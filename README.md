@@ -1,43 +1,102 @@
 # Koersplein
 
-Koersplein brengt aandelenbeurzen één voor één in beeld. De hoofdstructuur is uitbreidbaar opgezet als `beursgroep → markt → index → aandeel`. De eerste volledig beschikbare markt is Euronext Amsterdam.
+Koersplein is een zelfstandig financieel webproject. De site ordent de beurswereld als `regio → beursgroep → markt → index → aandeel`. Europa / Euronext / Amsterdam is actief; andere regio's en Euronext-markten zijn als toekomstige, lege onderdelen zichtbaar. Er is geen technische koppeling met Atlas en geen Atlas-code, -data of -workflow opgenomen.
 
-Koersplein is een zelfstandig project. Er bestaat geen technische koppeling met Atlas en er wordt geen code of data uit Atlas gebruikt.
+## Site
 
-## Lokaal bekijken en controleren
+De donkere, responsive homepage bevat:
+
+- een echte introductie en marktpositionering;
+- de interactieve Kanszoeker voor termijn, gezocht koerspotentieel en 1–5 aandelen;
+- een expliciete `engine_unavailable`-status: geen fictieve voorspellingen of rendementsbeloften;
+- datacontracten voor een later pakketresultaat met weging, potentieel, sector, land, beurs, spreiding/risico en modelbasis;
+- lege, eerlijke kaarten voor wereldwijde stijgers en dalers;
+- navigatie via Europa → Euronext → Amsterdam → AEX / AMX / AScX / Overig;
+- zoeken op bedrijfsnaam, ticker en ISIN;
+- een aandeel-detailpagina via `share.html?isin=...`, voorbereid op koershistorie, grafiek en analyse.
+
+`data/home-contracts.json` is het frontendcontract voor Kanszoeker en dagwinnaars/-verliezers. Het bevat schema's, geen verzonnen resultaten.
+
+## Lokaal draaien en testen
+
+Node.js 20 of nieuwer volstaat; er zijn geen npm-afhankelijkheden.
 
 ```bash
 npm run dev
-npm run validate
+npm test
 ```
 
-Open na `npm run dev` http://localhost:4173.
+Open http://localhost:4173. De validator controleert de 124 aandelen, unieke ISIN's, indexgroottes 30/25/20/49, marktstructuur, veilige lege UI-statussen en de twee gecontroleerde historiekoppelingen. De test controleert daarnaast de keuzeknoppen, zoekvelden, detailroute, historievalidatie, foutfilter, moversberekening en idempotente merge.
 
-## Data
+## Amsterdam-data en indices
 
-- `data/markets.json` bevat de uitbreidbare Euronext-marktstructuur. Nieuwe markten krijgen ieder hun eigen aandelen- en indexbestand.
-- `data/euronext-amsterdam.json` bevat alle Amsterdamse aandelen.
-- `data/euronext-amsterdam-indices.json` bevat de officiële indexsamenstellingen. De frontend koppelt uitsluitend op ISIN. Een Amsterdamse ISIN die niet in AEX, AMX of AScX staat, valt automatisch onder Overig.
+- `data/markets.json`: uitbreidbare Euronext-markten.
+- `data/regions.json`: uitbreidbare wereldregio's.
+- `data/euronext-amsterdam.json`: 124 bestaande Amsterdamse noteringen; ongewijzigd behouden.
+- `data/euronext-amsterdam-indices.json`: officiële Euronext-samenstellingen, gekoppeld op ISIN.
 
-De kleine index heet bij Euronext tegenwoordig **AMS Next 20**. In de navigatie blijft de voor gebruikers bekende en gevraagde naam **AScX** zichtbaar; `officialName` bewaart de officiële naam.
+Niet-ingedeelde Amsterdamse ISIN's vallen automatisch onder Overig. De officiële naam van de kleine index is **AMS Next 20**; de UI toont daarnaast de herkenbare naam **AScX**.
 
-## Amsterdamse aandelenlijst vernieuwen
+De aandelenlijst wordt gecontroleerd vernieuwd met:
 
 ```bash
 npm run update:amsterdam
 npm run validate
 ```
 
-De import haalt de officiële aandelenlijst rechtstreeks op bij Euronext en verandert de indexindeling niet.
+De drie actuele indexpagina's staan per index in het databestand. Werk bij een herweging de volledige Euronext-compositietabel en `asOf` bij en draai daarna de validator. Er is bewust geen periodieke GitHub-workflow.
 
-## Indexsamenstellingen vernieuwen
+## Historische data-architectuur
 
-Gebruik de drie officiële Euronext-pagina's die in ieder indexobject onder `source` staan:
+`scripts/history/engine.mjs` verzorgt validatie, merge, atomaire opslag, batches, foutisolatie en checkpointing. Providers zitten achter adapters onder `scripts/history/providers/`. Het uniforme bestand per instrument wordt `data/history/<ISIN>.json` en bevat:
 
-- AEX: ISIN `NL0000000107`
-- AMX: ISIN `NL0000249274`
-- AMS Next 20 (zichtbaar als AScX): ISIN `NL0000249142`
+- officiële instrumentidentiteit: naam, ticker, ISIN, MIC, markt en valuta;
+- dagelijkse datum, open, high, low, close, adjusted close en volume;
+- null voor een ontbrekend niet-kritiek veld; bruikbare andere dagen blijven behouden;
+- provider, providersymbool, ophaaldatum, requestmetadata en licentienotitie;
+- eerste datum, laatste datum en record-/volumedekking.
 
-Neem op de controledatum de volledige tabel **Index Composition** over in `constituents`, met ISIN als sleutel, werk `asOf` bij en voer daarna `npm run validate` uit. De validator blokkeert dubbele lidmaatschappen, ontbrekende Amsterdamse ISIN's en afwijkende groepsgroottes. Daardoor kan een naamswijziging geen verkeerde koppeling veroorzaken en komen niet-ingedeelde aandelen vanzelf onder Overig.
+Opslag is idempotent op handelsdatum. Een update begint na de laatst opgeslagen dag, bestaande historie wordt niet verwijderd bij een bronfout en fouten worden per instrument in `data/history/status.json` vastgelegd. Batchgrootte is configureerbaar met `--batch-size` of `KOERSPLEIN_BATCH_SIZE`.
 
-Voor indexherzieningen zijn de actuele live compositietabellen leidend; publicaties onder *Index announcements* op Euronext dienen als tweede controle. Er is bewust geen automatische GitHub-workflow toegevoegd: vernieuwen gebeurt gecontroleerd en veroorzaakt geen periodieke Actions- of deploymentkosten.
+### Providerkeuze
+
+Euronext blijft de gezaghebbende bron voor ISIN/MIC/ticker en biedt professionele historische data als gelicentieerd product. Voor de twee technische backfilltests is een vervangbare **Yahoo Finance chart-feedadapter** gebouwd, omdat die zonder sleutel dagelijkse OHLCV en adjusted close kan leveren voor Amsterdam-symbolen. De mapping staat expliciet per ISIN in `data/history-instruments.json`; de adapter controleert providersymbool, Amsterdam-beurs en EUR-valuta voordat data wordt opgeslagen.
+
+De Yahoo-feed is geen contractueel gegarandeerde productie-API. Commerciële herdistributierechten zijn niet aangetoond. Gebruik deze adapter dus voor de technische testcase; sluit vóór publieke commerciële koerspublicatie een passende licentie af bij Euronext of een professionele provider en voeg/vervang alleen de adapter.
+
+### Alleen ASML en Adyen testen
+
+```bash
+npm run history:test
+npm run history:status
+npm run history:test
+npm run history:movers
+```
+
+De tweede run hoort `unchanged` of alleen nieuw toegevoegde handelsdagen te melden. De moversuitvoer heet bewust `configured-test-universe` en wordt niet als wereldwijde Top 10 gepubliceerd.
+
+Een lichte dagelijkse update van uitsluitend de geconfigureerde instrumenten:
+
+```bash
+npm run history:update
+```
+
+Een individueel instrument:
+
+```bash
+node scripts/history.mjs backfill --isin NL0010273215 --batch-size 1
+```
+
+### Later alle Amsterdamse aandelen
+
+Voeg eerst per Amsterdamse ISIN een gecontroleerde providerkoppeling toe aan `data/history-instruments.json`. Start daarna één hervatbare batch, niet één workflow per aandeel:
+
+```bash
+KOERSPLEIN_ALLOW_FULL_BACKFILL=yes node scripts/history.mjs backfill --all --batch-size 10
+```
+
+De expliciete omgevingsvlag voorkomt een onbedoelde dure volledige backfill. In dit bouwblok worden uitsluitend ASML en Adyen geconfigureerd; de overige 122 aandelen worden bewust niet opgehaald.
+
+## Deployment
+
+Dit is een statische site zonder buildstap: publiceer de repositoryroot. Er is bewust geen GitHub Action of nieuw hostingbestand toegevoegd. Kies één bestaande statische host, stel publish directory `.` en eventueel startcommando `npm run dev` in, en laat alleen echte main-updates deployen. Hosting- en accountinstellingen horen buiten de repository; er staan geen secrets in de frontend.

@@ -1,12 +1,18 @@
 import { readFile } from 'node:fs/promises';
 
 const readJson = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
-const [sharesData, indicesData, marketsData] = await Promise.all([
-  readJson('../data/euronext-amsterdam.json'), readJson('../data/euronext-amsterdam-indices.json'), readJson('../data/markets.json')
+const [sharesData, indicesData, marketsData, regionsData, mappings, contracts] = await Promise.all([
+  readJson('../data/euronext-amsterdam.json'),
+  readJson('../data/euronext-amsterdam-indices.json'),
+  readJson('../data/markets.json'),
+  readJson('../data/regions.json'),
+  readJson('../data/history-instruments.json'),
+  readJson('../data/home-contracts.json')
 ]);
+
 const required = ['name', 'symbol', 'isin', 'market'];
 if (sharesData.exchange !== 'Euronext Amsterdam' || sharesData.mic !== 'XAMS') throw new Error('Onjuiste beursgegevens.');
-if (!Array.isArray(sharesData.shares) || sharesData.shares.length < 100) throw new Error('Bedrijvenlijst is onvolledig.');
+if (!Array.isArray(sharesData.shares) || sharesData.shares.length !== 124) throw new Error(`Verwacht 124 Amsterdamse aandelen, vond ${sharesData.shares?.length}.`);
 if (sharesData.shares.some((share) => required.some((field) => !share[field]))) throw new Error('Een aandeel mist verplichte gegevens.');
 const shareIsins = new Set(sharesData.shares.map((share) => share.isin));
 if (shareIsins.size !== sharesData.shares.length) throw new Error('Dubbele ISIN in de Amsterdamse aandelenlijst.');
@@ -21,8 +27,21 @@ for (const index of indicesData.indices) {
 if (new Set(allMembers.map((member) => member.isin)).size !== allMembers.length) throw new Error('Een ISIN staat in meerdere indices.');
 const missing = allMembers.filter((member) => !shareIsins.has(member.isin));
 if (missing.length) throw new Error(`Indexleden ontbreken in Amsterdam-data: ${missing.map((member) => `${member.index}:${member.isin}`).join(', ')}`);
+const other = sharesData.shares.length - allMembers.length;
+if (other !== 49) throw new Error(`Verwacht 49 overige aandelen, vond ${other}.`);
+
 const euronext = marketsData.venues.find((venue) => venue.id === 'euronext');
 if (!euronext?.markets.some((market) => market.id === 'amsterdam' && market.status === 'available')) throw new Error('Euronext Amsterdam ontbreekt in de marktstructuur.');
-const other = sharesData.shares.length - allMembers.length;
-if (other < 0) throw new Error('De groepsaantallen sluiten niet aan.');
-console.log(`Koersplein bevat ${sharesData.shares.length} geldige Amsterdamse aandelen: AEX ${expected.aex}, AMX ${expected.amx}, AScX ${expected.ascx}, Overig ${other}.`);
+if (euronext.markets.filter((market) => market.status === 'available').length !== 1) throw new Error('Alleen Amsterdam mag nu actief zijn.');
+if (!regionsData.regions.some((region) => region.id === 'europe' && region.status === 'available')) throw new Error('Europa ontbreekt.');
+if (regionsData.regions.filter((region) => region.status === 'available').length !== 1) throw new Error('Alleen Europa mag nu actief zijn.');
+
+for (const mapping of mappings.providerMappings) {
+  const share = sharesData.shares.find((item) => item.isin === mapping.isin);
+  if (!share || share.symbol !== mapping.symbol || mappings.mic !== 'XAMS') throw new Error(`Ongeldige historie-identiteit: ${mapping.isin}`);
+  if (!mapping.identitySource.includes(`${mapping.isin}-XAMS`)) throw new Error(`Officiële identiteitsbron ontbreekt: ${mapping.isin}`);
+}
+for (const isin of ['NL0010273215', 'NL0012969182']) if (!mappings.providerMappings.some((item) => item.isin === isin)) throw new Error(`Testkoppeling ontbreekt: ${isin}`);
+if (contracts.opportunitySelection.status !== 'engine_unavailable' || contracts.dailyMovers.status !== 'dataset_unavailable') throw new Error('Lege homepage-statussen zijn niet veilig ingesteld.');
+
+console.log(`Koersplein geldig: Amsterdam ${sharesData.shares.length}; AEX ${expected.aex}; AMX ${expected.amx}; AScX ${expected.ascx}; Overig ${other}; historie-testkoppelingen ${mappings.providerMappings.length}.`);

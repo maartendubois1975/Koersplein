@@ -1,51 +1,74 @@
 <!doctype html>
 <html lang="nl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Koersplein brengt alle aandelenbeurzen ter wereld beurs voor beurs in beeld." />
-    <title>Koersplein — Beurs voor beurs</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <a class="brand" href="#top">Koersplein</a>
-      <span class="tagline">Beurs voor beurs</span>
-    </header>
-    <main id="top">
-      <section class="hero">
-        <p class="eyebrow">De wereldmarkt overzichtelijk gemaakt</p>
-        <h1>Iedere beurs.<br />Ieder aandeel.<br />Iedere handelsdag.</h1>
-        <p class="intro">Van beursgroep naar markt, van index naar individueel aandeel. We beginnen bij Euronext Amsterdam.</p>
-      </section>
-      <section class="venue" aria-labelledby="venue-title">
-        <a class="venue-entrance" href="#amsterdam">
-          <span><small>Europese beursgroep</small><strong id="venue-title">Euronext</strong></span>
-          <span class="entrance-meta"><b id="venue-market-count">1</b> markt beschikbaar <i aria-hidden="true">↓</i></span>
-        </a>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Koersplein — onafhankelijke toegang tot beursmarkten, aandelen en dagelijkse koershistorie.">
+  <title>Koersplein — Vind richting op de beurs</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Koersplein home"><span>K</span>KOERSPLEIN</a>
+    <nav aria-label="Hoofdnavigatie">
+      <a href="#kanszoeker">Kanszoeker</a><a href="#markten">Markten</a><a href="#amsterdam">Amsterdam</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero shell">
+      <p class="eyebrow">Marktinzicht, helder geordend</p>
+      <h1>Vind richting<br>op de beurs.</h1>
+      <p class="lede">Koersplein brengt markten, indices en aandelen samen in één rustige omgeving. Feiten eerst, analyse daarna.</p>
+      <div class="hero-actions"><a class="button primary" href="#kanszoeker">Ontdek de kanszoeker</a><a class="button ghost" href="#markten">Bekijk de beurswereld</a></div>
+      <div class="principles"><span>Officiële identiteit</span><span>Geen fictieve adviezen</span><span>Transparante bronnen</span></div>
+    </section>
+
+    <section id="kanszoeker" class="section shell" aria-labelledby="finder-title">
+      <div class="section-heading"><div><p class="eyebrow">Kanszoeker</p><h2 id="finder-title">Stel uw zoekprofiel samen</h2></div><p>Leg uw doel vast. De selectie-engine wordt afzonderlijk en controleerbaar aangesloten zodra het model gereed is.</p></div>
+      <form id="opportunity-form" class="finder-card">
+        <fieldset><legend><span>01</span> Termijn</legend><div class="choice-grid" data-choice="term">
+          <button type="button" data-value="3">3 maanden</button><button type="button" data-value="6">6 maanden</button><button type="button" class="selected" data-value="12">12 maanden</button><button type="button" data-value="24">24 maanden</button>
+        </div></fieldset>
+        <fieldset><legend><span>02</span> Gezocht koerspotentieel</legend><div class="choice-grid three" data-choice="potential">
+          <button type="button" data-value="10">+10%</button><button type="button" class="selected" data-value="20">+20%</button><button type="button" data-value="30">+30%</button>
+        </div><small>Dit is een zoekdoelstelling, geen rendementsbelofte.</small></fieldset>
+        <fieldset><legend><span>03</span> Aantal aandelen / spreiding</legend><div class="choice-grid five" data-choice="count">
+          <button type="button" data-value="1">1</button><button type="button" data-value="2">2</button><button type="button" data-value="3">3</button><button type="button" class="selected" data-value="4">4</button><button type="button" data-value="5">5</button>
+        </div></fieldset>
+        <div class="finder-submit"><div><span>Uw zoekprofiel</span><strong id="profile-summary">12 maanden · +20% doel · 4 aandelen</strong></div><button class="button primary" type="submit">Profiel bevestigen</button></div>
+      </form>
+      <div id="finder-result" class="engine-state" hidden role="status">
+        <div class="state-icon">◎</div><div><p class="eyebrow">Selectie-engine</p><h3>De analyse-engine is in opbouw</h3><p>Uw zoekprofiel is geldig vastgelegd. Koersplein toont pas aandelen, wegingen en verwacht potentieel als een getoetste engine beschikbaar is—zonder verzonnen uitkomsten.</p></div>
+      </div>
+    </section>
+
+    <section class="section shell" aria-labelledby="movers-title">
+      <div class="section-heading"><div><p class="eyebrow">Dagbeeld</p><h2 id="movers-title">Winnaars en verliezers van gisteren</h2></div><p>Voorbereid op berekening uit twee opeenvolgende geldige handelsdagen.</p></div>
+      <div class="movers-grid">
+        <article class="mover-card gain"><header><span>↗</span><div><p>Top 10</p><h3>Stijgers gisteren</h3></div></header><div id="gainers" class="empty-state"><strong>Nog geen wereldwijde dagdataset</strong><p>Er wordt geen onvolledige testset als wereldranglijst gepresenteerd.</p></div></article>
+        <article class="mover-card loss"><header><span>↘</span><div><p>Top 10</p><h3>Dalers gisteren</h3></div></header><div id="losers" class="empty-state"><strong>Nog geen wereldwijde dagdataset</strong><p>De kaart wordt automatisch gevuld zodra de dagelijkse dekking gereed is.</p></div></article>
+      </div>
+    </section>
+
+    <section id="markten" class="section shell" aria-labelledby="markets-title">
+      <div class="section-heading"><div><p class="eyebrow">De beurswereld</p><h2 id="markets-title">Van regio naar aandeel</h2></div><p>Een schaalbare route door regio’s, beursgroepen, markten en indices.</p></div>
+      <div id="region-navigation" class="region-grid" aria-label="Wereldregio's"></div>
+      <article class="venue-card">
+        <header><div><p>Europa · beursgroep</p><h3>Euronext</h3></div><span><b id="venue-market-count">1</b> actieve markt</span></header>
         <div id="market-navigation" class="market-navigation" aria-label="Euronext-markten"></div>
-      </section>
-      <section id="amsterdam" class="exchange" aria-labelledby="exchange-title">
-        <div class="exchange-head">
-          <div>
-            <p class="country">Nederland · Euronext</p>
-            <h2 id="exchange-title">Amsterdam</h2>
-            <p class="exchange-meta"><span class="market-dot"></span> EUR · XAMS</p>
-          </div>
-          <div class="count-card"><strong id="share-count">—</strong><span>aandelen</span></div>
-        </div>
-        <nav id="index-navigation" class="index-navigation" aria-label="Amsterdamse indices"></nav>
-        <div class="toolbar">
-          <label class="search"><span class="sr-only">Zoek een bedrijf, ticker of ISIN</span><input id="search" type="search" placeholder="Zoek bedrijf, ticker of ISIN" autocomplete="off" /></label>
-          <p id="source-date" class="source-date"></p>
-        </div>
-        <div id="share-groups" class="share-groups" aria-live="polite"><p class="loading">Amsterdamse aandelen worden geladen…</p></div>
-      </section>
-    </main>
-    <footer><span>Koersplein</span><span>Bron bedrijven- en indexlijsten: Euronext</span></footer>
-    <script type="module" src="app.js"></script>
-  </body>
+      </article>
+    </section>
+
+    <section id="amsterdam" class="section shell exchange" aria-labelledby="exchange-title">
+      <div class="exchange-head"><div><p class="eyebrow">Europa · Euronext · Nederland</p><h2 id="exchange-title">Amsterdam</h2><p><span class="live-dot"></span> EUR · XAMS</p></div><div class="count-card"><strong id="share-count">—</strong><span>aandelen</span></div></div>
+      <nav id="index-navigation" class="index-navigation" aria-label="Amsterdamse indices"></nav>
+      <div class="toolbar"><label class="search"><span>Zoek binnen Amsterdam</span><input id="search" type="search" placeholder="Bedrijfsnaam, ticker of ISIN" autocomplete="off"></label><p id="source-date"></p></div>
+      <div id="share-groups" class="share-groups" aria-live="polite"><p class="loading">Amsterdamse aandelen worden geladen…</p></div>
+    </section>
+  </main>
+
+  <footer><a class="brand" href="#top"><span>K</span>KOERSPLEIN</a><p>Marktinformatie is informatief en geen beleggingsadvies.</p><p>Identiteit en indexindeling: Euronext.</p></footer>
+  <script type="module" src="app.js"></script>
+</body>
 </html>
