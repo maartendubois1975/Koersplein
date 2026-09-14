@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "opportunitySelection": {
+    "status": "engine_unavailable",
+    "requestSchema": {
+      "termMonths": {
+        "type": "integer",
+        "enum": [
+          3,
+          6,
+          12,
+          24
+        ]
+      },
+      "targetPotentialPercent": {
+        "type": "integer",
+        "enum": [
+          10,
+          20,
+          30
+        ]
+      },
+      "shareCount": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
+      }
+    },
+    "resultSchema": {
+      "asOf": "ISO-8601 date",
+      "modelVersion": "string",
+      "packageExpectedPotentialPercent": "number|null",
+      "diversificationRisk": "low|medium|high|unknown",
+      "holdings": [
+        {
+          "isin": "string",
+          "symbol": "string",
+          "name": "string",
+          "weightPercent": "number",
+          "expectedPotentialPercent": "number|null",
+          "sector": "string|null",
+          "country": "string|null",
+          "exchange": "string",
+          "mic": "string"
+        }
+      ]
+    }
+  },
+  "dailyMovers": {
+    "status": "dataset_unavailable",
+    "scope": "global",
+    "requiredCoverage": "worldwide daily close data",
+    "itemSchema": {
+      "isin": "string",
+      "name": "string",
+      "symbol": "string",
+      "exchange": "string",
+      "mic": "string",
+      "country": "string|null",
+      "close": "number",
+      "changePercent": "number",
+      "tradingDate": "ISO-8601 date",
+      "previousTradingDate": "ISO-8601 date",
+      "provider": "string"
+    }
+  }
+}

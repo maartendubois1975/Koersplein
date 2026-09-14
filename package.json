@@ -1,11 +1,16 @@
 {
   "name": "koersplein",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "node scripts/server.mjs",
     "update:amsterdam": "node scripts/import-euronext-amsterdam.mjs",
-    "validate": "node scripts/validate.mjs"
+    "validate": "node scripts/validate.mjs",
+    "test": "node scripts/validate.mjs && node scripts/test.mjs",
+    "history:test": "node scripts/history.mjs backfill --isin NL0010273215 --isin NL0012969182 --batch-size 2",
+    "history:update": "node scripts/history.mjs update --all",
+    "history:status": "node scripts/history.mjs status",
+    "history:movers": "node scripts/history.mjs movers"
   }
 }

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "identityAuthority": "Euronext",
+  "market": "Euronext Amsterdam",
+  "mic": "XAMS",
+  "providerMappings": [
+    {
+      "isin": "NL0010273215",
+      "name": "ASML HOLDING",
+      "symbol": "ASML",
+      "provider": "yahoo-chart",
+      "providerSymbol": "ASML.AS",
+      "currency": "EUR",
+      "identitySource": "https://live.euronext.com/en/product/equities/NL0010273215-XAMS"
+    },
+    {
+      "isin": "NL0012969182",
+      "name": "ADYEN",
+      "symbol": "ADYEN",
+      "provider": "yahoo-chart",
+      "providerSymbol": "ADYEN.AS",
+      "currency": "EUR",
+      "identitySource": "https://live.euronext.com/en/product/equities/NL0012969182-XAMS"
+    }
+  ]
+}
