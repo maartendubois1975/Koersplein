@@ -1,0 +1,11 @@
+{
+  "name": "koersplein",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/server.mjs",
+    "update:amsterdam": "node scripts/import-euronext-amsterdam.mjs",
+    "validate": "node scripts/validate.mjs"
+  }
+}

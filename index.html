@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Koersplein brengt alle aandelenbeurzen ter wereld beurs voor beurs in beeld." />
+    <title>Koersplein — Beurs voor beurs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#">Koersplein</a>
+      <span class="tagline">Beurs voor beurs</span>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">De wereldmarkt overzichtelijk gemaakt</p>
+        <h1>Iedere beurs.<br />Ieder aandeel.<br />Iedere handelsdag.</h1>
+        <p class="intro">We beginnen waar de Nederlandse handelsdag begint: Euronext Amsterdam.</p>
+      </section>
+
+      <section class="exchange" aria-labelledby="exchange-title">
+        <div class="exchange-head">
+          <div>
+            <p class="country">Nederland</p>
+            <h2 id="exchange-title">Euronext Amsterdam</h2>
+            <p class="exchange-meta"><span class="market-dot"></span> Amsterdam · EUR · XAMS</p>
+          </div>
+          <div class="count-card">
+            <strong id="share-count">—</strong>
+            <span>aandelen</span>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <label class="search">
+            <span class="sr-only">Zoek een bedrijf of ticker</span>
+            <input id="search" type="search" placeholder="Zoek bedrijf of ticker" autocomplete="off" />
+          </label>
+          <p id="source-date" class="source-date"></p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Bedrijf</th>
+                <th>Ticker</th>
+                <th>ISIN</th>
+                <th class="price">Open</th>
+                <th class="price">Slot</th>
+              </tr>
+            </thead>
+            <tbody id="share-list">
+              <tr><td colspan="5" class="loading">Amsterdamse aandelen worden geladen…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Koersplein</span>
+      <span>Bron bedrijvenlijst: Euronext Amsterdam</span>
+    </footer>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

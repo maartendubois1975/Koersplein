@@ -1,0 +1,134 @@
+:root {
+  --ink: #12231d;
+  --muted: #63716b;
+  --paper: #f5f2e9;
+  --white: #fffdf8;
+  --green: #174f3a;
+  --line: #d9ded8;
+  --gold: #c49b55;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: "DM Sans", sans-serif;
+}
+
+.site-header {
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(24px, 6vw, 96px);
+  border-bottom: 1px solid rgba(18, 35, 29, .14);
+}
+
+.brand {
+  color: var(--green);
+  font-family: "Playfair Display", serif;
+  font-size: 28px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.tagline, .eyebrow, .country {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+main { padding: 0 clamp(20px, 6vw, 96px) 80px; }
+
+.hero {
+  padding: clamp(64px, 10vw, 130px) 0 clamp(56px, 8vw, 104px);
+  max-width: 980px;
+}
+
+.hero h1 {
+  margin: 18px 0 28px;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(48px, 8vw, 100px);
+  line-height: .96;
+  letter-spacing: -.045em;
+}
+
+.intro {
+  max-width: 620px;
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.55;
+}
+
+.exchange {
+  max-width: 1320px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: 0 22px 60px rgba(18, 35, 29, .08);
+}
+
+.exchange-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(26px, 4vw, 48px);
+  background: var(--green);
+  color: white;
+}
+
+.country { margin: 0 0 10px; color: #bcd0c7; }
+.exchange h2 { margin: 0; font-family: "Playfair Display", serif; font-size: clamp(30px, 4vw, 48px); }
+.exchange-meta { margin: 12px 0 0; color: #cbd9d3; }
+.market-dot { display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: #74d7a4; }
+
+.count-card { min-width: 128px; padding-left: 26px; border-left: 1px solid rgba(255,255,255,.22); }
+.count-card strong { display: block; font-family: "Playfair Display", serif; font-size: 48px; line-height: 1; }
+.count-card span { color: #cbd9d3; font-size: 13px; }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px clamp(20px, 4vw, 48px);
+  border-bottom: 1px solid var(--line);
+}
+
+.search { flex: 1; max-width: 420px; }
+.search input { width: 100%; padding: 13px 16px; color: var(--ink); background: #f3f5f2; border: 1px solid transparent; border-radius: 10px; font: inherit; }
+.search input:focus { outline: none; border-color: var(--green); background: white; }
+.source-date { margin: 0; color: var(--muted); font-size: 13px; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 16px clamp(16px, 3vw, 48px); border-bottom: 1px solid #e9ece8; text-align: left; white-space: nowrap; }
+th { color: var(--muted); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+td { font-size: 14px; }
+td:first-child { width: 44%; font-weight: 600; }
+.price { text-align: right; }
+.empty-price { color: #9aa49f; text-align: right; }
+.loading, .no-results { padding: 44px; color: var(--muted); text-align: center; }
+
+footer { display: flex; justify-content: space-between; gap: 24px; padding: 26px clamp(24px, 6vw, 96px); color: var(--muted); border-top: 1px solid rgba(18, 35, 29, .14); font-size: 12px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+@media (max-width: 700px) {
+  .tagline { display: none; }
+  .exchange-head { align-items: flex-end; }
+  .count-card { min-width: 84px; padding-left: 18px; }
+  .count-card strong { font-size: 36px; }
+  .toolbar { align-items: stretch; flex-direction: column; }
+  .search { max-width: none; }
+  th:nth-child(3), td:nth-child(3) { display: none; }
+  th, td { padding: 14px 18px; }
+  footer { flex-direction: column; }
+}
