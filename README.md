@@ -15,6 +15,8 @@ De donkere, responsive homepage bevat:
 - zoeken op bedrijfsnaam, ticker en ISIN;
 - een aandeel-detailpagina via `share.html?isin=...` met een echte, lichte SVG-koersgrafiek voor de twee golden test cases, inclusief 1J/3J/5J/10J/MAX.
 
+Elke periode opent op de laatste beschikbare handelsdag. Aanraken of aanwijzen selecteert het dichtstbijzijnde echte datapunt en toont de opgeslagen OHLC-waarden. De Y-as gebruikt proportionele marge, maar zakt bij een volledig positieve zichtbare koersreeks nooit door grafiekpadding onder nul.
+
 `data/home-contracts.json` is het frontendcontract voor Kanszoeker en dagwinnaars/-verliezers. Het bevat schema's, geen verzonnen resultaten.
 
 ## Lokaal draaien en testen
