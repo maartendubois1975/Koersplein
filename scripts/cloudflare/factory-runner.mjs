@@ -5,6 +5,10 @@ import { partitionBars } from './history-format.mjs';
 const args = Object.fromEntries(process.argv.slice(2).map((item) => item.replace(/^--/, '').split('=')));
 const jobId = args['job-id'] || process.env.KOERSPLEIN_JOB_ID;
 const batchSize = Math.max(1, Math.min(100, Number(args['batch-size'] || process.env.KOERSPLEIN_BATCH_SIZE || 25)));
+const mode = String(args.mode || process.env.KOERSPLEIN_RUN_MODE || 'canary').toLowerCase();
+if (!['canary', 'mass'].includes(mode)) throw new Error('--mode moet canary of mass zijn');
+const requestedMax = Number(args['max-items'] || process.env.KOERSPLEIN_MAX_ITEMS || (mode === 'mass' ? 500 : 2));
+const maxItems = Math.max(1, Math.min(mode === 'mass' ? 5000 : 2, Number.isFinite(requestedMax) ? requestedMax : (mode === 'mass' ? 500 : 2)));
 if (!jobId) throw new Error('--job-id is vereist');
 const client = new FactoryApiClient();
 const registry = createDefaultProviderRegistry();
@@ -26,19 +30,23 @@ async function processItem(job, item) {
   if (startDate > today()) return { recordsAdded: 0, firstDate: item.first_date, lastDate: item.last_date };
   const { provider, result } = await registry.fetchDaily(base, { startDate, endDate: today() }, base.provider);
   let added = 0;
-  for (const [period, bars] of partitionBars(result.bars)) { const stored = await client.putPartition(item.isin, period, { bars, provider: provider.id }); added += bars.length; }
+  for (const [period, bars] of partitionBars(result.bars)) { await client.putPartition(item.isin, period, { bars, provider: provider.id }); added += bars.length; }
   const coverage = await client.completeHistory(item.isin, { provider: provider.id });
   return { recordsAdded: added, firstDate: coverage.first_date, lastDate: coverage.last_date };
 }
 
 const job = await client.job(jobId);
 if (!job) throw new Error(`Job ${jobId} bestaat niet`);
-for (;;) {
-  const { items } = await client.claim(jobId, batchSize);
+let processedThisRun = 0;
+console.log(JSON.stringify({ jobId, mode, maxItems, batchSize, safetyGate: mode === 'canary' ? 'CANARY_MAX_2' : 'MASS_BOUNDED' }));
+while (processedThisRun < maxItems) {
+  const claimLimit = Math.min(batchSize, maxItems - processedThisRun);
+  const { items } = await client.claim(jobId, claimLimit);
   if (!items.length) break;
   for (const item of items) {
     try { const result = await processItem(job, item); await client.finishItem(jobId, item.isin, { status: 'COMPLETE', ...result }); console.log(JSON.stringify({ jobId, isin: item.isin, status: 'COMPLETE', ...result })); }
     catch (error) { await client.finishItem(jobId, item.isin, { status: 'FAILED', error: error.message }); console.error(JSON.stringify({ jobId, isin: item.isin, status: 'FAILED', error: error.message })); }
+    processedThisRun += 1;
   }
 }
-console.log(JSON.stringify(await client.job(jobId), null, 2));
+console.log(JSON.stringify({ ...(await client.job(jobId)), run: { mode, processedThisRun, maxItems } }, null, 2));
