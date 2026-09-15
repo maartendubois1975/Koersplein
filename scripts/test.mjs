@@ -1,6 +1,7 @@
 import { strict as assert } from 'node:assert';
 import { readFile } from 'node:fs/promises';
 import { computeMovers, mergeBars, validateBars } from './history/engine.mjs';
+import { buildChartModel, downsampleSeries, filterPeriod, validateHistoryDocument } from '../chart.js';
 
 const original = [{ date: '2026-09-10', open: 100, high: 103, low: 99, close: 102, adjustedClose: 102, volume: null }];
 const incoming = [
@@ -20,18 +21,35 @@ assert.equal(movers.length, 1);
 assert.ok(Math.abs(movers[0].changePercent - 2.941176470588225) < 1e-9);
 assert.equal(movers[0].tradingDate, '2026-09-11');
 
-const [html, app, detail, contracts] = await Promise.all([
+const [html, app, detail, contracts, detailScript, css] = await Promise.all([
   readFile(new URL('../index.html', import.meta.url), 'utf8'),
   readFile(new URL('../app.js', import.meta.url), 'utf8'),
   readFile(new URL('../share.html', import.meta.url), 'utf8'),
-  readFile(new URL('../data/home-contracts.json', import.meta.url), 'utf8')
+  readFile(new URL('../data/home-contracts.json', import.meta.url), 'utf8'),
+  readFile(new URL('../share.js', import.meta.url), 'utf8'),
+  readFile(new URL('../styles.css', import.meta.url), 'utf8')
 ]);
 for (const text of ['3 maanden', '6 maanden', '12 maanden', '24 maanden', '+10%', '+20%', '+30%']) assert.ok(html.includes(text));
 assert.ok(html.includes('selectie-engine') && html.includes('geen rendementsbelofte'));
 assert.ok(html.includes('Stijgers gisteren') && html.includes('Dalers gisteren'));
 assert.ok(app.includes('share.html?isin=') && app.includes('share.name, share.symbol, share.isin'));
 assert.ok(detail.includes('Koersplein-analyse'));
+assert.ok(detail.includes('history-state') && detailScript.includes('manifest.json') && detailScript.includes('renderHistoryChart'));
+assert.ok(!detailScript.includes('catch { /*'), 'Historiefouten mogen niet stil worden ingeslikt');
+assert.ok(css.includes('@media(max-width:640px)') && css.includes('.chart-shell svg{height:220px}'));
+
+const synthetic = Array.from({ length: 7241 }, (_, index) => {
+  const date = new Date(Date.UTC(1998, 6, 20) + index * 1.42 * 86_400_000).toISOString().slice(0, 10);
+  return { date, open: 100 + index / 20, high: 102 + index / 20, low: 99 + index / 20, close: 101 + index / 20, adjustedClose: 101 + index / 20, volume: null };
+});
+const chartModel = buildChartModel(synthetic, 'MAX');
+assert.equal(chartModel.filtered.length, 7241);
+assert.ok(chartModel.plotted.length <= 902 && chartModel.path.startsWith('M'));
+assert.ok(filterPeriod(synthetic, '1J').length < synthetic.length);
+assert.ok(downsampleSeries(synthetic).length < synthetic.length);
+const fixtureDocument = { schemaVersion: 1, instrument: { isin: 'NL0010273215', symbol: 'ASML', mic: 'XAMS' }, coverage: { records: 2, firstDate: once[0].date, lastDate: once[1].date }, bars: once };
+assert.equal(validateHistoryDocument(fixtureDocument, { isin: 'NL0010273215', symbol: 'ASML' }).length, 2);
 const parsedContracts = JSON.parse(contracts);
 assert.equal(parsedContracts.opportunitySelection.status, 'engine_unavailable');
 assert.equal(parsedContracts.dailyMovers.status, 'dataset_unavailable');
-console.log('UI-contracten, historievalidatie, idempotentie, foutfilter en moversberekening: OK.');
+console.log('UI-contracten, grafiek/MAX, responsive CSS, historievalidatie, idempotentie, foutfilter en moversberekening: OK.');
