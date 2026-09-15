@@ -13,7 +13,7 @@ De donkere, responsive homepage bevat:
 - lege, eerlijke kaarten voor wereldwijde stijgers en dalers;
 - navigatie via Europa → Euronext → Amsterdam → AEX / AMX / AScX / Overig;
 - zoeken op bedrijfsnaam, ticker en ISIN;
-- een aandeel-detailpagina via `share.html?isin=...`, voorbereid op koershistorie, grafiek en analyse.
+- een aandeel-detailpagina via `share.html?isin=...` met een echte, lichte SVG-koersgrafiek voor de twee golden test cases, inclusief 1J/3J/5J/10J/MAX.
 
 `data/home-contracts.json` is het frontendcontract voor Kanszoeker en dagwinnaars/-verliezers. Het bevat schema's, geen verzonnen resultaten.
 
@@ -56,7 +56,7 @@ De drie actuele indexpagina's staan per index in het databestand. Werk bij een h
 - provider, providersymbool, ophaaldatum, requestmetadata en licentienotitie;
 - eerste datum, laatste datum en record-/volumedekking.
 
-Opslag is idempotent op handelsdatum. Een update begint na de laatst opgeslagen dag, bestaande historie wordt niet verwijderd bij een bronfout en fouten worden per instrument in `data/history/status.json` vastgelegd. Batchgrootte is configureerbaar met `--batch-size` of `KOERSPLEIN_BATCH_SIZE`.
+Opslag is idempotent op handelsdatum. Een voltooide backfill krijgt `backfillComplete`; een herhaalde backfill is daarna een echte no-op zonder providerrequest. Een update begint na de laatst opgeslagen dag, bestaande historie wordt niet verwijderd bij een bronfout en fouten worden per instrument in `data/history/status.json` vastgelegd. Batchgrootte is configureerbaar met `--batch-size` of `KOERSPLEIN_BATCH_SIZE`.
 
 ### Providerkeuze
 
@@ -73,7 +73,7 @@ npm run history:test
 npm run history:movers
 ```
 
-De tweede run hoort `unchanged` of alleen nieuw toegevoegde handelsdagen te melden. De moversuitvoer heet bewust `configured-test-universe` en wordt niet als wereldwijde Top 10 gepubliceerd.
+De ingebouwde tweede backfillrun moet `unchanged`, `backfill-complete` en `providerRequest: false` melden. Daarna valideert de build alle records en schrijft `data/history/manifest.json`. De frontend resolveert de bestandsnaam uitsluitend via dit manifest en controleert ISIN, ticker, MIC, recordaantal, volgorde en unieke handelsdagen. De moversuitvoer heet bewust `configured-test-universe` en wordt niet als wereldwijde Top 10 gepubliceerd.
 
 Een lichte dagelijkse update van uitsluitend de geconfigureerde instrumenten:
 
@@ -99,4 +99,4 @@ De expliciete omgevingsvlag voorkomt een onbedoelde dure volledige backfill. In 
 
 ## Deployment
 
-Dit is een statische site zonder buildstap: publiceer de repositoryroot. Er is bewust geen GitHub Action of nieuw hostingbestand toegevoegd. Kies één bestaande statische host, stel publish directory `.` en eventueel startcommando `npm run dev` in, en laat alleen echte main-updates deployen. Hosting- en accountinstellingen horen buiten de repository; er staan geen secrets in de frontend.
+De publieke testsite is `https://koersplein-test.onrender.com`. Render publiceert de repositoryroot na `npm test && npm run history:test`; die laatste stap genereert, auditeert en manifesteert uitsluitend ASML en Adyen voordat het artifact wordt geüpload. Auto-deploy blijft uit: één handmatige deploy per gecontroleerd bouwblok. Er is geen GitHub Action of nieuw hostingbestand toegevoegd en er staan geen secrets in de frontend.
