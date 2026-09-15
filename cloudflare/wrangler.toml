@@ -1,0 +1,24 @@
+name = "koersplein-api"
+main = "worker.mjs"
+compatibility_date = "2026-09-15"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "koersplein-metadata"
+database_id = "f04425e3-febb-4164-8fff-2e97c53e8ba6"
+
+[[r2_buckets]]
+binding = "HISTORY"
+bucket_name = "koersplein-history"
+
+[vars]
+GITHUB_REPOSITORY = "maartendubois1975/Koersplein"
+GITHUB_WORKFLOW = "koersplein-data-factory.yml"
+GITHUB_REF = "main"
+ALLOWED_ORIGIN = "https://koersplein-test.onrender.com"
+SCHEDULER_ENABLED = "false"
+
+# ADMIN_EMAIL is configured in Cloudflare rather than committed to GitHub.
+# Secrets FACTORY_TOKEN and GITHUB_DISPATCH_TOKEN are configured separately.
+
+# Scheduler intentionally omitted until daily updates are explicitly enabled.
