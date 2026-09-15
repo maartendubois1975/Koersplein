@@ -193,6 +193,7 @@ export function renderHistoryChart(container, bars, options = {}) {
       if (event.pointerType !== 'mouse') overlay.setPointerCapture?.(event.pointerId);
       show(locate(event.clientX));
     });
+    overlay.addEventListener('click', (event) => show(locate(event.clientX)));
     const finishPointer = (event) => { if (activePointer === event.pointerId) activePointer = null; };
     overlay.addEventListener('pointerup', finishPointer);
     overlay.addEventListener('pointercancel', finishPointer);
