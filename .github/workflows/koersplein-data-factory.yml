@@ -23,15 +23,15 @@ on:
         default: '25'
         type: string
       mode:
-        description: Eerst canary; mass alleen na geslaagde controle
+        description: HISTORY_BACKFILL start altijd met canary; mass volgt alleen na succes
         required: false
-        default: canary
+        default: mass
         type: choice
         options: [canary, mass]
       max_items:
-        description: Maximum instrumenten in deze run; canary wordt hard begrensd op 2
+        description: Maximum instrumenten in massafase; hard begrensd door runner
         required: false
-        default: '2'
+        default: '500'
         type: string
 
 permissions:
@@ -53,5 +53,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Verwerk hervatbare batchjob
-        run: node scripts/cloudflare/factory-runner.mjs --job-id="${{ inputs.job_id }}" --batch-size="${{ inputs.batch_size }}" --mode="${{ inputs.mode }}" --max-items="${{ inputs.max_items }}"
+      - name: Lokale veiligheids- en syntaxiscontrole
+        run: npm run cloudflare:test
+      - name: Canary - maximaal 2 instrumenten
+        run: node scripts/cloudflare/factory-runner.mjs --job-id="${{ inputs.job_id }}" --batch-size="2" --mode="canary" --max-items="2"
+      - name: Begrensde massavulling na geslaagde canary
+        if: ${{ inputs.job_type == 'HISTORY_BACKFILL' && inputs.mode == 'mass' }}
+        run: node scripts/cloudflare/factory-runner.mjs --job-id="${{ inputs.job_id }}" --batch-size="${{ inputs.batch_size }}" --mode="mass" --max-items="${{ inputs.max_items }}"
