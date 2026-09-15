@@ -38,15 +38,25 @@ async function processItem(job, item) {
 const job = await client.job(jobId);
 if (!job) throw new Error(`Job ${jobId} bestaat niet`);
 let processedThisRun = 0;
+let failedThisRun = 0;
 console.log(JSON.stringify({ jobId, mode, maxItems, batchSize, safetyGate: mode === 'canary' ? 'CANARY_MAX_2' : 'MASS_BOUNDED' }));
 while (processedThisRun < maxItems) {
   const claimLimit = Math.min(batchSize, maxItems - processedThisRun);
   const { items } = await client.claim(jobId, claimLimit);
   if (!items.length) break;
   for (const item of items) {
-    try { const result = await processItem(job, item); await client.finishItem(jobId, item.isin, { status: 'COMPLETE', ...result }); console.log(JSON.stringify({ jobId, isin: item.isin, status: 'COMPLETE', ...result })); }
-    catch (error) { await client.finishItem(jobId, item.isin, { status: 'FAILED', error: error.message }); console.error(JSON.stringify({ jobId, isin: item.isin, status: 'FAILED', error: error.message })); }
+    try {
+      const result = await processItem(job, item);
+      await client.finishItem(jobId, item.isin, { status: 'COMPLETE', ...result });
+      console.log(JSON.stringify({ jobId, isin: item.isin, status: 'COMPLETE', ...result }));
+    } catch (error) {
+      failedThisRun += 1;
+      await client.finishItem(jobId, item.isin, { status: 'FAILED', error: error.message });
+      console.error(JSON.stringify({ jobId, isin: item.isin, status: 'FAILED', error: error.message }));
+    }
     processedThisRun += 1;
   }
 }
-console.log(JSON.stringify({ ...(await client.job(jobId)), run: { mode, processedThisRun, maxItems } }, null, 2));
+const finalJob = await client.job(jobId);
+console.log(JSON.stringify({ ...finalJob, run: { mode, processedThisRun, failedThisRun, maxItems } }, null, 2));
+if (failedThisRun > 0) throw new Error(`${failedThisRun} instrument(en) mislukt in ${mode}-run; vervolg is geblokkeerd`);
