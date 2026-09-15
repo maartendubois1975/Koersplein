@@ -1,12 +1,12 @@
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
-import { YahooChartProvider } from './providers/yahoo-chart.mjs';
+import { createDefaultProviderRegistry } from './provider-registry.mjs';
 
 const rootUrl = new URL('../../', import.meta.url);
 const dataUrl = new URL('data/', rootUrl);
 const historyUrl = new URL('history/', dataUrl);
 const statusUrl = new URL('status.json', historyUrl);
-const providers = new Map([['yahoo-chart', new YahooChartProvider()]]);
+const providers = createDefaultProviderRegistry();
 const readJson = async (url, fallback = null) => { try { return JSON.parse(await readFile(url, 'utf8')); } catch (error) { if (error.code === 'ENOENT') return fallback; throw error; } };
 const nextDate = (date) => { const value = new Date(`${date}T00:00:00Z`); value.setUTCDate(value.getUTCDate() + 1); return value.toISOString().slice(0, 10); };
 const today = () => new Date().toISOString().slice(0, 10);
