@@ -22,6 +22,17 @@ on:
         required: false
         default: '25'
         type: string
+      mode:
+        description: Eerst canary; mass alleen na geslaagde controle
+        required: false
+        default: canary
+        type: choice
+        options: [canary, mass]
+      max_items:
+        description: Maximum instrumenten in deze run; canary wordt hard begrensd op 2
+        required: false
+        default: '2'
+        type: string
 
 permissions:
   contents: read
@@ -43,4 +54,4 @@ jobs:
         with:
           node-version: 22
       - name: Verwerk hervatbare batchjob
-        run: node scripts/cloudflare/factory-runner.mjs --job-id="${{ inputs.job_id }}" --batch-size="${{ inputs.batch_size }}"
+        run: node scripts/cloudflare/factory-runner.mjs --job-id="${{ inputs.job_id }}" --batch-size="${{ inputs.batch_size }}" --mode="${{ inputs.mode }}" --max-items="${{ inputs.max_items }}"
