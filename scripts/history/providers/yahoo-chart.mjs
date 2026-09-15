@@ -9,21 +9,30 @@ export class YahooChartProvider {
   name = 'Yahoo Finance chart feed';
   requiresApiKey = false;
 
+  supports(instrument) {
+    return instrument.mic === 'XAMS' && Boolean(instrument.providerSymbol || instrument.provider_symbol || instrument.ticker || instrument.symbol);
+  }
+
+  providerSymbolFor(instrument) {
+    return instrument.providerSymbol || instrument.provider_symbol || `${instrument.ticker || instrument.symbol}.AS`;
+  }
+
   async fetchDaily(instrument, { startDate, endDate, signal } = {}) {
-    if (instrument.provider !== PROVIDER_ID || !instrument.providerSymbol) throw new Error(`Geen gecontroleerde Yahoo-koppeling voor ${instrument.isin}`);
+    const providerSymbol = this.providerSymbolFor(instrument);
+    if (!providerSymbol) throw new Error(`Geen gecontroleerde Yahoo-koppeling voor ${instrument.isin}`);
     const period1 = Math.floor(new Date(`${startDate}T00:00:00Z`).getTime() / 1000);
     const period2 = Math.floor(new Date(`${endDate}T23:59:59Z`).getTime() / 1000);
-    const url = new URL(`${API_ROOT}/${encodeURIComponent(instrument.providerSymbol)}`);
+    const url = new URL(`${API_ROOT}/${encodeURIComponent(providerSymbol)}`);
     url.searchParams.set('period1', String(period1));
     url.searchParams.set('period2', String(period2));
     url.searchParams.set('interval', '1d');
     url.searchParams.set('events', 'div,splits');
     const response = await fetch(url, { signal, headers: { Accept: 'application/json', 'User-Agent': 'Koersplein-history/1.0' } });
-    if (!response.ok) throw new Error(`Yahoo HTTP ${response.status} voor ${instrument.providerSymbol}`);
+    if (!response.ok) throw new Error(`Yahoo HTTP ${response.status} voor ${providerSymbol}`);
     const payload = await response.json();
     const result = payload?.chart?.result?.[0];
     if (!result || payload?.chart?.error) throw new Error(payload?.chart?.error?.description || 'Yahoo-resultaat ontbreekt');
-    this.validateIdentity(instrument, result.meta);
+    this.validateIdentity({ ...instrument, providerSymbol }, result.meta);
     const quote = result.indicators?.quote?.[0] || {};
     const adjusted = result.indicators?.adjclose?.[0]?.adjclose || [];
     const bars = (result.timestamp || []).map((timestamp, index) => ({

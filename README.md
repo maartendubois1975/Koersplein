@@ -21,7 +21,7 @@ Elke periode opent op de laatste beschikbare handelsdag. Aanraken of aanwijzen s
 
 ## Lokaal draaien en testen
 
-Node.js 20 of nieuwer volstaat; er zijn geen npm-afhankelijkheden.
+Node.js 22.5 of nieuwer is nodig voor de ingebouwde SQLite-driver; er zijn geen npm-afhankelijkheden.
 
 ```bash
 npm run dev
@@ -99,6 +99,29 @@ KOERSPLEIN_ALLOW_FULL_BACKFILL=yes node scripts/history.mjs backfill --all --bat
 
 De expliciete omgevingsvlag voorkomt een onbedoelde dure volledige backfill. In dit bouwblok worden uitsluitend ASML en Adyen geconfigureerd; de overige 122 aandelen worden bewust niet opgehaald.
 
+## Zelfstandige datafabriek en beheer
+
+De nieuwe serverarchitectuur scheidt frontend, jobs, opslag, providers, scheduler en beheer. Details en operationele commando's staan in [`docs/FACTORY.md`](docs/FACTORY.md). De kern:
+
+- SQLite bewaart markten, 124 instrumenten, koersdagen, historiestatus, jobs en job-items buiten de Git-deploycyclus;
+- `HISTORY_BACKFILL`, `DAILY_UPDATE`, `REPAIR_MISSING`, `VALIDATE_HISTORY` en `CHECK_AMSTERDAM` zijn hervatbare serverjobs met foutisolatie;
+- `scripts/history/provider-registry.mjs` levert providerfallback zonder de opslag of frontend aan Yahoo te koppelen;
+- `npm run backend` serveert site, databasehistorie en het beveiligde `/beheer`;
+- beheeracties zijn POST-only, vereisen een serversessie, origincontrole en CSRF-token;
+- de scheduler is standaard uit en kan zonder GitHub Actions een dagelijkse marktjob starten.
+
+Initialiseren en de twee golden datasets idempotent importeren:
+
+```bash
+KOERSPLEIN_DATA_DIR=var npm run datastore:init
+KOERSPLEIN_DATA_DIR=var KOERSPLEIN_HISTORY_SOURCE_DIR=data/history npm run datastore:import-golden
+KOERSPLEIN_HISTORY_SOURCE_DIR=data/history npm run factory:test:golden
+```
+
+De database en levende koersdata staan in `var/` en worden niet gecommit. De bestaande statische JSON-route blijft bruikbaar; onder de backend levert exact dezelfde frontendcontractroute de records rechtstreeks uit SQLite.
+
 ## Deployment
 
-De publieke testsite is `https://koersplein-test.onrender.com`. Render publiceert de repositoryroot na `npm test && npm run history:test`; die laatste stap genereert, auditeert en manifesteert uitsluitend ASML en Adyen voordat het artifact wordt geüpload. Auto-deploy blijft uit: één handmatige deploy per gecontroleerd bouwblok. Er is geen GitHub Action of nieuw hostingbestand toegevoegd en er staan geen secrets in de frontend.
+De publieke testsite is `https://koersplein-test.onrender.com`. De huidige gratis Render Static Site kan de bestaande frontend blijven publiceren, maar kan geen serverjobs of persistente SQLite-database uitvoeren. Voor duurzaam publiek beheer is één Render Web Service met persistent disk (betaald) óf later een externe persistente database nodig. Die betaalde infrastructuur wordt niet automatisch geactiveerd. De minimale omschakelstappen staan in `docs/FACTORY.md`.
+
+Render publiceert nu de repositoryroot na `npm test && npm run history:test`; die laatste stap genereert, auditeert en manifesteert uitsluitend ASML en Adyen. Auto-deploy blijft uit. Er is geen GitHub Action toegevoegd en er staan geen secrets in frontend of repository.

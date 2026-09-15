@@ -1,16 +1,23 @@
 {
   "name": "koersplein",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "node scripts/server.mjs",
     "update:amsterdam": "node scripts/import-euronext-amsterdam.mjs",
     "validate": "node scripts/validate.mjs",
-    "test": "node scripts/validate.mjs && node scripts/test.mjs",
+    "test": "node scripts/validate.mjs && node scripts/test.mjs && node scripts/factory/test.mjs",
     "history:test": "node scripts/verify-history.mjs",
     "history:update": "node scripts/history.mjs update --all",
     "history:status": "node scripts/history.mjs status",
-    "history:movers": "node scripts/history.mjs movers"
-  }
+    "history:movers": "node scripts/history.mjs movers",
+    "backend": "node scripts/factory/server.mjs",
+    "datastore:init": "node scripts/factory/cli.mjs init",
+    "datastore:import-golden": "node scripts/factory/cli.mjs import-golden",
+    "factory:status": "node scripts/factory/cli.mjs status",
+    "factory:job": "node scripts/factory/cli.mjs run",
+    "factory:test:golden": "node scripts/factory/verify-golden.mjs"
+  },
+  "engines": { "node": ">=22.5" }
 }
