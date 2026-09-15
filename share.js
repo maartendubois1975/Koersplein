@@ -4,7 +4,6 @@ const escapeHtml = (value) => String(value ?? '').replaceAll('&', '&amp;').repla
 const isin = new URLSearchParams(location.search).get('isin');
 const detail = document.querySelector('#share-detail');
 const historyState = document.querySelector('#history-state');
-const manifestUrl = new URL('data/history/manifest.json', document.baseURI);
 const loadJson = async (url) => {
   const response = await fetch(url, { cache: 'no-store' });
   if (!response.ok) throw new Error(`HTTP ${response.status} voor ${new URL(url, document.baseURI).pathname}`);
@@ -19,8 +18,9 @@ function showHistoryError(message) {
 
 Promise.all([
   loadJson(new URL('data/euronext-amsterdam.json', document.baseURI)),
-  loadJson(new URL('data/euronext-amsterdam-indices.json', document.baseURI))
-]).then(async ([shareData, indexData]) => {
+  loadJson(new URL('data/euronext-amsterdam-indices.json', document.baseURI)),
+  loadJson(new URL('data/runtime-config.json', document.baseURI)).catch(() => ({ apiBaseUrl: '' }))
+]).then(async ([shareData, indexData, runtime]) => {
   const share = shareData.shares.find((item) => item.isin === isin);
   if (!share) throw new Error('Aandeel niet gevonden');
   const index = indexData.indices.find((item) => item.constituents.some((member) => member.isin === share.isin));
@@ -30,6 +30,10 @@ Promise.all([
   detail.innerHTML = `<div><p class="eyebrow">Euronext Amsterdam · ${escapeHtml(indexName)}</p><h1>${escapeHtml(share.name)}</h1><div class="identity-line"><span class="ticker">${escapeHtml(share.symbol)}</span><span>${escapeHtml(share.isin)}</span><span>XAMS</span></div></div><div class="latest-price"><span>Laatste koers</span><strong>—</strong><small>Historie wordt geladen</small></div>`;
 
   try {
+    const apiBaseUrl = String(runtime.apiBaseUrl || '').replace(/\/$/, '');
+    const manifestUrl = apiBaseUrl
+      ? new URL(`${apiBaseUrl}/api/history/manifest.json`)
+      : new URL('data/history/manifest.json', document.baseURI);
     const manifest = await loadJson(manifestUrl);
     const entry = manifest.instruments?.[share.isin];
     if (!entry?.file) throw new Error(`Geen gepubliceerde historiekoppeling voor ${share.isin}`);

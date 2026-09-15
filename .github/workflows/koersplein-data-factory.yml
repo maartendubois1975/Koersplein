@@ -1,0 +1,46 @@
+name: Koersplein datafabriek
+
+on:
+  workflow_dispatch:
+    inputs:
+      job_id:
+        description: Job-id dat door de beveiligde Worker is aangemaakt
+        required: true
+        type: string
+      job_type:
+        description: Informatief jobtype
+        required: true
+        type: choice
+        options: [HISTORY_BACKFILL, DAILY_UPDATE, REPAIR_MISSING, VALIDATE_HISTORY, CHECK_AMSTERDAM]
+      mic:
+        description: Markt-MIC
+        required: false
+        default: XAMS
+        type: string
+      batch_size:
+        description: Instrumenten per claim
+        required: false
+        default: '25'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: koersplein-data-${{ inputs.job_id }}
+  cancel-in-progress: false
+
+jobs:
+  factory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verwerk hervatbare batchjob
+        run: node scripts/cloudflare/factory-runner.mjs --job-id="${{ inputs.job_id }}" --batch-size="${{ inputs.batch_size }}"
