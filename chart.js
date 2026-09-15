@@ -69,19 +69,19 @@ export function buildChartModel(bars, period = 'MAX', width = 900, height = 310)
   const filtered = filterPeriod(bars, period);
   const plotted = downsampleSeries(filtered);
   const pad = { left: 64, right: 18, top: 18, bottom: 34 };
-  const values = plotted.map((bar) => bar.close);
-  let minimum = Math.min(...values);
-  let maximum = Math.max(...values);
-  const margin = Math.max((maximum - minimum) * 0.09, maximum * 0.01, 0.01);
-  minimum -= margin;
-  maximum += margin;
+  const values = filtered.map((bar) => bar.close);
+  const dataMinimum = Math.min(...values);
+  const dataMaximum = Math.max(...values);
+  const margin = Math.max((dataMaximum - dataMinimum) * 0.09, dataMaximum * 0.01, 0.01);
+  const minimum = dataMinimum >= 0 ? Math.max(0, dataMinimum - margin) : dataMinimum - margin;
+  const maximum = dataMaximum + margin;
   const firstTime = Date.parse(`${filtered[0].date}T00:00:00Z`);
   const lastTime = Date.parse(`${filtered.at(-1).date}T00:00:00Z`);
   const timeSpan = Math.max(lastTime - firstTime, DAY);
   const x = (date) => pad.left + ((Date.parse(`${date}T00:00:00Z`) - firstTime) / timeSpan) * (width - pad.left - pad.right);
   const y = (value) => pad.top + ((maximum - value) / Math.max(maximum - minimum, 0.01)) * (height - pad.top - pad.bottom);
   return {
-    filtered, plotted, pad, width, height, minimum, maximum, firstTime, lastTime,
+    filtered, plotted, pad, width, height, dataMinimum, dataMaximum, minimum, maximum, firstTime, lastTime,
     path: plotted.map((bar, index) => `${index ? 'L' : 'M'}${x(bar.date).toFixed(2)} ${y(bar.close).toFixed(2)}`).join(' '),
     x, y
   };
@@ -161,7 +161,7 @@ export function renderHistoryChart(container, bars, options = {}) {
     const point = svgElement('circle', { r: 5, class: 'chart-point', hidden: 'true' });
     const overlay = svgElement('rect', { x: model.pad.left, y: model.pad.top, width: model.width - model.pad.left - model.pad.right, height: model.height - model.pad.top - model.pad.bottom, class: 'chart-overlay', tabindex: '0' });
     svg.append(crosshair, point, overlay);
-    const show = (bar) => {
+    const show = (bar, selection = 'selected') => {
       const pointX = model.x(bar.date);
       crosshair.removeAttribute('hidden');
       point.removeAttribute('hidden');
@@ -169,7 +169,13 @@ export function renderHistoryChart(container, bars, options = {}) {
       crosshair.setAttribute('x2', pointX);
       point.setAttribute('cx', pointX);
       point.setAttribute('cy', model.y(bar.close));
-      info.textContent = `${shortDate(bar.date)} · slot ${money(bar.close, currency)}${bar.open !== null ? ` · open ${money(bar.open, currency)}` : ''}${bar.high !== null && bar.low !== null ? ` · hoog/laag ${money(bar.high, currency)} / ${money(bar.low, currency)}` : ''}`;
+      const label = document.createElement('strong');
+      label.textContent = selection === 'latest' ? 'Laatste handelsdag' : 'Geselecteerde handelsdag';
+      const values = document.createElement('span');
+      values.textContent = `${shortDate(bar.date)} · slot ${money(bar.close, currency)}${bar.open !== null ? ` · open ${money(bar.open, currency)}` : ''}${bar.high !== null && bar.low !== null ? ` · hoog ${money(bar.high, currency)} · laag ${money(bar.low, currency)}` : ''}`;
+      info.replaceChildren(label, values);
+      container.dataset.selectedDate = bar.date;
+      container.dataset.selection = selection;
     };
     const locate = (clientX) => {
       const rectangle = svg.getBoundingClientRect();
@@ -178,13 +184,25 @@ export function renderHistoryChart(container, bars, options = {}) {
       const ratio = Math.max(0, Math.min(1, (clientX - left) / usable));
       return nearestBar(model.filtered, model.firstTime + ratio * (model.lastTime - model.firstTime));
     };
-    overlay.addEventListener('pointermove', (event) => show(locate(event.clientX)));
-    overlay.addEventListener('pointerdown', (event) => show(locate(event.clientX)));
-    overlay.addEventListener('focus', () => show(model.filtered.at(-1)));
-    show(model.filtered.at(-1));
+    let activePointer = null;
+    overlay.addEventListener('pointermove', (event) => {
+      if (event.pointerType === 'mouse' || activePointer === event.pointerId) show(locate(event.clientX));
+    });
+    overlay.addEventListener('pointerdown', (event) => {
+      activePointer = event.pointerId;
+      if (event.pointerType !== 'mouse') overlay.setPointerCapture?.(event.pointerId);
+      show(locate(event.clientX));
+    });
+    const finishPointer = (event) => { if (activePointer === event.pointerId) activePointer = null; };
+    overlay.addEventListener('pointerup', finishPointer);
+    overlay.addEventListener('pointercancel', finishPointer);
+    overlay.addEventListener('focus', () => show(model.filtered.at(-1), 'latest'));
+    show(model.filtered.at(-1), 'latest');
     stats.textContent = `${model.filtered.length.toLocaleString('nl-NL')} handelsdagen · ${shortDate(model.filtered[0].date)} t/m ${shortDate(model.filtered.at(-1).date)} · slotkoers`;
     container.dataset.period = period;
     container.dataset.points = String(model.filtered.length);
+    container.dataset.axisMinimum = String(model.minimum);
+    container.dataset.axisMaximum = String(model.maximum);
   };
 
   periods.addEventListener('click', (event) => {

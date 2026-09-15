@@ -42,13 +42,17 @@ body{background:radial-gradient(circle at 72% 0%,rgba(214,181,111,.075) 0,transp
 .chart-date-label{font-size:10px}
 .chart-area{fill:rgba(214,181,111,.055)}
 .chart-line{fill:none;stroke:var(--gold);stroke-width:2.7;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.chart-overlay{fill:transparent;cursor:crosshair}
+.chart-overlay{fill:transparent;cursor:crosshair;touch-action:pan-y}
 .chart-crosshair{stroke:#707783;stroke-width:1;stroke-dasharray:4 4}
 .chart-point{fill:var(--gold);stroke:#090b10;stroke-width:3}
-.chart-hover{min-height:32px;padding:9px 4px 0;color:var(--soft);font-size:11px}
+.chart-hover{display:grid;min-height:42px;gap:3px;padding:9px 4px 0;color:var(--soft);font-size:11px;line-height:1.45}
+.chart-hover strong{color:var(--gold);font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+.chart-hover span{overflow-wrap:anywhere}
 .chart-stats,.history-source{color:var(--muted);font-size:10px}
 .chart-stats{padding:4px}
 .history-source{margin:12px 4px 0;padding-top:12px;border-top:1px solid var(--line)}
+.analysis-card{align-self:start;padding-block:24px}
+.analysis-card .muted{max-width:34ch;margin:12px 0 0;line-height:1.55}
 
 @media(max-width:640px){
   .chart-card>header{align-items:start;flex-direction:column;gap:7px}
@@ -58,9 +62,11 @@ body{background:radial-gradient(circle at 72% 0%,rgba(214,181,111,.075) 0,transp
   .chart-shell svg{height:220px}
   .chart-axis-label{font-size:13px}
   .chart-date-label{font-size:12px}
-  .chart-hover{min-height:48px;line-height:1.55}
+  .chart-hover{min-height:66px;font-size:10px;line-height:1.5}
   .history-loading,.history-empty{min-height:96px;padding:20px 8px}
   .detail-grid{padding-top:22px}
   .chart-card{padding:18px}
   .detail-card h2{font-size:28px}
+  .analysis-card{padding:18px}
+  .analysis-card .muted{max-width:none;margin-top:9px}
 }
