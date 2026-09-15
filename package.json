@@ -17,7 +17,10 @@
     "datastore:import-golden": "node scripts/factory/cli.mjs import-golden",
     "factory:status": "node scripts/factory/cli.mjs status",
     "factory:job": "node scripts/factory/cli.mjs run",
-    "factory:test:golden": "node scripts/factory/verify-golden.mjs"
+    "factory:test:golden": "node scripts/factory/verify-golden.mjs",
+    "cloudflare:test": "node scripts/cloudflare/test.mjs",
+    "cloudflare:seed": "node scripts/cloudflare/seed-catalog.mjs",
+    "cloudflare:import-golden": "node scripts/cloudflare/import-golden.mjs"
   },
   "engines": { "node": ">=22.5" }
 }

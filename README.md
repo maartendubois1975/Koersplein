@@ -101,7 +101,9 @@ De expliciete omgevingsvlag voorkomt een onbedoelde dure volledige backfill. In 
 
 ## Zelfstandige datafabriek en beheer
 
-De nieuwe serverarchitectuur scheidt frontend, jobs, opslag, providers, scheduler en beheer. Details en operationele commando's staan in [`docs/FACTORY.md`](docs/FACTORY.md). De kern:
+De serverarchitectuur scheidt frontend, jobs, opslag, providers, scheduler en beheer. De bestaande SQLite-uitvoering blijft de reproduceerbare lokale test-/hersteladapter. Voor productie is daarnaast de schaalbare Cloudflare-architectuur uitgewerkt in [`docs/CLOUDFLARE_FACTORY.md`](docs/CLOUDFLARE_FACTORY.md): D1 voor metadata/jobs, R2 voor gecomprimeerde jaarpartities, een beveiligde Worker voor historie en `/beheer`, en één marktgerichte GitHub Actions-workflow voor zware batches. Er is geen betaalde Render-service of disk nodig.
+
+Details van de lokale fabriek en operationele commando's staan in [`docs/FACTORY.md`](docs/FACTORY.md). De kern:
 
 - SQLite bewaart markten, 124 instrumenten, koersdagen, historiestatus, jobs en job-items buiten de Git-deploycyclus;
 - `HISTORY_BACKFILL`, `DAILY_UPDATE`, `REPAIR_MISSING`, `VALIDATE_HISTORY` en `CHECK_AMSTERDAM` zijn hervatbare serverjobs met foutisolatie;
@@ -122,6 +124,6 @@ De database en levende koersdata staan in `var/` en worden niet gecommit. De bes
 
 ## Deployment
 
-De publieke testsite is `https://koersplein-test.onrender.com`. De huidige gratis Render Static Site kan de bestaande frontend blijven publiceren, maar kan geen serverjobs of persistente SQLite-database uitvoeren. Voor duurzaam publiek beheer is één Render Web Service met persistent disk (betaald) óf later een externe persistente database nodig. Die betaalde infrastructuur wordt niet automatisch geactiveerd. De minimale omschakelstappen staan in `docs/FACTORY.md`.
+De publieke testsite is `https://koersplein-test.onrender.com`. De gratis Render Static Site blijft uitsluitend frontend. Levende productiegegevens en jobs zijn voorbereid op Cloudflare D1/R2/Worker; de eenmalige, handmatige gratis-accountconfiguratie staat in `docs/CLOUDFLARE_FACTORY.md`. Zolang `data/runtime-config.json` nog geen Worker-URL bevat, gebruikt de site zonder functieverlies de bestaande statische ASML- en Adyen-historie.
 
-Render publiceert nu de repositoryroot na `npm test && npm run history:test`; die laatste stap genereert, auditeert en manifesteert uitsluitend ASML en Adyen. Auto-deploy blijft uit. Er is geen GitHub Action toegevoegd en er staan geen secrets in frontend of repository.
+Render publiceert de repositoryroot na `npm test && npm run history:test`; die laatste stap genereert, auditeert en manifesteert uitsluitend ASML en Adyen. Auto-deploy blijft uit. De enige toegevoegde Action heeft uitsluitend `workflow_dispatch`, verwerkt één D1-job in batches en deployt de site niet. Secrets staan uitsluitend in Cloudflare/GitHub-omgevingen.

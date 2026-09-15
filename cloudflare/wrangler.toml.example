@@ -1,0 +1,27 @@
+name = "koersplein-api"
+main = "worker.mjs"
+compatibility_date = "2026-09-15"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "koersplein-metadata"
+database_id = "VUL_D1_DATABASE_ID_IN"
+
+[[r2_buckets]]
+binding = "HISTORY"
+bucket_name = "koersplein-history"
+
+[vars]
+GITHUB_REPOSITORY = "maartendubois1975/Koersplein"
+GITHUB_WORKFLOW = "koersplein-data-factory.yml"
+GITHUB_REF = "main"
+ADMIN_EMAIL = "VUL_BEHEER_EMAIL_IN"
+ALLOWED_ORIGIN = "https://koersplein-test.onrender.com"
+SCHEDULER_ENABLED = "false"
+
+# Pas activeren nadat dagelijkse updates bewust zijn aangezet.
+[triggers]
+crons = ["15 21 * * 1-5"]
+
+# Secrets via `wrangler secret put`, nooit hier:
+# GITHUB_DISPATCH_TOKEN, FACTORY_TOKEN
