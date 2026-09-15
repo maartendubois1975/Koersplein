@@ -196,7 +196,9 @@ export function renderHistoryChart(container, bars, options = {}) {
     const finishPointer = (event) => { if (activePointer === event.pointerId) activePointer = null; };
     overlay.addEventListener('pointerup', finishPointer);
     overlay.addEventListener('pointercancel', finishPointer);
-    overlay.addEventListener('focus', () => show(model.filtered.at(-1), 'latest'));
+    overlay.addEventListener('focus', () => {
+      if (activePointer === null) show(model.filtered.at(-1), 'latest');
+    });
     show(model.filtered.at(-1), 'latest');
     stats.textContent = `${model.filtered.length.toLocaleString('nl-NL')} handelsdagen · ${shortDate(model.filtered[0].date)} t/m ${shortDate(model.filtered.at(-1).date)} · slotkoers`;
     container.dataset.period = period;
