@@ -58,6 +58,7 @@ assert.equal(positiveModel.minimum, 0, 'Positieve koersreeksen mogen door paddin
 assert.equal(positiveModel.dataMinimum, 1.77);
 assert.ok(chartScript.includes("show(model.filtered.at(-1), 'latest')"));
 assert.ok(chartScript.includes("container.dataset.selectedDate = bar.date"));
+assert.ok(chartScript.includes("if (activePointer === null)"), 'Pointerfocus mag een gekozen touchpunt niet overschrijven');
 const fixtureDocument = { schemaVersion: 1, instrument: { isin: 'NL0010273215', symbol: 'ASML', mic: 'XAMS' }, coverage: { records: 2, firstDate: once[0].date, lastDate: once[1].date }, bars: once };
 assert.equal(validateHistoryDocument(fixtureDocument, { isin: 'NL0010273215', symbol: 'ASML' }).length, 2);
 const parsedContracts = JSON.parse(contracts);
