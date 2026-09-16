@@ -1,6 +1,7 @@
 const qs = (selector, root = document) => root.querySelector(selector);
 const escapeHtml = (value) => String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
-const state = { shares: [], groups: [], activeGroup: 'all', profile: { term: '12', potential: '20', count: '4' } };
+const state = { shares: [], groups: [], activeGroup: 'all', profile: { term: '12', potential: '20', count: '4' }, apiBaseUrl: '', prices: new Map() };
+const formatPrice = (value, currency = 'EUR') => Number.isFinite(Number(value)) ? new Intl.NumberFormat('nl-NL', { style: 'currency', currency: currency || 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Number(value)) : '—';
 
 function wireFinder() {
   qs('#opportunity-form').addEventListener('click', (event) => {
@@ -51,7 +52,13 @@ function renderIndexNavigation(filtered) {
 }
 
 function shareTable(items) {
-  return `<div class="table-wrap"><table><thead><tr><th>Bedrijf</th><th>Ticker</th><th>ISIN</th><th class="price">Open</th><th class="price">Slot</th><th aria-label="Open aandeel"></th></tr></thead><tbody>${items.map((share) => `<tr><td><a class="share-link" href="share.html?isin=${encodeURIComponent(share.isin)}">${escapeHtml(share.name)}</a></td><td><span class="ticker">${escapeHtml(share.symbol)}</span></td><td>${escapeHtml(share.isin)}</td><td class="empty-price">—</td><td class="empty-price">—</td><td><a class="row-arrow" aria-label="Bekijk ${escapeHtml(share.name)}" href="share.html?isin=${encodeURIComponent(share.isin)}">→</a></td></tr>`).join('')}</tbody></table></div>`;
+  return `<div class="table-wrap"><table><thead><tr><th>Bedrijf</th><th>Ticker</th><th>ISIN</th><th class="price">Open</th><th class="price">Slot</th><th aria-label="Open aandeel"></th></tr></thead><tbody>${items.map((share) => {
+    const price = state.prices.get(share.isin);
+    const open = price ? formatPrice(price.open, price.currency) : '—';
+    const close = price ? formatPrice(price.close, price.currency) : '—';
+    const title = price?.date ? `Laatste handelsdag ${escapeHtml(price.date)}` : 'Koers wordt geladen';
+    return `<tr><td><a class="share-link" href="share.html?isin=${encodeURIComponent(share.isin)}">${escapeHtml(share.name)}</a></td><td><span class="ticker">${escapeHtml(share.symbol)}</span></td><td>${escapeHtml(share.isin)}</td><td class="price" title="${title}">${open}</td><td class="price" title="${title}">${close}</td><td><a class="row-arrow" aria-label="Bekijk ${escapeHtml(share.name)}" href="share.html?isin=${encodeURIComponent(share.isin)}">→</a></td></tr>`;
+  }).join('')}</tbody></table></div>`;
 }
 
 function renderShares() {
@@ -71,6 +78,30 @@ async function loadJson(path) {
   return response.json();
 }
 
+async function loadOverviewPrices() {
+  if (!state.apiBaseUrl) return;
+  const manifest = await loadJson(`${state.apiBaseUrl}/api/history/manifest.json`);
+  const available = new Set(Object.keys(manifest.instruments || {}));
+  const shares = state.shares.filter((share) => available.has(share.isin));
+  const concurrency = 8;
+  let cursor = 0;
+  async function worker() {
+    while (cursor < shares.length) {
+      const share = shares[cursor++];
+      try {
+        const history = await loadJson(`${state.apiBaseUrl}/api/history/${encodeURIComponent(share.isin)}`);
+        const bars = Array.isArray(history.bars) ? history.bars : [];
+        const latest = bars[bars.length - 1];
+        if (latest) state.prices.set(share.isin, { date: latest.date, open: latest.open, close: latest.close, currency: history.instrument?.currency || share.currency || 'EUR' });
+      } catch (_) {
+        // Een ontbrekende koers mag de rest van het Amsterdam-overzicht niet blokkeren.
+      }
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(concurrency, shares.length) }, worker));
+  renderShares();
+}
+
 wireFinder();
 qs('#index-navigation').addEventListener('click', (event) => {
   const button = event.target.closest('[data-group]');
@@ -85,16 +116,19 @@ Promise.all([
   loadJson('data/regions.json'),
   loadJson('data/euronext-amsterdam.json'),
   loadJson('data/euronext-amsterdam-indices.json'),
-  loadJson('data/home-contracts.json')
-]).then(([marketData, regionData, shareData, indexData]) => {
+  loadJson('data/home-contracts.json'),
+  loadJson('data/runtime-config.json')
+]).then(([marketData, regionData, shareData, indexData, homeData, runtimeConfig]) => {
   const membership = new Map(indexData.indices.flatMap((index) => index.constituents.map((member) => [member.isin, index.id])));
   state.shares = shareData.shares.map((share) => ({ ...share, index: membership.get(share.isin) || null }));
   state.groups = [...indexData.indices.map((index) => ({ id: index.id, label: index.displayName, description: index.description, kicker: 'Officiële Euronext-index' })), { id: 'other', label: 'Overig', description: 'Buiten AEX, AMX en AScX', kicker: 'Overige Amsterdamse noteringen' }];
+  state.apiBaseUrl = String(runtimeConfig.apiBaseUrl || '').replace(/\/$/, '');
   const venue = marketData.venues.find((item) => item.id === 'euronext');
   renderRegions(regionData.regions);
   renderMarkets(venue.markets.map((market) => ({ ...market, shareCount: market.id === 'amsterdam' ? state.shares.length : 0 })));
   qs('#source-date').textContent = `Aandelen ${new Intl.DateTimeFormat('nl-NL', { dateStyle: 'medium' }).format(new Date(shareData.retrievedAt))} · indices ${new Intl.DateTimeFormat('nl-NL', { dateStyle: 'medium' }).format(new Date(indexData.asOf))}`;
   renderShares();
+  loadOverviewPrices().catch(() => {});
 }).catch((error) => {
   qs('#share-groups').innerHTML = `<p class="empty-state">${escapeHtml(error.message)}.</p>`;
 });
