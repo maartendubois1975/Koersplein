@@ -35,22 +35,31 @@ export class YahooChartProvider {
     this.validateIdentity({ ...instrument, providerSymbol }, result.meta);
     const quote = result.indicators?.quote?.[0] || {};
     const adjusted = result.indicators?.adjclose?.[0]?.adjclose || [];
-    const bars = (result.timestamp || []).map((timestamp, index) => ({
-      date: isoDate(timestamp),
-      open: finiteOrNull(quote.open?.[index]),
-      high: finiteOrNull(quote.high?.[index]),
-      low: finiteOrNull(quote.low?.[index]),
-      close: finiteOrNull(quote.close?.[index]),
-      adjustedClose: finiteOrNull(adjusted[index]),
-      volume: Number.isSafeInteger(quote.volume?.[index]) ? quote.volume[index] : null
-    })).filter((bar) => bar.close !== null);
+    const bars = (result.timestamp || []).map((timestamp, index) => {
+      let high = finiteOrNull(quote.high?.[index]);
+      let low = finiteOrNull(quote.low?.[index]);
+      // Een incidenteel corrupte Yahoo OHLC-regel mag niet duizenden geldige slotkoersen blokkeren.
+      // Bewaar de dag en laat alleen de onbetrouwbare high/low weg; reparatie kan die later aanvullen.
+      if (high !== null && low !== null && high < low) { high = null; low = null; }
+      return {
+        date: isoDate(timestamp),
+        open: finiteOrNull(quote.open?.[index]),
+        high,
+        low,
+        close: finiteOrNull(quote.close?.[index]),
+        adjustedClose: finiteOrNull(adjusted[index]),
+        volume: Number.isSafeInteger(quote.volume?.[index]) ? quote.volume[index] : null
+      };
+    }).filter((bar) => bar.close !== null);
     return { bars, requestUrl: url.toString(), providerMeta: { exchangeName: result.meta.exchangeName, currency: result.meta.currency, symbol: result.meta.symbol, timezone: result.meta.exchangeTimezoneName } };
   }
 
   validateIdentity(instrument, meta = {}) {
     if (meta.symbol?.toUpperCase() !== instrument.providerSymbol.toUpperCase()) throw new Error(`Providersymbool wijkt af voor ${instrument.isin}`);
-    if (meta.currency && meta.currency !== instrument.currency) throw new Error(`Valuta wijkt af voor ${instrument.isin}: ${meta.currency}`);
+    // Handelsvaluta is provider/listing-specifiek en mag een geldige Amsterdamse/cross-listing historie niet blokkeren.
+    // De bronvaluta blijft beschikbaar in providerMeta voor latere normalisatie en controle.
+    const explicitCrossListing = Boolean(instrument.allowProviderExchangeMismatch);
     const exchange = String(meta.fullExchangeName || meta.exchangeName || '').toLowerCase();
-    if (exchange && !exchange.includes('amsterdam') && !['ams','aex'].includes(String(meta.exchangeName || '').toLowerCase())) throw new Error(`Providerbeurs is niet Amsterdam voor ${instrument.isin}: ${meta.exchangeName}`);
+    if (!explicitCrossListing && exchange && !exchange.includes('amsterdam') && !['ams','aex'].includes(String(meta.exchangeName || '').toLowerCase())) throw new Error(`Providerbeurs is niet Amsterdam voor ${instrument.isin}: ${meta.exchangeName}`);
   }
 }
