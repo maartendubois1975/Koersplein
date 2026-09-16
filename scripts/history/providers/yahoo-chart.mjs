@@ -1,20 +1,34 @@
 const PROVIDER_ID = 'yahoo-chart';
 const API_ROOT = 'https://query1.finance.yahoo.com/v8/finance/chart';
 
+const MARKET_RULES = {
+  XAMS: { suffix: '.AS', exchanges: ['ams', 'aex', 'amsterdam'] },
+  XBRU: { suffix: '.BR', exchanges: ['bru', 'brussels', 'brussel'] }
+};
+
 const isoDate = (unixSeconds) => new Date(unixSeconds * 1000).toISOString().slice(0, 10);
 const finiteOrNull = (value) => Number.isFinite(value) ? value : null;
+const normalize = (value) => String(value || '').trim().toLowerCase();
 
 export class YahooChartProvider {
   id = PROVIDER_ID;
   name = 'Yahoo Finance chart feed';
   requiresApiKey = false;
 
+  marketRule(instrument) {
+    return MARKET_RULES[String(instrument.mic || instrument.market || '').toUpperCase()] || null;
+  }
+
   supports(instrument) {
-    return instrument.mic === 'XAMS' && Boolean(instrument.providerSymbol || instrument.provider_symbol || instrument.ticker || instrument.symbol);
+    return Boolean(this.marketRule(instrument) && (instrument.providerSymbol || instrument.provider_symbol || instrument.ticker || instrument.symbol));
   }
 
   providerSymbolFor(instrument) {
-    return instrument.providerSymbol || instrument.provider_symbol || `${instrument.ticker || instrument.symbol}.AS`;
+    const explicit = instrument.providerSymbol || instrument.provider_symbol;
+    if (explicit) return explicit;
+    const rule = this.marketRule(instrument);
+    const ticker = instrument.ticker || instrument.symbol;
+    return rule && ticker ? `${ticker}${rule.suffix}` : null;
   }
 
   async fetchDaily(instrument, { startDate, endDate, signal } = {}) {
@@ -38,28 +52,27 @@ export class YahooChartProvider {
     const bars = (result.timestamp || []).map((timestamp, index) => {
       let high = finiteOrNull(quote.high?.[index]);
       let low = finiteOrNull(quote.low?.[index]);
-      // Een incidenteel corrupte Yahoo OHLC-regel mag niet duizenden geldige slotkoersen blokkeren.
-      // Bewaar de dag en laat alleen de onbetrouwbare high/low weg; reparatie kan die later aanvullen.
       if (high !== null && low !== null && high < low) { high = null; low = null; }
       return {
         date: isoDate(timestamp),
-        open: finiteOrNull(quote.open?.[index]),
-        high,
-        low,
+        open: finiteOrNull(quote.open?.[index]), high, low,
         close: finiteOrNull(quote.close?.[index]),
         adjustedClose: finiteOrNull(adjusted[index]),
         volume: Number.isSafeInteger(quote.volume?.[index]) ? quote.volume[index] : null
       };
     }).filter((bar) => bar.close !== null);
-    return { bars, requestUrl: url.toString(), providerMeta: { exchangeName: result.meta.exchangeName, currency: result.meta.currency, symbol: result.meta.symbol, timezone: result.meta.exchangeTimezoneName } };
+    return { bars, requestUrl: url.toString(), providerMeta: { exchangeName: result.meta.exchangeName, fullExchangeName: result.meta.fullExchangeName, currency: result.meta.currency, symbol: result.meta.symbol, timezone: result.meta.exchangeTimezoneName } };
   }
 
   validateIdentity(instrument, meta = {}) {
-    if (meta.symbol?.toUpperCase() !== instrument.providerSymbol.toUpperCase()) throw new Error(`Providersymbool wijkt af voor ${instrument.isin}`);
-    // Handelsvaluta is provider/listing-specifiek en mag een geldige Amsterdamse/cross-listing historie niet blokkeren.
-    // De bronvaluta blijft beschikbaar in providerMeta voor latere normalisatie en controle.
-    const explicitCrossListing = Boolean(instrument.allowProviderExchangeMismatch);
-    const exchange = String(meta.fullExchangeName || meta.exchangeName || '').toLowerCase();
-    if (!explicitCrossListing && exchange && !exchange.includes('amsterdam') && !['ams','aex'].includes(String(meta.exchangeName || '').toLowerCase())) throw new Error(`Providerbeurs is niet Amsterdam voor ${instrument.isin}: ${meta.exchangeName}`);
+    const expectedSymbol = String(instrument.providerSymbol || '').toUpperCase();
+    if (meta.symbol?.toUpperCase() !== expectedSymbol) throw new Error(`Providersymbool wijkt af voor ${instrument.isin}: verwacht ${expectedSymbol}, ontvangen ${meta.symbol || 'onbekend'}`);
+    if (instrument.allowProviderExchangeMismatch) return;
+    const rule = this.marketRule(instrument);
+    if (!rule) throw new Error(`Geen Yahoo-beursregel voor ${instrument.mic || instrument.market}`);
+    const exchangeFields = [meta.exchangeName, meta.fullExchangeName].map(normalize).filter(Boolean);
+    if (exchangeFields.length && !exchangeFields.some((field) => rule.exchanges.some((expected) => field.includes(expected)))) {
+      throw new Error(`Providerbeurs wijkt af voor ${instrument.isin}: verwacht ${instrument.mic || instrument.market}, ontvangen ${meta.fullExchangeName || meta.exchangeName}`);
+    }
   }
 }
