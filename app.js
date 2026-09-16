@@ -83,8 +83,13 @@ async function loadOverviewPrices() {
   const manifest = await loadJson(`${state.apiBaseUrl}/api/history/manifest.json`);
   const available = new Set(Object.keys(manifest.instruments || {}));
   const shares = state.shares.filter((share) => available.has(share.isin));
-  const concurrency = 8;
+  const concurrency = 4;
   let cursor = 0;
+  let renderTimer = null;
+  const scheduleRender = () => {
+    if (renderTimer) return;
+    renderTimer = setTimeout(() => { renderTimer = null; renderShares(); }, 100);
+  };
   async function worker() {
     while (cursor < shares.length) {
       const share = shares[cursor++];
@@ -92,13 +97,17 @@ async function loadOverviewPrices() {
         const history = await loadJson(`${state.apiBaseUrl}/api/history/${encodeURIComponent(share.isin)}`);
         const bars = Array.isArray(history.bars) ? history.bars : [];
         const latest = bars[bars.length - 1];
-        if (latest) state.prices.set(share.isin, { date: latest.date, open: latest.open, close: latest.close, currency: history.instrument?.currency || share.currency || 'EUR' });
+        if (latest) {
+          state.prices.set(share.isin, { date: latest.date, open: latest.open, close: latest.close, currency: history.instrument?.currency || share.currency || 'EUR' });
+          scheduleRender();
+        }
       } catch (_) {
-        // Een ontbrekende koers mag de rest van het Amsterdam-overzicht niet blokkeren.
+        // Eén ontbrekende koers blokkeert de overige Amsterdamse aandelen niet.
       }
     }
   }
   await Promise.all(Array.from({ length: Math.min(concurrency, shares.length) }, worker));
+  if (renderTimer) { clearTimeout(renderTimer); renderTimer = null; }
   renderShares();
 }
 
