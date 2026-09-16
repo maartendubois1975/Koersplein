@@ -15,7 +15,7 @@ bucket_name = "koersplein-history"
 GITHUB_REPOSITORY = "maartendubois1975/Koersplein"
 GITHUB_WORKFLOW = "koersplein-data-factory.yml"
 GITHUB_REF = "main"
-ALLOWED_ORIGIN = "https://koersplein-test.onrender.com"
+ALLOWED_ORIGIN = "https://koersplein.onrender.com"
 SCHEDULER_ENABLED = "false"
 
 # ADMIN_EMAIL is configured in Cloudflare rather than committed to GitHub.
