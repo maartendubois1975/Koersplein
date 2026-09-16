@@ -1,0 +1,33 @@
+name: Amsterdam Machine 2 diepe historische detective
+on:
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+concurrency:
+  group: koersplein-machine2-deep-amsterdam
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download bevroren Machine 1
+        uses: actions/download-artifact@v4
+        with:
+          name: amsterdam-machine1-eerste-run
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35126453782
+          path: research/input
+      - name: Bouw historische dossiers
+        run: node scripts/research/machine2-deep-engine.mjs research/input/amsterdam-machine1-results.jsonl
+      - name: Controleer evidence gate
+        run: node scripts/research/machine2-evidence-gate.mjs
+      - name: Bewaar checkpoint
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-machine2-deep-checkpoint
+          path: research/output/machine2-deep
+          retention-days: 30
