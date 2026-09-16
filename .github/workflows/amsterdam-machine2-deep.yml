@@ -8,9 +8,9 @@ concurrency:
   group: koersplein-machine2-deep-amsterdam
   cancel-in-progress: false
 jobs:
-  prepare:
+  research:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
       - name: Download bevroren Machine 1
@@ -23,11 +23,15 @@ jobs:
           path: research/input
       - name: Bouw historische dossiers
         run: node scripts/research/machine2-deep-engine.mjs research/input/amsterdam-machine1-results.jsonl
+      - name: Verzamel point-in-time evidence via geregistreerde providers
+        run: node scripts/research/machine2-provider-runner.mjs
       - name: Controleer evidence gate
         run: node scripts/research/machine2-evidence-gate.mjs
-      - name: Bewaar checkpoint
+      - name: Leer patronen en maak alleen kandidaat-hypothesen
+        run: node scripts/research/machine2-learn.mjs
+      - name: Bewaar volledige Machine 2 onderzoeksrun
         uses: actions/upload-artifact@v4
         with:
-          name: amsterdam-machine2-deep-checkpoint
+          name: amsterdam-machine2-deep-run
           path: research/output/machine2-deep
           retention-days: 30
