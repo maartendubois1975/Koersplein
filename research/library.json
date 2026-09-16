@@ -1,6 +1,7 @@
 {
-  "version":1,
-  "status":"CAPTURE_ONLY",
-  "sources":[],
-  "sourceTemplate":{"title":"","authors":[],"year":null,"sourceType":"paper|book|central_bank|university|market_study|other","url":"","families":[],"markets":[],"period":"","horizon":"","hypothesis":"","method":"","reportedEffect":"","robustness":"","outOfSample":"","replicationOrCounterEvidence":"","koerspleinUse":"","notes":""}
+  "version": 2,
+  "purpose": "Research Library voor bronnen, literatuur, hypothesen en tegenbewijs. Ontdekkingsmateriaal wordt gescheiden gehouden van blind bewijs.",
+  "pointInTimeRequiredForMachine1": true,
+  "baselineRunMayUseOnlyStoredHistoricalPrices": true,
+  "sources": []
 }
