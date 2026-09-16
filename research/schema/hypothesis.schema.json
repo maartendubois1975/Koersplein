@@ -1,0 +1,22 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"Koersplein research hypothesis",
+  "type":"object",
+  "required":["id","title","family","status","question","horizons","requiredData"],
+  "properties":{
+    "id":{"type":"string"},
+    "title":{"type":"string"},
+    "family":{"type":"string"},
+    "status":{"enum":["CAPTURED","SPECIFIED","DATA_READY","BACKTESTED","OOS_VALIDATED","REPLICATED","CANDIDATE_SIGNAL","REJECTED"]},
+    "question":{"type":"string"},
+    "mechanism":{"type":"string"},
+    "scope":{"type":"array","items":{"type":"string"}},
+    "horizons":{"type":"array","items":{"type":"integer"}},
+    "requiredData":{"type":"array","items":{"type":"string"}},
+    "pointInTimeRisks":{"type":"array","items":{"type":"string"}},
+    "benchmark":{"type":"string"},
+    "successCriteria":{"type":"string"},
+    "failureCriteria":{"type":"string"},
+    "notes":{"type":"string"}
+  }
+}
