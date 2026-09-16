@@ -1,0 +1,4 @@
+import fs from 'node:fs/promises';
+const dir=process.argv[2]||'research/output/machine2-deep/dossiers';const files=(await fs.readdir(dir)).filter(x=>x.endsWith('.json'));let evidence=0,eligible=0,rejected=0;
+for(const f of files){const p=`${dir}/${f}`,d=JSON.parse(await fs.readFile(p,'utf8'));for(const e of d.evidence||[]){evidence++;const ok=e.source&&e.sourceTier&&e.publishedAt&&e.availableAt&&e.retrievedAt&&e.contentHash&&new Date(e.availableAt)<=new Date(d.cutoff);e.pointInTimeEligible=!!ok;if(ok)eligible++;else rejected++;}await fs.writeFile(p,JSON.stringify(d));}
+const report={stage:'EVIDENCE_GATE',dossiers:files.length,evidence,eligible,rejected,rule:'Alleen bewijs dat aantoonbaar beschikbaar was op of vóór cutoff mag kandidaat-signaal voor een volgende blinde test worden. Machine 2 verandert Machine 1 nooit.'};await fs.writeFile('research/output/machine2-deep/evidence-gate.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
