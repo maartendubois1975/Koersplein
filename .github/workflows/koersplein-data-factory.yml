@@ -39,3 +39,5 @@ jobs:
         run: node scripts/cloudflare/amsterdam-backfill.mjs --offset=0 --limit=2 --strict=true
       - name: Vul heel Amsterdam door
         run: node scripts/cloudflare/amsterdam-backfill.mjs --offset=2 --limit=250 --strict=false
+
+# Eerste automatische Amsterdam-run geactiveerd nadat GitHub Actions is ingeschakeld.
