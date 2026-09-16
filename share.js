@@ -31,24 +31,25 @@ Promise.all([
 
   try {
     const apiBaseUrl = String(runtime.apiBaseUrl || '').replace(/\/$/, '');
-    const manifestUrl = apiBaseUrl
-      ? new URL(`${apiBaseUrl}/api/history/manifest.json`)
-      : new URL('data/history/manifest.json', document.baseURI);
+    if (!apiBaseUrl) throw new Error('Koersplein API is niet geconfigureerd');
+    const manifestUrl = new URL(`${apiBaseUrl}/api/history/manifest.json`);
     const manifest = await loadJson(manifestUrl);
     const entry = manifest.instruments?.[share.isin];
     if (!entry?.file) throw new Error(`Geen gepubliceerde historiekoppeling voor ${share.isin}`);
     if (entry.symbol !== share.symbol || entry.mic !== 'XAMS') throw new Error('Historie-manifest heeft een onjuiste identiteit');
-    const history = await loadJson(new URL(entry.file, manifestUrl));
+    const historyUrl = new URL(entry.file, `${apiBaseUrl}/`);
+    const history = await loadJson(historyUrl);
+    if (history.coverage?.recordCount != null && history.coverage.records == null) history.coverage.records = history.coverage.recordCount;
     const bars = validateHistoryDocument(history, share);
     const coverage = history.coverage;
     document.querySelector('#history-range').textContent = `${coverage.firstDate} — ${coverage.lastDate}`;
-    renderHistoryChart(historyState, bars, { currency: history.instrument.currency });
+    renderHistoryChart(historyState, bars, { currency: history.instrument.currency || 'EUR' });
     const source = document.createElement('p');
     source.className = 'history-source';
-    source.textContent = `${bars.length.toLocaleString('nl-NL')} echte dagrecords · technische testbron: ${history.provider.name} · opgehaald ${new Intl.DateTimeFormat('nl-NL', { dateStyle: 'medium' }).format(new Date(history.provider.retrievedAt))}`;
+    source.textContent = `${bars.length.toLocaleString('nl-NL')} dagrecords · Koersplein-datastore · bijgewerkt ${new Intl.DateTimeFormat('nl-NL', { dateStyle: 'medium' }).format(new Date(history.provider.retrievedAt))}`;
     historyState.append(source);
     const last = bars.at(-1);
-    detail.querySelector('.latest-price').innerHTML = `<span>Laatste slotkoers</span><strong>${Number(last.close).toLocaleString('nl-NL', { style: 'currency', currency: history.instrument.currency, minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong><small>${escapeHtml(last.date)} · technische testbron</small>`;
+    detail.querySelector('.latest-price').innerHTML = `<span>Laatste slotkoers</span><strong>${Number(last.close).toLocaleString('nl-NL', { style: 'currency', currency: history.instrument.currency || 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong><small>${escapeHtml(last.date)}</small>`;
   } catch (error) {
     showHistoryError(error.message);
   }
