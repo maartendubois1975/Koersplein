@@ -1,18 +1,16 @@
 # Koersplein Research Machine
 
-Dit is de voorbereidende onderzoekslaag voor de toekomstige voorspelmachine. De machine voert nu bewust nog geen onderzoeken, backtests of voorspellingen uit. Zij bewaart eerst gestructureerd wat we later willen onderzoeken.
+De Research Machine onderzoekt welke signalen aantoonbaar voorspellende waarde hebben voor 3, 6, 12 en 24 maanden. Amsterdam (XAMS) is het eerste laboratorium.
 
-## Hoofdregel
-Een onderzoeksidee is een hypothese, geen bewezen signaal. Pas na point-in-time/walk-forward toetsing, out-of-sample controle en vergelijking met eenvoudige benchmarks kan een hypothese promoveren naar een kandidaat-signaal.
+## Vaste onderzoeksvolgorde
+1. Idee of literatuur vastleggen als hypothese.
+2. Exact bepalen welke informatie op historisch tijdstip t beschikbaar was.
+3. Machine 1 voert een blinde walk-forward test uit en bevriest de voorspelling.
+4. Pas daarna worden de gerealiseerde uitkomsten geopend en gescoord.
+5. Machine 2 mag vervolgens met volledige latere kennis verklaren waarom Machine 1 goed of fout zat.
+6. Nieuwe inzichten uit Machine 2 moeten opnieuw blind op ongeziene perioden/markten worden getest.
 
-## Fasen
-1. `CAPTURED` — idee vastgelegd.
-2. `SPECIFIED` — meetmethode en benodigde data beschreven.
-3. `DATA_READY` — point-in-time data beschikbaar.
-4. `BACKTESTED` — historische tijdmachine uitgevoerd.
-5. `OOS_VALIDATED` — op ongeziene periode getest.
-6. `REPLICATED` — op andere aandelen/markt/regime getest.
-7. `CANDIDATE_SIGNAL` — mag worden overwogen in voorspelmodel.
-8. `REJECTED` — onvoldoende bewijs; resultaat blijft bewaard.
+## Eerste actieve run
+`XAMS-M1-BASELINE-001` is de eerste technische nulmeting. Deze gebruikt uitsluitend historische prijsinformatie die op ieder meetmoment beschikbaar was. Nog niet ingelezen point-in-time fundamentals, analistenrevisies, nieuws/sentiment, macro, flows, opties en shortdata worden expliciet als ontbrekend opgeslagen; de machine verzint hiervoor geen waarden.
 
-Amsterdam wordt het eerste laboratorium; daarna België/Europa en vervolgens de wereld.
+Deze nulmeting is niet het uiteindelijke voorspelmodel. Zij valideert de volledige historische tijdmachine, maandelijkse snapshots, horizons 3/6/12/24 en de scheiding tussen voorspelling en latere uitkomst. Uitvoering gebeurt los van de Belgische koersvulling en veroorzaakt geen website-deploy.
