@@ -1,0 +1,34 @@
+import fs from 'node:fs/promises';
+
+const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
+if(!API) throw new Error('KOERSPLEIN_API_URL ontbreekt');
+const catalog=JSON.parse(await fs.readFile('data/euronext-amsterdam.json','utf8'));
+const instruments=Array.isArray(catalog)?catalog:(catalog.instruments||catalog.shares||[]);
+const pct=(a,b)=>a&&b?(b/a-1):null;
+const monthKey=d=>d.slice(0,7);
+const addMonths=(date,n)=>{const d=new Date(date+'T00:00:00Z');d.setUTCMonth(d.getUTCMonth()+n);return d.toISOString().slice(0,10)};
+const nearest=(bars,date)=>bars.find(b=>b.date>=date)||null;
+const history=async isin=>{const r=await fetch(`${API}/api/history/${encodeURIComponent(isin)}`);if(!r.ok)throw new Error(`history ${r.status}`);return r.json()};
+const getBars=x=>Array.isArray(x)?x:(x.bars||x.records||x.history||[]);
+const results=[];let failed=0;
+for(const item of instruments){
+ try{
+  const raw=await history(item.isin); const bars=getBars(raw).filter(b=>b?.date&&Number.isFinite(Number(b.close))).map(b=>({...b,close:Number(b.close)})).sort((a,b)=>a.date.localeCompare(b.date));
+  if(bars.length<260) continue;
+  const monthly=[];let last='';for(const b of bars){const k=monthKey(b.date);if(k!==last){monthly.push(b);last=k;}else monthly[monthly.length-1]=b;}
+  for(let i=12;i<monthly.length;i++){
+   const now=monthly[i], m3=monthly[Math.max(0,i-3)],m6=monthly[Math.max(0,i-6)],m12=monthly[Math.max(0,i-12)];
+   const signals={momentum3m:pct(m3.close,now.close),momentum6m:pct(m6.close,now.close),momentum12m:pct(m12.close,now.close)};
+   // Baseline v1: puur point-in-time prijsmodel. Geen toekomstige of nog niet ingelezen fundamentele/news-data.
+   const score=(signals.momentum3m??0)*.2+(signals.momentum6m??0)*.3+(signals.momentum12m??0)*.5;
+   const predictions={};const realized={};
+   for(const h of [3,6,12,24]){predictions[`${h}m`]=score;const future=nearest(bars,addMonths(now.date,h));realized[`${h}m`]=future?pct(now.close,future.close):null;}
+   results.push({instrument:item.isin,ticker:item.ticker||item.symbol,company:item.company||item.name,predictionDate:now.date,informationCutoff:now.date,modelVersion:'machine1-price-baseline-v1',availableSignals:signals,missingSignals:['fundamentals-point-in-time','analyst-revisions','news-sentiment','macro-point-in-time','flows-options-short'],predictions,realized});
+  }
+ }catch(e){failed++;console.error(JSON.stringify({isin:item.isin,error:e.message}));}
+}
+await fs.mkdir('research/output',{recursive:true});
+const summary={generatedAt:new Date().toISOString(),market:'XAMS',mode:'BLIND_WALK_FORWARD',modelVersion:'machine1-price-baseline-v1',instruments:instruments.length,observations:results.length,failed,strictPointInTime:true,note:'Eerste nulmeting op uitsluitend historische prijsinformatie; ontbrekende signaalfamilies zijn expliciet gemarkeerd en krijgen geen fictieve waarden.'};
+await fs.writeFile('research/output/amsterdam-machine1-summary.json',JSON.stringify(summary,null,2));
+await fs.writeFile('research/output/amsterdam-machine1-results.jsonl',results.map(x=>JSON.stringify(x)).join('\n')+'\n');
+console.log(JSON.stringify(summary,null,2));

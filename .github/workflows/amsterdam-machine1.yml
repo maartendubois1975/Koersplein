@@ -1,0 +1,29 @@
+name: Amsterdam Machine 1 eerste historische run
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/amsterdam-machine1.yml]
+permissions:
+  contents: read
+concurrency:
+  group: koersplein-research-amsterdam-machine1
+  cancel-in-progress: false
+jobs:
+  machine1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Draai blinde historische Amsterdam-machine
+        run: node scripts/research/amsterdam-machine1.mjs
+      - name: Bewaar onderzoeksresultaten
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-machine1-eerste-run
+          path: research/output/
+          retention-days: 30
