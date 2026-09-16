@@ -2,7 +2,10 @@ name: Amsterdam Machine 1 eerste historische run
 on:
   push:
     branches: [main]
-    paths: [.github/workflows/amsterdam-machine1.yml]
+    paths:
+      - .github/workflows/amsterdam-machine1.yml
+      - scripts/research/amsterdam-machine1.mjs
+      - research/experiments.json
 permissions:
   contents: read
 concurrency:
