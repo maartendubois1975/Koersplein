@@ -9,6 +9,10 @@ on:
         default: AMSTERDAM_HISTORY
         type: choice
         options: [AMSTERDAM_HISTORY]
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/koersplein-data-factory.yml'
 
 permissions:
   contents: read
