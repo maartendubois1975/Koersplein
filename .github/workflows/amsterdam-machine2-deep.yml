@@ -1,10 +1,6 @@
 name: Amsterdam Machine 2 diepe historische detective
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/amsterdam-machine2-deep.yml
 permissions:
   actions: read
   contents: read
@@ -27,8 +23,10 @@ jobs:
           path: research/input
       - name: Bouw historische dossiers
         run: node scripts/research/machine2-deep-engine.mjs research/input/amsterdam-machine1-results.jsonl
-      - name: Verzamel point-in-time evidence via geregistreerde providers
+      - name: Verzamel bevroren point-in-time prijs evidence
         run: node scripts/research/machine2-provider-runner.mjs
+      - name: Verzamel openbare historische macro evidence
+        run: node scripts/research/machine2-public-evidence.mjs
       - name: Controleer evidence gate
         run: node scripts/research/machine2-evidence-gate.mjs
       - name: Leer patronen en maak alleen kandidaat-hypothesen
@@ -36,6 +34,6 @@ jobs:
       - name: Bewaar volledige Machine 2 onderzoeksrun
         uses: actions/upload-artifact@v4
         with:
-          name: amsterdam-machine2-deep-run
+          name: amsterdam-machine2-deep-run-v2
           path: research/output/machine2-deep
           retention-days: 30
