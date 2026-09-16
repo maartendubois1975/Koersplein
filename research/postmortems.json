@@ -1,6 +1,9 @@
 {
-  "version":1,
-  "executionEnabled":false,
-  "postmortems":[],
-  "template":{"predictionId":"","predictionDate":"","instrument":"","predicted":"","realized":"","error":"","knownAtPrediction":[],"revealedAfterPrediction":[],"candidateExplanations":[],"newHypotheses":[],"notes":""}
+  "version": 2,
+  "executionEnabled": false,
+  "stage": "FUTURE_POSTMORTEM",
+  "predictionMutationForbidden": true,
+  "status": "WAITING_FOR_MACHINE1_RESULTS",
+  "rule": "Machine 2 start pas nadat de eerste Machine 1 voorspellingen en scores zijn bevroren. Latere informatie mag Machine 1 nooit herschrijven.",
+  "runs": []
 }
