@@ -37,3 +37,5 @@ jobs:
         run: node scripts/cloudflare/seed-catalog.mjs
       - name: Repareer de 15 Amsterdam-uitzonderingen
         run: node scripts/cloudflare/amsterdam-backfill.mjs --isins=BE0003851681,VGG885761301,FR001400J770,NL0000285278,KYG137071075,NL0000345627,NL0006294274,GG00BMB5XZ39,BMG455841020,NL0015000HT4,NL0000378669,BE0003720340,GG00B1RMC548,BE0003754687,BE0974349814 --strict=true
+
+# Eenmalige gerichte eindreparatie Amsterdam.
