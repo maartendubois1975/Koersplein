@@ -2,9 +2,13 @@ name: Brussel eenmalig vullen
 on:
   push:
     branches: [brussels-full-market]
-    paths: [.github/workflows/brussels-bootstrap.yml]
+    paths:
+      - .github/workflows/brussels-bootstrap.yml
+      - scripts/history/providers/yahoo-chart.mjs
+      - scripts/cloudflare/brussels-backfill.mjs
+      - scripts/cloudflare/catalog.mjs
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: koersplein-brussels-bootstrap
   cancel-in-progress: false
@@ -17,19 +21,8 @@ jobs:
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: brussels-full-market
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Haal officiële Brusselse aandelenlijst op
-        run: node scripts/cloudflare/fetch-brussels-catalog.mjs
-      - name: Bewaar Brusselse catalogus op de branch
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/euronext-brussels.json
-          git commit -m "Voeg officiële Brusselse aandelencatalogus toe" || true
-          git push origin HEAD:brussels-full-market
-      - name: Vul Brussel via dezelfde koersfabriek
+      - name: Vul Brussel via de generieke koersfabriek
         run: node scripts/cloudflare/brussels-backfill.mjs
