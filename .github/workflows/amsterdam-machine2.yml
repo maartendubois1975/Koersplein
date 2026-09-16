@@ -1,0 +1,36 @@
+name: Amsterdam Machine 2 eerste post-mortem
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/amsterdam-machine2.yml
+permissions:
+  actions: read
+  contents: read
+concurrency:
+  group: koersplein-amsterdam-machine2-first
+  cancel-in-progress: false
+jobs:
+  postmortem:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download bevroren Machine 1 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: amsterdam-machine1-eerste-run
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 35126453782
+          path: research/input
+      - name: Voer Machine 2 uit
+        run: node scripts/research/amsterdam-machine2.mjs research/input/amsterdam-machine1-results.jsonl
+      - name: Bewaar Machine 2 resultaten
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-machine2-eerste-run
+          path: |
+            research/output/amsterdam-machine2-summary.json
+            research/output/amsterdam-machine2-postmortems.jsonl
+          retention-days: 30
