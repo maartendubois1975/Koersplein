@@ -1,6 +1,10 @@
 name: Amsterdam Machine 2 diepe historische detective
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/machine2-run-2026-09-16-2.trigger
 permissions:
   actions: read
   contents: read
