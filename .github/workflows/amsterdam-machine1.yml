@@ -1,7 +1,7 @@
 name: Amsterdam Machine 1 eerste historische run
 on:
   push:
-    branches: [research-machine-foundation]
+    branches: [main]
     paths: [.github/workflows/amsterdam-machine1.yml]
 permissions:
   contents: read
@@ -16,8 +16,6 @@ jobs:
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: research-machine-foundation
       - uses: actions/setup-node@v4
         with:
           node-version: 22
