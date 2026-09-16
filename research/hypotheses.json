@@ -1,14 +1,12 @@
 {
-  "version": 2,
-  "status": "ACTIVE_BASELINE",
-  "researchExecutionEnabled": true,
-  "predictionEnabled": false,
-  "firstLab": "XAMS",
-  "horizonsMonths": [3,6,12,24],
-  "rules": ["strict-point-in-time","no-future-leakage","freeze-before-outcome","retain-failures","postmortem-cannot-rewrite-prediction","new-insights-require-unseen-retest"],
-  "activeBaseline": {"id":"PRICE-MOMENTUM-BASELINE","runId":"XAMS-M1-BASELINE-001","purpose":"technische en statistische nulmeting van de blinde historische tijdmachine","signals":["momentum3m","momentum6m","momentum12m"],"notFinalModel":true},
-  "families": ["PRICE","TRADING","FUNDAMENTALS","FUND_CHANGE","VALUATION","EXPECTATIONS","MANAGEMENT","NETWORK","SECTOR","MARKET_AMSTERDAM","EUROPE","GLOBAL","RATES","INFLATION","FX","COMMODITIES","CREDIT","RISK","FLOWS","INDEX_EFFECTS","NEWS","ATTENTION","POLITICS_POLICY","CENTRAL_BANKS","GEOPOLITICS","CALENDAR","SMART_MONEY","SHORT","OPTIONS","CORRELATION_CONTAGION","REGIME","EVENT_REACTION","RELATIVE","INTERACTIONS"],
-  "hypotheses": [
-    {"id":"PRICE-MOMENTUM-BASELINE","family":"PRICE","status":"BACKTEST_REQUESTED","question":"Welke voorspellende nulwaarde levert uitsluitend historisch 3/6/12-maands prijsmomentum op voor latere 3/6/12/24-maands rendementen?","pointInTimeDataRequired":["daily historical close"],"purpose":"baseline; geen eindmodel"}
-  ]
+  "version":2,
+  "status":"ACTIVE_BASELINE",
+  "researchExecutionEnabled":true,
+  "predictionEnabled":false,
+  "firstLab":"XAMS",
+  "horizonsMonths":[3,6,12,24],
+  "rules":["strict-point-in-time","no-future-leakage","freeze-before-outcome","retain-failures","postmortem-cannot-rewrite-prediction","new-insights-require-unseen-retest"],
+  "activeBaseline":{"id":"PRICE-MOMENTUM-BASELINE","runId":"XAMS-M1-BASELINE-001","purpose":"technische en statistische nulmeting van de blinde historische tijdmachine","signals":["momentum3m","momentum6m","momentum12m"],"notFinalModel":true},
+  "families":["PRICE","TRADING","FUNDAMENTALS","FUND_CHANGE","VALUATION","EXPECTATIONS","MANAGEMENT","NETWORK","SECTOR","MARKET_AMSTERDAM","EUROPE","GLOBAL","RATES","INFLATION","FX","COMMODITIES","CREDIT","RISK","FLOWS","INDEX_EFFECTS","NEWS","ATTENTION","POLITICS_POLICY","CENTRAL_BANKS","GEOPOLITICS","CALENDAR","SMART_MONEY","SHORT","OPTIONS","CORRELATION_CONTAGION","REGIME","EVENT_REACTION","RELATIVE","INTERACTIONS"],
+  "hypotheses":[{"id":"PRICE-MOMENTUM-BASELINE","family":"PRICE","status":"BACKTEST_REQUESTED","question":"Welke voorspellende nulwaarde levert uitsluitend historisch 3/6/12-maands prijsmomentum op voor latere 3/6/12/24-maands rendementen?","pointInTimeDataRequired":["daily historical close"],"purpose":"baseline; geen eindmodel"}]
 }
