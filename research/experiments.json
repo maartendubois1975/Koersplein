@@ -1,11 +1,1 @@
-{
-  "version":3,
-  "executionEnabled":true,
-  "market":"XAMS",
-  "universe":"ALL_AMSTERDAM_INSTRUMENTS",
-  "cadence":{"unit":"MONTH","step":1,"rule":"one_snapshot_per_calendar_month_while_instrument_exists"},
-  "horizonsMonths":[3,6,12,24],
-  "activeRun":{"id":"XAMS-M1-BASELINE-001","stage":"BLIND_WALK_FORWARD","modelVersion":"machine1-price-baseline-v1","status":"READY_TO_RUN","strictPointInTime":true},
-  "rules":["freeze_prediction_before_outcome","no_future_leakage","missing_signal_families_stay_missing","machine2_cannot_mutate_machine1"],
-  "experiments":[{"id":"XAMS-M1-BASELINE-001","hypothesisId":"PRICE-MOMENTUM-BASELINE","market":"XAMS","universe":"ALL_AMSTERDAM_INSTRUMENTS","asOfRule":"strict-point-in-time","cadence":"MONTHLY","horizonMonths":[3,6,12,24],"result":"READY_TO_RUN","artifacts":["amsterdam-machine1-eerste-run"]}]
-}
+{"version":3,"executionEnabled":true,"market":"XAMS","universe":"ALL_AMSTERDAM_INSTRUMENTS","cadence":{"unit":"MONTH","step":1},"horizonsMonths":[3,6,12,24],"activeRun":{"id":"XAMS-M1-BASELINE-001","stage":"BLIND_WALK_FORWARD","modelVersion":"machine1-price-baseline-v1","status":"READY_TO_RUN","strictPointInTime":true},"rules":["freeze_prediction_before_outcome","no_future_leakage","missing_signal_families_stay_missing","machine2_cannot_mutate_machine1"],"experiments":[{"id":"XAMS-M1-BASELINE-001","hypothesisId":"PRICE-MOMENTUM-BASELINE","market":"XAMS","asOfRule":"strict-point-in-time","cadence":"MONTHLY","horizonMonths":[3,6,12,24],"result":"READY_TO_RUN","artifacts":["amsterdam-machine1-eerste-run"]}]}
