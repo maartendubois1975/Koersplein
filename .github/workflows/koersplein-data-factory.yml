@@ -3,42 +3,18 @@ name: Koersplein datafabriek
 on:
   workflow_dispatch:
     inputs:
-      job_id:
-        description: Job-id dat door de beveiligde Worker is aangemaakt
+      run_type:
+        description: Wat moet Koersplein uitvoeren?
         required: true
-        type: string
-      job_type:
-        description: Informatief jobtype
-        required: true
+        default: AMSTERDAM_HISTORY
         type: choice
-        options: [HISTORY_BACKFILL, DAILY_UPDATE, REPAIR_MISSING, VALIDATE_HISTORY, CHECK_AMSTERDAM]
-      mic:
-        description: Markt-MIC
-        required: false
-        default: XAMS
-        type: string
-      batch_size:
-        description: Instrumenten per claim
-        required: false
-        default: '50'
-        type: string
-      mode:
-        description: HISTORY_BACKFILL doet 1 korte canary en vult daarna door
-        required: false
-        default: mass
-        type: choice
-        options: [canary, mass]
-      max_items:
-        description: Ruime bovengrens voor heel Amsterdam in één run
-        required: false
-        default: '250'
-        type: string
+        options: [AMSTERDAM_HISTORY]
 
 permissions:
   contents: read
 
 concurrency:
-  group: koersplein-data-${{ inputs.job_id }}
+  group: koersplein-amsterdam-history
   cancel-in-progress: false
 
 jobs:
@@ -53,8 +29,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Canary - maximaal 2 instrumenten
-        run: node scripts/cloudflare/factory-runner.mjs --job-id="${{ inputs.job_id }}" --batch-size="2" --mode="canary" --max-items="2"
-      - name: Vul Amsterdam door na geslaagde canary
-        if: ${{ inputs.job_type == 'HISTORY_BACKFILL' && inputs.mode == 'mass' }}
-        run: node scripts/cloudflare/factory-runner.mjs --job-id="${{ inputs.job_id }}" --batch-size="${{ inputs.batch_size }}" --mode="mass" --max-items="${{ inputs.max_items }}"
+      - name: Synchroniseer Amsterdam-catalogus
+        run: node scripts/cloudflare/seed-catalog.mjs
+      - name: Canary - 2 aandelen
+        run: node scripts/cloudflare/amsterdam-backfill.mjs --offset=0 --limit=2 --strict=true
+      - name: Vul heel Amsterdam door
+        run: node scripts/cloudflare/amsterdam-backfill.mjs --offset=2 --limit=250 --strict=false
