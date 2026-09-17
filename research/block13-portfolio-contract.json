@@ -1,0 +1,9 @@
+{
+ "version":"machine5-portfolio-v1",
+ "input":"frozen calibrated return distributions from champion Machine 1",
+ "perAsset":["expectedReturn","medianReturn","probabilityPositive","probabilityLoss20","probabilityGain25","expectedVolatility","modelUncertainty","dataQuality","correlations"],
+ "portfolioObjectives":["expected_return","downside_risk","drawdown_proxy","diversification","uncertainty_penalty","transaction_costs"],
+ "constraints":["max_weight_per_asset","max_sector_exposure","max_country_exposure","liquidity_floor","turnover_limit","missing_risk_data_excluded"],
+ "principles":["ranking is model output not certainty","uncertainty lowers conviction","correlation matters","costs before expected net return","portfolio layer never retrains prediction model"],
+ "output":"scenario-aware portfolio proposal plus full assumptions and attribution"
+}

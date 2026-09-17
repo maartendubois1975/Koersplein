@@ -1,0 +1,9 @@
+{
+ "version":"machine4-model-competition-v1",
+ "roles":{"champion":"huidige productieversie","challengers":"nieuwe modellen/ensembles/regimevarianten"},
+ "candidateFamilies":["regularized_linear","tree_boosting","probabilistic","regime_models","ensembles"],
+ "scorecard":["OOS_expected_return_error","direction_skill_vs_benchmark","Brier_calibration","tail_calibration","stability","breadth","turnover_cost_sensitivity"],
+ "rules":["zelfde frozen folds voor alle kandidaten","geen challenger tuning op final holdout","complexiteit wint nooit zonder OOS verbetering","probability calibration apart meten","model/data/code versie volledig bevriezen","terugval naar champion bij drift of slechter bewijs"],
+ "promotion":{"requiresMachine3State":"OOS_SURVIVOR","requiresReproducibleArtifact":true,"requiresNoRegressionOnRisk":true,"requiresIndependentHoldoutGain":true},
+ "output":"signed model manifest met feature-set, trainingsvenster, hyperparameters, calibration, bewijs en lineage"
+}

@@ -1,0 +1,9 @@
+{
+ "version":"learning-audit-v1",
+ "immutableArtifacts":["prediction","PIT_world_snapshot","model_manifest","hypothesis","validation_result","portfolio_proposal"],
+ "lineage":["source->evidence->feature->model->prediction->outcome->postmortem->hypothesis->validation->promotion"],
+ "monitoring":["data_freshness","missingness","source_failures","feature_drift","prediction_drift","calibration_drift","performance_drift","coverage","costs","license_status"],
+ "learningCycle":["freeze_prediction","wait_for_horizon","score_outcome","Machine2_postmortem","register_hypothesis","Machine3_falsification","Machine4_challenger","promote_only_if_OOS_proven"],
+ "controls":{"schedulerDefault":"OFF","manualUntilExplicitActivation":true,"rollbackChampion":true,"auditLogAppendOnly":true,"costBudgetRequiredBeforeAutomation":true},
+ "hardRules":["geen herschrijven van oude voorspellingen","geen automatische promotie zonder bewijs","geen stille bron/licentie wijziging","iedere run reproduceerbaar via dataSnapshot+codeCommit+modelManifest"]
+}
