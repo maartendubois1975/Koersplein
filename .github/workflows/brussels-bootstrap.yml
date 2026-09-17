@@ -29,6 +29,6 @@ jobs:
       - name: Vul Brussel via de generieke koersfabriek
         run: node scripts/cloudflare/brussels-backfill.mjs
       - name: Herstel aantoonbaar inconsistente optionele OHLC-velden
-        run: node scripts/cloudflare/repair-brussels-quality.mjs
+        run: node scripts/cloudflare/repair-brussels-quality.mjs --isins=BE0003770840,BE0974496284,BE0003735496,BE0003730448,IL0010830391,BE0003741551,BE0003656676,BE0003898187,BE0974464977,BE0003470755,BE0003545531,BE0974263924,BE0003878957,BE0003754687,BE0974271034,BE0974349814,BE0003734481,BE0003724383
       - name: Valideer alle Brusselse koersreeksen
         run: node scripts/cloudflare/validate-brussels.mjs

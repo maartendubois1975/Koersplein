@@ -13,9 +13,20 @@ function fail(isin, message) {
   console.error(JSON.stringify({ isin, status: 'INVALID', error: message }));
 }
 
+async function historyWithRetry(isin) {
+  for (let attempt = 1; attempt <= 5; attempt += 1) {
+    try { return await client.history(isin); }
+    catch (error) {
+      if (attempt === 5 || !/HTTP (429|500|502|503|504)/.test(error.message)) throw error;
+      console.warn(JSON.stringify({ isin, status: 'RETRY', attempt, reason: error.message.split('\n')[0] }));
+      await new Promise((resolve) => setTimeout(resolve, attempt * 5000));
+    }
+  }
+}
+
 async function validateInstrument(item) {
   try {
-    const document = await client.history(item.isin);
+    const document = await historyWithRetry(item.isin);
     const bars = document?.bars;
     const coverage = document?.coverage;
     if (!Array.isArray(bars) || bars.length === 0) throw new Error('Geen koersrecords opgeslagen');

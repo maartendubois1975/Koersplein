@@ -4,7 +4,8 @@ import { partitionBars } from './history-format.mjs';
 
 const client = new FactoryApiClient();
 const catalog = await cloudflareCatalog();
-const instruments = catalog.instruments.filter((item) => item.mic === 'XBRU');
+const requested = new Set(String(process.argv.find((arg) => arg.startsWith('--isins=')) || '').replace('--isins=', '').split(',').filter(Boolean));
+const instruments = catalog.instruments.filter((item) => item.mic === 'XBRU' && (!requested.size || requested.has(item.isin)));
 let repairedInstruments = 0;
 let repairedBars = 0;
 
@@ -33,8 +34,19 @@ function repairBar(raw) {
   return { bar, changed };
 }
 
+async function historyWithRetry(isin) {
+  for (let attempt = 1; attempt <= 5; attempt += 1) {
+    try { return await client.history(isin); }
+    catch (error) {
+      if (attempt === 5 || !/HTTP (429|500|502|503|504)/.test(error.message)) throw error;
+      console.warn(JSON.stringify({ isin, status: 'RETRY', attempt, reason: error.message.split('\n')[0] }));
+      await new Promise((resolve) => setTimeout(resolve, attempt * 5000));
+    }
+  }
+}
+
 for (const item of instruments) {
-  const document = await client.history(item.isin);
+  const document = await historyWithRetry(item.isin);
   const repaired = document.bars.map(repairBar);
   const changed = repaired.filter((entry) => entry.changed).length;
   if (!changed) continue;
