@@ -1,0 +1,10 @@
+{
+  "schemaVersion":"koersplein-universe-v1",
+  "purpose":"Survivorship-bias-vrije reconstructie van welke effecten op tijdstip T werkelijk belegbaar/bestaand waren",
+  "entity":{"companyId":"stabiele onderneming-id","securityId":"stabiele effect-id","listingId":"stabiele notering-id"},
+  "identifiers":{"isin":"vintage-gebonden","ticker":"vintage-gebonden","name":"vintage-gebonden","mic":"beurs/MIC","currency":"noteringsvaluta"},
+  "intervals":{"companyExistence":"[from,to)","securityExistence":"[from,to)","listingActive":"[from,to)","identifierValidity":"[from,to)","indexMembership":"[from,to)"},
+  "events":["IPO","LISTING_START","LISTING_END","DELISTING","BANKRUPTCY","ACQUISITION","MERGER","SPINOFF","NAME_CHANGE","TICKER_CHANGE","ISIN_CHANGE","INDEX_ENTRY","INDEX_EXIT","SPLIT","REVERSE_SPLIT","DIVIDEND","SPECIAL_DIVIDEND","RIGHTS_ISSUE","CAPITAL_RETURN"],
+  "eventFields":["eventId","companyId","securityId","listingId","eventType","effectiveTime","announcedTime","tradableTime","sourceId","sourceUrl","contentHash","licenseStatus","pointInTimeSafe"],
+  "rules":["nooit huidige indexsamenstelling terugprojecteren","delisted/failliete/overgenomen ondernemingen blijven in historische universa","corporate actions wijzigen historie niet stilletjes","identifiers zijn tijdsgebonden aliases, geen permanente identiteit","membership wordt alleen gebruikt vanaf bewezen tradableTime","onbewezen eventtijd gaat in quarantaine"]
+}
