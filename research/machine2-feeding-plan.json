@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "purpose": "Machine 2 voeden met historische informatie zonder toekomstlek",
+  "pilotUniverse": ["ASML", "ING", "SHELL", "PHILIPS", "HEINEKEN"],
+  "timeFields": ["valid_time", "published_time", "tradable_time", "retrieved_time"],
+  "sourcePriority": ["OFFICIAL_COMPANY_OR_EXCHANGE", "REGULATOR", "CENTRAL_BANK_OR_STATISTICS", "HIGH_QUALITY_ARCHIVE", "NEWS_ARCHIVE", "OTHER_VERIFIED"],
+  "layers": [
+    {"id":"FUNDAMENTALS","signals":["revenue","eps","net_income","operating_margin","free_cash_flow","net_debt","dividend","guidance"],"pointInTimeRequired":true},
+    {"id":"VALUATION_EXPECTATIONS","signals":["pe","ev_ebitda","price_sales","dividend_yield","consensus_eps","consensus_revenue","estimate_revisions"],"pointInTimeRequired":true},
+    {"id":"MARKET_MACRO","signals":["market_return","sector_return","relative_strength","volume","volatility","rates","yield_curve","inflation","fx","oil","gas","credit_stress"],"pointInTimeRequired":true},
+    {"id":"EVENTS_BEHAVIOUR","signals":["earnings_release","profit_warning","guidance_change","m_and_a","management_change","regulation","index_change","short_interest","company_news"],"pointInTimeRequired":true}
+  ],
+  "rules": {
+    "unknownIsNeverZero": true,
+    "revisionsAreSeparateRecords": true,
+    "futureEvidenceNeverBecomesHistoricalFeature": true,
+    "rawSourceHashRequired": true,
+    "machine2MayCreateHypotheses": true,
+    "machine2MayDirectlyChangeMachine1": false,
+    "blindValidationRequiredBeforeTeaching": true
+  },
+  "scaleAfterPilot": "124 Amsterdam instruments, then Brussels and further markets through the same generic pipeline"
+}
