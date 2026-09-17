@@ -1,0 +1,11 @@
+{
+ "version":1,
+ "priority":[
+  {"id":"AFM_FINANCIAL_REPORTING","tier":"A","formats":["PDF","ESEF/XHTML/XBRL","ZIP/XBRI"],"use":"Nederlandse gereglementeerde uitgevende instellingen","timestamp":"AFM filing timestamp is bewijs van uiterlijk-beschikbaar moment; eerdere issuer-publicatie alleen apart indien bewezen"},
+  {"id":"ISSUER_ORIGINAL_REPORT","tier":"A","formats":["annual report","half-year report","quarterly report","results release","guidance release"],"timestamp":"originele publicatietijd vereist"},
+  {"id":"EURONEXT_REGULATED_NEWS","tier":"A","formats":["regulated notice","results release"],"timestamp":"originele publicatietijd vereist"}
+ ],
+ "taxonomyPolicy":{"prefer":"ESEF/XBRL concept + dimensions + units","fallback":"explicit issuer label mapped with mapping version","never":"LLM/heuristic mapping direct naar training zonder gecontroleerde concept mapping"},
+ "restatementPolicy":"origineel en restatement blijven afzonderlijke vintages; historische cutoff ziet alleen destijds beschikbare vintage",
+ "guidancePolicy":"bewaar exacte range/eenheid/periode en bron; tekstinterpretatie wordt later afzonderlijk AI-evidence, niet hetzelfde als gerapporteerd cijfer"
+}
