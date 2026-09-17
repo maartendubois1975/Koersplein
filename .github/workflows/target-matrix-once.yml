@@ -1,0 +1,30 @@
+name: Volledige targetmatrix eenmalig
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/target-matrix-once.yml'
+permissions:
+  contents: read
+concurrency:
+  group: koersplein-target-matrix
+  cancel-in-progress: false
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Onderzoek volledige doelmatrix
+        run: node scripts/research/target-matrix-arena.mjs
+      - name: Bewaar intern onderzoeksrapport
+        uses: actions/upload-artifact@v4
+        with:
+          name: koersplein-target-matrix
+          path: research/output/target-matrix/latest.json
+          retention-days: 90
