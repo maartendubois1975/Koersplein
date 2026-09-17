@@ -15,6 +15,7 @@ jobs:
     env:
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+      CATALOG_BATCH_SIZE: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -22,7 +23,7 @@ jobs:
           node-version: 22
       - name: Haal officiële Euronext Parijs-catalogus op
         run: node scripts/cloudflare/fetch-paris-catalog.mjs
-      - name: Start met twee Parijse canary-aandelen na XPAR-registratie
+      - name: Registreer Parijs in batches en test twee canary-aandelen
         run: node scripts/cloudflare/paris-canary-backfill.mjs
       - name: Bewaar officiële catalogus als controle-artifact
         if: always()
