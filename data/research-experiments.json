@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "policy": {
+    "maxExperimentsPerCycle": 1,
+    "maxExperimentsPerDay": 1,
+    "neverRepeatSameExperimentSameDataDate": true,
+    "requireCrossMarket": true,
+    "requirePointInTime": true,
+    "humanReviewAfterConsecutiveFailures": 2
+  },
+  "experiments": [
+    {"id":"REGIME_30","priority":1,"status":"READY","title":"Marktregimes en +30% signalen","script":"scripts/research/model-arena-live.mjs","purpose":"Test of point-in-time marktregimes cross-market lift toevoegen."},
+    {"id":"SEQUENCE_30","priority":2,"status":"READY","title":"Versnelling terugval herstel","script":"scripts/research/model-arena-live.mjs","purpose":"Test causale signaalvolgordes zonder toekomstige informatie."},
+    {"id":"BREADTH_30","priority":3,"status":"READY","title":"Marktbreedte en cross-stock informatie","script":"scripts/research/model-arena-live.mjs","purpose":"Test of op T bekende marktbreedte extra cross-market informatie geeft."}
+  ]
+}
