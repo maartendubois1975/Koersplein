@@ -1,0 +1,43 @@
+name: Amsterdam fill 1-3 once
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/amsterdam-fill-1-3-once.yml'
+permissions:
+  contents: read
+jobs:
+  fill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Baseline universe
+        run: node -e "const x=require('./data/euronext-amsterdam.json'); console.log(JSON.stringify({catalogRecords:Array.isArray(x)?x.length:(x.instruments||x.companies||[]).length}))" | tee universe-baseline.json
+      - name: ECB current observations
+        run: node scripts/research/machine2-feed-official-macro.mjs
+      - name: ECB vintage capture
+        run: node scripts/research/machine2-feed-ecb-vintage.mjs
+      - name: AFM short source discovery
+        run: node scripts/research/machine2-feed-afm-short.mjs
+      - name: Quality audit
+        run: node scripts/research/machine2-feed-quality-audit.mjs
+      - name: Build factual run summary
+        run: |
+          node - <<'NODE'
+          const fs=require('fs'); const dir='research/output/machine2-feed';
+          const read=n=>{try{return JSON.parse(fs.readFileSync(dir+'/'+n,'utf8'))}catch{return null}};
+          const macro=read('official-macro-report.json'), vintage=read('ecb-vintage-report.json'), short=read('afm-short-report.json'), universe=JSON.parse(fs.readFileSync('universe-baseline.json','utf8'));
+          const summary={runAt:new Date().toISOString(),universe,macro,vintage,short,truth:{fundamentalsAccepted:0,reason:'AFM filing extraction adapter not yet executing real report records',historicalDeadListingsAccepted:0,reasonUniverse:'historical delisting/index back-history not yet ingested',analystConsensusAccepted:0,reasonConsensus:'licensed historical consensus unavailable'},scheduler:'OFF'};
+          fs.writeFileSync(dir+'/fill-1-3-run-summary.json',JSON.stringify(summary,null,2)); console.log(JSON.stringify(summary,null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-fill-1-3-first-real-run
+          path: |
+            universe-baseline.json
+            research/output/machine2-feed/
+          retention-days: 30
