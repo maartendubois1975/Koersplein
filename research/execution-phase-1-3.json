@@ -1,0 +1,9 @@
+{
+ "version":"execution-phase-1-3-v1",
+ "scope":"Amsterdam eerst; dezelfde fabriek schaalt later wereldwijd",
+ "block1":{"name":"historische databank vullen","families":["PRICE","FUNDAMENTALS","EXPECTATIONS","MACRO","RELATIVE","EVENTS","POSITIONING"],"gate":"alles via koersplein-pit-v1; onbewezen timestamps in quarantaine","universe":"historisch inclusief verdwenen fondsen zodra brondata beschikbaar is"},
+ "block2":{"name":"historische tijdmachine materialiseren","frequency":"monthly","rule":"snapshot(T) bevat alleen records met bewezen tradableTime <= T en de vintage die toen bekend was","output":"immutable world snapshots + manifest/hash"},
+ "block3":{"name":"Machine 1 massale blinde voorspellingen","horizonsMonths":[3,6,12,24],"output":"frozen probability distributions plus feature/world/model lineage","revealOutcome":"alleen nadat prediction is bevroren"},
+ "costControls":{"scheduler":"OFF","automaticDeploy":"NONE","batching":"grote batches/checkpoints/resume","noRepeatHistoryFetch":"hergebruik bestaande prijsdata"},
+ "truth":"architectuur en uitvoerpijplijn kunnen nu gebouwd worden; volledigheid van historische externe data wordt apart gemeten en nooit gefingeerd"
+}
