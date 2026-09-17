@@ -1,0 +1,11 @@
+{
+  "version":"machine3-validation-v1",
+  "role":"onafhankelijke falsificatie; discovery en eindbewijs strikt gescheiden",
+  "inputs":["frozen hypotheses","PIT features","historical universe","frozen outcomes"],
+  "splitPolicy":{"timeOrdered":true,"purgeOverlappingLabels":true,"embargoAfterTrain":true,"untouchedFinalHoldout":true,"noRandomRowSplit":true},
+  "tests":["walk_forward","purged_walk_forward","instrument_breadth","time_stability","regime_stability","market_transfer","block_bootstrap","multiple_testing_FDR","calibration","benchmark_comparison"],
+  "benchmarks":["always_up","historical_base_rate","market_return","simple_momentum"],
+  "promotionRequires":["positive_OOS_value","stable_across_time","sufficient_instrument_breadth","survives_multiple_testing","no_future_leak","holdout_not_used_for_tuning"],
+  "states":["DISCOVERY_ONLY","REJECTED","RETEST_REQUIRED","OOS_SURVIVOR"],
+  "hardRule":"Machine 3 probeert een hypothese te verwerpen; hij optimaliseert hem niet op de testset."
+}
