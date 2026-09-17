@@ -1,0 +1,11 @@
+import {makePurgedWalkForward,blockBootstrap,benjaminiHochberg} from './machine3-validation-core.mjs';
+import {modelManifest,mayPromote} from './machine4-model-registry.mjs';
+import {rankAssets,equalRiskCappedPortfolio} from './machine5-portfolio-core.mjs';
+import {auditEntry,verifyAuditChain} from './learning-audit-core.mjs';
+const rows=[];for(let y=2000;y<2015;y++)for(let m=0;m<12;m++)rows.push({predictionDate:new Date(Date.UTC(y,m,1)).toISOString(),entityId:'X'});
+const folds=makePurgedWalkForward(rows,{trainMonths:36,testMonths:12,embargoMonths:3,horizonMonths:12});if(!folds.length)throw new Error('Geen validatiefolds');for(const f of folds)if(Date.parse(f.trainEnd)>=Date.parse(f.testStart))throw new Error('Geen purge/embargo');
+if(!blockBootstrap([1,2,3,4,5],{reps:100}))throw new Error('Bootstrap faalt');if(benjaminiHochberg([{pValue:.01},{pValue:.2}]).length!==2)throw new Error('FDR faalt');
+const bad=modelManifest({modelId:'m',version:'1',featureSet:['x'],trainingWindow:'x',dataSnapshot:'d',codeCommit:'c',evidence:{machine3State:'DISCOVERY_ONLY'}});if(mayPromote(bad))throw new Error('Onbewezen model kon promoveren');
+const assets=[{entityId:'A',sector:'S1',expectedReturn:.2,modelUncertainty:.1,probabilityLoss20:.1,expectedVolatility:.2},{entityId:'B',sector:'S2',expectedReturn:.1,modelUncertainty:.05,probabilityLoss20:.05,expectedVolatility:.15}];if(rankAssets(assets).length!==2||!equalRiskCappedPortfolio(assets).length)throw new Error('Portefeuille faalt');
+const a=auditEntry({type:'PREDICTION',payload:{id:1}}),b=auditEntry({type:'OUTCOME',payload:{id:1},previousHash:a.entryHash});if(!verifyAuditChain([a,b]))throw new Error('Audit chain faalt');
+console.log(JSON.stringify({ok:true,blocks:[11,12,13,14],folds:folds.length},null,2));
