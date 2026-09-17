@@ -6,6 +6,7 @@ on:
       - .github/workflows/brussels-bootstrap.yml
       - scripts/history/providers/yahoo-chart.mjs
       - scripts/cloudflare/brussels-backfill.mjs
+      - scripts/cloudflare/repair-brussels-quality.mjs
       - scripts/cloudflare/validate-brussels.mjs
       - scripts/cloudflare/catalog.mjs
 permissions:
@@ -27,5 +28,7 @@ jobs:
           node-version: 22
       - name: Vul Brussel via de generieke koersfabriek
         run: node scripts/cloudflare/brussels-backfill.mjs
+      - name: Herstel aantoonbaar inconsistente optionele OHLC-velden
+        run: node scripts/cloudflare/repair-brussels-quality.mjs
       - name: Valideer alle Brusselse koersreeksen
         run: node scripts/cloudflare/validate-brussels.mjs
