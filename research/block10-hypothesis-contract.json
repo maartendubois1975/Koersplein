@@ -1,0 +1,14 @@
+{
+  "version":"hypothesis-factory-v1",
+  "required":["hypothesisId","origin","signalNames","target","horizonsMonths","discoveryUniverse","discoveryPeriod","mechanism","testPlan","tests","status"],
+  "statuses":["PROPOSED","REJECTED","INCONCLUSIVE","SURVIVED_DISCOVERY","READY_FOR_INDEPENDENT_TEST"],
+  "permanentLedger":true,
+  "rules":[
+    "geen mislukte hypothese verwijderen",
+    "alle probeersels tellen mee voor multiple-testing administratie",
+    "discovery data en onafhankelijke testdata worden vooraf gescheiden",
+    "interacties benoemen hun afzonderlijke named signals",
+    "Machine 2 kan alleen READY_FOR_INDEPENDENT_TEST voorstellen",
+    "alleen blok 11 kan bewijs leveren dat later voor modelpromotie in aanmerking komt"
+  ]
+}
