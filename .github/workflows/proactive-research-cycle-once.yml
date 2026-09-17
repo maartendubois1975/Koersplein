@@ -1,0 +1,37 @@
+name: Proactieve Amsterdam Brussel onderzoekscyclus eenmalig
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/proactive-research-cycle-once.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: koersplein-proactive-research
+  cancel-in-progress: false
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: M03-M07 proactieve cross-market cyclus
+        run: node scripts/research/crossmarket-research-cycle.mjs
+      - name: Bewaar volledige onderzoeksagenda
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: proactive-amsterdam-brussels-research
+          path: research/output/proactive/
+          retention-days: 90
