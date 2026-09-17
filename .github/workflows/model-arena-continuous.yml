@@ -1,0 +1,36 @@
+name: Model Arena continu onderzoek
+
+on:
+  schedule:
+    # Eén onderzoekscyclus per dag: bewust kostenbeheerst, geen onnodige continue polling.
+    - cron: '17 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: koersplein-model-arena-continuous
+  cancel-in-progress: false
+
+jobs:
+  arena:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      RESEARCH_MODE: XAMS_XBRU_COMBINED
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Draai Amsterdam, Brussel en gecombineerde cross-market Arena
+        run: node scripts/research/model-arena-live.mjs
+      - name: Bewaar onderzoeksrapport
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-arena-continuous-${{ github.run_number }}
+          path: research/output/model-arena/
+          retention-days: 90
