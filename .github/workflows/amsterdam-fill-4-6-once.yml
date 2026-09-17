@@ -1,0 +1,56 @@
+name: Amsterdam fill 4-6 once
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/amsterdam-fill-4-6-once.yml
+permissions:
+  contents: read
+concurrency:
+  group: koersplein-amsterdam-fill-4-6-once
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Blok 4 - materialiseer beschikbare Amsterdamse historische tijdlijn
+        run: |
+          mkdir -p research/output/fill-4-6
+          node scripts/research/amsterdam-machine1.mjs
+          cp research/output/amsterdam-machine1-summary.json research/output/fill-4-6/time-machine-summary.json
+      - name: Blok 5 - bevries massale blinde Machine 1 voorspellingen
+        run: |
+          cp research/output/amsterdam-machine1-results.jsonl research/output/fill-4-6/machine1-frozen.jsonl
+          cp research/output/amsterdam-machine1-summary.json research/output/fill-4-6/machine1-summary.json
+      - name: Blok 6 - Machine 2 forensische onderzoeksrun op verse Machine 1
+        run: |
+          node scripts/research/machine2-deep-engine.mjs research/output/amsterdam-machine1-results.jsonl
+          node scripts/research/machine2-provider-runner.mjs
+          node scripts/research/machine2-public-evidence.mjs
+          node scripts/research/machine2-evidence-gate.mjs
+          node scripts/research/machine2-forensic-intelligence.mjs
+          node scripts/research/machine2-learn.mjs
+          node scripts/research/machine2-autonomous-analysis.mjs
+          node scripts/research/machine2-statistical-guard.mjs
+          node scripts/research/machine2-teaching-contract.mjs
+          cp -R research/output/machine2-deep research/output/fill-4-6/machine2-deep
+      - name: Leg wetenschappelijke grens vast
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const s=JSON.parse(fs.readFileSync('research/output/amsterdam-machine1-summary.json'));
+          fs.writeFileSync('research/output/fill-4-6/run-truth.json',JSON.stringify({runAt:new Date().toISOString(),blocks:[4,5,6],machine1:s,importantLimitation:'Vulrun 1-3 leverde nog geen geaccepteerde fundamentals, historische verdwenen noteringen of consensus op. Deze run gebruikt daarom de beschikbare prijs/PIT-evidence en mag niet als volledig verrijkte eindtijdmachine worden aangeduid.',scheduler:'OFF'},null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-fill-4-6-first-run
+          path: research/output/fill-4-6
+          retention-days: 30
