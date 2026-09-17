@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "purpose": "Historische bedrijfsinformatie point-in-time verzamelen voor Amsterdam",
+  "sources": [
+    {
+      "id": "AFM_FINANCIAL_REPORTING",
+      "tier": "A_OFFICIAL_REGULATOR",
+      "baseUrl": "https://www.afm.nl/nl-nl/sector/registers/meldingenregisters/financiele-verslaggeving",
+      "covers": ["annual_reports", "half_year_reports", "filing_timestamp", "reporting_year", "document_type"],
+      "pitPolicy": "Filing timestamp is authoritative availability floor; never backdate to reporting period.",
+      "machineReadable": ["CSV", "XML"],
+      "enabled": true
+    },
+    {
+      "id": "AFM_ESEF",
+      "tier": "A_OFFICIAL_REGULATOR",
+      "baseUrl": "https://www.afm.nl/nl-nl/sector/effectenuitgevende-ondernemingen/financiele-en-duurzaamheidsverslaggeving/jaarlijkse-verslaggeving-in-esef",
+      "covers": ["xhtml", "xbrl_tags", "ifrs_primary_statements"],
+      "pitPolicy": "Use only document version linked to an AFM filing timestamp.",
+      "enabled": true
+    },
+    {
+      "id": "EURONEXT_COMPANY_PRESS_RELEASES",
+      "tier": "A_OFFICIAL_EXCHANGE_DISTRIBUTION",
+      "baseUrl": "https://live.euronext.com/en/listview/company-press-release/003030",
+      "covers": ["results", "guidance", "profit_warning", "dividend", "m_and_a", "management", "inside_information", "capital", "commercial_results"],
+      "pitPolicy": "Released timestamp/date is evidence availability; exact time required for intraday eligibility, otherwise next-session conservative availability.",
+      "enabled": true
+    }
+  ],
+  "requiredCompanySignals": ["revenue", "operating_income", "net_income", "eps", "operating_margin", "free_cash_flow", "cash", "net_debt", "dividend", "guidance", "guidance_change", "profit_warning"],
+  "rules": {
+    "reportingPeriodIsNotPublicationTime": true,
+    "restatedValuesNeverReplaceOriginal": true,
+    "unknownNeverZero": true,
+    "sourceDocumentHashRequired": true,
+    "issuerNameMustMapToInstrument": true,
+    "ambiguousIssuerMappingQuarantine": true
+  }
+}
