@@ -1,1 +1,66 @@
-{"version":1,"afterMarketValidation":[{"machine":"M02","name":"Kansenkaart","required":true},{"machine":"M03","name":"Tijdmachine","required":true},{"machine":"M04","name":"Voorspeller","required":true,"freezePredictions":true},{"machine":"M05","name":"Scheidsrechter","required":true,"mutationForbidden":true},{"machine":"M06","name":"Patroonzoeker","required":true},{"machine":"M07","name":"Wereldtest","required":true,"blindMarket":true}],"promotionRule":"market COMPLETE only after M01 validation; research results never mutate historical predictions","publication":{"perMarket":true,"crossMarketComparison":true,"proprietaryModelHidden":true}}
+{
+  "version": 2,
+  "mission": "Koersplein onderzoekt zelfstandig welke herhaalbare signalen en marktritmes voorafgaan aan toekomstige koerskansen. Iedere afgeronde analyse moet zelf nieuwe toetsbare onderzoeksideeën voorstellen; het systeem wacht daarvoor niet op handmatige ideeën.",
+  "researchPolicy": {
+    "proactiveResearch": true,
+    "generateNextExperiments": true,
+    "minimumNewHypothesesPerCompletedResearchCycle": 3,
+    "hypothesesMustBeTestable": true,
+    "challengeOwnHypotheses": true,
+    "requireControlGroups": true,
+    "requireOutOfSampleValidation": true,
+    "preventFutureLeakage": true,
+    "freezePredictionsBeforeScoring": true,
+    "crossMarketValidation": true,
+    "researchQuestion": "Welke kenmerken, volgordes en marktritmes waren vóór een koersbeweging zichtbaar en blijven voorspellend op een markt waarop ze niet ontdekt zijn?",
+    "priorityThemes": [
+      "voorlopers van +10%, +20%, +30%, +50% en +100% bewegingen",
+      "momentum en versnelling over dagen, weken en maanden",
+      "consolidatie, terugval, herstel en trendbreuken",
+      "volatiliteit en drawdown vóór winnaar en niet-winnaar",
+      "herhaaldelijke winnaars versus eenmalige uitschieters",
+      "marktregimes en clustering van gelijktijdige kansen",
+      "volgordes zoals +10%, terugval, consolidatie en verdere versnelling",
+      "verschillen tussen Amsterdam, Brussel en volgende blinde markten"
+    ],
+    "experimentLifecycle": [
+      "OBSERVE_RESULT",
+      "GENERATE_HYPOTHESES",
+      "DEFINE_CONTROL_GROUP",
+      "BACKTEST_POINT_IN_TIME",
+      "FREEZE_RULE_OR_MODEL",
+      "BLIND_CROSS_MARKET_TEST",
+      "REJECT_OR_KEEP",
+      "PROPOSE_NEXT_EXPERIMENTS"
+    ],
+    "ideaOutput": {
+      "required": true,
+      "fields": ["hypothesis", "why_now", "test_design", "success_metric", "falsification_condition", "next_market"],
+      "storePerMarket": true,
+      "storeCrossMarket": true
+    }
+  },
+  "afterMarketValidation": [
+    {"machine":"M02","name":"Kansenkaart","required":true},
+    {"machine":"M03","name":"Tijdmachine","required":true},
+    {"machine":"M04","name":"Voorspeller","required":true,"freezePredictions":true},
+    {"machine":"M05","name":"Scheidsrechter","required":true,"mutationForbidden":true},
+    {"machine":"M06","name":"Patroonzoeker","required":true,"generateHypotheses":true,"compareWinnersToControls":true},
+    {"machine":"M07","name":"Wereldtest","required":true,"blindMarket":true,"feedResultsBackToResearchAgenda":true},
+    {"machine":"M08","name":"Kansscanner","required":false,"activateOnlyAfterValidatedPatterns":true}
+  ],
+  "crossMarketProgram": {
+    "discoveryMarkets": ["XAMS", "XBRU"],
+    "crossTests": ["XAMS_TO_XBRU", "XBRU_TO_XAMS"],
+    "nextBlindMarket": "XPAR",
+    "combineDiscoveryOnlyAfterSeparateResultsStored": true
+  },
+  "promotionRule": "market COMPLETE only after M01 validation; research results never mutate historical predictions; hypotheses are retained only when their predeclared test survives the required control and blind validation",
+  "publication": {
+    "perMarket": true,
+    "crossMarketComparison": true,
+    "proprietaryModelHidden": true,
+    "showResearchAgenda": true,
+    "showHighLevelHypotheses": true
+  }
+}
