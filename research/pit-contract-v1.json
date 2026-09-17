@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "koersplein-pit-v1",
+  "purpose": "Universeel contract voor alle historische kennis die ooit Machine 1 of onderzoek voedt",
+  "identity": {
+    "evidenceId": "required immutable id",
+    "entityId": "required stable entity/instrument/economic-series id",
+    "family": "required signal family",
+    "signalName": "required named signal; nooit alleen family-average"
+  },
+  "value": {
+    "rawValue": "required unless explicitly missing",
+    "normalizedValue": "optional derived value",
+    "unit": "required when numeric",
+    "currency": "optional",
+    "missing": "explicit boolean; missing is never zero"
+  },
+  "time": {
+    "validTime": "wanneer de onderliggende economische werkelijkheid/periode geldt",
+    "publishedTime": "wanneer de bron het publiceerde; null indien niet bewezen",
+    "tradableTime": "eerste moment waarop een marktdeelnemer het redelijkerwijs kon gebruiken; null indien niet bewezen",
+    "retrievedTime": "wanneer Koersplein het ophaalde",
+    "supersededTime": "optioneel; moment waarop deze vintage werd vervangen"
+  },
+  "vintage": {
+    "vintageId": "required",
+    "revisionNumber": "optional",
+    "restatesEvidenceId": "optional",
+    "isCurrentAtRetrieval": "required boolean",
+    "rule": "een revisie overschrijft nooit een oudere vintage"
+  },
+  "source": {
+    "sourceId": "required registry id",
+    "publisher": "required",
+    "sourceUrl": "required where available",
+    "sourceTier": "required",
+    "contentHash": "required",
+    "licenseStatus": "required: PUBLIC|LICENSED|RESTRICTED|UNKNOWN"
+  },
+  "quality": {
+    "timestampProven": "required boolean",
+    "pointInTimeSafe": "required boolean",
+    "trainingEligible": "required boolean",
+    "quarantineReasons": "array",
+    "confidence": "0..1 optional"
+  },
+  "lineage": {
+    "ingestionAdapter": "required",
+    "adapterVersion": "required",
+    "transformations": "ordered array",
+    "parentEvidenceIds": "array"
+  },
+  "hardRules": [
+    "publishedTime ontbreekt of is onbewezen => niet blind-trainbaar",
+    "tradableTime ontbreekt of is onbewezen => niet blind-trainbaar",
+    "tradableTime > predictionCutoff => onzichtbaar voor Machine 1",
+    "missing != 0",
+    "future evidence mag Machine 2 voeden maar nooit Machine 1 op eerdere cutoff",
+    "revisions blijven afzonderlijke vintages",
+    "iedere afgeleide feature bewaart parentEvidenceIds",
+    "ieder signaal heeft een eigen signalName; geen averaging van ongelijksoortige signalen"
+  ]
+}
