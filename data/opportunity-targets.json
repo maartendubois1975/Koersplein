@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "principle": "Koersplein onderzoekt alleen doel/horizon-combinaties met voldoende praktisch onderscheidend vermogen.",
+  "targets": [
+    {"returnPct":10,"horizonsMonths":[3,6]},
+    {"returnPct":20,"horizonsMonths":[3,6,9,12]},
+    {"returnPct":30,"horizonsMonths":[3,6,9,12,24]},
+    {"returnPct":50,"horizonsMonths":[3,6,9,12,24]},
+    {"returnPct":100,"horizonsMonths":[3,6,9,12,24]}
+  ]
+}
