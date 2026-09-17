@@ -29,20 +29,19 @@ jobs:
           node-version: '22'
       - name: Selecteer maximaal één volgend experiment binnen budget
         run: node scripts/research/autonomous-director.mjs | tee director.log
-      - name: Voer geselecteerd gecontroleerd experiment uit
+      - name: Voer geselecteerd inhoudelijk experiment uit
         run: |
           ID=$(grep '^EXPERIMENT_ID=' director.log | tail -1 | cut -d= -f2 || true)
           if [ -z "$ID" ]; then echo 'Geen experiment: stopstaat/budget.'; exit 0; fi
           echo "Research Director start $ID"
-          EXPERIMENT_ID="$ID" node scripts/research/model-arena-live.mjs
-          node scripts/research/publish-research-lab.mjs
-      - name: Bewaar Research Director staat en nieuw rapport
+          EXPERIMENT_ID="$ID" node scripts/research/experiment-arena.mjs
+      - name: Bewaar Research Director staat
         run: |
           git config user.name "Koersplein Research Director"
           git config user.email "research-director@users.noreply.github.com"
-          git add data/research-lab/director-state.json data/research-lab/latest.json data/research-lab/archive.json 2>/dev/null || true
+          git add data/research-lab/director-state.json 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Research Director: autonoom onderzoekscheckpoint"
+          git commit -m "Research Director: autonoom experimentcheckpoint"
           git pull --rebase origin main
           git push origin HEAD:main
       - name: Bewaar intern experimentrapport
@@ -51,6 +50,6 @@ jobs:
         with:
           name: autonomous-research-${{ github.run_number }}
           path: |
-            research/output/model-arena/
+            research/output/experiments/
             director.log
           retention-days: 90
