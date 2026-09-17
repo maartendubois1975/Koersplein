@@ -1,0 +1,9 @@
+{
+ "schemaVersion":"koersplein-fundamentals-v1",
+ "baseContract":"koersplein-pit-v1",
+ "purpose":"Bedrijfsfundamentals uitsluitend als afzonderlijke named signals met historische publicatie/vintage",
+ "dimensions":["ANNUAL","HALF_YEAR","QUARTER","TTM","POINT_IN_TIME_BALANCE"],
+ "signals":["revenue","revenue_growth","gross_profit","gross_margin","ebit","ebita","ebitda","operating_margin","net_income","eps_basic","eps_diluted","operating_cash_flow","free_cash_flow","capex","cash","gross_debt","net_debt","equity","assets","dividend_per_share","shares_outstanding","buyback_amount","order_intake","order_backlog","segment_revenue","segment_profit","guidance_revenue_low","guidance_revenue_high","guidance_margin_low","guidance_margin_high","guidance_eps_low","guidance_eps_high"],
+ "requiredContext":["accountingStandard","periodStart","periodEnd","fiscalYear","fiscalPeriod","reportedCurrency","scale","consolidationScope"],
+ "rules":["periodEnd is nooit publishedTime","ieder gerapporteerd cijfer is eigen evidence/vintage","restatement overschrijft origineel niet","afgeleide groei/marge bewaart parentEvidenceIds","geen semantische mapping zonder expliciete taxonomy/concept mapping","guidance range bewaart low/high apart","niet vergelijkbare accounting concepts niet middelen","onbewezen publication/tradable time => quarantine","missing blijft missing"]
+}
