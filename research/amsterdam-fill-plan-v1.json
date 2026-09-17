@@ -1,0 +1,8 @@
+{
+ "version":"amsterdam-fill-v1",
+ "block1Universe":{"existingPriceUniverse":"reuse existing 124 Amsterdam histories","historicalDeadListings":"required but not claim-complete until sourced","indexHistory":{"source":"Euronext Index Weightings back history","state":"LICENSE_GATE"},"corporateActions":"official Euronext/issuer events with proven effective and availability times"},
+ "block2Company":{"primary":"AFM financial reporting register","scope":"annual and semiannual filings; issuer originals can prove earlier publication","rule":"filing/reporting period is never assumed to be publication time","extract":"named fundamentals only with concept/unit/period lineage"},
+ "block3World":{"short":"AFM current+archive public positions; public regime begins 2012","macro":"ECB Data Portal with includeHistory vintages where available","expectations":"licensed historical consensus required for analyst consensus; company guidance remains separate public evidence","relative":"historical Euronext membership remains license-gated","newsEvents":"original timestamp + rights required"},
+ "completionRule":"report actual accepted/quarantined counts; never mark a family filled merely because an adapter exists",
+ "scheduler":"OFF"
+}
