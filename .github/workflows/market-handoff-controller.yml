@@ -1,0 +1,48 @@
+name: M00 Automatische beurs-handoff
+on:
+  workflow_run:
+    workflows:
+      - Parijs volledige historische vulling eenmalig
+      - M00 Wereldvuller
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: koersplein-market-handoff
+  cancel-in-progress: false
+jobs:
+  handoff:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+      MARKET_MIC: XPAR
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Controleer verborgen COMPLETE-signaal en bepaal opvolger
+        id: gate
+        run: |
+          node scripts/cloudflare/market-handoff-signal.mjs | tee handoff.log
+          NEXT=$(grep '^KOERSPLEIN_HANDOFF=' handoff.log | tail -1 | cut -d= -f2 || true)
+          echo "next=$NEXT" >> "$GITHUB_OUTPUT"
+      - name: Start volgende beurs zonder menselijk ingrijpen
+        if: ${{ steps.gate.outputs.next != '' }}
+        env:
+          NEXT_MIC: ${{ steps.gate.outputs.next }}
+        run: |
+          echo "Volgende markt automatisch geactiveerd: $NEXT_MIC"
+          MARKET_MIC="$NEXT_MIC" HISTORY_OFFSET=0 node scripts/cloudflare/universal-market-runner.mjs
+      - name: Bewaar verborgen overdrachtsbewijs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: market-handoff-${{ github.run_number }}
+          path: |
+            research/output/market-handoff-signal.json
+            research/output/world-fill-state.json
+          retention-days: 30
