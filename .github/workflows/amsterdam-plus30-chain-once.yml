@@ -9,6 +9,7 @@ permissions:
 jobs:
   analyze:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
@@ -25,3 +26,4 @@ jobs:
           name: amsterdam-plus30-chain-result
           path: research/output/plus30-chain/
           retention-days: 30
+# one-shot trigger 2026-09-17
