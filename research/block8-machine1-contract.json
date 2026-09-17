@@ -1,0 +1,10 @@
+{
+  "version":"machine1-blind-v2",
+  "input":"alleen trainingEligible PIT-evidence zichtbaar op predictionTime",
+  "cadence":"maandelijkse historische snapshots zolang instrument belegbaar is",
+  "horizonsMonths":[3,6,12,24],
+  "outputPerHorizon":["fullDistributionRef","expectedReturn","medianReturn","probabilityPositive","upsideProbabilities","downsideProbabilities","expectedVolatility","uncertainty","dataQuality","regime","topPositiveContributors","topNegativeContributors"],
+  "frozen":["predictionId","predictionTime","entityId","modelVersion","evidenceIds","outputs"],
+  "benchmarks":["always_up","market_return","sector_return","simple_momentum","historical_mean"],
+  "prohibitions":["future evidence","post-cutoff revisions","current-universe-only filtering","rewriting old predictions","family averaging of unlike signals"]
+}

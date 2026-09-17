@@ -1,0 +1,9 @@
+{
+  "version":"machine2-forensic-v2",
+  "inputs":["frozen Machine-1 prediction","realized outcome","known-at-T evidence","future evidence after T"],
+  "researchWindows":["+1d","+1w","+1m","+3m","+6m","+12m","+24m"],
+  "priorityCases":["largest absolute forecast errors","extreme winners","extreme losers","turning points","regime breaks","high-confidence wrong predictions"],
+  "directions":["forward: what follows a known pattern?","backward: what was knowable before later extreme outcomes?"],
+  "outputs":["forensic case","candidate explanation","candidate named signals","candidate interaction","candidate regime dependency","hypothesis proposals"],
+  "hardRule":"Machine 2 may know the future, but no Machine-2 conclusion can directly alter Machine 1."
+}
