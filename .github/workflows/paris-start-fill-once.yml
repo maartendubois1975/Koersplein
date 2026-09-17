@@ -1,0 +1,32 @@
+name: Parijs catalogus en eerste vulling eenmalig
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/paris-start-fill-once.yml]
+permissions:
+  contents: read
+concurrency:
+  group: koersplein-paris-start-once
+  cancel-in-progress: false
+jobs:
+  paris:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_API_TOKEN: ${{ secrets.KOERSPLEIN_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Haal officiële Euronext Parijs-catalogus op
+        run: node scripts/cloudflare/fetch-paris-catalog.mjs
+      - name: Start met twee Parijse canary-aandelen
+        run: node scripts/cloudflare/paris-canary-backfill.mjs
+      - name: Bewaar officiële catalogus als controle-artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: paris-first-catalog-and-canary
+          path: data/euronext-paris.json
+          retention-days: 30
