@@ -1,0 +1,29 @@
+name: Actuele plus30 kansscanner eenmalig
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/current-plus30-scanner-once.yml'
+permissions:
+  contents: read
+concurrency:
+  group: koersplein-current-plus30-scanner
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Rangschik actuele kandidaten
+        run: node scripts/research/current-plus30-scanner.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: actuele-plus30-kansscanner
+          path: research/output/current-scanner/plus30-3m.json
+          retention-days: 30
