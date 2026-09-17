@@ -1,10 +1,6 @@
 name: Amsterdam Machine 2 diepe historische detective
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - .github/machine2-run-2026-09-16-2.trigger
 permissions:
   actions: read
   contents: read
@@ -35,9 +31,11 @@ jobs:
         run: node scripts/research/machine2-evidence-gate.mjs
       - name: Leer patronen en maak alleen kandidaat-hypothesen
         run: node scripts/research/machine2-learn.mjs
+      - name: Maak autonome totaalanalyse
+        run: node scripts/research/machine2-autonomous-analysis.mjs
       - name: Bewaar volledige Machine 2 onderzoeksrun
         uses: actions/upload-artifact@v4
         with:
-          name: amsterdam-machine2-deep-run-v2
+          name: amsterdam-machine2-deep-run-v3
           path: research/output/machine2-deep
           retention-days: 30
