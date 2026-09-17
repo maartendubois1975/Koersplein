@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "name": "Koersplein Event Target Contract",
+  "primaryTarget": {"direction":"UP","thresholdPct":30,"withinMonths":3,"evaluation":"FIRST_TOUCH"},
+  "thresholdsPct": {"up":[5,10,20,30,50,100],"down":[-5,-10,-20,-30,-50]},
+  "horizonsMonths": [1,3,6,12,24],
+  "requiredOutcomeFields": ["instrument","anchorAt","anchorPrice","direction","thresholdPct","horizonMonths","hit","firstTouchAt","tradingDaysToTouch","maxFavorableExcursionPct","maxAdverseExcursionBeforeTouchPct","maxAdverseExcursionPct","terminalReturnPct","marketRelativeReturnPct","sectorRelativeReturnPct","corporateActionChecked","priceQualityChecked"],
+  "episodePolicy": {"retainRawAnchors":true,"clusterOverlappingHits":true,"episodeEntity":"TARGET_EPISODE","purpose":"avoid treating one economic rally as multiple independent discoveries"},
+  "forensicLookback": ["1d","1w","1m","3m","6m","12m"],
+  "factorFamilies": ["PRICE","TRADING","FUNDAMENTALS","FUND_CHANGE","VALUATION","EXPECTATIONS","MANAGEMENT","NETWORK","SECTOR","MARKET","EUROPE","GLOBAL","RATES","INFLATION","FX","COMMODITIES","CREDIT","RISK","FLOWS","INDEX","NEWS","ATTENTION","POLITICS","CENTRAL_BANKS","GEOPOLITICS","CALENDAR","SMART_MONEY","SHORT","OPTIONS","CORRELATION","REGIME","EVENT_REACTION","RELATIVE","INTERACTIONS"],
+  "controls": ["MARKET_COUNTERFACTUAL","SECTOR_COUNTERFACTUAL","PEER_COUNTERFACTUAL","NON_EVENT_MATCHES"],
+  "promotionPath": ["TARGET_LABEL","MACHINE2_FORENSICS","HYPOTHESIS","MACHINE3_FALSIFICATION","MACHINE4_COMPETITION","MACHINE1_NEW_VERSION"],
+  "laws": ["NO_FUTURE_LEAKAGE","NO_SURVIVORSHIP_BIAS","MISSING_NEVER_ZERO","VALIDATE_CORPORATE_ACTIONS","M2_NEVER_DIRECTLY_TEACHES_M1","OOS_PROOF_REQUIRED","FREEZE_PREDICTIONS","AUDIT_LINEAGE","TARGET_HIT_IS_NOT_PORTFOLIO_RETURN"]
+}
