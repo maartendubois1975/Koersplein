@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "outcomeDefinition": "target hit at any observed close after T and on or before horizon; never exact endpoint only",
+  "targets": {
+    "10": [3,6],
+    "20": [3,6,9,12],
+    "30": [3,6,9,12,24],
+    "50": [3,6,9,12,24],
+    "100": [3,6,9,12,24]
+  },
+  "recordPerObservation": ["hit","timeToHitDays","maxUpside","maxDrawdown","censored"],
+  "validation": {
+    "discovery": "XAMS",
+    "crossValidation": "XBRU",
+    "blindExam": "XPAR",
+    "walkForwardRequired": true,
+    "frozenThresholdRequired": true,
+    "baseline": "momentum",
+    "minimumSelected": 30,
+    "confidenceLevel": 0.95,
+    "multipleTesting": "benjamini-hochberg",
+    "blindExamReusableForTuning": false
+  }
+}
