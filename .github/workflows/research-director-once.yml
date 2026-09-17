@@ -1,0 +1,26 @@
+name: Research Director controle eenmalig
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/research-director-once.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  director:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Bouw onderzoeksagenda
+        run: node scripts/research/research-director.mjs
+      - name: Bouw modelarena
+        run: node scripts/research/model-arena.mjs
+      - name: Bewaar Director rapport
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-director-report
+          path: research/output/director
+          retention-days: 90
