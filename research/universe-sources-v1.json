@@ -1,0 +1,11 @@
+{
+ "version":1,
+ "sources":[
+  {"id":"EURONEXT_INDEX_HISTORY","tier":"A","use":["index membership","weights","review events"],"licenseGate":true,"note":"historische index-weightings/back history kan abonnement vereisen; nooit aannemen dat huidige leden historisch lid waren"},
+  {"id":"EURONEXT_CORPORATE_ACTIONS","tier":"A","use":["dividends","mergers","index review","divisor/corporate actions"],"licenseGate":true},
+  {"id":"EURONEXT_PUBLIC_NOTICES","tier":"A","use":["listing/delisting","issuer notices","corporate events"],"licenseGate":false,"rule":"alleen gebruiken met oorspronkelijke publicatie/effective timestamp"},
+  {"id":"AFM_REGISTERS","tier":"A","use":["issuer filings","regulated disclosures","identity corroboration"],"licenseGate":false},
+  {"id":"ISSUER_IR","tier":"A","use":["IPO","merger","acquisition","name changes","corporate actions"],"licenseGate":false,"rule":"origineel gedateerd document vereist"}
+ ],
+ "quarantine":"conflicterende identiteit, ontbrekende eventtijd of onduidelijke rechten nooit stilletjes oplossen"
+}
