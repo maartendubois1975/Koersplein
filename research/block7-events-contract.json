@@ -1,0 +1,15 @@
+{
+  "version":"events-pit-v1",
+  "families":["COMPANY_EVENT","MANAGEMENT","M_AND_A","CAPITAL_ALLOCATION","REGULATION","INDEX_EVENT","SHORT","FLOW","NEWS","ATTENTION","GEOPOLITICS","SUPPLY_CHAIN"],
+  "eventFields":["eventId","entityId","eventType","eventTime","publishedTime","tradableTime","sourceId","sourceUrl","contentHash","licenseStatus","trainingEligible"],
+  "rules":[
+    "eventTime is niet automatisch publishedTime of tradableTime",
+    "geen historisch sentiment zonder origineel tijdgestempeld document",
+    "AI-extractie bewaart documenthash, modelversie en bewijsfragment-id",
+    "future events zijn Machine-2-evidence en nooit eerdere Machine-1-features",
+    "onbewezen timestamp of gebruiksrecht => quarantaine",
+    "zelfde gebeurtenis uit meerdere bronnen wordt gelinkt, niet blind dubbelgeteld"
+  ],
+  "derivedNamedSignals":["news_tone","management_language_change","guidance_event","buyback_event","short_interest_change","index_entry_exit","mna_state","regulatory_pressure","attention_change"],
+  "aiRole":"AI mag tekst structureren en hypotheses voorstellen; statistische validatie bepaalt nooit op basis van AI-oordeel alleen predictive status."
+}
