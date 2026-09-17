@@ -22,7 +22,7 @@ jobs:
           node-version: 22
       - name: Haal officiële Euronext Parijs-catalogus op
         run: node scripts/cloudflare/fetch-paris-catalog.mjs
-      - name: Start met twee Parijse canary-aandelen
+      - name: Start met twee Parijse canary-aandelen na XPAR-registratie
         run: node scripts/cloudflare/paris-canary-backfill.mjs
       - name: Bewaar officiële catalogus als controle-artifact
         if: always()
