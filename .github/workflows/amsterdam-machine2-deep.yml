@@ -29,13 +29,19 @@ jobs:
         run: node scripts/research/machine2-public-evidence.mjs
       - name: Controleer evidence gate
         run: node scripts/research/machine2-evidence-gate.mjs
-      - name: Leer patronen en maak alleen kandidaat-hypothesen
+      - name: Bouw forensische uitkomstdossiers
+        run: node scripts/research/machine2-forensic-intelligence.mjs
+      - name: Leer patronen zonder directe modelpromotie
         run: node scripts/research/machine2-learn.mjs
       - name: Maak autonome totaalanalyse
         run: node scripts/research/machine2-autonomous-analysis.mjs
+      - name: Bewaak multiple testing en false discoveries
+        run: node scripts/research/machine2-statistical-guard.mjs
+      - name: Maak gecontroleerde leervoorstellen voor Machine 1
+        run: node scripts/research/machine2-teaching-contract.mjs
       - name: Bewaar volledige Machine 2 onderzoeksrun
         uses: actions/upload-artifact@v4
         with:
-          name: amsterdam-machine2-deep-run-v3
+          name: amsterdam-machine2-deep-run-v4
           path: research/output/machine2-deep
           retention-days: 30
