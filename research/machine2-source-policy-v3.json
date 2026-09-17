@@ -1,0 +1,17 @@
+{
+  "version":3,
+  "sources":{
+    "ECB":{"tier":"A","mode":"PUBLIC_API","vintage":"includeHistory=true","training":"ALLOW_ONLY_WHEN_RELEASE_VERSION_TIME_PROVEN"},
+    "AFM_SHORT":{"tier":"A","mode":"PUBLIC_REGISTER","historyAvailable":true,"exports":["CSV","XML"],"training":"QUARANTINE_UNTIL_PUBLICATION_TIME_PROVEN","note":"Positiedatum is niet automatisch publicatiedatum."},
+    "EURONEXT_CORPORATE_ACTIONS":{"tier":"A","mode":"LICENSED_PRODUCT_OR_PUBLIC_NOTICE","training":"ALLOW_NOTICE_ONLY_WITH_ORIGINAL_PUBLICATION_TIMESTAMP","licensingGate":true},
+    "ISSUER_IR":{"tier":"A_OR_C","mode":"ORIGINAL_REPORT_OR_ARCHIVE","training":"ALLOW_ONLY_ORIGINAL_DOCUMENT_WITH_PUBLICATION_TIMESTAMP"},
+    "EUROSTAT":{"tier":"A","mode":"PUBLIC_API","training":"QUARANTINE_CURRENT_REVISED_VALUES_UNLESS_VINTAGE_PROVEN"}
+  },
+  "globalRules":[
+    "Geen geschatte publicatietijden",
+    "Geen huidige herziene waarde terugplaatsen in het verleden",
+    "Geen ontbrekende waarde als nul",
+    "Geen betaalde of gelicentieerde data publiek herdistribueren zonder rechten",
+    "Future evidence mag verklaren maar nooit historische feature worden"
+  ]
+}
