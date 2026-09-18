@@ -5,7 +5,7 @@ on:
     paths: ['.github/workflows/paris-full-backfill-once.yml']
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: koersplein-paris-full-backfill
   cancel-in-progress: false
@@ -18,16 +18,28 @@ jobs:
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+        with: { ref: main }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
-      - name: Vernieuw officiële Parijs-catalogus
+      - name: Vernieuw officiële Parijs-catalogus met MIC
         run: node scripts/cloudflare/fetch-paris-catalog.mjs
-      - name: Vul volledige historische Parijs-catalogus
+      - name: Vul en herstel volledige historische Parijs-catalogus
         run: node scripts/cloudflare/paris-full-backfill.mjs
+      - name: Valideer alle Parijse koersreeksen
+        run: node scripts/cloudflare/validate-paris-history.mjs
+      - name: Bewaar catalogus en validatierapport
+        if: always()
+        run: |
+          git config user.name "koersplein-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/euronext-paris.json research/output/paris/full-backfill-summary.json research/output/paris/validation-summary.json || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Parijs catalogus en historievalidatie"
+          git push origin HEAD:main
       - name: Bewaar eindrapport
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: paris-full-backfill-summary
-          path: research/output/paris/full-backfill-summary.json
+          path: research/output/paris/
           retention-days: 30
