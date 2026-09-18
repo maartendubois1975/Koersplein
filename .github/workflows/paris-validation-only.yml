@@ -21,6 +21,10 @@ jobs:
         with: { ref: main }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
+      - name: Haal officiële Parijs-catalogus op voor validatie
+        run: node scripts/cloudflare/fetch-paris-catalog.mjs
+      - name: Controleer validatie-input
+        run: test -s data/euronext-paris.json
       - name: Valideer bestaande Parijse koersreeksen zonder nieuwe backfill
         run: node scripts/cloudflare/validate-paris-history.mjs
       - name: Bewaar validatierapport
@@ -28,7 +32,7 @@ jobs:
         run: |
           git config user.name "koersplein-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add research/output/paris/validation-summary.json || true
+          git add data/euronext-paris.json research/output/paris/validation-summary.json || true
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Parijs losse historievalidatie"
           git pull --rebase origin main
