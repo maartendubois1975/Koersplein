@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-09-18T07:44:49.044Z",
+  "status": "COMPLETED",
+  "scope": "Amsterdam ↔ Brussel",
+  "target": "+30%",
+  "trials": 40,
+  "promoted": 13,
+  "rejected": 17,
+  "best": {
+    "discovery": "Amsterdam",
+    "test": "Brussel",
+    "horizonMonths": 12,
+    "model": "breakout",
+    "selected": 2086,
+    "baseRate": "17.1%",
+    "hitRate": "31.2%",
+    "lift": "14.0%"
+  },
+  "nextResearchIdeas": [
+    {
+      "hypothesis": "Regime conditionering verbetert cross-market +30 lift",
+      "test": "splits bull/bear/volatility regimes point-in-time en herhaal frozen cross-test"
+    },
+    {
+      "hypothesis": "Signaalvolgorde versnelling-terugval-herstel bevat meer informatie dan niveaufeatures",
+      "test": "bouw causale sequence features en vergelijk incremental lift"
+    },
+    {
+      "hypothesis": "Cross-stock breadth verbetert individuele kansen",
+      "test": "voeg uitsluitend op T bekende marktbreedte toe en voer ablation uit"
+    }
+  ],
+  "rules": [
+    "Alleen informatie beschikbaar op datum T",
+    "Regel/drempel wordt vóór de andere markt bevroren",
+    "Complexer model moet de momentum-baseline buiten de leermarkt verbeteren"
+  ],
+  "note": "Historische onderzoeksuitkomsten zijn geen voorspelling of rendementsbelofte."
+}
