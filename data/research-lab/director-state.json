@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "lastRun": "2026-09-18T07:45:03.868Z",
+  "today": "2026-09-18",
+  "runsToday": 1,
+  "lastExperiment": "REGIME_30",
+  "history": [
+    {
+      "at": "2026-09-18T07:45:03.868Z",
+      "experiment": "REGIME_30",
+      "reason": "Test of point-in-time marktregimes cross-market lift toevoegen."
+    }
+  ],
+  "status": "EXPERIMENT_SELECTED",
+  "next": {
+    "id": "REGIME_30",
+    "title": "Marktregimes en +30% signalen",
+    "script": "scripts/research/model-arena-live.mjs",
+    "purpose": "Test of point-in-time marktregimes cross-market lift toevoegen."
+  },
+  "lastDataDate": "2026-09-18"
+}
