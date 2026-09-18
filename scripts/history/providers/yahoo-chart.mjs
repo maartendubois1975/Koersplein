@@ -4,7 +4,9 @@ const API_ROOT = 'https://query1.finance.yahoo.com/v8/finance/chart';
 const MARKET_RULES = {
   XAMS: { suffix: '.AS', exchanges: ['ams', 'aex', 'amsterdam'] },
   XBRU: { suffix: '.BR', exchanges: ['bru', 'brussels', 'brussel'] },
-  XPAR: { suffix: '.PA', exchanges: ['par', 'paris', 'euronext paris'] }
+  XPAR: { suffix: '.PA', exchanges: ['par', 'paris', 'euronext paris'] },
+  ALXP: { suffix: '.PA', exchanges: ['par', 'paris', 'euronext growth paris'] },
+  XMLI: { suffix: '.PA', exchanges: ['par', 'paris', 'euronext access paris'] }
 };
 
 const isoDate = (unixSeconds) => new Date(unixSeconds * 1000).toISOString().slice(0, 10);
