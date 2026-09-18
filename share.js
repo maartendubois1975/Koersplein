@@ -1,59 +1,33 @@
 import { renderHistoryChart, validateHistoryDocument } from './chart.js';
-
-const escapeHtml = (value) => String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
-const isin = new URLSearchParams(location.search).get('isin');
-const detail = document.querySelector('#share-detail');
-const historyState = document.querySelector('#history-state');
-const loadJson = async (url) => {
-  const response = await fetch(url, { cache: 'no-store' });
-  if (!response.ok) throw new Error(`HTTP ${response.status} voor ${new URL(url, document.baseURI).pathname}`);
-  return response.json();
-};
-
-function showHistoryError(message) {
-  historyState.className = 'history-empty';
-  historyState.innerHTML = `<strong>Historie tijdelijk niet beschikbaar</strong><p>${escapeHtml(message)}.</p>`;
-  document.querySelector('#history-range').textContent = '—';
-}
-
+const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
+const isin=new URLSearchParams(location.search).get('isin'),detail=document.querySelector('#share-detail'),historyState=document.querySelector('#history-state');
+const load=async url=>{const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error(`HTTP ${r.status}`);return r.json()};
+const optional=async url=>{try{return await load(url)}catch{return null}};
+const fail=m=>{historyState.className='history-empty';historyState.innerHTML=`<strong>Historie tijdelijk niet beschikbaar</strong><p>${esc(m)}.</p>`;document.querySelector('#history-range').textContent='—'};
 Promise.all([
-  loadJson(new URL('data/euronext-amsterdam.json', document.baseURI)),
-  loadJson(new URL('data/euronext-amsterdam-indices.json', document.baseURI)),
-  loadJson(new URL('data/runtime-config.json', document.baseURI)).catch(() => ({ apiBaseUrl: '' }))
-]).then(async ([shareData, indexData, runtime]) => {
-  const share = shareData.shares.find((item) => item.isin === isin);
-  if (!share) throw new Error('Aandeel niet gevonden');
-  const index = indexData.indices.find((item) => item.constituents.some((member) => member.isin === share.isin));
-  const indexName = index?.displayName || 'Overig';
-  document.title = `${share.name} — Koersplein`;
-  document.querySelector('#crumb-share').textContent = share.name;
-  detail.innerHTML = `<div><p class="eyebrow">Euronext Amsterdam · ${escapeHtml(indexName)}</p><h1>${escapeHtml(share.name)}</h1><div class="identity-line"><span class="ticker">${escapeHtml(share.symbol)}</span><span>${escapeHtml(share.isin)}</span><span>XAMS</span></div></div><div class="latest-price"><span>Laatste koers</span><strong>—</strong><small>Historie wordt geladen</small></div>`;
-
-  try {
-    const apiBaseUrl = String(runtime.apiBaseUrl || '').replace(/\/$/, '');
-    if (!apiBaseUrl) throw new Error('Koersplein API is niet geconfigureerd');
-    const manifestUrl = new URL(`${apiBaseUrl}/api/history/manifest.json`);
-    const manifest = await loadJson(manifestUrl);
-    const entry = manifest.instruments?.[share.isin];
-    if (!entry?.file) throw new Error(`Geen gepubliceerde historiekoppeling voor ${share.isin}`);
-    if (entry.symbol !== share.symbol || entry.mic !== 'XAMS') throw new Error('Historie-manifest heeft een onjuiste identiteit');
-    const historyUrl = new URL(entry.file, `${apiBaseUrl}/`);
-    const history = await loadJson(historyUrl);
-    if (history.coverage?.recordCount != null && history.coverage.records == null) history.coverage.records = history.coverage.recordCount;
-    const bars = validateHistoryDocument(history, share);
-    const coverage = history.coverage;
-    document.querySelector('#history-range').textContent = `${coverage.firstDate} — ${coverage.lastDate}`;
-    renderHistoryChart(historyState, bars, { currency: history.instrument.currency || 'EUR' });
-    const source = document.createElement('p');
-    source.className = 'history-source';
-    source.textContent = `${bars.length.toLocaleString('nl-NL')} dagrecords · Koersplein-datastore · bijgewerkt ${new Intl.DateTimeFormat('nl-NL', { dateStyle: 'medium' }).format(new Date(history.provider.retrievedAt))}`;
-    historyState.append(source);
-    const last = bars.at(-1);
-    detail.querySelector('.latest-price').innerHTML = `<span>Laatste slotkoers</span><strong>${Number(last.close).toLocaleString('nl-NL', { style: 'currency', currency: history.instrument.currency || 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong><small>${escapeHtml(last.date)}</small>`;
-  } catch (error) {
-    showHistoryError(error.message);
-  }
-}).catch((error) => {
-  detail.innerHTML = `<div><p class="eyebrow">Niet beschikbaar</p><h1>${escapeHtml(error.message)}</h1><p><a class="button ghost" href="index.html#amsterdam">Terug naar Amsterdam</a></p></div>`;
-  showHistoryError('Aandeelgegevens konden niet worden geladen');
-});
+ optional('data/euronext-amsterdam.json'),optional('data/euronext-brussels.json'),optional('data/euronext-paris.json'),
+ load('data/runtime-config.json').catch(()=>({apiBaseUrl:''}))
+]).then(async ([ams,bru,par,runtime])=>{
+ const catalogs=[
+  {data:ams,venue:'Amsterdam',defaultMic:'XAMS',back:'index.html#amsterdam'},
+  {data:bru,venue:'Brussel',defaultMic:'XBRU',back:'brussel.html'},
+  {data:par,venue:'Parijs',defaultMic:'XPAR',back:'parijs.html'}
+ ].filter(x=>x.data);
+ let found=null;
+ for(const cat of catalogs){const s=(cat.data.shares||[]).find(x=>x.isin===isin);if(s){found={...cat,share:s};break}}
+ if(!found)throw Error('Aandeel niet gevonden');
+ const {share,venue,defaultMic,back}=found,mic=share.mic||defaultMic;
+ document.title=`${share.name} — Koersplein`;document.querySelector('#crumb-share').textContent=share.name;
+ const backLink=document.querySelector('.back-link');backLink.href=back;backLink.textContent=`← ${venue}`;
+ detail.innerHTML=`<div><p class="eyebrow">Euronext ${esc(venue)} · ${esc(mic)}</p><h1>${esc(share.name)}</h1><div class="identity-line"><span class="ticker">${esc(share.symbol)}</span><span>${esc(share.isin)}</span><span>${esc(mic)}</span></div></div><div class="latest-price"><span>Laatste koers</span><strong>—</strong><small>Historie wordt geladen</small></div>`;
+ try{
+  const api=String(runtime.apiBaseUrl||'').replace(/\/$/,'');if(!api)throw Error('Koersplein API is niet geconfigureerd');
+  const h=await load(`${api}/api/history/${encodeURIComponent(share.isin)}`);
+  if(h.coverage?.recordCount!=null&&h.coverage.records==null)h.coverage.records=h.coverage.recordCount;
+  const bars=validateHistoryDocument(h,share),first=bars[0],last=bars.at(-1),currency=h.instrument?.currency||'EUR';
+  document.querySelector('#history-range').textContent=`${first.date} — ${last.date}`;
+  renderHistoryChart(historyState,bars,{currency});
+  const p=document.createElement('p');p.className='history-source';p.textContent=`${bars.length.toLocaleString('nl-NL')} gevalideerde dagrecords · ${first.date} t/m ${last.date}`;historyState.append(p);
+  detail.querySelector('.latest-price').innerHTML=`<span>Laatste slotkoers</span><strong>${Number(last.close).toLocaleString('nl-NL',{style:'currency',currency,minimumFractionDigits:2,maximumFractionDigits:2})}</strong><small>${esc(last.date)} · historie vanaf ${esc(first.date)}</small>`;
+ }catch(e){fail(e.message)}
+}).catch(e=>{detail.innerHTML=`<div><p class="eyebrow">Niet beschikbaar</p><h1>${esc(e.message)}</h1></div>`;fail('Aandeelgegevens konden niet worden geladen')});
