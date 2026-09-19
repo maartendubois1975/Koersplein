@@ -1,94 +1,567 @@
 {
-  "generatedAt": "2026-09-18T20:12:41.382Z",
+  "generatedAt": "2026-09-19T14:13:17.219Z",
   "market": "PARIS",
   "catalog": 770,
-  "valid": 716,
-  "invalidCount": 54,
-  "records": 3185901,
-  "firstDate": "1990-01-01",
+  "equityUniverse": 753,
+  "researchEligible": 457,
+  "alternativeSourceRequired": 15,
+  "providerUnavailable": 15,
+  "excludedNonEquityCount": 17,
+  "invalidCount": 281,
+  "records": 1717654,
+  "firstDate": "1990-08-24",
   "lastDate": "2026-09-18",
-  "invalid": [
+  "excludedNonEquity": [
     {
       "isin": "FR001400ZRT0",
       "symbol": "ABBS",
       "mic": "XPAR",
-      "error": "geen historie"
+      "reason": "NON_EQUITY_INSTRUMENT"
     },
     {
       "isin": "FR00140118Z8",
       "symbol": "ABSBS",
       "mic": "ALXP",
-      "error": "geen historie"
+      "reason": "NON_EQUITY_INSTRUMENT"
     },
     {
       "isin": "FR0014011S49",
       "symbol": "ABBSA",
       "mic": "ALXP",
-      "error": "geen historie"
-    },
-    {
-      "isin": "AU000000AON7",
-      "symbol": "ALAON",
-      "mic": "ALXP",
-      "error": "geen historie"
-    },
-    {
-      "isin": "FR0000063737",
-      "symbol": "AUB",
-      "mic": "XPAR",
-      "error": "HTTP 503"
-    },
-    {
-      "isin": "FR0000061780",
-      "symbol": "AUGR",
-      "mic": "XPAR",
-      "error": "HTTP 503"
-    },
-    {
-      "isin": "ES0106008008",
-      "symbol": "MLBIM",
-      "mic": "XMLI",
-      "error": "geen historie"
-    },
-    {
-      "isin": "FR001401AY03",
-      "symbol": "BIBS4",
-      "mic": "ALXP",
-      "error": "geen historie"
+      "reason": "NON_EQUITY_INSTRUMENT"
     },
     {
       "isin": "FR0013507985",
       "symbol": "IBRKA",
       "mic": "ALXP",
-      "error": "geen historie"
+      "reason": "NON_EQUITY_INSTRUMENT"
     },
     {
       "isin": "FR0013508009",
       "symbol": "IBRKB",
       "mic": "ALXP",
-      "error": "geen historie"
+      "reason": "NON_EQUITY_INSTRUMENT"
     },
     {
       "isin": "FR001400OJ72",
       "symbol": "COBS1",
       "mic": "XPAR",
-      "error": "geen historie"
+      "reason": "NON_EQUITY_INSTRUMENT"
     },
     {
       "isin": "FR001400OJ98",
       "symbol": "COBS3",
       "mic": "XPAR",
-      "error": "geen historie"
+      "reason": "NON_EQUITY_INSTRUMENT"
     },
     {
       "isin": "FR0014004JF6",
       "symbol": "DEEZW",
       "mic": "XPAR",
-      "error": "geen historie"
+      "reason": "NON_EQUITY_INSTRUMENT"
+    },
+    {
+      "isin": "FR0014011219",
+      "symbol": "DRNBS",
+      "mic": "ALXP",
+      "reason": "NON_EQUITY_INSTRUMENT"
+    },
+    {
+      "isin": "FR001401ARU9",
+      "symbol": "DV31",
+      "mic": "ALXP",
+      "reason": "NON_EQUITY_INSTRUMENT"
+    },
+    {
+      "isin": "FR00140188H9",
+      "symbol": "DVBS6",
+      "mic": "ALXP",
+      "reason": "NON_EQUITY_INSTRUMENT"
+    },
+    {
+      "isin": "FR0014010IB4",
+      "symbol": "SIGBS",
+      "mic": "ALXP",
+      "reason": "NON_EQUITY_INSTRUMENT"
+    },
+    {
+      "isin": "FR0013472446",
+      "symbol": "MASBS",
+      "mic": "ALXP",
+      "reason": "NON_EQUITY_INSTRUMENT"
+    },
+    {
+      "isin": "FR0011844067",
+      "symbol": "PATBS",
+      "mic": "ALXP",
+      "reason": "NON_EQUITY_INSTRUMENT"
+    },
+    {
+      "isin": "FR0010649228",
+      "symbol": "SMLBS",
+      "mic": "XMLI",
+      "reason": "NON_EQUITY_INSTRUMENT"
+    },
+    {
+      "isin": "FR001400Z5J4",
+      "symbol": "STEBS",
+      "mic": "ALXP",
+      "reason": "NON_EQUITY_INSTRUMENT"
+    },
+    {
+      "isin": "LU2999660207",
+      "symbol": "YOUNW",
+      "mic": "XPAR",
+      "reason": "NON_EQUITY_INSTRUMENT"
+    }
+  ],
+  "unavailable": [
+    {
+      "isin": "AU000000AON7",
+      "symbol": "ALAON",
+      "mic": "ALXP",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0106008008",
+      "symbol": "MLBIM",
+      "mic": "XMLI",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105964003",
+      "symbol": "MLESV",
+      "mic": "XMLI",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0106046016",
+      "symbol": "MLEXP",
+      "mic": "XMLI",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105807004",
+      "symbol": "MLGNS",
+      "mic": "XMLI",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "IT0005613739",
+      "symbol": "MLGL",
+      "mic": "XMLI",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0106042007",
+      "symbol": "MLHA2",
+      "mic": "XMLI",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "FR001400QW73",
+      "symbol": "MLIME",
+      "mic": "XMLI",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105698007",
+      "symbol": "MLKPS",
+      "mic": "XMLI",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105910006",
+      "symbol": "MLSJA",
+      "mic": "XMLI",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "IT0005380602",
+      "symbol": "ALIE",
+      "mic": "ALXP",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105851002",
+      "symbol": "MLSPI",
+      "mic": "XMLI",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105748000",
+      "symbol": "MLURC",
+      "mic": "XMLI",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "FR0014010YR7",
+      "symbol": "ALVER",
+      "mic": "ALXP",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105962007",
+      "symbol": "MLVIC",
+      "mic": "XMLI",
+      "error": "geen historie",
+      "reason": "ALTERNATIVE_SOURCE_REQUIRED"
+    }
+  ],
+  "invalid": [
+    {
+      "isin": "FR0010425595",
+      "symbol": "ALCLS",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "BE0974260896",
+      "symbol": "CYAD",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000037475",
+      "symbol": "CFI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "MC0010000826",
+      "symbol": "MLCFM",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000037871",
+      "symbol": "MLCFD",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000060907",
+      "symbol": "CHSR",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010447086",
+      "symbol": "MLCHE",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000130403",
+      "symbol": "CDI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000054322",
+      "symbol": "ALCBX",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000060428",
+      "symbol": "MLCMB",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000130692",
+      "symbol": "CRI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013426004",
+      "symbol": "ALCLA",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010386334",
+      "symbol": "CLARI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013406881",
+      "symbol": "MLCMG",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010667147",
+      "symbol": "COFA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013257409",
+      "symbol": "ALCOF",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011071570",
+      "symbol": "ALCOG",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004031763",
+      "symbol": "COH",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "BE0160342011",
+      "symbol": "ALCOI",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010959684",
+      "symbol": "MLCLP",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000062234",
+      "symbol": "ODET",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "BE6252013725",
+      "symbol": "MLMFI",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000077828",
+      "symbol": "MLCNT",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010035816",
+      "symbol": "MLCOR",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004998318",
+      "symbol": "MLCOU",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000065393",
+      "symbol": "COUR",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000064578",
+      "symbol": "COV",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000060303",
+      "symbol": "COVH",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000044323",
+      "symbol": "CRAP",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000185506",
+      "symbol": "CRAV",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010483768",
+      "symbol": "CRBP2",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000045213",
+      "symbol": "CIV",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010461053",
+      "symbol": "CRLA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000045239",
+      "symbol": "CRLO",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000045551",
+      "symbol": "CMO",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000185514",
+      "symbol": "CNDF",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000044364",
+      "symbol": "CCN",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000045528",
+      "symbol": "CAF",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000045346",
+      "symbol": "CRSU",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000045304",
+      "symbol": "CRTO",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000045072",
+      "symbol": "ACA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011716265",
+      "symbol": "ALCJ",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000050395",
+      "symbol": "CROS",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010404368",
+      "symbol": "ALDLS",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000077885",
+      "symbol": "MLDAM",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000185423",
+      "symbol": "ALDAR",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000120644",
+      "symbol": "BN",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0014004L86",
+      "symbol": "AM",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0014003TT8",
+      "symbol": "DSY",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR001400LO86",
+      "symbol": "ALDBT",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010417345",
+      "symbol": "DBV",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000062978",
+      "symbol": "DKUPL",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000054132",
+      "symbol": "ALDEL",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013283108",
+      "symbol": "ALDLT",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000053381",
+      "symbol": "DBG",
+      "mic": "XPAR",
+      "error": "HTTP 503"
     },
     {
       "isin": "FR0000060840",
       "symbol": "ALDEV",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0012202497",
+      "symbol": "ALDMS",
       "mic": "ALXP",
       "error": "HTTP 503"
     },
@@ -99,28 +572,286 @@
       "error": "HTTP 503"
     },
     {
-      "isin": "FR0014011219",
-      "symbol": "DRNBS",
-      "mic": "ALXP",
-      "error": "geen historie"
+      "isin": "FR0000065260",
+      "symbol": "DPAM",
+      "mic": "XPAR",
+      "error": "HTTP 503"
     },
     {
-      "isin": "FR001401ARU9",
-      "symbol": "DV31",
+      "isin": "FR001400SP13",
+      "symbol": "ALDOL",
       "mic": "ALXP",
-      "error": "geen historie"
+      "error": "HTTP 503"
     },
     {
-      "isin": "FR00140188H9",
-      "symbol": "DVBS6",
+      "isin": "FR0013331212",
+      "symbol": "ALDNE",
       "mic": "ALXP",
-      "error": "geen historie"
+      "error": "HTTP 503"
     },
     {
-      "isin": "ES0105964003",
-      "symbol": "MLESV",
+      "isin": "FR001400SVN0",
+      "symbol": "ALDRV",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000052920",
+      "symbol": "MLDYN",
       "mic": "XMLI",
-      "error": "geen historie"
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010428771",
+      "symbol": "EFG",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "HK0000038783",
+      "symbol": "MLEAS",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0007200100",
+      "symbol": "MLEDR",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010536185",
+      "symbol": "MLEAV",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011490648",
+      "symbol": "ALESA",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010908533",
+      "symbol": "EDEN",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "IT0005351504",
+      "symbol": "ALEAC",
+      "mic": "ALXP",
+      "error": "HTTP 502"
+    },
+    {
+      "isin": "FR0010882886",
+      "symbol": "ALEFA",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000072373",
+      "symbol": "ALGID",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000130452",
+      "symbol": "FGR",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011466069",
+      "symbol": "EKI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000031023",
+      "symbol": "ELEC",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000035719",
+      "symbol": "EEM",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011950732",
+      "symbol": "ELIOR",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0012435121",
+      "symbol": "ELIS",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR001400NLM4",
+      "symbol": "EMEIS",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013356755",
+      "symbol": "ALEMV",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004030708",
+      "symbol": "ALDUB",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013330792",
+      "symbol": "ALNN6",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010208488",
+      "symbol": "ENGI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010465534",
+      "symbol": "ALEO2",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0012882389",
+      "symbol": "EQS",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000131757",
+      "symbol": "ERA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000121667",
+      "symbol": "EL",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010424697",
+      "symbol": "ALENT",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000061475",
+      "symbol": "EFI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010844001",
+      "symbol": "ALEUA",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000121121",
+      "symbol": "RF",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013240934",
+      "symbol": "ALERS",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013256518",
+      "symbol": "ALECR",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0014000MR3",
+      "symbol": "ERF",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010157115",
+      "symbol": "ALERO",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "NL0006294274",
+      "symbol": "ENX",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010490920",
+      "symbol": "ALECP",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "BE0974497290",
+      "symbol": "ALEMS",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0014011QJ8",
+      "symbol": "ALEUP",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010221234",
+      "symbol": "ETL",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000035784",
+      "symbol": "EGR",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000064164",
+      "symbol": "ALEXA",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000062671",
+      "symbol": "EXA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004527638",
+      "symbol": "EXE",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0014003AQ4",
+      "symbol": "EXPL",
+      "mic": "XPAR",
+      "error": "HTTP 503"
     },
     {
       "isin": "ES0106046008",
@@ -129,10 +860,64 @@
       "error": "geen historie"
     },
     {
-      "isin": "ES0106046016",
-      "symbol": "MLEXP",
+      "isin": "FR0000062101",
+      "symbol": "FCMC",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011271600",
+      "symbol": "ALGAE",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000061418",
+      "symbol": "SACI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000060535",
+      "symbol": "ORIA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011665280",
+      "symbol": "FGA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "SN0000033192",
+      "symbol": "FOAF",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000060824",
+      "symbol": "FINM",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010487272",
+      "symbol": "MLFXO",
       "mic": "XMLI",
-      "error": "geen historie"
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000038184",
+      "symbol": "FIPP",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "CH0120879058",
+      "symbol": "MLFIR",
+      "mic": "XMLI",
+      "error": "HTTP 503"
     },
     {
       "isin": "FR0000074759",
@@ -147,76 +932,460 @@
       "error": "HTTP 503"
     },
     {
+      "isin": "FR0013230067",
+      "symbol": "MLFNP",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
       "isin": "FR0000065930",
       "symbol": "LEBL",
       "mic": "XPAR",
       "error": "HTTP 503"
     },
     {
-      "isin": "ES0105807004",
-      "symbol": "MLGNS",
-      "mic": "XMLI",
-      "error": "geen historie"
+      "isin": "FR0010341032",
+      "symbol": "INEA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
     },
     {
-      "isin": "FR0014010IB4",
-      "symbol": "SIGBS",
+      "isin": "FR0011605617",
+      "symbol": "MLVIN",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000053944",
+      "symbol": "SPEL",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "CI0000053161",
+      "symbol": "FORE",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000121147",
+      "symbol": "FRVIA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010485268",
+      "symbol": "ALFPC",
       "mic": "ALXP",
-      "error": "geen historie"
+      "error": "HTTP 503"
     },
     {
-      "isin": "IT0005613739",
-      "symbol": "MLGL",
-      "mic": "XMLI",
-      "error": "geen historie"
-    },
-    {
-      "isin": "ES0106042007",
-      "symbol": "MLHA2",
-      "mic": "XMLI",
-      "error": "geen historie"
-    },
-    {
-      "isin": "FR001400QW73",
-      "symbol": "MLIME",
-      "mic": "XMLI",
-      "error": "geen historie"
-    },
-    {
-      "isin": "ES0105698007",
-      "symbol": "MLKPS",
-      "mic": "XMLI",
-      "error": "geen historie"
-    },
-    {
-      "isin": "FR0000062796",
-      "symbol": "POMRY",
+      "isin": "FR0013030152",
+      "symbol": "FDE",
       "mic": "XPAR",
       "error": "HTTP 503"
     },
     {
-      "isin": "FR0000030074",
-      "symbol": "MALT",
-      "mic": "XPAR",
+      "isin": "FR0010823724",
+      "symbol": "MLFTI",
+      "mic": "XMLI",
       "error": "HTTP 503"
     },
     {
-      "isin": "FR0000038606",
-      "symbol": "MTU",
-      "mic": "XPAR",
-      "error": "HTTP 503"
-    },
-    {
-      "isin": "MA0000011488",
-      "symbol": "IAM",
-      "mic": "XPAR",
-      "error": "HTTP 503"
-    },
-    {
-      "isin": "FR0013472446",
-      "symbol": "MASBS",
+      "isin": "FR0004187367",
+      "symbol": "ALFRE",
       "mic": "ALXP",
-      "error": "geen historie"
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010588079",
+      "symbol": "FREY",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000031973",
+      "symbol": "FSDV",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000053415",
+      "symbol": "MLGAI",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011100759",
+      "symbol": "MLGAL",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000124414",
+      "symbol": "ALBI",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000034894",
+      "symbol": "GAM",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000053035",
+      "symbol": "GEA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR001400M1R1",
+      "symbol": "ALGEC",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010040865",
+      "symbol": "GFC",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004163111",
+      "symbol": "GNFT",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004053510",
+      "symbol": "ALGEN",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013183985",
+      "symbol": "SIGHT",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "PTGVE1AM0017",
+      "symbol": "MLGEQ",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010533075",
+      "symbol": "GET",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000033888",
+      "symbol": "ALGEV",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000066672",
+      "symbol": "GLO",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010214064",
+      "symbol": "GPE",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000065971",
+      "symbol": "GRVO",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000076960",
+      "symbol": "MLGRC",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000036675",
+      "symbol": "CEN",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0012819381",
+      "symbol": "ALGIL",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004010338",
+      "symbol": "GJAJ",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000075442",
+      "symbol": "ALLDL",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0012612646",
+      "symbol": "PARP",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004155000",
+      "symbol": "SFPI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0014000RP6",
+      "symbol": "ALIMO",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011726835",
+      "symbol": "GTT",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000032526",
+      "symbol": "GBT",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000066722",
+      "symbol": "GUI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000066755",
+      "symbol": "PIG",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000066540",
+      "symbol": "ALHRG",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000052292",
+      "symbol": "RMS",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004159473",
+      "symbol": "ALHEX",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000038531",
+      "symbol": "ALHF",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000054231",
+      "symbol": "HCO",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0012821916",
+      "symbol": "ALHYP",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010396309",
+      "symbol": "ALHIT",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "DE000A11Q133",
+      "symbol": "MLHK",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000051302",
+      "symbol": "MLHBB",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013451044",
+      "symbol": "ALHGR",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0012336691",
+      "symbol": "MLHCF",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010312181",
+      "symbol": "MLHPE",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000065278",
+      "symbol": "ALHOP",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000053738",
+      "symbol": "MLHOT",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004165801",
+      "symbol": "HDP",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0006563904",
+      "symbol": "MLHIN",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000064735",
+      "symbol": "MLHYD",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0005843125",
+      "symbol": "MLHYE",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0005854700",
+      "symbol": "ALI2S",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000035081",
+      "symbol": "ICAD",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010929125",
+      "symbol": "IDL",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000051393",
+      "symbol": "IDIP",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000079691",
+      "symbol": "MLIDS",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010086371",
+      "symbol": "MLIML",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000120859",
+      "symbol": "NK",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0006859039",
+      "symbol": "MLIPP",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013060100",
+      "symbol": "ALIMR",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000033243",
+      "symbol": "IMDA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013470168",
+      "symbol": "ALIMP",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000065773",
+      "symbol": "MLIMP",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011158823",
+      "symbol": "MLIFC",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000071797",
+      "symbol": "INF",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010331421",
+      "symbol": "IPH",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000064297",
+      "symbol": "ALINN",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "IT0005391161",
+      "symbol": "MLIRF",
+      "mic": "XMLI",
+      "error": "terminated"
     },
     {
       "isin": "ES0105977005",
@@ -225,40 +1394,130 @@
       "error": "geen historie"
     },
     {
-      "isin": "FR0011844067",
-      "symbol": "PATBS",
+      "isin": "FR0000121220",
+      "symbol": "SW",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000078321",
+      "symbol": "ALSEC",
       "mic": "ALXP",
-      "error": "geen historie"
+      "error": "HTTP 503"
     },
     {
-      "isin": "ES0105910006",
-      "symbol": "MLSJA",
-      "mic": "XMLI",
-      "error": "geen historie"
-    },
-    {
-      "isin": "IT0005380602",
-      "symbol": "ALIE",
+      "isin": "FR0000065864",
+      "symbol": "ALSOG",
       "mic": "ALXP",
-      "error": "geen historie"
+      "error": "HTTP 503"
     },
     {
-      "isin": "FR0010649228",
-      "symbol": "SMLBS",
+      "isin": "FR0013227113",
+      "symbol": "SOI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR001400SA10",
+      "symbol": "LOCAL",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013379484",
+      "symbol": "S30",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "BE0003470755",
+      "symbol": "SOLB",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000050809",
+      "symbol": "SOP",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000054371",
+      "symbol": "MLSRP",
       "mic": "XMLI",
-      "error": "geen historie"
+      "error": "HTTP 503"
     },
     {
-      "isin": "FR001400Z5J4",
-      "symbol": "STEBS",
+      "isin": "FR0012757854",
+      "symbol": "SPIE",
+      "mic": "XPAR",
+      "error": "terminated"
+    },
+    {
+      "isin": "FR0011464452",
+      "symbol": "ALSGD",
       "mic": "ALXP",
-      "error": "geen historie"
+      "error": "HTTP 503"
     },
     {
-      "isin": "ES0105851002",
-      "symbol": "MLSPI",
+      "isin": "FR001400N2P2",
+      "symbol": "ALSPW",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000054199",
+      "symbol": "DPT",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000064271",
+      "symbol": "STF",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "NL00150001Q9",
+      "symbol": "STLAP",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "NL0000226223",
+      "symbol": "STMPA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000074775",
+      "symbol": "ALSAS",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010528059",
+      "symbol": "ALSTW",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000063976",
+      "symbol": "MLSTR",
       "mic": "XMLI",
-      "error": "geen historie"
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004180578",
+      "symbol": "SWP",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000032658",
+      "symbol": "SDG",
+      "mic": "XPAR",
+      "error": "HTTP 503"
     },
     {
       "isin": "FR0000063307",
@@ -279,22 +1538,316 @@
       "error": "HTTP 503"
     },
     {
-      "isin": "ES0105748000",
-      "symbol": "MLURC",
+      "isin": "FR0011076595",
+      "symbol": "MLVST",
       "mic": "XMLI",
-      "error": "geen historie"
+      "error": "HTTP 503"
     },
     {
-      "isin": "FR0014010YR7",
-      "symbol": "ALVER",
+      "isin": "FR0000054900",
+      "symbol": "TFI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013295789",
+      "symbol": "TFF",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000121329",
+      "symbol": "HO",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010120402",
+      "symbol": "ALTHE",
       "mic": "ALXP",
-      "error": "geen historie"
+      "error": "HTTP 503"
     },
     {
-      "isin": "ES0105962007",
-      "symbol": "MLVIC",
+      "isin": "FR0013333432",
+      "symbol": "THEP",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013286259",
+      "symbol": "ALTHX",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013230612",
+      "symbol": "TKO",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "BE0974338700",
+      "symbol": "TITC",
+      "mic": "XPAR",
+      "error": "HTTP 502"
+    },
+    {
+      "isin": "NL0015000YE1",
+      "symbol": "ALTME",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR001400H2X4",
+      "symbol": "ALTD",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000120271",
+      "symbol": "TTE",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "GA0000121459",
+      "symbol": "EC",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000033003",
+      "symbol": "ALTOU",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0014014ZV8",
+      "symbol": "ALTRA",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0005175080",
+      "symbol": "TNG",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0005691656",
+      "symbol": "TRI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010397901",
+      "symbol": "ALTRI",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000031106",
+      "symbol": "MLTRO",
       "mic": "XMLI",
-      "error": "geen historie"
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010654087",
+      "symbol": "ALTXC",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000079147",
+      "symbol": "ALU10",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000054470",
+      "symbol": "UBI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011776889",
+      "symbol": "MLUMG",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010820274",
+      "symbol": "ALUNI",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000074197",
+      "symbol": "FPG",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0012709160",
+      "symbol": "ALUNT",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010337865",
+      "symbol": "ALUPG",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013254851",
+      "symbol": "ALVAL",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013176526",
+      "symbol": "FR",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010095596",
+      "symbol": "ALVIO",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013506730",
+      "symbol": "VK",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004056851",
+      "symbol": "VLA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013505062",
+      "symbol": "VANTI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000124141",
+      "symbol": "VIE",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013447729",
+      "symbol": "VRLA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010291245",
+      "symbol": "VMX",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004186856",
+      "symbol": "VETO",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010326090",
+      "symbol": "ALVIA",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000031775",
+      "symbol": "VCT",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000050049",
+      "symbol": "VIL",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000125486",
+      "symbol": "DG",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000031577",
+      "symbol": "VIRP",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR001400PVN6",
+      "symbol": "VIRI",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010309096",
+      "symbol": "VTR",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0000127771",
+      "symbol": "VIV",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011532225",
+      "symbol": "ALVGO",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0011995588",
+      "symbol": "VLTSA",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004045847",
+      "symbol": "ALVDM",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010282822",
+      "symbol": "VU",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0010131409",
+      "symbol": "ALLIX",
+      "mic": "ALXP",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013357621",
+      "symbol": "WAVE",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0013079092",
+      "symbol": "ALWEC",
+      "mic": "ALXP",
+      "error": "HTTP 503"
     },
     {
       "isin": "FR0010688465",
@@ -309,16 +1862,40 @@
       "error": "HTTP 503"
     },
     {
-      "isin": "FR0004034072",
-      "symbol": "ALXIL",
+      "isin": "FR0010768770",
+      "symbol": "MLWEY",
+      "mic": "XMLI",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "BE0974334667",
+      "symbol": "ALWIN",
+      "mic": "ALXP",
+      "error": "HTTP 502"
+    },
+    {
+      "isin": "FR0013143872",
+      "symbol": "ALWIT",
       "mic": "ALXP",
       "error": "HTTP 503"
     },
     {
-      "isin": "LU2999660207",
-      "symbol": "YOUNW",
+      "isin": "FR00140182K6",
+      "symbol": "WLN",
       "mic": "XPAR",
-      "error": "geen historie"
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "BE0974310428",
+      "symbol": "XFAB",
+      "mic": "XPAR",
+      "error": "HTTP 503"
+    },
+    {
+      "isin": "FR0004034072",
+      "symbol": "ALXIL",
+      "mic": "ALXP",
+      "error": "HTTP 503"
     },
     {
       "isin": "ZM0000000037",
@@ -332,5 +1909,6 @@
       "mic": "XPAR",
       "error": "HTTP 503"
     }
-  ]
+  ],
+  "gate": "FAIL"
 }

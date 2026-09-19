@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-19T05:16:57.959Z",
-  "targets": 54,
+  "generatedAt": "2026-09-19T12:41:50.028Z",
+  "targets": 37,
   "repaired": 20,
-  "unavailable": 32,
+  "unavailable": 15,
   "failed": 2,
   "repairedItems": [
     {
@@ -45,7 +45,7 @@
       "isin": "FR0011476928",
       "symbol": "FNAC",
       "mic": "XPAR",
-      "records": 3388
+      "records": 3389
     },
     {
       "isin": "FR0000065930",
@@ -128,196 +128,94 @@
   ],
   "unavailableItems": [
     {
-      "isin": "FR001400ZRT0",
-      "symbol": "ABBS",
-      "mic": "XPAR",
-      "error": "Alle providers faalden voor FR001400ZRT0: yahoo-chart: Yahoo HTTP 404 voor ABBS.PA"
-    },
-    {
-      "isin": "FR00140118Z8",
-      "symbol": "ABSBS",
-      "mic": "ALXP",
-      "error": "Alle providers faalden voor FR00140118Z8: yahoo-chart: Yahoo HTTP 404 voor ABSBS.PA"
-    },
-    {
-      "isin": "FR0014011S49",
-      "symbol": "ABBSA",
-      "mic": "ALXP",
-      "error": "Alle providers faalden voor FR0014011S49: yahoo-chart: Yahoo HTTP 404 voor ABBSA.PA"
-    },
-    {
       "isin": "AU000000AON7",
       "symbol": "ALAON",
       "mic": "ALXP",
-      "error": "Alle providers faalden voor AU000000AON7: yahoo-chart: Yahoo HTTP 404 voor ALAON.PA"
+      "error": "Alle providers faalden voor AU000000AON7: yahoo-chart: Yahoo HTTP 404 voor ALAON.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "ES0106008008",
       "symbol": "MLBIM",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0106008008: yahoo-chart: Yahoo HTTP 404 voor MLBIM.PA"
-    },
-    {
-      "isin": "FR0013507985",
-      "symbol": "IBRKA",
-      "mic": "ALXP",
-      "error": "Alle providers faalden voor FR0013507985: yahoo-chart: Yahoo HTTP 404 voor IBRKA.PA"
-    },
-    {
-      "isin": "FR0013508009",
-      "symbol": "IBRKB",
-      "mic": "ALXP",
-      "error": "Alle providers faalden voor FR0013508009: yahoo-chart: Yahoo HTTP 404 voor IBRKB.PA"
-    },
-    {
-      "isin": "FR001400OJ72",
-      "symbol": "COBS1",
-      "mic": "XPAR",
-      "error": "Alle providers faalden voor FR001400OJ72: yahoo-chart: Yahoo HTTP 404 voor COBS1.PA"
-    },
-    {
-      "isin": "FR001400OJ98",
-      "symbol": "COBS3",
-      "mic": "XPAR",
-      "error": "Alle providers faalden voor FR001400OJ98: yahoo-chart: Yahoo HTTP 404 voor COBS3.PA"
-    },
-    {
-      "isin": "FR0014004JF6",
-      "symbol": "DEEZW",
-      "mic": "XPAR",
-      "error": "Geen koershistorie ontvangen"
-    },
-    {
-      "isin": "FR0014011219",
-      "symbol": "DRNBS",
-      "mic": "ALXP",
-      "error": "Alle providers faalden voor FR0014011219: yahoo-chart: Yahoo HTTP 404 voor DRNBS.PA"
-    },
-    {
-      "isin": "FR001401ARU9",
-      "symbol": "DV31",
-      "mic": "ALXP",
-      "error": "Alle providers faalden voor FR001401ARU9: yahoo-chart: Yahoo HTTP 404 voor DV31.PA"
-    },
-    {
-      "isin": "FR00140188H9",
-      "symbol": "DVBS6",
-      "mic": "ALXP",
-      "error": "Alle providers faalden voor FR00140188H9: yahoo-chart: Yahoo HTTP 404 voor DVBS6.PA"
+      "error": "Alle providers faalden voor ES0106008008: yahoo-chart: Yahoo HTTP 404 voor MLBIM.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "ES0105964003",
       "symbol": "MLESV",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0105964003: yahoo-chart: Yahoo HTTP 404 voor MLESV.PA"
+      "error": "Alle providers faalden voor ES0105964003: yahoo-chart: Yahoo HTTP 404 voor MLESV.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "ES0106046016",
       "symbol": "MLEXP",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0106046016: yahoo-chart: Yahoo HTTP 404 voor MLEXP.PA"
+      "error": "Alle providers faalden voor ES0106046016: yahoo-chart: Yahoo HTTP 404 voor MLEXP.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "ES0105807004",
       "symbol": "MLGNS",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0105807004: yahoo-chart: Yahoo HTTP 404 voor MLGNS.PA"
-    },
-    {
-      "isin": "FR0014010IB4",
-      "symbol": "SIGBS",
-      "mic": "ALXP",
-      "error": "Alle providers faalden voor FR0014010IB4: yahoo-chart: Yahoo HTTP 404 voor SIGBS.PA"
+      "error": "Alle providers faalden voor ES0105807004: yahoo-chart: Yahoo HTTP 404 voor MLGNS.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "IT0005613739",
       "symbol": "MLGL",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor IT0005613739: yahoo-chart: Yahoo HTTP 404 voor MLGL.PA"
+      "error": "Alle providers faalden voor IT0005613739: yahoo-chart: Yahoo HTTP 404 voor MLGL.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "ES0106042007",
       "symbol": "MLHA2",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0106042007: yahoo-chart: Yahoo HTTP 404 voor MLHA2.PA"
+      "error": "Alle providers faalden voor ES0106042007: yahoo-chart: Yahoo HTTP 404 voor MLHA2.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "FR001400QW73",
       "symbol": "MLIME",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor FR001400QW73: yahoo-chart: Yahoo HTTP 404 voor MLIME.PA"
+      "error": "Alle providers faalden voor FR001400QW73: yahoo-chart: Yahoo HTTP 404 voor MLIME.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "ES0105698007",
       "symbol": "MLKPS",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0105698007: yahoo-chart: Yahoo HTTP 404 voor MLKPS.PA"
-    },
-    {
-      "isin": "FR0013472446",
-      "symbol": "MASBS",
-      "mic": "ALXP",
-      "error": "Alle providers faalden voor FR0013472446: yahoo-chart: Yahoo HTTP 404 voor MASBS.PA"
-    },
-    {
-      "isin": "FR0011844067",
-      "symbol": "PATBS",
-      "mic": "ALXP",
-      "error": "Alle providers faalden voor FR0011844067: yahoo-chart: Yahoo HTTP 404 voor PATBS.PA"
+      "error": "Alle providers faalden voor ES0105698007: yahoo-chart: Yahoo HTTP 404 voor MLKPS.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "ES0105910006",
       "symbol": "MLSJA",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0105910006: yahoo-chart: Yahoo HTTP 404 voor MLSJA.PA"
+      "error": "Alle providers faalden voor ES0105910006: yahoo-chart: Yahoo HTTP 404 voor MLSJA.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "IT0005380602",
       "symbol": "ALIE",
       "mic": "ALXP",
-      "error": "Geen koershistorie ontvangen"
-    },
-    {
-      "isin": "FR0010649228",
-      "symbol": "SMLBS",
-      "mic": "XMLI",
-      "error": "Alle providers faalden voor FR0010649228: yahoo-chart: Yahoo HTTP 404 voor SMLBS.PA"
-    },
-    {
-      "isin": "FR001400Z5J4",
-      "symbol": "STEBS",
-      "mic": "ALXP",
-      "error": "Alle providers faalden voor FR001400Z5J4: yahoo-chart: Yahoo HTTP 404 voor STEBS.PA"
+      "error": "Alle providers faalden voor IT0005380602: yahoo-chart: Yahoo HTTP 404 voor ALIE.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "ES0105851002",
       "symbol": "MLSPI",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0105851002: yahoo-chart: Yahoo HTTP 404 voor MLSPI.PA"
+      "error": "Alle providers faalden voor ES0105851002: yahoo-chart: Yahoo HTTP 404 voor MLSPI.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "ES0105748000",
       "symbol": "MLURC",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0105748000: yahoo-chart: Yahoo HTTP 404 voor MLURC.PA"
+      "error": "Alle providers faalden voor ES0105748000: yahoo-chart: Yahoo HTTP 404 voor MLURC.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "FR0014010YR7",
       "symbol": "ALVER",
       "mic": "ALXP",
-      "error": "Alle providers faalden voor FR0014010YR7: yahoo-chart: Yahoo HTTP 404 voor ALVER.PA"
+      "error": "Alle providers faalden voor FR0014010YR7: yahoo-chart: Yahoo HTTP 404 voor ALVER.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "ES0105962007",
       "symbol": "MLVIC",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0105962007: yahoo-chart: Yahoo HTTP 404 voor MLVIC.PA"
-    },
-    {
-      "isin": "LU2999660207",
-      "symbol": "YOUNW",
-      "mic": "XPAR",
-      "error": "Alle providers faalden voor LU2999660207: yahoo-chart: Yahoo HTTP 404 voor YOUNW.PA"
+      "error": "Alle providers faalden voor ES0105962007: yahoo-chart: Yahoo HTTP 404 voor MLVIC.PA; euronext-live: Euronext historische tabel ontbreekt"
     }
   ],
   "failedItems": [
@@ -325,13 +223,13 @@
       "isin": "ES0106046008",
       "symbol": "MLEXX",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0106046008: yahoo-chart: Providerbeurs wijkt af voor ES0106046008: verwacht XMLI, ontvangen YHD"
+      "error": "Alle providers faalden voor ES0106046008: yahoo-chart: Providerbeurs wijkt af voor ES0106046008: verwacht XMLI, ontvangen YHD; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "ES0105977005",
       "symbol": "MLMED",
       "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0105977005: yahoo-chart: Providerbeurs wijkt af voor ES0105977005: verwacht XMLI, ontvangen YHD"
+      "error": "Alle providers faalden voor ES0105977005: yahoo-chart: Providerbeurs wijkt af voor ES0105977005: verwacht XMLI, ontvangen YHD; euronext-live: Euronext historische tabel ontbreekt"
     }
   ]
 }
