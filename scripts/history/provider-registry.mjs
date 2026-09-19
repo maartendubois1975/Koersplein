@@ -1,4 +1,5 @@
 import { YahooChartProvider } from './providers/yahoo-chart.mjs';
+import { EuronextLiveProvider } from './providers/euronext-live.mjs';
 
 export class ProviderRegistry {
   #providers = [];
@@ -39,4 +40,4 @@ export class ProviderRegistry {
   }
 }
 
-export const createDefaultProviderRegistry = () => new ProviderRegistry([new YahooChartProvider()]);
+export const createDefaultProviderRegistry = () => new ProviderRegistry([new YahooChartProvider(), new EuronextLiveProvider()]);
