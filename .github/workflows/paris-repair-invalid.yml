@@ -1,8 +1,5 @@
 name: Parijs 54 probleemreeksen repareren
 on:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/paris-repair-invalid.yml', 'scripts/cloudflare/validate-paris-history.mjs']
   workflow_dispatch:
 permissions:
   contents: write
@@ -26,7 +23,8 @@ jobs:
       - name: Repareer uitsluitend afgekeurde reeksen
         run: node scripts/cloudflare/paris-repair-invalid.mjs || echo 'Reparatie rapporteert resterende fouten; validator beslist eindstatus.'
       - name: Valideer Parijs opnieuw met retries
-        if: always()\n        run: node scripts/cloudflare/validate-paris-history.mjs
+        if: always()
+        run: node scripts/cloudflare/validate-paris-history.mjs
       - name: Bewaar reparatie en validatie
         if: always()
         run: |
