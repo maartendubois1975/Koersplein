@@ -1,8 +1,6 @@
 name: Model Arena continu onderzoek
 
 on:
-  schedule:
-    - cron: '17 2 * * *'
   workflow_dispatch:
 
 permissions:
