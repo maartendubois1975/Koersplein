@@ -1,7 +1,5 @@
 name: M00 Wereldvuller
 on:
-  schedule:
-    - cron: '17 * * * *'
   workflow_dispatch:
 permissions:
   contents: read
@@ -17,7 +15,6 @@ jobs:
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
       CATALOG_BATCH_SIZE: 25
       HISTORY_BATCH_SIZE: 10
-      MARKET_MIC: XPAR
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
