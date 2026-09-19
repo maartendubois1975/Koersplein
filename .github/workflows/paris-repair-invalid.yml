@@ -2,7 +2,7 @@ name: Parijs 54 probleemreeksen repareren
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/paris-repair-invalid.yml']
+    paths: ['.github/workflows/paris-repair-invalid.yml', 'scripts/cloudflare/validate-paris-history.mjs']
   workflow_dispatch:
 permissions:
   contents: write
