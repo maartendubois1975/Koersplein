@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['.github/workflows/paris-repair-invalid.yml']
+    paths: ['.github/workflows/paris-repair-invalid.yml', 'scripts/history/providers/euronext-live.mjs']
 permissions:
   contents: write
 concurrency:
