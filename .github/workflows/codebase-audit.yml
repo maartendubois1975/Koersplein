@@ -4,9 +4,17 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/codebase-audit.yml'
+      - 'scripts/audit/**'
+      - 'scripts/cloudflare/**'
+      - '.github/workflows/paris-*.yml'
+      - '.github/workflows/world-fill-controller.yml'
+      - '.github/workflows/market-handoff-controller.yml'
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: koersplein-codebase-audit
+  cancel-in-progress: true
 jobs:
   audit:
     runs-on: ubuntu-latest
