@@ -1,8 +1,5 @@
 name: Definitieve analysemachine Amsterdam Brussel
 on:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/final-analysis-machine.yml']
   workflow_dispatch:
 permissions:
   contents: write
