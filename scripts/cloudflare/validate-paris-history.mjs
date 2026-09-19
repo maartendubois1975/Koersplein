@@ -2,7 +2,10 @@ import fs from 'node:fs/promises';
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');if(!API)throw Error('KOERSPLEIN_API_URL ontbreekt');
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const raw=JSON.parse(await fs.readFile('data/euronext-paris.json','utf8')),shares=raw.shares||[];
-let valid=0,invalid=[],records=0,first=null,last=null;\nlet unavailableSet=new Set();try{const rr=JSON.parse(await fs.readFile('research/output/paris/repair-invalid-summary.json','utf8'));unavailableSet=new Set((rr.unavailableItems||[]).map(x=>x.isin))}catch{}\nlet unavailable=[];
+let valid=0,invalid=[],records=0,first=null,last=null;
+let unavailableSet=new Set();
+try{const rr=JSON.parse(await fs.readFile('research/output/paris/repair-invalid-summary.json','utf8'));unavailableSet=new Set((rr.unavailableItems||[]).map(x=>x.isin))}catch{}
+let unavailable=[];
 for(const s of shares){
   try{
     let r,lastErr;
