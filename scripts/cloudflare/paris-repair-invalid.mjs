@@ -7,8 +7,9 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const client=new FactoryApiClient(), registry=createDefaultProviderRegistry();
 const catalog=JSON.parse(await fs.readFile('data/euronext-paris.json','utf8')).shares||[];
 const previous=JSON.parse(await fs.readFile('research/output/paris/validation-summary.json','utf8'));
-const bad=new Set((previous.invalid||[]).map(x=>x.isin));
-const targets=catalog.filter(x=>bad.has(x.isin)).map(x=>({isin:x.isin,name:x.name,company:x.name,symbol:x.symbol,ticker:x.symbol,mic:x.mic||'XPAR',market:x.mic||'XPAR',currency:'EUR',countryCode:'FR',provider:'yahoo-chart'}));
+let nonEquitySet=new Set();try{const cc=JSON.parse(await fs.readFile('research/output/paris/instrument-classification.json','utf8'));nonEquitySet=new Set((cc.nonEquity||[]).map(x=>x.isin))}catch{}
+const bad=new Set([...(previous.invalid||[]),...(previous.unavailable||[])].map(x=>x.isin));
+const targets=catalog.filter(x=>bad.has(x.isin)&&!nonEquitySet.has(x.isin)).map(x=>({isin:x.isin,name:x.name,company:x.name,symbol:x.symbol,ticker:x.symbol,mic:x.mic||'XPAR',market:x.mic||'XPAR',currency:'EUR',countryCode:'FR',provider:'yahoo-chart'}));
 const today=new Date().toISOString().slice(0,10);
 let repaired=[],unavailable=[],failed=[];
 for(const item of targets){
