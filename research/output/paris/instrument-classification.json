@@ -1,0 +1,252 @@
+{
+  "generatedAt": "2026-09-19",
+  "purpose": "Classificatie van Parijs-instrumenten waarvoor Yahoo geen betrouwbare historie levert. Geen koersdata wordt verzonnen.",
+  "nonEquity": [
+    {
+      "isin": "FR001400ZRT0",
+      "symbol": "ABBS",
+      "name": "AB SCIENCE BSA",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR00140118Z8",
+      "symbol": "ABSBS",
+      "name": "AB SCIENCE BSA 25",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR0014011S49",
+      "symbol": "ABBSA",
+      "name": "AB SCIENCE BSAAU25",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR0013507985",
+      "symbol": "IBRKA",
+      "name": "CALIBRE BSA K2A",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR0013508009",
+      "symbol": "IBRKB",
+      "name": "CALIBRE BSA K2B",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR001400OJ72",
+      "symbol": "COBS1",
+      "name": "CASINO BSA1",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR001400OJ98",
+      "symbol": "COBS3",
+      "name": "CASINO BSA3",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR0014004JF6",
+      "symbol": "DEEZW",
+      "name": "DEEZER WARRANTS",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR0014011219",
+      "symbol": "DRNBS",
+      "name": "DRONE VOLT BSA",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR001401ARU9",
+      "symbol": "DV31",
+      "name": "DRONEVOLTBS2031",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR00140188H9",
+      "symbol": "DVBS6",
+      "name": "DRONEVOLTBS31",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR0014010IB4",
+      "symbol": "SIGBS",
+      "name": "GENSIGHT BSA",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR0013472446",
+      "symbol": "MASBS",
+      "name": "MASTRAD BS29",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR0011844067",
+      "symbol": "PATBS",
+      "name": "PLANT ADVANCED BS",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR0010649228",
+      "symbol": "SMLBS",
+      "name": "SMALTO BSA",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "FR001400Z5J4",
+      "symbol": "STEBS",
+      "name": "STREAMWIDE BSAANE",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    },
+    {
+      "isin": "LU2999660207",
+      "symbol": "YOUNW",
+      "name": "YOUNITED FIN. WARR",
+      "type": "WARRANT_OR_BSA",
+      "equityUniverse": false
+    }
+  ],
+  "equities": [
+    {
+      "isin": "AU000000AON7",
+      "symbol": "ALAON",
+      "name": "APOLLO MINERALS",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0106008008",
+      "symbol": "MLBIM",
+      "name": "BIMMART INVESTMENT",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105964003",
+      "symbol": "MLESV",
+      "name": "ES VEDRA",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0106046016",
+      "symbol": "MLEXP",
+      "name": "EXXITA BE CIRCULAR",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105807004",
+      "symbol": "MLGNS",
+      "name": "GENESIS",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "IT0005613739",
+      "symbol": "MLGL",
+      "name": "GLASS TO POWER",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0106042007",
+      "symbol": "MLHA2",
+      "name": "HAY 2 SOCIMI",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "FR001400QW73",
+      "symbol": "MLIME",
+      "name": "IMEON ENERGY",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105698007",
+      "symbol": "MLKPS",
+      "name": "K PRIME CAPITAL",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105910006",
+      "symbol": "MLSJA",
+      "name": "SAJA REAL ESTATE",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "IT0005380602",
+      "symbol": "ALIE",
+      "name": "SIPARIO MOVIES",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105851002",
+      "symbol": "MLSPI",
+      "name": "STUDENT PROPERTY",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105748000",
+      "symbol": "MLURC",
+      "name": "URCOLESA",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "FR0014010YR7",
+      "symbol": "ALVER",
+      "name": "VERGNET",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    },
+    {
+      "isin": "ES0105962007",
+      "symbol": "MLVIC",
+      "name": "VICSO",
+      "type": "EQUITY",
+      "equityUniverse": true,
+      "historyStatus": "ALTERNATIVE_SOURCE_REQUIRED"
+    }
+  ],
+  "notes": [
+    "Euronext is de autoritatieve bron voor instrumentbestaan en instrumenttype.",
+    "Yahoo 404 is geen bewijs dat een instrument niet bestaat.",
+    "Instrumenten zonder betrouwbare historische reeks blijven geregistreerd maar worden niet als gevalideerde historie gepubliceerd."
+  ]
+}
