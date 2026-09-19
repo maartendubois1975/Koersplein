@@ -24,9 +24,9 @@ jobs:
       - name: Vernieuw Parijs-catalogus
         run: node scripts/cloudflare/fetch-paris-catalog.mjs
       - name: Repareer uitsluitend afgekeurde reeksen
-        run: node scripts/cloudflare/paris-repair-invalid.mjs
+        run: node scripts/cloudflare/paris-repair-invalid.mjs || echo 'Reparatie rapporteert resterende fouten; validator beslist eindstatus.'
       - name: Valideer Parijs opnieuw met retries
-        run: node scripts/cloudflare/validate-paris-history.mjs
+        if: always()\n        run: node scripts/cloudflare/validate-paris-history.mjs
       - name: Bewaar reparatie en validatie
         if: always()
         run: |
