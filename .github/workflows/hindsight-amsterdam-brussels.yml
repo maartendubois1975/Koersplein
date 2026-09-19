@@ -2,7 +2,7 @@ name: Hindsight Amsterdam Brussel
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/hindsight-amsterdam-brussels.yml']
+    paths: ['.github/workflows/hindsight-amsterdam-brussels.yml', 'scripts/research/hindsight-postmortem.mjs']
   workflow_dispatch:
 permissions:
   contents: write
