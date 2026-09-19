@@ -1,0 +1,26 @@
+name: Koersplein A-tot-Z audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/codebase-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Controleer JavaScript JSON workflows en architectuur
+        run: node scripts/audit/codebase-audit.mjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: koersplein-codebase-audit
+          path: research/output/audit/codebase-audit.json
+          retention-days: 90
