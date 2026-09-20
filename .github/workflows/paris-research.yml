@@ -1,5 +1,9 @@
 name: Paris Research Factory
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.research-triggers/paris-full-run'
   workflow_dispatch:
     inputs:
       run_id:
