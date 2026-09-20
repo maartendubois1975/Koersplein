@@ -1,13 +1,78 @@
 {
-  "venues": [{
-    "id":"euronext","name":"Euronext","markets":[
-      {"id":"amsterdam","name":"Amsterdam","country":"Nederland","mic":"XAMS","currency":"EUR","slug":"amsterdam","status":"available","sharesData":"euronext-amsterdam.json","indicesData":"euronext-amsterdam-indices.json"},
-      {"id":"brussels","name":"Brussel","country":"België","mic":"XBRU","currency":"EUR","slug":"brussel","status":"available","sharesData":"euronext-brussels.json","indicesData":"euronext-brussels-indices.json"},
-      {"id":"paris","name":"Parijs","country":"Frankrijk","mic":"XPAR","currency":"EUR","slug":"parijs","status":"validating","sharesData":"euronext-paris.json"},
-      {"id":"milan","name":"Milaan","country":"Italië","mic":"XMIL","currency":"EUR","slug":"milaan","status":"planned"},
-      {"id":"oslo","name":"Oslo","country":"Noorwegen","mic":"XOSL","currency":"NOK","slug":"oslo","status":"planned"},
-      {"id":"dublin","name":"Dublin","country":"Ierland","mic":"XDUB","currency":"EUR","slug":"dublin","status":"planned"},
-      {"id":"lisbon","name":"Lissabon","country":"Portugal","mic":"XLIS","currency":"EUR","slug":"lissabon","status":"planned"}
-    ]
-  }]
+  "venues": [
+    {
+      "id": "euronext",
+      "name": "Euronext",
+      "markets": [
+        {
+          "id": "amsterdam",
+          "name": "Amsterdam",
+          "country": "Nederland",
+          "mic": "XAMS",
+          "currency": "EUR",
+          "slug": "amsterdam",
+          "status": "available",
+          "sharesData": "euronext-amsterdam.json",
+          "indicesData": "euronext-amsterdam-indices.json"
+        },
+        {
+          "id": "brussels",
+          "name": "Brussel",
+          "country": "België",
+          "mic": "XBRU",
+          "currency": "EUR",
+          "slug": "brussel",
+          "status": "available",
+          "sharesData": "euronext-brussels.json",
+          "indicesData": "euronext-brussels-indices.json"
+        },
+        {
+          "id": "paris",
+          "name": "Parijs",
+          "country": "Frankrijk",
+          "mic": "XPAR",
+          "currency": "EUR",
+          "slug": "parijs",
+          "status": "available",
+          "sharesData": "euronext-paris.json"
+        },
+        {
+          "id": "milan",
+          "name": "Milaan",
+          "country": "Italië",
+          "mic": "XMIL",
+          "currency": "EUR",
+          "slug": "milaan",
+          "status": "planned"
+        },
+        {
+          "id": "oslo",
+          "name": "Oslo",
+          "country": "Noorwegen",
+          "mic": "XOSL",
+          "currency": "NOK",
+          "slug": "oslo",
+          "status": "planned"
+        },
+        {
+          "id": "dublin",
+          "name": "Dublin",
+          "country": "Ierland",
+          "mic": "XDUB",
+          "currency": "EUR",
+          "slug": "dublin",
+          "status": "planned"
+        },
+        {
+          "id": "lisbon",
+          "name": "Lissabon",
+          "country": "Portugal",
+          "mic": "XLIS",
+          "currency": "EUR",
+          "slug": "lissabon",
+          "status": "planned"
+        }
+      ]
+    }
+  ]
 }

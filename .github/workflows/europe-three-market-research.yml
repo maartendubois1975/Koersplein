@@ -1,0 +1,42 @@
+name: Amsterdam Brussel Parijs volledig onderzoeksblok
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/europe-three-market-research.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: koersplein-europe-three-market-research
+  cancel-in-progress: false
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - run: node scripts/research/amsterdam-machine1.mjs
+      - run: node scripts/research/brussels-machine1.mjs
+      - run: node scripts/research/paris-machine1.mjs
+      - run: node scripts/research/final-amsterdam-brussels-arena.mjs
+      - name: Publiceer Research Lab
+        run: |
+          node -e "const fs=require('fs');const x=JSON.parse(fs.readFileSync('research/output/final-arena/amsterdam-brussels-paris.json'));const t=x.trials||[],best=[...t].sort((a,b)=>(b.crossMarket?.lift||-9)-(a.crossMarket?.lift||-9))[0];fs.writeFileSync('data/research-lab/latest.json',JSON.stringify({generatedAt:x.generatedAt,scope:'Amsterdam · Brussel · Parijs',trials:t.length,promoted:x.summary.promoted,rejected:t.length-x.summary.promoted,best:best?{model:best.model,discovery:best.discover,test:best.test,horizonMonths:best.horizonMonths,selected:best.crossMarket.selected,baseRate:best.crossMarket.baseRate,hitRate:best.crossMarket.hitRate,lift:best.crossMarket.lift}:null,nextResearchIdeas:[{hypothesis:'Drie-markten robuustheid',test:'Behoud alleen signalen die buiten de ontdekkingsmarkt standhouden.'},{hypothesis:'Jonge beursfondsen',test:'Volg nieuw genoteerde fondsen vanaf hun eerste echte handelsdag.'}]},null,2))"
+      - name: Bewaar resultaten
+        run: |
+          git config user.name "Koersplein Research"
+          git config user.email "research@users.noreply.github.com"
+          git add data/research-lab/latest.json research/output/paris-machine1-summary.json research/output/final-arena/amsterdam-brussels-paris.json
+          git commit -m "Research: Amsterdam Brussel Parijs resultaten" || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: europe-three-market-research
+          path: research/output/
+          retention-days: 90
