@@ -2,7 +2,7 @@ name: Milan Fill Factory
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/milan-fill.yml']
+    paths: ['.github/workflows/milan-fill.yml', 'scripts/cloudflare/universal-market-runner.mjs', 'scripts/cloudflare/fetch-milan-catalog.mjs', 'data/market-source-registry.json', 'data/world-fill-plan.json']
   workflow_dispatch:
 jobs:
   milan-fill:
