@@ -2,6 +2,7 @@ name: Milan Fill Factory
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 jobs:
   milan-fill:
     runs-on: ubuntu-latest
