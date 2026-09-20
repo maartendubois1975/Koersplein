@@ -1,131 +1,11 @@
 {
-  "generatedAt": "2026-09-19T12:41:50.028Z",
-  "targets": 37,
-  "repaired": 20,
-  "unavailable": 15,
-  "failed": 2,
-  "repairedItems": [
-    {
-      "isin": "FR0000063737",
-      "symbol": "AUB",
-      "mic": "XPAR",
-      "records": 7236
-    },
-    {
-      "isin": "FR0000061780",
-      "symbol": "AUGR",
-      "mic": "XPAR",
-      "records": 6479
-    },
-    {
-      "isin": "FR001401AY03",
-      "symbol": "BIBS4",
-      "mic": "ALXP",
-      "records": 1
-    },
-    {
-      "isin": "FR0000060840",
-      "symbol": "ALDEV",
-      "mic": "ALXP",
-      "records": 8830
-    },
-    {
-      "isin": "FR0010436584",
-      "symbol": "ALDNX",
-      "mic": "ALXP",
-      "records": 4978
-    },
-    {
-      "isin": "FR0000074759",
-      "symbol": "ALFLE",
-      "mic": "ALXP",
-      "records": 6837
-    },
-    {
-      "isin": "FR0011476928",
-      "symbol": "FNAC",
-      "mic": "XPAR",
-      "records": 3389
-    },
-    {
-      "isin": "FR0000065930",
-      "symbol": "LEBL",
-      "mic": "XPAR",
-      "records": 6862
-    },
-    {
-      "isin": "FR0000062796",
-      "symbol": "POMRY",
-      "mic": "XPAR",
-      "records": 6862
-    },
-    {
-      "isin": "FR0000030074",
-      "symbol": "MALT",
-      "mic": "XPAR",
-      "records": 6862
-    },
-    {
-      "isin": "FR0000038606",
-      "symbol": "MTU",
-      "mic": "XPAR",
-      "records": 6862
-    },
-    {
-      "isin": "MA0000011488",
-      "symbol": "IAM",
-      "mic": "XPAR",
-      "records": 5572
-    },
-    {
-      "isin": "FR0000063307",
-      "symbol": "TBSO",
-      "mic": "XPAR",
-      "records": 9042
-    },
-    {
-      "isin": "FR0000051807",
-      "symbol": "TEP",
-      "mic": "XPAR",
-      "records": 8842
-    },
-    {
-      "isin": "CH0008175645",
-      "symbol": "TVRB",
-      "mic": "XPAR",
-      "records": 6862
-    },
-    {
-      "isin": "FR0010688465",
-      "symbol": "MLWEA",
-      "mic": "XMLI",
-      "records": 4538
-    },
-    {
-      "isin": "FR0000121204",
-      "symbol": "MF",
-      "mic": "XPAR",
-      "records": 9472
-    },
-    {
-      "isin": "FR0004034072",
-      "symbol": "ALXIL",
-      "mic": "ALXP",
-      "records": 6312
-    },
-    {
-      "isin": "ZM0000000037",
-      "symbol": "MLZAM",
-      "mic": "XMLI",
-      "records": 5894
-    },
-    {
-      "isin": "BMG9887P1068",
-      "symbol": "CV",
-      "mic": "XPAR",
-      "records": 6427
-    }
-  ],
+  "generatedAt": "2026-09-20T04:36:41.191Z",
+  "selection": "MISSING_FROM_STORED_MANIFEST",
+  "targets": 17,
+  "repaired": 0,
+  "unavailable": 17,
+  "failed": 0,
+  "repairedItems": [],
   "unavailableItems": [
     {
       "isin": "AU000000AON7",
@@ -144,6 +24,12 @@
       "symbol": "MLESV",
       "mic": "XMLI",
       "error": "Alle providers faalden voor ES0105964003: yahoo-chart: Yahoo HTTP 404 voor MLESV.PA; euronext-live: Euronext historische tabel ontbreekt"
+    },
+    {
+      "isin": "ES0106046008",
+      "symbol": "MLEXX",
+      "mic": "XMLI",
+      "error": "Alle providers faalden voor ES0106046008: yahoo-chart: Providerbeurs wijkt af voor ES0106046008: verwacht XMLI, ontvangen YHD; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
       "isin": "ES0106046016",
@@ -182,6 +68,12 @@
       "error": "Alle providers faalden voor ES0105698007: yahoo-chart: Yahoo HTTP 404 voor MLKPS.PA; euronext-live: Euronext historische tabel ontbreekt"
     },
     {
+      "isin": "ES0105977005",
+      "symbol": "MLMED",
+      "mic": "XMLI",
+      "error": "Alle providers faalden voor ES0105977005: yahoo-chart: Providerbeurs wijkt af voor ES0105977005: verwacht XMLI, ontvangen YHD; euronext-live: Euronext historische tabel ontbreekt"
+    },
+    {
       "isin": "ES0105910006",
       "symbol": "MLSJA",
       "mic": "XMLI",
@@ -218,18 +110,5 @@
       "error": "Alle providers faalden voor ES0105962007: yahoo-chart: Yahoo HTTP 404 voor MLVIC.PA; euronext-live: Euronext historische tabel ontbreekt"
     }
   ],
-  "failedItems": [
-    {
-      "isin": "ES0106046008",
-      "symbol": "MLEXX",
-      "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0106046008: yahoo-chart: Providerbeurs wijkt af voor ES0106046008: verwacht XMLI, ontvangen YHD; euronext-live: Euronext historische tabel ontbreekt"
-    },
-    {
-      "isin": "ES0105977005",
-      "symbol": "MLMED",
-      "mic": "XMLI",
-      "error": "Alle providers faalden voor ES0105977005: yahoo-chart: Providerbeurs wijkt af voor ES0105977005: verwacht XMLI, ontvangen YHD; euronext-live: Euronext historische tabel ontbreekt"
-    }
-  ]
+  "failedItems": []
 }
