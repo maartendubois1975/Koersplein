@@ -1,18 +1,33 @@
 name: Milan Fill Factory
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 jobs:
   milan-fill:
     runs-on: ubuntu-latest
     timeout-minutes: 120
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: {node-version: '22'}
-      - run: node scripts/import-milan.mjs
+      - name: Fetch official Milan catalogue
+        run: node scripts/cloudflare/fetch-milan-catalog.mjs
+      - name: Validate repository and Milan catalogue
+        run: npm run validate
+      - name: Backfill Milan history batch
+        env:
+          KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+          KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+          MARKET_MIC: XMIL
+          HISTORY_BATCH_SIZE: 20
+          CATALOG_BATCH_SIZE: 25
+        run: node scripts/cloudflare/universal-market-runner.mjs
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: milan-catalog
-          path: data/borsa-italiana-milan.json
+          name: milan-fill-results
+          path: |
+            data/euronext-milan.json
+            research/output/world-fill-batch.json
+          retention-days: 30
