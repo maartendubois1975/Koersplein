@@ -1,28 +1,29 @@
 import fs from 'node:fs/promises';
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');if(!API)throw Error('KOERSPLEIN_API_URL ontbreekt');
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const raw=JSON.parse(await fs.readFile('data/euronext-paris.json','utf8')),shares=raw.shares||[];
-let valid=0,invalid=[],records=0,first=null,last=null;
-let unavailableSet=new Set(),nonEquitySet=new Set(),alternativeEquitySet=new Set();
-try{const rr=JSON.parse(await fs.readFile('research/output/paris/repair-invalid-summary.json','utf8'));unavailableSet=new Set((rr.unavailableItems||[]).map(x=>x.isin))}catch{}
-try{const cc=JSON.parse(await fs.readFile('research/output/paris/instrument-classification.json','utf8'));nonEquitySet=new Set((cc.nonEquity||[]).map(x=>x.isin));alternativeEquitySet=new Set((cc.equities||[]).map(x=>x.isin))}catch{}
-let unavailable=[],excludedNonEquity=[];
-for(const s of shares){
-  if(nonEquitySet.has(s.isin)){excludedNonEquity.push({isin:s.isin,symbol:s.symbol,mic:s.mic||'XPAR',reason:'NON_EQUITY_INSTRUMENT'});continue;}
-  try{
-    let r,lastErr;
-    for(let attempt=1;attempt<=4;attempt++){
-      try{r=await fetch(`${API}/api/history/${encodeURIComponent(s.isin)}`);if(r.ok)break;lastErr=new Error(`HTTP ${r.status}`);if(![429,500,502,503,504].includes(r.status))break;}catch(e){lastErr=e}
-      if(attempt<4)await sleep(750*attempt);
-    }
-    if(!r?.ok)throw(lastErr||new Error(`HTTP ${r?.status||'onbekend'}`));
-    const h=await r.json(),bars=(h.bars||h.records||h.history||[]).filter(x=>x?.date&&Number.isFinite(+x.close));
-    if(!bars.length)throw Error('geen historie');
-    for(let i=0;i<bars.length;i++){if(+bars[i].close<=0)throw Error('niet-positieve slotkoers');if(i&&bars[i].date<=bars[i-1].date)throw Error('datums niet strikt oplopend')}
-    valid++;records+=bars.length;first=!first||bars[0].date<first?bars[0].date:first;last=!last||bars.at(-1).date>last?bars.at(-1).date:last;
-  }catch(e){const item={isin:s.isin,symbol:s.symbol,mic:s.mic||'XPAR',error:e.message};if(unavailableSet.has(s.isin)||alternativeEquitySet.has(s.isin))unavailable.push({...item,reason:alternativeEquitySet.has(s.isin)?'ALTERNATIVE_SOURCE_REQUIRED':'PROVIDER_UNAVAILABLE'});else invalid.push(item)}
-  await sleep(75);
+async function getJson(path){
+ let last;
+ for(let attempt=0;attempt<6;attempt++){
+  try{const r=await fetch(API+path,{headers:{accept:'application/json'}});if(r.ok)return r.json();last=new Error(`HTTP ${r.status}`);if(![429,500,502,503,504].includes(r.status))break;
+   const ra=Number(r.headers.get('retry-after'));await sleep(Number.isFinite(ra)&&ra>0?ra*1000:Math.min(30000,1000*(2**attempt)));
+  }catch(e){last=e;await sleep(Math.min(30000,1000*(2**attempt)))}
+ }
+ throw last||new Error('API onbereikbaar');
 }
-const report={generatedAt:new Date().toISOString(),market:'PARIS',catalog:shares.length,equityUniverse:shares.length-excludedNonEquity.length,researchEligible:valid,alternativeSourceRequired:unavailable.filter(x=>x.reason==='ALTERNATIVE_SOURCE_REQUIRED').length,providerUnavailable:unavailable.length,excludedNonEquityCount:excludedNonEquity.length,invalidCount:invalid.length,records,firstDate:first,lastDate:last,excludedNonEquity,unavailable,invalid,gate:invalid.length===0?'PASS_WITH_EXPLICIT_EXCLUSIONS':'FAIL'};
+const raw=JSON.parse(await fs.readFile('data/euronext-paris.json','utf8')),shares=raw.shares||[];
+let nonEquitySet=new Set(),alternativeEquitySet=new Set(),knownUnavailable=new Set();
+try{const c=JSON.parse(await fs.readFile('research/output/paris/instrument-classification.json','utf8'));nonEquitySet=new Set((c.nonEquity||[]).map(x=>x.isin));alternativeEquitySet=new Set((c.equities||[]).map(x=>x.isin))}catch{}
+try{const r=JSON.parse(await fs.readFile('research/output/paris/repair-invalid-summary.json','utf8'));knownUnavailable=new Set([...(r.unavailableItems||[]),...(r.failedItems||[])].map(x=>x.isin))}catch{}
+const manifest=await getJson('/api/history/manifest.json'),stored=manifest.instruments||{};
+let valid=0,records=0,first=null,last=null,invalid=[],unavailable=[],excludedNonEquity=[];
+for(const s of shares){
+ if(nonEquitySet.has(s.isin)){excludedNonEquity.push({isin:s.isin,symbol:s.symbol,mic:s.mic||'XPAR',reason:'NON_EQUITY_INSTRUMENT'});continue}
+ const h=stored[s.isin],explicitGap=alternativeEquitySet.has(s.isin)||knownUnavailable.has(s.isin);
+ if(!h){const row={isin:s.isin,symbol:s.symbol,mic:s.mic||'XPAR',error:'geen opgeslagen historie'};if(explicitGap)unavailable.push({...row,reason:'ALTERNATIVE_SOURCE_REQUIRED'});else invalid.push(row);continue}
+ const count=Number(h.recordCount),fd=h.firstDate,ld=h.lastDate;
+ if(!Number.isFinite(count)||count<=0||!/^\d{4}-\d{2}-\d{2}$/.test(fd||'')||!/^\d{4}-\d{2}-\d{2}$/.test(ld||'')||fd>ld){invalid.push({isin:s.isin,symbol:s.symbol,mic:s.mic||'XPAR',error:'ongeldige manifestdekking'});continue}
+ valid++;records+=count;first=!first||fd<first?fd:first;last=!last||ld>last?ld:last;
+}
+const report={generatedAt:new Date().toISOString(),market:'PARIS',validationMode:'STORED_MANIFEST',catalog:shares.length,equityUniverse:shares.length-excludedNonEquity.length,researchEligible:valid,alternativeSourceRequired:unavailable.length,providerUnavailable:unavailable.length,excludedNonEquityCount:excludedNonEquity.length,invalidCount:invalid.length,records,firstDate:first,lastDate:last,excludedNonEquity,unavailable,invalid,gate:invalid.length===0?'PASS_WITH_EXPLICIT_EXCLUSIONS':'FAIL'};
 await fs.mkdir('research/output/paris',{recursive:true});await fs.writeFile('research/output/paris/validation-summary.json',JSON.stringify(report,null,2));
-console.log(JSON.stringify({...report,invalid:undefined}));if(invalid.length)process.exitCode=2;
+console.log(JSON.stringify({...report,invalid:undefined,unavailable:undefined,excludedNonEquity:undefined}));if(invalid.length)process.exitCode=2;

@@ -1,13 +1,13 @@
-name: Parijs 54 probleemreeksen repareren
+name: Parijs definitieve herstelcontrole
 on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['.github/workflows/paris-repair-invalid.yml', 'scripts/history/providers/euronext-live.mjs']
+    paths: ['scripts/cloudflare/validate-paris-history.mjs']
 permissions:
   contents: write
 concurrency:
-  group: koersplein-paris-repair-invalid
+  group: koersplein-paris-finalize
   cancel-in-progress: false
 jobs:
   repair:
@@ -21,27 +21,27 @@ jobs:
         with: { ref: main }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
-      - name: Vernieuw Parijs-catalogus
+      - name: Vernieuw officiële Euronext Parijs-catalogus
         run: node scripts/cloudflare/fetch-paris-catalog.mjs
-      - name: Repareer uitsluitend afgekeurde reeksen
-        run: node scripts/cloudflare/paris-repair-invalid.mjs || echo 'Reparatie rapporteert resterende fouten; validator beslist eindstatus.'
-      - name: Valideer Parijs opnieuw met retries
+      - name: Vul uitsluitend werkelijk ontbrekende aandelen
+        run: node scripts/cloudflare/paris-repair-invalid.mjs || echo 'Bronhiaten worden expliciet door de eindvalidator beoordeeld.'
+      - name: Valideer opgeslagen Parijs-universum
         if: always()
         run: node scripts/cloudflare/validate-paris-history.mjs
-      - name: Bewaar reparatie en validatie
+      - name: Bewaar definitief Parijs-rapport
         if: always()
         run: |
           git config user.name "koersplein-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/euronext-paris.json research/output/paris/repair-invalid-summary.json research/output/paris/validation-summary.json || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Repareer en valideer resterende Parijs-reeksen"
+          git commit -m "Parijs definitieve bron- en historiecontrole"
           git pull --rebase origin main
           git push origin HEAD:main
       - name: Bewaar rapport
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: paris-repair-invalid
+          name: paris-final-validation
           path: research/output/paris/
           retention-days: 30
