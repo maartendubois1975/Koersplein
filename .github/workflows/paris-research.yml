@@ -1,4 +1,5 @@
 name: Paris Research Factory
+# Controlled push trigger: changes to this workflow start a verified full research run.
 on:
   push:
     branches: [main]
