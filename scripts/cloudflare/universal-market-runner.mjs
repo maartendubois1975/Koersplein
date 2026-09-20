@@ -16,7 +16,18 @@ const source=raw.shares||raw.instruments||[];if(!source.length)throw new Error('
 const instruments=source.map(x=>({isin:x.isin,name:x.name||x.company,company:x.name||x.company,symbol:x.symbol||x.ticker,ticker:x.symbol||x.ticker,mic:x.mic||m.mic,market:x.mic||m.mic,currency:m.currency,countryCode:m.country,provider:'yahoo-chart'}));
 let unavailable=new Set();
 if(mic==='XPAR')try{const rr=JSON.parse(await fs.readFile('research/output/paris/repair-invalid-summary.json','utf8'));unavailable=new Set((rr.unavailableItems||[]).map(x=>x.isin))}catch{}
-await client.seedCatalog({markets:[{mic:m.mic,code:m.code,name:m.name,exchangeGroup:'world',countryCode:m.country,currency:m.currency,timezone:m.timezone}],instruments:[]});
+// Register every MIC present in the official catalogue before inserting instruments.
+const marketMics=[...new Set(instruments.map(x=>x.mic).filter(Boolean))];
+const markets=marketMics.map(segmentMic=>({
+  mic:segmentMic,
+  code:segmentMic===m.mic?m.code:`${m.code}-${segmentMic.toLowerCase()}`,
+  name:segmentMic===m.mic?m.name:`${m.name} (${segmentMic})`,
+  exchangeGroup:'world',
+  countryCode:m.country,
+  currency:m.currency,
+  timezone:m.timezone
+}));
+await client.seedCatalog({markets,instruments:[]});
 const cb=Number(process.env.CATALOG_BATCH_SIZE||25);for(let i=0;i<instruments.length;i+=cb)await client.seedCatalog({markets:[],instruments:instruments.slice(i,i+cb)});
 const hb=Number(process.env.HISTORY_BATCH_SIZE||10),today=new Date().toISOString().slice(0,10);
 const candidates=[];let alreadyCurrent=0,excluded=0,inspectionFailed=0;
