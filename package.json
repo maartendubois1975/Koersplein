@@ -20,7 +20,12 @@
     "factory:test:golden": "node scripts/factory/verify-golden.mjs",
     "cloudflare:test": "node scripts/cloudflare/test.mjs",
     "cloudflare:seed": "node scripts/cloudflare/seed-catalog.mjs",
-    "cloudflare:import-golden": "node scripts/cloudflare/import-golden.mjs"
+    "cloudflare:import-golden": "node scripts/cloudflare/import-golden.mjs",
+    "research:paris:plan": "node scripts/research/paris-pipeline.mjs",
+    "research:paris:run": "node scripts/research/paris-pipeline.mjs --execute",
+    "research:paris:test": "node scripts/research/test-paris-pipeline.mjs"
   },
-  "engines": { "node": ">=22.5" }
+  "engines": {
+    "node": ">=22.5"
+  }
 }
