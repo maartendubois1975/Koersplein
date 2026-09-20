@@ -3,6 +3,7 @@ on:
   push:
     branches: [main]
     paths:
+      - '.github/workflows/paris-research.yml'
       - '.research-triggers/paris-full-run'
   workflow_dispatch:
     inputs:
@@ -21,6 +22,7 @@ jobs:
         with:
           node-version: '22'
       - run: npm test
+      - run: npm run research:paris:test
       - name: Build official point-in-time macro dataset
         run: npm run research:paris:events
       - name: Run complete Paris research
