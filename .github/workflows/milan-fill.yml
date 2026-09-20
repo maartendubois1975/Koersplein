@@ -1,10 +1,13 @@
 name: Milan Fill Factory
 on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/milan-fill.yml']
   workflow_dispatch:
 jobs:
   milan-fill:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 360
     permissions:
       contents: read
     steps:
@@ -15,14 +18,30 @@ jobs:
         run: node scripts/cloudflare/fetch-milan-catalog.mjs
       - name: Validate repository and Milan catalogue
         run: npm run validate
-      - name: Backfill Milan history batch
+      - name: Complete Milan historical backfill
         env:
           KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
           KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
           MARKET_MIC: XMIL
           HISTORY_BATCH_SIZE: 20
           CATALOG_BATCH_SIZE: 25
-        run: node scripts/cloudflare/universal-market-runner.mjs
+        run: |
+          for round in $(seq 1 24); do
+            echo "=== Milan batch $round ==="
+            node scripts/cloudflare/universal-market-runner.mjs
+            remaining=$(node -e "const r=require('./research/output/world-fill-batch.json'); console.log(r.remainingHint ?? 999999)")
+            failed=$(node -e "const r=require('./research/output/world-fill-batch.json'); console.log((r.failed||[]).length)")
+            complete=$(node -e "const r=require('./research/output/world-fill-batch.json'); console.log(r.complete ?? 0)")
+            echo "batch=$round complete=$complete failed=$failed remaining=$remaining"
+            if [ "$remaining" -le 0 ]; then
+              echo "MILAN_BACKFILL_COMPLETE"
+              break
+            fi
+            if [ "$complete" -eq 0 ]; then
+              echo "No progress; stopping to avoid a wasteful loop"
+              exit 2
+            fi
+          done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
