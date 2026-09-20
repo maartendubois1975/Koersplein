@@ -1,0 +1,62 @@
+{
+  "generatedAt": "2026-09-20T04:51:10.130Z",
+  "market": "PARIS",
+  "policy": "FREE_SOURCE_FIRST",
+  "rules": [
+    "Nooit betaalde bron vereisen zolang gratis betrouwbare marktinformatie beschikbaar is",
+    "Koppel primair op ISIN",
+    "Bepaal listingdatum vóór volledigheidsbeoordeling",
+    "Een technische/direct listing met weinig of geen transacties mag een korte/constante reeks hebben",
+    "Geen synthetische dagkoersen maken"
+  ],
+  "sources": [
+    {
+      "name": "Euronext",
+      "role": "AUTHORITATIVE",
+      "use": [
+        "catalogus",
+        "ISIN",
+        "MIC",
+        "listingdatum",
+        "reference price",
+        "market notices"
+      ]
+    },
+    {
+      "name": "Yahoo Finance",
+      "role": "PRIMARY_FREE_MACHINE",
+      "use": [
+        "daghistorie waar symbooldekking aanwezig is"
+      ]
+    },
+    {
+      "name": "ABC Bourse",
+      "role": "FREE_DISCOVERY_VALIDATION",
+      "use": [
+        "historische koers/grafiek voor kleine Euronext Access-noteringen"
+      ]
+    },
+    {
+      "name": "Bourse Direct",
+      "role": "FREE_DISCOVERY_VALIDATION",
+      "use": [
+        "Euronext Access sessie/historische velden"
+      ]
+    },
+    {
+      "name": "Investing.com",
+      "role": "FREE_DISCOVERY_VALIDATION",
+      "use": [
+        "historische koerscontrole"
+      ]
+    },
+    {
+      "name": "MarketScreener",
+      "role": "FREE_DISCOVERY_VALIDATION",
+      "use": [
+        "historische grafiek/laatste koerscontrole"
+      ]
+    }
+  ],
+  "status": "APPROVED"
+}
