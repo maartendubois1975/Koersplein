@@ -27,8 +27,12 @@ const markets=marketMics.map(segmentMic=>({
   currency:m.currency,
   timezone:m.timezone
 }));
-await client.seedCatalog({markets,instruments:[]});
-const cb=Number(process.env.CATALOG_BATCH_SIZE||25);for(let i=0;i<instruments.length;i+=cb)await client.seedCatalog({markets:[],instruments:instruments.slice(i,i+cb)});
+const seedCatalog=process.env.SEED_CATALOG!=='0';
+if(seedCatalog){
+  await client.seedCatalog({markets,instruments:[]});
+  const cb=Number(process.env.CATALOG_BATCH_SIZE||25);
+  for(let i=0;i<instruments.length;i+=cb)await client.seedCatalog({markets:[],instruments:instruments.slice(i,i+cb)});
+}
 const hb=Number(process.env.HISTORY_BATCH_SIZE||10),today=new Date().toISOString().slice(0,10);
 const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
 // A daily series is current when it reaches the latest expected trading weekday.

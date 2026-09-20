@@ -28,7 +28,11 @@ jobs:
         run: |
           for round in $(seq 1 24); do
             echo "=== Milan batch $round ==="
-            node scripts/cloudflare/universal-market-runner.mjs
+            if [ "$round" -eq 1 ]; then
+              SEED_CATALOG=1 node scripts/cloudflare/universal-market-runner.mjs
+            else
+              SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs
+            fi
             remaining=$(node -e "const r=require('./research/output/world-fill-batch.json'); console.log(r.remainingHint ?? 999999)")
             failed=$(node -e "const r=require('./research/output/world-fill-batch.json'); console.log((r.failed||[]).length)")
             complete=$(node -e "const r=require('./research/output/world-fill-batch.json'); console.log(r.complete ?? 0)")
