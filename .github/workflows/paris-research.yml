@@ -1,11 +1,7 @@
 name: Paris Research Factory
-# Controlled push trigger: changes to this workflow start a verified full research run. Repair trigger 2026-09-20-1.
 on:
   push:
     branches: [main]
-    paths:
-      - '.github/workflows/paris-research.yml'
-      - '.research-triggers/paris-full-run'
   workflow_dispatch:
     inputs:
       run_id:
@@ -13,6 +9,7 @@ on:
         required: false
 jobs:
   paris-research:
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[run-paris]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 120
     permissions:
@@ -22,10 +19,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate market datasets
-        run: node scripts/validate.mjs
-      - name: Run Paris research guard tests
-        run: npm run research:paris:test
+      - run: npm test
+      - run: npm run research:paris:test
       - name: Build official point-in-time macro dataset
         run: npm run research:paris:events
       - name: Run complete Paris research
