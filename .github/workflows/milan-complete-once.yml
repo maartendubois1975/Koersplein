@@ -1,0 +1,54 @@
+name: Milaan in een keer vullen en valideren
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/milan-complete-once.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: koersplein-milan-complete
+  cancel-in-progress: false
+jobs:
+  milan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      MARKET_MIC: XMIL
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+      CATALOG_BATCH_SIZE: 50
+      HISTORY_BATCH_SIZE: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - name: Officiële Milaan catalogus
+        run: node scripts/cloudflare/fetch-milan-catalog.mjs
+      - name: Bron-gate
+        run: node scripts/history/market-source-preflight.mjs
+      - name: Vul Milaan in batches tot er niets meer over is
+        run: |
+          for i in $(seq 1 30); do
+            echo "Milaan batch $i"
+            node scripts/cloudflare/universal-market-runner.mjs || true
+            REM=$(node -e "const fs=require('fs');const x=JSON.parse(fs.readFileSync('research/output/world-fill-batch.json'));console.log(x.remainingHint??1)")
+            echo "remaining=$REM"
+            if [ "$REM" = "0" ]; then break; fi
+          done
+      - name: Bewaar catalogus en eindrapport
+        run: |
+          git config user.name "Koersplein Milan Factory"
+          git config user.email "milan-factory@users.noreply.github.com"
+          git add data/euronext-milan.json research/output/world-fill-batch.json
+          git commit -m "Milaan: catalogus en backfill eindstand" || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: milan-complete
+          path: |
+            data/euronext-milan.json
+            research/output/world-fill-batch.json
+          retention-days: 90
