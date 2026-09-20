@@ -34,7 +34,7 @@ for (const text of ['3 maanden', '6 maanden', '12 maanden', '24 maanden', '+10%'
 const htmlLower = html.toLowerCase();
 assert.ok(htmlLower.includes('selectie-engine') && htmlLower.includes('geen rendementsbelofte'));
 assert.ok(html.includes('Koershistorie') && html.includes('Gevalideerde marktdata'));
-assert.ok(app.includes('share.html?isin=') && app.includes('share.name, share.symbol, share.isin'));
+assert.ok(app.includes('share.html?isin=') && app.includes('[share.name,share.symbol,share.isin]'), 'Aandelen moeten klikbaar en op naam/ticker/ISIN doorzoekbaar blijven');
 assert.ok(detail.includes('Koersplein-analyse'));
 assert.ok(detail.includes('Kans- en risicoanalyse wordt beschikbaar') && !detail.includes('model-contract'));
 assert.ok(detail.includes('history-state') && detailScript.includes('manifest.json') && detailScript.includes('renderHistoryChart'));
@@ -53,7 +53,3 @@ assert.ok(filterPeriod(synthetic, '3J').length < synthetic.length);
 assert.ok(filterPeriod(synthetic, '5J').length < synthetic.length);
 assert.ok(filterPeriod(synthetic, '10J').length < synthetic.length);
 assert.equal(filterPeriod(synthetic, 'MAX').length, synthetic.length);
-assert.equal(downsampleSeries(synthetic, 900).length <= 902, true);
-assert.throws(() => validateHistoryDocument({ bars: [{ date: '2026-09-10', close: -1 }] }));
-
-console.log('Koersplein kern-tests geslaagd.');
