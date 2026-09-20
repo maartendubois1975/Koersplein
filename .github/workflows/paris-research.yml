@@ -21,8 +21,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: npm test
-      - run: npm run research:paris:test
+      - name: Validate market datasets
+        run: node scripts/validate.mjs
+      - name: Run Paris research guard tests
+        run: npm run research:paris:test
       - name: Build official point-in-time macro dataset
         run: npm run research:paris:events
       - name: Run complete Paris research
