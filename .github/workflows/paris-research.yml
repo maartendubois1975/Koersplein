@@ -1,5 +1,5 @@
 name: Paris Research Factory
-# Controlled push trigger: changes to this workflow start a verified full research run.
+# Controlled push trigger: changes to this workflow start a verified full research run. Repair trigger 2026-09-20-1.
 on:
   push:
     branches: [main]
