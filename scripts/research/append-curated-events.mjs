@@ -1,0 +1,2 @@
+import fs from 'node:fs';
+export function appendCuratedEvents(file,extra){const d=JSON.parse(fs.readFileSync(file,'utf8'));const ids=new Set(d.events.map(x=>x.id));for(const e of extra){if(!ids.has(e.id)){if(!e.available_at||!e.source)throw new Error('Curated event lacks point-in-time provenance');d.events.push(e);ids.add(e.id)}}fs.writeFileSync(file,JSON.stringify(d,null,2));return d.events.length;}
