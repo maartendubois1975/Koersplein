@@ -1,5 +1,5 @@
 name: Paris Research Factory
-'on':
+on:
   push:
     branches: [main]
   workflow_dispatch:
@@ -9,7 +9,6 @@ name: Paris Research Factory
         required: false
 jobs:
   paris-research:
-    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[run-paris]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 120
     permissions:
