@@ -1,0 +1,32 @@
+name: Paris Research Factory
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Optional reproducible run id
+        required: false
+jobs:
+  paris-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
+      - name: Run complete Paris research
+        env:
+          KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+          KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+          KOERSPLEIN_RESEARCH_EVENTS_FILE: data/research/paris-events-v1.json
+          KOERSPLEIN_RESEARCH_RUN_ID: ${{ inputs.run_id }}
+        run: npm run research:paris:full
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: paris-research-results
+          path: var/research/paris-v1/
+          retention-days: 30
