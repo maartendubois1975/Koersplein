@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "policy": "NO_MARKET_BACKFILL_WITHOUT_APPROVED_SOURCE_DISCOVERY",
+  "markets": {
+    "XAMS": {
+      "status": "APPROVED",
+      "catalogSource": "Euronext",
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY"
+        }
+      ],
+      "discovery": {
+        "testedDifficultSymbols": 10,
+        "note": "Bestaande golden cases en Amsterdam-productie."
+      }
+    },
+    "XBRU": {
+      "status": "APPROVED",
+      "catalogSource": "Euronext",
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY"
+        }
+      ],
+      "discovery": {
+        "testedDifficultSymbols": 10,
+        "note": "Bestaande Brussel-validatie."
+      }
+    },
+    "XPAR": {
+      "status": "APPROVED",
+      "catalogSource": "Euronext official product directory",
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Brede gratis dekking voor .PA"
+        },
+        {
+          "provider": "euronext-live",
+          "role": "FALLBACK",
+          "note": "Officiële beursbron; huidige HTML-endpoint dekt niet alle Growth/Access-instrumenten"
+        },
+        {
+          "provider": "EODHD",
+          "role": "CANDIDATE_PAID",
+          "note": "PA/XPAR EOD API; 30+ jaar volgens provider; sleutel/gebruiksovereenkomst vereist"
+        },
+        {
+          "provider": "Financial Modeling Prep",
+          "role": "CANDIDATE_PAID",
+          "note": "Euronext historical endpoint; API-sleutel/voorwaarden vereist"
+        }
+      ],
+      "discovery": {
+        "testedDifficultSymbols": 17,
+        "note": "Alle 17 resterende probleemnoteringen onderzocht; externe platforms bevestigen dat meerdere bestaan, maar productie-import vereist een betrouwbare API/feed en passende gebruiksrechten."
+      }
+    }
+  }
+}

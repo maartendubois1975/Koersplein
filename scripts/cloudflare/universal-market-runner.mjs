@@ -4,10 +4,12 @@ import { createDefaultProviderRegistry } from '../history/provider-registry.mjs'
 import { partitionBars } from './history-format.mjs';
 
 const client=new FactoryApiClient();
+const sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
 const registry=createDefaultProviderRegistry();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const mic=process.env.MARKET_MIC||plan.markets.find(x=>x.state==='ACTIVE')?.mic||plan.markets[0]?.mic;
 const m=plan.markets.find(x=>x.mic===mic);if(!m)throw new Error(`MARKET_MIC ${mic} niet in actief plan`);
+const sourcePlan=sourceRegistry.markets?.[mic];if(!sourcePlan||sourcePlan.status!=='APPROVED'||!sourcePlan.historySources?.some(x=>x.role==='PRIMARY')||(sourcePlan.discovery?.testedDifficultSymbols||0)<10)throw new Error(`BRONONDERZOEK VERPLICHT vóór backfill van ${mic}`);
 const path=`data/euronext-${m.code}.json`;
 const raw=JSON.parse(await fs.readFile(path,'utf8'));
 const source=raw.shares||raw.instruments||[];if(!source.length)throw new Error('lege catalogus');
