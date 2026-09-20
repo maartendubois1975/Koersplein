@@ -30,10 +30,13 @@ const markets=marketMics.map(segmentMic=>({
 await client.seedCatalog({markets,instruments:[]});
 const cb=Number(process.env.CATALOG_BATCH_SIZE||25);for(let i=0;i<instruments.length;i+=cb)await client.seedCatalog({markets:[],instruments:instruments.slice(i,i+cb)});
 const hb=Number(process.env.HISTORY_BATCH_SIZE||10),today=new Date().toISOString().slice(0,10);
+// A daily series is current when it reaches the latest expected trading weekday.
+// Comparing with calendar 'today' made every weekend reselect Friday-complete instruments forever.
+const latestExpectedTradingDate=(()=>{const d=new Date(`${today}T12:00:00Z`);const dow=d.getUTCDay();if(dow===0)d.setUTCDate(d.getUTCDate()-2);else if(dow===6)d.setUTCDate(d.getUTCDate()-1);return d.toISOString().slice(0,10)})();
 const candidates=[];let alreadyCurrent=0,excluded=0,inspectionFailed=0;
 for(const item of instruments){
   if(unavailable.has(item.isin)){excluded++;continue}
-  try{const h=await client.history(item.isin);const last=h?.coverage?.lastDate||h?.bars?.at?.(-1)?.date||h?.history?.at?.(-1)?.date;if(last>=today){alreadyCurrent++;continue}}catch{inspectionFailed++}
+  try{const h=await client.history(item.isin);const last=h?.coverage?.lastDate||h?.bars?.at?.(-1)?.date||h?.history?.at?.(-1)?.date;if(last>=latestExpectedTradingDate){alreadyCurrent++;continue}}catch{inspectionFailed++}
   candidates.push(item);if(candidates.length>=hb)break;
 }
 let complete=0,failed=[];
