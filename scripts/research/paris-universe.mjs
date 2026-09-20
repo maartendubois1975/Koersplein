@@ -1,3 +1,3 @@
 import {readFile} from 'node:fs/promises';
-const NON_EQUITY=/\b(BSA|WARR(?:ANT)?|RIGHTS?|CERT(?:IFICATE)?|OBLIG|BOND|ETF|ETN)\b/i;
+const NON_EQUITY=/(?:^|[\s._\-/()])(BSA[A-Z0-9]*|WARR(?:ANT)?S?|RIGHTS?|CERT(?:IFICATE)?S?|OBLIG(?:ATION)?S?|BONDS?|ETFS?|ETNS?)(?=$|[\s._\-/()0-9])/i;
 export async function parisResearchUniverse(){const d=JSON.parse(await readFile(new URL('../../data/euronext-paris.json',import.meta.url),'utf8'));const included=[],excluded=[];for(const s of d.shares){const reason=s.mic!=='XPAR'?'NOT_XPAR':NON_EQUITY.test(s.name)?'NON_EQUITY_NAME':null;(reason?excluded:included).push(reason?{...s,reason}:s)}return {market:'PARIS',mic:'XPAR',source:d.source,retrievedAt:d.retrievedAt,included,excluded,counts:{source:d.shares.length,included:included.length,excluded:excluded.length}};}
