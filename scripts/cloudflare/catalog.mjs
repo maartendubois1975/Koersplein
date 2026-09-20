@@ -5,15 +5,16 @@ const readJson = async (name) => JSON.parse(await readFile(new URL(`data/${name}
 const maybeJson = async (name) => { try { return await readJson(name); } catch (error) { if (error.code === 'ENOENT') return null; throw error; } };
 
 export async function cloudflareCatalog() {
-  const [marketData, amsShares, amsIndices, mappings, bruShares, bruIndices] = await Promise.all([
+  const [marketData, amsShares, amsIndices, mappings, bruShares, bruIndices, parShares, parIndices] = await Promise.all([
     readJson('markets.json'), readJson('euronext-amsterdam.json'), readJson('euronext-amsterdam-indices.json'), readJson('history-instruments.json'),
-    maybeJson('euronext-brussels.json'), maybeJson('euronext-brussels-indices.json')
+    maybeJson('euronext-brussels.json'), maybeJson('euronext-brussels-indices.json'), maybeJson('euronext-paris.json'), maybeJson('euronext-paris-indices.json')
   ]);
   const mappingByIsin = new Map(mappings.providerMappings.map((item) => [item.isin, item]));
   const venue = marketData.venues.find((item) => item.id === 'euronext');
   const configs = [
     { shares: amsShares, indices: amsIndices, countryCode: 'NL', timezone: 'Europe/Amsterdam', suffix: '.AS' },
-    ...(bruShares ? [{ shares: bruShares, indices: bruIndices, countryCode: 'BE', timezone: 'Europe/Brussels', suffix: '.BR' }] : [])
+    ...(bruShares ? [{ shares: bruShares, indices: bruIndices, countryCode: 'BE', timezone: 'Europe/Brussels', suffix: '.BR' }] : []),
+    ...(parShares ? [{ shares: parShares, indices: parIndices, countryCode: 'FR', timezone: 'Europe/Paris', suffix: '.PA' }] : [])
   ];
   const markets = [];
   const instruments = [];
