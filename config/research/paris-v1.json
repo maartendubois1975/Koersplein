@@ -1,0 +1,51 @@
+{
+  "research_version": "paris-v1",
+  "market": "PARIS",
+  "phase": "A",
+  "horizons_months": [
+    1,
+    3,
+    6,
+    12,
+    24
+  ],
+  "targets_pct": [
+    10,
+    20,
+    30,
+    40,
+    50
+  ],
+  "pipeline": [
+    "BUILD_BASE_RATES",
+    "BUILD_POINT_IN_TIME_FEATURES",
+    "RUN_BLIND_RESEARCH",
+    "SCORE_FORWARD_OUTCOMES",
+    "RUN_HINDSIGHT_DIAGNOSTICS",
+    "VALIDATE_RESEARCH",
+    "BUILD_HUMAN_CONCLUSION",
+    "BUILD_SITE_RESEARCH_OUTPUT",
+    "PROMOTE_RESEARCH_VERSION"
+  ],
+  "point_in_time": {
+    "availability_field": "available_at",
+    "forbid_future": true,
+    "immutable_feature_snapshots": true
+  },
+  "validation": {
+    "chronological_split": true,
+    "walk_forward": true,
+    "unseen_holdout_required": true,
+    "compare_baselines": [
+      "base_rate",
+      "index",
+      "momentum"
+    ],
+    "block_on_leakage": true
+  },
+  "outputs": {
+    "human_conclusion_required": true,
+    "site_output_required": true,
+    "site_requires_pass_and_promotion": true
+  }
+}

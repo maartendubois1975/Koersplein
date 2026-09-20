@@ -1,0 +1,1 @@
+import {parisResearchUniverse} from './paris-universe.mjs';const u=await parisResearchUniverse();if(!u.included.length||u.included.some(x=>x.mic!=='XPAR'))throw new Error('universe');if(u.included.some(x=>/\b(BSA|WARR)/i.test(x.name)))throw new Error('non-equity leak');console.log('Paris universe:',u.counts);

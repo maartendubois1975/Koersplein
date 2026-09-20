@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Koersplein point-in-time research event",
+  "type": "object",
+  "required": [
+    "id",
+    "available_at",
+    "source",
+    "family"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "event_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "available_at": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "source_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "family": {
+      "enum": [
+        "macro",
+        "rates",
+        "inflation",
+        "fx",
+        "commodity",
+        "credit",
+        "geopolitics",
+        "sanctions",
+        "regulation",
+        "policy",
+        "supply_chain",
+        "mna",
+        "management",
+        "product",
+        "sector",
+        "fundamental"
+      ]
+    },
+    "market": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "isin": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sector": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "signed_score": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "payload": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": true
+}
