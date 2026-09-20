@@ -23,7 +23,7 @@
     "cloudflare:import-golden": "node scripts/cloudflare/import-golden.mjs",
     "research:paris:plan": "node scripts/research/paris-pipeline.mjs",
     "research:paris:run": "node scripts/research/paris-pipeline.mjs --execute",
-    "research:paris:test": "node scripts/research/test-paris-pipeline.mjs && node scripts/research/test-paris-input.mjs && node scripts/research/test-analytics.mjs && node scripts/research/test-learning.mjs",
+    "research:paris:test": "node scripts/research/test-paris-pipeline.mjs && node scripts/research/test-paris-input.mjs && node scripts/research/test-analytics.mjs && node scripts/research/test-learning.mjs && node scripts/research/test-block1-complete.mjs",
     "research:paris:core": "node scripts/research/run-paris-core.mjs"
   },
   "engines": {
