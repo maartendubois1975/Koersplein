@@ -30,6 +30,7 @@ const markets=marketMics.map(segmentMic=>({
 await client.seedCatalog({markets,instruments:[]});
 const cb=Number(process.env.CATALOG_BATCH_SIZE||25);for(let i=0;i<instruments.length;i+=cb)await client.seedCatalog({markets:[],instruments:instruments.slice(i,i+cb)});
 const hb=Number(process.env.HISTORY_BATCH_SIZE||10),today=new Date().toISOString().slice(0,10);
+const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
 // A daily series is current when it reaches the latest expected trading weekday.
 // Comparing with calendar 'today' made every weekend reselect Friday-complete instruments forever.
 const latestExpectedTradingDate=(()=>{const d=new Date(`${today}T12:00:00Z`);const dow=d.getUTCDay();if(dow===0)d.setUTCDate(d.getUTCDate()-2);else if(dow===6)d.setUTCDate(d.getUTCDate()-1);return d.toISOString().slice(0,10)})();
@@ -41,7 +42,7 @@ for(const item of instruments){
 }
 let complete=0,failed=[];
 for(const item of candidates){try{const {provider,result}=await registry.fetchDaily(item,{startDate:'1990-01-01',endDate:today},'yahoo-chart');if(!result.bars.length)throw new Error('geen historie');for(const [period,bars] of partitionBars(result.bars))await client.putPartition(item.isin,period,{bars,provider:provider.id});await client.completeHistory(item.isin,{provider:provider.id});complete++;}catch(e){failed.push({isin:item.isin,symbol:item.symbol,mic:item.mic,error:e.message})}}
-const report={market:mic,catalog:instruments.length,batchRequested:hb,candidates:candidates.length,alreadyCurrent,excludedProviderUnavailable:excluded,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-complete)};
+const report={market:mic,catalog:instruments.length,batchRequested:hb,candidates:candidates.length,alreadyCurrent,excludedProviderUnavailable:excluded,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-complete),freshnessCutoff};
 console.log(JSON.stringify(report,null,2));
 await fs.mkdir('research/output',{recursive:true});await fs.writeFile('research/output/world-fill-batch.json',JSON.stringify({...report,generatedAt:new Date().toISOString()},null,2));
 if(failed.length===candidates.length&&candidates.length)process.exitCode=2;
