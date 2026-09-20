@@ -35,3 +35,6 @@ De site mag alleen output met validation_status=PASS en promoted=true tonen.
 
 ## Gate
 FAIL bij leakage, ontbrekende provenance/available_at voor gebruikte niet-koersfeatures, onvoldoende holdout, niet-reproduceerbare run of ontbrekende menselijke conclusie.
+
+## Bouwblok 1 — complete research engine gate
+Gebouwd: point-in-time external/fundamental event contract, provenance-check, event feature families, calibration (Brier + calibration gap) en finale promotion gate. De gate faalt gesloten: zonder echte historische externe/fundamental data met available_at, volledige provenance, ongeziene holdout, calibratie, reproduceerbaarheid en menselijke conclusie kan niets worden gepromoveerd of gepubliceerd.
