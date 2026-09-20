@@ -33,7 +33,7 @@ const [html, app, detail, contracts, detailScript, chartScript, css] = await Pro
 for (const text of ['3 maanden', '6 maanden', '12 maanden', '24 maanden', '+10%', '+20%', '+30%']) assert.ok(html.includes(text));
 const htmlLower = html.toLowerCase();
 assert.ok(htmlLower.includes('selectie-engine') && htmlLower.includes('geen rendementsbelofte'));
-assert.ok(html.includes('Stijgers gisteren') && html.includes('Dalers gisteren'));
+assert.ok(html.includes('Koershistorie') && html.includes('Gevalideerde marktdata'));
 assert.ok(app.includes('share.html?isin=') && app.includes('share.name, share.symbol, share.isin'));
 assert.ok(detail.includes('Koersplein-analyse'));
 assert.ok(detail.includes('Kans- en risicoanalyse wordt beschikbaar') && !detail.includes('model-contract'));
