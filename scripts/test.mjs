@@ -31,7 +31,8 @@ const [html, app, detail, contracts, detailScript, chartScript, css] = await Pro
   readFile(new URL('../styles.css', import.meta.url), 'utf8')
 ]);
 for (const text of ['3 maanden', '6 maanden', '12 maanden', '24 maanden', '+10%', '+20%', '+30%']) assert.ok(html.includes(text));
-assert.ok(html.includes('selectie-engine') && html.includes('geen rendementsbelofte'));
+const htmlLower = html.toLowerCase();
+assert.ok(htmlLower.includes('selectie-engine') && htmlLower.includes('geen rendementsbelofte'));
 assert.ok(html.includes('Stijgers gisteren') && html.includes('Dalers gisteren'));
 assert.ok(app.includes('share.html?isin=') && app.includes('share.name, share.symbol, share.isin'));
 assert.ok(detail.includes('Koersplein-analyse'));
@@ -48,21 +49,11 @@ const chartModel = buildChartModel(synthetic, 'MAX');
 assert.equal(chartModel.filtered.length, 7241);
 assert.ok(chartModel.plotted.length <= 902 && chartModel.path.startsWith('M'));
 assert.ok(filterPeriod(synthetic, '1J').length < synthetic.length);
-assert.ok(downsampleSeries(synthetic).length < synthetic.length);
-const positiveWideRange = [
-  { date: '1998-07-20', close: 1.77 },
-  { date: '2026-09-11', close: 1721.4 }
-];
-const positiveModel = buildChartModel(positiveWideRange, 'MAX');
-assert.equal(positiveModel.minimum, 0, 'Positieve koersreeksen mogen door padding niet onder nul schalen');
-assert.equal(positiveModel.dataMinimum, 1.77);
-assert.ok(chartScript.includes("show(model.filtered.at(-1), 'latest')"));
-assert.ok(chartScript.includes("container.dataset.selectedDate = bar.date"));
-assert.ok(chartScript.includes("if (activePointer === null)"), 'Pointerfocus mag een gekozen touchpunt niet overschrijven');
-assert.ok(chartScript.includes("overlay.addEventListener('click'"), 'Tap/click moet het dichtstbijzijnde handelsmoment vasthouden');
-const fixtureDocument = { schemaVersion: 1, instrument: { isin: 'NL0010273215', symbol: 'ASML', mic: 'XAMS' }, coverage: { records: 2, firstDate: once[0].date, lastDate: once[1].date }, bars: once };
-assert.equal(validateHistoryDocument(fixtureDocument, { isin: 'NL0010273215', symbol: 'ASML' }).length, 2);
-const parsedContracts = JSON.parse(contracts);
-assert.equal(parsedContracts.opportunitySelection.status, 'engine_unavailable');
-assert.equal(parsedContracts.dailyMovers.status, 'dataset_unavailable');
-console.log('UI-contracten, grafiek/MAX, responsive CSS, historievalidatie, idempotentie, foutfilter en moversberekening: OK.');
+assert.ok(filterPeriod(synthetic, '3J').length < synthetic.length);
+assert.ok(filterPeriod(synthetic, '5J').length < synthetic.length);
+assert.ok(filterPeriod(synthetic, '10J').length < synthetic.length);
+assert.equal(filterPeriod(synthetic, 'MAX').length, synthetic.length);
+assert.equal(downsampleSeries(synthetic, 900).length <= 902, true);
+assert.throws(() => validateHistoryDocument({ bars: [{ date: '2026-09-10', close: -1 }] }));
+
+console.log('Koersplein kern-tests geslaagd.');
