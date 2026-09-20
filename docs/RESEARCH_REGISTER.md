@@ -74,6 +74,26 @@ Actuele kandidaat toont horizon/target, base rate, conditionele hit rate, sample
 **Status: VASTGELEGD**
 Te integreren in bestaande D1/R2/Worker/factory, minimaal: BUILD_BASE_RATES, BUILD_POINT_IN_TIME_FEATURES, RUN_BLIND_RESEARCH, SCORE_FORWARD_OUTCOMES, RUN_HINDSIGHT_DIAGNOSTICS, VALIDATE_RESEARCH, PROMOTE_RESEARCH_VERSION. Idempotent, resumable, checkpoints, foutisolatie, audit trail en versiebeheer.
 
+### RF-013 Verplichte menselijke onderzoeksconclusie + site-output
+**Status: VASTGELEGD**
+Iedere voltooide onderzoeksrun moet naast machine-artifacts ook een begrijpelijke conclusie opleveren voor de eigenaar én een gestructureerde versie voor de site. Geen run geldt als afgerond zonder dit eindrapport.
+
+Het eindrapport bevat minimaal:
+- wat is onderzocht, universum, periode, horizons en aantal observaties;
+- historische base rates per target/horizon;
+- welke signalen aantoonbaar waarde toevoegden en welke niet;
+- sterkste positieve én negatieve bevindingen;
+- false positives, false negatives en belangrijke missers;
+- verschillen tussen Machine 1 en Machine 2;
+- welke hindsight-lessen nieuwe blinde out-of-sample tests overleefden;
+- prestaties versus simpele baselines;
+- beperkingen, datagaten, onzekerheid en risico op overfitting;
+- concrete conclusie in gewone Nederlandse taal: **wat hebben wij hiervan geleerd?**;
+- welke onderzoeksregels/features worden behouden, verworpen of opnieuw getest;
+- site-contract met alleen gevalideerde resultaten, inclusief evidence/sample size/base rate/onzekerheid en datum/model/data/feature-versie.
+
+De website mag geen conclusie publiceren die niet herleidbaar is tot een gevalideerde onderzoeksrun. De menselijke conclusie moet leesbaar blijven naast de technische JSON/artifacts, zodat de eigenaar zelf van elke onderzoeksronde kan leren.
+
 ## Fase-gate
 Huidige opdracht: **eerst Parijs**. De Research Factory mag pas als Parijs-lab "GETEST/ACTIEF" worden aangemerkt wanneer point-in-time/leakage-controles, base rates, blind/hindsight/out-of-sample cyclus en validatierapport aantoonbaar slagen. Daarna pas Parijs + Amsterdam + Brussel.
 
