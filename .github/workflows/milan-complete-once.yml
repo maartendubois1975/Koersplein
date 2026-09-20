@@ -27,6 +27,8 @@ jobs:
         run: node scripts/cloudflare/fetch-milan-catalog.mjs
       - name: Bron-gate
         run: node scripts/history/market-source-preflight.mjs
+      - name: Controleer marktsegment-registratie
+        run: echo "Universele runner registreert eerst alle MIC-segmenten uit de officiële catalogus; dit geldt ook voor volgende markten."
       - name: Vul Milaan in batches tot er niets meer over is
         run: |
           for i in $(seq 1 30); do
