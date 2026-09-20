@@ -6,7 +6,10 @@ const MARKET_RULES = {
   XBRU: { suffix: '.BR', exchanges: ['bru', 'brussels', 'brussel'] },
   XPAR: { suffix: '.PA', exchanges: ['par', 'paris', 'euronext paris'] },
   ALXP: { suffix: '.PA', exchanges: ['par', 'paris', 'euronext growth paris'] },
-  XMLI: { suffix: '.PA', exchanges: ['par', 'paris', 'euronext access paris'] }
+  XMLI: { suffix: '.PA', exchanges: ['par', 'paris', 'euronext access paris'] },
+  XMIL: { suffix: '.MI', exchanges: ['mil', 'milan', 'italy', 'borsa italiana'] },
+  MTAA: { suffix: '.MI', exchanges: ['mil', 'milan', 'italy', 'borsa italiana'] },
+  EXGM: { suffix: '.MI', exchanges: ['mil', 'milan', 'italy', 'borsa italiana'] }
 };
 
 const isoDate = (unixSeconds) => new Date(unixSeconds * 1000).toISOString().slice(0, 10);
