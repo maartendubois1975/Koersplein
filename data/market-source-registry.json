@@ -59,6 +59,36 @@
         "testedDifficultSymbols": 17,
         "note": "Alle 17 resterende probleemnoteringen onderzocht; externe platforms bevestigen dat meerdere bestaan, maar productie-import vereist een betrouwbare API/feed en passende gebruiksrechten."
       }
+    },
+    "XMIL": {
+      "status": "APPROVED",
+      "catalogSource": "Euronext/Borsa Italiana Live Markets official equity directory",
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Gratis dagelijkse historie via .MI; identiteit wordt tegen Milan/Borsa Italia gecontroleerd"
+        },
+        {
+          "provider": "euronext-live",
+          "role": "FALLBACK",
+          "note": "Officiële bron voor referentie, listingdatum en controle; historische beschikbaarheid per instrument kan verschillen"
+        },
+        {
+          "provider": "stooq",
+          "role": "VALIDATION_CANDIDATE",
+          "note": "Gratis publieke controlebron voor Italiaanse historie waar beschikbaar"
+        },
+        {
+          "provider": "marketscreener-public",
+          "role": "VALIDATION_CANDIDATE",
+          "note": "Gratis publieke validatie voor kleine en jonge noteringen"
+        }
+      ],
+      "discovery": {
+        "testedDifficultSymbols": 20,
+        "note": "Milaan source-first plan: main market + Growth, jonge IPOs en small caps; listingdatum bepaalt begin van verwachte historie; geen synthetische koersen."
+      }
     }
   }
 }
