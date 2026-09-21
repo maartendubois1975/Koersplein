@@ -52,4 +52,4 @@ for(const item of candidates){try{const {provider,result}=await registry.fetchDa
 const report={market:mic,catalog:instruments.length,batchRequested:hb,candidates:candidates.length,alreadyCurrent,excludedProviderUnavailable:excluded,skippedRunFailures,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-complete-skippedRunFailures),freshnessCutoff};
 console.log(JSON.stringify(report,null,2));
 await fs.mkdir('research/output',{recursive:true});await fs.writeFile('research/output/world-fill-batch.json',JSON.stringify({...report,generatedAt:new Date().toISOString()},null,2));
-if(failed.length===candidates.length&&candidates.length)process.exitCode=2;
+if(failed.length===candidates.length&&candidates.length&&process.env.ALLOW_PARTIAL_FAILURES!=='1')process.exitCode=2;
