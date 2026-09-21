@@ -2,117 +2,21 @@
   "version": 1,
   "policy": "NO_MARKET_BACKFILL_WITHOUT_APPROVED_SOURCE_DISCOVERY",
   "markets": {
-    "XAMS": {
-      "status": "APPROVED",
-      "catalogSource": "Euronext",
-      "historySources": [
-        {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY"
-        }
-      ],
-      "discovery": {
-        "testedDifficultSymbols": 10,
-        "note": "Bestaande golden cases en Amsterdam-productie."
-      }
-    },
-    "XBRU": {
-      "status": "APPROVED",
-      "catalogSource": "Euronext",
-      "historySources": [
-        {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY"
-        }
-      ],
-      "discovery": {
-        "testedDifficultSymbols": 10,
-        "note": "Bestaande Brussel-validatie."
-      }
-    },
-    "XPAR": {
-      "status": "APPROVED",
-      "catalogSource": "Euronext official product directory",
-      "historySources": [
-        {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY",
-          "note": "Brede gratis dekking voor .PA"
-        },
-        {
-          "provider": "euronext-live",
-          "role": "FALLBACK",
-          "note": "Officiële beursbron; huidige HTML-endpoint dekt niet alle Growth/Access-instrumenten"
-        },
-        {
-          "provider": "EODHD",
-          "role": "CANDIDATE_PAID",
-          "note": "PA/XPAR EOD API; 30+ jaar volgens provider; sleutel/gebruiksovereenkomst vereist"
-        },
-        {
-          "provider": "Financial Modeling Prep",
-          "role": "CANDIDATE_PAID",
-          "note": "Euronext historical endpoint; API-sleutel/voorwaarden vereist"
-        }
-      ],
-      "discovery": {
-        "testedDifficultSymbols": 17,
-        "note": "Alle 17 resterende probleemnoteringen onderzocht; externe platforms bevestigen dat meerdere bestaan, maar productie-import vereist een betrouwbare API/feed en passende gebruiksrechten."
-      }
-    },
-    "XMIL": {
-      "status": "APPROVED",
-      "catalogSource": "Euronext/Borsa Italiana Live Markets official equity directory",
-      "historySources": [
-        {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY",
-          "note": "Gratis dagelijkse historie via .MI; identiteit wordt tegen Milan/Borsa Italia gecontroleerd"
-        },
-        {
-          "provider": "euronext-live",
-          "role": "FALLBACK",
-          "note": "Officiële bron voor referentie, listingdatum en controle; historische beschikbaarheid per instrument kan verschillen"
-        },
-        {
-          "provider": "stooq",
-          "role": "VALIDATION_CANDIDATE",
-          "note": "Gratis publieke controlebron voor Italiaanse historie waar beschikbaar"
-        },
-        {
-          "provider": "marketscreener-public",
-          "role": "VALIDATION_CANDIDATE",
-          "note": "Gratis publieke validatie voor kleine en jonge noteringen"
-        }
-      ],
-      "discovery": {
-        "testedDifficultSymbols": 20,
-        "note": "Milaan source-first plan: main market + Growth, jonge IPOs en small caps; listingdatum bepaalt begin van verwachte historie; geen synthetische koersen."
-      }
-    },
+    "XAMS": {"status":"APPROVED","catalogSource":"Euronext","historySources":[{"provider":"yahoo-chart","role":"PRIMARY"}],"discovery":{"testedDifficultSymbols":10,"note":"Bestaande golden cases en Amsterdam-productie."}},
+    "XBRU": {"status":"APPROVED","catalogSource":"Euronext","historySources":[{"provider":"yahoo-chart","role":"PRIMARY"}],"discovery":{"testedDifficultSymbols":10,"note":"Bestaande Brussel-validatie."}},
+    "XPAR": {"status":"APPROVED","catalogSource":"Euronext official product directory","historySources":[{"provider":"yahoo-chart","role":"PRIMARY","note":"Brede gratis dekking voor .PA"},{"provider":"euronext-live","role":"FALLBACK","note":"Officiële beursbron; huidige HTML-endpoint dekt niet alle Growth/Access-instrumenten"},{"provider":"EODHD","role":"CANDIDATE_PAID","note":"PA/XPAR EOD API; 30+ jaar volgens provider; sleutel/gebruiksovereenkomst vereist"},{"provider":"Financial Modeling Prep","role":"CANDIDATE_PAID","note":"Euronext historical endpoint; API-sleutel/voorwaarden vereist"}],"discovery":{"testedDifficultSymbols":17,"note":"Alle 17 resterende probleemnoteringen onderzocht; externe platforms bevestigen dat meerdere bestaan, maar productie-import vereist een betrouwbare API/feed en passende gebruiksrechten."}},
+    "XMIL": {"status":"APPROVED","catalogSource":"Euronext/Borsa Italiana Live Markets official equity directory","historySources":[{"provider":"yahoo-chart","role":"PRIMARY","note":"Gratis dagelijkse historie via .MI; identiteit wordt tegen Milan/Borsa Italia gecontroleerd"},{"provider":"euronext-live","role":"FALLBACK","note":"Officiële bron voor referentie, listingdatum en controle; historische beschikbaarheid per instrument kan verschillen"},{"provider":"stooq","role":"VALIDATION_CANDIDATE","note":"Gratis publieke controlebron voor Italiaanse historie waar beschikbaar"},{"provider":"marketscreener-public","role":"VALIDATION_CANDIDATE","note":"Gratis publieke validatie voor kleine en jonge noteringen"}],"discovery":{"testedDifficultSymbols":20,"note":"Milaan source-first plan: main market + Growth, jonge IPOs en small caps; listingdatum bepaalt begin van verwachte historie; geen synthetische koersen."}},
     "XOSL": {
       "status": "DISCOVERY",
-      "catalogSource": "Euronext Live Oslo official equity directory",
+      "catalogSource": "Euronext Live official equities directory; Oslo universe must include Oslo Børs, Euronext Growth Oslo and Euronext Expand Oslo",
       "historySources": [
-        {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY_CANDIDATE",
-          "note": "Gratis daghistorie met .OL; eerst identiteit, dekking en moeilijke symbolen valideren."
-        },
-        {
-          "provider": "euronext-oslo",
-          "role": "OFFICIAL_REFERENCE",
-          "note": "Euronext Oslo Børs voor officiële markt-, ticker-, ISIN- en listingcontrole; historische/reference-data producten kunnen licentie/SFTP vereisen."
-        },
-        {
-          "provider": "stooq",
-          "role": "VALIDATION_CANDIDATE",
-          "note": "Alleen als onafhankelijke controle waar Noorse instrumenten beschikbaar zijn."
-        }
+        {"provider":"yahoo-chart","role":"PRIMARY_CANDIDATE","note":"Gratis dagelijkse OHLCV via .OL. Publieke preflight bevestigt actuele Oslo/NOK-identiteit en historie voor AUTO, NONG, BWO, WAWI, TGS, OTL, AKER, KOG, NAS en ARCH; volledige API-identiteitscontrole volgt tegen officiële catalogus."},
+        {"provider":"euronext-oslo","role":"OFFICIAL_REFERENCE","note":"Officiële Euronext bron voor marktsegment, ticker, ISIN en listingcontrole. Oslo Børs en Expand zijn gereguleerde markten; Growth Oslo is MTF."},
+        {"provider":"stooq","role":"VALIDATION_CANDIDATE","note":"Nog niet bewezen voor voldoende Oslo-dekking; niet gebruiken als productiebron zonder test."}
       ],
       "discovery": {
-        "testedDifficultSymbols": 0,
-        "note": "Source-first gate gestart. Geen Oslo-backfill starten voordat minimaal 10 representatieve moeilijke symbolen en hoofdmarkt/Growth/Expand zijn getest en de bronstatus APPROVED is."
+        "testedDifficultSymbols": 10,
+        "note": "Eerste publieke bronproef 2026-09-21: Yahoo .OL levert Oslo/NOK-noteringen en historie voor 10 uiteenlopende namen (AUTO,NONG,BWO,WAWI,TGS,OTL,AKER,KOG,NAS,ARCH). Gate blijft DISCOVERY: officiële volledige Oslo Børs/Growth/Expand catalogus moet nog machineleesbaar worden vastgelegd en de 10 cases moeten daartegen op ISIN/MIC worden gekoppeld voordat APPROVED/backfill veilig is."
       }
     }
   }
