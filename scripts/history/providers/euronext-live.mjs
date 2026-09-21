@@ -5,7 +5,7 @@ const iso=s=>{const m=clean(s).match(/(\d{2})\/(\d{2})\/(\d{4})/);return m?`${m[
 const num=s=>{const n=Number(clean(s).replace(/\s/g,'').replace(/,/g,''));return Number.isFinite(n)?n:null};
 export class EuronextLiveProvider{
  id=PROVIDER_ID;name='Euronext Live historical prices';requiresApiKey=false;
- supports(i){return ['XPAR','ALXP','XMLI','XMIL','MTAA','EXGM'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin)}
+ supports(i){return ['XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin)}
  async fetchDaily(i,{startDate,endDate,signal}={}){
   const mic=String(i.mic||i.market||'').toUpperCase(),key=`${i.isin}-${mic}`;
   const body=new URLSearchParams({adjusted:'Y',startdate:startDate,enddate:endDate,nbSession:'100000'});
