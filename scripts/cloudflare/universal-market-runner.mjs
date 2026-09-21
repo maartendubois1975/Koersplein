@@ -35,9 +35,10 @@ if(seedCatalog){
 }
 const hb=Number(process.env.HISTORY_BATCH_SIZE||10),today=new Date().toISOString().slice(0,10);
 const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
-// A daily series is current when it reaches the latest expected trading weekday.
-// Comparing with calendar 'today' made every weekend reselect Friday-complete instruments forever.
-const latestExpectedTradingDate=(()=>{const d=new Date(`${today}T12:00:00Z`);const dow=d.getUTCDay();if(dow===0)d.setUTCDate(d.getUTCDate()-2);else if(dow===6)d.setUTCDate(d.getUTCDate()-1);return d.toISOString().slice(0,10)})();
+// A daily series is current when it reaches the last fully closed trading weekday.
+// Never require today's bar while the trading day is still open: that reselects the
+// same already-filled instruments on weekday runs (notably Monday before Milan closes).
+const latestExpectedTradingDate=(()=>{const d=new Date(`${today}T12:00:00Z`);do{d.setUTCDate(d.getUTCDate()-1)}while(d.getUTCDay()===0||d.getUTCDay()===6);return d.toISOString().slice(0,10)})();
 const candidates=[];let alreadyCurrent=0,excluded=0,inspectionFailed=0;
 for(const item of instruments){
   if(unavailable.has(item.isin)){excluded++;continue}
