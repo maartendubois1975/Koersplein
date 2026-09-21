@@ -5,7 +5,7 @@ on:
     paths: ['.github/workflows/milan-fill.yml', 'scripts/cloudflare/universal-market-runner.mjs', 'scripts/cloudflare/fetch-milan-catalog.mjs', 'data/market-source-registry.json', 'data/world-fill-plan.json']
   workflow_dispatch:
   schedule:
-    - cron: '17,47 * * * *'
+    - cron: '7,37 * * * *'
 jobs:
   milan-fill:
     runs-on: ubuntu-latest
