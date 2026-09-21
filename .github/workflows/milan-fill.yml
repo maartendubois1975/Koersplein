@@ -42,6 +42,7 @@ jobs:
           MARKET_MIC: XMIL
           HISTORY_BATCH_SIZE: 20
           CATALOG_BATCH_SIZE: 25
+          ALLOW_PARTIAL_FAILURES: 1
         run: |
           set -euo pipefail
           : > research/output/milan-rounds.jsonl
