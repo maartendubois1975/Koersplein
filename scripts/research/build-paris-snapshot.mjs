@@ -19,7 +19,15 @@ async function fetchOne(x,index){
   for(let attempt=1;attempt<=retries;attempt++){
     try{
       const input=new ParisResearchInput();
-      const snap=await input.history(x.isin);
+      let snap;
+      try {
+        const meta=await input.clientOrDefault().historyPartitions(x.isin);
+        const bars=[];
+        for(const p of meta.partitions||[]) bars.push(...(await input.clientOrDefault().historyPartition(x.isin,p.period)).bars);
+        snap=await input.normalizeRaw({instrument:meta.instrument,provider:meta.provider,bars});
+      } catch (e) {
+        throw new Error(`bounded partition snapshot failed: ${e.message}`);
+      }
       await fs.writeFile(safeName(x.isin),JSON.stringify(snap));
       results[index]={isin:x.isin,status:'COMPLETE',records:snap.records,firstDate:snap.firstDate,lastDate:snap.lastDate,attempt};
       return;
