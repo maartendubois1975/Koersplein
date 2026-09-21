@@ -89,6 +89,31 @@
         "testedDifficultSymbols": 20,
         "note": "Milaan source-first plan: main market + Growth, jonge IPOs en small caps; listingdatum bepaalt begin van verwachte historie; geen synthetische koersen."
       }
+    },
+    "XOSL": {
+      "status": "DISCOVERY",
+      "catalogSource": "Euronext Live Oslo official equity directory",
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY_CANDIDATE",
+          "note": "Gratis daghistorie met .OL; eerst identiteit, dekking en moeilijke symbolen valideren."
+        },
+        {
+          "provider": "euronext-oslo",
+          "role": "OFFICIAL_REFERENCE",
+          "note": "Euronext Oslo Børs voor officiële markt-, ticker-, ISIN- en listingcontrole; historische/reference-data producten kunnen licentie/SFTP vereisen."
+        },
+        {
+          "provider": "stooq",
+          "role": "VALIDATION_CANDIDATE",
+          "note": "Alleen als onafhankelijke controle waar Noorse instrumenten beschikbaar zijn."
+        }
+      ],
+      "discovery": {
+        "testedDifficultSymbols": 0,
+        "note": "Source-first gate gestart. Geen Oslo-backfill starten voordat minimaal 10 representatieve moeilijke symbolen en hoofdmarkt/Growth/Expand zijn getest en de bronstatus APPROVED is."
+      }
     }
   }
 }
