@@ -14,9 +14,11 @@ export function normalizeHistoryDocument(document,{cutoff=null}={}){
 }
 export class ParisResearchInput{
  constructor({client=null,snapshotDir=process.env.KOERSPLEIN_PARIS_SNAPSHOT_DIR||null}={}){this.client=client;this.snapshotDir=snapshotDir;}
+ clientOrDefault(){if(!this.client)this.client=new FactoryApiClient();return this.client;}
+ async normalizeRaw(document,{cutoff=null}={}){return normalizeHistoryDocument(document,{cutoff});}
  async history(isin,{cutoff=null}={}){
    if(this.snapshotDir){const raw=JSON.parse(await fs.readFile(path.join(this.snapshotDir,isin+'.json'),'utf8'));return normalizeHistoryDocument(raw,{cutoff});}
-   const client=this.client||new FactoryApiClient();return normalizeHistoryDocument(await client.history(isin),{cutoff});
+   const client=this.clientOrDefault();return normalizeHistoryDocument(await client.history(isin),{cutoff});
  }
 }
 export const parisResearchRules=Object.freeze({mic:PARIS_MIC,phase:'A',futureBarsForbidden:true,cutoffInclusive:true});
