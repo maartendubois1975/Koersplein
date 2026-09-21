@@ -38,8 +38,8 @@ jobs:
           KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
           KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
           KOERSPLEIN_RESEARCH_DIR: var/research
-          KOERSPLEIN_SNAPSHOT_CONCURRENCY: 3
-          KOERSPLEIN_SNAPSHOT_RETRIES: 3
+          KOERSPLEIN_SNAPSHOT_CONCURRENCY: 1
+          KOERSPLEIN_SNAPSHOT_RETRIES: 6
         run: node scripts/research/build-paris-snapshot.mjs
 
       - name: Run complete Paris research from local snapshot
