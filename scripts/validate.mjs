@@ -41,8 +41,10 @@ const other = sharesData.shares.length - allMembers.length;
 if (other !== 49) throw new Error(`Verwacht 49 overige aandelen, vond ${other}.`);
 
 const euronext = marketsData.venues.find((venue) => venue.id === 'euronext');
-for (const id of ['amsterdam','brussels','paris']) if (!euronext?.markets.some((market) => market.id === id && market.status === 'available')) throw new Error(`Euronext ${id} ontbreekt in de actieve marktstructuur.`);
-if (euronext.markets.filter((market) => market.status === 'available').length !== 3) throw new Error('Alleen Amsterdam, Brussel en Parijs mogen nu actief zijn.');
+const publishedMarkets = ['amsterdam','brussels','paris','milan'];
+for (const id of publishedMarkets) if (!euronext?.markets.some((market) => market.id === id && market.status === 'available')) throw new Error(`Euronext ${id} ontbreekt in de actieve marktstructuur.`);
+if (euronext.markets.filter((market) => market.status === 'available').length !== publishedMarkets.length) throw new Error(`Verwacht exact ${publishedMarkets.length} gepubliceerde Europese markten.`);
+for (const id of ['oslo','dublin','lisbon']) if (!euronext?.markets.some((market) => market.id === id && market.status === 'planned')) throw new Error(`Euronext ${id} moet gepland blijven tot eindvalidatie is geslaagd.`);
 if (!regionsData.regions.some((region) => region.id === 'europe' && region.status === 'available')) throw new Error('Europa ontbreekt.');
 if (regionsData.regions.filter((region) => region.status === 'available').length !== 1) throw new Error('Alleen Europa mag nu actief zijn.');
 
