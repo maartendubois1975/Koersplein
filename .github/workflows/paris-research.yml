@@ -1,16 +1,26 @@
 name: Paris Research Factory
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
     inputs:
       run_id:
         description: Optional reproducible run id
         required: false
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/paris-research.yml'
+      - 'scripts/research/**'
+      - 'data/research/paris-events-v1.json'
+      - 'data/euronext-paris.json'
+
+concurrency:
+  group: paris-research-production
+  cancel-in-progress: false
+
 jobs:
   paris-research:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
     permissions:
       contents: read
     steps:
@@ -22,13 +32,23 @@ jobs:
       - run: npm run research:paris:test
       - name: Build official point-in-time macro dataset
         run: npm run research:paris:events
-      - name: Run complete Paris research
+
+      - name: Build one bounded Paris history snapshot
         env:
           KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
           KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+          KOERSPLEIN_RESEARCH_DIR: var/research
+          KOERSPLEIN_SNAPSHOT_CONCURRENCY: 3
+          KOERSPLEIN_SNAPSHOT_RETRIES: 3
+        run: node scripts/research/build-paris-snapshot.mjs
+
+      - name: Run complete Paris research from local snapshot
+        env:
+          KOERSPLEIN_PARIS_SNAPSHOT_DIR: var/research/paris-v1/snapshot
           KOERSPLEIN_RESEARCH_EVENTS_FILE: data/research/paris-events-v1.json
           KOERSPLEIN_RESEARCH_RUN_ID: ${{ inputs.run_id }}
         run: npm run research:paris:full
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
