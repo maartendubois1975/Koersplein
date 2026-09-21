@@ -70,3 +70,6 @@ body{background:radial-gradient(circle at 72% 0%,rgba(214,181,111,.075) 0,transp
   .analysis-card{padding:18px}
   .analysis-card .muted{max-width:none;margin-top:9px}
 }
+
+/* Continent-first navigation */
+.region-card[type="button"]{width:100%;color:inherit;text-align:left;font:inherit;cursor:pointer}.region-card[type="button"]:hover{border-color:var(--gold);transform:translateY(-1px)}#europe-markets{margin-top:20px}#europe-markets .market-card.active{min-height:145px;background:linear-gradient(145deg,rgba(214,181,111,.09),rgba(14,16,21,.98))}@media(max-width:640px){#europe-markets .market-navigation{grid-template-columns:1fr 1fr}#europe-markets .market-card{min-height:120px}}
