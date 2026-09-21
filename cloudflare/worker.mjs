@@ -102,6 +102,21 @@ async function route(request, env) {
     const rows = await env.DB.prepare(`SELECT i.isin,i.ticker symbol,i.mic,h.first_date firstDate,h.last_date lastDate,h.record_count recordCount,h.provider FROM instruments i JOIN history_status h ON h.instrument_id=i.id WHERE h.record_count>0`).all();
     return json({ schemaVersion: 1, generatedAt: now(), instruments: Object.fromEntries(rows.results.map((row) => [row.isin, { ...row, file: `/api/history/${row.isin}` }])) }, 200, cors(request, env));
   }
+  const partitionListMatch = path.match(/^\/api\/factory\/history\/([A-Z]{2}[A-Z0-9]{10})\/partitions$/);
+  if (partitionListMatch && request.method === 'GET') {
+    if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
+    const item = await instrument(env, partitionListMatch[1]); if (!item) return json({ error: 'Instrument ontbreekt' }, 404);
+    const partitions = await env.DB.prepare('SELECT period,object_key,record_count,first_date,last_date,provider,checksum FROM history_partitions WHERE instrument_id=? ORDER BY period').bind(item.id).all();
+    return json({ instrument: { name: item.company, symbol: item.ticker, isin: item.isin, mic: item.mic, market: item.mic, currency: item.currency }, provider: { name: item.provider || 'unknown', retrievedAt: item.updated_at || now() }, partitions: partitions.results });
+  }
+  const partitionGetMatch = path.match(/^\/api\/factory\/history\/([A-Z]{2}[A-Z0-9]{10})\/partition\/(\d{4})$/);
+  if (partitionGetMatch && request.method === 'GET') {
+    if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
+    const item = await instrument(env, partitionGetMatch[1]); if (!item) return json({ error: 'Instrument ontbreekt' }, 404);
+    const partition = await env.DB.prepare('SELECT object_key FROM history_partitions WHERE instrument_id=? AND period=?').bind(item.id, partitionGetMatch[2]).first();
+    if (!partition) return json({ error: 'Partitie ontbreekt' }, 404);
+    return json({ bars: await gunzip(await env.HISTORY.get(partition.object_key)) });
+  }
   const historyMatch = path.match(/^\/api\/history\/([A-Z]{2}[A-Z0-9]{10})$/);
   if (historyMatch && request.method === 'GET') {
     const document = await historyDocument(env, historyMatch[1]);
