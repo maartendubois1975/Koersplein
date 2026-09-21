@@ -2,24 +2,39 @@ name: Milan Fill Factory
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/milan-fill.yml', 'scripts/cloudflare/universal-market-runner.mjs', 'scripts/cloudflare/fetch-milan-catalog.mjs', 'data/market-source-registry.json', 'data/world-fill-plan.json']
+    paths:
+      - '.github/workflows/milan-fill.yml'
+      - 'scripts/cloudflare/universal-market-runner.mjs'
+      - 'scripts/cloudflare/fetch-milan-catalog.mjs'
+      - 'scripts/history/providers/yahoo-chart.mjs'
+      - 'scripts/history/providers/euronext-live.mjs'
+      - 'data/market-source-registry.json'
+      - 'data/world-fill-plan.json'
   workflow_dispatch:
   schedule:
     - cron: '7,37 * * * *'
+
+concurrency:
+  group: milan-fill-production
+  cancel-in-progress: false
+
 jobs:
   milan-fill:
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    timeout-minutes: 350
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: {node-version: '22'}
+
       - name: Fetch official Milan catalogue
         run: node scripts/cloudflare/fetch-milan-catalog.mjs
+
       - name: Validate repository and Milan catalogue
         run: npm run validate
+
       - name: Complete Milan historical backfill
         env:
           KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
@@ -27,27 +42,54 @@ jobs:
           MARKET_MIC: XMIL
           HISTORY_BATCH_SIZE: 20
           CATALOG_BATCH_SIZE: 25
+          ALLOW_PARTIAL_FAILURES: 1
         run: |
-          for round in $(seq 1 4); do
-            echo "=== Milan batch $round ==="
-            if [ "$round" -eq 1 ]; then
+          set -euo pipefail
+          : > research/output/milan-rounds.jsonl
+          skip_isins=""
+          seed=1
+          for round in $(seq 1 18); do
+            echo "=== Milan batch $round/18 ==="
+            export SKIP_ISINS="$skip_isins"
+            if [ "$seed" -eq 1 ]; then
               SEED_CATALOG=1 node scripts/cloudflare/universal-market-runner.mjs
+              seed=0
             else
               SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs
             fi
+
+            node -e "const fs=require('fs');const r=require('./research/output/world-fill-batch.json');fs.appendFileSync('./research/output/milan-rounds.jsonl',JSON.stringify({round:$round,...r})+'\n')"
+            new_failed=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log((r.failed||[]).map(x=>x.isin).join(','))")
+            if [ -n "$new_failed" ]; then
+              skip_isins=$(printf '%s,%s' "$skip_isins" "$new_failed" | sed 's/^,//')
+            fi
+
             remaining=$(node -e "const r=require('./research/output/world-fill-batch.json'); console.log(r.remainingHint ?? 999999)")
-            failed=$(node -e "const r=require('./research/output/world-fill-batch.json'); console.log((r.failed||[]).length)")
             complete=$(node -e "const r=require('./research/output/world-fill-batch.json'); console.log(r.complete ?? 0)")
-            echo "batch=$round complete=$complete failed=$failed remaining=$remaining"
-            if [ "$remaining" -le 0 ]; then
-              echo "MILAN_BACKFILL_COMPLETE"
+            candidates=$(node -e "const r=require('./research/output/world-fill-batch.json'); console.log(r.candidates ?? 0)")
+            echo "batch=$round complete=$complete candidates=$candidates remaining=$remaining quarantined=$skip_isins"
+
+            if [ "$remaining" -le 0 ] || [ "$candidates" -eq 0 ]; then
+              echo "Bulk backfill exhausted; moving to end validation"
               break
             fi
-            if [ "$complete" -eq 0 ]; then
-              echo "No progress; stopping to avoid a wasteful loop"
+            if [ "$complete" -eq 0 ] && [ -z "$new_failed" ]; then
+              echo "No measurable progress and no isolated provider failure"
               exit 2
             fi
           done
+
+      - name: End validation
+        if: always()
+        env:
+          KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+          KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+          MARKET_MIC: XMIL
+        run: |
+          node scripts/cloudflare/market-handoff-signal.mjs
+          cp research/output/market-handoff-signal.json research/output/milan-end-validation.json
+          node -e "const fs=require('fs');const rows=fs.existsSync('./research/output/milan-rounds.jsonl')?fs.readFileSync('./research/output/milan-rounds.jsonl','utf8').trim().split(/\n/).filter(Boolean).map(JSON.parse):[];const end=require('./research/output/milan-end-validation.json');const summary={generatedAt:new Date().toISOString(),rounds:rows.length,totalCompletedThisRun:rows.reduce((n,r)=>n+(r.complete||0),0),failed:[...new Map(rows.flatMap(r=>r.failed||[]).map(x=>[x.isin,x])).values()],validation:end};fs.writeFileSync('./research/output/milan-run-summary.json',JSON.stringify(summary,null,2));console.log(JSON.stringify(summary,null,2))"
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -55,4 +97,7 @@ jobs:
           path: |
             data/euronext-milan.json
             research/output/world-fill-batch.json
+            research/output/milan-rounds.jsonl
+            research/output/milan-run-summary.json
+            research/output/milan-end-validation.json
           retention-days: 30

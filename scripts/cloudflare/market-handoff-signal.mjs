@@ -6,6 +6,7 @@ const plan = JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const signalPath = 'research/output/market-handoff-signal.json';
 const statePath = 'research/output/world-fill-state.json';
 const today = new Date().toISOString().slice(0,10);
+const latestExpectedTradingDate=(()=>{const d=new Date(`${today}T12:00:00Z`);do{d.setUTCDate(d.getUTCDate()-1)}while(d.getUTCDay()===0||d.getUTCDay()===6);return d.toISOString().slice(0,10)})();
 
 async function inspectMarket(m) {
   const raw = JSON.parse(await fs.readFile(`data/euronext-${m.code}.json`, 'utf8'));
@@ -16,13 +17,15 @@ async function inspectMarket(m) {
     try {
       const h = await client.history(s.isin);
       const bars = Array.isArray(h?.bars) ? h.bars : Array.isArray(h?.history) ? h.history : Array.isArray(h?.data) ? h.data : [];
-      if (!bars.length) { missing++; failures.push({isin:s.isin, reason:'NO_HISTORY'}); continue; }
-      const last = String(bars.at(-1)?.date || bars.at(-1)?.day || '').slice(0,10);
+      const count=Number(h?.coverage?.recordCount||bars.length||0);
+      if (!count) { missing++; failures.push({isin:s.isin, reason:'NO_HISTORY'}); continue; }
+      const last = String(h?.coverage?.lastDate || bars.at(-1)?.date || bars.at(-1)?.day || '').slice(0,10);
       if (!last) { invalid++; failures.push({isin:s.isin, reason:'NO_LAST_DATE'}); continue; }
+      if(last<latestExpectedTradingDate){invalid++;failures.push({isin:s.isin,reason:`STALE_HISTORY:${last}<${latestExpectedTradingDate}`});continue;}
       complete++;
     } catch (e) { missing++; failures.push({isin:s.isin, reason:e.message}); }
   }
-  return {catalog:shares.length, complete, missing, invalid, checkedAt:new Date().toISOString(), today, failures:failures.slice(0,25)};
+  return {catalog:shares.length, complete, missing, invalid, checkedAt:new Date().toISOString(), today, latestExpectedTradingDate, failures:failures.slice(0,25)};
 }
 
 let state={version:2,updatedAt:null,markets:{},activeMic:null,nextMic:null};

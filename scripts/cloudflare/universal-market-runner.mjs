@@ -39,15 +39,17 @@ const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
 // Never require today's bar while the trading day is still open: that reselects the
 // same already-filled instruments on weekday runs (notably Monday before Milan closes).
 const latestExpectedTradingDate=(()=>{const d=new Date(`${today}T12:00:00Z`);do{d.setUTCDate(d.getUTCDate()-1)}while(d.getUTCDay()===0||d.getUTCDay()===6);return d.toISOString().slice(0,10)})();
-const candidates=[];let alreadyCurrent=0,excluded=0,inspectionFailed=0;
+const runSkip=new Set(String(process.env.SKIP_ISINS||'').split(',').map(x=>x.trim()).filter(Boolean));
+const candidates=[];let alreadyCurrent=0,excluded=0,inspectionFailed=0,skippedRunFailures=0;
 for(const item of instruments){
   if(unavailable.has(item.isin)){excluded++;continue}
+  if(runSkip.has(item.isin)){skippedRunFailures++;continue}
   try{const h=await client.history(item.isin);const last=h?.coverage?.lastDate||h?.bars?.at?.(-1)?.date||h?.history?.at?.(-1)?.date;if(last>=latestExpectedTradingDate){alreadyCurrent++;continue}}catch{inspectionFailed++}
   candidates.push(item);if(candidates.length>=hb)break;
 }
 let complete=0,failed=[];
 for(const item of candidates){try{const {provider,result}=await registry.fetchDaily(item,{startDate:'1990-01-01',endDate:today},'yahoo-chart');if(!result.bars.length)throw new Error('geen historie');for(const [period,bars] of partitionBars(result.bars))await client.putPartition(item.isin,period,{bars,provider:provider.id});await client.completeHistory(item.isin,{provider:provider.id});complete++;}catch(e){failed.push({isin:item.isin,symbol:item.symbol,mic:item.mic,error:e.message})}}
-const report={market:mic,catalog:instruments.length,batchRequested:hb,candidates:candidates.length,alreadyCurrent,excludedProviderUnavailable:excluded,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-complete),freshnessCutoff};
+const report={market:mic,catalog:instruments.length,batchRequested:hb,candidates:candidates.length,alreadyCurrent,excludedProviderUnavailable:excluded,skippedRunFailures,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-complete-skippedRunFailures),freshnessCutoff};
 console.log(JSON.stringify(report,null,2));
 await fs.mkdir('research/output',{recursive:true});await fs.writeFile('research/output/world-fill-batch.json',JSON.stringify({...report,generatedAt:new Date().toISOString()},null,2));
-if(failed.length===candidates.length&&candidates.length)process.exitCode=2;
+if(failed.length===candidates.length&&candidates.length&&process.env.ALLOW_PARTIAL_FAILURES!=='1')process.exitCode=2;
