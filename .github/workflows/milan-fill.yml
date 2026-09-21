@@ -4,6 +4,8 @@ on:
     branches: [main]
     paths: ['.github/workflows/milan-fill.yml', 'scripts/cloudflare/universal-market-runner.mjs', 'scripts/cloudflare/fetch-milan-catalog.mjs', 'data/market-source-registry.json', 'data/world-fill-plan.json']
   workflow_dispatch:
+  schedule:
+    - cron: '17,47 * * * *'
 jobs:
   milan-fill:
     runs-on: ubuntu-latest
@@ -26,7 +28,7 @@ jobs:
           HISTORY_BATCH_SIZE: 20
           CATALOG_BATCH_SIZE: 25
         run: |
-          for round in $(seq 1 24); do
+          for round in $(seq 1 4); do
             echo "=== Milan batch $round ==="
             if [ "$round" -eq 1 ]; then
               SEED_CATALOG=1 node scripts/cloudflare/universal-market-runner.mjs
