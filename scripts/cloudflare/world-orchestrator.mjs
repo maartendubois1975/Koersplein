@@ -4,6 +4,8 @@ import { FactoryApiClient } from './client.mjs';
 const client=new FactoryApiClient();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const statePath='research/output/world-fill-state.json';
+const today=new Date().toISOString().slice(0,10);
+const latestExpectedTradingDate=(()=>{const d=new Date(`${today}T12:00:00Z`);do{d.setUTCDate(d.getUTCDate()-1)}while(d.getUTCDay()===0||d.getUTCDay()===6);return d.toISOString().slice(0,10)})();
 let state={version:1,updatedAt:null,markets:{}};
 try{state=JSON.parse(await fs.readFile(statePath,'utf8'));}catch{}
 const active=plan.markets.find(m=>!['COMPLETE'].includes(state.markets[m.mic]?.state||m.state));
@@ -18,7 +20,7 @@ try{
   let complete=0,missing=0,invalid=0;
   for(const s of shares){
     const isin=s.isin;
-    try{const h=await client.history(isin);const bars=Array.isArray(h?.bars)?h.bars:Array.isArray(h?.history)?h.history:Array.isArray(h?.data)?h.data:[];if(bars.length)complete++;else missing++;}
+    try{const h=await client.history(isin);const bars=Array.isArray(h?.bars)?h.bars:Array.isArray(h?.history)?h.history:Array.isArray(h?.data)?h.data:[];const count=Number(h?.coverage?.recordCount||bars.length||0);const last=String(h?.coverage?.lastDate||bars.at(-1)?.date||bars.at(-1)?.day||'').slice(0,10);if(!count)missing++;else if(!last||last<latestExpectedTradingDate)invalid++;else complete++;}
     catch{missing++;}
   }
   entry.catalogCount=shares.length;entry.historyComplete=complete;entry.missing=missing;entry.invalid=invalid;
