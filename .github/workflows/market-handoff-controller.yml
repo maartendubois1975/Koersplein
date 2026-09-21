@@ -2,7 +2,6 @@ name: M00 Automatische beurs-handoff
 on:
   workflow_run:
     workflows:
-      - Parijs volledige historische vulling eenmalig
       - M00 Wereldvuller
     types: [completed]
   workflow_dispatch:
