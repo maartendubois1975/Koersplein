@@ -3,18 +3,13 @@ on:
   workflow_run:
     workflows:
       - M00 Wereldvuller
-      - Oslo Source-First Fill
     types: [completed]
-  push:
-    branches: [main]
-    paths:
-      - 'data/world-fill-plan.json'
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
   group: koersplein-market-handoff
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   handoff:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
