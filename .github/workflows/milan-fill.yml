@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/milan-fill.yml'
       - 'scripts/cloudflare/fetch-milan-catalog.mjs'
+      - 'scripts/validate.mjs'
   workflow_dispatch:
   schedule:
     - cron: '7,37 * * * *'
