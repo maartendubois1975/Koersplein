@@ -5,19 +5,10 @@ on:
       run_id:
         description: Optional reproducible run id
         required: false
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/paris-research.yml'
-      - 'scripts/research/**'
-      - 'scripts/cloudflare/client.mjs'
-      - 'cloudflare/worker.mjs'
-      - 'data/research/paris-events-v1.json'
-      - 'data/euronext-paris.json'
-
+ 
 concurrency:
   group: paris-research-production
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   paris-research:
