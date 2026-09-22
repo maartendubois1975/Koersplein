@@ -2,67 +2,12 @@
   "version": 1,
   "mode": "sequential-market-gates",
   "markets": [
-    {
-      "mic": "XPAR",
-      "code": "paris",
-      "name": "Parijs",
-      "country": "FR",
-      "currency": "EUR",
-      "timezone": "Europe/Paris",
-      "providerSuffix": ".PA",
-      "state": "COMPLETE"
-    },
-    {
-      "mic": "XMIL",
-      "code": "milan",
-      "name": "Milaan",
-      "country": "IT",
-      "currency": "EUR",
-      "timezone": "Europe/Rome",
-      "providerSuffix": ".MI",
-      "state": "ACTIVE"
-    },
-    {
-      "mic": "XOSL",
-      "code": "oslo",
-      "name": "Oslo",
-      "country": "NO",
-      "currency": "NOK",
-      "timezone": "Europe/Oslo",
-      "providerSuffix": ".OL",
-      "state": "WAITING"
-    },
-    {
-      "mic": "XDUB",
-      "code": "dublin",
-      "name": "Dublin",
-      "country": "IE",
-      "currency": "EUR",
-      "timezone": "Europe/Dublin",
-      "providerSuffix": ".IR",
-      "state": "WAITING"
-    },
-    {
-      "mic": "XLIS",
-      "code": "lisbon",
-      "name": "Lissabon",
-      "country": "PT",
-      "currency": "EUR",
-      "timezone": "Europe/Lisbon",
-      "providerSuffix": ".LS",
-      "state": "WAITING"
-    }
+    {"mic":"XPAR","code":"paris","name":"Parijs","country":"FR","currency":"EUR","timezone":"Europe/Paris","providerSuffix":".PA","state":"COMPLETE"},
+    {"mic":"XMIL","code":"milan","name":"Milaan","country":"IT","currency":"EUR","timezone":"Europe/Rome","providerSuffix":".MI","state":"ACTIVE"},
+    {"mic":"XOSL","code":"oslo","name":"Oslo","country":"NO","currency":"NOK","timezone":"Europe/Oslo","providerSuffix":".OL","state":"COMPLETE"},
+    {"mic":"XDUB","code":"dublin","name":"Dublin","country":"IE","currency":"EUR","timezone":"Europe/Dublin","providerSuffix":".IR","state":"WAITING"},
+    {"mic":"XLIS","code":"lisbon","name":"Lissabon","country":"PT","currency":"EUR","timezone":"Europe/Lisbon","providerSuffix":".LS","state":"WAITING"}
   ],
-  "gates": {
-    "catalogRequired": true,
-    "historyRequired": true,
-    "validationRequired": true,
-    "maxFailedInstruments": 0
-  },
-  "limits": {
-    "catalogBatchSize": 25,
-    "historyBatchSize": 10,
-    "maxMarketsActive": 1,
-    "maxRetriesPerInstrument": 3
-  }
+  "gates":{"catalogRequired":true,"historyRequired":true,"validationRequired":true,"maxFailedInstruments":0},
+  "limits":{"catalogBatchSize":25,"historyBatchSize":10,"maxMarketsActive":1,"maxRetriesPerInstrument":3}
 }
