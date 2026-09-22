@@ -1,0 +1,9 @@
+const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+const pct=v=>Number.isFinite(Number(v))?(Number(v)*100).toFixed(1)+'%':'—';
+const eur=v=>Number.isFinite(Number(v))?new Intl.NumberFormat('nl-NL',{style:'currency',currency:'EUR'}).format(Number(v)):'—';
+fetch('data/opportunity-learning.json').then(r=>r.ok?r.json():Promise.reject()).then(x=>{
+ const box=document.querySelector('#learning-opportunities'); if(!box)return;
+ const markets=[['XAMS','Amsterdam'],['XBRU','Brussel']];
+ const cards=markets.map(([mic,label])=>{const p=x.latestByMarket?.[mic];return p?`<article class="finder-card"><p class="eyebrow">${label} · bevroren voorspelling</p><h3>${esc(p.name)}</h3><p><strong>${esc(p.ticker||p.isin)}</strong> · referentie ${esc(p.referenceDate)} · ${eur(p.referenceClose)}</p><p>Consensusrang: <strong>${esc(p.consensusRank)}</strong> · huidig resultaat: <strong>${pct(p.currentReturn)}</strong> · beste tussentijdse stijging: <strong>${pct(p.maxReturn)}</strong></p><p>Status: ${esc(p.status)}. De selectie blijft bevroren zodat achteraf controleerbaar is of Koersplein gelijk had.</p></article>`:`<article class="finder-card"><p class="eyebrow">${label}</p><h3>Nog geen bevroren kandidaat</h3><p>De machine publiceert pas een kandidaat zodra de dagelijkse selectie een geldige meting kan vastleggen.</p></article>`}).join('');
+ const s=x.scoreboard||{}; box.innerHTML=`<div class="section-heading"><div><p class="eyebrow">Voorspellen → volgen → leren</p><h2>Koersplein leerdossier</h2></div><p>${s.totalPredictions||0} voorspellingen · ${s.open||0} open · ${s.closed||0} afgerond · hit-rate ${s.hitRate==null?'nog niet meetbaar':s.hitRate+'%'}</p></div><div class="choice-grid">${cards}</div><p class="empty-state">Doel van deze proef: +30% binnen 3 maanden. Ook missers blijven zichtbaar; juist daarvan moet de machine leren.</p>`;
+}).catch(()=>{});

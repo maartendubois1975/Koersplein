@@ -134,5 +134,36 @@ for(const p of ledger){
 }
 
 await fs.writeFile('data/opportunity-ledger.json',JSON.stringify(ledger,null,2));
-await fs.writeFile('data/opportunity-latest.json',JSON.stringify({generatedAt:new Date().toISOString(),referenceDate:runReferenceDate,target:'+30% binnen 3 maanden',selections:newSelections},null,2));
+const latestByMarket={};
+for(const mic of ['XAMS','XBRU']){
+  const xs=ledger.filter(x=>x.market===mic).sort((a,b)=>String(b.selectionDate||b.referenceDate).localeCompare(String(a.selectionDate||a.referenceDate)));
+  if(xs[0]) latestByMarket[mic]=xs[0];
+}
+const closed=ledger.filter(x=>x.status==='CLOSED');
+const hits30=closed.filter(x=>x.result30===true).length;
+const misses30=closed.filter(x=>x.result30===false).length;
+const learning={
+  generatedAt:new Date().toISOString(),
+  referenceDate:runReferenceDate,
+  purpose:'Bevries iedere voorspelling vooraf, volg de uitkomst en leer van raak en mis.',
+  target:'+30% binnen 3 maanden',
+  latestByMarket,
+  scoreboard:{
+    totalPredictions:ledger.length,
+    open:ledger.filter(x=>x.status==='OPEN').length,
+    closed:closed.length,
+    hits30,
+    misses30,
+    hitRate:closed.length?round(hits30/closed.length*100,2):null
+  },
+  lessons:closed.slice(-50).map(x=>({
+    market:x.market,name:x.name,isin:x.isin,selectionDate:x.selectionDate,referenceDate:x.referenceDate,
+    referenceClose:x.referenceClose,latestDate:x.latestDate,latestClose:x.latestClose,
+    maxReturn:x.maxReturn,maxDrawdown:x.maxDrawdown,result30:x.result30,
+    componentRanks:x.componentRanks||null,componentScores:x.componentScores||null,features:x.features||null,
+    explanation:x.result30===true?'Doel gehaald: bewaar welke signalen vooraf aanwezig waren.':'Doel niet gehaald: vergelijk vooraf bevroren signalen met succesvolle gevallen.'
+  }))
+};
+await fs.writeFile('data/opportunity-latest.json',JSON.stringify({generatedAt:new Date().toISOString(),referenceDate:runReferenceDate,target:'+30% binnen 3 maanden',selections:newSelections,latestByMarket},null,2));
+await fs.writeFile('data/opportunity-learning.json',JSON.stringify(learning,null,2));
 console.log(JSON.stringify({referenceDate:runReferenceDate,activeMarkets:active.map(x=>x.mic),newSelections:newSelections.map(x=>({market:x.market,isin:x.isin,name:x.name,rank:x.consensusRank})),total:ledger.length}));
