@@ -35,15 +35,15 @@ jobs:
           KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
           KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
           MARKET_MIC: XMIL
-          HISTORY_BATCH_SIZE: 20
-          CATALOG_BATCH_SIZE: 25
+          HISTORY_BATCH_SIZE: 5
+          CATALOG_BATCH_SIZE: 5
           ALLOW_PARTIAL_FAILURES: 1
         run: |
           set -euo pipefail
           : > research/output/milan-rounds.jsonl
           skip_isins=""
           seed=1
-          for round in $(seq 1 18); do
+          for round in $(seq 1 100); do
             echo "=== Milan batch $round/18 ==="
             export SKIP_ISINS="$skip_isins"
             if [ "$seed" -eq 1 ]; then
@@ -68,9 +68,9 @@ jobs:
               echo "Bulk backfill exhausted; moving to end validation"
               break
             fi
-            if [ "$complete" -eq 0 ] && [ -z "$new_failed" ]; then
-              echo "No measurable progress and no isolated provider failure"
-              exit 2
+            if [ "$complete" -eq 0 ] && [ -z "$new_failed" ] && [ "$candidates" -gt 0 ]; then
+              echo "No measurable progress; stop safely for end validation instead of hammering the Worker"
+              break
             fi
           done
 
