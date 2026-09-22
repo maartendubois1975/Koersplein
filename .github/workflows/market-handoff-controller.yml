@@ -3,7 +3,12 @@ on:
   workflow_run:
     workflows:
       - M00 Wereldvuller
+      - Oslo Source-First Fill
     types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - 'data/world-fill-plan.json'
   workflow_dispatch:
 permissions:
   contents: read
@@ -18,7 +23,6 @@ jobs:
     env:
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
-      MARKET_MIC: XPAR
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,13 +33,20 @@ jobs:
           node scripts/cloudflare/market-handoff-signal.mjs | tee handoff.log
           NEXT=$(grep '^KOERSPLEIN_HANDOFF=' handoff.log | tail -1 | cut -d= -f2 || true)
           echo "next=$NEXT" >> "$GITHUB_OUTPUT"
-      - name: Start volgende beurs zonder menselijk ingrijpen
+      - name: Zet volgende beurs in source-first fase
         if: ${{ steps.gate.outputs.next != '' }}
         env:
           NEXT_MIC: ${{ steps.gate.outputs.next }}
         run: |
-          echo "Volgende markt automatisch geactiveerd: $NEXT_MIC"
-          MARKET_MIC="$NEXT_MIC" HISTORY_OFFSET=0 node scripts/cloudflare/universal-market-runner.mjs
+          echo "Volgende markt automatisch geactiveerd voor brononderzoek: $NEXT_MIC"
+          node -e "const fs=require('fs');const r=JSON.parse(fs.readFileSync('data/market-source-registry.json'));const m=r.markets?.[process.env.NEXT_MIC];if(m?.status==='APPROVED')process.exit(0);console.log('SOURCE_RESEARCH_REQUIRED='+process.env.NEXT_MIC)"
+      - name: Start backfill alleen wanneer brononderzoek al APPROVED is
+        if: ${{ steps.gate.outputs.next != '' }}
+        env:
+          NEXT_MIC: ${{ steps.gate.outputs.next }}
+        run: |
+          STATUS=$(node -e "const r=require('./data/market-source-registry.json');console.log(r.markets?.[process.env.NEXT_MIC]?.status||'MISSING')")
+          if [ "$STATUS" = "APPROVED" ]; then MARKET_MIC="$NEXT_MIC" HISTORY_OFFSET=0 node scripts/cloudflare/universal-market-runner.mjs; else echo "Backfill geblokkeerd tot source-first APPROVED: $NEXT_MIC"; fi
       - name: Bewaar verborgen overdrachtsbewijs
         if: always()
         uses: actions/upload-artifact@v4
