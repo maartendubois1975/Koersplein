@@ -26,11 +26,11 @@ jobs:
           node-version: '22'
       - name: Selecteer en volg kandidaten
         run: node scripts/research/daily-opportunity-ledger.mjs
-      - name: Bewaar bevroren historie
+      - name: Bereken Top 5 verwachte stijgers per beurs voor 3 maanden\n        run: node scripts/research/top5-three-month.mjs\n      - name: Bewaar bevroren historie
         run: |
           git config user.name "koersplein-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/opportunity-ledger.json data/opportunity-latest.json data/opportunity-learning.json
+          git add data/opportunity-ledger.json data/opportunity-latest.json data/opportunity-learning.json data/top5-three-month.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Dagelijkse Kansscanner $(date -u +%F)"
           git push origin HEAD:main
