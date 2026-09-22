@@ -61,3 +61,4 @@ for (const isin of ['NL0010273215', 'NL0012969182']) if (!mappings.providerMappi
 if (contracts.opportunitySelection.status !== 'engine_unavailable' || contracts.dailyMovers.status !== 'dataset_unavailable') throw new Error('Lege homepage-statussen zijn niet veilig ingesteld.');
 
 console.log(`Koersplein geldig: Amsterdam ${sharesData.shares.length}; Brussel ${brusselsData.shares.length}; Parijs ${parisData.shares.length}; AEX ${expected.aex}; AMX ${expected.amx}; AScX ${expected.ascx}; Overig ${other}; historie-testkoppelingen ${mappings.providerMappings.length}.`);
+
