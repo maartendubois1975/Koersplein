@@ -24,7 +24,10 @@ async function fetchOne(x,index){
         const meta=await input.clientOrDefault().historyPartitions(x.isin);
         const bars=[];
         for(const p of meta.partitions||[]) bars.push(...(await input.clientOrDefault().historyPartition(x.isin,p.period)).bars);
-        snap=await input.normalizeRaw({instrument:meta.instrument,provider:meta.provider,bars});
+        // The research universe is authoritatively XPAR. Some cross-listed instruments
+        // are stored by the factory under another primary MIC (for example MTAA).
+        // Bind the snapshot identity to the selected Paris listing, not that storage MIC.
+        snap=await input.normalizeRaw({instrument:{...meta.instrument,isin:x.isin,mic:'XPAR',market:'XPAR'},provider:meta.provider,bars});
       } catch (e) {
         throw new Error(`bounded partition snapshot failed: ${e.message}`);
       }
