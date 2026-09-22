@@ -31,23 +31,18 @@ jobs:
           HISTORY_BATCH_SIZE: 5
           CATALOG_BATCH_SIZE: 5
           ALLOW_PARTIAL_FAILURES: 1
+          SEED_CATALOG: 0
         run: |
           set -euo pipefail
           : > research/output/milan-rounds.jsonl
           skip_isins=""
-          seed=1
-          for round in $(seq 1 18); do
-            echo "=== Milan batch $round/18 ==="
+          for round in $(seq 1 30); do
+            echo "=== Milan history batch $round/30 ==="
             export SKIP_ISINS="$skip_isins"
-            if [ "$seed" -eq 1 ]; then
-              timeout 240s env SEED_CATALOG=1 node scripts/cloudflare/universal-market-runner.mjs || rc=$?
-              seed=0
-            else
-              timeout 240s env SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs || rc=$?
-            fi
+            timeout 180s env SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs || rc=$?
             rc=${rc:-0}
             if [ "$rc" -eq 124 ]; then
-              echo "Micro-batch timed out after 240s; stop safely and continue on the next scheduled run"
+              echo "History micro-batch timed out after 180s; stop safely for end validation"
               break
             elif [ "$rc" -ne 0 ]; then
               echo "Micro-batch failed with exit code $rc"
