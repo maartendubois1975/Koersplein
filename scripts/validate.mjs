@@ -41,10 +41,14 @@ const other = sharesData.shares.length - allMembers.length;
 if (other !== 49) throw new Error(`Verwacht 49 overige aandelen, vond ${other}.`);
 
 const euronext = marketsData.venues.find((venue) => venue.id === 'euronext');
-const publishedMarkets = ['amsterdam','brussels','paris','milan'];
-for (const id of publishedMarkets) if (!euronext?.markets.some((market) => market.id === id && market.status === 'available')) throw new Error(`Euronext ${id} ontbreekt in de actieve marktstructuur.`);
-if (euronext.markets.filter((market) => market.status === 'available').length !== publishedMarkets.length) throw new Error(`Verwacht exact ${publishedMarkets.length} gepubliceerde Europese markten.`);
-for (const id of ['oslo','dublin','lisbon']) if (!euronext?.markets.some((market) => market.id === id && market.status === 'planned')) throw new Error(`Euronext ${id} moet gepland blijven tot eindvalidatie is geslaagd.`);
+const requiredPublishedMarkets = ['amsterdam','brussels','paris','milan'];
+for (const id of requiredPublishedMarkets) if (!euronext?.markets.some((market) => market.id === id && market.status === 'available')) throw new Error(`Euronext ${id} ontbreekt in de actieve marktstructuur.`);
+// Published markets are additive: once a market has passed its own end validation it may
+// become available without making older market fill/repair workflows invalid.
+const knownMarketIds = new Set(['amsterdam','brussels','paris','milan','oslo','dublin','lisbon']);
+const unknownPublished = (euronext?.markets || []).filter((market) => market.status === 'available' && !knownMarketIds.has(market.id));
+if (unknownPublished.length) throw new Error(`Onbekende gepubliceerde Europese markt(en): ${unknownPublished.map(x=>x.id).join(', ')}.`);
+for (const id of ['dublin','lisbon']) if (!euronext?.markets.some((market) => market.id === id && market.status === 'planned')) throw new Error(`Euronext ${id} moet gepland blijven tot de eigen eindvalidatie is geslaagd.`);
 if (!regionsData.regions.some((region) => region.id === 'europe' && region.status === 'available')) throw new Error('Europa ontbreekt.');
 if (regionsData.regions.filter((region) => region.status === 'available').length !== 1) throw new Error('Alleen Europa mag nu actief zijn.');
 
