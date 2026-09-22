@@ -17,7 +17,7 @@ concurrency:
 jobs:
   milan-fill:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: 90
     permissions:
       contents: read
     steps:
@@ -44,15 +44,24 @@ jobs:
           : > research/output/milan-rounds.jsonl
           skip_isins=""
           seed=1
-          for round in $(seq 1 100); do
+          for round in $(seq 1 18); do
             echo "=== Milan batch $round/18 ==="
             export SKIP_ISINS="$skip_isins"
             if [ "$seed" -eq 1 ]; then
-              SEED_CATALOG=1 node scripts/cloudflare/universal-market-runner.mjs
+              timeout 240s env SEED_CATALOG=1 node scripts/cloudflare/universal-market-runner.mjs || rc=$?
               seed=0
             else
-              SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs
+              timeout 240s env SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs || rc=$?
             fi
+            rc=${rc:-0}
+            if [ "$rc" -eq 124 ]; then
+              echo "Micro-batch timed out after 240s; stop safely and continue on the next scheduled run"
+              break
+            elif [ "$rc" -ne 0 ]; then
+              echo "Micro-batch failed with exit code $rc"
+              exit "$rc"
+            fi
+            rc=0
 
             node -e "const fs=require('fs');const r=require('./research/output/world-fill-batch.json');fs.appendFileSync('./research/output/milan-rounds.jsonl',JSON.stringify({round:$round,...r})+'\n')"
             new_failed=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log((r.failed||[]).map(x=>x.isin).join(','))")
