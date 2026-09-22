@@ -1,6 +1,40 @@
 {
-  "generatedAt": "2026-09-21T22:18:04.202Z",
+  "generatedAt": "2026-09-22T18:03:07.522Z",
   "referenceDate": "2026-09-16",
   "target": "+30% binnen 3 maanden",
-  "selections": []
+  "selections": [],
+  "latestByMarket": {
+    "XAMS": {
+      "selectionDate": "2026-09-17",
+      "market": "XAMS",
+      "venue": "Amsterdam",
+      "targetPct": 30,
+      "horizonMonths": 3,
+      "status": "OPEN",
+      "frozen": true,
+      "modelVersion": "consensus-price-v1",
+      "name": "FAGRON",
+      "ticker": "FAGR",
+      "isin": "BE0003874915",
+      "referenceDate": "2026-09-16",
+      "referenceClose": 22.049999237060547,
+      "consensusRank": 4
+    },
+    "XBRU": {
+      "selectionDate": "2026-09-17",
+      "market": "XBRU",
+      "venue": "Brussel",
+      "targetPct": 30,
+      "horizonMonths": 3,
+      "status": "OPEN",
+      "frozen": true,
+      "modelVersion": "consensus-price-v1",
+      "name": "FAGRON",
+      "ticker": "FAGR",
+      "isin": "BE0003874915",
+      "referenceDate": "2026-09-16",
+      "referenceClose": 22.049999237060547,
+      "consensusRank": 5
+    }
+  }
 }
