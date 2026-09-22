@@ -1,15 +1,9 @@
 name: Oslo Source-First Fill
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/oslo-source-first-fill.yml'
-      - 'scripts/validate.mjs'
-      - 'scripts/cloudflare/client.mjs'
   workflow_dispatch:
 concurrency:
   group: oslo-source-first-production
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   oslo:
     runs-on: ubuntu-latest
