@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/oslo-source-first-fill.yml'
       - 'scripts/validate.mjs'
+      - 'scripts/cloudflare/client.mjs'
   workflow_dispatch:
 concurrency:
   group: oslo-source-first-production
@@ -44,7 +45,7 @@ jobs:
           : > research/output/oslo/rounds.jsonl
           skip_isins=''
           seed=1
-          for round in $(seq 1 30); do
+          for round in $(seq 1 80); do
             export SKIP_ISINS="$skip_isins"
             if [ "$seed" -eq 1 ]; then SEED_CATALOG=1 node scripts/cloudflare/universal-market-runner.mjs; seed=0; else SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs; fi
             node -e "const fs=require('fs');const r=require('./research/output/world-fill-batch.json');fs.appendFileSync('./research/output/oslo/rounds.jsonl',JSON.stringify({round:$round,...r})+'\n')"
@@ -53,6 +54,7 @@ jobs:
             remaining=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log(r.remainingHint ?? 999999)")
             candidates=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log(r.candidates ?? 0)")
             if [ "$remaining" -le 0 ] || [ "$candidates" -eq 0 ]; then break; fi
+            sleep 3
           done
       - name: Oslo end validation
         if: always()
