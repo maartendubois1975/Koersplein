@@ -17,11 +17,18 @@ const h=parse(lines[0]).map(v=>v.toLowerCase().replace(/[^a-z0-9]+/g,'')),pick=(
 const shares=[],seenIsin=new Set(),seenKey=new Set(),rejected={missingIdentity:0,missingMic:0,wrongMic:0,wrongMarket:0,duplicateIsin:0,duplicateMicTicker:0};
 for(const line of lines.slice(1)){const r=parse(line),name=pick(r,['name','instrumentname','instrument']),isin=pick(r,['isin','isincode']).toUpperCase(),symbol=pick(r,['symbol','ticker','mnemo']),market=pick(r,['market','markets']),rowMic=pick(r,['mic','miccode','marketmic','segmentmic']).toUpperCase();
  if(!name||!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)||!symbol){rejected.missingIdentity++;continue}
- if(!rowMic){rejected.missingMic++;continue}
- if(!cfg.allowedMics.has(rowMic)){rejected.wrongMic++;continue}
+ let provenMic=rowMic;
+ if(!provenMic&&mic==='XMIL'){
+   // Euronext Milan's official CSV currently leaves the MIC column empty.
+   // Infer only from the official market/segment label, never from the requested market.
+   if(/Euronext Growth Milan|Growth Milan|EGM/i.test(market))provenMic='EXGM';
+   else if(/Euronext Milan|Borsa Italiana|MTA|Mercato Telematico Azionario/i.test(market))provenMic='MTAA';
+ }
+ if(!provenMic){rejected.missingMic++;continue}
+ if(!cfg.allowedMics.has(provenMic)){rejected.wrongMic++;continue}
  if(market&&!cfg.market.test(market)){rejected.wrongMarket++;continue}
- const key=rowMic+'\u0000'+symbol.toUpperCase();if(seenIsin.has(isin)){rejected.duplicateIsin++;continue}if(seenKey.has(key)){rejected.duplicateMicTicker++;continue}
- seenIsin.add(isin);seenKey.add(key);shares.push({name,symbol,isin,market:market||m.name,mic:rowMic});
+ const key=provenMic+'\u0000'+symbol.toUpperCase();if(seenIsin.has(isin)){rejected.duplicateIsin++;continue}if(seenKey.has(key)){rejected.duplicateMicTicker++;continue}
+ seenIsin.add(isin);seenKey.add(key);shares.push({name,symbol,isin,market:market||m.name,mic:provenMic});
 }
 if(shares.length<cfg.min)throw new Error(`Te weinig bewezen ${m.name}-aandelen: ${shares.length}; rejected=${JSON.stringify(rejected)}`);
 shares.sort((a,b)=>a.name.localeCompare(b.name,cfg.locale));
