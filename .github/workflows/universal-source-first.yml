@@ -1,57 +1,62 @@
-name: M00 Universele source-first marktketen
+name: M00 Europa parallelle beursfabriek
 on:
   workflow_dispatch:
-    inputs:
-      market_mic:
-        description: WAITING markt
-        required: true
-        default: XDUB
   workflow_run:
     workflows: ['M00 Automatische beurs-handoff']
     types: [completed]
   push:
     branches: [main]
-    paths:
-      - '.source-first-trigger'
+    paths: ['.source-first-trigger']
 permissions:
   contents: write
 concurrency:
-  group: koersplein-universal-source-first
+  group: koersplein-europe-parallel-factory
   cancel-in-progress: false
 jobs:
-  source_first:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
+  select:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    outputs:
+      markets: ${{ steps.pick.outputs.markets }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - id: pick
+        name: Kies maximaal vier Europese beurzen
+        run: |
+          MARKETS=$(node scripts/cloudflare/select-europe-parallel-markets.mjs | tail -1)
+          echo "markets=$MARKETS" >> "$GITHUB_OUTPUT"
+          echo "Geselecteerd: $MARKETS"
+  market:
+    needs: select
+    if: ${{ needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        market_mic: ${{ fromJSON(needs.select.outputs.markets) }}
     runs-on: ubuntu-latest
     timeout-minutes: 360
+    concurrency:
+      group: koersplein-market-${{ matrix.market_mic }}
+      cancel-in-progress: false
     env:
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
-      MARKET_MIC: ${{ inputs.market_mic || 'XDUB' }}
+      MARKET_MIC: ${{ matrix.market_mic }}
     steps:
       - uses: actions/checkout@v4
-        with: {ref: main}
+        with: { ref: main }
       - uses: actions/setup-node@v4
-        with: {node-version: 22}
-      - name: Selecteer eerstvolgende WAITING markt
-        run: |
-          if [ -z "$MARKET_MIC" ]; then MARKET_MIC=$(node -e "const p=require('./data/world-fill-plan.json');console.log(p.markets.find(x=>x.state==='WAITING')?.mic||'')"); echo "MARKET_MIC=$MARKET_MIC" >> "$GITHUB_ENV"; fi
-          node -e "const p=require('./data/world-fill-plan.json');const m=p.markets.find(x=>x.mic===process.env.MARKET_MIC);if(!m||!['WAITING','ACTIVE'].includes(m.state))throw Error('Geen geldige volgende markt: '+process.env.MARKET_MIC)"
+        with: { node-version: 22 }
       - name: Officiële catalogus
         run: node scripts/cloudflare/universal-source-catalog.mjs
       - name: Gratis bronpreflight
         run: node scripts/cloudflare/universal-source-audit.mjs
-      - name: Bewaar APPROVED gate en catalogus
-        run: |
-          git config user.name koersplein-factory
-          git config user.email actions@users.noreply.github.com
-          git add data/market-source-registry.json data/euronext-*.json
-          git commit -m "data: approve $MARKET_MIC sources after preflight" || true
-          git pull --rebase origin main
-          git push origin HEAD:main
       - name: Historische backfill met foutisolatie
         env:
-          HISTORY_BATCH_SIZE: 20
-          CATALOG_BATCH_SIZE: 25
+          HISTORY_BATCH_SIZE: 5
+          CATALOG_BATCH_SIZE: 5
           ALLOW_PARTIAL_FAILURES: 1
         run: |
           set -euo pipefail
@@ -64,13 +69,17 @@ jobs:
             remaining=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log(r.remainingHint??999999)")
             candidates=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log(r.candidates??0)")
             if [ "$remaining" -le 0 ] || [ "$candidates" -eq 0 ]; then break; fi
-            sleep 3
+            sleep 8
           done
-      - name: Eindvalidatie en automatische handoff
+      - name: Eindvalidatie
+        if: always()
         run: node scripts/cloudflare/market-handoff-signal.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: source-first-${{ env.MARKET_MIC }}-${{ github.run_number }}
-          path: research/output/
+          name: europe-market-${{ matrix.market_mic }}-${{ github.run_number }}
+          path: |
+            data/market-source-registry.json
+            data/euronext-*.json
+            research/output/
           retention-days: 30
