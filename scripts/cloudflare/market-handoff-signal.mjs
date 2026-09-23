@@ -10,7 +10,7 @@ const latestExpectedTradingDate=(()=>{const d=new Date();do{d.setUTCDate(d.getUT
 async function inspect(m){
  const raw=JSON.parse(await fs.readFile(`data/euronext-${m.code}.json`,'utf8'));const shares=raw.shares||raw.instruments||[];
  let complete=0,missing=0,invalid=0;
- for(const s of shares){try{const h=await client.history(s.isin),bars=h?.bars||h?.history||h?.data||[],count=Number(h?.coverage?.recordCount||bars.length||0),last=String(h?.coverage?.lastDate||bars.at(-1)?.date||'').slice(0,10);if(!count)missing++;else if(!last||last<latestExpectedTradingDate)invalid++;else complete++;}catch{missing++;}}
+ for(const s of shares){try{const h=await client.historyCoverage(s.isin),bars=h?.bars||h?.history||h?.data||[],count=Number(h?.coverage?.recordCount||bars.length||0),last=String(h?.coverage?.lastDate||bars.at(-1)?.date||'').slice(0,10);if(!count)missing++;else if(!last||last<latestExpectedTradingDate)invalid++;else complete++;}catch{missing++;}}
  return {catalog:shares.length,complete,missing,invalid,ready:shares.length>0&&complete===shares.length&&missing===0&&invalid===0};
 }
 let state={version:3,markets:{}};try{state=JSON.parse(await fs.readFile(statePath,'utf8'));}catch{}
