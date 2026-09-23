@@ -44,7 +44,7 @@ const candidates=[];let alreadyCurrent=0,excluded=0,inspectionFailed=0,skippedRu
 for(const item of instruments){
   if(unavailable.has(item.isin)){excluded++;continue}
   if(runSkip.has(item.isin)){skippedRunFailures++;continue}
-  try{const h=await client.history(item.isin);const last=h?.coverage?.lastDate||h?.bars?.at?.(-1)?.date||h?.history?.at?.(-1)?.date;if(last>=latestExpectedTradingDate){alreadyCurrent++;continue}}catch{inspectionFailed++}
+  try{const h=await client.historyCoverage(item.isin);const last=h?.coverage?.lastDate||h?.bars?.at?.(-1)?.date||h?.history?.at?.(-1)?.date;if(last>=latestExpectedTradingDate){alreadyCurrent++;continue}}catch{inspectionFailed++}
   candidates.push(item);if(candidates.length>=hb)break;
 }
 let complete=0,failed=[];
