@@ -103,3 +103,15 @@ jobs:
             data/euronext-*.json
             research/output/
           retention-days: 30
+
+  continue-autopilot:
+    needs: [select, market]
+    if: ${{ always() && needs.select.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start volgende autonome cyclus
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sleep 20
+          gh workflow run universal-source-first.yml --repo "${{ github.repository }}" --ref main
