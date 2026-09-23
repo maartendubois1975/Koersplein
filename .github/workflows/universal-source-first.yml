@@ -36,7 +36,7 @@ jobs:
       matrix:
         market_mic: ${{ fromJSON(needs.select.outputs.markets) }}
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 330
     concurrency:
       group: koersplein-market-${{ matrix.market_mic }}
       cancel-in-progress: false
@@ -62,7 +62,7 @@ jobs:
         run: |
           set -euo pipefail
           skip_isins=''; seed=1
-          for round in $(seq 1 100); do
+          for round in $(seq 1 500); do
             export SKIP_ISINS="$skip_isins"
             if [ "$seed" -eq 1 ]; then SEED_CATALOG=1 node scripts/cloudflare/universal-market-runner.mjs; seed=0; else SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs; fi
             new_failed=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log((r.failed||[]).map(x=>x.isin).join(','))")
@@ -70,7 +70,7 @@ jobs:
             remaining=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log(r.remainingHint??999999)")
             candidates=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log(r.candidates??0)")
             if [ "$remaining" -le 0 ] || [ "$candidates" -eq 0 ]; then break; fi
-            sleep 8
+            sleep 2
           done
       - name: Eindvalidatie
         if: ${{ success() }}
