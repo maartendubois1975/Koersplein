@@ -3,6 +3,26 @@
   "mode": "parallel-europe-market-gates",
   "markets": [
     {
+      "mic": "XBRU",
+      "code": "brussels",
+      "name": "Brussel",
+      "country": "BE",
+      "currency": "EUR",
+      "timezone": "Europe/Brussels",
+      "providerSuffix": ".BR",
+      "state": "COMPLETE"
+    },
+    {
+      "mic": "XAMS",
+      "code": "amsterdam",
+      "name": "Amsterdam",
+      "country": "NL",
+      "currency": "EUR",
+      "timezone": "Europe/Amsterdam",
+      "providerSuffix": ".AS",
+      "state": "COMPLETE"
+    },
+    {
       "mic": "XPAR",
       "code": "paris",
       "name": "Parijs",
