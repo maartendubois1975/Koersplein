@@ -52,8 +52,7 @@ jobs:
       - name: Officiële catalogus
         run: node scripts/cloudflare/universal-source-catalog.mjs
       - name: Gratis bronpreflight
-        timeout-minutes: 5
-        continue-on-error: true
+        timeout-minutes: 30
         run: node scripts/cloudflare/universal-source-audit.mjs
       - name: Historische backfill met foutisolatie
         env:
@@ -74,8 +73,8 @@ jobs:
             sleep 8
           done
       - name: Eindvalidatie
-        if: always()
-        timeout-minutes: 5
+        if: ${{ success() }}
+        timeout-minutes: 30
         run: node scripts/cloudflare/market-handoff-signal.mjs
       - uses: actions/upload-artifact@v4
         if: always()
