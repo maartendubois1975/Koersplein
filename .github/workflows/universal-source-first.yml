@@ -106,7 +106,7 @@ jobs:
 
   continue-autopilot:
     needs: [select, market]
-    if: ${{ always() && needs.select.result == 'success' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
+    if: ${{ needs.select.result == 'success' && needs.market.result == 'success' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Start volgende autonome cyclus
