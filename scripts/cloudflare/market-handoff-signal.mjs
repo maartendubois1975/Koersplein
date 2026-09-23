@@ -24,6 +24,9 @@ if(!current)throw new Error('Geen huidige markt');
 const result=await inspect(current);
 let next=null;
 if(result.ready){
+ const planCurrent=plan.markets.find(x=>x.mic===current.mic);
+ if(planCurrent){planCurrent.state='COMPLETE';planCurrent.completedAt=new Date().toISOString();planCurrent.catalogFingerprint=result.catalogFingerprint;delete planCurrent.note;}
+ await fs.writeFile('data/world-fill-plan.json',JSON.stringify(plan,null,2)+'\n');
  const idx=plan.markets.findIndex(x=>x.mic===current.mic);
  next=plan.markets.slice(idx+1).find(x=>x.state==='WAITING')||null;
 }
