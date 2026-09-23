@@ -9,6 +9,8 @@ on:
       - '.github/workflows/paris-*.yml'
       - '.github/workflows/world-fill-controller.yml'
       - '.github/workflows/market-handoff-controller.yml'
+      - '.github/workflows/universal-source-first.yml'
+      - 'data/world-fill-plan.json'
   workflow_dispatch:
 permissions:
   contents: read
