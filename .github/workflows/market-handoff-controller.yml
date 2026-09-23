@@ -1,9 +1,5 @@
 name: M00 Automatische beurs-handoff
 on:
-  workflow_run:
-    workflows:
-      - M00 Wereldvuller
-    types: [completed]
   workflow_dispatch:
   workflow_run:
     workflows:
