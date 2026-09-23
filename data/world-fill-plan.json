@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "mode": "sequential-market-gates",
+  "version": 2,
+  "mode": "parallel-europe-market-gates",
   "markets": [
     {
       "mic": "XPAR",
@@ -51,6 +51,246 @@
       "timezone": "Europe/Lisbon",
       "providerSuffix": ".LS",
       "state": "WAITING"
+    },
+    {
+      "mic": "XLON",
+      "code": "london",
+      "name": "Londen",
+      "country": "GB",
+      "currency": "GBP",
+      "timezone": "Europe/London",
+      "providerSuffix": ".L",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XETR",
+      "code": "frankfurt",
+      "name": "Frankfurt / Xetra",
+      "country": "DE",
+      "currency": "EUR",
+      "timezone": "Europe/Berlin",
+      "providerSuffix": ".DE",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XSWX",
+      "code": "zurich",
+      "name": "Zürich",
+      "country": "CH",
+      "currency": "CHF",
+      "timezone": "Europe/Zurich",
+      "providerSuffix": ".SW",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XMAD",
+      "code": "madrid",
+      "name": "Madrid",
+      "country": "ES",
+      "currency": "EUR",
+      "timezone": "Europe/Madrid",
+      "providerSuffix": ".MC",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XSTO",
+      "code": "stockholm",
+      "name": "Stockholm",
+      "country": "SE",
+      "currency": "SEK",
+      "timezone": "Europe/Stockholm",
+      "providerSuffix": ".ST",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XCSE",
+      "code": "copenhagen",
+      "name": "Kopenhagen",
+      "country": "DK",
+      "currency": "DKK",
+      "timezone": "Europe/Copenhagen",
+      "providerSuffix": ".CO",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XHEL",
+      "code": "helsinki",
+      "name": "Helsinki",
+      "country": "FI",
+      "currency": "EUR",
+      "timezone": "Europe/Helsinki",
+      "providerSuffix": ".HE",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XICE",
+      "code": "reykjavik",
+      "name": "Reykjavik",
+      "country": "IS",
+      "currency": "ISK",
+      "timezone": "Atlantic/Reykjavik",
+      "providerSuffix": ".IC",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XATH",
+      "code": "athens",
+      "name": "Athene",
+      "country": "GR",
+      "currency": "EUR",
+      "timezone": "Europe/Athens",
+      "providerSuffix": ".AT",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XWAR",
+      "code": "warsaw",
+      "name": "Warschau",
+      "country": "PL",
+      "currency": "PLN",
+      "timezone": "Europe/Warsaw",
+      "providerSuffix": ".WA",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XWBO",
+      "code": "vienna",
+      "name": "Wenen",
+      "country": "AT",
+      "currency": "EUR",
+      "timezone": "Europe/Vienna",
+      "providerSuffix": ".VI",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XPRA",
+      "code": "prague",
+      "name": "Praag",
+      "country": "CZ",
+      "currency": "CZK",
+      "timezone": "Europe/Prague",
+      "providerSuffix": ".PR",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XBUD",
+      "code": "budapest",
+      "name": "Boedapest",
+      "country": "HU",
+      "currency": "HUF",
+      "timezone": "Europe/Budapest",
+      "providerSuffix": ".BD",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XBSE",
+      "code": "bucharest",
+      "name": "Boekarest",
+      "country": "RO",
+      "currency": "RON",
+      "timezone": "Europe/Bucharest",
+      "providerSuffix": ".RO",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XBUL",
+      "code": "sofia",
+      "name": "Sofia",
+      "country": "BG",
+      "currency": "BGN",
+      "timezone": "Europe/Sofia",
+      "providerSuffix": ".SO",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XZAG",
+      "code": "zagreb",
+      "name": "Zagreb",
+      "country": "HR",
+      "currency": "EUR",
+      "timezone": "Europe/Zagreb",
+      "providerSuffix": ".ZA",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XLJU",
+      "code": "ljubljana",
+      "name": "Ljubljana",
+      "country": "SI",
+      "currency": "EUR",
+      "timezone": "Europe/Ljubljana",
+      "providerSuffix": ".LJ",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XBRA",
+      "code": "bratislava",
+      "name": "Bratislava",
+      "country": "SK",
+      "currency": "EUR",
+      "timezone": "Europe/Bratislava",
+      "providerSuffix": ".BS",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XLUX",
+      "code": "luxembourg",
+      "name": "Luxemburg",
+      "country": "LU",
+      "currency": "EUR",
+      "timezone": "Europe/Luxembourg",
+      "providerSuffix": ".LU",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XMAL",
+      "code": "malta",
+      "name": "Malta",
+      "country": "MT",
+      "currency": "EUR",
+      "timezone": "Europe/Malta",
+      "providerSuffix": ".MT",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XCYS",
+      "code": "cyprus",
+      "name": "Cyprus",
+      "country": "CY",
+      "currency": "EUR",
+      "timezone": "Asia/Nicosia",
+      "providerSuffix": ".CY",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XTAL",
+      "code": "tallinn",
+      "name": "Tallinn",
+      "country": "EE",
+      "currency": "EUR",
+      "timezone": "Europe/Tallinn",
+      "providerSuffix": ".TL",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XRIS",
+      "code": "riga",
+      "name": "Riga",
+      "country": "LV",
+      "currency": "EUR",
+      "timezone": "Europe/Riga",
+      "providerSuffix": ".RG",
+      "state": "WAITING"
+    },
+    {
+      "mic": "XLIT",
+      "code": "vilnius",
+      "name": "Vilnius",
+      "country": "LT",
+      "currency": "EUR",
+      "timezone": "Europe/Vilnius",
+      "providerSuffix": ".VS",
+      "state": "WAITING"
     }
   ],
   "gates": {
@@ -62,7 +302,8 @@
   "limits": {
     "catalogBatchSize": 25,
     "historyBatchSize": 10,
-    "maxMarketsActive": 1,
+    "maxMarketsActive": 4,
     "maxRetriesPerInstrument": 3
-  }
+  },
+  "region": "EUROPE"
 }
