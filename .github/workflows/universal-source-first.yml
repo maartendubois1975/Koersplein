@@ -9,6 +9,10 @@ on:
   workflow_run:
     workflows: ['M00 Automatische beurs-handoff']
     types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - '.source-first-trigger'
 permissions:
   contents: write
 concurrency:
