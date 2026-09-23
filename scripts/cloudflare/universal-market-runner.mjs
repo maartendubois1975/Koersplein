@@ -13,7 +13,17 @@ const sourcePlan=sourceRegistry.markets?.[mic];if(!sourcePlan||sourcePlan.status
 const path=`data/euronext-${m.code}.json`;
 const raw=JSON.parse(await fs.readFile(path,'utf8'));
 const source=raw.shares||raw.instruments||[];if(!source.length)throw new Error('lege catalogus');
-const instruments=source.map(x=>({isin:x.isin,name:x.name||x.company,company:x.name||x.company,symbol:x.symbol||x.ticker,ticker:x.symbol||x.ticker,mic:x.mic||m.mic,market:x.mic||m.mic,currency:m.currency,countryCode:m.country,provider:'yahoo-chart'}));
+const rawInstruments=source.map(x=>({isin:x.isin,name:x.name||x.company,company:x.name||x.company,symbol:x.symbol||x.ticker,ticker:x.symbol||x.ticker,mic:x.mic||m.mic,market:x.mic||m.mic,currency:m.currency,countryCode:m.country,provider:'yahoo-chart'}));
+const seenIsin=new Set(),seenMicTicker=new Set(),instruments=[];let duplicateIsin=0,duplicateMicTicker=0;
+for(const item of rawInstruments){
+  const isin=String(item.isin||'').trim().toUpperCase(),ticker=String(item.ticker||'').trim().toUpperCase(),segmentMic=String(item.mic||m.mic).trim().toUpperCase();
+  if(!isin||!ticker)continue;
+  const mt=`${segmentMic}\u0000${ticker}`;
+  if(seenIsin.has(isin)){duplicateIsin++;continue}
+  if(seenMicTicker.has(mt)){duplicateMicTicker++;continue}
+  seenIsin.add(isin);seenMicTicker.add(mt);instruments.push({...item,isin,ticker:item.ticker?.trim(),symbol:item.symbol?.trim(),mic:segmentMic,market:segmentMic});
+}
+if(duplicateIsin||duplicateMicTicker)console.log(JSON.stringify({catalogDedup:{raw:rawInstruments.length,usable:instruments.length,duplicateIsin,duplicateMicTicker}}));
 let unavailable=new Set();
 if(mic==='XPAR')try{const rr=JSON.parse(await fs.readFile('research/output/paris/repair-invalid-summary.json','utf8'));unavailable=new Set((rr.unavailableItems||[]).map(x=>x.isin))}catch{}
 // Register every MIC present in the official catalogue before inserting instruments.
@@ -49,7 +59,7 @@ for(const item of instruments){
 }
 let complete=0,failed=[];
 for(const item of candidates){try{const {provider,result}=await registry.fetchDaily(item,{startDate:'1990-01-01',endDate:today},'yahoo-chart');if(!result.bars.length)throw new Error('geen historie');for(const [period,bars] of partitionBars(result.bars))await client.putPartition(item.isin,period,{bars,provider:provider.id});await client.completeHistory(item.isin,{provider:provider.id});complete++;}catch(e){failed.push({isin:item.isin,symbol:item.symbol,mic:item.mic,error:e.message})}}
-const report={market:mic,catalog:instruments.length,batchRequested:hb,candidates:candidates.length,alreadyCurrent,excludedProviderUnavailable:excluded,skippedRunFailures,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-complete-skippedRunFailures),freshnessCutoff};
+const report={market:mic,catalog:instruments.length,catalogRaw:rawInstruments.length,duplicateIsin,duplicateMicTicker,batchRequested:hb,candidates:candidates.length,alreadyCurrent,excludedProviderUnavailable:excluded,skippedRunFailures,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-complete-skippedRunFailures),freshnessCutoff};
 console.log(JSON.stringify(report,null,2));
 await fs.mkdir('research/output',{recursive:true});await fs.writeFile('research/output/world-fill-batch.json',JSON.stringify({...report,generatedAt:new Date().toISOString()},null,2));
 if(failed.length===candidates.length&&candidates.length&&process.env.ALLOW_PARTIAL_FAILURES!=='1')process.exitCode=2;
