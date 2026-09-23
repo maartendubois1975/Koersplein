@@ -1,6 +1,8 @@
 name: M00 Europa parallelle beursfabriek
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
   workflow_run:
     workflows: ['M00 Automatische beurs-handoff']
     types: [completed]
@@ -11,7 +13,7 @@ permissions:
   contents: write
 concurrency:
   group: koersplein-europe-parallel-factory
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   select:
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
@@ -76,6 +78,22 @@ jobs:
         if: ${{ success() }}
         timeout-minutes: 30
         run: node scripts/cloudflare/market-handoff-signal.mjs
+      - name: Bewaar bewezen COMPLETE-status
+        if: ${{ success() }}
+        run: |
+          set -euo pipefail
+          git config user.name "koersplein-autopilot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/world-fill-plan.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "state: mark $MARKET_MIC COMPLETE after end validation"
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt*3))
+          done
+          echo "Kon COMPLETE-status niet duurzaam opslaan" >&2
+          exit 1
       - uses: actions/upload-artifact@v4
         if: always()
         with:
