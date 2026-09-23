@@ -1,6 +1,10 @@
 name: Milan Fill Factory
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/milan-fill.yml'
 
 concurrency:
   group: milan-fill-production
