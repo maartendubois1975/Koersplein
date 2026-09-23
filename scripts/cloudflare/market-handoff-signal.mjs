@@ -9,9 +9,9 @@ const latestExpectedTradingDate=(()=>{const d=new Date();do{d.setUTCDate(d.getUT
 
 async function inspect(m){
  const raw=JSON.parse(await fs.readFile(`data/euronext-${m.code}.json`,'utf8'));const shares=raw.shares||raw.instruments||[];
- let complete=0,missing=0,invalid=0;
- for(const s of shares){try{const h=await client.historyCoverage(s.isin),bars=h?.bars||h?.history||h?.data||[],count=Number(h?.coverage?.recordCount||bars.length||0),last=String(h?.coverage?.lastDate||bars.at(-1)?.date||'').slice(0,10);if(!count)missing++;else if(!last||last<latestExpectedTradingDate)invalid++;else complete++;}catch{missing++;}}
- return {catalog:shares.length,complete,missing,invalid,ready:shares.length>0&&complete===shares.length&&missing===0&&invalid===0};
+ const batch=Math.max(10,Number(process.env.VALIDATION_BATCH_SIZE||25));let complete=0,missing=0,invalid=0,checked=0;
+ for(let i=0;i<shares.length;i+=batch){const part=shares.slice(i,i+batch);const rows=await Promise.all(part.map(async s=>{try{const h=await client.historyCoverage(s.isin),bars=h?.bars||h?.history||h?.data||[],count=Number(h?.coverage?.recordCount||bars.length||0),last=String(h?.coverage?.lastDate||bars.at(-1)?.date||'').slice(0,10);return !count?'missing':(!last||last<latestExpectedTradingDate?'invalid':'complete')}catch{return'missing'}}));for(const x of rows){checked++;if(x==='complete')complete++;else if(x==='invalid')invalid++;else missing++;}console.log(JSON.stringify({validationProgress:{market:m.mic,checked,total:shares.length,complete,missing,invalid}}));}
+ return {catalogFingerprint:raw.fingerprint||null,catalog:shares.length,checked,complete,missing,invalid,ready:shares.length>0&&checked===shares.length&&complete===shares.length&&missing===0&&invalid===0};
 }
 let state={version:3,markets:{}};try{state=JSON.parse(await fs.readFile(statePath,'utf8'));}catch{}
 const requested=process.env.MARKET_MIC;
