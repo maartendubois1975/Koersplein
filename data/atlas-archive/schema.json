@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "namespace": "atlas-archive",
+  "entities": {
+    "security": {
+      "required": [
+        "atlasSecurityId"
+      ],
+      "fields": [
+        "atlasSecurityId",
+        "isin",
+        "figi",
+        "ticker",
+        "mic",
+        "name",
+        "country",
+        "currency",
+        "companyKey"
+      ]
+    },
+    "price": {
+      "required": [
+        "atlasSecurityId",
+        "date",
+        "close"
+      ],
+      "fields": [
+        "atlasSecurityId",
+        "listingId",
+        "date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "provider",
+        "qualityState",
+        "identityGrade",
+        "decisionEligible"
+      ]
+    },
+    "returnLabel": {
+      "required": [
+        "atlasSecurityId",
+        "asOfDate",
+        "horizonMonths"
+      ],
+      "fields": [
+        "atlasSecurityId",
+        "asOfDate",
+        "horizonCode",
+        "horizonMonths",
+        "startPriceDate",
+        "startPrice",
+        "targetDate",
+        "endPriceDate",
+        "endPrice",
+        "realisedReturnPct",
+        "realisedTotalReturnPct",
+        "labelStatus",
+        "labelSource",
+        "terminalProxy"
+      ]
+    },
+    "feature": {
+      "required": [
+        "atlasSecurityId",
+        "asOfDate",
+        "featureVersion",
+        "feature"
+      ],
+      "fields": [
+        "atlasSecurityId",
+        "asOfDate",
+        "featureVersion",
+        "feature",
+        "coverage",
+        "maxInputDate",
+        "frozenAt",
+        "snapshotHash"
+      ]
+    },
+    "forecast": {
+      "required": [
+        "forecastId",
+        "forecastAt",
+        "evidenceCutoff",
+        "horizonMonths"
+      ],
+      "fields": [
+        "forecastId",
+        "candidateId",
+        "forecastAt",
+        "evidenceCutoff",
+        "horizonMonths",
+        "modelSpecHash",
+        "predictedReturnPct",
+        "startPrice",
+        "payload"
+      ]
+    },
+    "outcome": {
+      "required": [
+        "forecastId",
+        "maturityDate"
+      ],
+      "fields": [
+        "forecastId",
+        "maturityDate",
+        "realizedDate",
+        "realizedReturnPct",
+        "absoluteErrorPct",
+        "directionCorrect",
+        "payload"
+      ]
+    },
+    "corporateAction": {
+      "required": [
+        "atlasSecurityId",
+        "date",
+        "type"
+      ],
+      "fields": [
+        "atlasSecurityId",
+        "date",
+        "type",
+        "value",
+        "source",
+        "sourceSymbol",
+        "retrievedAt"
+      ]
+    }
+  }
+}

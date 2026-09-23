@@ -1,0 +1,13 @@
+import fs from 'node:fs/promises';
+const [,,kind,input,output]=process.argv;if(!kind||!input||!output)throw new Error('usage: node scripts/archive/atlas-normalize.mjs <kind> <input.ndjson> <output.ndjson>');
+const lines=(await fs.readFile(input,'utf8')).split(/\r?\n/).filter(Boolean);
+const maps={
+security:r=>({atlasSecurityId:r.id??r.security_id,isin:r.isin||null,figi:r.figi||null,ticker:r.ticker||null,mic:r.mic||null,name:r.name||null,country:r.country||null,currency:r.currency||null,companyKey:r.canonical_company_key||null}),
+price:r=>({atlasSecurityId:r.security_id,listingId:r.listing_id||null,date:r.price_date,open:r.open,high:r.high,low:r.low,close:r.close,volume:r.volume,provider:r.chosen_provider||null,qualityState:r.quality_state||null,identityGrade:r.identity_grade||null,decisionEligible:r.decision_eligible===true}),
+returnLabel:r=>({atlasSecurityId:r.security_id,asOfDate:r.as_of_date,horizonCode:r.horizon_code||null,horizonMonths:Number(r.horizon_months),startPriceDate:r.start_price_date||null,startPrice:r.start_price,targetDate:r.target_date||null,endPriceDate:r.end_price_date||null,endPrice:r.end_price,realisedReturnPct:r.realised_return_pct,realisedTotalReturnPct:r.realised_total_return_pct,labelStatus:r.label_status||null,labelSource:r.label_source||null,terminalProxy:Number(r.terminal_proxy||0)}),
+feature:r=>({atlasSecurityId:r.security_id,asOfDate:r.as_of_date,featureVersion:r.feature_version,feature:typeof r.feature_json==='string'?JSON.parse(r.feature_json):r.feature_json,coverage:r.coverage,maxInputDate:r.max_input_date||null,frozenAt:r.frozen_at||null,snapshotHash:r.snapshot_hash||null}),
+forecast:r=>({forecastId:r.forecast_id,candidateId:r.candidate_id||null,forecastAt:r.forecast_at,evidenceCutoff:r.evidence_cutoff,horizonMonths:Number(r.horizon_months),modelSpecHash:r.model_spec_hash||null,predictedReturnPct:r.predicted_return_pct,startPrice:r.start_price,payload:r.payload||null}),
+outcome:r=>({forecastId:r.forecast_id,maturityDate:r.maturity_date,realizedDate:r.realized_date||null,realizedReturnPct:r.realized_return_pct,absoluteErrorPct:r.absolute_error_pct,directionCorrect:r.direction_correct,payload:r.payload||null}),
+corporateAction:r=>({atlasSecurityId:r.security_id,date:r.action_date,type:r.action_type,value:r.value,source:r.source||null,sourceSymbol:r.source_symbol||null,retrievedAt:r.retrieved_at||null})
+};if(!maps[kind])throw new Error('unknown kind '+kind);
+const out=lines.map(x=>JSON.stringify(maps[kind](JSON.parse(x)))).join('\n')+'\n';await fs.mkdir(new URL('../../data/atlas-archive/normalized/',import.meta.url),{recursive:true});await fs.writeFile(output,out);console.log(JSON.stringify({kind,input,output,rows:lines.length}));
