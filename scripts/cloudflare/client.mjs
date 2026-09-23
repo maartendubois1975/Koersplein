@@ -34,6 +34,7 @@ export class FactoryApiClient {
   claim(id, limit) { return this.request(`/api/factory/jobs/${encodeURIComponent(id)}/claim`, { method: 'POST', body: JSON.stringify({ limit }) }); }
   finishItem(jobId, isin, body) { return this.request(`/api/factory/jobs/${encodeURIComponent(jobId)}/items/${isin}`, { method: 'PATCH', body: JSON.stringify(body) }); }
   history(isin) { return this.request(`/api/history/${isin}`); }
+  historyCoverage(isin) { return this.request(`/api/history/${isin}/coverage`); }
   historyPartitions(isin) { return this.request(`/api/factory/history/${isin}/partitions`); }
   historyPartition(isin, period) { return this.request(`/api/factory/history/${isin}/partition/${period}`); }
   putPartition(isin, period, payload) { return this.request(`/api/factory/history/${isin}/${period}`, { method: 'PUT', body: JSON.stringify(payload) }); }
