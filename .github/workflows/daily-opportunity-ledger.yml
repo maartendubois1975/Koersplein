@@ -26,7 +26,9 @@ jobs:
           node-version: '22'
       - name: Selecteer en volg kandidaten
         run: node scripts/research/daily-opportunity-ledger.mjs
-      - name: Bereken Top 5 verwachte stijgers per beurs voor 3 maanden\n        run: node scripts/research/top5-three-month.mjs\n      - name: Bewaar bevroren historie
+      - name: Bereken Top 5 verwachte stijgers per beurs voor 3 maanden
+        run: node scripts/research/top5-three-month.mjs
+      - name: Bewaar bevroren historie
         run: |
           git config user.name "koersplein-bot"
           git config user.email "actions@users.noreply.github.com"
