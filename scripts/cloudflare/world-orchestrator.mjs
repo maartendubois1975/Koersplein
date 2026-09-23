@@ -20,7 +20,7 @@ try{
   let complete=0,missing=0,invalid=0;
   for(const s of shares){
     const isin=s.isin;
-    try{const h=await client.history(isin);const bars=Array.isArray(h?.bars)?h.bars:Array.isArray(h?.history)?h.history:Array.isArray(h?.data)?h.data:[];const count=Number(h?.coverage?.recordCount||bars.length||0);const last=String(h?.coverage?.lastDate||bars.at(-1)?.date||bars.at(-1)?.day||'').slice(0,10);if(!count)missing++;else if(!last||last<latestExpectedTradingDate)invalid++;else complete++;}
+    try{const h=await client.historyCoverage(isin);const bars=Array.isArray(h?.bars)?h.bars:Array.isArray(h?.history)?h.history:Array.isArray(h?.data)?h.data:[];const count=Number(h?.coverage?.recordCount||bars.length||0);const last=String(h?.coverage?.lastDate||bars.at(-1)?.date||bars.at(-1)?.day||'').slice(0,10);if(!count)missing++;else if(!last||last<latestExpectedTradingDate)invalid++;else complete++;}
     catch{missing++;}
   }
   entry.catalogCount=shares.length;entry.historyComplete=complete;entry.missing=missing;entry.invalid=invalid;
