@@ -7,7 +7,7 @@ on:
         required: true
         default: XOSL
   workflow_run:
-    workflows: ['Oslo Source-First Fill']
+    workflows: ['M00 Universele source-first marktketen']
     types: [completed]
 permissions:
   contents: read
@@ -22,14 +22,16 @@ jobs:
     env:
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
-      MARKET_MIC: ${{ inputs.market_mic || 'XOSL' }}
+      MARKET_MIC: ${{ inputs.market_mic || '' }}
     steps:
       - uses: actions/checkout@v4
         with: { ref: main }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
-      - name: Gate COMPLETE markt
-        run: node scripts/research/complete-market-gate.mjs
+      - name: Selecteer laatst afgeronde markt en gate COMPLETE
+        run: |
+          if [ -z "$MARKET_MIC" ]; then MARKET_MIC=$(node -e "const p=require('./data/world-fill-plan.json');console.log([...p.markets].reverse().find(x=>x.state==='COMPLETE')?.mic||'')"); echo "MARKET_MIC=$MARKET_MIC" >> "$GITHUB_ENV"; fi
+          node scripts/research/complete-market-gate.mjs
       - name: Machine 1 blind 3 6 12 24 maanden
         run: node scripts/research/universal-market-machine1.mjs
       - name: Machine 2 opportunity map
