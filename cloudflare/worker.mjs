@@ -117,6 +117,11 @@ async function route(request, env) {
     if (!partition) return json({ error: 'Partitie ontbreekt' }, 404);
     return json({ bars: await gunzip(await env.HISTORY.get(partition.object_key)) });
   }
+  const coverageMatch = path.match(/^\/api\/history\/([A-Z]{2}[A-Z0-9]{10})\/coverage$/);
+  if (coverageMatch && request.method === 'GET') {
+    const item = await instrument(env, coverageMatch[1]);
+    return item ? json({ instrument:{isin:item.isin,symbol:item.ticker,mic:item.mic}, coverage:{firstDate:item.first_date,lastDate:item.last_date,recordCount:item.record_count}, provider:item.provider },200,cors(request,env)) : json({error:'Historie niet gevonden'},404,cors(request,env));
+  }
   const historyMatch = path.match(/^\/api\/history\/([A-Z]{2}[A-Z0-9]{10})$/);
   if (historyMatch && request.method === 'GET') {
     const document = await historyDocument(env, historyMatch[1]);
