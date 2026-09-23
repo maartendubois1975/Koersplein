@@ -5,6 +5,12 @@ on:
       - M00 Wereldvuller
     types: [completed]
   workflow_dispatch:
+  workflow_run:
+    workflows:
+      - M00 Wereldvuller
+      - Oslo Source-First Fill
+      - M00 Universele source-first marktketen
+    types: [completed]
 permissions:
   contents: read
 concurrency:
