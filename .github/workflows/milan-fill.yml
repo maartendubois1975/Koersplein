@@ -1,10 +1,6 @@
 name: LEGACY Milan Fill (manual only)
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/milan-fill.yml'
 
 concurrency:
   group: milan-fill-production
