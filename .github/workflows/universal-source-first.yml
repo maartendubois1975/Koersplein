@@ -11,7 +11,7 @@ permissions:
   contents: write
 concurrency:
   group: koersplein-europe-parallel-factory
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   select:
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
@@ -36,7 +36,7 @@ jobs:
       matrix:
         market_mic: ${{ fromJSON(needs.select.outputs.markets) }}
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    timeout-minutes: 90
     concurrency:
       group: koersplein-market-${{ matrix.market_mic }}
       cancel-in-progress: false
@@ -52,6 +52,8 @@ jobs:
       - name: Officiële catalogus
         run: node scripts/cloudflare/universal-source-catalog.mjs
       - name: Gratis bronpreflight
+        timeout-minutes: 5
+        continue-on-error: true
         run: node scripts/cloudflare/universal-source-audit.mjs
       - name: Historische backfill met foutisolatie
         env:
@@ -73,6 +75,7 @@ jobs:
           done
       - name: Eindvalidatie
         if: always()
+        timeout-minutes: 5
         run: node scripts/cloudflare/market-handoff-signal.mjs
       - uses: actions/upload-artifact@v4
         if: always()
