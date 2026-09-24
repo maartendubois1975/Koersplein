@@ -5,6 +5,7 @@ const root=process.argv[2]||'research/output/completion-artifacts';
 const planPath='data/world-fill-plan.json';
 const plan=JSON.parse(await fs.readFile(planPath,'utf8'));
 const proven=new Map();
+const registry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
 
 async function walk(dir){
   let out=[];
@@ -25,7 +26,9 @@ for(const file of await walk(root)){
     const v=s.validation||s.result||s;
     if(!mic||v.ready!==true) continue;
     if(!(Number(v.catalog)>0&&Number(v.checked)===Number(v.catalog)&&Number(v.complete)===Number(v.catalog)&&Number(v.missing)===0&&Number(v.invalid)===0)) continue;
-    proven.set(mic,{fingerprint:v.catalogFingerprint||s.catalogFingerprint||null,completedAt:s.emittedAt||new Date().toISOString()});
+    const fingerprint=v.catalogFingerprint||s.catalogFingerprint||null,source=registry.markets?.[mic];
+    if(!fingerprint||source?.status!=='APPROVED'||source.catalogFingerprint!==fingerprint) continue;
+    proven.set(mic,{fingerprint,completedAt:s.emittedAt||new Date().toISOString()});
   }catch{}
 }
 
