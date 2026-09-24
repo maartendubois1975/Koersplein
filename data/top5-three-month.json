@@ -1,6 +1,432 @@
 {
-  "generatedAt": "2026-09-22T17:29:44.222Z",
+  "generatedAt": "2026-09-24T05:08:30.529Z",
   "horizonMonths": 3,
   "method": "historische nearest-neighbour analogs + momentum/breakout consensus; voorspelling wordt dagelijks bevroren",
-  "markets": {}
+  "markets": {
+    "XAMS": {
+      "name": "Amsterdam",
+      "currency": "EUR",
+      "status": "READY",
+      "universeCount": 124,
+      "eligibleCount": 113,
+      "failedCount": 2,
+      "top5": [
+        {
+          "name": "APERAM",
+          "ticker": "APAM",
+          "isin": "LU0569974404",
+          "referenceDate": "2026-09-15",
+          "referenceClose": 45.97999954223633,
+          "expected3m": 0.1002,
+          "chancePositive": 0.825,
+          "chanceUp10": 0.5,
+          "analogCount": 40,
+          "signals": {
+            "m1": 0.3849,
+            "m3": 0.5085,
+            "m6": 0.7351,
+            "breakoutDistance": 0,
+            "volatility": 0.033
+          },
+          "rank": 1
+        },
+        {
+          "name": "AMG",
+          "ticker": "AMG",
+          "isin": "NL0000888691",
+          "referenceDate": "2026-09-14",
+          "referenceClose": 29.15999984741211,
+          "expected3m": 0.163,
+          "chancePositive": 0.6,
+          "chanceUp10": 0.55,
+          "analogCount": 40,
+          "signals": {
+            "m1": -0.1337,
+            "m3": -0.1827,
+            "m6": -0.1248,
+            "breakoutDistance": -0.3077,
+            "volatility": 0.0303
+          },
+          "rank": 2
+        },
+        {
+          "name": "AALBERTS NV",
+          "ticker": "AALB",
+          "isin": "NL0000852564",
+          "referenceDate": "2026-09-14",
+          "referenceClose": 40.2400016784668,
+          "expected3m": 0.1067,
+          "chancePositive": 0.8,
+          "chanceUp10": 0.525,
+          "analogCount": 40,
+          "signals": {
+            "m1": -0.0945,
+            "m3": 0.0167,
+            "m6": 0.2807,
+            "breakoutDistance": -0.1074,
+            "volatility": 0.0199
+          },
+          "rank": 3
+        },
+        {
+          "name": "REINET INVESTMENTS",
+          "ticker": "REINA",
+          "isin": "LU0383812293",
+          "referenceDate": "2026-09-14",
+          "referenceClose": 23,
+          "expected3m": 0.1186,
+          "chancePositive": 0.85,
+          "chanceUp10": 0.55,
+          "analogCount": 40,
+          "signals": {
+            "m1": -0.051,
+            "m3": -0.1137,
+            "m6": -0.2123,
+            "breakoutDistance": -0.2767,
+            "volatility": 0.0324
+          },
+          "rank": 4
+        },
+        {
+          "name": "EURONEXT",
+          "ticker": "ENX",
+          "isin": "NL0006294274",
+          "referenceDate": "2026-09-18",
+          "referenceClose": 156.39999389648438,
+          "expected3m": 0.0918,
+          "chancePositive": 0.725,
+          "chanceUp10": 0.425,
+          "analogCount": 40,
+          "signals": {
+            "m1": -0.028,
+            "m3": 0.0734,
+            "m6": 0.1551,
+            "breakoutDistance": -0.0538,
+            "volatility": 0.0139
+          },
+          "rank": 5
+        }
+      ]
+    },
+    "XBRU": {
+      "name": "Brussel",
+      "currency": "EUR",
+      "status": "READY",
+      "universeCount": 133,
+      "eligibleCount": 71,
+      "failedCount": 58,
+      "top5": [
+        {
+          "name": "APERAM",
+          "ticker": "APAM",
+          "isin": "LU0569974404",
+          "referenceDate": "2026-09-15",
+          "referenceClose": 45.97999954223633,
+          "expected3m": 0.1002,
+          "chancePositive": 0.825,
+          "chanceUp10": 0.5,
+          "analogCount": 40,
+          "signals": {
+            "m1": 0.3849,
+            "m3": 0.5085,
+            "m6": 0.7351,
+            "breakoutDistance": 0,
+            "volatility": 0.033
+          },
+          "rank": 1
+        },
+        {
+          "name": "EURONEXT",
+          "ticker": "ENX",
+          "isin": "NL0006294274",
+          "referenceDate": "2026-09-18",
+          "referenceClose": 156.39999389648438,
+          "expected3m": 0.0918,
+          "chancePositive": 0.725,
+          "chanceUp10": 0.425,
+          "analogCount": 40,
+          "signals": {
+            "m1": -0.028,
+            "m3": 0.0734,
+            "m6": 0.1551,
+            "breakoutDistance": -0.0538,
+            "volatility": 0.0139
+          },
+          "rank": 2
+        },
+        {
+          "name": "FAGRON",
+          "ticker": "FAGR",
+          "isin": "BE0003874915",
+          "referenceDate": "2026-09-16",
+          "referenceClose": 22.049999237060547,
+          "expected3m": 0,
+          "chancePositive": 0.125,
+          "chanceUp10": 0.025,
+          "analogCount": 40,
+          "signals": {
+            "m1": 2.4361,
+            "m3": 2.4361,
+            "m6": 2.4361,
+            "breakoutDistance": 0,
+            "volatility": 0.212
+          },
+          "rank": 3
+        },
+        {
+          "name": "ING GROEP N.V.",
+          "ticker": "INGA",
+          "isin": "NL0011821202",
+          "referenceDate": "2026-09-15",
+          "referenceClose": 7.980000019073486,
+          "expected3m": 0.1089,
+          "chancePositive": 0.65,
+          "chanceUp10": 0.525,
+          "analogCount": 40,
+          "signals": {
+            "m1": -0.6454,
+            "m3": -0.6367,
+            "m6": -0.5839,
+            "breakoutDistance": -0.6678,
+            "volatility": 0.0607
+          },
+          "rank": 4
+        },
+        {
+          "name": "BREDERODE",
+          "ticker": "BREB",
+          "isin": "LU1068091351",
+          "referenceDate": "2026-09-16",
+          "referenceClose": 105.5999984741211,
+          "expected3m": 0.0485,
+          "chancePositive": 0.775,
+          "chanceUp10": 0.225,
+          "analogCount": 40,
+          "signals": {
+            "m1": 0.0154,
+            "m3": 0.0312,
+            "m6": 0.0154,
+            "breakoutDistance": -0.0258,
+            "volatility": 0.0068
+          },
+          "rank": 5
+        }
+      ]
+    },
+    "XPAR": {
+      "name": "Parijs",
+      "currency": "EUR",
+      "status": "READY",
+      "universeCount": 770,
+      "eligibleCount": 388,
+      "failedCount": 289,
+      "top5": [
+        {
+          "name": "INFOCLIP",
+          "ticker": "MLIFC",
+          "isin": "FR0011158823",
+          "referenceDate": "2026-09-18",
+          "referenceClose": 22.139999389648438,
+          "expected3m": -0.095,
+          "chancePositive": 0.3,
+          "chanceUp10": 0.225,
+          "analogCount": 40,
+          "signals": {
+            "m1": 0,
+            "m3": 10.07,
+            "m6": 10.07,
+            "breakoutDistance": -0.0889,
+            "volatility": 0.8936
+          },
+          "rank": 1
+        },
+        {
+          "name": "FRANCE TOURISME",
+          "ticker": "MLFTI",
+          "isin": "FR0010823724",
+          "referenceDate": "2026-09-18",
+          "referenceClose": 0.2199999988079071,
+          "expected3m": 0.1869,
+          "chancePositive": 0.575,
+          "chanceUp10": 0.525,
+          "analogCount": 40,
+          "signals": {
+            "m1": 0.4667,
+            "m3": 1.5287,
+            "m6": 2.9286,
+            "breakoutDistance": -0.0517,
+            "volatility": 0.1068
+          },
+          "rank": 2
+        },
+        {
+          "name": "EMBENTION",
+          "ticker": "ALUAV",
+          "isin": "ES0105639001",
+          "referenceDate": "2026-09-16",
+          "referenceClose": 32.20000076293945,
+          "expected3m": 0.2847,
+          "chancePositive": 0.95,
+          "chanceUp10": 0.75,
+          "analogCount": 40,
+          "signals": {
+            "m1": -0.1297,
+            "m3": -0.2512,
+            "m6": -0.2333,
+            "breakoutDistance": -0.3686,
+            "volatility": 0.0455
+          },
+          "rank": 3
+        },
+        {
+          "name": "SPEED RABBIT PIZZA",
+          "ticker": "MLSRP",
+          "isin": "FR0000054371",
+          "referenceDate": "2026-09-16",
+          "referenceClose": 13.399999618530273,
+          "expected3m": 0.2596,
+          "chancePositive": 0.725,
+          "chanceUp10": 0.675,
+          "analogCount": 40,
+          "signals": {
+            "m1": -0.2717,
+            "m3": -0.2717,
+            "m6": -0.3909,
+            "breakoutDistance": -0.7254,
+            "volatility": 0.0591
+          },
+          "rank": 4
+        },
+        {
+          "name": "North Atlantic En.",
+          "ticker": "NAE",
+          "isin": "FR0000120669",
+          "referenceDate": "2026-09-18",
+          "referenceClose": 103.9000015258789,
+          "expected3m": 0.0941,
+          "chancePositive": 0.775,
+          "chanceUp10": 0.475,
+          "analogCount": 40,
+          "signals": {
+            "m1": 0.3644,
+            "m3": 1.2306,
+            "m6": 0.4811,
+            "breakoutDistance": -0.0555,
+            "volatility": 0.0339
+          },
+          "rank": 5
+        }
+      ]
+    },
+    "XMIL": {
+      "name": "Milaan",
+      "status": "NO_CATALOG_FILE",
+      "top5": []
+    },
+    "XOSL": {
+      "name": "Oslo",
+      "currency": "NOK",
+      "status": "READY",
+      "universeCount": 294,
+      "eligibleCount": 234,
+      "failedCount": 37,
+      "top5": [
+        {
+          "name": "HUNTER GROUP",
+          "ticker": "HUNT",
+          "isin": "NO0012953720",
+          "referenceDate": "2026-09-21",
+          "referenceClose": 20.75,
+          "expected3m": 0.4154,
+          "chancePositive": 0.7,
+          "chanceUp10": 0.7,
+          "analogCount": 40,
+          "signals": {
+            "m1": 0.9875,
+            "m3": 0.9249,
+            "m6": 2.7054,
+            "breakoutDistance": 0,
+            "volatility": 0.0516
+          },
+          "rank": 1
+        },
+        {
+          "name": "ZELLUNA",
+          "ticker": "ZLNA",
+          "isin": "NO0013524942",
+          "referenceDate": "2026-09-22",
+          "referenceClose": 20.5,
+          "expected3m": 0.3268,
+          "chancePositive": 0.9,
+          "chanceUp10": 0.8,
+          "analogCount": 40,
+          "signals": {
+            "m1": -0.0284,
+            "m3": 0.1264,
+            "m6": 0.0376,
+            "breakoutDistance": -0.3279,
+            "volatility": 0.0477
+          },
+          "rank": 2
+        },
+        {
+          "name": "OKEA",
+          "ticker": "OKEA",
+          "isin": "NO0010816895",
+          "referenceDate": "2026-09-22",
+          "referenceClose": 38.45000076293945,
+          "expected3m": 0.3223,
+          "chancePositive": 0.8,
+          "chanceUp10": 0.725,
+          "analogCount": 40,
+          "signals": {
+            "m1": 0.0026,
+            "m3": 0.2304,
+            "m6": 0.0092,
+            "breakoutDistance": -0.1161,
+            "volatility": 0.029
+          },
+          "rank": 3
+        },
+        {
+          "name": "EAM SOLAR",
+          "ticker": "EAM",
+          "isin": "NO0013601245",
+          "referenceDate": "2026-09-21",
+          "referenceClose": 0.6819999814033508,
+          "expected3m": 0.332,
+          "chancePositive": 0.7,
+          "chanceUp10": 0.675,
+          "analogCount": 40,
+          "signals": {
+            "m1": -0.105,
+            "m3": -0.1097,
+            "m6": -0.407,
+            "breakoutDistance": -0.8295,
+            "volatility": 0.1997
+          },
+          "rank": 4
+        },
+        {
+          "name": "SMARTOPTICS GROUP",
+          "ticker": "SMOP",
+          "isin": "NO0011012502",
+          "referenceDate": "2026-09-22",
+          "referenceClose": 52,
+          "expected3m": 0.2748,
+          "chancePositive": 0.675,
+          "chanceUp10": 0.625,
+          "analogCount": 40,
+          "signals": {
+            "m1": 0.1927,
+            "m3": 0.04,
+            "m6": 0.2714,
+            "breakoutDistance": -0.1875,
+            "volatility": 0.0365
+          },
+          "rank": 5
+        }
+      ]
+    }
+  }
 }
