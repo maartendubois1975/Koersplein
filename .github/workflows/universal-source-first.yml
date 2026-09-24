@@ -3,9 +3,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '17 */6 * * *'
-  workflow_run:
-    workflows: ['M00 Automatische beurs-handoff']
-    types: [completed]
   push:
     branches: [main]
     paths: ['.source-first-trigger']
@@ -16,7 +13,6 @@ concurrency:
   cancel-in-progress: false
 jobs:
   select:
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       markets: ${{ steps.pick.outputs.markets }}
@@ -58,8 +54,8 @@ jobs:
         run: node scripts/cloudflare/universal-source-audit.mjs
       - name: Historische backfill met foutisolatie
         env:
-          HISTORY_BATCH_SIZE: 5
-          CATALOG_BATCH_SIZE: 5
+          HISTORY_BATCH_SIZE: 10
+          CATALOG_BATCH_SIZE: 25
           ALLOW_PARTIAL_FAILURES: 1
         run: |
           set -euo pipefail
