@@ -67,8 +67,8 @@ jobs:
           for round in $(seq 1 500); do
             export SKIP_ISINS="$skip_isins"
             if [ "$seed" -eq 1 ]; then SEED_CATALOG=1 node scripts/cloudflare/universal-market-runner.mjs; seed=0; else SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs; fi
-            new_failed=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log((r.failed||[]).map(x=>x.isin).join(','))")
-            if [ -n "$new_failed" ]; then skip_isins=$(printf '%s,%s' "$skip_isins" "$new_failed" | sed 's/^,//'); fi
+            attempted=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log((r.attemptedIsins||[]).join(','))")
+            if [ -n "$attempted" ]; then skip_isins=$(printf '%s,%s' "$skip_isins" "$attempted" | sed 's/^,//'); fi
             remaining=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log(r.remainingHint??999999)")
             candidates=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log(r.candidates??0)")
             if [ "$remaining" -le 0 ] || [ "$candidates" -eq 0 ]; then break; fi
