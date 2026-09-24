@@ -27,17 +27,8 @@ for(const item of rawInstruments){
 if(duplicateIsin||duplicateMicTicker)console.log(JSON.stringify({catalogDedup:{raw:rawInstruments.length,usable:instruments.length,duplicateIsin,duplicateMicTicker}}));
 let unavailable=new Set();
 if(mic==='XPAR')try{const rr=JSON.parse(await fs.readFile('research/output/paris/repair-invalid-summary.json','utf8'));unavailable=new Set((rr.unavailableItems||[]).map(x=>x.isin))}catch{}
-// Register every MIC present in the official catalogue before inserting instruments.
 const marketMics=[...new Set(instruments.map(x=>x.mic).filter(Boolean))];
-const markets=marketMics.map(segmentMic=>({
-  mic:segmentMic,
-  code:segmentMic===m.mic?m.code:`${m.code}-${segmentMic.toLowerCase()}`,
-  name:segmentMic===m.mic?m.name:`${m.name} (${segmentMic})`,
-  exchangeGroup:'world',
-  countryCode:m.country,
-  currency:m.currency,
-  timezone:m.timezone
-}));
+const markets=marketMics.map(segmentMic=>({mic:segmentMic,code:segmentMic===m.mic?m.code:`${m.code}-${segmentMic.toLowerCase()}`,name:segmentMic===m.mic?m.name:`${m.name} (${segmentMic})`,exchangeGroup:'world',countryCode:m.country,currency:m.currency,timezone:m.timezone}));
 const seedCatalog=process.env.SEED_CATALOG!=='0';
 if(seedCatalog){
   await client.seedCatalog({markets,instruments:[]});
@@ -46,10 +37,11 @@ if(seedCatalog){
 }
 const hb=Math.max(1,Math.min(5,Number(process.env.HISTORY_BATCH_SIZE||5))),today=new Date().toISOString().slice(0,10);
 const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
-// A daily series is current when it reaches the last fully closed trading weekday.
-// Never require today's bar while the trading day is still open: that reselects the
-// same already-filled instruments on weekday runs (notably Monday before Milan closes).
-const latestExpectedTradingDate=(()=>{const d=new Date(`${today}T12:00:00Z`);do{d.setUTCDate(d.getUTCDate()-1)}while(d.getUTCDay()===0||d.getUTCDay()===6);return d.toISOString().slice(0,10)})();
+// Use the last fully closed trading weekday, with one extra closed-session grace day.
+// Provider/API propagation can lag a completed session; demanding T-1 at UTC midnight
+// previously turned hundreds of current Milan instruments stale at once and restarted
+// the same five instruments until the 330-minute job timeout.
+const latestExpectedTradingDate=(()=>{const d=new Date(`${today}T12:00:00Z`);let closed=0;while(closed<2){d.setUTCDate(d.getUTCDate()-1);if(d.getUTCDay()!==0&&d.getUTCDay()!==6)closed++;}return d.toISOString().slice(0,10)})();
 const runSkip=new Set(String(process.env.SKIP_ISINS||'').split(',').map(x=>x.trim()).filter(Boolean));
 const candidates=[];let alreadyCurrent=0,excluded=0,inspectionFailed=0,skippedRunFailures=0;
 for(const item of instruments){
@@ -60,7 +52,8 @@ for(const item of instruments){
 }
 let complete=0,failed=[];
 for(const item of candidates){try{const {provider,result}=await registry.fetchDaily(item,{startDate:'1990-01-01',endDate:today},'yahoo-chart');if(!result.bars.length)throw new Error('geen historie');for(const [period,bars] of partitionBars(result.bars))await client.putPartition(item.isin,period,{bars,provider:provider.id});await client.completeHistory(item.isin,{provider:provider.id});complete++;}catch(e){failed.push({isin:item.isin,symbol:item.symbol,mic:item.mic,error:e.message})}}
-const report={market:mic,catalog:instruments.length,catalogRaw:rawInstruments.length,duplicateIsin,duplicateMicTicker,batchRequested:hb,candidates:candidates.length,alreadyCurrent,excludedProviderUnavailable:excluded,skippedRunFailures,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-complete-skippedRunFailures),freshnessCutoff};
+const attemptedIsins=candidates.map(x=>x.isin);
+const report={market:mic,catalog:instruments.length,catalogRaw:rawInstruments.length,duplicateIsin,duplicateMicTicker,batchRequested:hb,candidates:candidates.length,attemptedIsins,alreadyCurrent,excludedProviderUnavailable:excluded,skippedRunFailures,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-attemptedIsins.length-skippedRunFailures),freshnessCutoff,latestExpectedTradingDate};
 console.log(JSON.stringify(report,null,2));
 await fs.mkdir('research/output',{recursive:true});await fs.writeFile('research/output/world-fill-batch.json',JSON.stringify({...report,generatedAt:new Date().toISOString()},null,2));
 if(failed.length===candidates.length&&candidates.length&&process.env.ALLOW_PARTIAL_FAILURES!=='1')process.exitCode=2;
