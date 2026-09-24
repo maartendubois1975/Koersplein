@@ -2,6 +2,10 @@
 
 Koersplein is een zelfstandig financieel webproject. De site ordent de beurswereld als `regio → beursgroep → markt → index → aandeel`. Europa / Euronext / Amsterdam is actief; andere regio's en Euronext-markten zijn als toekomstige, lege onderdelen zichtbaar. Er is geen technische koppeling met Atlas en geen Atlas-code, -data of -workflow opgenomen.
 
+## Technische regie
+
+Architectuur- en automatiseringswijzigingen volgen de vaste beslisregels in [`docs/REGIE.md`](docs/REGIE.md). Een gebruikersvoorstel is input, geen automatische bouwopdracht: eerst bewijs, oorzaak en risico beoordelen; bij onvoldoende technische meerwaarde is **niet wijzigen** de juiste uitkomst.
+
 ## Site
 
 De donkere, responsive homepage bevat:
