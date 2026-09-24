@@ -74,22 +74,6 @@ jobs:
         if: ${{ success() }}
         timeout-minutes: 30
         run: node scripts/cloudflare/market-handoff-signal.mjs
-      - name: Bewaar bewezen COMPLETE-status
-        if: ${{ success() }}
-        run: |
-          set -euo pipefail
-          git config user.name "koersplein-autopilot"
-          git config user.email "actions@users.noreply.github.com"
-          git add data/world-fill-plan.json
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "state: mark $MARKET_MIC COMPLETE after end validation"
-          for attempt in 1 2 3 4 5; do
-            git pull --rebase origin main && git push origin HEAD:main && exit 0
-            git rebase --abort 2>/dev/null || true
-            sleep $((attempt*3))
-          done
-          echo "Kon COMPLETE-status niet duurzaam opslaan" >&2
-          exit 1
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -100,9 +84,35 @@ jobs:
             research/output/
           retention-days: 30
 
-  continue-autopilot:
+  persist-completions:
     needs: [select, market]
-    if: ${{ needs.select.result == 'success' && needs.market.result == 'success' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
+    if: ${{ always() && needs.select.result == 'success' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: europe-market-*-${{ github.run_number }}
+          path: research/output/completion-artifacts
+      - name: Reduceer uitsluitend bewezen COMPLETE-resultaten
+        run: node scripts/cloudflare/reduce-europe-completions.mjs research/output/completion-artifacts
+      - name: Bewaar canonical status met één writer
+        run: |
+          set -euo pipefail
+          git config user.name "koersplein-autopilot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/world-fill-plan.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "state: persist proven Europe completions"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+  continue-autopilot:
+    needs: [select, market, persist-completions]
+    if: ${{ needs.select.result == 'success' && needs.market.result == 'success' && needs.persist-completions.result == 'success' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Start volgende autonome cyclus
