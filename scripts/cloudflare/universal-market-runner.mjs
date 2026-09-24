@@ -32,10 +32,10 @@ const markets=marketMics.map(segmentMic=>({mic:segmentMic,code:segmentMic===m.mi
 const seedCatalog=process.env.SEED_CATALOG!=='0';
 if(seedCatalog){
   await client.seedCatalog({markets,instruments:[]});
-  const cb=Math.max(1,Math.min(5,Number(process.env.CATALOG_BATCH_SIZE||5)));
+  const cb=Math.max(1,Math.min(25,Number(process.env.CATALOG_BATCH_SIZE||25)));
   for(let i=0;i<instruments.length;i+=cb)await client.seedCatalog({markets:[],instruments:instruments.slice(i,i+cb)});
 }
-const hb=Math.max(1,Math.min(5,Number(process.env.HISTORY_BATCH_SIZE||5))),today=new Date().toISOString().slice(0,10);
+const hb=Math.max(1,Math.min(10,Number(process.env.HISTORY_BATCH_SIZE||10))),today=new Date().toISOString().slice(0,10);
 const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
 // Use the last fully closed trading weekday, with one extra closed-session grace day.
 // Provider/API propagation can lag a completed session; demanding T-1 at UTC midnight
