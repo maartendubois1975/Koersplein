@@ -23,7 +23,8 @@ jobs:
       - id: pick
         name: Kies maximaal vier Europese beurzen
         run: |
-          MARKETS=$(node scripts/cloudflare/select-europe-parallel-markets.mjs | tail -1)
+          set -euo pipefail
+          MARKETS=$(node scripts/cloudflare/select-europe-parallel-markets.mjs)
           echo "markets=$MARKETS" >> "$GITHUB_OUTPUT"
           echo "Geselecteerd: $MARKETS"
   market:
