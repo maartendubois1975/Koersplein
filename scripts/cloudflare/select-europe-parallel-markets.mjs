@@ -3,8 +3,14 @@ const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const max=Math.max(1,Math.min(4,Number(plan.limits?.maxMarketsActive||4)));
 const adapterMics=new Set(['XMIL','XOSL','XAMS','XBRU','XPAR','XDUB','XLIS']);
 const blocked=plan.markets.filter(m=>m.state==='BLOCKED').map(m=>({mic:m.mic,reason:m.blockedReason||'UNSPECIFIED'}));
-const eligible=plan.markets.filter(m=>m.state==='WAITING'&&adapterMics.has(m.mic));
+const waiting=plan.markets.filter(m=>m.state==='WAITING');
+const eligible=waiting.filter(m=>adapterMics.has(m.mic));
+const unsupportedWaiting=waiting.filter(m=>!adapterMics.has(m.mic)).map(m=>m.mic);
 const selected=eligible.slice(0,max).map(m=>m.mic);
 await fs.mkdir('research/output',{recursive:true});
-await fs.writeFile('research/output/europe-parallel-selection.json',JSON.stringify({generatedAt:new Date().toISOString(),maxActive:max,selected,blocked,eligible:eligible.map(m=>m.mic),stateSource:'data/world-fill-plan.json'},null,2));
+await fs.writeFile('research/output/europe-parallel-selection.json',JSON.stringify({generatedAt:new Date().toISOString(),maxActive:max,selected,blocked,eligible:eligible.map(m=>m.mic),unsupportedWaiting,stateSource:'data/world-fill-plan.json'},null,2));
+if(!selected.length&&unsupportedWaiting.length){
+ console.error(`REGIE_BLOCK: ${unsupportedWaiting.length} WAITING markten hebben nog geen goedgekeurde catalogusadapter: ${unsupportedWaiting.join(', ')}`);
+ process.exitCode=2;
+}
 console.log(JSON.stringify(selected));
