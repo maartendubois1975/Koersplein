@@ -8,6 +8,7 @@ on:
     paths: ['.source-first-trigger']
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: koersplein-europe-parallel-factory
   cancel-in-progress: false
