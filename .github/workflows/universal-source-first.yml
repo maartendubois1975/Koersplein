@@ -99,12 +99,14 @@ jobs:
           path: research/output/completion-artifacts
       - name: Reduceer uitsluitend bewezen COMPLETE-resultaten
         run: node scripts/cloudflare/reduce-europe-completions.mjs research/output/completion-artifacts
+      - name: Bouw canonical health-status
+        run: node scripts/cloudflare/build-health-dashboard.mjs
       - name: Bewaar canonical status met één writer
         run: |
           set -euo pipefail
           git config user.name "koersplein-autopilot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/world-fill-plan.json
+          git add data/world-fill-plan.json data/europe-health.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "state: persist proven Europe completions"
           git pull --rebase origin main
