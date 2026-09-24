@@ -35,4 +35,10 @@ jobs:
           git add data/opportunity-ledger.json data/opportunity-latest.json data/opportunity-learning.json data/top5-three-month.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Dagelijkse Kansscanner $(date -u +%F)"
-          git push origin HEAD:main
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 10))
+          done
+          echo 'Kansscanner kon canonical data na 3 pogingen niet veilig publiceren.' >&2
+          exit 1
