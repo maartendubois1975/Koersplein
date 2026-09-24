@@ -61,7 +61,10 @@
       "currency": "EUR",
       "timezone": "Europe/Dublin",
       "providerSuffix": ".IR",
-      "state": "WAITING"
+      "state": "BLOCKED",
+      "blockedReason": "OFFICIAL_CATALOG_GATE",
+      "blockedAt": "2026-09-24T04:50:00Z",
+      "note": "Run 13: official catalog gate failed; excluded from automatic selection until the official Dublin adapter is repaired and revalidated."
     },
     {
       "mic": "XLIS",
@@ -71,7 +74,10 @@
       "currency": "EUR",
       "timezone": "Europe/Lisbon",
       "providerSuffix": ".LS",
-      "state": "WAITING"
+      "state": "BLOCKED",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-09-24T04:50:00Z",
+      "note": "Run 13: official catalog passed but free source preflight failed; excluded from automatic selection until source coverage is repaired and revalidated."
     },
     {
       "mic": "XLON",
