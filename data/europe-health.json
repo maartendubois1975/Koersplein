@@ -1,0 +1,697 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-24T10:43:45.077Z",
+  "canonicalState": "data/world-fill-plan.json",
+  "sourceRegistry": "data/market-source-registry.json",
+  "summary": {
+    "complete": 4,
+    "blocked": 3,
+    "ready": 0,
+    "pending": 24,
+    "total": 31
+  },
+  "markets": [
+    {
+      "mic": "XBRU",
+      "name": "Brussel",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
+      "catalog": {
+        "present": true,
+        "count": 133,
+        "fingerprint": null,
+        "retrievedAt": "2026-09-16T17:40:11.435Z",
+        "source": "https://live.euronext.com/en/product_directory/data/stocks-brussels/download?mics=XBRU%2CALXB%2CMLXB%2CTNLB%2CENXB"
+      },
+      "sources": {
+        "status": "APPROVED",
+        "tested": 1,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XAMS",
+      "name": "Amsterdam",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
+      "catalog": {
+        "present": true,
+        "count": 124,
+        "fingerprint": null,
+        "retrievedAt": "2026-09-14T05:11:43.140Z",
+        "source": "https://live.euronext.com/en/product_directory/data/stocks-amsterdam/download?mics=TNLA%2CXAMC%2CXAMS"
+      },
+      "sources": {
+        "status": "APPROVED",
+        "tested": 1,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XPAR",
+      "name": "Parijs",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
+      "catalog": {
+        "present": true,
+        "count": 770,
+        "fingerprint": null,
+        "retrievedAt": "2026-09-20T04:34:11.191Z",
+        "source": "https://live.euronext.com/en/product_directory/data/stocks-paris/download?mics=XPAR%2CALXP%2CXMLI%2CMLXP%2CTNLP%2CENXP"
+      },
+      "sources": {
+        "status": "APPROVED",
+        "tested": 4,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XMIL",
+      "name": "Milaan",
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "BLOCKED",
+        "tested": 2,
+        "fullCatalog": 444,
+        "coverageRatio": 0.9617117117117117,
+        "crossCheckRatio": 0
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XOSL",
+      "name": "Oslo",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
+      "catalog": {
+        "present": true,
+        "count": 294,
+        "fingerprint": null,
+        "retrievedAt": "2026-09-22T13:22:35.158Z",
+        "source": "https://live.euronext.com/en/product_directory/data/stocks-oslo/download?mics=XOSL%2CMERK%2CXOAS"
+      },
+      "sources": {
+        "status": "APPROVED",
+        "tested": 2,
+        "fullCatalog": 294,
+        "coverageRatio": 1,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XDUB",
+      "name": "Dublin",
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "OFFICIAL_CATALOG_GATE",
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XLIS",
+      "name": "Lissabon",
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XLON",
+      "name": "Londen",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XETR",
+      "name": "Frankfurt / Xetra",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XSWX",
+      "name": "Zürich",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XMAD",
+      "name": "Madrid",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XSTO",
+      "name": "Stockholm",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XCSE",
+      "name": "Kopenhagen",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XHEL",
+      "name": "Helsinki",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XICE",
+      "name": "Reykjavik",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XATH",
+      "name": "Athene",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XWAR",
+      "name": "Warschau",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XWBO",
+      "name": "Wenen",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XPRA",
+      "name": "Praag",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XBUD",
+      "name": "Boedapest",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XBSE",
+      "name": "Boekarest",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XBUL",
+      "name": "Sofia",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XZAG",
+      "name": "Zagreb",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XLJU",
+      "name": "Ljubljana",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XBRA",
+      "name": "Bratislava",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XLUX",
+      "name": "Luxemburg",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XMAL",
+      "name": "Malta",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XCYS",
+      "name": "Cyprus",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XTAL",
+      "name": "Tallinn",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XRIS",
+      "name": "Riga",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    },
+    {
+      "mic": "XLIT",
+      "name": "Vilnius",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
+      "catalog": {
+        "present": false,
+        "count": 0,
+        "fingerprint": null,
+        "retrievedAt": null,
+        "source": null
+      },
+      "sources": {
+        "status": "UNTESTED",
+        "tested": 0,
+        "fullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null
+      },
+      "completedAt": null
+    }
+  ]
+}
