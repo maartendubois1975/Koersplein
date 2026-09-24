@@ -11,7 +11,6 @@ permissions:
 concurrency:
   group: koersplein-europe-parallel-factory
   cancel-in-progress: false
-  queue: max
 jobs:
   select:
     runs-on: ubuntu-latest
@@ -39,7 +38,6 @@ jobs:
     concurrency:
       group: koersplein-market-${{ matrix.market_mic }}
       cancel-in-progress: false
-      queue: max
     env:
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
