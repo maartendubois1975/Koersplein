@@ -97,7 +97,7 @@
       },
       "catalogFingerprint": "bed3b581909fedaf3ef3a175c10ca2b08b96485c791c429edf00db97e899a301",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-09-24T10:43:34.770Z"
+      "lastAuditAt": "2026-09-24T14:15:29.879Z"
     },
     "XOSL": {
       "status": "APPROVED",
@@ -119,6 +119,22 @@
         "testedFullCatalog": 294,
         "coverageRatio": 1,
         "note": "Source-first volledige catalogusaudit vóór eerste backfill; minimaal 90% per Oslo-segment en 95% gecombineerd vereist."
+      }
+    },
+    "XLIS": {
+      "status": "BLOCKED",
+      "catalogFingerprint": "cf951f3219704345ae22bb2e5a5004c255b190a4795866a8ef5ce0244b3beaa8",
+      "catalogSource": "https://live.euronext.com/en/product_directory/data/stocks-lisbon/download?mics=XLIS%2CALXL%2CENXL",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "lastAuditAt": "2026-09-24T14:11:46.889Z",
+      "discovery": {
+        "testedDifficultSymbols": 20,
+        "testedFullCatalog": 48,
+        "coverageRatio": 0,
+        "crossCheckedSymbols": 0,
+        "crossCheckRatio": 0,
+        "sourceCountTested": 2,
+        "uncovered": 48
       }
     }
   }

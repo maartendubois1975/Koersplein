@@ -79,8 +79,9 @@
       "providerSuffix": ".LS",
       "state": "BLOCKED",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-09-24T04:50:00Z",
-      "note": "Run 13: official catalog passed but free source preflight failed; excluded from automatic selection until source coverage is repaired and revalidated."
+      "blockedAt": "2026-09-24T14:15:45.414Z",
+      "note": "Quarantined by canonical single writer after proven source preflight failure.",
+      "catalogFingerprint": "cf951f3219704345ae22bb2e5a5004c255b190a4795866a8ef5ce0244b3beaa8"
     },
     {
       "mic": "XLON",
