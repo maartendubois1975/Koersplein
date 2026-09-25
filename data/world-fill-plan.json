@@ -40,9 +40,20 @@
       "currency": "EUR",
       "timezone": "Europe/Rome",
       "providerSuffix": ".MI",
-      "state": "WAITING",
-      "note": "RETEST_WITH_FOURTH_HISTORY_ROUTE",
-      "catalogFingerprint": "0b230cc2edf398a7e682187076133b541ab94a767c0359c063317394dfd06051"
+      "state": "COMPLETE",
+      "catalogFingerprint": "0b230cc2edf398a7e682187076133b541ab94a767c0359c063317394dfd06051",
+      "completedAt": "2026-09-25T13:06:50.960Z",
+      "dataUnavailable": [
+        {
+          "isin": "IT0005440323",
+          "symbol": "AIM2",
+          "name": "4AIM SICAF COMP 2",
+          "lastDate": "2026-08-31",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        }
+      ]
     },
     {
       "mic": "XOSL",

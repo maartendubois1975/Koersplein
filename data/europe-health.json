@@ -3,10 +3,10 @@
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 4,
+    "complete": 5,
     "blocked": 2,
     "ready": 0,
-    "pending": 25,
+    "pending": 24,
     "total": 31
   },
   "markets": [
@@ -79,8 +79,8 @@
     {
       "mic": "XMIL",
       "name": "Milaan",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
       "reason": null,
       "catalog": {
         "present": false,
@@ -96,7 +96,7 @@
         "coverageRatio": 1,
         "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-09-25T13:06:50.960Z"
     },
     {
       "mic": "XOSL",
@@ -693,5 +693,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-09-25T08:44:44.606Z"
+  "generatedAt": "2026-09-25T13:07:01.009Z"
 }
