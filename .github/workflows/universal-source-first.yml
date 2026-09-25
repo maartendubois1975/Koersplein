@@ -129,7 +129,7 @@ jobs:
 
   continue-autopilot:
     needs: [select, market, persist-completions]
-    if: ${{ always() && needs.select.result == 'success' && needs.persist-completions.result == 'success' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
+    if: ${{ always() && needs.select.result == 'success' && needs.market.result == 'success' && needs.persist-completions.result == 'success' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Start volgende autonome cyclus uitsluitend vanaf actuele main
