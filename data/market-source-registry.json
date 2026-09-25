@@ -136,6 +136,40 @@
         "sourceCountTested": 2,
         "uncovered": 48
       }
+    },
+    "XLON": {
+      "status": "CANARY_REQUIRED",
+      "catalogSource": "London Stock Exchange official Prices and Markets / Issuers and Instruments catalogue",
+      "catalogEvidenceUrl": "https://www.londonstockexchange.com/live-markets/market-data-dashboard/price-explorer?categories=EQUITY&subcategories=1",
+      "officialCatalogEvidence": {
+        "observedResults": 5575,
+        "instrumentType": "EQUITY / Shares",
+        "micEvidence": "XLON is published on official LSE instrument pages",
+        "checkedAt": "2026-09-25T04:01:28.222Z",
+        "note": "Official LSE catalogue is proven, but no production adapter is approved until the official catalogue can be consumed deterministically with stable identifiers."
+      },
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "CANARY_CANDIDATE",
+          "note": "Test only after official LSE catalogue adapter preserves ticker/ISIN/MIC identity."
+        },
+        {
+          "provider": "lse-official",
+          "role": "VALIDATION",
+          "note": "Official LSE instrument pages provide MIC, ISIN, issue date and delayed market data; use for identity/canary validation, not synthetic history."
+        }
+      ],
+      "blockedReason": "OFFICIAL_CATALOG_ADAPTER_CANARY_REQUIRED",
+      "discovery": {
+        "testedDifficultSymbols": 0,
+        "testedFullCatalog": 0,
+        "coverageRatio": null,
+        "crossCheckRatio": null,
+        "sourceCountTested": 0,
+        "uncovered": null
+      },
+      "note": "Do not start full backfill. Build deterministic official-LSE catalogue ingestion, then canary small/young/difficult listings before full-catalog history audit."
     }
   }
 }
