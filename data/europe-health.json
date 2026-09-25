@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-24T17:20:58.640Z",
+  "generatedAt": "2026-09-25T04:00:35.058Z",
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
@@ -18,11 +18,11 @@
       "health": "COMPLETE",
       "reason": null,
       "catalog": {
-        "present": true,
-        "count": 133,
+        "present": false,
+        "count": 0,
         "fingerprint": null,
-        "retrievedAt": "2026-09-16T17:40:11.435Z",
-        "source": "https://live.euronext.com/en/product_directory/data/stocks-brussels/download?mics=XBRU%2CALXB%2CMLXB%2CTNLB%2CENXB"
+        "retrievedAt": null,
+        "source": "Euronext"
       },
       "sources": {
         "status": "APPROVED",
@@ -40,11 +40,11 @@
       "health": "COMPLETE",
       "reason": null,
       "catalog": {
-        "present": true,
-        "count": 124,
+        "present": false,
+        "count": 0,
         "fingerprint": null,
-        "retrievedAt": "2026-09-14T05:11:43.140Z",
-        "source": "https://live.euronext.com/en/product_directory/data/stocks-amsterdam/download?mics=TNLA%2CXAMC%2CXAMS"
+        "retrievedAt": null,
+        "source": "Euronext"
       },
       "sources": {
         "status": "APPROVED",
@@ -62,11 +62,11 @@
       "health": "COMPLETE",
       "reason": null,
       "catalog": {
-        "present": true,
-        "count": 770,
+        "present": false,
+        "count": 0,
         "fingerprint": null,
-        "retrievedAt": "2026-09-20T04:34:11.191Z",
-        "source": "https://live.euronext.com/en/product_directory/data/stocks-paris/download?mics=XPAR%2CALXP%2CXMLI%2CMLXP%2CTNLP%2CENXP"
+        "retrievedAt": null,
+        "source": "Euronext official product directory"
       },
       "sources": {
         "status": "APPROVED",
@@ -85,10 +85,10 @@
       "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 444,
+        "fingerprint": "bed3b581909fedaf3ef3a175c10ca2b08b96485c791c429edf00db97e899a301",
         "retrievedAt": null,
-        "source": null
+        "source": "https://live.euronext.com/en/product_directory/data/stocks-milan/download?mics=XMIL%2CMTAA%2CEXGM"
       },
       "sources": {
         "status": "BLOCKED",
@@ -106,11 +106,11 @@
       "health": "COMPLETE",
       "reason": null,
       "catalog": {
-        "present": true,
+        "present": false,
         "count": 294,
         "fingerprint": null,
-        "retrievedAt": "2026-09-22T13:22:35.158Z",
-        "source": "https://live.euronext.com/en/product_directory/data/stocks-oslo/download?mics=XOSL%2CMERK%2CXOAS"
+        "retrievedAt": null,
+        "source": "Euronext Live official Oslo equity directory (XOSL + MERK + XOAS)"
       },
       "sources": {
         "status": "APPROVED",
@@ -151,10 +151,10 @@
       "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 48,
+        "fingerprint": "cf951f3219704345ae22bb2e5a5004c255b190a4795866a8ef5ce0244b3beaa8",
         "retrievedAt": null,
-        "source": null
+        "source": "https://live.euronext.com/en/product_directory/data/stocks-lisbon/download?mics=XLIS%2CALXL%2CENXL"
       },
       "sources": {
         "status": "BLOCKED",
