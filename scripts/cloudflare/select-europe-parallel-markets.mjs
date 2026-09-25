@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const max=Math.max(1,Math.min(4,Number(plan.limits?.maxMarketsActive||4)));
-const adapterMics=new Set(['XMIL','XOSL','XAMS','XBRU','XPAR','XDUB','XLIS']);
+const adapterMics=new Set(['XMIL','XOSL','XAMS','XBRU','XPAR','XDUB','XLIS','XETR']);
 // Markets that have a proven external access gate are quarantined in the source registry even if world-fill-plan still says WAITING.
 const registry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
 const externallyBlocked=new Set(Object.entries(registry.markets||{}).filter(([,r])=>r?.status==='BLOCKED').map(([mic])=>mic));
