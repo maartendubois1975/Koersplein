@@ -100,6 +100,8 @@ jobs:
           retention-days: 30
 
   persist-completions:
+    outputs:
+      changed: ${{ steps.persist.outputs.changed }}
     needs: [select, market]
     if: ${{ always() && needs.select.result == 'success' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
     runs-on: ubuntu-latest
@@ -116,20 +118,22 @@ jobs:
         run: node scripts/cloudflare/reduce-europe-completions.mjs research/output/completion-artifacts
       - name: Bouw canonical health-status
         run: node scripts/cloudflare/build-health-dashboard.mjs
-      - name: Bewaar canonical status met één writer
+      - id: persist
+        name: Bewaar canonical status met één writer
         run: |
           set -euo pipefail
           git config user.name "koersplein-autopilot"
           git config user.email "actions@users.noreply.github.com"
           git add data/world-fill-plan.json data/market-source-registry.json data/europe-health.json
-          if git diff --cached --quiet; then exit 0; fi
+          if git diff --cached --quiet; then echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
           git commit -m "state: persist proven Europe market evidence"
           git pull --rebase origin main
           git push origin HEAD:main
 
   continue-autopilot:
     needs: [select, market, persist-completions]
-    if: ${{ always() && needs.select.result == 'success' && needs.market.result == 'success' && needs.persist-completions.result == 'success' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
+    if: ${{ always() && needs.select.result == 'success' && needs.market.result == 'success' && needs.persist-completions.result == 'success' && needs.persist-completions.outputs.changed == 'true' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Start volgende autonome cyclus uitsluitend vanaf actuele main
