@@ -18,6 +18,10 @@ for(const m of plan.markets||[]){
   markets.push({mic:m.mic,name:m.name,state:m.state,health,reason,catalog:{present:!!cat,count:cat?.shares?.length||r.discovery?.testedFullCatalog||0,fingerprint,retrievedAt:cat?.retrievedAt||null,source:cat?.source||r.catalogSource||null},sources:{status:r.status||'UNTESTED',tested:r.discovery?.sourceCountTested||r.historySources?.length||0,fullCatalog:r.discovery?.testedFullCatalog||0,coverageRatio:r.discovery?.coverageRatio??null,crossCheckRatio:r.discovery?.crossCheckRatio??null},completedAt:m.completedAt||null});
 }
 const summary={complete:markets.filter(x=>x.health==='COMPLETE').length,blocked:markets.filter(x=>x.health==='BLOCKED').length,ready:markets.filter(x=>x.health==='READY').length,pending:markets.filter(x=>!['COMPLETE','BLOCKED','READY'].includes(x.health)).length,total:markets.length};
-const out={version:1,generatedAt,canonicalState:'data/world-fill-plan.json',sourceRegistry:'data/market-source-registry.json',summary,markets};
+const previous=await read('data/europe-health.json');
+const stable={version:1,canonicalState:'data/world-fill-plan.json',sourceRegistry:'data/market-source-registry.json',summary,markets};
+const previousStable=previous?{version:previous.version,canonicalState:previous.canonicalState,sourceRegistry:previous.sourceRegistry,summary:previous.summary,markets:previous.markets}:null;
+const unchanged=previousStable&&JSON.stringify(previousStable)===JSON.stringify(stable);
+const out={...stable,generatedAt:unchanged?previous.generatedAt:generatedAt};
 await fs.writeFile('data/europe-health.json',JSON.stringify(out,null,2)+'\n');
 console.log(JSON.stringify(summary));
