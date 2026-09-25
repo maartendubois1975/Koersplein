@@ -2,9 +2,12 @@ import fs from 'node:fs/promises';
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const max=Math.max(1,Math.min(4,Number(plan.limits?.maxMarketsActive||4)));
 const adapterMics=new Set(['XMIL','XOSL','XAMS','XBRU','XPAR','XDUB','XLIS']);
+// Markets that have a proven external access gate are quarantined in the source registry even if world-fill-plan still says WAITING.
+const registry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
+const externallyBlocked=new Set(Object.entries(registry.markets||{}).filter(([,r])=>r?.status==='BLOCKED').map(([mic])=>mic));
 const blocked=plan.markets.filter(m=>m.state==='BLOCKED').map(m=>({mic:m.mic,reason:m.blockedReason||'UNSPECIFIED'}));
 const waiting=plan.markets.filter(m=>m.state==='WAITING');
-const eligibleWaiting=waiting.filter(m=>adapterMics.has(m.mic));
+const eligibleWaiting=waiting.filter(m=>adapterMics.has(m.mic)&&!externallyBlocked.has(m.mic));
 // BLOCKED is a real quarantine. Repeated proof runs with an unchanged failure
 // fingerprint waste capacity and can never heal a missing source. A quarantined
 // market is re-enabled only by an explicit structural repair that first changes
