@@ -12,9 +12,18 @@ async function walk(dir,name){let out=[];try{for(const e of await fs.readdir(dir
 // Source discovery happens inside isolated market jobs. Reduce that evidence into the
 // canonical registry here, so the single writer—not parallel jobs—owns persistent state.
 for(const file of await walk(root,'market-source-registry.json')){
-  try{const r=JSON.parse(await fs.readFile(file,'utf8'));for(const [mic,s] of Object.entries(r.markets||{})){if(!s?.catalogFingerprint)continue;const old=artifactSources.get(mic);if(!old||String(s.lastAuditAt||'')>=String(old.lastAuditAt||''))artifactSources.set(mic,s)}}catch{}
+  try{const r=JSON.parse(await fs.readFile(file,'utf8'));for(const [mic,s] of Object.entries(r.markets||{})){
+    // Approved source evidence must always be tied to the exact official-catalog fingerprint.
+    // A proven external/catalog-access quarantine may legitimately exist before a downloadable
+    // catalog (and therefore before a fingerprint) exists; preserve that evidence as well.
+    if(!s?.catalogFingerprint && s?.status!=='BLOCKED')continue;
+    const old=artifactSources.get(mic);if(!old||String(s.lastAuditAt||'')>=String(old.lastAuditAt||''))artifactSources.set(mic,s)
+  }}catch{}
 }
-for(const [mic,s] of artifactSources){registry.markets[mic]=s;if(s.status==='BLOCKED')blocked.set(mic,{reason:s.blockedReason||'SOURCE_PREFLIGHT_GATE',fingerprint:s.catalogFingerprint});}
+for(const [mic,s] of artifactSources){
+  registry.markets[mic]=s;
+  if(s.status==='BLOCKED')blocked.set(mic,{reason:s.blockedReason||'SOURCE_PREFLIGHT_GATE',fingerprint:s.catalogFingerprint||null});
+}
 
 for(const file of await walk(root,'market-handoff-signal.json')){
   try{
