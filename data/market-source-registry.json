@@ -61,44 +61,35 @@
       }
     },
     "XMIL": {
-      "status": "RETEST",
+      "status": "APPROVED",
+      "catalogFingerprint": "0b230cc2edf398a7e682187076133b541ab94a767c0359c063317394dfd06051",
       "catalogSource": "https://live.euronext.com/en/product_directory/data/stocks-milan/download?mics=XMIL%2CMTAA%2CEXGM",
       "historySources": [
         {
+          "provider": "yahoo-isin-resolver",
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
+        },
+        {
           "provider": "yahoo-chart",
           "role": "PRIMARY",
-          "note": "Gratis dagelijkse historie via .MI; identiteit wordt tegen Milan/Borsa Italia gecontroleerd"
+          "note": "Full-catalog preflight: 400/401 instruments."
         },
         {
           "provider": "euronext-live",
-          "role": "FALLBACK",
-          "note": "Officiële bron voor referentie, listingdatum en controle; historische beschikbaarheid per instrument kan verschillen"
-        },
-        {
-          "provider": "stooq",
-          "role": "VALIDATION_CANDIDATE",
-          "note": "Gratis publieke controlebron voor Italiaanse historie waar beschikbaar"
-        },
-        {
-          "provider": "marketscreener-public",
-          "role": "VALIDATION_CANDIDATE",
-          "note": "Gratis publieke validatie voor kleine en jonge noteringen"
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/401; 0 additional instruments beyond primary."
         }
       ],
       "discovery": {
         "testedDifficultSymbols": 20,
-        "note": "Milaan source-first plan: main market + Growth, jonge IPOs en small caps; listingdatum bepaalt begin van verwachte historie; geen synthetische koersen.",
         "testedFullCatalog": 401,
-        "coverageRatio": 0.9975062344139651,
+        "coverageRatio": 1,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
-        "sourceCountTested": 3,
-        "uncovered": 1
-      },
-      "catalogFingerprint": "0b230cc2edf398a7e682187076133b541ab94a767c0359c063317394dfd06051",
-      "blockedReason": null,
-      "lastAuditAt": "2026-09-25T05:00:25.306Z",
-      "note": "Retest with StockAnalysis BIT fallback for uncovered official-catalog instruments."
+        "sourceCountTested": 4,
+        "note": "Official catalog plus two independently queried history routes are tested on the full catalog before backfill. Approval requires 100% combined coverage because the canonical end gate permits zero missing instruments."
+      }
     },
     "XOSL": {
       "status": "APPROVED",
