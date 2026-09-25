@@ -12,7 +12,8 @@ const MARKET_RULES = {
   EXGM: { suffix: '.MI', exchanges: ['mil', 'milan', 'italy', 'borsa italiana', 'bts', 'yhd'] },
   XOSL: { suffix: '.OL', exchanges: ['osl', 'oslo', 'oslo bors', 'oslo børs'] },
   XOAS: { suffix: '.OL', exchanges: ['osl', 'oslo', 'oslo bors', 'oslo børs'] },
-  MERK: { suffix: '.OL', exchanges: ['osl', 'oslo', 'oslo bors', 'oslo børs'] }
+  MERK: { suffix: '.OL', exchanges: ['osl', 'oslo', 'oslo bors', 'oslo børs'] },
+  XETR: { suffix: '.DE', exchanges: ['ger', 'xetra', 'frankfurt', 'deutsche boerse', 'deutsche börse'] }
 };
 
 const isoDate = (unixSeconds) => new Date(unixSeconds * 1000).toISOString().slice(0, 10);
