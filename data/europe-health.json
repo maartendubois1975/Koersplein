@@ -4,9 +4,9 @@
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
     "complete": 5,
-    "blocked": 2,
+    "blocked": 3,
     "ready": 0,
-    "pending": 24,
+    "pending": 23,
     "total": 31
   },
   "markets": [
@@ -167,9 +167,9 @@
     {
       "mic": "XLON",
       "name": "Londen",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
-      "reason": null,
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "OFFICIAL_CATALOG_ACCESS_GATE",
       "catalog": {
         "present": false,
         "count": 0,
@@ -693,5 +693,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-09-25T13:45:33.680Z"
+  "generatedAt": "2026-09-25T13:48:42.356Z"
 }

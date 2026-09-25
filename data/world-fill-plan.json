@@ -100,7 +100,11 @@
       "currency": "GBP",
       "timezone": "Europe/London",
       "providerSuffix": ".L",
-      "state": "WAITING"
+      "state": "BLOCKED",
+      "blockedReason": "OFFICIAL_CATALOG_ACCESS_GATE",
+      "blockedAt": "2026-09-25T13:48:42.302Z",
+      "catalogFingerprint": null,
+      "note": "Quarantined by canonical single writer after proven source preflight failure."
     },
     {
       "mic": "XETR",
