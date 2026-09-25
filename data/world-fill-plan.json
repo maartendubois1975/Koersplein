@@ -328,7 +328,11 @@
     "catalogRequired": true,
     "historyRequired": true,
     "validationRequired": true,
-    "maxFailedInstruments": 0
+    "maxFailedInstruments": 0,
+    "sourceCoverageRequired": 1,
+    "sourceDiscoveryBeforeBackfill": true,
+    "perInstrumentRouteRequired": true,
+    "continueDiscoveryUntilCovered": true
   },
   "limits": {
     "catalogBatchSize": 25,
@@ -336,5 +340,20 @@
     "maxMarketsActive": 4,
     "maxRetriesPerInstrument": 3
   },
-  "region": "EUROPE"
+  "region": "EUROPE",
+  "workflowPolicy": {
+    "scope": "GLOBAL_DEFAULT",
+    "sequence": [
+      "OFFICIAL_CATALOG",
+      "SOURCE_DISCOVERY",
+      "CANARY_VALIDATION",
+      "FULL_CATALOG_SOURCE_COVERAGE",
+      "ROUTE_MAP",
+      "HISTORY_BACKFILL",
+      "END_VALIDATION"
+    ],
+    "backfillGate": "Every official-catalog instrument must have >=1 proven history route before any backfill starts.",
+    "discovery": "Continue testing additional legitimate sources while uncovered instruments remain; never treat a fixed provider count as sufficient.",
+    "fallback": "Persist the proven provider route(s) per instrument so backfill can fail over without rediscovery."
+  }
 }
