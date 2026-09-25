@@ -22,10 +22,19 @@ let current=requested?plan.markets.find(x=>x.mic===requested):null;
 if(!current){const completed=[...plan.markets].reverse().find(x=>x.state==='COMPLETE');current=completed||plan.markets[0];}
 if(!current)throw new Error('Geen huidige markt');
 const result=await inspect(current);
+// DATA_UNAVAILABLE is only allowed when this same run actually retried the stale instrument
+// successfully but the provider still returned history older than the end gate. This proves
+// a local data-availability limitation instead of masking an untried or failed fetch.
+let batch={};try{batch=JSON.parse(await fs.readFile('research/output/world-fill-batch.json','utf8'));}catch{}
+const attempted=new Set(batch.market===current.mic?(batch.attemptedIsins||[]):[]),failed=new Set(batch.market===current.mic?(batch.failed||[]).map(x=>x.isin):[]);
+const dataUnavailable=result.invalidItems.filter(x=>x.recordCount>0&&attempted.has(x.isin)&&!failed.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY'}));
+result.dataUnavailable=dataUnavailable;
+result.available=result.complete;
+result.ready=result.catalog>0&&result.checked===result.catalog&&result.missing===0&&result.complete+dataUnavailable.length===result.catalog;
 let next=null;
 if(result.ready){
  const planCurrent=plan.markets.find(x=>x.mic===current.mic);
- if(planCurrent){planCurrent.state='COMPLETE';planCurrent.completedAt=new Date().toISOString();planCurrent.catalogFingerprint=result.catalogFingerprint;delete planCurrent.note;}
+ if(planCurrent){planCurrent.state='COMPLETE';planCurrent.completedAt=new Date().toISOString();planCurrent.catalogFingerprint=result.catalogFingerprint;planCurrent.dataUnavailable=dataUnavailable;delete planCurrent.note;}
  await fs.writeFile('data/world-fill-plan.json',JSON.stringify(plan,null,2)+'\n');
  const idx=plan.markets.findIndex(x=>x.mic===current.mic);next=plan.markets.slice(idx+1).find(x=>x.state==='WAITING')||null;
 }
