@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-24T21:44:08.129Z",
+  "generatedAt": "2026-09-25T21:54:20.988Z",
   "horizonMonths": 3,
   "method": "historische nearest-neighbour analogs + momentum/breakout consensus; voorspelling wordt dagelijks bevroren",
   "markets": {
@@ -8,8 +8,8 @@
       "currency": "EUR",
       "status": "READY",
       "universeCount": 124,
-      "eligibleCount": 81,
-      "failedCount": 34,
+      "eligibleCount": 115,
+      "failedCount": 0,
       "top5": [
         {
           "name": "APERAM",
@@ -113,8 +113,8 @@
       "currency": "EUR",
       "status": "READY",
       "universeCount": 133,
-      "eligibleCount": 70,
-      "failedCount": 59,
+      "eligibleCount": 124,
+      "failedCount": 5,
       "top5": [
         {
           "name": "APERAM",
@@ -134,6 +134,44 @@
             "volatility": 0.033
           },
           "rank": 1
+        },
+        {
+          "name": "LOTUS BAKERIES",
+          "ticker": "LOTB",
+          "isin": "BE0003604155",
+          "referenceDate": "2026-09-16",
+          "referenceClose": 12140,
+          "expected3m": 0.0921,
+          "chancePositive": 0.85,
+          "chanceUp10": 0.475,
+          "analogCount": 40,
+          "signals": {
+            "m1": -0.0194,
+            "m3": 0.0782,
+            "m6": 0.1925,
+            "breakoutDistance": -0.0733,
+            "volatility": 0.0159
+          },
+          "rank": 2
+        },
+        {
+          "name": "VIOHALCO",
+          "ticker": "VIO",
+          "isin": "BE0974271034",
+          "referenceDate": "2026-09-16",
+          "referenceClose": 15.4399995803833,
+          "expected3m": 0.1125,
+          "chancePositive": 0.75,
+          "chanceUp10": 0.525,
+          "analogCount": 40,
+          "signals": {
+            "m1": -0.1345,
+            "m3": -0.2178,
+            "m6": 0.175,
+            "breakoutDistance": -0.3198,
+            "volatility": 0.0337
+          },
+          "rank": 3
         },
         {
           "name": "UMICORE",
@@ -152,7 +190,7 @@
             "breakoutDistance": -0.1698,
             "volatility": 0.0321
           },
-          "rank": 2
+          "rank": 4
         },
         {
           "name": "EURONEXT",
@@ -171,44 +209,6 @@
             "breakoutDistance": -0.0538,
             "volatility": 0.0139
           },
-          "rank": 3
-        },
-        {
-          "name": "FAGRON",
-          "ticker": "FAGR",
-          "isin": "BE0003874915",
-          "referenceDate": "2026-09-16",
-          "referenceClose": 22.049999237060547,
-          "expected3m": 0,
-          "chancePositive": 0.125,
-          "chanceUp10": 0.025,
-          "analogCount": 40,
-          "signals": {
-            "m1": 2.4361,
-            "m3": 2.4361,
-            "m6": 2.4361,
-            "breakoutDistance": 0,
-            "volatility": 0.212
-          },
-          "rank": 4
-        },
-        {
-          "name": "SIPEF",
-          "ticker": "SIP",
-          "isin": "BE0003898187",
-          "referenceDate": "2026-09-16",
-          "referenceClose": 108.80000305175781,
-          "expected3m": 0.0622,
-          "chancePositive": 0.675,
-          "chanceUp10": 0.4,
-          "analogCount": 40,
-          "signals": {
-            "m1": 0.0837,
-            "m3": 0.1762,
-            "m6": 0.1699,
-            "breakoutDistance": 0,
-            "volatility": 0.0143
-          },
           "rank": 5
         }
       ]
@@ -218,9 +218,28 @@
       "currency": "EUR",
       "status": "READY",
       "universeCount": 770,
-      "eligibleCount": 217,
-      "failedCount": 460,
+      "eligibleCount": 657,
+      "failedCount": 20,
       "top5": [
+        {
+          "name": "INFOCLIP",
+          "ticker": "MLIFC",
+          "isin": "FR0011158823",
+          "referenceDate": "2026-09-18",
+          "referenceClose": 22.139999389648438,
+          "expected3m": -0.095,
+          "chancePositive": 0.3,
+          "chanceUp10": 0.225,
+          "analogCount": 40,
+          "signals": {
+            "m1": 0,
+            "m3": 10.07,
+            "m6": 10.07,
+            "breakoutDistance": -0.0889,
+            "volatility": 0.8936
+          },
+          "rank": 1
+        },
         {
           "name": "EMBENTION",
           "ticker": "ALUAV",
@@ -238,81 +257,62 @@
             "breakoutDistance": -0.3686,
             "volatility": 0.0455
           },
-          "rank": 1
-        },
-        {
-          "name": "APERAM",
-          "ticker": "APAM",
-          "isin": "LU0569974404",
-          "referenceDate": "2026-09-15",
-          "referenceClose": 45.97999954223633,
-          "expected3m": 0.1002,
-          "chancePositive": 0.825,
-          "chanceUp10": 0.5,
-          "analogCount": 40,
-          "signals": {
-            "m1": 0.3849,
-            "m3": 0.5085,
-            "m6": 0.7351,
-            "breakoutDistance": 0,
-            "volatility": 0.033
-          },
           "rank": 2
         },
         {
-          "name": "TECHNIP ENERGIES",
-          "ticker": "TE",
-          "isin": "NL0014559478",
-          "referenceDate": "2026-09-18",
-          "referenceClose": 29.200000762939453,
-          "expected3m": 0.135,
-          "chancePositive": 0.875,
-          "chanceUp10": 0.625,
+          "name": "SPEED RABBIT PIZZA",
+          "ticker": "MLSRP",
+          "isin": "FR0000054371",
+          "referenceDate": "2026-09-16",
+          "referenceClose": 13.399999618530273,
+          "expected3m": 0.2596,
+          "chancePositive": 0.725,
+          "chanceUp10": 0.675,
           "analogCount": 40,
           "signals": {
-            "m1": -0.0299,
-            "m3": -0.1681,
-            "m6": -0.0881,
-            "breakoutDistance": -0.2895,
-            "volatility": 0.0231
+            "m1": -0.2717,
+            "m3": -0.2717,
+            "m6": -0.3909,
+            "breakoutDistance": -0.7254,
+            "volatility": 0.0591
           },
           "rank": 3
         },
         {
-          "name": "EXOSENS",
-          "ticker": "EXENS",
-          "isin": "FR001400Q9V2",
+          "name": "North Atlantic En.",
+          "ticker": "NAE",
+          "isin": "FR0000120669",
           "referenceDate": "2026-09-18",
-          "referenceClose": 61.04999923706055,
-          "expected3m": 0.1239,
+          "referenceClose": 103.9000015258789,
+          "expected3m": 0.0941,
           "chancePositive": 0.775,
-          "chanceUp10": 0.575,
+          "chanceUp10": 0.475,
           "analogCount": 40,
           "signals": {
-            "m1": -0.0185,
-            "m3": 0.0535,
-            "m6": -0.0325,
-            "breakoutDistance": -0.1626,
-            "volatility": 0.0273
+            "m1": 0.3644,
+            "m3": 1.2306,
+            "m6": 0.4811,
+            "breakoutDistance": -0.0555,
+            "volatility": 0.0339
           },
           "rank": 4
         },
         {
-          "name": "ENTECH",
-          "ticker": "ALESE",
-          "isin": "FR0014004362",
+          "name": "FINANCIERE MARJOS",
+          "ticker": "FINM",
+          "isin": "FR0000060824",
           "referenceDate": "2026-09-18",
-          "referenceClose": 10.0600004196167,
-          "expected3m": 0.1251,
-          "chancePositive": 0.775,
-          "chanceUp10": 0.525,
+          "referenceClose": 1.3200000524520874,
+          "expected3m": 0.1604,
+          "chancePositive": 0.6,
+          "chanceUp10": 0.575,
           "analogCount": 40,
           "signals": {
-            "m1": 0.004,
-            "m3": -0.0563,
-            "m6": 0.0852,
-            "breakoutDistance": -0.1546,
-            "volatility": 0.0235
+            "m1": -0.1484,
+            "m3": -0.2826,
+            "m6": 1.2373,
+            "breakoutDistance": -0.3125,
+            "volatility": 0.0608
           },
           "rank": 5
         }
@@ -328,9 +328,28 @@
       "currency": "NOK",
       "status": "READY",
       "universeCount": 294,
-      "eligibleCount": 200,
-      "failedCount": 71,
+      "eligibleCount": 271,
+      "failedCount": 0,
       "top5": [
+        {
+          "name": "HUNTER GROUP",
+          "ticker": "HUNT",
+          "isin": "NO0012953720",
+          "referenceDate": "2026-09-21",
+          "referenceClose": 20.75,
+          "expected3m": 0.4154,
+          "chancePositive": 0.7,
+          "chanceUp10": 0.7,
+          "analogCount": 40,
+          "signals": {
+            "m1": 0.9875,
+            "m3": 0.9249,
+            "m6": 2.7054,
+            "breakoutDistance": 0,
+            "volatility": 0.0516
+          },
+          "rank": 1
+        },
         {
           "name": "ZELLUNA",
           "ticker": "ZLNA",
@@ -348,7 +367,7 @@
             "breakoutDistance": -0.3279,
             "volatility": 0.0477
           },
-          "rank": 1
+          "rank": 2
         },
         {
           "name": "OKEA",
@@ -367,7 +386,7 @@
             "breakoutDistance": -0.1161,
             "volatility": 0.029
           },
-          "rank": 2
+          "rank": 3
         },
         {
           "name": "EAM SOLAR",
@@ -386,7 +405,7 @@
             "breakoutDistance": -0.8295,
             "volatility": 0.1997
           },
-          "rank": 3
+          "rank": 4
         },
         {
           "name": "SMARTOPTICS GROUP",
@@ -404,25 +423,6 @@
             "m6": 0.2714,
             "breakoutDistance": -0.1875,
             "volatility": 0.0365
-          },
-          "rank": 4
-        },
-        {
-          "name": "PEXIP HOLDING",
-          "ticker": "PEXIP",
-          "isin": "NO0010840507",
-          "referenceDate": "2026-09-22",
-          "referenceClose": 75.30000305175781,
-          "expected3m": 0.2478,
-          "chancePositive": 0.85,
-          "chanceUp10": 0.775,
-          "analogCount": 40,
-          "signals": {
-            "m1": -0.0284,
-            "m3": -0.0026,
-            "m6": 0.1803,
-            "breakoutDistance": -0.1099,
-            "volatility": 0.0223
           },
           "rank": 5
         }
