@@ -20,17 +20,19 @@ for(const file of await walk(root,'market-handoff-signal.json')){
   try{
     const s=JSON.parse(await fs.readFile(file,'utf8')),mic=s.market||s.currentMarket||s.mic||s.current?.mic,v=s.validation||s.result||s.current||s;
     if(!mic||v.ready!==true)continue;
-    if(!(Number(v.catalog)>0&&Number(v.checked)===Number(v.catalog)&&Number(v.complete)===Number(v.catalog)&&Number(v.missing)===0&&Number(v.invalid)===0))continue;
+    const unavailable=Array.isArray(v.dataUnavailable)?v.dataUnavailable:[];
+    if(!(Number(v.catalog)>0&&Number(v.checked)===Number(v.catalog)&&Number(v.missing)===0&&Number(v.complete)+unavailable.length===Number(v.catalog)))continue;
+    if(unavailable.some(x=>x?.status!=='DATA_UNAVAILABLE'||x?.reason!=='PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY'||!x?.isin))continue;
     const fingerprint=v.catalogFingerprint||s.catalogFingerprint||null,source=registry.markets?.[mic];
     if(!fingerprint||source?.status!=='APPROVED'||source.catalogFingerprint!==fingerprint)continue;
-    proven.set(mic,{fingerprint,completedAt:s.emittedAt||new Date().toISOString()});
+    proven.set(mic,{fingerprint,completedAt:s.emittedAt||new Date().toISOString(),dataUnavailable:unavailable});
   }catch{}
 }
 
 let changed=0;
 for(const m of plan.markets){
   const p=proven.get(m.mic);
-  if(p){if(m.state!=='COMPLETE'||m.catalogFingerprint!==p.fingerprint){m.state='COMPLETE';m.completedAt=p.completedAt;m.catalogFingerprint=p.fingerprint;delete m.note;delete m.blockedReason;delete m.blockedAt;changed++;}continue;}
+  if(p){if(m.state!=='COMPLETE'||m.catalogFingerprint!==p.fingerprint){m.state='COMPLETE';m.completedAt=p.completedAt;m.catalogFingerprint=p.fingerprint;m.dataUnavailable=p.dataUnavailable;delete m.note;delete m.blockedReason;delete m.blockedAt;changed++;}continue;}
   const b=blocked.get(m.mic);
   if(b&&m.state!=='COMPLETE'&&(m.state!=='BLOCKED'||m.blockedReason!==b.reason||m.catalogFingerprint!==b.fingerprint)){m.state='BLOCKED';m.blockedReason=b.reason;m.blockedAt=new Date().toISOString();m.catalogFingerprint=b.fingerprint;m.note='Quarantined by canonical single writer after proven source preflight failure.';changed++;}
 }
