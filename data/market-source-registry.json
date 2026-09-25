@@ -61,7 +61,7 @@
       }
     },
     "XMIL": {
-      "status": "BLOCKED",
+      "status": "RETEST",
       "catalogSource": "https://live.euronext.com/en/product_directory/data/stocks-milan/download?mics=XMIL%2CMTAA%2CEXGM",
       "historySources": [
         {
@@ -96,8 +96,9 @@
         "uncovered": 17
       },
       "catalogFingerprint": "bed3b581909fedaf3ef3a175c10ca2b08b96485c791c429edf00db97e899a301",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-09-24T17:20:46.792Z"
+      "blockedReason": null,
+      "lastAuditAt": "2026-09-24T17:20:46.792Z",
+      "note": "Re-test with ISIN-first discovery fallback before any backfill."
     },
     "XOSL": {
       "status": "APPROVED",
