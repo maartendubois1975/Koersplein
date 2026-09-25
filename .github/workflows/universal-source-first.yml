@@ -132,9 +132,17 @@ jobs:
     if: ${{ always() && needs.select.result == 'success' && needs.persist-completions.result == 'success' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Start volgende autonome cyclus
+      - name: Start volgende autonome cyclus uitsluitend vanaf actuele main
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
           sleep 20
+          git ls-remote "https://github.com/${{ github.repository }}.git" refs/heads/main | cut -f1 > /tmp/main.sha
+          MAIN_SHA=$(cat /tmp/main.sha)
+          echo "Actuele main: $MAIN_SHA"
+          echo "Deze run: ${{ github.sha }}"
+          # State-writer commits may advance main while this run is finishing. Dispatching
+          # is allowed, but the next run must always checkout ref=main and never replay
+          # this run's historical SHA.
           gh workflow run universal-source-first.yml --repo "${{ github.repository }}" --ref main
