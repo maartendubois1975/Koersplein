@@ -40,11 +40,9 @@
       "currency": "EUR",
       "timezone": "Europe/Rome",
       "providerSuffix": ".MI",
-      "state": "BLOCKED",
-      "note": "Quarantined by canonical single writer after proven source preflight failure.",
-      "catalogFingerprint": "0b230cc2edf398a7e682187076133b541ab94a767c0359c063317394dfd06051",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-09-25T05:00:34.466Z"
+      "state": "WAITING",
+      "note": "RETEST_WITH_FOURTH_HISTORY_ROUTE",
+      "catalogFingerprint": "0b230cc2edf398a7e682187076133b541ab94a767c0359c063317394dfd06051"
     },
     {
       "mic": "XOSL",
