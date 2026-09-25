@@ -61,7 +61,7 @@
       }
     },
     "XMIL": {
-      "status": "RETEST",
+      "status": "BLOCKED",
       "catalogSource": "https://live.euronext.com/en/product_directory/data/stocks-milan/download?mics=XMIL%2CMTAA%2CEXGM",
       "historySources": [
         {
@@ -88,17 +88,17 @@
       "discovery": {
         "testedDifficultSymbols": 20,
         "note": "Milaan source-first plan: main market + Growth, jonge IPOs en small caps; listingdatum bepaalt begin van verwachte historie; geen synthetische koersen.",
-        "testedFullCatalog": 444,
-        "coverageRatio": 0.9707207207207207,
+        "testedFullCatalog": 401,
+        "coverageRatio": 0.9975062344139651,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 3,
-        "uncovered": 13
+        "uncovered": 1
       },
-      "catalogFingerprint": "bed3b581909fedaf3ef3a175c10ca2b08b96485c791c429edf00db97e899a301",
-      "blockedReason": null,
-      "lastAuditAt": "2026-09-25T04:30:45.382Z",
-      "note": "Clean retest after catalogue syntax and autopilot failure-loop repair."
+      "catalogFingerprint": "0b230cc2edf398a7e682187076133b541ab94a767c0359c063317394dfd06051",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "lastAuditAt": "2026-09-25T05:00:25.306Z",
+      "note": "Retest after removing warrant instruments from equity history gate."
     },
     "XOSL": {
       "status": "APPROVED",
