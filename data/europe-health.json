@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-25T04:30:55.212Z",
+  "generatedAt": "2026-09-25T04:37:05.163Z",
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
     "complete": 4,
-    "blocked": 3,
+    "blocked": 2,
     "ready": 0,
-    "pending": 24,
+    "pending": 25,
     "total": 31
   },
   "markets": [
@@ -80,9 +80,9 @@
     {
       "mic": "XMIL",
       "name": "Milaan",
-      "state": "BLOCKED",
-      "health": "BLOCKED",
-      "reason": "SOURCE_PREFLIGHT_GATE",
+      "state": "WAITING",
+      "health": "CATALOG_PENDING",
+      "reason": null,
       "catalog": {
         "present": false,
         "count": 444,
@@ -91,7 +91,7 @@
         "source": "https://live.euronext.com/en/product_directory/data/stocks-milan/download?mics=XMIL%2CMTAA%2CEXGM"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "RETEST",
         "tested": 3,
         "fullCatalog": 444,
         "coverageRatio": 0.9707207207207207,
