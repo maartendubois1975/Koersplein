@@ -51,9 +51,22 @@ jobs:
         with: { node-version: 22 }
       - name: Officiële catalogus
         run: node scripts/cloudflare/universal-source-catalog.mjs
-      - name: Gratis bronpreflight
+      - name: Bron-dekkingspoort — bewijs 100% vóór vullen
         timeout-minutes: 30
-        run: node scripts/cloudflare/universal-source-audit.mjs
+        run: |
+          set -euo pipefail
+          node scripts/cloudflare/universal-source-audit.mjs
+          node - <<'NODE'
+          const fs=require('fs');
+          const plan=JSON.parse(fs.readFileSync('data/world-fill-plan.json','utf8'));
+          const m=plan.markets.find(x=>x.mic===process.env.MARKET_MIC);
+          if(!m) throw new Error('Onbekende markt '+process.env.MARKET_MIC);
+          const r=JSON.parse(fs.readFileSync(`research/output/${m.code}/source-audit.json`,'utf8'));
+          if(r.catalog<1 || r.combinedCovered!==r.catalog || r.uncovered.length!==0 || r.coverageRatio!==1 || r.pass!==true){
+            throw new Error(`BACKFILL VERBODEN: brondekking ${r.combinedCovered}/${r.catalog}; eerst alle instrumenten aan een bewezen bronroute koppelen`);
+          }
+          console.log(`SOURCE COVERAGE GATE PASS: ${r.combinedCovered}/${r.catalog} (100%)`);
+          NODE
       - name: Historische backfill met foutisolatie
         env:
           HISTORY_BATCH_SIZE: 10
