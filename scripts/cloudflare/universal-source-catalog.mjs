@@ -8,18 +8,10 @@ const configs={
  XBRU:{urls:['https://live.euronext.com/en/product_directory/data/stocks-brussels/download?mics=XBRU'],allowedMics:new Set(['XBRU']),market:/Brussels|Brussel/i,min:20},
  XPAR:{urls:['https://live.euronext.com/en/product_directory/data/stocks-paris/download?mics=XPAR%2CALXP%2CXMLI'],allowedMics:new Set(['XPAR','ALXP','XMLI']),market:/Paris|Growth|Access/i,min:50},
  XDUB:{urls:['https://live.euronext.com/en/product_directory/data/stocks-dublin/download?mics=XDUB%2CXESM'],allowedMics:new Set(['XDUB','XESM']),market:/Dublin|Irish|Growth/i,min:20},
- XETR:{urls:[],discoveryPage:'https://www.cashmarket.deutsche-boerse.com/cash-en/trading/Tradable-Instruments-Xetra/Downloads/xetra-downloads',filePattern:/href=["']([^"']*t7-xetr-allTradableInstruments\.csv[^"']*)["']/i,allowedMics:new Set(['XETR']),market:/Xetra|XETR/i,min:500,format:'xetra'},
+ XETR:{urls:['https://www.cashmarket.deutsche-boerse.com/resource/blob/1528/39c6a299553e4dd89ac61a8908b65115/data/t7-xetr-allTradableInstruments.csv'],allowedMics:new Set(['XETR']),market:/Xetra|XETR/i,min:500,format:'xetra'},
  XLIS:{urls:['https://live.euronext.com/en/product_directory/data/stocks-lisbon/download?mics=XLIS%2CALXL%2CENXL'],allowedMics:new Set(['XLIS','ALXL','ENXL']),market:/Lisbon|Growth|Access/i,min:20}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
-if(cfg.discoveryPage){
- const page=await fetch(cfg.discoveryPage,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html,*/*'}});
- if(!page.ok)throw new Error(`Officiële catalogus-index niet bereikbaar voor ${m.name}: HTTP ${page.status}`);
- const html=await page.text(),match=html.match(cfg.filePattern);
- if(!match)throw new Error(`Officiële cataloguslink niet gevonden op Deutsche Börse downloadpagina voor ${m.name}`);
- const resolved=new URL(match[1].replace(/&amp;/g,'&'),cfg.discoveryPage).href;
- cfg.urls=[resolved];
-}
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':'Koersplein/1.0',accept:'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if(t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XETR'){
