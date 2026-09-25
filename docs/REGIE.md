@@ -75,3 +75,18 @@ Een eerdere beslissing mag automatisch worden hergebruikt voor diagnose, maar ni
 
 ## 13. Stabiliteit heeft voorrang
 Wanneer recente wijzigingen nog niet end-to-end bewezen zijn, worden niet zonder noodzaak nieuwe architectuurlagen gestapeld. Bij een verhoogd foutpercentage of terugkerende regressies gaat de regie tijdelijk in stabiliteitsmodus: nieuwe optimalisaties pauzeren, oorzaak isoleren, bekende goede toestand herstellen en pas daarna verder verbeteren.
+
+## 14. Van begeleide doorbraak naar herhaalbare beursfabriek
+Wanneer een begeleide sessie aantoonbaar sneller tot een werkende markt leidt, wordt niet alleen het losse probleem opgelost. De regie abstraheert de bewezen werkwijze naar de bestaande beursfabriek, zodat de volgende markt dezelfde beslisroute automatisch kan volgen.
+
+Na iedere nieuwe of herstelde beurs:
+1. leg vast welke stap werkelijk blokkeerde en welke evidence dat bewees;
+2. onderscheid markt-specifieke bronlogica van generieke orkestratie;
+3. verplaats alleen het bewezen generieke patroon naar de bestaande universele componenten;
+4. voeg geen tweede workflow, scheduler, state of writer toe als de bestaande fabriek kan worden uitgebreid;
+5. laat de volgende markt eerst catalogus/source-preflight doorlopen en ga daarna zonder menselijke tussenstappen door zolang alle gates groen blijven;
+6. bij een structurele fout: stop alleen die markt, registreer reden/fingerprint en ga met andere bewezen markten verder;
+7. beschouw handmatige begeleiding als trainingsdata voor de regie: een terugkerende handmatige aanwijzing is een signaal om te onderzoeken welk generiek beslispunt nog ontbreekt.
+
+Doel: niet sneller worden door controles over te slaan, maar door bewezen controles en herstelbeslissingen één keer goed in de fabriek vast te leggen. De regie stuurt op complete beurzen en end-to-end resultaat, niet op aantallen losse reparaties of groene deelstappen.
+
