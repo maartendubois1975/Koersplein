@@ -8,7 +8,7 @@ const configs={
  XBRU:{urls:['https://live.euronext.com/en/product_directory/data/stocks-brussels/download?mics=XBRU'],allowedMics:new Set(['XBRU']),market:/Brussels|Brussel/i,min:20},
  XPAR:{urls:['https://live.euronext.com/en/product_directory/data/stocks-paris/download?mics=XPAR%2CALXP%2CXMLI'],allowedMics:new Set(['XPAR','ALXP','XMLI']),market:/Paris|Growth|Access/i,min:50},
  XDUB:{urls:['https://live.euronext.com/en/product_directory/data/stocks-dublin/download?mics=XDUB%2CXESM'],allowedMics:new Set(['XDUB','XESM']),market:/Dublin|Irish|Growth/i,min:20},
- XETR:{urls:['https://www.cashmarket.deutsche-boerse.com/resource/blob/1528/39c6a299553e4dd89ac61a8908b65115/data/t7-xetr-allTradableInstruments.csv'],allowedMics:new Set(['XETR']),market:/Xetra|XETR/i,min:500,format:'xetra'},
+ XETR:{urls:['https://www.cashmarket.deutsche-boerse.com/resource/blob/1528/b52ea43a2edac92e8283d40645d1c076/data/t7-xetr-allTradableInstruments.csv'],allowedMics:new Set(['XETR']),market:/Xetra|XETR/i,min:500,format:'xetra'},
  XLIS:{urls:['https://live.euronext.com/en/product_directory/data/stocks-lisbon/download?mics=XLIS%2CALXL%2CENXL'],allowedMics:new Set(['XLIS','ALXL','ENXL']),market:/Lisbon|Growth|Access/i,min:20}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
