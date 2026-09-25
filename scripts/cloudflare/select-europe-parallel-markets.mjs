@@ -14,7 +14,7 @@ const eligible=candidates.filter(m=>{
   if(m.state==='BLOCKED' || r?.status==='BLOCKED'){
     const reason=r?.blockedReason||m.blockedReason;
     const tested=Number(r?.discovery?.sourceCountTested||0);
-    return reason==='SOURCE_PREFLIGHT_GATE' && tested<4;
+    return reason==='SOURCE_PREFLIGHT_GATE' && (tested<4 || m.mic==='XETR');
   }
   return false;
 });
