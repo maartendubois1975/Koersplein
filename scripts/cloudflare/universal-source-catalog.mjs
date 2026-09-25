@@ -16,9 +16,9 @@ if(!text)throw new Error('Officiële product-directory download niet gevonden vo
 const lines=text.split(/\r?\n/).filter(Boolean),delimiter=[';',',','\t'].sort((a,b)=>lines[0].split(b).length-lines[0].split(a).length)[0];
 const parse=line=>{const o=[];let cur='',q=false;for(let i=0;i<line.length;i++){const c=line[i];if(c==='"'){if(q&&line[i+1]==='"'){cur+='"';i++}else q=!q}else if(c===delimiter&&!q){o.push(cur.trim());cur=''}else cur+=c}o.push(cur.trim());return o};
 const h=parse(lines[0]).map(v=>v.toLowerCase().replace(/[^a-z0-9]+/g,'')),pick=(r,a)=>{for(const x of a){const i=h.indexOf(x);if(i>=0&&r[i])return r[i]}return''};
-const shares=[],seenIsin=new Set(),seenKey=new Set(),rejected={missingIdentity:0,missingMic:0,wrongMic:0,wrongMarket:0,duplicateIsin:0,duplicateMicTicker:0};
+const shares=[],seenIsin=new Set(),seenKey=new Set(),rejected={missingIdentity:0,missingMic:0,wrongMic:0,wrongMarket:0,nonEquity:0,duplicateIsin:0,duplicateMicTicker:0};
 for(const line of lines.slice(1)){const r=parse(line),name=pick(r,['name','instrumentname','instrument']),isin=pick(r,['isin','isincode']).toUpperCase(),symbol=pick(r,['symbol','ticker','mnemo']),market=pick(r,['market','markets']),rowMic=pick(r,['mic','miccode','marketmic','segmentmic']).toUpperCase();
- if(!name||!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)||!symbol){rejected.missingIdentity++;continue}
+ if(!name||!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)||!symbol){rejected.missingIdentity++;continue}\n if(mic==='XMIL' && (name.toUpperCase().startsWith('W ') || symbol.toUpperCase().startsWith('W'))){rejected.nonEquity++;continue}
  let provenMic=rowMic;
  if(!provenMic&&mic==='XDUB'){
    if(/Growth|ESM/i.test(market))provenMic='XESM';
