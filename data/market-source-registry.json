@@ -61,7 +61,7 @@
       }
     },
     "XMIL": {
-      "status": "BLOCKED",
+      "status": "RETEST",
       "catalogSource": "https://live.euronext.com/en/product_directory/data/stocks-milan/download?mics=XMIL%2CMTAA%2CEXGM",
       "historySources": [
         {
@@ -96,9 +96,9 @@
         "uncovered": 1
       },
       "catalogFingerprint": "0b230cc2edf398a7e682187076133b541ab94a767c0359c063317394dfd06051",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedReason": null,
       "lastAuditAt": "2026-09-25T05:00:25.306Z",
-      "note": "Retest after removing warrant instruments from equity history gate."
+      "note": "Retest with StockAnalysis BIT fallback for uncovered official-catalog instruments."
     },
     "XOSL": {
       "status": "APPROVED",
