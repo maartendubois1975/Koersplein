@@ -114,7 +114,11 @@
       "currency": "EUR",
       "timezone": "Europe/Berlin",
       "providerSuffix": ".DE",
-      "state": "WAITING"
+      "state": "BLOCKED",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-09-25T15:03:16.091Z",
+      "catalogFingerprint": "08fb3055f3905ea5f88590e0d3f24a1374119337bab9e2965003c34eb5b1245c",
+      "note": "Quarantined by canonical single writer after proven source preflight failure."
     },
     {
       "mic": "XSWX",

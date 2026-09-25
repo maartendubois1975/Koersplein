@@ -4,9 +4,9 @@
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
     "complete": 5,
-    "blocked": 3,
+    "blocked": 4,
     "ready": 0,
-    "pending": 23,
+    "pending": 22,
     "total": 31
   },
   "markets": [
@@ -189,22 +189,22 @@
     {
       "mic": "XETR",
       "name": "Frankfurt / Xetra",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
-      "reason": null,
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 1416,
+        "fingerprint": "08fb3055f3905ea5f88590e0d3f24a1374119337bab9e2965003c34eb5b1245c",
         "retrievedAt": null,
-        "source": null
+        "source": "https://www.cashmarket.deutsche-boerse.com/resource/blob/1528/b52ea43a2edac92e8283d40645d1c076/data/t7-xetr-allTradableInstruments.csv"
       },
       "sources": {
-        "status": "UNTESTED",
-        "tested": 0,
-        "fullCatalog": 0,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "status": "BLOCKED",
+        "tested": 4,
+        "fullCatalog": 1416,
+        "coverageRatio": 0,
+        "crossCheckRatio": 0
       },
       "completedAt": null
     },
@@ -693,5 +693,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-09-25T13:48:42.356Z"
+  "generatedAt": "2026-09-25T15:03:16.146Z"
 }
