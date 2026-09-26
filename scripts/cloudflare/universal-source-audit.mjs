@@ -15,7 +15,15 @@ const combined=results.filter(x=>x.yahoo.ok||x.euronext.ok||x.yahooIsin.ok||x.st
 // therefore prove a usable route for every catalog instrument; a 95% preflight only
 // postpones a known failure until after an expensive backfill.
 const explicitDataUnavailableByMic={
-  XETR:new Map([['DE000A41YEE3',{symbol:'BRN',name:'BRANICKS GROUP AG NA JGE',reason:'NO_HISTORY_AFTER_FOUR_INDEPENDENT_ROUTE_TESTS'}]])
+  XETR:new Map([['DE000A41YEE3',{symbol:'BRN',name:'BRANICKS GROUP AG NA JGE',reason:'NO_HISTORY_AFTER_FOUR_INDEPENDENT_ROUTE_TESTS'}]]),
+  XLIS:new Map([
+    ['PTCAP0AM0017',{symbol:'MLARR',name:'ARRABIDASHOPPING',reason:'LISTED_BUT_NO_USABLE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS'}],
+    ['PTGHP0AM0005',{symbol:'MLGSH',name:'GAIASHOPPING - SIC',reason:'LISTED_BUT_NO_USABLE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS'}],
+    ['PTMNN0AE0006',{symbol:'MLMR',name:'MONUMENTAL RES',reason:'INACTIVE_TRADING_NO_USABLE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS'}],
+    ['PTOBW0AM0008',{symbol:'MLOBT',name:'ORIENTE BT SIGI',reason:'NEW_LISTING_NO_USABLE_DAILY_HISTORY_YET_AFTER_FOUR_ROUTE_TESTS'}],
+    ['ES0105505004',{symbol:'MLRSR',name:'RSR SINGULAR',reason:'LISTED_ZERO_LIQUIDITY_NO_USABLE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS'}],
+    ['PTVUO0AM0000',{symbol:'MLVDN',name:'VILA DOS NUMEROS',reason:'LISTED_BUT_NO_USABLE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS'}]
+  ])
 };
 const allowedMap=explicitDataUnavailableByMic[mic]||new Map();
 const dataUnavailable=uncovered.filter(x=>allowedMap.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:allowedMap.get(x.isin).reason}));
