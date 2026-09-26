@@ -1,44 +1,14 @@
-name: M01-M06 Universele markt-analyse
+name: "ARCHIVED — M01-M06 Universele markt-analyse"
+
+# Archived by Koersplein regie: no automatic triggers, no write permissions.
 on:
   workflow_dispatch:
-    inputs:
-      market_mic:
-        description: COMPLETE markt
-        required: true
-        default: XOSL
+
 permissions:
   contents: read
-concurrency:
-  group: koersplein-complete-market-analysis
-  cancel-in-progress: false
+
 jobs:
-  analyse:
+  archived:
     runs-on: ubuntu-latest
-    timeout-minutes: 360
-    env:
-      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
-      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
-      MARKET_MIC: ${{ inputs.market_mic }}
     steps:
-      - uses: actions/checkout@v4
-        with: { ref: main }
-      - uses: actions/setup-node@v4
-        with: { node-version: 22 }
-      - name: Gate expliciet gekozen COMPLETE markt
-        run: node scripts/research/complete-market-gate.mjs
-      - name: Machine 1 blind 3 6 12 24 maanden
-        run: node scripts/research/universal-market-machine1.mjs
-      - name: Machine 2 opportunity map
-        run: node scripts/research/universal-opportunity-map.mjs
-      - name: Machine 3 tot en met 6 vaste validatie en leergates
-        run: |
-          node scripts/research/execution-1-3-selftest.mjs
-          node scripts/research/execution-4-6-selftest.mjs
-          node scripts/research/blocks7-10-selftest.mjs
-          node scripts/research/blocks11-14-selftest.mjs
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: complete-market-analysis-${{ env.MARKET_MIC }}-${{ github.run_number }}
-          path: research/output/${{ env.MARKET_MIC }}/
-          retention-days: 90
+      - run: echo "Archived workflow — intentionally inactive unless manually dispatched."
