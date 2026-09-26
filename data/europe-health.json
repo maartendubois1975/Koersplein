@@ -3,8 +3,8 @@
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 5,
-    "blocked": 4,
+    "complete": 6,
+    "blocked": 3,
     "ready": 0,
     "pending": 22,
     "total": 31
@@ -145,9 +145,9 @@
     {
       "mic": "XLIS",
       "name": "Lissabon",
-      "state": "BLOCKED",
-      "health": "BLOCKED",
-      "reason": "SOURCE_PREFLIGHT_GATE",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
       "catalog": {
         "present": false,
         "count": 48,
@@ -162,7 +162,7 @@
         "coverageRatio": 0.8541666666666666,
         "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-09-26T11:18:14.679Z"
     },
     {
       "mic": "XLON",
@@ -693,5 +693,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-09-26T10:59:49.513Z"
+  "generatedAt": "2026-09-26T11:20:25.883Z"
 }

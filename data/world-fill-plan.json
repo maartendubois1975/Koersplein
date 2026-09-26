@@ -86,13 +86,72 @@
       "currency": "EUR",
       "timezone": "Europe/Lisbon",
       "providerSuffix": ".LS",
-      "state": "BLOCKED",
-      "note": "Quarantined by canonical single writer after proven source preflight failure.",
+      "state": "COMPLETE",
       "catalogFingerprint": "cf951f3219704345ae22bb2e5a5004c255b190a4795866a8ef5ce0244b3beaa8",
       "retryReason": "LISBON_SEVEN_EXCEPTION_RESOLUTION",
       "retryAuthorizedAt": "2026-09-26T04:44:28.290Z",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-09-26T06:52:14.786Z"
+      "completedAt": "2026-09-26T11:18:14.679Z",
+      "dataUnavailable": [
+        {
+          "isin": "ES0105665006",
+          "symbol": "MLMAC",
+          "name": "MACC1X1 SOCIMI",
+          "lastDate": "2023-06-19",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "PTMNN0AE0006",
+          "symbol": "MLMR",
+          "name": "MONUMENTAL RES",
+          "lastDate": "2021-08-25",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "INACTIVE_TRADING_NO_USABLE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "ES0105505004",
+          "symbol": "MLRSR",
+          "name": "RSR SINGULAR",
+          "lastDate": "2021-08-25",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "LISTED_ZERO_LIQUIDITY_NO_USABLE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "PTCAP0AM0017",
+          "symbol": "MLARR",
+          "name": "ARRABIDASHOPPING",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "LISTED_BUT_NO_USABLE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "PTGHP0AM0005",
+          "symbol": "MLGSH",
+          "name": "GAIASHOPPING - SIC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "LISTED_BUT_NO_USABLE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "PTOBW0AM0008",
+          "symbol": "MLOBT",
+          "name": "ORIENTE BT SIGI",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "NEW_LISTING_NO_USABLE_DAILY_HISTORY_YET_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "PTVUO0AM0000",
+          "symbol": "MLVDN",
+          "name": "VILA DOS NUMEROS",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "LISTED_BUT_NO_USABLE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        }
+      ]
     },
     {
       "mic": "XLON",
