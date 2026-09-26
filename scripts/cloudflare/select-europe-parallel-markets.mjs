@@ -19,7 +19,18 @@ const eligible=candidates.filter(m=>{
   return false;
 });
 const unsupportedWaiting=plan.markets.filter(m=>m.state==='WAITING'&&!adapterMics.has(m.mic)).map(m=>m.mic);
-const selected=[...new Set(eligible.map(m=>m.mic))].slice(0,max);
+const forced=String(process.env.FORCE_MARKET_MIC||'').trim().toUpperCase();
+let selected;
+if(forced){
+  const market=plan.markets.find(m=>m.mic===forced);
+  if(!market) throw new Error(`FORCE_MARKET_MIC onbekend: ${forced}`);
+  if(!adapterMics.has(forced)) throw new Error(`FORCE_MARKET_MIC heeft nog geen bewezen adapter: ${forced}`);
+  if(market.state==='COMPLETE') throw new Error(`FORCE_MARKET_MIC is al COMPLETE: ${forced}`);
+  // Manual/chat selection bypasses only quarantine selection, never catalog/source/history/end gates.
+  selected=[forced];
+} else {
+  selected=[...new Set(eligible.map(m=>m.mic))].slice(0,max);
+}
 await fs.mkdir('research/output',{recursive:true});
 await fs.writeFile('research/output/europe-parallel-selection.json',JSON.stringify({generatedAt:new Date().toISOString(),maxActive:max,selected,blocked,eligible:eligible.map(m=>m.mic),unsupportedWaiting,stateSource:'data/world-fill-plan.json',quarantinePolicy:'BLOCKED_RETEST_ONLY_AFTER_PROVEN_SOURCE_FAMILY_EXPANSION'},null,2));
 console.log(JSON.stringify(selected));
