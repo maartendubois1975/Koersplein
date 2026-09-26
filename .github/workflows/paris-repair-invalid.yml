@@ -1,47 +1,14 @@
-name: Parijs definitieve herstelcontrole
+name: "ARCHIVED — Parijs definitieve herstelcontrole"
+
+# Archived by Koersplein regie: no automatic triggers, no write permissions.
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: ['scripts/cloudflare/validate-paris-history.mjs']
+
 permissions:
-  contents: write
-concurrency:
-  group: koersplein-paris-finalize
-  cancel-in-progress: false
+  contents: read
+
 jobs:
-  repair:
+  archived:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
-    env:
-      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
-      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-        with: { ref: main }
-      - uses: actions/setup-node@v4
-        with: { node-version: 22 }
-      - name: Vernieuw officiële Euronext Parijs-catalogus
-        run: node scripts/cloudflare/fetch-paris-catalog.mjs
-      - name: Vul uitsluitend werkelijk ontbrekende aandelen
-        run: node scripts/cloudflare/paris-repair-invalid.mjs || echo 'Bronhiaten worden expliciet door de eindvalidator beoordeeld.'
-      - name: Valideer opgeslagen Parijs-universum
-        if: always()
-        run: node scripts/cloudflare/validate-paris-history.mjs
-      - name: Bewaar definitief Parijs-rapport
-        if: always()
-        run: |
-          git config user.name "koersplein-bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add data/euronext-paris.json research/output/paris/repair-invalid-summary.json research/output/paris/validation-summary.json || true
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Parijs definitieve bron- en historiecontrole"
-          git pull --rebase origin main
-          git push origin HEAD:main
-      - name: Bewaar rapport
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: paris-final-validation
-          path: research/output/paris/
-          retention-days: 30
+      - run: echo "Archived workflow — intentionally inactive unless manually dispatched."
