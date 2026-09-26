@@ -5,13 +5,14 @@ const load=async url=>{const r=await fetch(url,{cache:'no-store'});if(!r.ok)thro
 const optional=async url=>{try{return await load(url)}catch{return null}};
 const fail=m=>{historyState.className='history-empty';historyState.innerHTML=`<strong>Historie tijdelijk niet beschikbaar</strong><p>${esc(m)}.</p>`;document.querySelector('#history-range').textContent='—'};
 Promise.all([
- optional('data/euronext-amsterdam.json'),optional('data/euronext-brussels.json'),optional('data/euronext-paris.json'),
+ optional('data/euronext-amsterdam.json'),optional('data/euronext-brussels.json'),optional('data/euronext-paris.json'),optional('data/euronext-oslo.json'),
  load('data/runtime-config.json').catch(()=>({apiBaseUrl:''}))
-]).then(async ([ams,bru,par,runtime])=>{
+]).then(async ([ams,bru,par,osl,runtime])=>{
  const catalogs=[
   {data:ams,venue:'Amsterdam',defaultMic:'XAMS',back:'index.html#amsterdam'},
   {data:bru,venue:'Brussel',defaultMic:'XBRU',back:'brussel.html'},
-  {data:par,venue:'Parijs',defaultMic:'XPAR',back:'parijs.html'}
+  {data:par,venue:'Parijs',defaultMic:'XPAR',back:'parijs.html'},
+  {data:osl,venue:'Oslo',defaultMic:'XOSL',back:'oslo.html'}
  ].filter(x=>x.data);
  let found=null;
  for(const cat of catalogs){const s=(cat.data.shares||[]).find(x=>x.isin===isin);if(s){found={...cat,share:s};break}}
