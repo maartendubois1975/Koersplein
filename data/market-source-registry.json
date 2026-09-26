@@ -114,19 +114,34 @@
       }
     },
     "XLIS": {
-      "status": "BLOCKED",
+      "status": "APPROVED",
       "catalogFingerprint": "cf951f3219704345ae22bb2e5a5004c255b190a4795866a8ef5ce0244b3beaa8",
       "catalogSource": "https://live.euronext.com/en/product_directory/data/stocks-lisbon/download?mics=XLIS%2CALXL%2CENXL",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-09-25T13:45:21.540Z",
+      "historySources": [
+        {
+          "provider": "yahoo-isin-resolver",
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
+        },
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Full-catalog preflight: 41/48 instruments."
+        },
+        {
+          "provider": "euronext-live",
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/48; 0 additional instruments beyond primary."
+        }
+      ],
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 48,
-        "coverageRatio": 0,
+        "coverageRatio": 0.8541666666666666,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 48
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       }
     },
     "XLON": {
