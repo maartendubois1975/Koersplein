@@ -1,25 +1,14 @@
-name: Atlas archive validation
+name: "ARCHIVED — Atlas archive validation"
+
+# Archived by Koersplein regie: no automatic triggers, no write permissions.
 on:
   workflow_dispatch:
+
 permissions:
   contents: read
-concurrency:
-  group: atlas-archive-validation
-  cancel-in-progress: true
+
 jobs:
-  validate-contract:
+  archived:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Validate archive contracts
-        run: |
-          node --check scripts/archive/atlas-normalize.mjs
-          node --check scripts/archive/atlas-validate.mjs
-          node --check scripts/archive/atlas-research-evaluate.mjs
-          node -e "JSON.parse(require('fs').readFileSync('data/atlas-archive/schema.json','utf8')); console.log('archive schema OK')"
-      - name: Guard against runtime coupling
-        run: |
-          ! grep -R "dpg-da8lf8qjnfac73epeu70-a" scripts data --exclude='README.md' --exclude='atlas-data-asset-manifest.md' --exclude='*.sql'
+      - run: echo "Archived workflow — intentionally inactive unless manually dispatched."
