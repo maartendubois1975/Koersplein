@@ -1,35 +1,14 @@
-name: Definitieve analysemachine Amsterdam Brussel
+name: "ARCHIVED — Definitieve analysemachine Amsterdam Brussel"
+
+# Archived by Koersplein regie: no automatic triggers, no write permissions.
 on:
   workflow_dispatch:
+
 permissions:
-  contents: write
-concurrency:
-  group: koersplein-final-analysis-machine
-  cancel-in-progress: false
+  contents: read
+
 jobs:
-  research:
+  archived:
     runs-on: ubuntu-latest
-    timeout-minutes: 360
-    env:
-      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
     steps:
-      - uses: actions/checkout@v4
-        with: { ref: main }
-      - uses: actions/setup-node@v4
-        with: { node-version: 22 }
-      - name: Draai volledige Amsterdam-Brussel arena
-        run: node scripts/research/final-amsterdam-brussels-arena.mjs
-      - name: Bewaar definitieve onderzoeksbasis
-        run: |
-          git config user.name "Koersplein Research Director"
-          git config user.email "research-director@users.noreply.github.com"
-          git add research/output/final-arena/amsterdam-brussels.json
-          git commit -m "Research: complete Amsterdam-Brussel leerfase" || exit 0
-          git pull --rebase origin main
-          git push origin HEAD:main
-      - name: Archiveer volledige uitslag
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-amsterdam-brussels-arena
-          path: research/output/final-arena/
-          retention-days: 90
+      - run: echo "Archived workflow — intentionally inactive unless manually dispatched."
