@@ -87,10 +87,10 @@
       "timezone": "Europe/Lisbon",
       "providerSuffix": ".LS",
       "state": "WAITING",
-      "note": "Controlled retry after adding XLIS/ALXL/ENXL .LS provider routing; daily requirement is EOD open+close, no realtime.",
+      "note": "Controlled retry: 41 direct daily-history routes, Euronext cross-list resolved by ISIN, six listings explicitly DATA_UNAVAILABLE after four-route evidence.",
       "catalogFingerprint": "cf951f3219704345ae22bb2e5a5004c255b190a4795866a8ef5ce0244b3beaa8",
-      "retryReason": "LISBON_PROVIDER_ROUTING_ADDED",
-      "retryAuthorizedAt": "2026-09-26T04:41:47.096Z"
+      "retryReason": "LISBON_SEVEN_EXCEPTION_RESOLUTION",
+      "retryAuthorizedAt": "2026-09-26T04:44:28.290Z"
     },
     {
       "mic": "XLON",
