@@ -12,8 +12,6 @@ on:
       - '.github/workflows/universal-source-first.yml'
       - '.github/workflows/complete-market-analysis.yml'
       - '.github/workflows/daily-opportunity-ledger.yml'
-      - 'data/world-fill-plan.json'
-      - 'data/market-source-registry.json'
   workflow_dispatch:
 permissions:
   contents: read
