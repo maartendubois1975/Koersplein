@@ -27,10 +27,14 @@ const result=await inspect(current);
 // a local data-availability limitation instead of masking an untried or failed fetch.
 let batch={};try{batch=JSON.parse(await fs.readFile('research/output/world-fill-batch.json','utf8'));}catch{}
 const attempted=new Set(batch.market===current.mic?(batch.attemptedIsins||[]):[]),failed=new Set(batch.market===current.mic?(batch.failed||[]).map(x=>x.isin):[]);
-const dataUnavailable=result.invalidItems.filter(x=>x.recordCount>0&&attempted.has(x.isin)&&!failed.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY'}));
+let sourceAudit={};try{sourceAudit=JSON.parse(await fs.readFile(`research/output/${current.code}/source-audit.json`,'utf8'));}catch{}
+const auditedUnavailable=new Map((sourceAudit.catalogFingerprint===result.catalogFingerprint&&sourceAudit.pass===true?(sourceAudit.dataUnavailable||[]):[]).map(x=>[x.isin,x.reason||'NO_USABLE_DAILY_HISTORY_AFTER_FULL_SOURCE_AUDIT']));
+const staleUnavailable=result.invalidItems.filter(x=>x.recordCount>0&&attempted.has(x.isin)&&!failed.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY'}));
+const auditedItems=[...result.missingItems,...result.invalidItems].filter(x=>auditedUnavailable.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:auditedUnavailable.get(x.isin)}));
+const dataUnavailable=[...new Map([...staleUnavailable,...auditedItems].map(x=>[x.isin,x])).values()];
 result.dataUnavailable=dataUnavailable;
 result.available=result.complete;
-result.ready=result.catalog>0&&result.checked===result.catalog&&result.missing===0&&result.complete+dataUnavailable.length===result.catalog;
+result.ready=result.catalog>0&&result.checked===result.catalog&&result.complete+dataUnavailable.length===result.catalog;
 let next=null;
 if(result.ready){
  const planCurrent=plan.markets.find(x=>x.mic===current.mic);
