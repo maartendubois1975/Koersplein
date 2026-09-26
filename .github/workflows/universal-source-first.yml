@@ -133,10 +133,10 @@ jobs:
 
   continue-autopilot:
     needs: [select, market, persist-completions]
-    if: ${{ always() && needs.select.result == 'success' && needs.persist-completions.result == 'success' && needs.persist-completions.outputs.changed == 'true' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
+    if: ${{ always() && github.event_name != 'workflow_dispatch' && needs.select.result == 'success' && needs.persist-completions.result == 'success' && needs.persist-completions.outputs.changed == 'true' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Start volgende autonome cyclus uitsluitend vanaf actuele main
+      - name: Start maximaal één vervolgcyclus vanaf actuele main
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
