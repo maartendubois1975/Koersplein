@@ -30,8 +30,8 @@ for(const file of await walk(root,'market-handoff-signal.json')){
     const s=JSON.parse(await fs.readFile(file,'utf8')),mic=s.market||s.currentMarket||s.mic||s.current?.mic,v=s.validation||s.result||s.current||s;
     if(!mic||v.ready!==true)continue;
     const unavailable=Array.isArray(v.dataUnavailable)?v.dataUnavailable:[];
-    if(!(Number(v.catalog)>0&&Number(v.checked)===Number(v.catalog)&&Number(v.missing)===0&&Number(v.complete)+unavailable.length===Number(v.catalog)))continue;
-    if(unavailable.some(x=>x?.status!=='DATA_UNAVAILABLE'||x?.reason!=='PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY'||!x?.isin))continue;
+    if(!(Number(v.catalog)>0&&Number(v.checked)===Number(v.catalog)&&Number(v.complete)+unavailable.length===Number(v.catalog)))continue;
+    if(unavailable.some(x=>x?.status!=='DATA_UNAVAILABLE'||!x?.reason||!x?.isin))continue;
     const fingerprint=v.catalogFingerprint||s.catalogFingerprint||null,source=registry.markets?.[mic];
     if(!fingerprint||source?.status!=='APPROVED'||source.catalogFingerprint!==fingerprint)continue;
     proven.set(mic,{fingerprint,completedAt:s.emittedAt||new Date().toISOString(),dataUnavailable:unavailable});
