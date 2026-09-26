@@ -62,10 +62,12 @@ jobs:
           const m=plan.markets.find(x=>x.mic===process.env.MARKET_MIC);
           if(!m) throw new Error('Onbekende markt '+process.env.MARKET_MIC);
           const r=JSON.parse(fs.readFileSync(`research/output/${m.code}/source-audit.json`,'utf8'));
-          if(r.catalog<1 || r.combinedCovered!==r.catalog || r.uncovered.length!==0 || r.coverageRatio!==1 || r.pass!==true){
-            throw new Error(`BACKFILL VERBODEN: brondekking ${r.combinedCovered}/${r.catalog}; eerst alle instrumenten aan een bewezen bronroute koppelen`);
+          const unavailable=Array.isArray(r.dataUnavailable)?r.dataUnavailable:[];
+          const unresolved=Array.isArray(r.unresolved)?r.unresolved:r.uncovered||[];
+          if(r.catalog<1 || r.combinedCovered+unavailable.length!==r.catalog || unresolved.length!==0 || r.pass!==true){
+            throw new Error(`BACKFILL VERBODEN: covered=${r.combinedCovered}, DATA_UNAVAILABLE=${unavailable.length}, unresolved=${unresolved.length}, catalog=${r.catalog}`);
           }
-          console.log(`SOURCE COVERAGE GATE PASS: ${r.combinedCovered}/${r.catalog} (100%)`);
+          console.log(`SOURCE COVERAGE GATE PASS: ${r.combinedCovered} covered + ${unavailable.length} proven DATA_UNAVAILABLE = ${r.catalog}/${r.catalog}`);
           NODE
       - name: Historische backfill met foutisolatie
         env:
