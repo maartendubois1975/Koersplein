@@ -21,7 +21,7 @@ const parseTable=html=>{
 };
 export class EuronextLiveProvider{
  id=PROVIDER_ID;name='Euronext Live historical prices';requiresApiKey=false;
- supports(i){return ['XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin)}
+ supports(i){return ['XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin)}
  async fetchDaily(i,{startDate,endDate,signal}={}){
   const mic=String(i.mic||i.market||'').toUpperCase(),key=`${i.isin}-${mic}`,all=[];
   for(const [start,end] of chunks(startDate,endDate)){
