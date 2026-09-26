@@ -7,7 +7,7 @@ const blocked=plan.markets.filter(m=>m.state==='BLOCKED').map(m=>({mic:m.mic,rea
 const candidates=plan.markets.filter(m=>m.state!=='COMPLETE'&&adapterMics.has(m.mic));
 const eligible=candidates.filter(m=>{
   const r=registry.markets?.[m.mic];
-  if(m.state==='WAITING' && r?.status!=='BLOCKED') return true;
+  if(m.state==='WAITING' && (r?.status!=='BLOCKED' || Boolean(m.retryReason))) return true;
   // A proven structural source-family expansion may get exactly one new preflight.
   // This is not an endless retry: once the current four-family audit has been
   // recorded, an unchanged failure remains quarantined.
