@@ -1,6 +1,12 @@
 name: M00 Europa parallelle beursfabriek
 on:
   workflow_dispatch:
+    inputs:
+      market_mic:
+        description: 'Optionele expliciete markt-MIC voor begeleide/chat-publicatie (bijv. XLIS)'
+        required: false
+        type: string
+        default: ''
 permissions:
   contents: write
   actions: write
@@ -17,6 +23,8 @@ jobs:
         with: { ref: main }
       - id: pick
         name: Kies maximaal vier Europese beurzen
+        env:
+          FORCE_MARKET_MIC: ${{ inputs.market_mic }}
         run: |
           set -euo pipefail
           MARKETS=$(node scripts/cloudflare/select-europe-parallel-markets.mjs)
