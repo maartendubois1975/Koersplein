@@ -1,55 +1,14 @@
-name: Autonome Research Director
+name: "ARCHIVED — Autonome Research Director"
 
+# Archived by Koersplein regie: no automatic triggers, no write permissions.
 on:
-  workflow_run:
-    workflows: ['Model Arena continu onderzoek']
-    types: [completed]
   workflow_dispatch:
 
 permissions:
-  contents: write
-
-concurrency:
-  group: koersplein-autonomous-research-director
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  direct:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+  archived:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
-    env:
-      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Selecteer maximaal één volgend experiment binnen budget
-        run: node scripts/research/autonomous-director.mjs | tee director.log
-      - name: Voer geselecteerd inhoudelijk experiment uit
-        run: |
-          ID=$(grep '^EXPERIMENT_ID=' director.log | tail -1 | cut -d= -f2 || true)
-          if [ -z "$ID" ]; then echo 'Geen experiment: stopstaat/budget.'; exit 0; fi
-          echo "Research Director start $ID"
-          EXPERIMENT_ID="$ID" node scripts/research/experiment-arena.mjs
-      - name: Bewaar Research Director staat
-        run: |
-          git config user.name "Koersplein Research Director"
-          git config user.email "research-director@users.noreply.github.com"
-          git add data/research-lab/director-state.json 2>/dev/null || true
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Research Director: autonoom experimentcheckpoint"
-          git pull --rebase origin main
-          git push origin HEAD:main
-      - name: Bewaar intern experimentrapport
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: autonomous-research-${{ github.run_number }}
-          path: |
-            research/output/experiments/
-            director.log
-          retention-days: 90
+      - run: echo "Archived workflow — intentionally inactive unless manually dispatched."
