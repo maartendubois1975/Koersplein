@@ -1,17 +1,12 @@
 name: M00 Europa parallelle beursfabriek
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '17 */6 * * *'
-  push:
-    branches: [main]
-    paths: ['.source-first-trigger']
 permissions:
   contents: write
   actions: write
 concurrency:
   group: koersplein-europe-parallel-factory-v2
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   select:
     runs-on: ubuntu-latest
@@ -39,7 +34,7 @@ jobs:
     timeout-minutes: 330
     concurrency:
       group: koersplein-market-${{ matrix.market_mic }}
-      cancel-in-progress: true
+      cancel-in-progress: false
     env:
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
