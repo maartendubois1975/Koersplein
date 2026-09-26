@@ -10,7 +10,7 @@ permissions:
   contents: write
   actions: write
 concurrency:
-  group: koersplein-europe-parallel-factory
+  group: koersplein-europe-parallel-factory-v2
   cancel-in-progress: true
 jobs:
   select:
