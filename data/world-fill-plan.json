@@ -86,11 +86,13 @@
       "currency": "EUR",
       "timezone": "Europe/Lisbon",
       "providerSuffix": ".LS",
-      "state": "WAITING",
-      "note": "Controlled retry: 41 direct daily-history routes, Euronext cross-list resolved by ISIN, six listings explicitly DATA_UNAVAILABLE after four-route evidence.",
+      "state": "BLOCKED",
+      "note": "Quarantined by canonical single writer after proven source preflight failure.",
       "catalogFingerprint": "cf951f3219704345ae22bb2e5a5004c255b190a4795866a8ef5ce0244b3beaa8",
       "retryReason": "LISBON_SEVEN_EXCEPTION_RESOLUTION",
-      "retryAuthorizedAt": "2026-09-26T04:44:28.290Z"
+      "retryAuthorizedAt": "2026-09-26T04:44:28.290Z",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-09-26T06:52:14.786Z"
     },
     {
       "mic": "XLON",
@@ -114,11 +116,13 @@
       "currency": "EUR",
       "timezone": "Europe/Berlin",
       "providerSuffix": ".DE",
-      "state": "WAITING",
+      "state": "BLOCKED",
       "catalogFingerprint": "08fb3055f3905ea5f88590e0d3f24a1374119337bab9e2965003c34eb5b1245c",
-      "note": "One controlled retry authorized after structural DATA_UNAVAILABLE gate repair; BRN / DE000A41YEE3 is explicit proven DATA_UNAVAILABLE.",
+      "note": "Quarantined by canonical single writer after proven source preflight failure.",
       "retryReason": "PROVEN_DATA_UNAVAILABLE_POLICY_REPAIR",
-      "retryAuthorizedAt": "2026-09-26T04:33:24.838Z"
+      "retryAuthorizedAt": "2026-09-26T04:33:24.838Z",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-09-26T06:52:14.786Z"
     },
     {
       "mic": "XSWX",
