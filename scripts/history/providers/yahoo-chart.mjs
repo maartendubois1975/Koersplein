@@ -13,6 +13,9 @@ const MARKET_RULES = {
   XOSL: { suffix: '.OL', exchanges: ['osl', 'oslo', 'oslo bors', 'oslo børs'] },
   XOAS: { suffix: '.OL', exchanges: ['osl', 'oslo', 'oslo bors', 'oslo børs'] },
   MERK: { suffix: '.OL', exchanges: ['osl', 'oslo', 'oslo bors', 'oslo børs'] },
+  XLIS: { suffix: '.LS', exchanges: ['lis', 'lisbon'] },
+  ALXL: { suffix: '.LS', exchanges: ['lis', 'lisbon'] },
+  ENXL: { suffix: '.LS', exchanges: ['lis', 'lisbon'] },
   XETR: { suffix: '.DE', exchanges: ['ger', 'xetra', 'frankfurt', 'deutsche boerse', 'deutsche börse'] }
 };
 
