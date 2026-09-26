@@ -1,38 +1,14 @@
-name: Hindsight Amsterdam Brussel
+name: "ARCHIVED — Hindsight Amsterdam Brussel"
+
+# Archived by Koersplein regie: no automatic triggers, no write permissions.
 on:
   workflow_dispatch:
+
 permissions:
-  contents: write
-concurrency:
-  group: koersplein-hindsight-amsterdam-brussels
-  cancel-in-progress: false
+  contents: read
+
 jobs:
-  hindsight:
+  archived:
     runs-on: ubuntu-latest
-    timeout-minutes: 360
-    env:
-      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
     steps:
-      - uses: actions/checkout@v4
-        with: { ref: main }
-      - uses: actions/setup-node@v4
-        with: { node-version: 22 }
-      - name: Inventariseer alle extreme bewegingen Amsterdam en Brussel
-        run: node scripts/research/hindsight-postmortem.mjs
-      - name: Bewaar Hindsight event census
-        run: |
-          git config user.name "Koersplein Research Director"
-          git config user.email "research-director@users.noreply.github.com"
-          test -s research/output/hindsight/amsterdam-brussels.json || { echo 'Hindsight output ontbreekt/leeg'; exit 1; }
-          git add research/output/hindsight/amsterdam-brussels.json
-          if git diff --cached --quiet; then echo 'Geen wijziging'; exit 0; fi
-          git commit -m "Hindsight: Amsterdam-Brussel event census"
-          git pull --rebase origin main
-          git push origin HEAD:main
-      - uses: actions/upload-artifact@v4
-        with:
-          name: hindsight-amsterdam-brussels
-          path: research/output/hindsight/
-          retention-days: 90
-
-
+      - run: echo "Archived workflow — intentionally inactive unless manually dispatched."
