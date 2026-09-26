@@ -114,11 +114,11 @@
       "currency": "EUR",
       "timezone": "Europe/Berlin",
       "providerSuffix": ".DE",
-      "state": "BLOCKED",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-09-25T15:03:16.091Z",
+      "state": "WAITING",
       "catalogFingerprint": "08fb3055f3905ea5f88590e0d3f24a1374119337bab9e2965003c34eb5b1245c",
-      "note": "Quarantined by canonical single writer after proven source preflight failure."
+      "note": "One controlled retry authorized after structural DATA_UNAVAILABLE gate repair; BRN / DE000A41YEE3 is explicit proven DATA_UNAVAILABLE.",
+      "retryReason": "PROVEN_DATA_UNAVAILABLE_POLICY_REPAIR",
+      "retryAuthorizedAt": "2026-09-26T04:33:24.838Z"
     },
     {
       "mic": "XSWX",
