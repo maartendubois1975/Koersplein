@@ -223,7 +223,11 @@
       "currency": "SEK",
       "timezone": "Europe/Stockholm",
       "providerSuffix": ".ST",
-      "state": "WAITING"
+      "state": "BLOCKED",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-09-27T16:34:38.061Z",
+      "catalogFingerprint": "d3daf9be1f88ff4324ecd375a1a27f215606e99b43b9fabbf74007313f6180dc",
+      "note": "Quarantined by canonical single writer after proven source preflight failure."
     },
     {
       "mic": "XCSE",

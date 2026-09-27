@@ -276,8 +276,8 @@
       }
     },
     "XSTO": {
-      "status": "PREPARED",
-      "catalogSource": "Nasdaq Nordic Equity Reference Data / Nasdaq Stockholm official market model and market notices",
+      "status": "BLOCKED",
+      "catalogSource": "Fixed XSTO instrument snapshot reconciled to Nasdaq OMXSPI and official listing/delisting notices",
       "catalogEvidenceUrl": "https://www.nasdaq.com/products/data/nordic-baltic/nordic-reference-data-files",
       "officialMarketScope": {
         "mainMarketMic": "XSTO",
@@ -337,8 +337,20 @@
           "IPCO",
           "CLAS B"
         ],
-        "note": "Include spaces/share classes and foreign-ISIN Stockholm listings in full-catalog route audit before backfill."
-      }
+        "note": "Include spaces/share classes and foreign-ISIN Stockholm listings in full-catalog route audit before backfill.",
+        "testedDifficultSymbols": 20,
+        "testedFullCatalog": 409,
+        "coverageRatio": 0.9853300733496333,
+        "crossCheckedSymbols": 0,
+        "crossCheckRatio": 0,
+        "sourceCountTested": 4,
+        "uncovered": 6,
+        "dataUnavailable": 0,
+        "unresolved": 6
+      },
+      "catalogFingerprint": "d3daf9be1f88ff4324ecd375a1a27f215606e99b43b9fabbf74007313f6180dc",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "lastAuditAt": "2026-09-27T16:34:26.416Z"
     }
   }
 }
