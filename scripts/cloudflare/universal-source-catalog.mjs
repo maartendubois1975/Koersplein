@@ -9,11 +9,36 @@ const configs={
  XPAR:{urls:['https://live.euronext.com/en/product_directory/data/stocks-paris/download?mics=XPAR%2CALXP%2CXMLI'],allowedMics:new Set(['XPAR','ALXP','XMLI']),market:/Paris|Growth|Access/i,min:50},
  XDUB:{urls:['https://live.euronext.com/en/product_directory/data/stocks-dublin/download?mics=XDUB%2CXESM'],allowedMics:new Set(['XDUB','XESM']),market:/Dublin|Irish|Growth/i,min:20},
  XETR:{urls:['https://www.cashmarket.deutsche-boerse.com/resource/blob/1528/b52ea43a2edac92e8283d40645d1c076/data/t7-xetr-allTradableInstruments.csv'],allowedMics:new Set(['XETR']),market:/Xetra|XETR/i,min:500,format:'xetra'},
- XLIS:{urls:['https://live.euronext.com/en/product_directory/data/stocks-lisbon/download?mics=XLIS%2CALXL%2CENXL'],allowedMics:new Set(['XLIS','ALXL','ENXL']),market:/Lisbon|Growth|Access/i,min:20}
+ XLIS:{urls:['https://live.euronext.com/en/product_directory/data/stocks-lisbon/download?mics=XLIS%2CALXL%2CENXL'],allowedMics:new Set(['XLIS','ALXL','ENXL']),market:/Lisbon|Growth|Access/i,min:20},
+ XSWX:{urls:['https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202608.csv','https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202607.csv'],allowedMics:new Set(['XSWX']),market:/Swiss|Switzerland|Blue Chip|Mid|Small|Sparks/i,min:200,format:'six-monthly'}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':'Koersplein/1.0',accept:'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if(t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
+if(mic==='XSWX'){
+ const lines=text.split(/\r?\n/).filter(Boolean);
+ const delimiter=[';',',','\t'].sort((a,b)=>lines[0].split(b).length-lines[0].split(a).length)[0];
+ const parse=line=>{const o=[];let cur='',q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(q&&line[i+1]==='"'){cur+='"';i++}else q=!q}else if(ch===delimiter&&!q){o.push(cur.trim());cur=''}else cur+=ch}o.push(cur.trim());return o};
+ const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'');
+ const headerIndex=lines.findIndex(line=>{const n=parse(line).map(norm);return n.includes('isin')&&(n.some(x=>/symbol|ticker|valor|security/.test(x)))});
+ if(headerIndex<0)throw new Error('SIX monthly trade CSV: ISIN/symbol header niet gevonden');
+ const header=parse(lines[headerIndex]),hn=header.map(norm);
+ const idx=(...patterns)=>hn.findIndex(h=>patterns.some(p=>h===norm(p)||h.includes(norm(p))));
+ const iIsin=idx('isin'),iSym=idx('symbol','ticker','trading symbol'),iName=idx('security name','instrument name','security','instrument'),iType=idx('security type','instrument type','product group','trading segment'),iCur=idx('currency','trading currency');
+ if(iIsin<0||iSym<0)throw new Error('SIX monthly trade CSV onverwachte kolommen: '+JSON.stringify(header));
+ const shares=[],seen=new Set(),rejected={missingIdentity:0,nonEquity:0,duplicateIsin:0};
+ for(const line of lines.slice(headerIndex+1)){const r=parse(line),isin=String(r[iIsin]||'').toUpperCase(),symbol=String(r[iSym]||'').trim(),name=String((iName>=0?r[iName]:'')||symbol).trim(),type=String(iType>=0?r[iType]:'').toLowerCase(),currency=String(iCur>=0?r[iCur]:'').toUpperCase();
+  if(!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)||!symbol){rejected.missingIdentity++;continue}
+  if(type&&!/(share|equity|blue chip|mid|small|spark)/i.test(type)){rejected.nonEquity++;continue}
+  if(/(bond|etf|etp|fund|warrant|right|option|structured|certificate|derivative)/i.test(type)){rejected.nonEquity++;continue}
+  if(seen.has(isin)){rejected.duplicateIsin++;continue}seen.add(isin);shares.push({name,symbol,isin,market:'SIX Swiss Exchange',mic:'XSWX',currency:currency||undefined});
+ }
+ if(shares.length<cfg.min)throw new Error(`Te weinig bewezen Zürich-aandelen uit officiële SIX Monthly Trade Data: ${shares.length}; rejected=${JSON.stringify(rejected)}`);
+ shares.sort((a,b)=>a.name.localeCompare(b.name,'de-CH'));
+ const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(shares.map(x=>[x.isin,x.mic,x.symbol]))).digest('hex');
+ const catalog={exchange:m.name,mic:m.mic,retrievedAt:new Date().toISOString(),source,fingerprint,rawRows:lines.length-headerIndex-1,rejected,shares};
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,source,fingerprint,rawRows:catalog.rawRows,accepted:shares.length,rejected,pass:true,generatedAt:new Date().toISOString()},null,2));console.log(JSON.stringify({market:mic,rawRows:catalog.rawRows,accepted:shares.length,rejected,fingerprint,source}));process.exit(0);
+}
 if(mic==='XETR'){
  const lines=text.split(/\r?\n/).filter(Boolean), delimiter=';';
  const parse=line=>{const o=[];let cur='',q=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(q&&line[i+1]==='"'){cur+='"';i++}else q=!q}else if(ch===delimiter&&!q){o.push(cur.trim());cur=''}else cur+=ch}o.push(cur.trim());return o};
