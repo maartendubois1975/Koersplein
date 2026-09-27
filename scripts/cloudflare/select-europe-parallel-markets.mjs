@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const max=Math.max(1,Math.min(4,Number(plan.limits?.maxMarketsActive||4)));
-const adapterMics=new Set(['XMIL','XOSL','XAMS','XBRU','XPAR','XDUB','XLIS','XETR']);
+const adapterMics=new Set(['XMIL','XOSL','XAMS','XBRU','XPAR','XDUB','XLIS','XETR','XSWX']);
 const registry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
 const blocked=plan.markets.filter(m=>m.state==='BLOCKED').map(m=>({mic:m.mic,reason:m.blockedReason||'UNSPECIFIED'}));
 const candidates=plan.markets.filter(m=>m.state!=='COMPLETE'&&adapterMics.has(m.mic));
