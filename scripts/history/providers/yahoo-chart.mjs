@@ -16,7 +16,8 @@ const MARKET_RULES = {
   XLIS: { suffix: '.LS', exchanges: ['lis', 'lisbon'] },
   ALXL: { suffix: '.LS', exchanges: ['lis', 'lisbon'] },
   ENXL: { suffix: '.LS', exchanges: ['lis', 'lisbon'] },
-  XETR: { suffix: '.DE', exchanges: ['ger', 'xetra', 'frankfurt', 'deutsche boerse', 'deutsche börse'] }
+  XETR: { suffix: '.DE', exchanges: ['ger', 'xetra', 'frankfurt', 'deutsche boerse', 'deutsche börse'] },
+  XSWX: { suffix: '.SW', exchanges: ['swx', 'swiss', 'six swiss exchange', 'zurich'] }
 };
 
 const isoDate = (unixSeconds) => new Date(unixSeconds * 1000).toISOString().slice(0, 10);
