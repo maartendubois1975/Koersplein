@@ -200,21 +200,34 @@
       }
     },
     "XSWX": {
-      "status": "BLOCKED",
-      "catalogFingerprint": "0c9bb6d6fb324480167b131c91a75eae835cc7764f3fe3916b10dbedd095aa46",
+      "status": "APPROVED",
+      "catalogFingerprint": "b30aaa811000e49f9904a95859e3dc14e72eebb2a4634907eb83efeba269ae39",
       "catalogSource": "https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202608.csv",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-09-27T05:02:54.619Z",
+      "historySources": [
+        {
+          "provider": "yahoo-isin-resolver",
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
+        },
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Full-catalog preflight: 216/445 instruments."
+        },
+        {
+          "provider": "euronext-live",
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/445; 0 additional instruments beyond primary."
+        }
+      ],
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 445,
-        "coverageRatio": 0.9910112359550561,
+        "coverageRatio": 0.9955056179775281,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 4,
-        "dataUnavailable": 2,
-        "unresolved": 2
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       }
     }
   }
