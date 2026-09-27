@@ -274,6 +274,71 @@
         "testedFullCatalog": 126,
         "note": "Official BME equity universe prepared in chat; full route audit must approve every line or explicitly isolate DATA_UNAVAILABLE before COMPLETE."
       }
+    },
+    "XSTO": {
+      "status": "PREPARED",
+      "catalogSource": "Nasdaq Nordic Equity Reference Data / Nasdaq Stockholm official market model and market notices",
+      "catalogEvidenceUrl": "https://www.nasdaq.com/products/data/nordic-baltic/nordic-reference-data-files",
+      "officialMarketScope": {
+        "mainMarketMic": "XSTO",
+        "firstNorthMics": [
+          "FNSE",
+          "SSME"
+        ],
+        "note": "XSTO is regulated Nasdaq Stockholm; First North Sweden is a separate MTF and must retain its own MIC rather than be silently merged into XSTO."
+      },
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "suffix": ".ST",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume"
+          ],
+          "note": "ISIN/ticker-controlled Stockholm route; reused for historical backfill and daily EOD updates."
+        },
+        {
+          "provider": "nasdaq-nordic-reference-data",
+          "role": "OFFICIAL_IDENTITY_VALIDATION",
+          "fields": [
+            "isin",
+            "ticker",
+            "mic"
+          ],
+          "note": "Official Nasdaq Nordic reference data is the canonical identity/catalog source."
+        }
+      ],
+      "dailyUpdate": {
+        "enabled": true,
+        "identity": "ISIN",
+        "provider": "yahoo-chart",
+        "suffix": ".ST",
+        "requiredFields": [
+          "open",
+          "close"
+        ],
+        "validationProvider": "nasdaq-nordic",
+        "policy": "Persist after COMPLETE; DAILY_UPDATE reuses the proven .ST route and does not rediscover sources."
+      },
+      "discovery": {
+        "canaries": [
+          "ERIC B",
+          "VOLV B",
+          "ATCO A",
+          "ATCO B",
+          "SEB A",
+          "HM B",
+          "EVO",
+          "LUG",
+          "IPCO",
+          "CLAS B"
+        ],
+        "note": "Include spaces/share classes and foreign-ISIN Stockholm listings in full-catalog route audit before backfill."
+      }
     }
   }
 }
