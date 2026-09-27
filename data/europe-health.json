@@ -238,15 +238,15 @@
       "reason": null,
       "catalog": {
         "present": false,
-        "count": 0,
+        "count": 126,
         "fingerprint": null,
         "retrievedAt": null,
-        "source": null
+        "source": "BME Equity Securities List / Madrid & Continuous Market official bulletins"
       },
       "sources": {
-        "status": "UNTESTED",
-        "tested": 0,
-        "fullCatalog": 0,
+        "status": "PREPARED",
+        "tested": 2,
+        "fullCatalog": 126,
         "coverageRatio": null,
         "crossCheckRatio": null
       },
@@ -263,11 +263,11 @@
         "count": 0,
         "fingerprint": null,
         "retrievedAt": null,
-        "source": null
+        "source": "Nasdaq Nordic Equity Reference Data / Nasdaq Stockholm official market model and market notices"
       },
       "sources": {
-        "status": "UNTESTED",
-        "tested": 0,
+        "status": "PREPARED",
+        "tested": 2,
         "fullCatalog": 0,
         "coverageRatio": null,
         "crossCheckRatio": null
@@ -693,5 +693,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-09-27T07:03:37.882Z"
+  "generatedAt": "2026-09-27T16:31:01.034Z"
 }
