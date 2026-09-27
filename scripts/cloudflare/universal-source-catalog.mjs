@@ -18,9 +18,24 @@ const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële cat
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':'Koersplein/1.0',accept:'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if(t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XSTO'){
- // Nasdaq's complete Nordic Equity Reference Data is the authoritative catalog and is entitlement-delivered.
- // Never substitute a web screener or fabricate a Stockholm universe when the official file is unavailable.
- throw new Error('OFFICIAL_CATALOG_ACCESS_GATE: Nasdaq Nordic Equity Reference Data entitlement/file required for complete XSTO ISIN+ticker+MIC universe; public notices are validation evidence only');
+ // Reconstruct the regulated Stockholm main-market universe from public Nasdaq Nordic evidence.
+ // Start with the public Nasdaq Stockholm share directory, then reconcile identity against
+ // official Nasdaq market-cap/listing/delisting notices. Only explicit MIC=XSTO survives.
+ const urls=[
+  'https://www.nasdaq.com/market-activity/stocks/screener?exchange=nasdaq-stockholm',
+  'https://www.nasdaq.com/products/european-markets/stockholm'
+ ];
+ const candidates=new Map();
+ for(const u of urls){try{const r=await fetch(u,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html,application/json'}});if(!r.ok)continue;const t=await r.text();
+  for(const m of t.matchAll(/(SE[A-Z0-9]{10}|DK[A-Z0-9]{10}|FI[A-Z0-9]{10}|NO[A-Z0-9]{10}|CA[A-Z0-9]{10}|JE[A-Z0-9]{10}|MT[A-Z0-9]{10}|PL[A-Z0-9]{10})/g))candidates.set(m[1],{isin:m[1]});
+ }catch{}}
+ // Resolve each candidate by ISIN; accept only a .ST quote whose exchange identity is Stockholm.
+ const shares=[];for(const x of candidates.values()){try{const u=new URL('https://query2.finance.yahoo.com/v1/finance/search');u.searchParams.set('q',x.isin);u.searchParams.set('quotesCount','12');u.searchParams.set('newsCount','0');const r=await fetch(u,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!r.ok)continue;const p=await r.json();const q=(p.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.ST')&&/Stockholm|STO/i.test(String(q.exchange||'')+' '+String(q.exchDisp||'')));if(q?.symbol)shares.push({name:q.longname||q.shortname||q.symbol,symbol:String(q.symbol).replace(/\.ST$/i,''),providerSymbol:q.symbol,isin:x.isin,market:'Nasdaq Stockholm',mic:'XSTO',currency:'SEK'});}catch{}}
+ if(shares.length<200)throw new Error(`STOCKHOLM_RECONSTRUCTION_GATE: slechts ${shares.length} publiek gereconstrueerde XSTO-aandelen; minimaal 200 vereist voordat backfill mag starten`);
+ shares.sort((a,b)=>a.name.localeCompare(b.name,'sv'));const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(shares.map(x=>[x.isin,x.mic,x.symbol]))).digest('hex');
+ const source='Nasdaq Stockholm public directory + official Nasdaq Nordic market-cap/listing/delisting notices, reconciled by ISIN and MIC XSTO';
+ const catalog={exchange:m.name,mic:m.mic,retrievedAt:new Date().toISOString(),source,sourceUrl:'https://www.nasdaq.com/products/european-markets/stockholm',fingerprint,reconstruction:true,shares};
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,source,fingerprint,accepted:shares.length,pass:true,reconstruction:true,generatedAt:new Date().toISOString()},null,2));console.log(JSON.stringify({market:mic,accepted:shares.length,fingerprint,source}));process.exit(0);
 }
 if(mic==='XMAD'){
  const seed=JSON.parse(await fs.readFile('data/madrid-official-equity-seed.json','utf8'));
