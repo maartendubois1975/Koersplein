@@ -17,23 +17,27 @@ const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële cat
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':'Koersplein/1.0',accept:'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if(t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XMAD'){
- const pages=[];
- for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html,application/json,*/*'}});if(r.ok)pages.push({url,body:await r.text()});}catch{}}
- const candidates=[]; const seen=new Set();
- const walk=(v)=>{if(!v)return;if(Array.isArray(v)){for(const x of v)walk(x);return}if(typeof v!=='object')return;
-   const entries=Object.entries(v), get=(rx)=>entries.find(([k])=>rx.test(k))?.[1];
-   const isin=String(get(/(^|_)isin($|_)/i)||'').toUpperCase(), symbol=String(get(/symbol|ticker|mnemo|code/i)||'').trim(), name=String(get(/name|company|issuer|security/i)||'').trim(), market=String(get(/market|exchange|segment/i)||'');
-   if(/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)&&symbol&&name&&!/(warrant|etf|fund|right|bond|certificate|future|option)/i.test(name+' '+market)){const k=isin+'\\0'+symbol;if(!seen.has(k)){seen.add(k);candidates.push({name,symbol,isin,market:market||'BME Main Market',mic:'XMAD',currency:'EUR'});}}
-   for(const [,x] of entries)walk(x);
- };
- for(const p of pages){
-   for(const m of p.body.matchAll(/<script[^>]*type=["']application\\/json["'][^>]*>([\\s\\S]*?)<\\/script>/gi)){try{walk(JSON.parse(m[1].replace(/&quot;/g,'"').replace(/&amp;/g,'&')))}catch{}}
-   for(const m of p.body.matchAll(/\{[^{}]{0,1200}"(?:isin|ISIN)"[^{}]{0,1200}\}/g)){try{walk(JSON.parse(m[0]))}catch{}}
+ const seed=JSON.parse(await fs.readFile('data/madrid-official-equity-seed.json','utf8'));
+ const shares=[]; const unresolved=[];
+ for(let n=0;n<seed.shares.length;n+=6){
+   const batch=await Promise.all(seed.shares.slice(n,n+6).map(async x=>{
+     try{
+       const u=new URL('https://query2.finance.yahoo.com/v1/finance/search');u.searchParams.set('q',x.isin);u.searchParams.set('quotesCount','12');u.searchParams.set('newsCount','0');
+       const r=await fetch(u,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!r.ok)return null;
+       const p=await r.json();const q=(p.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.MC')&&/MCE|Madrid/i.test(String(q.exchange||'')+' '+String(q.exchDisp||'')));
+       if(!q?.symbol)return null;return {...x,symbol:String(q.symbol).replace(/\.MC$/i,''),providerSymbol:String(q.symbol),market:'BME Main Market'};
+     }catch{return null}
+   }));
+   batch.forEach((v,i)=>{if(v)shares.push(v);else unresolved.push(seed.shares[n+i])});
  }
- if(candidates.length<cfg.min)throw new Error(`BME officiële cataloguspagina gevonden maar slechts ${candidates.length} machineleesbare aandelen; officiële Equity Securities List blijft bronpoort`);
- candidates.sort((a,b)=>a.name.localeCompare(b.name,'es'));const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(candidates.map(x=>[x.isin,x.mic,x.symbol]))).digest('hex');
- const catalog={exchange:m.name,mic:m.mic,retrievedAt:new Date().toISOString(),source:'BME Listed Companies / Equity Securities List',fingerprint,rawRows:candidates.length,rejected:{},shares:candidates};
- await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,source:catalog.source,fingerprint,rawRows:candidates.length,accepted:candidates.length,rejected:{},pass:true,generatedAt:new Date().toISOString()},null,2));console.log(JSON.stringify({market:mic,accepted:candidates.length,fingerprint,source:catalog.source}));process.exit(0);
+ if(shares.length<110)throw new Error(`Madrid BME ISIN-resolutie onvoldoende: ${shares.length}/${seed.shares.length}; unresolved=${unresolved.length}`);
+ const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(seed.shares.map(x=>[x.isin,x.mic]))).digest('hex');
+ shares.sort((a,b)=>a.name.localeCompare(b.name,'es'));
+ const catalog={exchange:m.name,mic:m.mic,retrievedAt:new Date().toISOString(),source:seed.source,sourceUrl:seed.sourceUrl,fingerprint,officialCount:seed.shares.length,resolvedCount:shares.length,unresolved,shares};
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,source:seed.source,sourceUrl:seed.sourceUrl,fingerprint,officialCount:seed.shares.length,accepted:shares.length,unresolved,pass:unresolved.length===0,generatedAt:new Date().toISOString()},null,2));
+ if(unresolved.length)throw new Error(`Madrid catalogus heeft nog ${unresolved.length} onopgeloste officiële aandelen; gate blijft dicht`);
+ console.log(JSON.stringify({market:mic,officialCount:seed.shares.length,accepted:shares.length,fingerprint,source:seed.source}));
+ process.exit(0);
 }
 if(mic==='XSWX'){
  const lines=text.split(/\r?\n/).filter(Boolean);
