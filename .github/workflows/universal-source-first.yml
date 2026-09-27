@@ -1,5 +1,8 @@
 name: M00 Europa parallelle beursfabriek
 on:
+  push:
+    branches: [main]
+    paths: ['.github/triggers/zurich']
   workflow_dispatch:
     inputs:
       market_mic:
@@ -138,7 +141,7 @@ jobs:
 
   continue-autopilot:
     needs: [select, market, persist-completions]
-    if: ${{ always() && github.event_name != 'workflow_dispatch' && needs.select.result == 'success' && needs.persist-completions.result == 'success' && needs.persist-completions.outputs.changed == 'true' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
+    if: ${{ always() && github.event_name == 'schedule' && needs.select.result == 'success' && needs.persist-completions.result == 'success' && needs.persist-completions.outputs.changed == 'true' && needs.select.outputs.markets != '[]' && needs.select.outputs.markets != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Start maximaal één vervolgcyclus vanaf actuele main
