@@ -27,7 +27,7 @@ jobs:
       - id: pick
         name: Kies maximaal vier Europese beurzen
         env:
-          FORCE_MARKET_MIC: ${{ inputs.market_mic }}
+          FORCE_MARKET_MIC: ${{ inputs.market_mic || 'XSWX' }}
         run: |
           set -euo pipefail
           MARKETS=$(node scripts/cloudflare/select-europe-parallel-markets.mjs)
