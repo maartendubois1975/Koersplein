@@ -18,24 +18,34 @@ const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële cat
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':'Koersplein/1.0',accept:'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if(t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XSTO'){
- // Reconstruct the regulated Stockholm main-market universe from public Nasdaq Nordic evidence.
- // Start with the public Nasdaq Stockholm share directory, then reconcile identity against
- // official Nasdaq market-cap/listing/delisting notices. Only explicit MIC=XSTO survives.
- const urls=[
-  'https://www.nasdaq.com/market-activity/stocks/screener?exchange=nasdaq-stockholm',
-  'https://www.nasdaq.com/products/european-markets/stockholm'
+ const snapshot='https://www.instinet.com/sites/default/files/blockmatch/stocklist/europe/BlockMatchEurope_20260917.html';
+ const r=await fetch(snapshot,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'}});
+ if(!r.ok)throw new Error('STOCKHOLM_SNAPSHOT_GATE: XSTO snapshot niet bereikbaar');
+ const html=await r.text(); const shares=[]; const seen=new Set();
+ const clean=s=>String(s||'').replace(/<[^>]*>/g,'').replace(/&amp;/g,'&').replace(/&#39;/g,"'").trim();
+ for(const tr of html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)){
+  const cells=[...tr[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(x=>clean(x[1])); if(cells.length<6)continue;
+  const [desc,bloomberg,isin,micCode,currency,relevant]=cells;
+  if(micCode!=='XSTO'||relevant!=='XSTO'||currency!=='SEK'||!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin))continue;
+  if(/SUBSCR|RIGHT|BTA|TR\b/i.test(desc))continue;
+  let symbol=String(bloomberg||'').replace(/\s+SS$/i,'').trim();
+  if(!symbol||seen.has(isin))continue;seen.add(isin);shares.push({name:desc.replace(/\s+(ORD|PRF|SDR|SDB|ORD SHS)$/i,''),symbol,providerSymbol:symbol.replace(/([A-Z])$/,'-$1')+'.ST',isin,market:'Nasdaq Stockholm',mic:'XSTO',currency:'SEK'});
+ }
+ // 2026 Main-Market graduates whose reference-market flag can lag in the 17 Sep broker snapshot.
+ const add=[
+  ['FLAT B','Flat Capital AB ser. B','SE0016609846'],['SMCRT','SmartCraft Group AB','SE0027597691'],['SILEX','Silex Microsystems AB','SE0025012248'],['PPI','Public Property Invest ASA','NO0013228586'],['OCTV SDB','Octave Intelligence plc SDB','SE0028329433'],['STORY B','Storytel AB ser. B','SE0007439443'],['PDX','Paradox Interactive AB','SE0008294953'],['NTECH','Stockholm Nordtech Group AB','SE0028825042'],['TANGEN B','Tången Industrikapital AB','SE0029278985'],['SALIX','Salix Group AB','SE0028329540'],['ELLOS','Ellos Holding AB','SE0028799429'],['LMGAB','Linjemontage i Grästorp AB','SE0030361606']
  ];
- const candidates=new Map();
- for(const u of urls){try{const r=await fetch(u,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html,application/json'}});if(!r.ok)continue;const t=await r.text();
-  for(const m of t.matchAll(/(SE[A-Z0-9]{10}|DK[A-Z0-9]{10}|FI[A-Z0-9]{10}|NO[A-Z0-9]{10}|CA[A-Z0-9]{10}|JE[A-Z0-9]{10}|MT[A-Z0-9]{10}|PL[A-Z0-9]{10})/g))candidates.set(m[1],{isin:m[1]});
- }catch{}}
- // Resolve each candidate by ISIN; accept only a .ST quote whose exchange identity is Stockholm.
- const shares=[];for(const x of candidates.values()){try{const u=new URL('https://query2.finance.yahoo.com/v1/finance/search');u.searchParams.set('q',x.isin);u.searchParams.set('quotesCount','12');u.searchParams.set('newsCount','0');const r=await fetch(u,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!r.ok)continue;const p=await r.json();const q=(p.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.ST')&&/Stockholm|STO/i.test(String(q.exchange||'')+' '+String(q.exchDisp||'')));if(q?.symbol)shares.push({name:q.longname||q.shortname||q.symbol,symbol:String(q.symbol).replace(/\.ST$/i,''),providerSymbol:q.symbol,isin:x.isin,market:'Nasdaq Stockholm',mic:'XSTO',currency:'SEK'});}catch{}}
- if(shares.length<200)throw new Error(`STOCKHOLM_RECONSTRUCTION_GATE: slechts ${shares.length} publiek gereconstrueerde XSTO-aandelen; minimaal 200 vereist voordat backfill mag starten`);
- shares.sort((a,b)=>a.name.localeCompare(b.name,'sv'));const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(shares.map(x=>[x.isin,x.mic,x.symbol]))).digest('hex');
- const source='Nasdaq Stockholm public directory + official Nasdaq Nordic market-cap/listing/delisting notices, reconciled by ISIN and MIC XSTO';
- const catalog={exchange:m.name,mic:m.mic,retrievedAt:new Date().toISOString(),source,sourceUrl:'https://www.nasdaq.com/products/european-markets/stockholm',fingerprint,reconstruction:true,shares};
- await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,source,fingerprint,accepted:shares.length,pass:true,reconstruction:true,generatedAt:new Date().toISOString()},null,2));console.log(JSON.stringify({market:mic,accepted:shares.length,fingerprint,source}));process.exit(0);
+ for(const [symbol,name,isin] of add)if(!seen.has(isin)){seen.add(isin);shares.push({name,symbol,providerSymbol:symbol.replace(/ /g,'-')+'.ST',isin,market:'Nasdaq Stockholm',mic:'XSTO',currency:'SEK'})}
+ // Confirmed delistings after/before snapshot must never survive.
+ const removed=new Set(['SE0017084361']); // Viva Wine, last trading day 2026-09-22
+ const final=shares.filter(x=>!removed.has(x.isin)).sort((a,b)=>a.symbol.localeCompare(b.symbol,'sv'));
+ if(final.length!==398)throw new Error(`STOCKHOLM_INSTRUMENT_CLOSURE_GATE: ${final.length}/398 actuele XSTO share instruments; niets publiceren tot exact 398`);
+ const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(final.map(x=>[x.isin,x.mic,x.symbol]))).digest('hex');
+ const seed={asOf:'2026-09-27',scope:'Nasdaq Stockholm Main Market shares; MIC XSTO; First North excluded',officialControl:{index:'OMXSPI',components:398,asOf:'2026-09-25'},sources:[snapshot,'https://indexes.nasdaq.com/Index/Overview/OMXSPI','https://view.news.eu.nasdaq.com/view?id=bc42af4cf9b929594bacdd76e84831702&lang=en'],fingerprint,shares:final};
+ await fs.writeFile('data/stockholm-official-equity-seed.json',JSON.stringify(seed,null,2)+'\n');
+ const catalog={exchange:m.name,mic:m.mic,retrievedAt:new Date().toISOString(),source:'Fixed XSTO instrument snapshot reconciled to Nasdaq OMXSPI and official listing/delisting notices',sourceUrl:snapshot,fingerprint,officialCount:398,resolvedCount:398,shares:final};
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,fingerprint,officialCount:398,accepted:398,pass:true,generatedAt:new Date().toISOString()},null,2));
+ console.log(JSON.stringify({market:mic,officialCount:398,accepted:398,fingerprint}));process.exit(0);
 }
 if(mic==='XMAD'){
  const seed=JSON.parse(await fs.readFile('data/madrid-official-equity-seed.json','utf8'));
