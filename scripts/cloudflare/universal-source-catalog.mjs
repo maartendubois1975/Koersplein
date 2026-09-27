@@ -11,11 +11,17 @@ const configs={
  XETR:{urls:['https://www.cashmarket.deutsche-boerse.com/resource/blob/1528/b52ea43a2edac92e8283d40645d1c076/data/t7-xetr-allTradableInstruments.csv'],allowedMics:new Set(['XETR']),market:/Xetra|XETR/i,min:500,format:'xetra'},
  XLIS:{urls:['https://live.euronext.com/en/product_directory/data/stocks-lisbon/download?mics=XLIS%2CALXL%2CENXL'],allowedMics:new Set(['XLIS','ALXL','ENXL']),market:/Lisbon|Growth|Access/i,min:20},
  XSWX:{urls:['https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202608.csv','https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202607.csv'],allowedMics:new Set(['XSWX']),market:/Swiss|Switzerland|Blue Chip|Mid|Small|Sparks/i,min:200,format:'six-monthly'},
- XMAD:{urls:['https://www.bolsasymercados.es/en/bme-exchange/prices-and-markets/shares/listed-companies.html','https://www.bolsasymercados.es/es/download-center.html'],allowedMics:new Set(['XMAD']),market:/Madrid|Continuous|Mercado Continuo|Main Market/i,min:80,format:'bme-html'}
+ XMAD:{urls:['https://www.bolsasymercados.es/en/bme-exchange/prices-and-markets/shares/listed-companies.html','https://www.bolsasymercados.es/es/download-center.html'],allowedMics:new Set(['XMAD']),market:/Madrid|Continuous|Mercado Continuo|Main Market/i,min:80,format:'bme-html'},
+ XSTO:{urls:['https://www.nasdaq.com/products/data/nordic-baltic/nordic-reference-data-files'],allowedMics:new Set(['XSTO']),market:/Stockholm|STO Equities/i,min:200,format:'nasdaq-nordic-reference'}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':'Koersplein/1.0',accept:'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if(t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
+if(mic==='XSTO'){
+ // Nasdaq's complete Nordic Equity Reference Data is the authoritative catalog and is entitlement-delivered.
+ // Never substitute a web screener or fabricate a Stockholm universe when the official file is unavailable.
+ throw new Error('OFFICIAL_CATALOG_ACCESS_GATE: Nasdaq Nordic Equity Reference Data entitlement/file required for complete XSTO ISIN+ticker+MIC universe; public notices are validation evidence only');
+}
 if(mic==='XMAD'){
  const seed=JSON.parse(await fs.readFile('data/madrid-official-equity-seed.json','utf8'));
  const shares=[]; const unresolved=[];
