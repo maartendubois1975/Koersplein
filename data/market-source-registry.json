@@ -229,6 +229,51 @@
         "sourceCountTested": 4,
         "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       }
+    },
+    "XMAD": {
+      "status": "PREPARED",
+      "catalogSource": "BME Equity Securities List / Madrid & Continuous Market official bulletins",
+      "catalogEvidenceUrl": "https://www.bolsasymercados.es/en/bme-exchange/prices-and-markets/statistics/boletines-e-informes.html",
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "suffix": ".MC",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume"
+          ],
+          "note": "ISIN-resolved Madrid symbol; same daily route used for historical backfill and incremental EOD updates."
+        },
+        {
+          "provider": "bme-daily-bulletin",
+          "role": "OFFICIAL_DAILY_VALIDATION",
+          "fields": [
+            "open",
+            "close"
+          ],
+          "note": "Official BME Madrid/Continuous Market daily bulletin retained as exchange-specific validation source."
+        }
+      ],
+      "dailyUpdate": {
+        "enabled": true,
+        "identity": "ISIN",
+        "provider": "yahoo-chart",
+        "suffix": ".MC",
+        "validationProvider": "bme-daily-bulletin",
+        "requiredFields": [
+          "open",
+          "close"
+        ],
+        "policy": "Persist this route after COMPLETE; DAILY_UPDATE must reuse the proven market route and must not rediscover a generic source."
+      },
+      "discovery": {
+        "testedFullCatalog": 126,
+        "note": "Official BME equity universe prepared in chat; full route audit must approve every line or explicitly isolate DATA_UNAVAILABLE before COMPLETE."
+      }
     }
   }
 }
