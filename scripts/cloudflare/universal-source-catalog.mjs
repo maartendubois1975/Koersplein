@@ -39,13 +39,13 @@ if(mic==='XSTO'){
  // Confirmed delistings after/before snapshot must never survive.
  const removed=new Set(['SE0017084361']); // Viva Wine, last trading day 2026-09-22
  const final=shares.filter(x=>!removed.has(x.isin)).sort((a,b)=>a.symbol.localeCompare(b.symbol,'sv'));
- if(final.length!==398)throw new Error(`STOCKHOLM_INSTRUMENT_CLOSURE_GATE: ${final.length}/398 actuele XSTO share instruments; niets publiceren tot exact 398`);
+ if(final.length!==409)throw new Error(`STOCKHOLM_INSTRUMENT_CLOSURE_GATE: ${final.length}/409 actuele XSTO share instruments; niets publiceren tot exact 409`);
  const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(final.map(x=>[x.isin,x.mic,x.symbol]))).digest('hex');
- const seed={asOf:'2026-09-27',scope:'Nasdaq Stockholm Main Market shares; MIC XSTO; First North excluded',officialControl:{index:'OMXSPI',components:398,asOf:'2026-09-25'},sources:[snapshot,'https://indexes.nasdaq.com/Index/Overview/OMXSPI','https://view.news.eu.nasdaq.com/view?id=bc42af4cf9b929594bacdd76e84831702&lang=en'],fingerprint,shares:final};
+ const seed={asOf:'2026-09-27',scope:'Nasdaq Stockholm Main Market shares; MIC XSTO; First North excluded',officialControl:{listedCompanies:363,index:'OMXSPI',indexComponents:398,shareInstruments:409,asOf:'2026-09-27',note:'OMXSPI component count is an index control and is not identical to the complete tradable share-instrument universe'},sources:[snapshot,'https://indexes.nasdaq.com/Index/Overview/OMXSPI','https://view.news.eu.nasdaq.com/view?id=bc42af4cf9b929594bacdd76e84831702&lang=en'],fingerprint,shares:final};
  await fs.writeFile('data/stockholm-official-equity-seed.json',JSON.stringify(seed,null,2)+'\n');
- const catalog={exchange:m.name,mic:m.mic,retrievedAt:new Date().toISOString(),source:'Fixed XSTO instrument snapshot reconciled to Nasdaq OMXSPI and official listing/delisting notices',sourceUrl:snapshot,fingerprint,officialCount:398,resolvedCount:398,shares:final};
- await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,fingerprint,officialCount:398,accepted:398,pass:true,generatedAt:new Date().toISOString()},null,2));
- console.log(JSON.stringify({market:mic,officialCount:398,accepted:398,fingerprint}));process.exit(0);
+ const catalog={exchange:m.name,mic:m.mic,retrievedAt:new Date().toISOString(),source:'Fixed XSTO instrument snapshot reconciled to Nasdaq OMXSPI and official listing/delisting notices',sourceUrl:snapshot,fingerprint,officialCount:409,resolvedCount:409,shares:final};
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,fingerprint,officialCount:409,accepted:409,pass:true,generatedAt:new Date().toISOString()},null,2));
+ console.log(JSON.stringify({market:mic,officialCount:409,accepted:409,fingerprint}));process.exit(0);
 }
 if(mic==='XMAD'){
  const seed=JSON.parse(await fs.readFile('data/madrid-official-equity-seed.json','utf8'));
