@@ -24,16 +24,18 @@ if(mic==='XSWX'){
  if(headerIndex<0)throw new Error('SIX monthly trade CSV: ISIN/symbol header niet gevonden');
  const header=parse(lines[headerIndex]),hn=header.map(norm);
  const idx=(...patterns)=>hn.findIndex(h=>patterns.some(p=>h===norm(p)||h.includes(norm(p))));
- const iIsin=idx('isin'),iSym=idx('symbol','ticker','trading symbol'),iName=idx('security name','instrument name','security','instrument'),iType=idx('security type','instrument type','product group','trading segment'),iCur=idx('currency','trading currency');
- if(iIsin<0||iSym<0)throw new Error('SIX monthly trade CSV onverwachte kolommen: '+JSON.stringify(header));
+ const iIsin=idx('isin'),iSym=idx('symbol','ticker','trading symbol'),iValor=idx('valor number','valor'),iName=idx('name','security name','instrument name','security','instrument'),iType=idx('six product segment desc','security type','instrument type','product group','trading segment'),iSub=idx('instrument sub type'),iCur=idx('trading currency code','currency','trading currency');
+ if(iIsin<0||iName<0)throw new Error('SIX monthly trade CSV onverwachte kolommen: '+JSON.stringify(header));
  const shares=[],seen=new Set(),rejected={missingIdentity:0,nonEquity:0,duplicateIsin:0};
- for(const line of lines.slice(headerIndex+1)){const r=parse(line),isin=String(r[iIsin]||'').toUpperCase(),symbol=String(r[iSym]||'').trim(),name=String((iName>=0?r[iName]:'')||symbol).trim(),type=String(iType>=0?r[iType]:'').toLowerCase(),currency=String(iCur>=0?r[iCur]:'').toUpperCase();
+ for(const line of lines.slice(headerIndex+1)){const r=parse(line),isin=String(r[iIsin]||'').toUpperCase(),symbol=String((iSym>=0?r[iSym]:'')||(iValor>=0?r[iValor]:'')).trim(),name=String((iName>=0?r[iName]:'')||symbol).trim(),type=(String(iType>=0?r[iType]:'')+' '+String(iSub>=0?r[iSub]:'')).toLowerCase(),currency=String(iCur>=0?r[iCur]:'').toUpperCase();
   if(!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)||!symbol){rejected.missingIdentity++;continue}
   if(type&&!/(share|equity|blue chip|mid|small|spark)/i.test(type)){rejected.nonEquity++;continue}
   if(/(bond|etf|etp|fund|warrant|right|option|structured|certificate|derivative)/i.test(type)){rejected.nonEquity++;continue}
   if(seen.has(isin)){rejected.duplicateIsin++;continue}seen.add(isin);shares.push({name,symbol,isin,market:'SIX Swiss Exchange',mic:'XSWX',currency:currency||undefined});
  }
  if(shares.length<cfg.min)throw new Error(`Te weinig bewezen Zürich-aandelen uit officiële SIX Monthly Trade Data: ${shares.length}; rejected=${JSON.stringify(rejected)}`);
+ // SIX Monthly Trade Data is the authoritative universe. Resolve public .SW tickers by ISIN for display/history routing.
+ for(let n=0;n<shares.length;n+=6){await Promise.all(shares.slice(n,n+6).map(async x=>{try{const u=new URL('https://query2.finance.yahoo.com/v1/finance/search');u.searchParams.set('q',x.isin);u.searchParams.set('quotesCount','10');u.searchParams.set('newsCount','0');const r=await fetch(u,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!r.ok)return;const p=await r.json();const q=(p.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.SW'));if(q?.symbol)x.symbol=String(q.symbol).replace(/\.SW$/i,'');}catch{}}));}
  shares.sort((a,b)=>a.name.localeCompare(b.name,'de-CH'));
  const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(shares.map(x=>[x.isin,x.mic,x.symbol]))).digest('hex');
  const catalog={exchange:m.name,mic:m.mic,retrievedAt:new Date().toISOString(),source,fingerprint,rawRows:lines.length-headerIndex-1,rejected,shares};
