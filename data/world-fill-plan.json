@@ -191,7 +191,11 @@
       "currency": "CHF",
       "timezone": "Europe/Zurich",
       "providerSuffix": ".SW",
-      "state": "WAITING"
+      "state": "BLOCKED",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-09-27T04:48:06.845Z",
+      "catalogFingerprint": "b30aaa811000e49f9904a95859e3dc14e72eebb2a4634907eb83efeba269ae39",
+      "note": "Quarantined by canonical single writer after proven source preflight failure."
     },
     {
       "mic": "XMAD",

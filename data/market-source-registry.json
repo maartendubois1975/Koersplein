@@ -198,6 +198,24 @@
         "sourceCountTested": 4,
         "uncovered": 1
       }
+    },
+    "XSWX": {
+      "status": "BLOCKED",
+      "catalogFingerprint": "b30aaa811000e49f9904a95859e3dc14e72eebb2a4634907eb83efeba269ae39",
+      "catalogSource": "https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202608.csv",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "lastAuditAt": "2026-09-27T04:47:52.232Z",
+      "discovery": {
+        "testedDifficultSymbols": 20,
+        "testedFullCatalog": 445,
+        "coverageRatio": 0,
+        "crossCheckedSymbols": 0,
+        "crossCheckRatio": 0,
+        "sourceCountTested": 4,
+        "uncovered": 445,
+        "dataUnavailable": 0,
+        "unresolved": 445
+      }
     }
   }
 }

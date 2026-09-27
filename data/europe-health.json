@@ -4,9 +4,9 @@
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
     "complete": 6,
-    "blocked": 3,
+    "blocked": 4,
     "ready": 0,
-    "pending": 22,
+    "pending": 21,
     "total": 31
   },
   "markets": [
@@ -211,22 +211,22 @@
     {
       "mic": "XSWX",
       "name": "Zürich",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
-      "reason": null,
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 445,
+        "fingerprint": "b30aaa811000e49f9904a95859e3dc14e72eebb2a4634907eb83efeba269ae39",
         "retrievedAt": null,
-        "source": null
+        "source": "https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202608.csv"
       },
       "sources": {
-        "status": "UNTESTED",
-        "tested": 0,
-        "fullCatalog": 0,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "status": "BLOCKED",
+        "tested": 4,
+        "fullCatalog": 445,
+        "coverageRatio": 0,
+        "crossCheckRatio": 0
       },
       "completedAt": null
     },
@@ -693,5 +693,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-09-26T11:20:25.883Z"
+  "generatedAt": "2026-09-27T04:48:06.896Z"
 }
