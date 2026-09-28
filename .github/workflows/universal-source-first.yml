@@ -27,7 +27,7 @@ jobs:
       - id: pick
         name: Kies maximaal vier Europese beurzen
         env:
-          FORCE_MARKET_MIC: ${{ inputs.market_mic || (contains(github.event.head_commit.message, 'stockholm') && 'XSTO') || (contains(github.event.head_commit.message, 'madrid') && 'XMAD') || 'XSWX' }}
+          FORCE_MARKET_MIC: ${{ inputs.market_mic || (contains(github.event.head_commit.message, 'stockholm') && 'XSTO') || (contains(github.event.head_commit.message, 'stockholm') && 'XSTO') || (contains(github.event.head_commit.message, 'madrid') && 'XMAD') || 'XSWX' }}
         run: |
           set -euo pipefail
           MARKETS=$(node scripts/cloudflare/select-europe-parallel-markets.mjs)
