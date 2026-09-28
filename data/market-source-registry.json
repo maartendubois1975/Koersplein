@@ -276,8 +276,8 @@
       }
     },
     "XSTO": {
-      "status": "BLOCKED",
-      "catalogSource": "Fixed XSTO instrument snapshot reconciled to Nasdaq OMXSPI and official listing/delisting notices",
+      "status": "APPROVED",
+      "catalogSource": "Official Nasdaq Nordic Equity Trading by Company and Instrument - July 2026 XLSX, Instrument Trading Details; reconciled with official Nasdaq Stockholm listing/delisting notices through 2026-09-28",
       "catalogEvidenceUrl": "https://www.nasdaq.com/products/data/nordic-baltic/nordic-reference-data-files",
       "officialMarketScope": {
         "mainMarketMic": "XSTO",
@@ -289,27 +289,19 @@
       },
       "historySources": [
         {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY",
-          "suffix": ".ST",
-          "fields": [
-            "open",
-            "high",
-            "low",
-            "close",
-            "volume"
-          ],
-          "note": "ISIN/ticker-controlled Stockholm route; reused for historical backfill and daily EOD updates."
+          "provider": "yahoo-isin-resolver",
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
         },
         {
-          "provider": "nasdaq-nordic-reference-data",
-          "role": "OFFICIAL_IDENTITY_VALIDATION",
-          "fields": [
-            "isin",
-            "ticker",
-            "mic"
-          ],
-          "note": "Official Nasdaq Nordic reference data is the canonical identity/catalog source."
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Full-catalog preflight: 412/412 instruments."
+        },
+        {
+          "provider": "euronext-live",
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/412; 0 additional instruments beyond primary."
         }
       ],
       "dailyUpdate": {
@@ -325,30 +317,15 @@
         "policy": "Persist after COMPLETE; DAILY_UPDATE reuses the proven .ST route and does not rediscover sources."
       },
       "discovery": {
-        "canaries": [
-          "ERIC B",
-          "VOLV B",
-          "ATCO A",
-          "ATCO B",
-          "SEB A",
-          "HM B",
-          "EVO",
-          "LUG",
-          "IPCO",
-          "CLAS B"
-        ],
-        "note": "Include spaces/share classes and foreign-ISIN Stockholm listings in full-catalog route audit before backfill.",
         "testedDifficultSymbols": 20,
-        "testedFullCatalog": 409,
-        "coverageRatio": 0.9828850855745721,
+        "testedFullCatalog": 412,
+        "coverageRatio": 1,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 7,
-        "dataUnavailable": 0,
-        "unresolved": 7
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       },
-      "catalogFingerprint": "d3daf9be1f88ff4324ecd375a1a27f215606e99b43b9fabbf74007313f6180dc",
+      "catalogFingerprint": "0330b39db31ce010c855bd12c3657d60c78e9cb10e1710f274f2abdff7e7a5d3",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
       "lastAuditAt": "2026-09-28T04:12:55.163Z"
     }
