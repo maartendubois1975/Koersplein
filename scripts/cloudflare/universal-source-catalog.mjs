@@ -26,7 +26,7 @@ if(mic==='XSTO'){
  if(invalid.length||duplicates.length||shares.length!==412)throw new Error(`STOCKHOLM_FIXED_SEED_GATE: count=${shares.length}, invalid=${invalid.length}, duplicates=${duplicates.length}; verwacht exact 412 actuele XSTO stock instruments`);
  const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(shares.map(x=>[x.isin,x.mic,x.symbol,x.segment,x.providerSymbol]))).digest('hex');
  const catalog={exchange:m.name,mic:'XSTO',retrievedAt:new Date().toISOString(),source:seed.source,sourceUrl:seed.sourceUrl,fingerprint,officialCount:shares.length,resolvedCount:shares.length,fixedSeed:true,shares};
- await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,source:seed.source,sourceUrl:seed.sourceUrl,fingerprint,officialCount:shares.length,accepted:shares.length,invalid:invalid.length,duplicates:duplicates.length,pass:true,fixedSeed:true,generatedAt:new Date().toISOString()},null,2));
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,source:seed.source,sourceUrl:seed.sourceUrl,fingerprint,officialCount:shares.length,accepted:shares.length,invalid:invalid.length,duplicates:duplicates.length,pass:true,fixedSeed:true,generatedAt:new Date().toISOString()},null,2));
  console.log(JSON.stringify({market:mic,officialCount:shares.length,accepted:shares.length,fingerprint,fixedSeed:true}));process.exit(0);
 }
 if(mic==='XMAD'){
