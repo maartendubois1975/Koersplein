@@ -55,8 +55,6 @@ jobs:
         with: { ref: main }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
-      - name: Officiële catalogus
-        run: node scripts/cloudflare/universal-source-catalog.mjs
       - name: Bouw vaste Stockholm-seed uit officiële Nasdaq XLSX
         if: matrix.market_mic == 'XSTO'
         run: |
@@ -67,6 +65,8 @@ jobs:
           git commit -m "stockholm: freeze official XSTO seed through 2026-09-28" || true
           git pull --rebase origin main
           git push origin HEAD:main
+      - name: Officiële catalogus
+        run: node scripts/cloudflare/universal-source-catalog.mjs
       - name: Bron-dekkingspoort — bewijs 100% vóór vullen
         timeout-minutes: 30
         run: |
