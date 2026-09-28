@@ -18,34 +18,16 @@ const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële cat
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':'Koersplein/1.0',accept:'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if(t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XSTO'){
- const snapshot='https://www.instinet.com/sites/default/files/blockmatch/stocklist/europe/BlockMatchEurope_20260917.html';
- const r=await fetch(snapshot,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'}});
- if(!r.ok)throw new Error('STOCKHOLM_SNAPSHOT_GATE: XSTO snapshot niet bereikbaar');
- const html=await r.text(); const shares=[]; const seen=new Set();
- const clean=s=>String(s||'').replace(/<[^>]*>/g,'').replace(/&amp;/g,'&').replace(/&#39;/g,"'").trim();
- for(const tr of html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)){
-  const cells=[...tr[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(x=>clean(x[1])); if(cells.length<6)continue;
-  const [desc,bloomberg,isin,micCode,currency,relevant]=cells;
-  if(micCode!=='XSTO'||relevant!=='XSTO'||currency!=='SEK'||!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin))continue;
-  if(/SUBSCR|RIGHT|BTA|TR\b/i.test(desc))continue;
-  let symbol=String(bloomberg||'').replace(/\s+SS$/i,'').trim();
-  if(!symbol||seen.has(isin))continue;seen.add(isin);shares.push({name:desc.replace(/\s+(ORD|PRF|SDR|SDB|ORD SHS)$/i,''),symbol,providerSymbol:symbol.replace(/([A-Z])$/,'-$1')+'.ST',isin,market:'Nasdaq Stockholm',mic:'XSTO',currency:'SEK'});
- }
- // 2026 Main-Market graduates whose reference-market flag can lag in the 17 Sep broker snapshot.
- const add=[
-  ['FLAT B','Flat Capital AB ser. B','SE0016609846'],['SMCRT','SmartCraft Group AB','SE0027597691'],['SILEX','Silex Microsystems AB','SE0025012248'],['PPI','Public Property Invest ASA','NO0013228586'],['OCTV SDB','Octave Intelligence plc SDB','SE0028329433'],['STORY B','Storytel AB ser. B','SE0007439443'],['PDX','Paradox Interactive AB','SE0008294953'],['NTECH','Stockholm Nordtech Group AB','SE0028825042'],['TANGEN B','Tången Industrikapital AB','SE0029278985'],['SALIX','Salix Group AB','SE0028329540'],['ELLOS','Ellos Holding AB','SE0028799429'],['LMGAB','Linjemontage i Grästorp AB','SE0030361606']
- ];
- for(const [symbol,name,isin] of add)if(!seen.has(isin)){seen.add(isin);shares.push({name,symbol,providerSymbol:symbol.replace(/ /g,'-')+'.ST',isin,market:'Nasdaq Stockholm',mic:'XSTO',currency:'SEK'})}
- // Confirmed delistings after/before snapshot must never survive.
- const removed=new Set(['SE0017084361']); // Viva Wine, last trading day 2026-09-22
- const final=shares.filter(x=>!removed.has(x.isin)).sort((a,b)=>a.symbol.localeCompare(b.symbol,'sv'));
- if(final.length!==409)throw new Error(`STOCKHOLM_INSTRUMENT_CLOSURE_GATE: ${final.length}/409 actuele XSTO share instruments; niets publiceren tot exact 409`);
- const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(final.map(x=>[x.isin,x.mic,x.symbol]))).digest('hex');
- const seed={asOf:'2026-09-27',scope:'Nasdaq Stockholm Main Market shares; MIC XSTO; First North excluded',officialControl:{listedCompanies:363,index:'OMXSPI',indexComponents:398,shareInstruments:409,asOf:'2026-09-27',note:'OMXSPI component count is an index control and is not identical to the complete tradable share-instrument universe'},sources:[snapshot,'https://indexes.nasdaq.com/Index/Overview/OMXSPI','https://view.news.eu.nasdaq.com/view?id=bc42af4cf9b929594bacdd76e84831702&lang=en'],fingerprint,shares:final};
- await fs.writeFile('data/stockholm-official-equity-seed.json',JSON.stringify(seed,null,2)+'\n');
- const catalog={exchange:m.name,mic:m.mic,retrievedAt:new Date().toISOString(),source:'Fixed XSTO instrument snapshot reconciled to Nasdaq OMXSPI and official listing/delisting notices',sourceUrl:snapshot,fingerprint,officialCount:409,resolvedCount:409,shares:final};
- await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,fingerprint,officialCount:409,accepted:409,pass:true,generatedAt:new Date().toISOString()},null,2));
- console.log(JSON.stringify({market:mic,officialCount:409,accepted:409,fingerprint}));process.exit(0);
+ const seed=JSON.parse(await fs.readFile('data/stockholm-official-equity-seed.json','utf8'));
+ const shares=(seed.shares||[]).map(x=>({...x,mic:'XSTO',market:'Nasdaq Stockholm Main Market'}));
+ const invalid=shares.filter(x=>!x.name||!x.symbol||!x.isin||x.mic!=='XSTO'||!['Large Cap','Mid Cap','Small Cap'].includes(x.segment)||!x.providerSymbol);
+ const seenIsin=new Set(),seenTicker=new Set();const duplicates=[];
+ for(const x of shares){if(seenIsin.has(x.isin)||seenTicker.has(x.symbol.toUpperCase()))duplicates.push(x);seenIsin.add(x.isin);seenTicker.add(x.symbol.toUpperCase());}
+ if(invalid.length||duplicates.length||shares.length!==409)throw new Error(`STOCKHOLM_FIXED_SEED_GATE: count=${shares.length}, invalid=${invalid.length}, duplicates=${duplicates.length}; verwacht exact 409 actuele XSTO stock instruments`);
+ const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(shares.map(x=>[x.isin,x.mic,x.symbol,x.segment,x.providerSymbol]))).digest('hex');
+ const catalog={exchange:m.name,mic:'XSTO',retrievedAt:new Date().toISOString(),source:seed.source,sourceUrl:seed.sourceUrl,fingerprint,officialCount:shares.length,resolvedCount:shares.length,fixedSeed:true,shares};
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,source:seed.source,sourceUrl:seed.sourceUrl,fingerprint,officialCount:shares.length,accepted:shares.length,invalid:invalid.length,duplicates:duplicates.length,pass:true,fixedSeed:true,generatedAt:new Date().toISOString()},null,2));
+ console.log(JSON.stringify({market:mic,officialCount:shares.length,accepted:shares.length,fingerprint,fixedSeed:true}));process.exit(0);
 }
 if(mic==='XMAD'){
  const seed=JSON.parse(await fs.readFile('data/madrid-official-equity-seed.json','utf8'));
