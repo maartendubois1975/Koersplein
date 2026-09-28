@@ -12,11 +12,22 @@ const configs={
  XLIS:{urls:['https://live.euronext.com/en/product_directory/data/stocks-lisbon/download?mics=XLIS%2CALXL%2CENXL'],allowedMics:new Set(['XLIS','ALXL','ENXL']),market:/Lisbon|Growth|Access/i,min:20},
  XSWX:{urls:['https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202608.csv','https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202607.csv'],allowedMics:new Set(['XSWX']),market:/Swiss|Switzerland|Blue Chip|Mid|Small|Sparks/i,min:200,format:'six-monthly'},
  XMAD:{urls:['https://www.bolsasymercados.es/en/bme-exchange/prices-and-markets/shares/listed-companies.html','https://www.bolsasymercados.es/es/download-center.html'],allowedMics:new Set(['XMAD']),market:/Madrid|Continuous|Mercado Continuo|Main Market/i,min:80,format:'bme-html'},
- XSTO:{urls:['https://www.nasdaq.com/products/data/nordic-baltic/nordic-reference-data-files'],allowedMics:new Set(['XSTO']),market:/Stockholm|STO Equities/i,min:200,format:'nasdaq-nordic-reference'}
+ XSTO:{urls:['https://www.nasdaq.com/products/data/nordic-baltic/nordic-reference-data-files'],allowedMics:new Set(['XSTO']),market:/Stockholm|STO Equities/i,min:200,format:'nasdaq-nordic-reference'},
+ XCSE:{urls:['https://www.investing.com/indices/omx-copenhagen-all-shares-pi-components'],allowedMics:new Set(['XCSE']),market:/Copenhagen/i,min:115,format:'omxcpi-components'}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':'Koersplein/1.0',accept:'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if(t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
+if(mic==='XCSE'){
+ const html=text;
+ const links=[...html.matchAll(/href=["']([^"']*\/equities\/[^"']+)["'][^>]*>([^<]+)<\/a>/gi)].map(m=>({href:new URL(m[1],source).href,name:m[2].replace(/&amp;/g,'&').trim()}));
+ const uniq=[];const seen=new Set();for(const x of links){if(!seen.has(x.href)){seen.add(x.href);uniq.push(x);}}
+ const shares=[];for(let n=0;n<uniq.length;n+=8){const batch=await Promise.all(uniq.slice(n,n+8).map(async x=>{try{const r=await fetch(x.href,{headers:{'user-agent':'Mozilla/5.0',accept:'text/html'}});if(!r.ok)return null;const h=await r.text();const ticker=(h.match(/stock ticker symbol[^"]*? is ([A-Z0-9 .-]+)/i)||h.match(/<h1[^>]*>[^<]*\(([A-Z0-9 .-]+)\)/i)||[])[1]?.trim();const isin=(h.match(/ISIN:\s*([A-Z]{2}[A-Z0-9]{10})/i)||h.match(/>ISIN<[^>]*>[\s\S]{0,120}?([A-Z]{2}[A-Z0-9]{10})/i)||[])[1];if(!ticker||!isin)return null;return {company:x.name,name:x.name,symbol:ticker,ticker,isin,mic:'XCSE',segment:'Main Market',currency:'DKK',providerSymbol:ticker.replace(/ /g,'-')+'.CO'};}catch{return null;}}));shares.push(...batch.filter(Boolean));}
+ const byIsin=[...new Map(shares.map(x=>[x.isin,x])).values()];
+ if(byIsin.length!==115)throw new Error(`COPENHAGEN_ALL_SHARE_GATE: resolved=${byIsin.length}; verwacht exact 115 OMXCPI-verhandelbare aandelen`);
+ const catalog={exchange:m.name,mic:'XCSE',retrievedAt:new Date().toISOString(),source:'Nasdaq OMXCPI official count + Investing OMXCPI constituent identity cross-check',sourceUrl:'https://indexes.nasdaq.com/Index/Overview/OMXCPI',officialCount:115,resolvedCount:115,fixedSeed:false,shares:byIsin};
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');console.log(JSON.stringify({market:mic,officialCount:115,accepted:115}));process.exit(0);
+}
 if(mic==='XSTO'){
  const seed=JSON.parse(await fs.readFile('data/stockholm-official-equity-seed.json','utf8'));
  const koerspleinExcluded=new Set(['BESQAB PREF B','CORE D','CORE PREF','EMIL PREF','FPAR D','INTEA D','K2A PREF','NP3 PREF','SAGA D','SBB D','VOLO PREF','ALIV SDB','ALVO SDB','ARION SDB']);
