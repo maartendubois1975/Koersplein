@@ -340,17 +340,17 @@
         "note": "Include spaces/share classes and foreign-ISIN Stockholm listings in full-catalog route audit before backfill.",
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 409,
-        "coverageRatio": 0.980440097799511,
+        "coverageRatio": 0.9853300733496333,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 8,
+        "uncovered": 6,
         "dataUnavailable": 0,
-        "unresolved": 8
+        "unresolved": 6
       },
       "catalogFingerprint": "d3daf9be1f88ff4324ecd375a1a27f215606e99b43b9fabbf74007313f6180dc",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-09-27T16:36:26.326Z"
+      "lastAuditAt": "2026-09-28T04:11:44.714Z"
     }
   }
 }
