@@ -57,6 +57,9 @@ jobs:
         with: { node-version: 22 }
       - name: Officiële catalogus
         run: node scripts/cloudflare/universal-source-catalog.mjs
+      - name: Inspecteer officiële Stockholm XLSX
+        if: matrix.market_mic == 'XSTO'
+        run: python3 scripts/cloudflare/inspect-stockholm-xlsx.py
       - name: Bron-dekkingspoort — bewijs 100% vóór vullen
         timeout-minutes: 30
         run: |
