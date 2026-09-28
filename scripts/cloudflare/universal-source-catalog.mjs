@@ -16,7 +16,7 @@ const configs={
  XCSE:{urls:['https://www.investing.com/indices/omx-copenhagen-all-shares-pi-components'],allowedMics:new Set(['XCSE']),market:/Copenhagen/i,min:115,format:'omxcpi-components'}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
-let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':'Koersplein/1.0',accept:'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if(t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
+let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if(t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XCSE'){
  const html=text;
