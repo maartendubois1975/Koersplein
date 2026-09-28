@@ -14,7 +14,7 @@ const today = () => new Date().toISOString().slice(0, 10);
 export function validateBars(bars) {
   const seen = new Set();
   return bars.filter((bar) => {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(bar.date) || seen.has(bar.date) || !Number.isFinite(bar.close) || bar.close <= 0) return false;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(bar.date) || seen.has(bar.date) || !Number.isFinite(bar.open) || bar.open <= 0 || !Number.isFinite(bar.close) || bar.close <= 0) return false;
     if (Number.isFinite(bar.high) && Number.isFinite(bar.low) && bar.high < bar.low) return false;
     if (Number.isFinite(bar.high) && bar.high < bar.close) return false;
     if (Number.isFinite(bar.low) && bar.low > bar.close) return false;
