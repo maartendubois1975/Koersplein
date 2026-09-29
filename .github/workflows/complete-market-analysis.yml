@@ -1,0 +1,69 @@
+name: M01-M10 COMPLETE markt onderzoek
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['Dagelijkse Open Close Update']
+    types: [completed]
+permissions:
+  contents: write
+concurrency:
+  group: koersplein-complete-market-analysis
+  cancel-in-progress: false
+jobs:
+  matrix:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    outputs:
+      markets: ${{ steps.mk.outputs.markets }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - id: mk
+        run: echo "markets=$(node -e "const p=require('./data/world-fill-plan.json');console.log(JSON.stringify(p.markets.filter(x=>x.state==='COMPLETE').map(x=>x.mic)))")" >> "$GITHUB_OUTPUT"
+  core:
+    needs: matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        mic: ${{ fromJSON(needs.matrix.outputs.markets) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      MARKET_MIC: ${{ matrix.mic }}
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - run: node scripts/research/complete-market-pipeline.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: complete-market-${{ matrix.mic }}
+          path: research/output/${{ matrix.mic }}/
+          retention-days: 90
+  cross-market:
+    needs: core
+    if: ${{ always() && needs.core.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: M05 model arena contract
+        run: node scripts/research/model-arena.mjs
+      - name: M10 hindsight alle COMPLETE markten
+        run: node scripts/research/hindsight-postmortem.mjs
+      - name: M08 live opportunity output
+        run: node scripts/research/top5-three-month.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: complete-market-cross-research
+          path: research/output/
+          retention-days: 90
