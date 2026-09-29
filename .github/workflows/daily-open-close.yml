@@ -1,4 +1,4 @@
-name: Dagelijkse Open Close Controle
+name: Dagelijkse Open Close Update
 on:
   schedule:
     - cron: '45 18 * * 1-5'
@@ -6,32 +6,36 @@ on:
   push:
     paths:
       - '.github/workflows/daily-open-close.yml'
+      - 'scripts/cloudflare/daily-open-close-update.mjs'
       - 'scripts/cloudflare/audit-daily-open-close.mjs'
-      - 'scripts/history/providers/yahoo-chart.mjs'
+      - 'scripts/history/**'
 permissions:
   contents: read
 concurrency:
   group: koersplein-daily-open-close
   cancel-in-progress: false
 jobs:
-  audit:
+  update-and-verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
     env:
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: main
+        with: { ref: main }
       - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Controleer Open en Close op alle COMPLETE beurzen
+        with: { node-version: '22' }
+      - name: Voeg nieuwste volledige open en slot toe aan COMPLETE beurzen
+        run: node scripts/cloudflare/daily-open-close-update.mjs
+      - name: Verifieer open en slot
+        if: always()
         run: node scripts/cloudflare/audit-daily-open-close.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: daily-open-close-audit
-          path: research/output/daily-open-close-audit.json
-          retention-days: 30
+          name: daily-open-close
+          path: |
+            research/output/daily-open-close-update.json
+            research/output/daily-open-close-audit.json
+          retention-days: 90
