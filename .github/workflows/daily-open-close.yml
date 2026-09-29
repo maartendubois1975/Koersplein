@@ -27,10 +27,20 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
       - name: Voeg nieuwste volledige open en slot toe aan COMPLETE beurzen
-        run: node scripts/cloudflare/daily-open-close-update.mjs
+        run: |
+          for attempt in 1 2 3; do
+            node scripts/cloudflare/daily-open-close-update.mjs && break
+            test "$attempt" -eq 3 && exit 1
+            sleep $((attempt * 30))
+          done
       - name: Verifieer open en slot
         if: always()
-        run: node scripts/cloudflare/audit-daily-open-close.mjs
+        run: |
+          for attempt in 1 2 3; do
+            node scripts/cloudflare/audit-daily-open-close.mjs && break
+            test "$attempt" -eq 3 && exit 1
+            sleep $((attempt * 30))
+          done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
