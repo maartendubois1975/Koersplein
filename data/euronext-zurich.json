@@ -1,0 +1,3575 @@
+{
+  "exchange": "Zürich",
+  "mic": "XSWX",
+  "retrievedAt": "2026-09-29T04:49:50.232Z",
+  "source": "https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202608.csv",
+  "fingerprint": "f6a515b191f29fbe31d04f2935de3e38f6f71152a81a2ae7fdced07ddb3f91c1",
+  "rawRows": 86507,
+  "rejected": {
+    "missingIdentity": 0,
+    "nonEquity": 80811,
+    "duplicateIsin": 5251
+  },
+  "shares": [
+    {
+      "name": "Bearer Share",
+      "symbol": "41860974",
+      "isin": "AT0000KTMI02",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "CCAP",
+      "isin": "CH0006326851",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "DAE",
+      "isin": "CH0030486770",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "HLEE",
+      "isin": "CH0003583256",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "KUD",
+      "isin": "CH0012268360",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "PEDU",
+      "isin": "CH0252620700",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "RO",
+      "isin": "CH0012032113",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "UHR",
+      "isin": "CH0012255151",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "CFT",
+      "isin": "CH0014345117",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "AMS",
+      "isin": "AT0000A3EPA4",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "LMN",
+      "isin": "NL0010733960",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "490580",
+      "isin": "FR0000125007",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "CFTE",
+      "isin": "CH1270609584",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Bearer Share",
+      "symbol": "4279720",
+      "isin": "CH0042797206",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ABBN",
+      "isin": "CH0012221716",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ALC",
+      "isin": "CH0432492467",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "AMRZ",
+      "isin": "CH1430134226",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "CFR",
+      "isin": "CH0210483332",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "GALD",
+      "isin": "CH1335392721",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "GEBN",
+      "isin": "CH0030170408",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "GIVN",
+      "isin": "CH0010645932",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "HBAN",
+      "isin": "CH0466642201",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "HOLN",
+      "isin": "CH0012214059",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BAER",
+      "isin": "CH0102484968",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "KNIN",
+      "isin": "CH0025238863",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "2575132",
+      "isin": "CH0025751329",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "LONN",
+      "isin": "CH0013841017",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "NESN",
+      "isin": "CH0038863350",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "NOVN",
+      "isin": "CH0012005267",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "PGHN",
+      "isin": "CH0024608827",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SGSN",
+      "isin": "CH1256740924",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SDZ",
+      "isin": "CH1243598427",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SIKA",
+      "isin": "CH0418792922",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SOON",
+      "isin": "CH0012549785",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "STMN",
+      "isin": "CH1175448666",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SLHN",
+      "isin": "CH0014852781",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SREN",
+      "isin": "CH0126881561",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SCMN",
+      "isin": "CH0008742519",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "UBSG",
+      "isin": "CH0244767585",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VACN",
+      "isin": "CH0311864901",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ZURN",
+      "isin": "CH0011075394",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "AEVS",
+      "isin": "CH0478634105",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ARBN",
+      "isin": "CH0110240600",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "APGN",
+      "isin": "CH0019107025",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ARYN",
+      "isin": "CH1425684714",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ASWN",
+      "isin": "CH0404880129",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ACLN",
+      "isin": "CH1169360919",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ADXN",
+      "isin": "CH0029850754",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ADEN",
+      "isin": "CH0012138605",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ADVN",
+      "isin": "CH0008967926",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ALLN",
+      "isin": "CH0008837566",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ALSN",
+      "isin": "CH0024590272",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ASCN",
+      "isin": "CH0011339204",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "AUTN",
+      "isin": "CH0127480363",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "AVOL",
+      "isin": "CH0023405456",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BEAN",
+      "isin": "CH1101098163",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BKW",
+      "isin": "CH0130293662",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BVZN",
+      "isin": "CH0008207356",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BANB",
+      "isin": "CH1176493729",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BCVN",
+      "isin": "CH0531751755",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BCGE",
+      "isin": "CH1485899350",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BCJ",
+      "isin": "CH0350665672",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BARN",
+      "isin": "CH0009002962",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BSLN",
+      "isin": "CH0011432447",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BELL",
+      "isin": "CH0315966322",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BBN",
+      "isin": "CH0028422100",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BEKN",
+      "isin": "CH0009691608",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BIOV",
+      "isin": "CH0210362643",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BION",
+      "isin": "CH0038389992",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BOSN",
+      "isin": "CH0238627142",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BUCN",
+      "isin": "CH0002432174",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BCHN",
+      "isin": "CH0025536027",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BRKN",
+      "isin": "CH0212255803",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "BYS",
+      "isin": "CH0244017502",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "GAV",
+      "isin": "CH1278877563",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "CLTN",
+      "isin": "CH0025343259",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "CPHN",
+      "isin": "CH0001624714",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "CALN",
+      "isin": "CH0126639464",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "CPEN",
+      "isin": "CH0048854746",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "CMBN",
+      "isin": "CH0225173167",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "CNTL",
+      "isin": "CH0024666528",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "CHAM",
+      "isin": "CH0524026959",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "CICN",
+      "isin": "CH0008702190",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "CLN",
+      "isin": "CH0012142631",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "COTN",
+      "isin": "CH0360826991",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "CMHC",
+      "isin": "NL0011832936",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "CURN",
+      "isin": "CH1330780979",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "DKSH",
+      "isin": "CH0126673539",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "121647879",
+      "isin": "CH1216478797",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "DOCM",
+      "isin": "CH0042615283",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "DESN",
+      "isin": "CH0582581713",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "EFGN",
+      "isin": "CH0022268228",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "117016316",
+      "isin": "CY0109992111",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "EUR"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "EPIC",
+      "isin": "CH0516131684",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ESUN",
+      "isin": "CH0024736404",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ELMN",
+      "isin": "CH0005319162",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "EMMN",
+      "isin": "CH0012829898",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "EMSN",
+      "isin": "CH0016440353",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "EVE",
+      "isin": "CH1262055788",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "FTON",
+      "isin": "CH0009320091",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "FHZN",
+      "isin": "CH0319416936",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "FORN",
+      "isin": "CH0003541510",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "FREN",
+      "isin": "CH0045825517",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "GAM",
+      "isin": "CH0102659627",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "GF",
+      "isin": "CH1169151003",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "GALE",
+      "isin": "CH0360674466",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "GLKBN",
+      "isin": "CH0189396655",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "GMI",
+      "isin": "CH0012949464",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "GURN",
+      "isin": "CH1173567111",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "HBMN",
+      "isin": "CH0012627250",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "HIAG",
+      "isin": "CH0239518779",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "HUBN",
+      "isin": "CH0030380734",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "HBLN",
+      "isin": "CH0001341608",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "IFCN",
+      "isin": "CH1431598916",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VBSN",
+      "isin": "CH0187624256",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "IDIA",
+      "isin": "CH0363463438",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "IMPN",
+      "isin": "CH0023868554",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "INFRAC",
+      "isin": "CH0019867685",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "INRN",
+      "isin": "CH0006372897",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ISN",
+      "isin": "CH1338987303",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "IREN",
+      "isin": "CH0325094297",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "JFN",
+      "isin": "CH0017875789",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "KARN",
+      "isin": "CH0100837282",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "KLIN",
+      "isin": "CH0420462266",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "KOMN",
+      "isin": "CH0010702154",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "KURN",
+      "isin": "CH0325814116",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "LEHN",
+      "isin": "CH0022427626",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "LAND",
+      "isin": "CH0371153492",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "LEON",
+      "isin": "CH0190891181",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "LLBN",
+      "isin": "LI0355147575",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "LISN",
+      "isin": "CH0010570759",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "LUKN",
+      "isin": "CH1252930610",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "MCHN",
+      "isin": "CH0039542854",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "MOVE",
+      "isin": "CH0468525222",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "MED",
+      "isin": "CH0386200239",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "MTG",
+      "isin": "CH0208062627",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "METN",
+      "isin": "CH0039821084",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "MIKN",
+      "isin": "CH0003390066",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "MMTX",
+      "isin": "CH1251125998",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "MOBN",
+      "isin": "CH0011108872",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "MOLN",
+      "isin": "CH0256379097",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "AERO",
+      "isin": "CH1110425654",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "NBEN",
+      "isin": "CH0005059438",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "NWRN",
+      "isin": "IT0004147952",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "NREN",
+      "isin": "CH0212186248",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "OERL",
+      "isin": "CH0000816824",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ORON",
+      "isin": "CH0111677362",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "PLAN",
+      "isin": "CH0284142913",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "PSPN",
+      "isin": "CH0018294154",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "11853036",
+      "isin": "CH0118530366",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "PMN",
+      "isin": "CH1261338102",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "PPGN",
+      "isin": "CH1110760852",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "PEHN",
+      "isin": "CH0006089921",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "RSGN",
+      "isin": "CH1107979838",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "RIEN",
+      "isin": "CH0003671440",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "REHN",
+      "isin": "CH1263676327",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SFPN",
+      "isin": "CH0032816131",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SFSN",
+      "isin": "CH0239229302",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SHLTN",
+      "isin": "IL0010855885",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SIGN",
+      "isin": "CH0435377954",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SKAN",
+      "isin": "CH0013396012",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SMG",
+      "isin": "CH1484953687",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SNBN",
+      "isin": "CH0001319265",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SANN",
+      "isin": "CH1276028821",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SCHN",
+      "isin": "CH0024638212",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SWTQ",
+      "isin": "CH1248667003",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SENS",
+      "isin": "CH0406705126",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SFZN",
+      "isin": "CH1429326825",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SWON",
+      "isin": "CH0496451508",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SGKN",
+      "isin": "CH0011484067",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SRAIL",
+      "isin": "CH0002178181",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "STGN",
+      "isin": "CH0002361068",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SUN",
+      "isin": "CH0038388911",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SUNN",
+      "isin": "CH1386220409",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "UHRN",
+      "isin": "CH0012255144",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SPSN",
+      "isin": "CH0008038389",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SQN",
+      "isin": "CH1548235246",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "TEMN",
+      "isin": "CH0012453913",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "TXGN",
+      "isin": "CH0011178255",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "TECN",
+      "isin": "CH0012100191",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VZUG",
+      "isin": "CH0542483745",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VPBN",
+      "isin": "LI0315487269",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VZN",
+      "isin": "CH0528751586",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VLRT",
+      "isin": "CH0367427686",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VATN",
+      "isin": "CH0014786500",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VARN",
+      "isin": "CH0305285295",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VAHN",
+      "isin": "CH0021545667",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VETN",
+      "isin": "CH0530235594",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VILN",
+      "isin": "CH0002609656",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VONN",
+      "isin": "CH0012335540",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "WIHN",
+      "isin": "CH1276062754",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "WKBN",
+      "isin": "CH0305951201",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "WARN",
+      "isin": "CH0002619481",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "XLS",
+      "isin": "CH0461929603",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "YPSN",
+      "isin": "CH0019396990",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ZEHN",
+      "isin": "CH0276534614",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ZUGN",
+      "isin": "CH0148052126",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ZUGER",
+      "isin": "CH0493891243",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ZUBN",
+      "isin": "CH0312309682",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "DOKA",
+      "isin": "CH1486524122",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "MEDX",
+      "isin": "CH1129677105",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "MOZN",
+      "isin": "CH0276837694",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "NEAG",
+      "isin": "CH0039651184",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "947556",
+      "isin": "US5324571083",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "111709033",
+      "isin": "SE0015988019",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "961618",
+      "isin": "US7134481081",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "3754629",
+      "isin": "US7181721090",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "2844943",
+      "isin": "FR0010411983",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ABBNE",
+      "isin": "CH0357679619",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ACLNE",
+      "isin": "CH1550409051",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ALCE",
+      "isin": "CH1557600348",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "AMRZE",
+      "isin": "CH1560267291",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "35854105",
+      "isin": "CH0358541057",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "HBMNE",
+      "isin": "CH0257717097",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "LISNE",
+      "isin": "CH1192548399",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "LOGNE",
+      "isin": "CH1282125983",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "NOVNEE",
+      "isin": "CH0038459415",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SCHNE",
+      "isin": "CH1391509895",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "SRENE",
+      "isin": "CH0286491805",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "TXGNE",
+      "isin": "CH1469859271",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "UBSGE",
+      "isin": "CH1523282379",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "VATNE",
+      "isin": "CH1549892193",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "ALPN",
+      "isin": "CH0019199550",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "OFN",
+      "isin": "CH0003420806",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "STRN",
+      "isin": "CH0002277314",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Registered Share",
+      "symbol": "TIBN",
+      "isin": "CH0527044959",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "676894",
+      "isin": "CA0084741085",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "146740002",
+      "isin": "CA0203987072",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "144690732",
+      "isin": "CA06849F1080",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "680579",
+      "isin": "CA13321L1085",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1935513",
+      "isin": "CA29258Y1034",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "22787347",
+      "isin": "CA2926717083",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "37962592",
+      "isin": "CA67077M1086",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "696996",
+      "isin": "CA6979001089",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "27926256",
+      "isin": "CA82509L1076",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "36429694",
+      "isin": "CA9628791027",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "502455",
+      "isin": "FR0000120073",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "486352",
+      "isin": "FR0000120628",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "123397",
+      "isin": "FR0000131104",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "487663",
+      "isin": "FR0000120644",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "497537",
+      "isin": "FR0000121667",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "86689",
+      "isin": "FR0000052292",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "502805",
+      "isin": "FR0000120321",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "507170",
+      "isin": "FR0000121014",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "829036",
+      "isin": "FR0000073272",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "699381",
+      "isin": "FR0000120578",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "509120",
+      "isin": "FR0000121972",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "524773",
+      "isin": "FR0000120271",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "508670",
+      "isin": "FR0000125486",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "11730015",
+      "isin": "DE000A1EWWW0",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "4566068",
+      "isin": "DE000A0WMPJ6",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "322646",
+      "isin": "DE0008404005",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "917955",
+      "isin": "DE0006766504",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "11450563",
+      "isin": "DE000BASF111",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "10367293",
+      "isin": "DE000BAY0017",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "324660",
+      "isin": "DE0005200000",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "325648",
+      "isin": "DE0005909006",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "324410",
+      "isin": "DE0005190003",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "21320655",
+      "isin": "DE000A1TNV91",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "21170377",
+      "isin": "DE000CBK1001",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "327800",
+      "isin": "DE0005439004",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1040659",
+      "isin": "DE0005470306",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "115216150",
+      "isin": "DE000DTR0CK8",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "829257",
+      "isin": "DE0005140008",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "667979",
+      "isin": "DE0008232125",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "324330",
+      "isin": "DE0008019001",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "338580",
+      "isin": "DE0006305006",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1124244",
+      "isin": "DE0005552004",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1177233",
+      "isin": "DE0005810055",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1026592",
+      "isin": "DE0005557508",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "4334819",
+      "isin": "DE000ENAG999",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1234108",
+      "isin": "DE0005773303",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "332902",
+      "isin": "DE0005785604",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "159647500",
+      "isin": "DE000FRE5EN2",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "3138496",
+      "isin": "DE000A0LD6E6",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "335740",
+      "isin": "DE0006047004",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "335910",
+      "isin": "DE0006048432",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "56875079",
+      "isin": "DE000HAG0005",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "336340",
+      "isin": "DE0006070006",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1038049",
+      "isin": "DE0006231004",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "124525998",
+      "isin": "DE000A3E00M1",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "21642770",
+      "isin": "DE000KGX8881",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "20516489",
+      "isin": "DE000LEG1110",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "945657",
+      "isin": "DE0007100000",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "2166689",
+      "isin": "DE000A0D9PT0",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "341960",
+      "isin": "DE0008430026",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "502775",
+      "isin": "DE0006916604",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "4533730",
+      "isin": "DE000PAH0038",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "129870173",
+      "isin": "DE000RENK730",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "345850",
+      "isin": "DE0007030009",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1158883",
+      "isin": "DE0007037129",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "348595",
+      "isin": "DE0006202005",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "345952",
+      "isin": "DE0007164600",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "29613036",
+      "isin": "DE000A12DM80",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "827766",
+      "isin": "DE0007236101",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "56635536",
+      "isin": "DE000ENER6Y0",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "40652181",
+      "isin": "DE000SHL1006",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "13673056",
+      "isin": "DE000A1K0235",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "2810536",
+      "isin": "DE000SYM9999",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "28423342",
+      "isin": "DE000WAF3001",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "412006",
+      "isin": "DE0007500001",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "125205291",
+      "isin": "DE000TUAG505",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "19625225",
+      "isin": "DE000TLX1005",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "352781",
+      "isin": "DE0007664039",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "21644750",
+      "isin": "DE000A1ML7J1",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "25375574",
+      "isin": "DE000ZAL1111",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1250633",
+      "isin": "IT0003128367",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "575913",
+      "isin": "IT0000072618",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "80896",
+      "isin": "LU0061462528",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "42119868",
+      "isin": "NL0012969182",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "19531091",
+      "isin": "NL0010273215",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "33292346",
+      "isin": "NL0011821202",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "49729630",
+      "isin": "NL0013654783",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "2578174",
+      "isin": "NL0000395903",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "40769307",
+      "isin": "LU1778762911",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "20145667",
+      "isin": "US00287Y1091",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "903472",
+      "isin": "US00724F1012",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "903491",
+      "isin": "US0079031078",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "2863830",
+      "isin": "US0080731088",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "58382412",
+      "isin": "US0090661010",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "199805",
+      "isin": "US0126531013",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "34298184",
+      "isin": "US0138721065",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "29798540",
+      "isin": "US02079K3059",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "29798545",
+      "isin": "US02079K1079",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "645156",
+      "isin": "US0231351067",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "22053992",
+      "isin": "US02376R1023",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "647943",
+      "isin": "US0320951017",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "908440",
+      "isin": "US0378331005",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "118301491",
+      "isin": "US0381692070",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "908542",
+      "isin": "US0382221051",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "110387675",
+      "isin": "US03831W1080",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "139795197",
+      "isin": "US0404132054",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "36372319",
+      "isin": "US05464C1018",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "906153",
+      "isin": "US0258161092",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "115740143",
+      "isin": "US03769M1062",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "912061",
+      "isin": "US0758871091",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "10926529",
+      "isin": "US0846707026",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "30143936",
+      "isin": "US8522341036",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "42260790",
+      "isin": "US0937121079",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "913253",
+      "isin": "US0970231058",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "40656108",
+      "isin": "US09857L1089",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "913577",
+      "isin": "US1011371077",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "914188",
+      "isin": "US1101221083",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "41112361",
+      "isin": "US11135F1012",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "748628",
+      "isin": "US0605051046",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "138405792",
+      "isin": "US09290D1019",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "916187",
+      "isin": "US1273871087",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "916546",
+      "isin": "US1491231015",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1281709",
+      "isin": "US1667641005",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "12915350",
+      "isin": "US1729674242",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "49563753",
+      "isin": "US18915M1071",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "919390",
+      "isin": "US1912161007",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "10218771",
+      "isin": "US1921085049",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "110289664",
+      "isin": "US19260Q1076",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "919477",
+      "isin": "US1941621039",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1330331",
+      "isin": "US20825C1045",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "116022036",
+      "isin": "US21037T1097",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "921667",
+      "isin": "US2193501051",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "47976949",
+      "isin": "US22788C1053",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "2319653",
+      "isin": "US1696561059",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "918546",
+      "isin": "US17275R1023",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "120490456",
+      "isin": "US26740W1099",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "923916",
+      "isin": "US2358511028",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "49718937",
+      "isin": "US23804L1035",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "924235",
+      "isin": "US2441991054",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "44433929",
+      "isin": "US24703L2025",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "2107726",
+      "isin": "US2521311074",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "13213821",
+      "isin": "US29355A1079",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "2488062",
+      "isin": "US26884L1098",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "99350",
+      "isin": "US5184391044",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "158011235",
+      "isin": "US30233Q1085",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "2626060",
+      "isin": "US3364331070",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "10704017",
+      "isin": "US34959E1091",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "391280",
+      "isin": "US35671D8570",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "133262491",
+      "isin": "US36828A1016",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "112258433",
+      "isin": "US3696043013",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "11665971",
+      "isin": "US37045V1008",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "714968",
+      "isin": "US38141G1040",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "935700",
+      "isin": "US3755581036",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "938298",
+      "isin": "US4227041062",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "59397181",
+      "isin": "US4330001060",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "939360",
+      "isin": "US4370761029",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "29968910",
+      "isin": "US40434L1052",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "941800",
+      "isin": "US4592001014",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "941595",
+      "isin": "US4581401001",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "114005538",
+      "isin": "US46222L1089",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "943981",
+      "isin": "US4781601046",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1161460",
+      "isin": "US46625H1005",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "945590",
+      "isin": "US4824801009",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "10548656",
+      "isin": "US50077B2079",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "351011",
+      "isin": "US5398301094",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "28285011",
+      "isin": "US55024U1097",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "46755164",
+      "isin": "US55087P1049",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "111229262",
+      "isin": "US5738741041",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "2282206",
+      "isin": "US57636Q1040",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "950605",
+      "isin": "US5801351017",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "25187155",
+      "isin": "IE00BTN1Y115",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "14917609",
+      "isin": "US30303M1027",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "951691",
+      "isin": "US5951121038",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "951692",
+      "isin": "US5949181045",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "44811242",
+      "isin": "US60770K1079",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "10683053",
+      "isin": "US58933Y1055",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "653571",
+      "isin": "US6174464486",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1251097",
+      "isin": "US6311031081",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1413346",
+      "isin": "US64110L1061",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "956952",
+      "isin": "US6516391066",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "957150",
+      "isin": "US6541061031",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "994529",
+      "isin": "US67066G1040",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "958611",
+      "isin": "US6745991058",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "959184",
+      "isin": "US68389X1054",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "36244719",
+      "isin": "US69608A1088",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "18379378",
+      "isin": "US6974351057",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "28467085",
+      "isin": "US70450Y1038",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "962004",
+      "isin": "US7170811035",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "963896",
+      "isin": "US7427181091",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "963989",
+      "isin": "US7433151039",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "964930",
+      "isin": "US7475251036",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "112476016",
+      "isin": "US7707001027",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "145518311",
+      "isin": "US7731211089",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "967596",
+      "isin": "US7802871084",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "53852485",
+      "isin": "US75513E1010",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1755645",
+      "isin": "US79466L3024",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "18868154",
+      "isin": "US81762P1021",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "35612177",
+      "isin": "US83304A1060",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "56799254",
+      "isin": "US8334451098",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "156888148",
+      "isin": "US84615Q1031",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1465124",
+      "isin": "US5949724083",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "138624448",
+      "isin": "US86800U3023",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "21226503",
+      "isin": "US8725901040",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1036943",
+      "isin": "US87612E1064",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "976541",
+      "isin": "US8807701029",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "11448018",
+      "isin": "US88160R1014",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "47459333",
+      "isin": "US90353T1007",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1078451",
+      "isin": "US91324P1021",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "58052754",
+      "isin": "US91680M1071",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "1095642",
+      "isin": "US92343V1044",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "52408119",
+      "isin": "US92537N1081",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "3826452",
+      "isin": "US92826C8394",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "984101",
+      "isin": "US9311421039",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "984192",
+      "isin": "US2546871060",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "933404",
+      "isin": "US94106L1098",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "966021",
+      "isin": "US9497461015",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "985376",
+      "isin": "US9581021055",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "19276994",
+      "isin": "US98978V1035",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "CHF"
+    },
+    {
+      "name": "Sponsored Foreign Shares",
+      "symbol": "40562757",
+      "isin": "US98980G1022",
+      "market": "SIX Swiss Exchange",
+      "mic": "XSWX",
+      "currency": "USD"
+    }
+  ]
+}

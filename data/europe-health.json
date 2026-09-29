@@ -238,17 +238,17 @@
       "health": "COMPLETE",
       "reason": null,
       "catalog": {
-        "present": false,
+        "present": true,
         "count": 445,
-        "fingerprint": "b30aaa811000e49f9904a95859e3dc14e72eebb2a4634907eb83efeba269ae39",
-        "retrievedAt": null,
+        "fingerprint": "f6a515b191f29fbe31d04f2935de3e38f6f71152a81a2ae7fdced07ddb3f91c1",
+        "retrievedAt": "2026-09-29T04:49:50.232Z",
         "source": "https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202608.csv"
       },
       "sources": {
         "status": "APPROVED",
         "tested": 4,
         "fullCatalog": 445,
-        "coverageRatio": 0.9955056179775281,
+        "coverageRatio": 0.9842696629213483,
         "crossCheckRatio": 0
       },
       "completedAt": "2026-09-27T07:03:28.693Z"
@@ -716,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-09-29T04:54:06.285Z"
+  "generatedAt": "2026-09-29T05:54:03.548Z"
 }
