@@ -25,7 +25,8 @@ if(forced){
   const market=plan.markets.find(m=>m.mic===forced);
   if(!market) throw new Error(`FORCE_MARKET_MIC onbekend: ${forced}`);
   if(!adapterMics.has(forced)) throw new Error(`FORCE_MARKET_MIC heeft nog geen bewezen adapter: ${forced}`);
-  if(market.state==='COMPLETE') throw new Error(`FORCE_MARKET_MIC is al COMPLETE: ${forced}`);
+  // Een expliciete begeleide repair mag een COMPLETE markt opnieuw door dezelfde harde gates sturen.
+  // Dit wijzigt de COMPLETE-status niet; het herbouwt uitsluitend canonical evidence/catalogus.
   // Manual/chat selection bypasses only quarantine selection, never catalog/source/history/end gates.
   selected=[forced];
 } else {
