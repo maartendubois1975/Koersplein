@@ -14,7 +14,7 @@ permissions:
   contents: write
   actions: write
 concurrency:
-  group: koersplein-europe-${{ inputs.market_mic || github.event.head_commit.message || github.run_id }}
+  group: koersplein-europe-${{ inputs.market_mic || github.sha }}
   cancel-in-progress: false
 jobs:
   select:
