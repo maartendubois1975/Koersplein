@@ -223,11 +223,20 @@
       "currency": "SEK",
       "timezone": "Europe/Stockholm",
       "providerSuffix": ".ST",
-      "state": "BLOCKED",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-09-27T16:34:38.061Z",
-      "catalogFingerprint": "d3daf9be1f88ff4324ecd375a1a27f215606e99b43b9fabbf74007313f6180dc",
-      "note": "Quarantined by canonical single writer after proven source preflight failure."
+      "state": "COMPLETE",
+      "catalogFingerprint": "7eee68dc898cf7c9ca9e7d7d42b23f5dc692b808154375e35c4b4c82bc25b34f",
+      "completedAt": "2026-09-29T17:33:18.706Z",
+      "dataUnavailable": [
+        {
+          "isin": "SE0001338039",
+          "symbol": "LASER",
+          "name": "Lasernet Group AB",
+          "lastDate": "2026-08-24",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        }
+      ]
     },
     {
       "mic": "XCSE",
