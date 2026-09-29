@@ -37,7 +37,13 @@ jobs:
         with: { ref: main }
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
-      - run: node scripts/research/complete-market-pipeline.mjs
+      - name: M01-M07 met begrensde retry
+        run: |
+          for attempt in 1 2; do
+            node scripts/research/complete-market-pipeline.mjs && break
+            test "$attempt" -eq 2 && exit 1
+            sleep 45
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: complete-market-${{ matrix.mic }}
@@ -58,7 +64,12 @@ jobs:
       - name: M05 model arena contract
         run: node scripts/research/model-arena.mjs
       - name: M10 hindsight alle COMPLETE markten
-        run: node scripts/research/hindsight-postmortem.mjs
+        run: |
+          for attempt in 1 2; do
+            node scripts/research/hindsight-postmortem.mjs && break
+            test "$attempt" -eq 2 && exit 1
+            sleep 45
+          done
       - name: M08 live opportunity output
         run: node scripts/research/top5-three-month.mjs
       - uses: actions/upload-artifact@v4
