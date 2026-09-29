@@ -1,0 +1,355 @@
+{
+  "exchange": "Lissabon",
+  "mic": "XLIS",
+  "retrievedAt": "2026-09-29T08:35:02.680Z",
+  "source": "https://live.euronext.com/en/product_directory/data/stocks-lisbon/download?mics=XLIS%2CALXL%2CENXL",
+  "fingerprint": "cf951f3219704345ae22bb2e5a5004c255b190a4795866a8ef5ce0244b3beaa8",
+  "rawRows": 51,
+  "rejected": {
+    "missingIdentity": 3,
+    "missingMic": 0,
+    "wrongMic": 0,
+    "wrongMarket": 0,
+    "nonEquity": 0,
+    "duplicateIsin": 0,
+    "duplicateMicTicker": 0
+  },
+  "shares": [
+    {
+      "name": "ALTRI SGPS",
+      "symbol": "ALTR",
+      "isin": "PTALT0AE0002",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "ARRABIDASHOPPING",
+      "symbol": "MLARR",
+      "isin": "PTCAP0AM0017",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "ATRIUM BIRE SIGI",
+      "symbol": "MLATR",
+      "isin": "PTTBI0AM0006",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "B.COM.PORTUGUES",
+      "symbol": "BCP",
+      "isin": "PTBCP0AM0015",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "BENFICA",
+      "symbol": "SLBEN",
+      "isin": "PTSLB0AM0010",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "CIAGEST - SIGI S.A",
+      "symbol": "MLCIA",
+      "isin": "PTIAG0AM0005",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "CONDURIL",
+      "symbol": "CDU",
+      "isin": "PTCDU0AE0003",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "CORTICEIRA AMORIM",
+      "symbol": "COR",
+      "isin": "PTCOR0AE0006",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "CTT CORREIOS PORT",
+      "symbol": "CTT",
+      "isin": "PTCTT0AM0001",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "EDP",
+      "symbol": "EDP",
+      "isin": "PTEDP0AM0009",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "EDP RENEWABLES",
+      "symbol": "EDPR",
+      "isin": "ES0127797019",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "ESTORIL SOL N",
+      "symbol": "ESON",
+      "isin": "PTESO0AM0000",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "EURONEXT",
+      "symbol": "ENXP",
+      "isin": "NL0006294274",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "FARMINVESTE",
+      "symbol": "MLFMV",
+      "isin": "PTFNV1AM0002",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "FLEXDEAL",
+      "symbol": "FLEXD",
+      "isin": "PTFXD0AM0018",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "FUT.CLUBE PORTO",
+      "symbol": "FCP",
+      "isin": "PTFCP0AM0008",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "GAIASHOPPING - SIC",
+      "symbol": "MLGSH",
+      "isin": "PTGHP0AM0005",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "GALP ENERGIA-NOM",
+      "symbol": "GALP",
+      "isin": "PTGAL0AM0009",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "GLINTT",
+      "symbol": "GLINT",
+      "isin": "PTPAD0AM0007",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "IBERSOL,SGPS",
+      "symbol": "IBS",
+      "isin": "PTIBS0AM0008",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "IMPRESA,SGPS",
+      "symbol": "IPR",
+      "isin": "PTIPR0AM0000",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "J.MARTINS,SGPS",
+      "symbol": "JMT",
+      "isin": "PTJMT0AE0001",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "MACC1X1 SOCIMI",
+      "symbol": "MLMAC",
+      "isin": "ES0105665006",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "MARTIFER",
+      "symbol": "MAR",
+      "isin": "PTMFR0AM0003",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "MEDIA CAPITAL",
+      "symbol": "MCP",
+      "isin": "PTGMC0AM0003",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "MERLIN PROPERTIES",
+      "symbol": "MRL",
+      "isin": "ES0105025003",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "MONUMENTAL RES",
+      "symbol": "MLMR",
+      "isin": "PTMNN0AE0006",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "MOTA ENGIL",
+      "symbol": "EGL",
+      "isin": "PTMEN0AE0005",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "NOS, SGPS",
+      "symbol": "NOS",
+      "isin": "PTZON0AM0006",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "NOVABASE,SGPS",
+      "symbol": "NBA",
+      "isin": "PTNBA0AM0006",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "OLIMPO REAL ESTATE",
+      "symbol": "MLORE",
+      "isin": "PTOTP0AM0004",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "ORIENTE BT SIGI",
+      "symbol": "MLOBT",
+      "isin": "PTOBW0AM0008",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "PHAROL",
+      "symbol": "PHR",
+      "isin": "PTPTC0AM0009",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "RAIZE",
+      "symbol": "MLRZE",
+      "isin": "PTRIZ0AM0009",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "RAMADA",
+      "symbol": "RAM",
+      "isin": "PTFRV0AE0004",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "REN",
+      "symbol": "RENE",
+      "isin": "PTREL0AM0008",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "RSR SINGULAR",
+      "symbol": "MLRSR",
+      "isin": "ES0105505004",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "S.CLUBE BRAGA",
+      "symbol": "SCB",
+      "isin": "PTSCB0AM0001",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "SAMBA DIGITAL",
+      "symbol": "ALSMB",
+      "isin": "PTDGL0AM0003",
+      "market": "Euronext Growth Lisbon",
+      "mic": "ALXL"
+    },
+    {
+      "name": "SEMAPA",
+      "symbol": "SEM",
+      "isin": "PTSEM0AM0004",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "SONAE",
+      "symbol": "SON",
+      "isin": "PTSON0AM0001",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "SONAECOM,SGPS",
+      "symbol": "SNC",
+      "isin": "PTSNC0AM0006",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "SONAGI",
+      "symbol": "SNG",
+      "isin": "PTSNG0AM0007",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    },
+    {
+      "name": "SPORTING",
+      "symbol": "SCP",
+      "isin": "PTSCP0AM0001",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "TEIXEIRA DUARTE",
+      "symbol": "TDSA",
+      "isin": "PTTD10AM0000",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "THE NAVIGATOR COMP",
+      "symbol": "NVG",
+      "isin": "PTPTI0AM0006",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "TOYOTA CAETANO",
+      "symbol": "SCT",
+      "isin": "PTSCT0AP0018",
+      "market": "Euronext Lisbon",
+      "mic": "XLIS"
+    },
+    {
+      "name": "VILA DOS NUMEROS",
+      "symbol": "MLVDN",
+      "isin": "PTVUO0AM0000",
+      "market": "Euronext Access Lisbon",
+      "mic": "ENXL"
+    }
+  ]
+}
