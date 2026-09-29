@@ -1,4 +1,4 @@
-name: M00 Europa parallelle beursfabriek
+name: Beurs publiceren vanuit chat
 on:
   push:
     branches: [main]
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       market_mic:
-        description: 'Optionele expliciete markt-MIC voor begeleide/chat-publicatie (bijv. XLIS)'
+        description: 'Markt-MIC die in chat is onderzocht en nu gepubliceerd moet worden'
         required: false
         type: string
         default: ''
@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v4
         with: { ref: main }
       - id: pick
-        name: Kies maximaal vier Europese beurzen
+        name: Publiceer alleen de expliciet gekozen chat-beurs
         env:
           FORCE_MARKET_MIC: ${{ inputs.market_mic || (contains(github.event.head_commit.message, 'XMIL:') && 'XMIL') || (contains(github.event.head_commit.message, 'XLIS:') && 'XLIS') || (contains(github.event.head_commit.message, 'copenhagen') && 'XCSE') || (contains(github.event.head_commit.message, 'stockholm') && 'XSTO') || (contains(github.event.head_commit.message, 'madrid') && 'XMAD') || 'XSWX' }}
         run: |
