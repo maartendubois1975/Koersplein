@@ -25,6 +25,15 @@ for(const [mic,s] of artifactSources){
   if(s.status==='BLOCKED')blocked.set(mic,{reason:s.blockedReason||'SOURCE_PREFLIGHT_GATE',fingerprint:s.catalogFingerprint||null});
 }
 
+// Persist the exact catalog that produced approved source evidence. This closes the
+// old gap where a market could be COMPLETE while its canonical catalog only lived in an artifact.
+for(const m of plan.markets){
+  const candidates=await walk(root,`euronext-${m.code}.json`);
+  let chosen=null;
+  for(const file of candidates){try{const cat=JSON.parse(await fs.readFile(file,'utf8'));const src=artifactSources.get(m.mic);if(src?.status==='APPROVED'&&cat?.fingerprint&&src.catalogFingerprint===cat.fingerprint){chosen={file,cat};break}}catch{}}
+  if(chosen)await fs.copyFile(chosen.file,`data/euronext-${m.code}.json`);
+}
+
 for(const file of await walk(root,'market-handoff-signal.json')){
   try{
     const s=JSON.parse(await fs.readFile(file,'utf8')),mic=s.market||s.currentMarket||s.mic||s.current?.mic,v=s.validation||s.result||s.current||s;
