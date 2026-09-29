@@ -24,3 +24,12 @@
 - Provider-onbeschikbare instrumenten zijn expliciete exclusions, geen eindeloze retry.
 - Elke zware run heeft een inhoudelijke output-gate; groen zonder bruikbare output is geen succes.
 - Parijs blijft blind voor modelontwikkeling totdat de datagate expliciet PASS geeft.
+
+
+## Blok 0 cleanup — 2026-09-29
+- Operationele workflowlaag teruggebracht tot vier goedgekeurde routes: codebase audit, daily open/close, daily opportunity ledger en universal source-first.
+- Lege ARCHIVED-workflowhulzen en historische run-triggerbestanden definitief verwijderd.
+- Superseded markt-specifieke Cloudflare backfill/repair/validation scripts verwijderd waar geen actieve referenties meer bestonden; de universele source-first keten is de operationele route.
+- Frontendcontract is beschermd: homepage -> Europa -> beurs -> aandelen -> aandeel -> koershistorie.
+- data/machine-pipeline.json is gelijkgetrokken met de M01-M10 architectuur.
+- Bekende frontend-dataschuld: COMPLETE-markten mogen pas als homepage-regressie groen gelden wanneer hun lokale catalogus en markt/detail-route bestaan. Zürich en Lissabon moeten in het volgende blok tegen deze contractgate worden hersteld; COMPLETE-status of catalogus wordt tijdens cleanup niet stilzwijgend gewijzigd.
