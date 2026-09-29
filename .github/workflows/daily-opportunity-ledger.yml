@@ -1,7 +1,5 @@
 name: Dagelijkse Kansscanner
 on:
-  schedule:
-    - cron: '15 18 * * 1-5'
   workflow_dispatch:
   push:
     paths:
