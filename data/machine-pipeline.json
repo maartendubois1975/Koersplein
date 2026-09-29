@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "mission": "Koersplein onderzoekt zelfstandig welke herhaalbare signalen en marktritmes voorafgaan aan toekomstige koerskansen. Iedere afgeronde analyse moet zelf nieuwe toetsbare onderzoeksideeën voorstellen; het systeem wacht daarvoor niet op handmatige ideeën.",
   "researchPolicy": {
     "proactiveResearch": true,
@@ -35,32 +35,95 @@
     ],
     "ideaOutput": {
       "required": true,
-      "fields": ["hypothesis", "why_now", "test_design", "success_metric", "falsification_condition", "next_market"],
+      "fields": [
+        "hypothesis",
+        "why_now",
+        "test_design",
+        "success_metric",
+        "falsification_condition",
+        "next_market"
+      ],
       "storePerMarket": true,
       "storeCrossMarket": true
     }
   },
   "afterMarketValidation": [
-    {"machine":"M02","name":"Kansenkaart","required":true},
-    {"machine":"M03","name":"Tijdmachine","required":true},
-    {"machine":"M04","name":"Voorspeller","required":true,"freezePredictions":true},
-    {"machine":"M05","name":"Scheidsrechter","required":true,"mutationForbidden":true},
-    {"machine":"M06","name":"Patroonzoeker","required":true,"generateHypotheses":true,"compareWinnersToControls":true},
-    {"machine":"M07","name":"Wereldtest","required":true,"blindMarket":true,"feedResultsBackToResearchAgenda":true},
-    {"machine":"M08","name":"Kansscanner","required":false,"activateOnlyAfterValidatedPatterns":true}
+    {
+      "machine": "M01",
+      "name": "Data Truth",
+      "required": true
+    },
+    {
+      "machine": "M02",
+      "name": "Opportunity Map",
+      "required": true
+    },
+    {
+      "machine": "M03",
+      "name": "Time Machine",
+      "required": true
+    },
+    {
+      "machine": "M04",
+      "name": "Feature Factory",
+      "required": true
+    },
+    {
+      "machine": "M05",
+      "name": "Model Arena",
+      "required": true,
+      "freezePredictions": true
+    },
+    {
+      "machine": "M06",
+      "name": "Judge / Statistical Guard",
+      "required": true,
+      "mutationForbidden": true
+    },
+    {
+      "machine": "M07",
+      "name": "Blind World Test",
+      "required": true,
+      "blindMarket": true
+    },
+    {
+      "machine": "M08",
+      "name": "Live Opportunity Scanner",
+      "required": false,
+      "activateOnlyAfterValidatedPatterns": true
+    },
+    {
+      "machine": "M09",
+      "name": "Drift & Execution Monitor",
+      "required": true
+    },
+    {
+      "machine": "M10",
+      "name": "Hindsight / Post-Mortem",
+      "required": true,
+      "mayGenerateHypotheses": true,
+      "promotionForbidden": true
+    }
   ],
   "crossMarketProgram": {
-    "discoveryMarkets": ["XAMS", "XBRU"],
-    "crossTests": ["XAMS_TO_XBRU", "XBRU_TO_XAMS"],
+    "discoveryMarkets": [
+      "XAMS",
+      "XBRU"
+    ],
+    "crossTests": [
+      "XAMS_TO_XBRU",
+      "XBRU_TO_XAMS"
+    ],
     "nextBlindMarket": "XPAR",
     "combineDiscoveryOnlyAfterSeparateResultsStored": true
   },
-  "promotionRule": "market COMPLETE only after M01 validation; research results never mutate historical predictions; hypotheses are retained only when their predeclared test survives the required control and blind validation",
+  "promotionRule": "market COMPLETE only after M01 data validation; research never mutates historical predictions; M10 hindsight may generate hypotheses but only PRE_VISIBLE candidates may return through M03/M04 and must survive M05/M06/M07 before promotion",
   "publication": {
     "perMarket": true,
     "crossMarketComparison": true,
     "proprietaryModelHidden": true,
     "showResearchAgenda": true,
     "showHighLevelHypotheses": true
-  }
+  },
+  "architecture": "M01-M10"
 }
