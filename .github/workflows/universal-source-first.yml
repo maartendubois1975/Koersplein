@@ -1,5 +1,8 @@
 name: Beurs publiceren vanuit chat
 on:
+  push:
+    branches: [main]
+    paths: ['data/chat-publication-request.json']
   workflow_dispatch:
     inputs:
       market_mic:
@@ -24,9 +27,15 @@ jobs:
       - id: pick
         name: Publiceer alleen de expliciet gekozen chat-beurs
         env:
-          FORCE_MARKET_MIC: ${{ inputs.market_mic }}
+          FORCE_MARKET_MIC: ${{ inputs.market_mic || '' }}
+          CHAT_REQUEST_EVENT: ${{ github.event_name }}
         run: |
           set -euo pipefail
+          if [ "$CHAT_REQUEST_EVENT" = "push" ]; then
+            FORCE_MARKET_MIC=$(node -p "require('./data/chat-publication-request.json').marketMic")
+            export FORCE_MARKET_MIC
+          fi
+          test -n "$FORCE_MARKET_MIC" || { echo 'Geen expliciete marketMic'; exit 1; }
           MARKETS=$(node scripts/cloudflare/select-europe-parallel-markets.mjs)
           echo "markets=$MARKETS" >> "$GITHUB_OUTPUT"
           echo "Geselecteerd: $MARKETS"
