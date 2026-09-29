@@ -1,5 +1,28 @@
 {
-  "version": 1,
+  "version": 2,
+  "autopilot": {
+    "transientRetryPolicy": "BOUNDED_IN_WORKFLOW",
+    "maxRetries": 3,
+    "structuralErrorsRequireCodeOrSourceRepair": true,
+    "structuralErrors": [
+      {
+        "mic": "XDUB",
+        "reason": "OFFICIAL_CATALOG_GATE"
+      },
+      {
+        "mic": "XLON",
+        "reason": "OFFICIAL_CATALOG_ACCESS_GATE"
+      },
+      {
+        "mic": "XETR",
+        "reason": "SOURCE_PREFLIGHT_GATE"
+      },
+      {
+        "mic": "XSTO",
+        "reason": "SOURCE_PREFLIGHT_GATE"
+      }
+    ]
+  },
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
@@ -693,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-09-28T08:25:46.278Z"
+  "generatedAt": "2026-09-29T04:54:06.285Z"
 }
