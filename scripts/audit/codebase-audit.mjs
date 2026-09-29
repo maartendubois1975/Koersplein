@@ -18,5 +18,19 @@ for(const f of obsoleteTriggers) issues.push({severity:'ERROR',type:'OBSOLETE_RU
 const protectedFrontend=['index.html','app.js','market.js','share.html','share.js'];
 for(const rel of protectedFrontend){if(!files.some(x=>path.relative(root,x).replaceAll('\\','/')===rel))issues.push({severity:'ERROR',type:'FRONTEND_CONTRACT_FILE_MISSING',file:rel});}
 
+try{
+ const plan=JSON.parse(await fs.readFile(path.join(root,'data/world-fill-plan.json'),'utf8'));
+ const markets=JSON.parse(await fs.readFile(path.join(root,'data/markets.json'),'utf8')).venues?.find(v=>v.id==='euronext')?.markets||[];
+ const app=await fs.readFile(path.join(root,'app.js'),'utf8'),share=await fs.readFile(path.join(root,'share.js'),'utf8');
+ for(const m of plan.markets.filter(x=>x.state==='COMPLETE')){
+  const ui=markets.find(x=>x.mic===m.mic);
+  if(!ui||ui.status!=='available'||!ui.sharesData)issues.push({severity:'ERROR',type:'COMPLETE_MARKET_NOT_ON_HOMEPAGE',file:'data/markets.json',detail:m.mic});
+  const catalogRel='data/euronext-'+m.code+'.json',page=(ui?.id==='amsterdam'?'amsterdam':ui?.slug)+'.html';
+  if(!files.some(x=>path.relative(root,x).replaceAll('\\','/')===catalogRel))issues.push({severity:'ERROR',type:'COMPLETE_MARKET_CATALOG_MISSING',file:catalogRel,detail:m.mic});
+  if(!files.some(x=>path.relative(root,x).replaceAll('\\','/')===page))issues.push({severity:'ERROR',type:'COMPLETE_MARKET_PAGE_MISSING',file:page,detail:m.mic});
+  if(ui&&!app.includes(ui.id+":'"+page+"'"))issues.push({severity:'ERROR',type:'COMPLETE_MARKET_HOMEPAGE_ROUTE_MISSING',file:'app.js',detail:m.mic});
+  if(ui&&!share.includes("'data/'+market.sharesData"))issues.push({severity:'ERROR',type:'UNIVERSAL_SHARE_ROUTE_MISSING',file:'share.js',detail:m.mic});
+ }
+}catch(e){issues.push({severity:'ERROR',type:'FRONTEND_COMPLETE_MARKET_GATE_FAILED',file:'data/markets.json',detail:e.message});}
 const report={generatedAt:new Date().toISOString(),stats,errors:issues.filter(x=>x.severity==='ERROR').length,warnings:issues.filter(x=>x.severity==='WARN').length,info:issues.filter(x=>x.severity==='INFO').length,issues};
 await fs.mkdir('research/output/audit',{recursive:true});await fs.writeFile('research/output/audit/codebase-audit.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));if(report.errors)process.exitCode=2;
