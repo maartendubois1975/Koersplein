@@ -143,7 +143,7 @@ jobs:
           set -euo pipefail
           git config user.name "koersplein-autopilot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/world-fill-plan.json data/market-source-registry.json data/europe-health.json data/euronext-*.json
+          git add data/world-fill-plan.json data/market-source-registry.json data/europe-health.json data/markets.json data/euronext-*.json
           if git diff --cached --quiet; then echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
           echo "changed=true" >> "$GITHUB_OUTPUT"
           git commit -m "state: persist proven Europe market evidence"
