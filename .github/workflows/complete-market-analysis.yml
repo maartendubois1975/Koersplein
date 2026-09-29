@@ -72,6 +72,19 @@ jobs:
           done
       - name: M08 live opportunity output
         run: node scripts/research/top5-three-month.mjs
+      - name: Publiceer dagelijkse Top 5 / verwachting op de site
+        run: |
+          git config user.name "koersplein-research"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/top5-three-month.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "research: publish verified daily market outlook"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 10))
+          done
+          exit 1
       - uses: actions/upload-artifact@v4
         if: always()
         with:
