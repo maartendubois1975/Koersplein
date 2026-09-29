@@ -2,7 +2,7 @@ name: M00 Europa parallelle beursfabriek
 on:
   push:
     branches: [main]
-    paths: ['.github/triggers/zurich', '.github/triggers/madrid', '.github/triggers/stockholm', '.github/triggers/copenhagen']
+    paths: ['.github/triggers/zurich', '.github/triggers/madrid', '.github/triggers/stockholm', '.github/triggers/copenhagen', '.github/triggers/repair-xmil', '.github/triggers/repair-xlis']
   workflow_dispatch:
     inputs:
       market_mic:
@@ -27,7 +27,7 @@ jobs:
       - id: pick
         name: Kies maximaal vier Europese beurzen
         env:
-          FORCE_MARKET_MIC: ${{ inputs.market_mic || (contains(github.event.head_commit.message, 'copenhagen') && 'XCSE') || (contains(github.event.head_commit.message, 'stockholm') && 'XSTO') || (contains(github.event.head_commit.message, 'madrid') && 'XMAD') || 'XSWX' }}
+          FORCE_MARKET_MIC: ${{ inputs.market_mic || (contains(github.event.head_commit.message, 'XMIL:') && 'XMIL') || (contains(github.event.head_commit.message, 'XLIS:') && 'XLIS') || (contains(github.event.head_commit.message, 'copenhagen') && 'XCSE') || (contains(github.event.head_commit.message, 'stockholm') && 'XSTO') || (contains(github.event.head_commit.message, 'madrid') && 'XMAD') || 'XSWX' }}
         run: |
           set -euo pipefail
           MARKETS=$(node scripts/cloudflare/select-europe-parallel-markets.mjs)
