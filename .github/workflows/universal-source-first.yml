@@ -14,8 +14,8 @@ permissions:
   contents: write
   actions: write
 concurrency:
-  group: koersplein-europe-parallel-factory-v2
-  cancel-in-progress: true
+  group: koersplein-europe-${{ inputs.market_mic || github.event.head_commit.message || github.run_id }}
+  cancel-in-progress: false
 jobs:
   select:
     runs-on: ubuntu-latest
