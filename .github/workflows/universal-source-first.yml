@@ -108,6 +108,17 @@ jobs:
             if [ "$remaining" -le 0 ] || [ "$candidates" -eq 0 ]; then break; fi
             sleep 2
           done
+      - name: Herstel resterende eindvalidatie-uitzonderingen
+        run: |
+          set -euo pipefail
+          for repair in 1 2 3; do
+            if node scripts/cloudflare/market-handoff-signal.mjs; then :; fi
+            ready=$(node -e "const s=require('./research/output/market-handoff-signal.json');console.log(s.current.ready?'yes':'no')")
+            [ "$ready" = yes ] && break
+            export SKIP_ISINS=''
+            SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs
+            sleep $((repair * 5))
+          done
       - name: Eindvalidatie
         if: ${{ success() }}
         timeout-minutes: 30
