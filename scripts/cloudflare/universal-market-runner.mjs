@@ -14,7 +14,7 @@ const path=`data/euronext-${m.code}.json`;
 const raw=JSON.parse(await fs.readFile(path,'utf8'));
 if(!sourcePlan||sourcePlan.status!=='APPROVED'||!sourcePlan.historySources?.some(x=>x.role==='PRIMARY')||(sourcePlan.discovery?.testedDifficultSymbols||0)<10||!raw.fingerprint||sourcePlan.catalogFingerprint!==raw.fingerprint)throw new Error(`BRONONDERZOEK/CATALOGUS-GATE VERPLICHT vóór backfill van ${mic}; fingerprint mismatch of approval ontbreekt`);
 const source=raw.shares||raw.instruments||[];if(!source.length)throw new Error('lege catalogus');
-const rawInstruments=source.map(x=>({isin:x.isin,name:x.name||x.company,company:x.name||x.company,symbol:x.symbol||x.ticker,ticker:x.symbol||x.ticker,mic:x.mic||m.mic,market:x.mic||m.mic,currency:m.currency,countryCode:m.country,provider:'yahoo-chart'}));
+const rawInstruments=source.map(x=>({isin:x.isin,name:x.name||x.company,company:x.name||x.company,symbol:x.symbol||x.ticker,ticker:x.symbol||x.ticker,mic:x.mic||m.mic,market:x.mic||m.mic,currency:m.currency,countryCode:m.country,provider:'yahoo-chart',providerSymbol:x.providerSymbol||null}));
 const seenIsin=new Set(),seenMicTicker=new Set(),instruments=[];let duplicateIsin=0,duplicateMicTicker=0;
 for(const item of rawInstruments){
   const isin=String(item.isin||'').trim().toUpperCase(),ticker=String(item.ticker||'').trim().toUpperCase(),segmentMic=String(item.mic||m.mic).trim().toUpperCase();
