@@ -19,7 +19,8 @@ for(const m of plan.markets||[]){
 }
 const summary={complete:markets.filter(x=>x.health==='COMPLETE').length,blocked:markets.filter(x=>x.health==='BLOCKED').length,ready:markets.filter(x=>x.health==='READY').length,pending:markets.filter(x=>!['COMPLETE','BLOCKED','READY'].includes(x.health)).length,total:markets.length};
 const previous=await read('data/europe-health.json');
-const stable={version:1,canonicalState:'data/world-fill-plan.json',sourceRegistry:'data/market-source-registry.json',summary,markets};
+const structuralErrors=markets.filter(x=>x.health==='BLOCKED').map(x=>({mic:x.mic,reason:x.reason}));
+const stable={version:2,autopilot:{transientRetryPolicy:'BOUNDED_IN_WORKFLOW',maxRetries:3,structuralErrorsRequireCodeOrSourceRepair:true,structuralErrors},canonicalState:'data/world-fill-plan.json',sourceRegistry:'data/market-source-registry.json',summary,markets};
 const previousStable=previous?{version:previous.version,canonicalState:previous.canonicalState,sourceRegistry:previous.sourceRegistry,summary:previous.summary,markets:previous.markets}:null;
 const unchanged=previousStable&&JSON.stringify(previousStable)===JSON.stringify(stable);
 const out={...stable,generatedAt:unchanged?previous.generatedAt:generatedAt};
