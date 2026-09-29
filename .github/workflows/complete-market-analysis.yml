@@ -2,7 +2,7 @@ name: M01-M10 COMPLETE markt onderzoek
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ['Dagelijkse Open Close Update']
+    workflows: ['Dagelijkse Open Close Update', 'M00 Europa parallelle beursfabriek']
     types: [completed]
 permissions:
   contents: write
