@@ -1,8 +1,5 @@
 name: Beurs publiceren vanuit chat
 on:
-  push:
-    branches: [main]
-    paths: ['.github/triggers/zurich', '.github/triggers/madrid', '.github/triggers/stockholm', '.github/triggers/copenhagen', '.github/triggers/repair-xmil', '.github/triggers/repair-xlis', 'scripts/cloudflare/reduce-europe-completions.mjs']
   workflow_dispatch:
     inputs:
       market_mic:
@@ -27,7 +24,7 @@ jobs:
       - id: pick
         name: Publiceer alleen de expliciet gekozen chat-beurs
         env:
-          FORCE_MARKET_MIC: ${{ inputs.market_mic || (contains(github.event.head_commit.message, 'XMIL:') && 'XMIL') || (contains(github.event.head_commit.message, 'XLIS:') && 'XLIS') || (contains(github.event.head_commit.message, 'copenhagen') && 'XCSE') || (contains(github.event.head_commit.message, 'stockholm') && 'XSTO') || (contains(github.event.head_commit.message, 'madrid') && 'XMAD') || 'XSWX' }}
+          FORCE_MARKET_MIC: ${{ inputs.market_mic }}
         run: |
           set -euo pipefail
           MARKETS=$(node scripts/cloudflare/select-europe-parallel-markets.mjs)
