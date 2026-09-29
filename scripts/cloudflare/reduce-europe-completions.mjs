@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 const root=process.argv[2]||'research/output/completion-artifacts';
-const planPath='data/world-fill-plan.json',registryPath='data/market-source-registry.json';
+const planPath='data/world-fill-plan.json',registryPath='data/market-source-registry.json',marketsPath='data/markets.json';
 const plan=JSON.parse(await fs.readFile(planPath,'utf8'));
 const registry=JSON.parse(await fs.readFile(registryPath,'utf8'));registry.markets||={};
 const proven=new Map(),blocked=new Map(),artifactSources=new Map();
@@ -56,4 +56,14 @@ for(const m of plan.markets){
 }
 await fs.writeFile(planPath,JSON.stringify(plan,null,2)+'\n');
 await fs.writeFile(registryPath,JSON.stringify(registry,null,2)+'\n');
+// Frontend promotion is downstream of the same proven COMPLETE gate: no manual status drift.
+try{
+ const front=JSON.parse(await fs.readFile(marketsPath,'utf8'));
+ const all=(front.venues||[]).flatMap(v=>v.markets||[]);
+ for(const m of plan.markets.filter(x=>x.state==='COMPLETE')){
+   const x=all.find(y=>y.mic===m.mic);
+   if(x&&x.sharesData)x.status='available';
+ }
+ await fs.writeFile(marketsPath,JSON.stringify(front,null,2)+'\n');
+}catch{}
 console.log(JSON.stringify({changed,proven:[...proven.keys()],blocked:[...blocked.keys()],sourceEvidence:[...artifactSources.keys()]},null,2));
