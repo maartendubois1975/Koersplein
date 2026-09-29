@@ -15,6 +15,8 @@ on:
       - 'share.js'
       - '*.html'
       - 'scripts/cloudflare/**'
+      - 'scripts/research/**'
+      - 'data/machine-pipeline.json'
       - '.github/workflows/paris-*.yml'
       - '.github/workflows/world-fill-controller.yml'
       - '.github/workflows/market-handoff-controller.yml'
