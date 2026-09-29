@@ -106,10 +106,10 @@
       "health": "COMPLETE",
       "reason": null,
       "catalog": {
-        "present": false,
+        "present": true,
         "count": 401,
         "fingerprint": "0b230cc2edf398a7e682187076133b541ab94a767c0359c063317394dfd06051",
-        "retrievedAt": null,
+        "retrievedAt": "2026-09-29T04:49:39.673Z",
         "source": "https://live.euronext.com/en/product_directory/data/stocks-milan/download?mics=XMIL%2CMTAA%2CEXGM"
       },
       "sources": {
@@ -248,7 +248,7 @@
         "status": "APPROVED",
         "tested": 4,
         "fullCatalog": 445,
-        "coverageRatio": 0.9842696629213483,
+        "coverageRatio": 0.9955056179775281,
         "crossCheckRatio": 0
       },
       "completedAt": "2026-09-27T07:03:28.693Z"
@@ -716,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-09-29T05:54:03.548Z"
+  "generatedAt": "2026-09-29T06:31:50.361Z"
 }

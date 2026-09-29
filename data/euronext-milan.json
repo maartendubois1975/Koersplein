@@ -1,0 +1,2826 @@
+{
+  "exchange": "Milaan",
+  "mic": "XMIL",
+  "retrievedAt": "2026-09-29T04:49:39.673Z",
+  "source": "https://live.euronext.com/en/product_directory/data/stocks-milan/download?mics=XMIL%2CMTAA%2CEXGM",
+  "fingerprint": "0b230cc2edf398a7e682187076133b541ab94a767c0359c063317394dfd06051",
+  "rawRows": 445,
+  "rejected": {
+    "missingIdentity": 3,
+    "missingMic": 0,
+    "wrongMic": 0,
+    "wrongMarket": 0,
+    "nonEquity": 41,
+    "duplicateIsin": 0,
+    "duplicateMicTicker": 0
+  },
+  "shares": [
+    {
+      "name": "4AIM SICAF",
+      "symbol": "AIM",
+      "isin": "IT0005204729",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "4AIM SICAF COMP 2",
+      "symbol": "AIM2",
+      "isin": "IT0005440323",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "A.B.P. NOCIVELLI",
+      "symbol": "ABP",
+      "isin": "IT0005439861",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "A2A",
+      "symbol": "A2A",
+      "isin": "IT0001233417",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "AATECH",
+      "symbol": "AAT",
+      "isin": "IT0005548521",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ABC COMPANY",
+      "symbol": "ABC",
+      "isin": "IT0005466294",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ABITARE IN",
+      "symbol": "ABT",
+      "isin": "IT0005445280",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ACEA",
+      "symbol": "ACE",
+      "isin": "IT0001207098",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ACINQUE",
+      "symbol": "AC5",
+      "isin": "IT0001382024",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ACQUAZZURRA",
+      "symbol": "ACQ",
+      "isin": "IT0005443061",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ADVENTURE",
+      "symbol": "ADV",
+      "isin": "IT0005607715",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "AEDES",
+      "symbol": "AEDES",
+      "isin": "IT0005708174",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "AEFFE",
+      "symbol": "AEF",
+      "isin": "IT0001384590",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "AEROPORTO G. M. BO",
+      "symbol": "ADB",
+      "isin": "IT0001006128",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ALERION",
+      "symbol": "ARN",
+      "isin": "IT0004720733",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ALFIO BARDOLLA",
+      "symbol": "ABTG",
+      "isin": "IT0005244030",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ALFONSINO",
+      "symbol": "ALFO",
+      "isin": "IT0005466039",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ALIA MENTIS",
+      "symbol": "ALMS",
+      "isin": "IT0005717241",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ALLCORE",
+      "symbol": "CORE",
+      "isin": "IT0005461303",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ALTEA GREEN POWER",
+      "symbol": "AGP",
+      "isin": "IT0005472730",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "AMBROMOBILIARE",
+      "symbol": "AMB",
+      "isin": "IT0004779515",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "AMPLIFON",
+      "symbol": "AMP",
+      "isin": "IT0004056880",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ANIMA HOLDING",
+      "symbol": "ANIM",
+      "isin": "IT0004998065",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "AQUAFIL",
+      "symbol": "ECNL",
+      "isin": "IT0005241192",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ARISTON HOLDING",
+      "symbol": "ARIS",
+      "isin": "NL0015000N33",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ARTERRA BIOSCIENCE",
+      "symbol": "ARBS",
+      "isin": "IT0005386369",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ASCOPIAVE",
+      "symbol": "ASC",
+      "isin": "IT0004093263",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ATON GREEN STORAGE",
+      "symbol": "ATON",
+      "isin": "IT0005449464",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "AUTOSTRADE MERID",
+      "symbol": "AUTME",
+      "isin": "IT0000084043",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "AVIO",
+      "symbol": "AVIO",
+      "isin": "IT0005119810",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "AZIMUT",
+      "symbol": "AZM",
+      "isin": "IT0003261697",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "B.F.",
+      "symbol": "BFG",
+      "isin": "IT0005187460",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "B&C SPEAKERS",
+      "symbol": "BEC",
+      "isin": "IT0001268561",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BANCA GENERALI",
+      "symbol": "BGN",
+      "isin": "IT0001031084",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BANCA IFIS",
+      "symbol": "IF",
+      "isin": "IT0003188064",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BANCA MEDIOLANUM",
+      "symbol": "BMED",
+      "isin": "IT0004776628",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BANCA MPS",
+      "symbol": "BMPS",
+      "isin": "IT0005508921",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BANCA SISTEMA",
+      "symbol": "BST",
+      "isin": "IT0003173629",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BANCO BPM",
+      "symbol": "BAMI",
+      "isin": "IT0005218380",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BASICNET",
+      "symbol": "BAN",
+      "isin": "IT0001033700",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BASTOGI SPA",
+      "symbol": "B",
+      "isin": "IT0004412497",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BCA PROFILO",
+      "symbol": "PRO",
+      "isin": "IT0005704439",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BCO DESIO BRIANZA",
+      "symbol": "BDB",
+      "isin": "IT0001041000",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BEEWIZE",
+      "symbol": "BWZ",
+      "isin": "IT0001487047",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BELLINI NAUTICA",
+      "symbol": "BELL",
+      "isin": "IT0005497042",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "BESTBE HOLDING",
+      "symbol": "BES",
+      "isin": "IT0005611642",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BFF BANK",
+      "symbol": "BFF",
+      "isin": "IT0005244402",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BIESSE",
+      "symbol": "BSS",
+      "isin": "IT0003097257",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BOLOGNAFIERE",
+      "symbol": "BF",
+      "isin": "IT0003516066",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "BORGOSESIA",
+      "symbol": "BO",
+      "isin": "IT0003217335",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BPER BANCA",
+      "symbol": "BPE",
+      "isin": "IT0000066123",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BREMBO",
+      "symbol": "BRE",
+      "isin": "NL0015001KT6",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BRIOSCHI",
+      "symbol": "BRI",
+      "isin": "IT0000066180",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BRUNELLO CUCINELLI",
+      "symbol": "BC",
+      "isin": "IT0004764699",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "BUZZI",
+      "symbol": "BZU",
+      "isin": "IT0001347308",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "C. LATTE D'ITALIA",
+      "symbol": "CLI",
+      "isin": "IT0003023980",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CAIRO COMMUNICAT",
+      "symbol": "CAI",
+      "isin": "IT0004329733",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CALEFFI",
+      "symbol": "CLF",
+      "isin": "IT0003025019",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CALTAGIRONE",
+      "symbol": "CALT",
+      "isin": "IT0003127930",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CALTAGIRONE EDIT",
+      "symbol": "CED",
+      "isin": "IT0001472171",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CAMPARI",
+      "symbol": "CPR",
+      "isin": "NL0015435975",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CAREL INDUSTRIES",
+      "symbol": "CRL",
+      "isin": "IT0005331019",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CASTA DIVA GROUP",
+      "symbol": "CDG",
+      "isin": "IT0005003782",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "CELLULARLINE",
+      "symbol": "CELL",
+      "isin": "IT0005244618",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CEMBRE",
+      "symbol": "CMB",
+      "isin": "IT0001128047",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CEMENTIR HOLDING",
+      "symbol": "CEM",
+      "isin": "NL0013995087",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CIR",
+      "symbol": "CIR",
+      "isin": "IT0000070786",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CIRCLE",
+      "symbol": "CIRC",
+      "isin": "IT0005344996",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "CLABO",
+      "symbol": "CLABO",
+      "isin": "IT0005091324",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "CLASS EDITORI",
+      "symbol": "CLE",
+      "isin": "IT0005117848",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CLEANBNB",
+      "symbol": "CBB",
+      "isin": "IT0005377277",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "CLOUDIA RESEARCH",
+      "symbol": "AGAIN",
+      "isin": "IT0005577090",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "COFLE",
+      "symbol": "CFL",
+      "isin": "IT0005465619",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "COGEFEED",
+      "symbol": "CGF",
+      "isin": "IT0005618043",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "COM.TEL",
+      "symbol": "CMTL",
+      "isin": "IT0005632945",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "COMER INDUSTRIES",
+      "symbol": "COM",
+      "isin": "IT0005246191",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CONFINVEST ORO",
+      "symbol": "CFV",
+      "isin": "IT0005379604",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "CONVERGENZE",
+      "symbol": "CVG",
+      "isin": "IT0005426215",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "COPERNICO",
+      "symbol": "COP",
+      "isin": "IT0005379406",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "CREACTIVES GROUP",
+      "symbol": "CREG",
+      "isin": "IT0005408593",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "CREDEM",
+      "symbol": "CE",
+      "isin": "IT0003121677",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CSP INT IND CALZE",
+      "symbol": "CSP",
+      "isin": "IT0001127874",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CUBE LABS",
+      "symbol": "CUBE",
+      "isin": "IT0005532483",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "CY4GATE",
+      "symbol": "CY4",
+      "isin": "IT0005412504",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "CYBEROO",
+      "symbol": "CYB",
+      "isin": "IT0005546103",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "D'AMICO",
+      "symbol": "DIS",
+      "isin": "LU2592315662",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "DANIELI & C",
+      "symbol": "DAN",
+      "isin": "IT0000076502",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "DANIELI & C RISP",
+      "symbol": "DANR",
+      "isin": "IT0000076486",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "DATRIX",
+      "symbol": "DATA",
+      "isin": "IT0005468357",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "DBA GROUP",
+      "symbol": "DBA",
+      "isin": "IT0005285942",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "DE'LONGHI",
+      "symbol": "DLG",
+      "isin": "IT0003115950",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "DEDEM",
+      "symbol": "DDM",
+      "isin": "IT0005659724",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "DEODATO.GALLERY",
+      "symbol": "ART",
+      "isin": "IT0005528937",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "DESTINATION ITALIA",
+      "symbol": "DIT",
+      "isin": "IT0005454027",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "DEXELANCE",
+      "symbol": "DEX",
+      "isin": "IT0005543480",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "DHH",
+      "symbol": "DHH",
+      "isin": "IT0005203622",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "DIASORIN",
+      "symbol": "DIA",
+      "isin": "IT0003492391",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "DIGITAL BROS",
+      "symbol": "DIB",
+      "isin": "IT0001469995",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "DIGITOUCH",
+      "symbol": "DGT",
+      "isin": "IT0005089476",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "DIPIETRO GROUP",
+      "symbol": "DPG",
+      "isin": "IT0005716813",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "DIRECTA SIM",
+      "symbol": "D",
+      "isin": "IT0001463063",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "DIS ELET ADRIATICA",
+      "symbol": "DEA",
+      "isin": "IT0005600249",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "DOTSTAY",
+      "symbol": "DOT",
+      "isin": "IT0005523839",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "DOVALUE",
+      "symbol": "DOV",
+      "isin": "IT0005610958",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "DOXEE",
+      "symbol": "DOX",
+      "isin": "IT0005394413",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "E-GLOBE",
+      "symbol": "EGB",
+      "isin": "IT0005557514",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "E-NOVIA",
+      "symbol": "E9IA",
+      "isin": "IT0005391229",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "E.T.S.",
+      "symbol": "ETS",
+      "isin": "IT0005669558",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ECOMEMBRANE",
+      "symbol": "ECMB",
+      "isin": "IT0005543332",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ECOSUNTEK",
+      "symbol": "ECK",
+      "isin": "IT0005654766",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "EDGELAB",
+      "symbol": "ELB",
+      "isin": "IT0005627762",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "EDIL SAN FELICE",
+      "symbol": "ESF",
+      "isin": "IT0005561441",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "EDILIZIACROBATICA",
+      "symbol": "EDAC",
+      "isin": "IT0005351504",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "EDISON R",
+      "symbol": "EDNR",
+      "isin": "IT0003372205",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "EGOMNIA",
+      "symbol": "EGN",
+      "isin": "IT0005586497",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "EHI",
+      "symbol": "EHI",
+      "isin": "IT0005723405",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "EL.EN.",
+      "symbol": "ELN",
+      "isin": "IT0005453250",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ELICA",
+      "symbol": "ELC",
+      "isin": "IT0003404214",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ELSA SOLUTIONS",
+      "symbol": "ELSA",
+      "isin": "IT0005561466",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "EMAK",
+      "symbol": "EM",
+      "isin": "IT0001237053",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "EMMA VILLAS",
+      "symbol": "EAV",
+      "isin": "IT0005562183",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ENA",
+      "symbol": "ENA",
+      "isin": "IT0005468290",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ENAV",
+      "symbol": "ENAV",
+      "isin": "IT0005176406",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ENEL",
+      "symbol": "ENEL",
+      "isin": "IT0003128367",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ENERGY",
+      "symbol": "ENY",
+      "isin": "IT0005500712",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ENERGY TIME",
+      "symbol": "ET",
+      "isin": "IT0005660219",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ENERVIT",
+      "symbol": "ENV",
+      "isin": "IT0004356751",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ENI",
+      "symbol": "ENI",
+      "isin": "IT0003132476",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ENTERA",
+      "symbol": "ENT",
+      "isin": "IT0005353575",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "EPH INVEST",
+      "symbol": "EPH",
+      "isin": "IT0005730095",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "EPRCOMUNICAZIONE",
+      "symbol": "EPRB",
+      "isin": "IT0005519837",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "EQUITA GROUP",
+      "symbol": "EQUI",
+      "isin": "IT0005312027",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ERG",
+      "symbol": "ERG",
+      "isin": "IT0001157020",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ERREDUE",
+      "symbol": "RDUE",
+      "isin": "IT0005521247",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ESAUTOMOTION",
+      "symbol": "ESAU",
+      "isin": "IT0005337107",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ESI",
+      "symbol": "ESIGM",
+      "isin": "IT0005421885",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ESPE",
+      "symbol": "ESPE",
+      "isin": "IT0005573818",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ESPRINET",
+      "symbol": "PRT",
+      "isin": "IT0003850929",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ESTRIMA",
+      "symbol": "ESTM",
+      "isin": "IT0005468191",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ETI",
+      "symbol": "ETI",
+      "isin": "IT0005720005",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "EUKEDOS",
+      "symbol": "EUK",
+      "isin": "IT0004818297",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "EUROCOMMERCIAL",
+      "symbol": "ECMPM",
+      "isin": "NL0015000K93",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "EUROGROUP LAM",
+      "symbol": "EGLA",
+      "isin": "IT0005527616",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "EUROTECH",
+      "symbol": "ETH",
+      "isin": "IT0003895668",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "EVISO",
+      "symbol": "EVISO",
+      "isin": "IT0005430936",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "EXECUS",
+      "symbol": "EXEC",
+      "isin": "IT0005557530",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "EXPERT.AI",
+      "symbol": "EXAI",
+      "isin": "IT0004496029",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "FAE TECHNOLOGY",
+      "symbol": "FAE",
+      "isin": "IT0005500688",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "FARMACOSMO",
+      "symbol": "COSMO",
+      "isin": "IT0005487670",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "FERRARI",
+      "symbol": "RACE",
+      "isin": "NL0011585146",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "FERRETTI",
+      "symbol": "YACHT",
+      "isin": "IT0005383291",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "FIDIA",
+      "symbol": "FDA",
+      "isin": "IT0005654683",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "FIERA MILANO",
+      "symbol": "FM",
+      "isin": "IT0003365613",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "FILA",
+      "symbol": "FILA",
+      "isin": "IT0004967292",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "FINANZA.TECH",
+      "symbol": "FTC",
+      "isin": "IT0005475162",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "FINCANTIERI",
+      "symbol": "FCT",
+      "isin": "IT0005599938",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "FINE FOODS & PHARM",
+      "symbol": "FF",
+      "isin": "IT0005215329",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "FINECOBANK",
+      "symbol": "FBK",
+      "isin": "IT0000072170",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "FIRST CAPITAL",
+      "symbol": "FIC",
+      "isin": "IT0005252736",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "FIRST POINT",
+      "symbol": "FPT",
+      "isin": "IT0005720500",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "FNM",
+      "symbol": "FNM",
+      "isin": "IT0000060886",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "FOPE",
+      "symbol": "FPE",
+      "isin": "IT0005203424",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "FRANCHETTI",
+      "symbol": "FCH",
+      "isin": "IT0005508574",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "FRANCHI UMB MARMI",
+      "symbol": "FUM",
+      "isin": "IT0005335754",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "FRENDY ENERGY",
+      "symbol": "FRE",
+      "isin": "IT0004819857",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "FRIENDS",
+      "symbol": "AMI",
+      "isin": "IT0005664641",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "G.M. LEATHER",
+      "symbol": "GML",
+      "isin": "IT0005498610",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GABETTI",
+      "symbol": "GAB",
+      "isin": "IT0005023038",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "gAIn360",
+      "symbol": "GAIN",
+      "isin": "IT0005672461",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GAMBERO ROSSO",
+      "symbol": "GAMB",
+      "isin": "IT0005122392",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GAROF HEALTH CARE",
+      "symbol": "GHC",
+      "isin": "IT0005345233",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "GAS PLUS",
+      "symbol": "GSP",
+      "isin": "IT0004098510",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "GEFRAN",
+      "symbol": "GE",
+      "isin": "IT0003203947",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "GEL",
+      "symbol": "GEL",
+      "isin": "IT0005312365",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GENERALFINANCE",
+      "symbol": "GF",
+      "isin": "IT0005144784",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "GENERALI",
+      "symbol": "G",
+      "isin": "IT0000062072",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "GENS AUREA",
+      "symbol": "OROX",
+      "isin": "IT0005713232",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "GENTILI MOSCONI",
+      "symbol": "GM",
+      "isin": "IT0005531261",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GEOX",
+      "symbol": "GEO",
+      "isin": "IT0003697080",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "GIGLIO.COM",
+      "symbol": "GCOM",
+      "isin": "IT0005453003",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GIOCAMONDO STUDY",
+      "symbol": "GMS",
+      "isin": "IT0005652489",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GISMONDI 1754",
+      "symbol": "GIS",
+      "isin": "IT0005391138",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GIUNTI",
+      "symbol": "GPSY",
+      "isin": "IT0005722191",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GPI",
+      "symbol": "GPI",
+      "isin": "IT0005221517",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "GREEN OLEO",
+      "symbol": "GRN",
+      "isin": "IT0005549768",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GRIFAL",
+      "symbol": "GRAL",
+      "isin": "IT0005332595",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GROWENS",
+      "symbol": "GROW",
+      "isin": "IT0005040354",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GT TALENT GROUP",
+      "symbol": "GT",
+      "isin": "IT0005607699",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GUIDOTTI SHIPS",
+      "symbol": "GDT",
+      "isin": "IT0005723074",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "GVS",
+      "symbol": "GVS",
+      "isin": "IT0005411209",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "H-FARM",
+      "symbol": "FARM",
+      "isin": "IT0004674666",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "HAIKI+",
+      "symbol": "HIK",
+      "isin": "IT0005628778",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "HELYX INDUSTRIES",
+      "symbol": "HLX",
+      "isin": "IT0005451213",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "HERA",
+      "symbol": "HER",
+      "isin": "IT0001250932",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "HIGH QUALITY FOOD",
+      "symbol": "HQF",
+      "isin": "IT0005450694",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "HOMIZY",
+      "symbol": "HZY",
+      "isin": "IT0005468662",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "I GRANDI VIAGGI",
+      "symbol": "IGV",
+      "isin": "IT0005108219",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "I.M.D.",
+      "symbol": "IMD",
+      "isin": "IT0005549255",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ICOP",
+      "symbol": "ICOP",
+      "isin": "IT0001214433",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "IDNTT",
+      "symbol": "IDNTT",
+      "isin": "CH1118852594",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "IGD",
+      "symbol": "IGD",
+      "isin": "IT0005322612",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ILLA",
+      "symbol": "ILLA",
+      "isin": "IT0005578395",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ILPRA",
+      "symbol": "ILP",
+      "isin": "IT0005359101",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "IMMSI",
+      "symbol": "IMS",
+      "isin": "IT0001413837",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "IMPIANTI",
+      "symbol": "MPT",
+      "isin": "IT0005518953",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "IND CHIMICHE FORES",
+      "symbol": "ICF",
+      "isin": "IT0005416281",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "INDEL B",
+      "symbol": "INDB",
+      "isin": "IT0005245508",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "INDUSTRIE DE NORA",
+      "symbol": "DNR",
+      "isin": "IT0005186371",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "INIZIAT BRESCIANE",
+      "symbol": "IB",
+      "isin": "IT0005037905",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "INNOVATEC",
+      "symbol": "INC",
+      "isin": "IT0005412298",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "INTERCOS",
+      "symbol": "ICOS",
+      "isin": "IT0005455875",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "INTERNAT CARE COMP",
+      "symbol": "ICC",
+      "isin": "IT0005469371",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "INTERPUMP GROUP",
+      "symbol": "IP",
+      "isin": "IT0001078911",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "INTESA SANPAOLO",
+      "symbol": "ISP",
+      "isin": "IT0000072618",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "INTRED",
+      "symbol": "ITD",
+      "isin": "IT0005337818",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "INWIT",
+      "symbol": "INW",
+      "isin": "IT0005090300",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "IRCE",
+      "symbol": "IRC",
+      "isin": "IT0001077780",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "IREN",
+      "symbol": "IRE",
+      "isin": "IT0003027817",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ISCC FINTECH",
+      "symbol": "ISC",
+      "isin": "IT0005474108",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "IT WAY",
+      "symbol": "ITW",
+      "isin": "IT0003057624",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ITALGAS",
+      "symbol": "IG",
+      "isin": "IT0005211237",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ITALIAN EXHIBITION",
+      "symbol": "IEG",
+      "isin": "IT0003411417",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ITALIAN WINE BRAND",
+      "symbol": "IWB",
+      "isin": "IT0005075764",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ITALMOBILIARE",
+      "symbol": "ITM",
+      "isin": "IT0005253205",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "IVECO GROUP",
+      "symbol": "IVG",
+      "isin": "NL0015000LU4",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "IVISION TECH",
+      "symbol": "IVN",
+      "isin": "IT0005554784",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "JUVENTUS FC",
+      "symbol": "JUVE",
+      "isin": "IT0005572778",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "KALEON",
+      "symbol": "KLN",
+      "isin": "IT0005678104",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "KME GROUP",
+      "symbol": "KME",
+      "isin": "IT0004552359",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "KME GROUP RSP",
+      "symbol": "KMER",
+      "isin": "IT0004552367",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "KRUSO KAPITAL",
+      "symbol": "KK",
+      "isin": "IT0005707341",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "LAB FARMACEUT ERFO",
+      "symbol": "ERFO",
+      "isin": "IT0005497885",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "LANDI RENZO",
+      "symbol": "LNDR",
+      "isin": "IT0005619843",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "LEMON SISTEMI",
+      "symbol": "LS",
+      "isin": "IT0005573438",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "LEONARDO",
+      "symbol": "LDO",
+      "isin": "IT0003856405",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "LEONE FILM GROUP",
+      "symbol": "LFG",
+      "isin": "IT0004973696",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "LINDBERGH",
+      "symbol": "LDB",
+      "isin": "IT0005469272",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "LITIX",
+      "symbol": "LTX",
+      "isin": "IT0005600801",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "LONGINO&CARDENAL",
+      "symbol": "LON",
+      "isin": "IT0005337073",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "LOTTOMATICA GROUP",
+      "symbol": "LTMC",
+      "isin": "IT0005541336",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "LUCISANO MEDIA G",
+      "symbol": "LMG",
+      "isin": "IT0004522162",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "LUVE",
+      "symbol": "LUVE",
+      "isin": "IT0005107492",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "MAGIS",
+      "symbol": "MGS",
+      "isin": "IT0005525347",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MAIRE",
+      "symbol": "MAIRE",
+      "isin": "IT0004931058",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "MAPS",
+      "symbol": "MAPS",
+      "isin": "IT0005364333",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MARE ENGINEERING",
+      "symbol": "MARE",
+      "isin": "IT0005588626",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MARKBASS",
+      "symbol": "MARK",
+      "isin": "IT0005670960",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MARR",
+      "symbol": "MARR",
+      "isin": "IT0003428445",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "MARZOCCHI POMPE",
+      "symbol": "MARP",
+      "isin": "IT0004376858",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MASI AGRICOLA",
+      "symbol": "MASI",
+      "isin": "IT0004125677",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MATICA FINTEC",
+      "symbol": "MFT",
+      "isin": "IT0005388449",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MEDIOBANCA",
+      "symbol": "MB",
+      "isin": "IT0000062957",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "MEGLIOQUESTO",
+      "symbol": "MQSPA",
+      "isin": "IT0005450173",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MET.EXTRA GROUP",
+      "symbol": "MET",
+      "isin": "IT0005481855",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "METRIKS AI",
+      "symbol": "MTK",
+      "isin": "IT0005651481",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MEVIM",
+      "symbol": "MEV",
+      "isin": "IT0005586950",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MFE A",
+      "symbol": "MFEA",
+      "isin": "NL0015001OI1",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "MFE B",
+      "symbol": "MFEB",
+      "isin": "NL0015001OJ9",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "MISITANO STRACUZZI",
+      "symbol": "MS",
+      "isin": "IT0005603078",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MIT SIM",
+      "symbol": "MTS",
+      "isin": "IT0005427510",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MOLTIPLY GROUP",
+      "symbol": "MOL",
+      "isin": "IT0004195308",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "MONCLER",
+      "symbol": "MONC",
+      "isin": "IT0004965148",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "MONDADORI EDIT",
+      "symbol": "MN",
+      "isin": "IT0001469383",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "MONDO TV",
+      "symbol": "MTV",
+      "isin": "IT0001447785",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "MONDO TV FRANCE",
+      "symbol": "MTVFR",
+      "isin": "FR0014011ND8",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "MONNALISA",
+      "symbol": "MNL",
+      "isin": "IT0005338139",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "NABLA",
+      "symbol": "NABLA",
+      "isin": "IT0005730384",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "NEODECORTECH",
+      "symbol": "NDT",
+      "isin": "IT0005275778",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "NEOSPERIENCE",
+      "symbol": "NSP",
+      "isin": "IT0005497018",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "NEUROSOFT",
+      "symbol": "NRST",
+      "isin": "GRS802003004",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "NEWPRINCES",
+      "symbol": "NWL",
+      "isin": "IT0005385213",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "NEXI",
+      "symbol": "NEXI",
+      "isin": "IT0005366767",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "NEXT GEOSOLUTIONS",
+      "symbol": "NXT",
+      "isin": "IT0005594418",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "NOTORIOUS PICTURES",
+      "symbol": "NPI",
+      "isin": "IT0005025355",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "NOVAMARINE",
+      "symbol": "NOVA",
+      "isin": "IT0005605701",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "NUSCO",
+      "symbol": "NUS",
+      "isin": "IT0005453110",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "OFFICINA STELLARE",
+      "symbol": "OS",
+      "isin": "IT0005374035",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "OLIDATA",
+      "symbol": "OLI",
+      "isin": "IT0005634610",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "OMER",
+      "symbol": "OMER",
+      "isin": "IT0005453748",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "OPS ECOM",
+      "symbol": "OEC",
+      "isin": "IT0005122400",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "OPS ITALIA",
+      "symbol": "OPS",
+      "isin": "IT0005577868",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "OPS RETAIL",
+      "symbol": "OPR",
+      "isin": "IT0005545675",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "OPT",
+      "symbol": "OPTS",
+      "isin": "IT0005713646",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ORSERO",
+      "symbol": "ORS",
+      "isin": "IT0005138703",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "OSAI AUTOM SYSTEM",
+      "symbol": "OSA",
+      "isin": "IT0005424830",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "OTOFARMA",
+      "symbol": "OTO",
+      "isin": "IT0005663361",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "OVS",
+      "symbol": "OVS",
+      "isin": "IT0005043507",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "PASQUARELLI AUTO",
+      "symbol": "PSQ",
+      "isin": "IT0005546319",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "PATTERN",
+      "symbol": "PTR",
+      "isin": "IT0005378143",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "PHARMANUTRA",
+      "symbol": "PHN",
+      "isin": "IT0005274094",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "PHILOGEN",
+      "symbol": "PHIL",
+      "isin": "IT0005373789",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "PIAGGIO",
+      "symbol": "PIA",
+      "isin": "IT0003073266",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "PININFARINA SPA",
+      "symbol": "PINF",
+      "isin": "IT0003056386",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "PIQUADRO",
+      "symbol": "PQ",
+      "isin": "IT0004240443",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "PIRELLI & C",
+      "symbol": "PIRC",
+      "isin": "IT0005278236",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "Piu' Medical",
+      "symbol": "PMED",
+      "isin": "IT0005676140",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "PLANETEL",
+      "symbol": "PLN",
+      "isin": "IT0005430951",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "PLC",
+      "symbol": "PLC",
+      "isin": "IT0005339160",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "POLIGRAF PRINTING",
+      "symbol": "POPR",
+      "isin": "IT0004587470",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "PORTO AVIATION",
+      "symbol": "PAG",
+      "isin": "IT0005545238",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "PORTOBELLO",
+      "symbol": "POR",
+      "isin": "IT0005337495",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "POSTE ITALIANE",
+      "symbol": "PST",
+      "isin": "IT0003796171",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "POWERSOFT",
+      "symbol": "PWS",
+      "isin": "IT0005353815",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "POZZI MILANO",
+      "symbol": "POZ",
+      "isin": "IT0005499949",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "Praexidia",
+      "symbol": "PRXD",
+      "isin": "IT0005687469",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "PREDICT",
+      "symbol": "PRE",
+      "isin": "IT0005611071",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "PROMOTICA",
+      "symbol": "PMT",
+      "isin": "IT0005425365",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "PRYSMIAN",
+      "symbol": "PRY",
+      "isin": "IT0004176001",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "RACING FORCE",
+      "symbol": "RFG",
+      "isin": "IT0005466963",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "RADICI",
+      "symbol": "RAD",
+      "isin": "IT0005379737",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "RAI WAY",
+      "symbol": "RWAY",
+      "isin": "IT0005054967",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "RATTI",
+      "symbol": "RAT",
+      "isin": "IT0004724107",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "RCS MEDIAGROUP",
+      "symbol": "RCS",
+      "isin": "IT0004931496",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "RECORDATI ORD",
+      "symbol": "REC",
+      "isin": "IT0003828271",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "REDELFI",
+      "symbol": "RDF",
+      "isin": "IT0005496101",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "REDFISH",
+      "symbol": "RFLTC",
+      "isin": "IT0005549354",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "RENOVALO",
+      "symbol": "RNV",
+      "isin": "IT0005500571",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "REPLY",
+      "symbol": "REY",
+      "isin": "IT0005282865",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "RES",
+      "symbol": "RES",
+      "isin": "IT0005543613",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "RETI",
+      "symbol": "RETI",
+      "isin": "IT0005418204",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "REVO INSURANCE",
+      "symbol": "REVO",
+      "isin": "IT0005513202",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "REWAY GROUP",
+      "symbol": "RWY",
+      "isin": "IT0005528069",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "RIBA MUNDO",
+      "symbol": "RMT",
+      "isin": "ES0105724001",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "RINO PETINO",
+      "symbol": "RPTN",
+      "isin": "IT0005663429",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "RISANAMENTO",
+      "symbol": "RN",
+      "isin": "IT0001402269",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ROCKET SHARING C",
+      "symbol": "RKT",
+      "isin": "IT0005481830",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ROSETTI MARINO",
+      "symbol": "YRM",
+      "isin": "IT0001017851",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "RT&L",
+      "symbol": "RTL",
+      "isin": "IT0005680373",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "S.S. LAZIO",
+      "symbol": "SSL",
+      "isin": "IT0003621783",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SABAF",
+      "symbol": "SAB",
+      "isin": "IT0001042610",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SACCHERIA F. FRANC",
+      "symbol": "SAC",
+      "isin": "IT0005521551",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "SAFILO GROUP",
+      "symbol": "SFL",
+      "isin": "IT0004604762",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SAIPEM",
+      "symbol": "SPM",
+      "isin": "IT0005495657",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SALV FERRAGAMO",
+      "symbol": "SFER",
+      "isin": "IT0004712375",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SANLORENZO",
+      "symbol": "SL",
+      "isin": "IT0003549422",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SBE-VARVIT",
+      "symbol": "VARV",
+      "isin": "IT0005568461",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "SCIUKER FRAMES",
+      "symbol": "SCK",
+      "isin": "IT0005340051",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "SECO",
+      "symbol": "IOT",
+      "isin": "IT0005438046",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SERI INDUSTRIAL",
+      "symbol": "SERI",
+      "isin": "IT0005283640",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SESA",
+      "symbol": "SES",
+      "isin": "IT0004729759",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SG COMPANY",
+      "symbol": "SGC",
+      "isin": "IT0005337172",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "SIAV",
+      "symbol": "SIAV",
+      "isin": "IT0005504128",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "SICILY BY CAR",
+      "symbol": "SBC",
+      "isin": "IT0005556581",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "SIMONE",
+      "symbol": "SMN",
+      "isin": "IT0005573123",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "SIT",
+      "symbol": "SIT",
+      "isin": "IT0005262149",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SMART CAPITAL",
+      "symbol": "SMCAP",
+      "isin": "IT0005621070",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "SNAM",
+      "symbol": "SRG",
+      "isin": "IT0003153415",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SOC EDIT IL FATTO",
+      "symbol": "SEIF",
+      "isin": "IT0005353484",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "SOFTLAB",
+      "symbol": "SFT",
+      "isin": "IT0001469953",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SOGEFI",
+      "symbol": "SGF",
+      "isin": "IT0000076536",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SOGES GROUP",
+      "symbol": "SOGES",
+      "isin": "IT0005597411",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "SOL",
+      "symbol": "SOL",
+      "isin": "IT0001206769",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SOLID WORLD GROUP",
+      "symbol": "S3D",
+      "isin": "IT0005497893",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "SOMEC",
+      "symbol": "SOM",
+      "isin": "IT0005329815",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SOSTRAVEL.COM",
+      "symbol": "SOS",
+      "isin": "IT0005338675",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "STELLANTIS",
+      "symbol": "STLAM",
+      "isin": "NL00150001Q9",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "STMICROELECTRONICS",
+      "symbol": "STMMI",
+      "isin": "NL0000226223",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "SVAS BIOSANA",
+      "symbol": "SVS",
+      "isin": "IT0005469264",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "SYS-DAT",
+      "symbol": "SYS",
+      "isin": "IT0005595423",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "TALEA",
+      "symbol": "TALEA",
+      "isin": "IT0005378333",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "TAMBURI",
+      "symbol": "TIP",
+      "isin": "IT0003153621",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "TECHNOGYM",
+      "symbol": "TGYM",
+      "isin": "IT0005162406",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "TECHNOPROBE",
+      "symbol": "TPRO",
+      "isin": "IT0005482333",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "TECMA SOLUTIONS",
+      "symbol": "TCM",
+      "isin": "IT0005425050",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "TECNO",
+      "symbol": "TCG",
+      "isin": "IT0005658841",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "TELECOM ITALIA",
+      "symbol": "TIT",
+      "isin": "IT0005712671",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "TELESIA",
+      "symbol": "TLS",
+      "isin": "IT0005240046",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "TELMES",
+      "symbol": "TLM",
+      "isin": "IT0005683401",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "TENARIS",
+      "symbol": "TEN",
+      "isin": "LU2598331598",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "TENAX INTERNAT",
+      "symbol": "TNX",
+      "isin": "IT0005428898",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "TERNA",
+      "symbol": "TRN",
+      "isin": "IT0003242622",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "TESMEC",
+      "symbol": "TES",
+      "isin": "IT0004585243",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "TESSELLIS",
+      "symbol": "TSL",
+      "isin": "IT0005496473",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "THE ITALIAN SEA G",
+      "symbol": "TISG",
+      "isin": "IT0005439085",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "TMP GROUP",
+      "symbol": "TMP",
+      "isin": "IT0005531238",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "TOSCANA AEROPORTI",
+      "symbol": "TYA",
+      "isin": "IT0000214293",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "TPS",
+      "symbol": "TPS",
+      "isin": "IT0005246142",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "TRADELAB",
+      "symbol": "TRAI",
+      "isin": "IT0005651507",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "TRAWELL CO",
+      "symbol": "TWL",
+      "isin": "IT0005717571",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "TREVI FIN IND",
+      "symbol": "TFIN",
+      "isin": "IT0005709909",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "TRIBOO",
+      "symbol": "TB",
+      "isin": "IT0005001554",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "TXT E-SOLUTIONS",
+      "symbol": "TXT",
+      "isin": "IT0001454435",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "UBALDI COSTRUZIONI",
+      "symbol": "UBA",
+      "isin": "IT0005628158",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "UCAPITAL24",
+      "symbol": "U24",
+      "isin": "IT0005380461",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "UNICREDIT",
+      "symbol": "UCG",
+      "isin": "IT0005239360",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "UNIDATA",
+      "symbol": "UD",
+      "isin": "IT0005573065",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "UNIPOL",
+      "symbol": "UNI",
+      "isin": "IT0004810054",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "VALICA",
+      "symbol": "VLC",
+      "isin": "IT0005562514",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "VALSOIA",
+      "symbol": "VLS",
+      "isin": "IT0001018362",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "VALTECNE",
+      "symbol": "VLT",
+      "isin": "IT0005532525",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "VANTEA SMART",
+      "symbol": "VNT",
+      "isin": "IT0005433765",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "VIMI FASTENERS",
+      "symbol": "VIM",
+      "isin": "IT0004717200",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "VINEXT",
+      "symbol": "VNXT",
+      "isin": "IT0005652414",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "VIVENDA GROUP",
+      "symbol": "VVG",
+      "isin": "IT0005622581",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "VNE",
+      "symbol": "VNE",
+      "isin": "IT0005556110",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "XENIA",
+      "symbol": "XHS",
+      "isin": "IT0005568487",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "YAKKYO",
+      "symbol": "YKY",
+      "isin": "IT0005573966",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "YOLO GROUP",
+      "symbol": "YOLO",
+      "isin": "IT0005495871",
+      "market": "Euronext Growth Milan",
+      "mic": "EXGM"
+    },
+    {
+      "name": "ZEST",
+      "symbol": "ZEST",
+      "isin": "IT0005013013",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ZIGNAGO VETRO",
+      "symbol": "ZV",
+      "isin": "IT0004171440",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    },
+    {
+      "name": "ZUCCHI",
+      "symbol": "ZUC",
+      "isin": "IT0005395071",
+      "market": "Euronext Milan",
+      "mic": "MTAA"
+    }
+  ]
+}

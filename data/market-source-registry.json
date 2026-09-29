@@ -88,7 +88,7 @@
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "note": "Official catalog plus two independently queried history routes are tested on the full catalog before backfill. Approval requires 100% combined coverage because the canonical end gate permits zero missing instruments."
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       }
     },
     "XOSL": {
@@ -201,7 +201,7 @@
     },
     "XSWX": {
       "status": "APPROVED",
-      "catalogFingerprint": "f6a515b191f29fbe31d04f2935de3e38f6f71152a81a2ae7fdced07ddb3f91c1",
+      "catalogFingerprint": "b30aaa811000e49f9904a95859e3dc14e72eebb2a4634907eb83efeba269ae39",
       "catalogSource": "https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202608.csv",
       "historySources": [
         {
@@ -212,7 +212,7 @@
         {
           "provider": "yahoo-chart",
           "role": "PRIMARY",
-          "note": "Full-catalog preflight: 213/445 instruments."
+          "note": "Full-catalog preflight: 216/445 instruments."
         },
         {
           "provider": "euronext-live",
@@ -223,7 +223,7 @@
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 445,
-        "coverageRatio": 0.9842696629213483,
+        "coverageRatio": 0.9955056179775281,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
