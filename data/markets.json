@@ -44,7 +44,7 @@
           "currency": "EUR",
           "slug": "milaan",
           "status": "available",
-          "sharesData": "borsa-italiana-milan.json"
+          "sharesData": "euronext-milan.json"
         },
         {
           "id": "oslo",
@@ -57,15 +57,6 @@
           "sharesData": "euronext-oslo.json"
         },
         {
-          "id": "dublin",
-          "name": "Dublin",
-          "country": "Ierland",
-          "mic": "XDUB",
-          "currency": "EUR",
-          "slug": "dublin",
-          "status": "planned"
-        },
-        {
           "id": "lisbon",
           "name": "Lissabon",
           "country": "Portugal",
@@ -74,6 +65,16 @@
           "slug": "lissabon",
           "status": "available",
           "sharesData": "euronext-lisbon.json"
+        },
+        {
+          "id": "zurich",
+          "name": "Zürich",
+          "country": "Zwitserland",
+          "mic": "XSWX",
+          "currency": "CHF",
+          "slug": "zurich",
+          "status": "available",
+          "sharesData": "euronext-zurich.json"
         }
       ]
     }
