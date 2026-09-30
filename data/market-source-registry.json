@@ -273,6 +273,33 @@
       "discovery": {
         "testedFullCatalog": 126,
         "note": "Official BME equity universe prepared in chat; full route audit must approve every line or explicitly isolate DATA_UNAVAILABLE before COMPLETE."
+      },
+      "historyResearch": {
+        "mode": "CHAT_PROVEN_THEN_MACHINE_REUSE",
+        "identityAuthority": "BME_OFFICIAL",
+        "catalogEvidence": "BME Equity Securities List and Continuous Market bulletins",
+        "primaryCandidate": {
+          "provider": "yahoo-chart",
+          "suffix": ".MC",
+          "identity": "ISIN_RESOLVED_SYMBOL",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume"
+          ]
+        },
+        "officialValidation": {
+          "provider": "bme-daily-bulletin",
+          "fields": [
+            "open",
+            "close"
+          ]
+        },
+        "gate": "NO_BACKFILL_UNTIL_FULL_CATALOG_ROUTE_MAP_OR_EXPLICIT_DATA_UNAVAILABLE",
+        "learnedAt": "2026-09-30",
+        "note": "Historical source discovery is performed outside the website; only proven routes are persisted for factory reuse."
       }
     },
     "XSTO": {
@@ -326,7 +353,6 @@
         "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       },
       "catalogFingerprint": "7eee68dc898cf7c9ca9e7d7d42b23f5dc692b808154375e35c4b4c82bc25b34f",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
       "lastAuditAt": "2026-09-28T04:12:55.163Z"
     }
   }
