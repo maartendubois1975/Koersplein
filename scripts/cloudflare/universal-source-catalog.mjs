@@ -63,6 +63,20 @@ if(mic==='XCSE'){
  await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,officialAuthority:'Nasdaq OMXCPI',officialCount:expected,accepted:resolved.length,discovered:candidates.length,unresolved,fingerprint,pass:true,discoveryPolicy:'NORDIC_FREE_DISCOVERY',generatedAt:new Date().toISOString()},null,2));
  console.log(JSON.stringify({market:mic,officialCount:expected,accepted:resolved.length,fingerprint,discoveryPolicy:'NORDIC_FREE_DISCOVERY'}));process.exit(0);
 }
+if(mic==='XHEL'){
+ const expected=145;
+ if(!/# of Components[\s\S]{0,200}145|Components[\s\S]{0,120}145/i.test(text))throw new Error('HELSINKI_OFFICIAL_COUNT_GATE: Nasdaq OMXH does not prove 145 components');
+ const instinetUrl='https://www.instinet.com/sites/default/files/blockmatch/stocklist/europe/BlockMatchEurope_20260916.html';
+ const ir=await fetch(instinetUrl,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'}});if(!ir.ok)throw new Error('HELSINKI_FREE_DISCOVERY: Instinet '+ir.status);
+ const ih=await ir.text(), candidates=[],seen=new Set();
+ for(const tr of ih.matchAll(new RegExp('<tr[^>]*>([\\s\\S]*?)</tr>','gi'))){const cells=[...tr[1].matchAll(new RegExp('<td[^>]*>([\\s\\S]*?)</td>','gi'))].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim());if(cells.length<6)continue;const [name,bb,isin,micCode,currency,relevantMarket]=cells;if(micCode!=='XHEL'||relevantMarket!=='XHEL'||!isin||seen.has(isin)||/SUBSCR|RIGHTS?|WARRANT|TEMPORARY RIGHTS?/i.test(name))continue;seen.add(isin);candidates.push({isin,name,bb,currency,sourceUrl:instinetUrl});}
+ if(candidates.length!==expected)throw new Error(`HELSINKI_FREE_DISCOVERY: identities ${candidates.length}/${expected}`);
+ const shares=[],unresolved=[];
+ for(let n=0;n<candidates.length;n+=6){const batch=await Promise.all(candidates.slice(n,n+6).map(async x=>{try{const u=new URL('https://query2.finance.yahoo.com/v1/finance/search');u.searchParams.set('q',x.isin);u.searchParams.set('quotesCount','12');u.searchParams.set('newsCount','0');const r=await fetch(u,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!r.ok)return null;const p=await r.json(),q=(p.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.HE'));if(!q?.symbol)return null;const ps=String(q.symbol);return {company:q.longname||q.shortname||x.name,name:q.longname||q.shortname||x.name,symbol:ps.replace(/\.HE$/i,'').replace(/-/g,' '),ticker:ps.replace(/\.HE$/i,''),isin:x.isin,mic:'XHEL',segment:'Main Market',currency:'EUR',providerSymbol:ps,identitySource:x.sourceUrl,identityResolution:'YAHOO_ISIN'};}catch{return null}}));batch.forEach((v,i)=>v?shares.push(v):unresolved.push(candidates[n+i]));}
+ const resolved=[...new Map(shares.map(x=>[x.isin,x])).values()].sort((a,b)=>a.name.localeCompare(b.name,'fi'));if(resolved.length!==expected)throw new Error(`HELSINKI_IDENTITY_GATE: resolved ${resolved.length}/${expected}; unresolved=${JSON.stringify(unresolved.map(x=>({name:x.name,isin:x.isin,bb:x.bb})))}`);
+ const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(resolved.map(x=>[x.isin,x.providerSymbol]))).digest('hex'),catalog={exchange:m.name,mic:'XHEL',retrievedAt:new Date().toISOString(),source:'Nasdaq OMXH official count + free Instinet XHEL identities + Yahoo ISIN resolution',sourceUrl:'https://indexes.nasdaq.com/Index/Overview/OMXHGI',officialCount:expected,resolvedCount:resolved.length,fingerprint,discoverySource:instinetUrl,discoveryPolicy:'NORDIC_FREE_DISCOVERY',shares:resolved};await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+String.fromCharCode(10));console.log(JSON.stringify({market:mic,officialCount:expected,accepted:resolved.length,fingerprint,preparedOnly:true}));process.exit(0);
+}
+
 if(mic==='XSTO'){
  const seed=JSON.parse(await fs.readFile('data/stockholm-official-equity-seed.json','utf8'));
  const koerspleinExcluded=new Set(['BESQAB PREF B','CORE D','CORE PREF','EMIL PREF','FPAR D','INTEA D','K2A PREF','NP3 PREF','SAGA D','SBB D','VOLO PREF','ALIV SDB','ALVO SDB','ARION SDB']);
