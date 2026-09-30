@@ -20,7 +20,7 @@ let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{he
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XCSE'){
  const expected=115;
- if(!/# of Components[\\s\\S]{0,200}115|Components[\\s\\S]{0,120}115/i.test(text))
+ if(!/# of Components[\s\S]{0,200}115|Components[\s\S]{0,120}115/i.test(text))
    throw new Error('COPENHAGEN_OFFICIAL_COUNT_GATE: Nasdaq OMXCPI does not prove 115 components');
  const componentUrl='https://www.investing.com/indices/omx-copenhagen-all-shares-pi-components';
  const cr=await fetch(componentUrl,{headers:{'user-agent':'Mozilla/5.0',accept:'text/html'}});
@@ -33,8 +33,8 @@ if(mic==='XCSE'){
  for(let n=0;n<urls.length;n+=8){
    const batch=await Promise.all(urls.slice(n,n+8).map(async url=>{try{
      const r=await fetch(url,{headers:{'user-agent':'Mozilla/5.0',accept:'text/html'}});if(!r.ok)return null;
-     const h=await r.text();const isin=(h.match(/\\b(DK[A-Z0-9]{10})\\b/i)||[])[1];if(!isin)return null;
-     const title=((h.match(new RegExp('<h1[^>]*>([\\\\s\\\\S]*?)</h1>','i'))||[])[1]||'').replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/\\s+/g,' ').trim();
+     const h=await r.text();const isin=(h.match(/\b(DK[A-Z0-9]{10})\b/i)||[])[1];if(!isin)return null;
+     const title=((h.match(new RegExp('<h1[^>]*>([\\\\s\\\\S]*?)</h1>','i'))||[])[1]||'').replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/\s+/g,' ').trim();
      return {isin:isin.toUpperCase(),name:title||isin,sourceUrl:url};
    }catch{return null}}));
    for(const x of batch)if(x&&!seenIsin.has(x.isin)){seenIsin.add(x.isin);candidates.push(x);}
@@ -46,7 +46,7 @@ if(mic==='XCSE'){
      const u=new URL('https://query2.finance.yahoo.com/v1/finance/search');u.searchParams.set('q',x.isin);u.searchParams.set('quotesCount','12');u.searchParams.set('newsCount','0');
      const r=await fetch(u,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!r.ok)return null;
      const p=await r.json();const q=(p.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.CO'));
-     if(!q?.symbol)return null;const ps=String(q.symbol);return {company:q.longname||q.shortname||x.name,name:q.longname||q.shortname||x.name,symbol:ps.replace(/\\.CO$/i,'').replace(/-/g,' '),ticker:ps.replace(/\\.CO$/i,''),isin:x.isin,mic:'XCSE',segment:'Main Market',currency:'DKK',providerSymbol:ps,identitySource:x.sourceUrl};
+     if(!q?.symbol)return null;const ps=String(q.symbol);return {company:q.longname||q.shortname||x.name,name:q.longname||q.shortname||x.name,symbol:ps.replace(/\.CO$/i,'').replace(/-/g,' '),ticker:ps.replace(/\.CO$/i,''),isin:x.isin,mic:'XCSE',segment:'Main Market',currency:'DKK',providerSymbol:ps,identitySource:x.sourceUrl};
    }catch{return null}}));
    batch.forEach((v,i)=>{if(v)shares.push(v);else unresolved.push(candidates[n+i])});
  }
