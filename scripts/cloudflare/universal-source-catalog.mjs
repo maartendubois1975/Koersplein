@@ -22,27 +22,21 @@ if(mic==='XCSE'){
  const expected=115;
  if(!/# of Components[\s\S]{0,200}115|Components[\s\S]{0,120}115/i.test(text))
    throw new Error('COPENHAGEN_OFFICIAL_COUNT_GATE: Nasdaq OMXCPI does not prove 115 components');
- const msBase='https://www.marketscreener.com/quote/index/OMX-COPENHAGEN-PI-30531342/components/';
- const pageSources=[msBase,msBase+'?p=2',msBase+'?page=2',msBase+'?pagination=2'];
- const msLink=new RegExp('href=["\\\\\']([^"\\\\\']*/quote/stock/[^"\\\\\'?#]+)[^"\\\\\']*["\\\\\']','gi');
- let urls=[],discoverySource='';const collected=new Set();
- for(const pageUrl of pageSources){try{
-   const cr=await fetch(pageUrl,{headers:{'user-agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36',accept:'text/html,application/xhtml+xml'}});
-   if(!cr.ok)continue;const html=await cr.text();for(const x of html.matchAll(msLink))collected.add(new URL(x[1],pageUrl).href);
- }catch{}}
- urls=[...collected];if(urls.length>=expected)discoverySource='MarketScreener OMXCPI public component pages';
- if(urls.length<expected)throw new Error(`COPENHAGEN_FREE_DISCOVERY: MarketScreener pagination yielded ${urls.length}/${expected} unique component links`);
- const candidates=[]; const seenIsin=new Set();
- for(let n=0;n<urls.length;n+=8){
-   const batch=await Promise.all(urls.slice(n,n+8).map(async url=>{try{
-     const r=await fetch(url,{headers:{'user-agent':'Mozilla/5.0',accept:'text/html'}});if(!r.ok)return null;
-     const h=await r.text();const isin=(h.match(/\b(DK[A-Z0-9]{10})\b/i)||[])[1];if(!isin)return null;
-     const title=((h.match(new RegExp('<h1[^>]*>([\\\\s\\\\S]*?)</h1>','i'))||[])[1]||'').replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/\s+/g,' ').trim();
-     return {isin:isin.toUpperCase(),name:title||isin,sourceUrl:url};
-   }catch{return null}}));
-   for(const x of batch)if(x&&!seenIsin.has(x.isin)){seenIsin.add(x.isin);candidates.push(x);}
+ const instinetUrl='https://www.instinet.com/sites/default/files/blockmatch/stocklist/europe/BlockMatchEurope_20260916.html';
+ const ir=await fetch(instinetUrl,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'}});
+ if(!ir.ok)throw new Error('COPENHAGEN_FREE_DISCOVERY: Instinet stock list unavailable '+ir.status);
+ const ih=await ir.text();const candidates=[];const seenIsin=new Set();
+ for(const tr of ih.matchAll(/<tr[^>]*>([\\s\\S]*?)<\\/tr>/gi)){
+   const cells=[...tr[1].matchAll(/<td[^>]*>([\\s\\S]*?)<\\/td>/gi)].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\\s+/g,' ').trim());
+   if(cells.length<6)continue;
+   const [name,bb,isin,micCode,currency,relevantMarket]=cells;
+   if(micCode!=='XCSE'||relevantMarket!=='XCSE'||!isin||seenIsin.has(isin))continue;
+   seenIsin.add(isin);candidates.push({isin,name,bb,currency,sourceUrl:instinetUrl});
  }
- if(candidates.length<expected)throw new Error(`COPENHAGEN_FREE_DISCOVERY: only ${candidates.length}/${expected} unique DK ISINs discovered`);
+ const discoverySource=instinetUrl;
+ if(candidates.length!==expected)throw new Error(`COPENHAGEN_FREE_DISCOVERY: Instinet XCSE main-market identities ${candidates.length}/${expected}`);
+
+ if(candidates.length!==expected)throw new Error(`COPENHAGEN_FREE_DISCOVERY: ${candidates.length}/${expected} identities`);
  const shares=[]; const unresolved=[];
  for(let n=0;n<candidates.length;n+=6){
    const batch=await Promise.all(candidates.slice(n,n+6).map(async x=>{try{
