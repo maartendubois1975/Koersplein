@@ -17,7 +17,8 @@ export class FactoryApiClient {
         });
         if(response.ok) return response.status === 204 ? null : response.json();
         const body=await response.text();
-        const cpuLimit=/Worker exceeded resource limits|error 1102/i.test(body);\n        const retryable=!cpuLimit&&(response.status===429||response.status===502||response.status===503||response.status===504);
+        const cpuLimit=/Worker exceeded resource limits|error 1102/i.test(body);
+        const retryable=!cpuLimit&&(response.status===429||response.status===502||response.status===503||response.status===504);
         lastError=new Error(`${method} ${path}: HTTP ${response.status} ${body}`);
         if(!retryable||attempt===maxAttempts) throw lastError;
       }catch(error){
