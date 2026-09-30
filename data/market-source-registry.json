@@ -443,6 +443,49 @@
         "coverageRatio": 0,
         "note": "Prepared while Copenhagen backfill runs. Publication remains closed until 145/145 history routes or explicit DATA_UNAVAILABLE."
       }
+    },
+    "XICE": {
+      "status": "PREPARED",
+      "catalogSource": "Nasdaq OMX Iceland All-Share official universe/count",
+      "catalogEvidenceUrl": "https://indexes.nasdaqomx.com/Index/Overview/OMXIGI",
+      "officialComponentCount": 27,
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY_CANDIDATE",
+          "suffix": ".IC",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume"
+          ],
+          "note": "Yahoo officially documents .IC for Nasdaq OMX Iceland; full 27-instrument preflight required before approval."
+        },
+        {
+          "provider": "yahoo-isin-resolver",
+          "role": "IDENTITY_HISTORY_FALLBACK",
+          "note": "ISIN-first resolution constrained to the documented .IC suffix."
+        }
+      ],
+      "dailyUpdate": {
+        "enabled": true,
+        "identity": "ISIN",
+        "provider": "yahoo-chart",
+        "suffix": ".IC",
+        "requiredFields": [
+          "open",
+          "close"
+        ],
+        "policy": "After COMPLETE, reuse the proven free Iceland .IC route; no paid source and no generic rediscovery."
+      },
+      "discovery": {
+        "testedFullCatalog": 0,
+        "requiredFullCatalog": 27,
+        "coverageRatio": 0,
+        "note": "Prepared source-first. Publication remains closed until all 27 OMX Iceland All-Share instruments have a proven free history route or explicit DATA_UNAVAILABLE."
+      }
     }
   }
 }
