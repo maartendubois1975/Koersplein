@@ -15,7 +15,7 @@ for(const market of plan.markets.filter(x=>x.state==='COMPLETE')){
   try{
    const before=await client.historyCoverage(s.isin),beforeDate=before?.coverage?.lastDate||before?.bars?.at?.(-1)?.date||before?.history?.at?.(-1)?.date||null;
    const instrument={...s,ticker:s.ticker||s.symbol,symbol:s.symbol||s.ticker,mic:s.mic||market.mic,market:s.mic||market.mic,currency:s.currency||market.currency,countryCode:market.country};
-   const {provider,result}=await providers.fetchDaily(instrument,{startDate:beforeDate||'1990-01-01',endDate:today},primary);
+   const {provider,result}=await providers.fetchDaily(instrument,{startDate:beforeDate||'1990-01-01',endDate:today},primary,{strictPreferred:true});
    const bars=(result.bars||[]).filter(b=>b.date&&Number(b.open)>0&&Number(b.close)>0&&(!beforeDate||b.date>beforeDate));
    for(const [period,part] of partitionBars(bars))await client.putPartition(s.isin,period,{bars:part,provider:provider.id});
    if(bars.length)await client.completeHistory(s.isin,{provider:provider.id});
