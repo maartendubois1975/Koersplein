@@ -12,7 +12,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: koersplein-daily-open-close-v2
+  group: koersplein-daily-open-close-v3
   cancel-in-progress: true
 jobs:
   update-and-verify:
