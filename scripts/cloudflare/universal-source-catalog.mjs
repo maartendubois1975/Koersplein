@@ -59,7 +59,7 @@ if(mic==='XCSE'){
  if(resolved.length!==expected)throw new Error(`COPENHAGEN_IDENTITY_GATE: resolved ${resolved.length}/${expected}; unresolved=${JSON.stringify(unresolved.map(x=>({name:x.name,isin:x.isin,bb:x.bb})))}; discovered=${candidates.length}`);
  const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(resolved.map(x=>[x.isin,x.providerSymbol]))).digest('hex');
  const catalog={exchange:m.name,mic:'XCSE',retrievedAt:new Date().toISOString(),source:'Nasdaq OMXCPI official count + free public constituent discovery + Yahoo ISIN resolution',sourceUrl:'https://indexes.nasdaqomx.com/Index/Overview/OMXCPI',officialCount:expected,resolvedCount:resolved.length,fingerprint,discoverySource,discoveryPolicy:'NORDIC_FREE_DISCOVERY',shares:resolved};
- await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\\n');await fs.mkdir('research/output',{recursive:true});
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+String.fromCharCode(10));await fs.mkdir('research/output',{recursive:true});
  await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,officialAuthority:'Nasdaq OMXCPI',officialCount:expected,accepted:resolved.length,discovered:candidates.length,unresolved,fingerprint,pass:true,discoveryPolicy:'NORDIC_FREE_DISCOVERY',generatedAt:new Date().toISOString()},null,2));
  console.log(JSON.stringify({market:mic,officialCount:expected,accepted:resolved.length,fingerprint,discoveryPolicy:'NORDIC_FREE_DISCOVERY'}));process.exit(0);
 }
