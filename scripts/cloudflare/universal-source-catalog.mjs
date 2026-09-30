@@ -13,20 +13,34 @@ const configs={
  XSWX:{urls:['https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202608.csv','https://www.six-group.com/dam/download/market-data/statistics/monthly-report/mtd/2026/monthly-trade-data-202607.csv'],allowedMics:new Set(['XSWX']),market:/Swiss|Switzerland|Blue Chip|Mid|Small|Sparks/i,min:200,format:'six-monthly'},
  XMAD:{urls:['https://www.bolsasymercados.es/en/bme-exchange/prices-and-markets/shares/listed-companies.html','https://www.bolsasymercados.es/es/download-center.html'],allowedMics:new Set(['XMAD']),market:/Madrid|Continuous|Mercado Continuo|Main Market/i,min:80,format:'bme-html'},
  XSTO:{urls:['https://www.nasdaq.com/products/data/nordic-baltic/nordic-reference-data-files'],allowedMics:new Set(['XSTO']),market:/Stockholm|STO Equities/i,min:200,format:'nasdaq-nordic-reference'},
- XCSE:{urls:['https://www.investing.com/indices/omx-copenhagen-all-shares-pi-components'],allowedMics:new Set(['XCSE']),market:/Copenhagen/i,min:115,format:'omxcpi-components'}
+ XCSE:{urls:['https://indexes.nasdaqomx.com/Index/Overview/OMXCPI'],allowedMics:new Set(['XCSE']),market:/Copenhagen/i,min:115,format:'nasdaq-omxcpi-seed'}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if(t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XCSE'){
- const html=text;
- const links=[...html.matchAll(/href=["']([^"']*\/equities\/[^"']+)["'][^>]*>([^<]+)<\/a>/gi)].map(m=>({href:new URL(m[1],source).href,name:m[2].replace(/&amp;/g,'&').trim()}));
- const uniq=[];const seen=new Set();for(const x of links){if(!seen.has(x.href)){seen.add(x.href);uniq.push(x);}}
- const shares=[];for(let n=0;n<uniq.length;n+=8){const batch=await Promise.all(uniq.slice(n,n+8).map(async x=>{try{const r=await fetch(x.href,{headers:{'user-agent':'Mozilla/5.0',accept:'text/html'}});if(!r.ok)return null;const h=await r.text();const ticker=(h.match(/stock ticker symbol[^"]*? is ([A-Z0-9 .-]+)/i)||h.match(/<h1[^>]*>[^<]*\(([A-Z0-9 .-]+)\)/i)||[])[1]?.trim();const isin=(h.match(/ISIN:\s*([A-Z]{2}[A-Z0-9]{10})/i)||h.match(/>ISIN<[^>]*>[\s\S]{0,120}?([A-Z]{2}[A-Z0-9]{10})/i)||[])[1];if(!ticker||!isin)return null;return {company:x.name,name:x.name,symbol:ticker,ticker,isin,mic:'XCSE',segment:'Main Market',currency:'DKK',providerSymbol:ticker.replace(/ /g,'-')+'.CO'};}catch{return null;}}));shares.push(...batch.filter(Boolean));}
- const byIsin=[...new Map(shares.map(x=>[x.isin,x])).values()];
- if(byIsin.length!==115)throw new Error(`COPENHAGEN_ALL_SHARE_GATE: resolved=${byIsin.length}; verwacht exact 115 OMXCPI-verhandelbare aandelen`);
- const catalog={exchange:m.name,mic:'XCSE',retrievedAt:new Date().toISOString(),source:'Nasdaq OMXCPI official count + Investing OMXCPI constituent identity cross-check',sourceUrl:'https://indexes.nasdaq.com/Index/Overview/OMXCPI',officialCount:115,resolvedCount:115,fixedSeed:false,shares:byIsin};
- await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');console.log(JSON.stringify({market:mic,officialCount:115,accepted:115}));process.exit(0);
+ // Nasdaq's public OMXCPI page is the authoritative count gate (115), but the
+ // licensed Nordic Reference Data files are the authoritative ISIN/ticker feed.
+ // Therefore never scrape a third-party constituent page and call it official.
+ const expected=115;
+ if(!/# of Components[\s\S]{0,120}115|Components[\s\S]{0,80}115/i.test(text))
+   throw new Error('COPENHAGEN_OFFICIAL_COUNT_GATE: Nasdaq OMXCPI page does not prove 115 components');
+ let seed;
+ try{seed=JSON.parse(await fs.readFile('data/copenhagen-official-equity-seed.json','utf8'));}catch{
+   throw new Error('COPENHAGEN_IDENTITY_GATE: official Nasdaq-derived ISIN/ticker seed missing; do not substitute Investing.com or another third-party catalog');
+ }
+ const shares=(seed.shares||[]).filter(x=>x.mic==='XCSE').map(x=>({...x,market:'Nasdaq Copenhagen Main Market',currency:x.currency||'DKK',providerSymbol:x.providerSymbol||String(x.symbol).replace(/ /g,'-')+'.CO'}));
+ const invalid=shares.filter(x=>!x.name||!x.symbol||!/^DK[A-Z0-9]{10}$/.test(x.isin)||x.mic!=='XCSE'||!x.providerSymbol);
+ const byIsin=new Map(),byTicker=new Map(),duplicates=[];
+ for(const x of shares){const t=x.symbol.toUpperCase();if(byIsin.has(x.isin)||byTicker.has(t))duplicates.push(x);byIsin.set(x.isin,x);byTicker.set(t,x);}
+ if(shares.length!==expected||invalid.length||duplicates.length)
+   throw new Error(`COPENHAGEN_IDENTITY_GATE: seed=${shares.length}/${expected}, invalid=${invalid.length}, duplicates=${duplicates.length}`);
+ const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(shares.map(x=>[x.isin,x.mic,x.symbol,x.providerSymbol]))).digest('hex');
+ const catalog={exchange:m.name,mic:'XCSE',retrievedAt:new Date().toISOString(),source:seed.source,sourceUrl:seed.sourceUrl,officialCount:expected,resolvedCount:shares.length,fingerprint,fixedSeed:true,shares};
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');
+ await fs.mkdir('research/output',{recursive:true});
+ await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,source:seed.source,sourceUrl:seed.sourceUrl,officialCount:expected,accepted:shares.length,fingerprint,pass:true,fixedSeed:true,generatedAt:new Date().toISOString()},null,2));
+ console.log(JSON.stringify({market:mic,officialCount:expected,accepted:shares.length,fingerprint,fixedSeed:true}));process.exit(0);
 }
 if(mic==='XSTO'){
  const seed=JSON.parse(await fs.readFile('data/stockholm-official-equity-seed.json','utf8'));
