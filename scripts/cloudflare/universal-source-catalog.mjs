@@ -22,13 +22,18 @@ if(mic==='XCSE'){
  const expected=115;
  if(!/# of Components[\s\S]{0,200}115|Components[\s\S]{0,120}115/i.test(text))
    throw new Error('COPENHAGEN_OFFICIAL_COUNT_GATE: Nasdaq OMXCPI does not prove 115 components');
- const componentUrl='https://www.investing.com/indices/omx-copenhagen-all-shares-pi-components';
- const cr=await fetch(componentUrl,{headers:{'user-agent':'Mozilla/5.0',accept:'text/html'}});
- if(!cr.ok)throw new Error('COPENHAGEN_FREE_DISCOVERY: component page unavailable '+cr.status);
- const html=await cr.text();
- const hrefRe=new RegExp('href=["\\\\\']([^"\\\\\']*/equities/[^"\\\\\'?#]+)[^"\\\\\']*["\\\\\']','gi');
- const hrefs=[...html.matchAll(hrefRe)].map(x=>new URL(x[1],'https://www.investing.com').href);
- const urls=[...new Set(hrefs)].filter(u=>!/indices|etfs/i.test(u));
+ const discoverySources=[
+  {url:'https://www.marketscreener.com/quote/index/OMX-COPENHAGEN-PI-30531342/components/',link:new RegExp('href=["\\\\\']([^"\\\\\']*/quote/stock/[^"\\\\\'?#]+)[^"\\\\\']*["\\\\\']','gi')},
+  {url:'https://www.investing.com/indices/omx-copenhagen-all-shares-pi-components',link:new RegExp('href=["\\\\\']([^"\\\\\']*/equities/[^"\\\\\'?#]+)[^"\\\\\']*["\\\\\']','gi')}
+ ];
+ let urls=[],discoverySource='';
+ for(const ds of discoverySources){try{
+   const cr=await fetch(ds.url,{headers:{'user-agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36',accept:'text/html,application/xhtml+xml'}});
+   if(!cr.ok)continue;const html=await cr.text();
+   const found=[...html.matchAll(ds.link)].map(x=>new URL(x[1],ds.url).href);
+   const unique=[...new Set(found)];if(unique.length>=expected){urls=unique;discoverySource=ds.url;break;}
+ }catch{}}
+ if(urls.length<expected)throw new Error(`COPENHAGEN_FREE_DISCOVERY: no server-accessible free constituent source produced >=${expected} links`);
  const candidates=[]; const seenIsin=new Set();
  for(let n=0;n<urls.length;n+=8){
    const batch=await Promise.all(urls.slice(n,n+8).map(async url=>{try{
@@ -53,7 +58,7 @@ if(mic==='XCSE'){
  const uniq=new Map(shares.map(x=>[x.isin,x]));const resolved=[...uniq.values()].sort((a,b)=>a.name.localeCompare(b.name,'da'));
  if(resolved.length!==expected)throw new Error(`COPENHAGEN_IDENTITY_GATE: resolved ${resolved.length}/${expected}; unresolved=${unresolved.length}; discovered=${candidates.length}`);
  const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(resolved.map(x=>[x.isin,x.providerSymbol]))).digest('hex');
- const catalog={exchange:m.name,mic:'XCSE',retrievedAt:new Date().toISOString(),source:'Nasdaq OMXCPI official count + free public constituent discovery + Yahoo ISIN resolution',sourceUrl:'https://indexes.nasdaqomx.com/Index/Overview/OMXCPI',officialCount:expected,resolvedCount:resolved.length,fingerprint,discoveryPolicy:'NORDIC_FREE_DISCOVERY',shares:resolved};
+ const catalog={exchange:m.name,mic:'XCSE',retrievedAt:new Date().toISOString(),source:'Nasdaq OMXCPI official count + free public constituent discovery + Yahoo ISIN resolution',sourceUrl:'https://indexes.nasdaqomx.com/Index/Overview/OMXCPI',officialCount:expected,resolvedCount:resolved.length,fingerprint,discoverySource,discoveryPolicy:'NORDIC_FREE_DISCOVERY',shares:resolved};
  await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\\n');await fs.mkdir('research/output',{recursive:true});
  await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,officialAuthority:'Nasdaq OMXCPI',officialCount:expected,accepted:resolved.length,discovered:candidates.length,unresolved,fingerprint,pass:true,discoveryPolicy:'NORDIC_FREE_DISCOVERY',generatedAt:new Date().toISOString()},null,2));
  console.log(JSON.stringify({market:mic,officialCount:expected,accepted:resolved.length,fingerprint,discoveryPolicy:'NORDIC_FREE_DISCOVERY'}));process.exit(0);
