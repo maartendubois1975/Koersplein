@@ -25,9 +25,11 @@ export class ProviderRegistry {
     return this.#providers.filter((provider) => provider.supports?.(instrument) !== false);
   }
 
-  async fetchDaily(instrument, range, preferredProvider = null) {
+  async fetchDaily(instrument, range, preferredProvider = null, { strictPreferred = false } = {}) {
+    const preferred = preferredProvider ? this.get(preferredProvider) : null;
+    if (preferredProvider && !preferred) throw new Error(`Onbekende voorkeursprovider: ${preferredProvider}`);
     const ordered = preferredProvider
-      ? [this.get(preferredProvider), ...this.candidates(instrument).filter((provider) => provider.id !== preferredProvider)].filter(Boolean)
+      ? (strictPreferred ? [preferred] : [preferred, ...this.candidates(instrument).filter((provider) => provider.id !== preferredProvider)]).filter(Boolean)
       : this.candidates(instrument);
     if (!ordered.length) throw new Error(`Geen provider beschikbaar voor ${instrument.isin}`);
     const failures = [];
