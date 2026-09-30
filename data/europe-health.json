@@ -16,6 +16,10 @@
       {
         "mic": "XETR",
         "reason": "SOURCE_PREFLIGHT_GATE"
+      },
+      {
+        "mic": "XCSE",
+        "reason": "SOURCE_PREFLIGHT_GATE"
       }
     ]
   },
@@ -23,9 +27,9 @@
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
     "complete": 8,
-    "blocked": 3,
+    "blocked": 4,
     "ready": 0,
-    "pending": 20,
+    "pending": 19,
     "total": 31
   },
   "markets": [
@@ -296,22 +300,22 @@
     {
       "mic": "XCSE",
       "name": "Kopenhagen",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
-      "reason": null,
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 115,
+        "fingerprint": "77c5c196d1b2b128f9bf29efe0ac98c1697c51b8ec38d5b2ca57e0c8f107f62e",
         "retrievedAt": null,
-        "source": "Nasdaq OMX Copenhagen All-Share OMXCPI"
+        "source": "Nasdaq OMXCPI official count + free public constituent discovery + Yahoo ISIN resolution"
       },
       "sources": {
-        "status": "PREPARED",
+        "status": "BLOCKED",
         "tested": 4,
-        "fullCatalog": 0,
+        "fullCatalog": 115,
         "coverageRatio": 0,
-        "crossCheckRatio": null
+        "crossCheckRatio": 0
       },
       "completedAt": null
     },
@@ -712,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-09-30T05:56:32.138Z"
+  "generatedAt": "2026-09-30T06:04:01.332Z"
 }

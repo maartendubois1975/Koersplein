@@ -356,8 +356,8 @@
       "lastAuditAt": "2026-09-28T04:12:55.163Z"
     },
     "XCSE": {
-      "status": "PREPARED",
-      "catalogSource": "Nasdaq OMX Copenhagen All-Share OMXCPI",
+      "status": "BLOCKED",
+      "catalogSource": "Nasdaq OMXCPI official count + free public constituent discovery + Yahoo ISIN resolution",
       "catalogEvidenceUrl": "https://indexes.nasdaq.com/Index/Overview/OMXCPI",
       "officialComponentCount": 115,
       "historySources": [
@@ -403,11 +403,21 @@
         "policy": "After COMPLETE, reuse proven Copenhagen route; do not rediscover generic sources."
       },
       "discovery": {
-        "testedFullCatalog": 0,
+        "testedFullCatalog": 115,
         "requiredFullCatalog": 115,
         "coverageRatio": 0,
-        "note": "Backfill remains closed until all 115 OMXCPI components have a proven history route or explicit DATA_UNAVAILABLE."
-      }
+        "note": "Backfill remains closed until all 115 OMXCPI components have a proven history route or explicit DATA_UNAVAILABLE.",
+        "testedDifficultSymbols": 20,
+        "crossCheckedSymbols": 0,
+        "crossCheckRatio": 0,
+        "sourceCountTested": 4,
+        "uncovered": 115,
+        "dataUnavailable": 0,
+        "unresolved": 115
+      },
+      "catalogFingerprint": "77c5c196d1b2b128f9bf29efe0ac98c1697c51b8ec38d5b2ca57e0c8f107f62e",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "lastAuditAt": "2026-09-30T06:03:50.391Z"
     }
   }
 }
