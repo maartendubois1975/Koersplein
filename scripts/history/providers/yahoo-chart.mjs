@@ -22,6 +22,7 @@ const MARKET_RULES = {
   XSTO: { suffix: '.ST', exchanges: ['sto', 'stockholm', 'nasdaq stockholm'] },
   XCSE: { suffix: '.CO', exchanges: ['cph', 'copenhagen', 'nasdaq copenhagen'] },
   XHEL: { suffix: '.HE', exchanges: ['hel', 'helsinki', 'nasdaq helsinki'] },
+  XICE: { suffix: '.IC', exchanges: ['ice', 'iceland', 'nasdaq iceland', 'reykjavik'] },
   FNSE: { suffix: '.ST', exchanges: ['sto', 'stockholm', 'first north sweden', 'nasdaq stockholm'] },
   SSME: { suffix: '.ST', exchanges: ['sto', 'stockholm', 'first north sweden', 'nasdaq stockholm'] }
 };
