@@ -43,7 +43,8 @@ if(mic==='XCSE'){
  const copenhagenSymbolFallback={
   'DK0010255975':'MTHH.CO',
   'DK0061273125':'SHAPE.CO',
-  'DK0064983373':'NEWCAP.CO'
+  'DK0064983373':'NEWCAP.CO',
+  'DK0010247600':'GYLD-B.CO'
  };
  for(let n=0;n<candidates.length;n+=6){
    const batch=await Promise.all(candidates.slice(n,n+6).map(async x=>{try{
