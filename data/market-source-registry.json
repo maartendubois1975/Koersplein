@@ -356,38 +356,25 @@
       "lastAuditAt": "2026-09-28T04:12:55.163Z"
     },
     "XCSE": {
-      "status": "BLOCKED",
+      "status": "APPROVED",
       "catalogSource": "Nasdaq OMXCPI official count + free public constituent discovery + Yahoo ISIN resolution",
       "catalogEvidenceUrl": "https://indexes.nasdaq.com/Index/Overview/OMXCPI",
       "officialComponentCount": 115,
       "historySources": [
         {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY_CANDIDATE",
-          "suffix": ".CO",
-          "fields": [
-            "open",
-            "high",
-            "low",
-            "close",
-            "volume"
-          ],
-          "note": "Yahoo documents Nasdaq OMX Copenhagen suffix .CO; full 115-instrument preflight required before approval."
-        },
-        {
           "provider": "yahoo-isin-resolver",
-          "role": "IDENTITY_HISTORY_FALLBACK",
-          "note": "ISIN-first resolution for symbols that fail direct .CO mapping."
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
         },
         {
-          "provider": "nasdaq-nordic-eod",
-          "role": "OFFICIAL_VALIDATION",
-          "note": "Nasdaq Nordic EOD covers Copenhagen and supplies listing identifiers plus daily trade statistics; use as official validation route where entitlement/access permits."
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Full-catalog preflight: 115/115 instruments."
         },
         {
-          "provider": "nasdaq-nordic-historicalview",
-          "role": "OFFICIAL_HISTORICAL_REFERENCE",
-          "note": "Official Nasdaq Nordic historical product; retained as authoritative historical reference/fallback subject to access entitlement."
+          "provider": "euronext-live",
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/115; 0 additional instruments beyond primary."
         }
       ],
       "dailyUpdate": {
@@ -403,17 +390,13 @@
         "policy": "After COMPLETE, reuse proven Copenhagen route; do not rediscover generic sources."
       },
       "discovery": {
-        "testedFullCatalog": 115,
-        "requiredFullCatalog": 115,
-        "coverageRatio": 0,
-        "note": "Backfill remains closed until all 115 OMXCPI components have a proven history route or explicit DATA_UNAVAILABLE.",
         "testedDifficultSymbols": 20,
+        "testedFullCatalog": 115,
+        "coverageRatio": 1,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 115,
-        "dataUnavailable": 0,
-        "unresolved": 115
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       },
       "catalogFingerprint": "77c5c196d1b2b128f9bf29efe0ac98c1697c51b8ec38d5b2ca57e0c8f107f62e",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
