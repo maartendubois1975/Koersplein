@@ -31,6 +31,8 @@ if(mic==='XCSE'){
    if(cells.length<6)continue;
    const [name,bb,isin,micCode,currency,relevantMarket]=cells;
    if(micCode!=='XCSE'||relevantMarket!=='XCSE'||!isin||seenIsin.has(isin))continue;
+   // NEWCAP is XCSE Main Market but is not in the current 115-member OMXCPI basket.
+   if(/^NEWCAP\s/i.test(bb)||/NEWCAP HOLDING/i.test(name))continue;
    seenIsin.add(isin);candidates.push({isin,name,bb,currency,sourceUrl:instinetUrl});
  }
  const discoverySource=instinetUrl;
