@@ -1,7 +1,7 @@
 {
   "marketMic": "XHEL",
-  "requestedAt": "2026-09-30T13:33:00.000Z",
+  "requestedAt": "2026-09-30T14:50:00.000Z",
   "requestedBy": "chat",
-  "purpose": "Canonical Copenhagen publication repaired; continue same market factory",
-  "instruction": "Helsinki: run official 145 catalog gate, free full-catalog source preflight, explicit DATA_UNAVAILABLE where proven, route-map, historical backfill, repair, final validation and publish only when proven COMPLETE. Reuse canonical single writer and registered .HE routes; no parallel path."
+  "purpose": "Resume Helsinki after Cloudflare CPU retry amplification fix",
+  "instruction": "Helsinki: continue canonical source-first factory. Official 145 catalog gate, free full-catalog preflight, explicit DATA_UNAVAILABLE only when proven, route-map, history, final validation, publication. CPU-limit responses must not be retry-amplified."
 }
