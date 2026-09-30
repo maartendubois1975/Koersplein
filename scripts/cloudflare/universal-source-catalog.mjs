@@ -26,8 +26,8 @@ if(mic==='XCSE'){
  const ir=await fetch(instinetUrl,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'}});
  if(!ir.ok)throw new Error('COPENHAGEN_FREE_DISCOVERY: Instinet stock list unavailable '+ir.status);
  const ih=await ir.text();const candidates=[];const seenIsin=new Set();
- for(const tr of ih.matchAll(/<tr[^>]*>([\\s\\S]*?)<\\/tr>/gi)){
-   const cells=[...tr[1].matchAll(/<td[^>]*>([\\s\\S]*?)<\\/td>/gi)].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\\s+/g,' ').trim());
+ for(const tr of ih.matchAll(new RegExp('<tr[^>]*>([\\s\\S]*?)</tr>','gi'))){
+   const cells=[...tr[1].matchAll(new RegExp('<td[^>]*>([\\s\\S]*?)</td>','gi'))].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim());
    if(cells.length<6)continue;
    const [name,bb,isin,micCode,currency,relevantMarket]=cells;
    if(micCode!=='XCSE'||relevantMarket!=='XCSE'||!isin||seenIsin.has(isin))continue;
