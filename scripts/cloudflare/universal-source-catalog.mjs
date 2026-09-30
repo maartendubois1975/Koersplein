@@ -34,7 +34,7 @@ if(mic==='XCSE'){
    const batch=await Promise.all(urls.slice(n,n+8).map(async url=>{try{
      const r=await fetch(url,{headers:{'user-agent':'Mozilla/5.0',accept:'text/html'}});if(!r.ok)return null;
      const h=await r.text();const isin=(h.match(/\\b(DK[A-Z0-9]{10})\\b/i)||[])[1];if(!isin)return null;
-     const title=((h.match(/<h1[^>]*>([\\s\\S]*?)<\\/h1>/i)||[])[1]||'').replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/\\s+/g,' ').trim();
+     const title=((h.match(new RegExp('<h1[^>]*>([\\\\s\\\\S]*?)</h1>','i'))||[])[1]||'').replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/\\s+/g,' ').trim();
      return {isin:isin.toUpperCase(),name:title||isin,sourceUrl:url};
    }catch{return null}}));
    for(const x of batch)if(x&&!seenIsin.has(x.isin)){seenIsin.add(x.isin);candidates.push(x);}
