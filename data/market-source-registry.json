@@ -486,6 +486,49 @@
         "coverageRatio": 0,
         "note": "Prepared source-first. Publication remains closed until all 27 OMX Iceland All-Share instruments have a proven free history route or explicit DATA_UNAVAILABLE."
       }
+    },
+    "XATH": {
+      "status": "PREPARED_SOURCE_DISCOVERY",
+      "catalogSource": "ATHEX / Euronext Athens official All Share universe",
+      "catalogEvidenceUrl": "https://www.athexgroup.gr/",
+      "officialComponentCount": null,
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY_CANDIDATE",
+          "suffix": ".AT",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume"
+          ],
+          "note": "Yahoo officially documents Athens Stock Exchange (ATHEX) suffix .AT; full-catalog preflight remains mandatory."
+        },
+        {
+          "provider": "yahoo-isin-resolver",
+          "role": "IDENTITY_HISTORY_FALLBACK",
+          "note": "ISIN-first resolution constrained to .AT."
+        }
+      ],
+      "dailyUpdate": {
+        "enabled": true,
+        "identity": "ISIN",
+        "provider": "yahoo-chart",
+        "suffix": ".AT",
+        "requiredFields": [
+          "open",
+          "close"
+        ],
+        "policy": "After COMPLETE, reuse proven free Athens .AT route; no paid source and no generic rediscovery."
+      },
+      "discovery": {
+        "testedFullCatalog": 0,
+        "requiredFullCatalog": null,
+        "coverageRatio": 0,
+        "note": "History route is prepared. Publication is blocked until a current official ATHEX/Euronext Athens ordinary-share universe and exact count are proven; do not infer a count from an unrelated index."
+      }
     }
   }
 }
