@@ -418,6 +418,49 @@
       "catalogFingerprint": "77c5c196d1b2b128f9bf29efe0ac98c1697c51b8ec38d5b2ca57e0c8f107f62e",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
       "lastAuditAt": "2026-09-30T06:03:50.391Z"
+    },
+    "XHEL": {
+      "status": "PREPARED",
+      "catalogSource": "Nasdaq OMX Helsinki All-Share official count + free Instinet XHEL identities + Yahoo ISIN resolution",
+      "catalogEvidenceUrl": "https://indexes.nasdaq.com/Index/Overview/OMXHGI",
+      "officialComponentCount": 145,
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY_CANDIDATE",
+          "suffix": ".HE",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume"
+          ],
+          "note": "Free Helsinki history route; full 145-instrument preflight required before approval."
+        },
+        {
+          "provider": "yahoo-isin-resolver",
+          "role": "IDENTITY_HISTORY_FALLBACK",
+          "note": "Free ISIN-first .HE resolution for Helsinki symbols."
+        }
+      ],
+      "dailyUpdate": {
+        "enabled": true,
+        "identity": "ISIN",
+        "provider": "yahoo-chart",
+        "suffix": ".HE",
+        "requiredFields": [
+          "open",
+          "close"
+        ],
+        "policy": "After COMPLETE, reuse the proven Helsinki .HE route; no paid source and no generic rediscovery."
+      },
+      "discovery": {
+        "testedFullCatalog": 0,
+        "requiredFullCatalog": 145,
+        "coverageRatio": 0,
+        "note": "Prepared while Copenhagen backfill runs. Publication remains closed until 145/145 history routes or explicit DATA_UNAVAILABLE."
+      }
     }
   }
 }
