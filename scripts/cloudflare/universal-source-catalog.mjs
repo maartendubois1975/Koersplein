@@ -26,7 +26,8 @@ if(mic==='XCSE'){
  const cr=await fetch(componentUrl,{headers:{'user-agent':'Mozilla/5.0',accept:'text/html'}});
  if(!cr.ok)throw new Error('COPENHAGEN_FREE_DISCOVERY: component page unavailable '+cr.status);
  const html=await cr.text();
- const hrefs=[...html.matchAll(/href=["']([^"']*\\/equities\\/[^"'?#]+)[^"']*["']/gi)].map(x=>new URL(x[1],'https://www.investing.com').href);
+ const hrefRe=new RegExp('href=["\\\\\']([^"\\\\\']*/equities/[^"\\\\\'?#]+)[^"\\\\\']*["\\\\\']','gi');
+ const hrefs=[...html.matchAll(hrefRe)].map(x=>new URL(x[1],'https://www.investing.com').href);
  const urls=[...new Set(hrefs)].filter(u=>!/indices|etfs/i.test(u));
  const candidates=[]; const seenIsin=new Set();
  for(let n=0;n<urls.length;n+=8){
