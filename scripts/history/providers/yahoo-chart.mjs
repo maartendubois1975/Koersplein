@@ -20,6 +20,7 @@ const MARKET_RULES = {
   XSWX: { suffix: '.SW', exchanges: ['swx', 'swiss', 'six swiss exchange', 'zurich'] },
   XMAD: { suffix: '.MC', exchanges: ['mce', 'madrid', 'bolsa de madrid', 'bme'] },
   XSTO: { suffix: '.ST', exchanges: ['sto', 'stockholm', 'nasdaq stockholm'] },
+  XCSE: { suffix: '.CO', exchanges: ['cph', 'copenhagen', 'nasdaq copenhagen'] },
   FNSE: { suffix: '.ST', exchanges: ['sto', 'stockholm', 'first north sweden', 'nasdaq stockholm'] },
   SSME: { suffix: '.ST', exchanges: ['sto', 'stockholm', 'first north sweden', 'nasdaq stockholm'] }
 };
