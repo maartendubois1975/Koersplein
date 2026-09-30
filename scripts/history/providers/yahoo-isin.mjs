@@ -8,7 +8,7 @@ export class YahooIsinProvider {
   const url=new URL(SEARCH);url.searchParams.set('q',instrument.isin);url.searchParams.set('quotesCount','10');url.searchParams.set('newsCount','0');
   const r=await fetch(url,{headers:{Accept:'application/json','User-Agent':'Koersplein-history/1.0'}});
   if(!r.ok)throw Error(`Yahoo search HTTP ${r.status} voor ${instrument.isin}`);
-  const p=await r.json(), suffix={XMIL:'.MI',MTAA:'.MI',EXGM:'.MI',XCSE:'.CO',XHEL:'.HE',XICE:'.IC'}[String(instrument.mic||'').toUpperCase()];
+  const p=await r.json(), suffix={XMIL:'.MI',MTAA:'.MI',EXGM:'.MI',XCSE:'.CO',XHEL:'.HE',XICE:'.IC',XATH:'.AT'}[String(instrument.mic||'').toUpperCase()];
   const quotes=(p?.quotes||[]).filter(q=>q?.symbol&&(!suffix||String(q.symbol).toUpperCase().endsWith(suffix)));
   if(!quotes.length)throw Error(`Geen Yahoo ISIN-resolutie voor ${instrument.isin}`);
   let last;
