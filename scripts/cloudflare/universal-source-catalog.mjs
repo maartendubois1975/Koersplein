@@ -22,18 +22,16 @@ if(mic==='XCSE'){
  const expected=115;
  if(!/# of Components[\s\S]{0,200}115|Components[\s\S]{0,120}115/i.test(text))
    throw new Error('COPENHAGEN_OFFICIAL_COUNT_GATE: Nasdaq OMXCPI does not prove 115 components');
- const discoverySources=[
-  {url:'https://www.marketscreener.com/quote/index/OMX-COPENHAGEN-PI-30531342/components/',link:new RegExp('href=["\\\\\']([^"\\\\\']*/quote/stock/[^"\\\\\'?#]+)[^"\\\\\']*["\\\\\']','gi')},
-  {url:'https://www.investing.com/indices/omx-copenhagen-all-shares-pi-components',link:new RegExp('href=["\\\\\']([^"\\\\\']*/equities/[^"\\\\\'?#]+)[^"\\\\\']*["\\\\\']','gi')}
- ];
- let urls=[],discoverySource='';
- for(const ds of discoverySources){try{
-   const cr=await fetch(ds.url,{headers:{'user-agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36',accept:'text/html,application/xhtml+xml'}});
-   if(!cr.ok)continue;const html=await cr.text();
-   const found=[...html.matchAll(ds.link)].map(x=>new URL(x[1],ds.url).href);
-   const unique=[...new Set(found)];if(unique.length>=expected){urls=unique;discoverySource=ds.url;break;}
+ const msBase='https://www.marketscreener.com/quote/index/OMX-COPENHAGEN-PI-30531342/components/';
+ const pageSources=[msBase,msBase+'?p=2',msBase+'?page=2',msBase+'?pagination=2'];
+ const msLink=new RegExp('href=["\\\\\']([^"\\\\\']*/quote/stock/[^"\\\\\'?#]+)[^"\\\\\']*["\\\\\']','gi');
+ let urls=[],discoverySource='';const collected=new Set();
+ for(const pageUrl of pageSources){try{
+   const cr=await fetch(pageUrl,{headers:{'user-agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36',accept:'text/html,application/xhtml+xml'}});
+   if(!cr.ok)continue;const html=await cr.text();for(const x of html.matchAll(msLink))collected.add(new URL(x[1],pageUrl).href);
  }catch{}}
- if(urls.length<expected)throw new Error(`COPENHAGEN_FREE_DISCOVERY: no server-accessible free constituent source produced >=${expected} links`);
+ urls=[...collected];if(urls.length>=expected)discoverySource='MarketScreener OMXCPI public component pages';
+ if(urls.length<expected)throw new Error(`COPENHAGEN_FREE_DISCOVERY: MarketScreener pagination yielded ${urls.length}/${expected} unique component links`);
  const candidates=[]; const seenIsin=new Set();
  for(let n=0;n<urls.length;n+=8){
    const batch=await Promise.all(urls.slice(n,n+8).map(async url=>{try{
