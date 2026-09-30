@@ -7,7 +7,7 @@ export class FactoryApiClient {
   }
   async request(path, options = {}) {
     const method=options.method||'GET';
-    const maxAttempts=Math.max(1,Number(process.env.FACTORY_API_MAX_ATTEMPTS||6));
+    const maxAttempts=Math.max(1,Math.min(3,Number(process.env.FACTORY_API_MAX_ATTEMPTS||3)));
     let lastError;
     for(let attempt=1;attempt<=maxAttempts;attempt++){
       try{
@@ -17,7 +17,7 @@ export class FactoryApiClient {
         });
         if(response.ok) return response.status === 204 ? null : response.json();
         const body=await response.text();
-        const retryable=response.status===429||response.status===502||response.status===503||response.status===504||/Worker exceeded resource limits|error 1102/i.test(body);
+        const cpuLimit=/Worker exceeded resource limits|error 1102/i.test(body);\n        const retryable=!cpuLimit&&(response.status===429||response.status===502||response.status===503||response.status===504);
         lastError=new Error(`${method} ${path}: HTTP ${response.status} ${body}`);
         if(!retryable||attempt===maxAttempts) throw lastError;
       }catch(error){
