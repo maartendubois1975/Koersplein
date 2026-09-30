@@ -90,3 +90,21 @@ Na iedere nieuwe of herstelde beurs:
 
 Doel: niet sneller worden door controles over te slaan, maar door bewezen controles en herstelbeslissingen één keer goed in de fabriek vast te leggen. De regie stuurt op complete beurzen en end-to-end resultaat, niet op aantallen losse reparaties of groene deelstappen.
 
+
+
+## 15. Historische koersdata wordt buiten de website bewezen
+De website is nooit verantwoordelijk voor bronontdekking van historische koersdata. Voor iedere nieuwe markt wordt de historische bronroute eerst door begeleid onderzoek of de regisseur bewezen en daarna als machineleesbare route in `data/market-source-registry.json` vastgelegd.
+
+Vaste volgorde:
+1. officiële exchange-catalogus en ISIN-identiteit;
+2. diep brononderzoek naar legitieme historische OHLC-routes;
+3. representatieve canary over oude, jonge, illiquide en moeilijke noteringen;
+4. volledige catalogus-preflight: ieder instrument krijgt minimaal één bewezen route of expliciete DATA_UNAVAILABLE;
+5. pas daarna historische backfill;
+6. append-only validatie en publicatie;
+7. dagelijkse open/close hergebruikt exact de bewezen markt-route en doet geen nieuwe bronontdekking.
+
+Een begeleide chatoplossing is trainingsdata: leg providerfamilie, suffix-/symbolmapping, ISIN-resolutie, foutfingerprint, fallbackvolgorde en validatiebewijs generiek vast. De volgende markt moet dit patroon automatisch proberen. Markt-specifieke uitzonderingen mogen geen generieke kwaliteitsgate verzwakken.
+
+## 16. Eén regisseur, twee ingangen
+De periodieke regisseur en expliciete chat-publicatie gebruiken dezelfde canonical state, source registry, adapters, backfillrunner en eindvalidatie. Chat is geen parallel systeem maar een begeleide ingang voor brononderzoek en structurele reparatie. De regisseur kiest per cyclus maximaal één nieuwe markt; COMPLETE-markten worden eerst op dagelijkse actualiteit gecontroleerd.
