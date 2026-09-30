@@ -49,3 +49,5 @@ jobs:
             research/output/daily-open-close-update.json
             research/output/daily-open-close-audit.json
           retention-days: 90
+
+# manual-trigger-safe: touching this workflow intentionally triggers the existing daily update path.
