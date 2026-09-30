@@ -10,6 +10,11 @@ on:
         required: false
         type: string
         default: ''
+      preflight_only:
+        description: 'Alleen catalogus + 100% bronpreflight; geen backfill/publicatie'
+        required: false
+        type: boolean
+        default: false
 permissions:
   contents: write
   actions: write
@@ -91,6 +96,7 @@ jobs:
           console.log(`SOURCE COVERAGE GATE PASS: ${r.combinedCovered} covered + ${unavailable.length} proven DATA_UNAVAILABLE = ${r.catalog}/${r.catalog}`);
           NODE
       - name: Historische backfill met foutisolatie
+        if: ${{ inputs.preflight_only != true }}
         env:
           HISTORY_BATCH_SIZE: 10
           CATALOG_BATCH_SIZE: 25
@@ -109,6 +115,7 @@ jobs:
             sleep 2
           done
       - name: Herstel resterende eindvalidatie-uitzonderingen
+        if: ${{ inputs.preflight_only != true }}
         run: |
           set -euo pipefail
           for repair in 1 2 3; do
@@ -120,7 +127,7 @@ jobs:
             sleep $((repair * 5))
           done
       - name: Eindvalidatie
-        if: ${{ success() }}
+        if: ${{ success() && inputs.preflight_only != true }}
         timeout-minutes: 30
         run: |
           for attempt in 1 2 3; do
