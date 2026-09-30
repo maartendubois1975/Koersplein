@@ -354,6 +354,60 @@
       },
       "catalogFingerprint": "7eee68dc898cf7c9ca9e7d7d42b23f5dc692b808154375e35c4b4c82bc25b34f",
       "lastAuditAt": "2026-09-28T04:12:55.163Z"
+    },
+    "XCSE": {
+      "status": "PREPARED",
+      "catalogSource": "Nasdaq OMX Copenhagen All-Share OMXCPI",
+      "catalogEvidenceUrl": "https://indexes.nasdaq.com/Index/Overview/OMXCPI",
+      "officialComponentCount": 115,
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY_CANDIDATE",
+          "suffix": ".CO",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume"
+          ],
+          "note": "Yahoo documents Nasdaq OMX Copenhagen suffix .CO; full 115-instrument preflight required before approval."
+        },
+        {
+          "provider": "yahoo-isin-resolver",
+          "role": "IDENTITY_HISTORY_FALLBACK",
+          "note": "ISIN-first resolution for symbols that fail direct .CO mapping."
+        },
+        {
+          "provider": "nasdaq-nordic-eod",
+          "role": "OFFICIAL_VALIDATION",
+          "note": "Nasdaq Nordic EOD covers Copenhagen and supplies listing identifiers plus daily trade statistics; use as official validation route where entitlement/access permits."
+        },
+        {
+          "provider": "nasdaq-nordic-historicalview",
+          "role": "OFFICIAL_HISTORICAL_REFERENCE",
+          "note": "Official Nasdaq Nordic historical product; retained as authoritative historical reference/fallback subject to access entitlement."
+        }
+      ],
+      "dailyUpdate": {
+        "enabled": true,
+        "identity": "ISIN",
+        "provider": "yahoo-chart",
+        "suffix": ".CO",
+        "validationProvider": "nasdaq-nordic-eod",
+        "requiredFields": [
+          "open",
+          "close"
+        ],
+        "policy": "After COMPLETE, reuse proven Copenhagen route; do not rediscover generic sources."
+      },
+      "discovery": {
+        "testedFullCatalog": 0,
+        "requiredFullCatalog": 115,
+        "coverageRatio": 0,
+        "note": "Backfill remains closed until all 115 OMXCPI components have a proven history route or explicit DATA_UNAVAILABLE."
+      }
     }
   }
 }
