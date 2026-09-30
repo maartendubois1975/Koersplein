@@ -446,7 +446,7 @@
     },
     "XICE": {
       "status": "PREPARED",
-      "catalogSource": "Nasdaq OMX Iceland All-Share official universe/count",
+      "catalogSource": "Nasdaq OMX Iceland All-Share (OMXIGI/OMXIPI) official universe/count; current official count verified 27 on 2026-09-30",
       "catalogEvidenceUrl": "https://indexes.nasdaqomx.com/Index/Overview/OMXIGI",
       "officialComponentCount": 27,
       "historySources": [
@@ -484,8 +484,20 @@
         "testedFullCatalog": 0,
         "requiredFullCatalog": 27,
         "coverageRatio": 0,
-        "note": "Prepared source-first. Publication remains closed until all 27 OMX Iceland All-Share instruments have a proven free history route or explicit DATA_UNAVAILABLE."
-      }
+        "note": "Official Nasdaq scope and 27-count reverified 2026-09-30. Independent current reconstruction also yields 27 named main-market stocks. Factory gate remains strict: full identity/catalog materialization and 27/27 .IC route preflight or explicit DATA_UNAVAILABLE before APPROVED."
+      },
+      "officialIndexIdentity": {
+        "gi": {
+          "code": "OMXIGI",
+          "isin": "IS0000009157"
+        },
+        "pi": {
+          "code": "OMXIPI",
+          "isin": "IS0000004463"
+        },
+        "scope": "All shares listed on Nasdaq Iceland main market"
+      },
+      "lastAuditAt": "2026-09-30T13:40:00.000Z"
     },
     "XATH": {
       "status": "PREPARED_SOURCE_DISCOVERY",
