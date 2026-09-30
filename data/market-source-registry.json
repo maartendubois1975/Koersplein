@@ -382,12 +382,12 @@
         "identity": "ISIN",
         "provider": "yahoo-chart",
         "suffix": ".CO",
-        "validationProvider": "nasdaq-nordic-eod",
+        "validationProvider": "yahoo-chart",
         "requiredFields": [
           "open",
           "close"
         ],
-        "policy": "After COMPLETE, reuse proven Copenhagen route; do not rediscover generic sources."
+        "policy": "Reuse proven free Copenhagen .CO route for daily open/close; no paid source and no generic rediscovery."
       },
       "discovery": {
         "testedDifficultSymbols": 20,
@@ -399,8 +399,7 @@
         "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       },
       "catalogFingerprint": "77c5c196d1b2b128f9bf29efe0ac98c1697c51b8ec38d5b2ca57e0c8f107f62e",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-09-30T06:03:50.391Z"
+      "lastAuditAt": "2026-09-30T08:40:59.343Z"
     },
     "XHEL": {
       "status": "PREPARED",
