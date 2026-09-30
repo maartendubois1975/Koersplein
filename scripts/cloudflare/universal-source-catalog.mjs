@@ -50,7 +50,7 @@ if(mic==='XCSE'){
    batch.forEach((v,i)=>{if(v)shares.push(v);else unresolved.push(candidates[n+i])});
  }
  const uniq=new Map(shares.map(x=>[x.isin,x]));const resolved=[...uniq.values()].sort((a,b)=>a.name.localeCompare(b.name,'da'));
- if(resolved.length!==expected)throw new Error(`COPENHAGEN_IDENTITY_GATE: resolved ${resolved.length}/${expected}; unresolved=${unresolved.length}; discovered=${candidates.length}`);
+ if(resolved.length!==expected)throw new Error(`COPENHAGEN_IDENTITY_GATE: resolved ${resolved.length}/${expected}; unresolved=${JSON.stringify(unresolved.map(x=>({name:x.name,isin:x.isin,bb:x.bb})))}; discovered=${candidates.length}`);
  const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(resolved.map(x=>[x.isin,x.providerSymbol]))).digest('hex');
  const catalog={exchange:m.name,mic:'XCSE',retrievedAt:new Date().toISOString(),source:'Nasdaq OMXCPI official count + free public constituent discovery + Yahoo ISIN resolution',sourceUrl:'https://indexes.nasdaqomx.com/Index/Overview/OMXCPI',officialCount:expected,resolvedCount:resolved.length,fingerprint,discoverySource,discoveryPolicy:'NORDIC_FREE_DISCOVERY',shares:resolved};
  await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\\n');await fs.mkdir('research/output',{recursive:true});
