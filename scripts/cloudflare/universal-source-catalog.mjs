@@ -31,8 +31,8 @@ if(mic==='XCSE'){
    if(cells.length<6)continue;
    const [name,bb,isin,micCode,currency,relevantMarket]=cells;
    if(micCode!=='XCSE'||relevantMarket!=='XCSE'||!isin||seenIsin.has(isin))continue;
-   // NEWCAP is XCSE Main Market but is not in the current 115-member OMXCPI basket.
-   if(/^NEWCAP\s/i.test(bb)||/NEWCAP HOLDING/i.test(name))continue;
+   // Venue lists may also contain temporary subscription rights/warrants; OMXCPI equity basket does not.
+   if(/SUBSCR|RIGHTS?|WARRANT|TEMPORARY RIGHTS?/i.test(name))continue;
    seenIsin.add(isin);candidates.push({isin,name,bb,currency,sourceUrl:instinetUrl});
  }
  const discoverySource=instinetUrl;
@@ -40,12 +40,17 @@ if(mic==='XCSE'){
 
  if(candidates.length!==expected)throw new Error(`COPENHAGEN_FREE_DISCOVERY: ${candidates.length}/${expected} identities`);
  const shares=[]; const unresolved=[];
+ const copenhagenSymbolFallback={
+  'DK0010255975':'MTHH.CO',
+  'DK0061273125':'SHAPE.CO',
+  'DK0064983373':'NEWCAP.CO'
+ };
  for(let n=0;n<candidates.length;n+=6){
    const batch=await Promise.all(candidates.slice(n,n+6).map(async x=>{try{
      const u=new URL('https://query2.finance.yahoo.com/v1/finance/search');u.searchParams.set('q',x.isin);u.searchParams.set('quotesCount','12');u.searchParams.set('newsCount','0');
      const r=await fetch(u,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!r.ok)return null;
      const p=await r.json();const q=(p.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.CO'));
-     if(!q?.symbol)return null;const ps=String(q.symbol);return {company:q.longname||q.shortname||x.name,name:q.longname||q.shortname||x.name,symbol:ps.replace(/\.CO$/i,'').replace(/-/g,' '),ticker:ps.replace(/\.CO$/i,''),isin:x.isin,mic:'XCSE',segment:'Main Market',currency:'DKK',providerSymbol:ps,identitySource:x.sourceUrl};
+     const ps=q?.symbol?String(q.symbol):copenhagenSymbolFallback[x.isin];if(!ps)return null;return {company:q?.longname||q?.shortname||x.name,name:q?.longname||q?.shortname||x.name,symbol:ps.replace(/\.CO$/i,'').replace(/-/g,' '),ticker:ps.replace(/\.CO$/i,''),isin:x.isin,mic:'XCSE',segment:'Main Market',currency:'DKK',providerSymbol:ps,identitySource:x.sourceUrl,identityResolution:q?.symbol?'YAHOO_ISIN':'FREE_SEED_SYMBOL_FALLBACK'};
    }catch{return null}}));
    batch.forEach((v,i)=>{if(v)shares.push(v);else unresolved.push(candidates[n+i])});
  }
