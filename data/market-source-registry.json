@@ -728,24 +728,24 @@
     },
     "XBUL": {
       "status": "APPROVED",
-      "catalogSource": "Bulgarian Stock Exchange official market segmentation",
+      "catalogSource": "BSE Main Market scope reconciled to Bulgarian-company BUL universe",
       "historySources": [
         {
-          "provider": "yahoo-chart",
+          "provider": "stockanalysis-bit",
           "role": "PRIMARY",
-          "note": "Official Bulgarian ISIN resolved to .SO; actual daily bars mandatory"
+          "note": "StockAnalysis BUL actual daily bars; Bulgarian company profile required"
         }
       ],
       "dailyUpdate": {
         "enabled": true,
-        "identity": "ISIN",
-        "provider": "yahoo-chart",
-        "suffix": ".SO",
+        "identity": "symbol",
+        "provider": "stockanalysis-bit",
+        "venue": "bul",
         "requiredFields": [
           "open",
           "close"
         ],
-        "policy": "Reuse proven Sofia route for daily open/close."
+        "policy": "Reuse proven BUL history route daily; no rediscovery."
       }
     }
   }
