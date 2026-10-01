@@ -147,7 +147,7 @@ async function route(request, env) {
     const body = await request.json();
     for (const market of body.markets || []) await env.DB.prepare(`INSERT INTO markets(mic,code,name,exchange_group,country_code,currency,timezone) VALUES(?,?,?,?,?,?,?) ON CONFLICT(mic) DO UPDATE SET code=excluded.code,name=excluded.name,exchange_group=excluded.exchange_group,country_code=excluded.country_code,currency=excluded.currency,timezone=excluded.timezone,updated_at=CURRENT_TIMESTAMP WHERE markets.code IS NOT excluded.code OR markets.name IS NOT excluded.name OR markets.exchange_group IS NOT excluded.exchange_group OR markets.country_code IS NOT excluded.country_code OR markets.currency IS NOT excluded.currency OR markets.timezone IS NOT excluded.timezone`).bind(market.mic, market.code, market.name, market.exchangeGroup || null, market.countryCode || null, market.currency || null, market.timezone || null).run();
     for (const item of body.instruments || []) {
-      // Canonical identity repair: early Sofia imports used temporary XBUL-* identifiers.
+      // Canonical identity repair: early Sofia imports used temporary XBUL-* identifiers; preserve relational history.
       // Preserve the existing instrument id/history relations while replacing only that temporary ISIN.
       const collision = await env.DB.prepare('SELECT id,isin FROM instruments WHERE mic=? AND ticker=?').bind(item.mic,item.ticker).first();
       if (collision && collision.isin !== item.isin && String(collision.isin).startsWith('XBUL-') && /^BG[A-Z0-9]{10}$/.test(item.isin)) {
