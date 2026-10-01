@@ -156,7 +156,7 @@ if(mic==='XMAD'){
  shares.sort((a,b)=>a.name.localeCompare(b.name,'es'));
  const catalog={exchange:m.name,mic:m.mic,retrievedAt:new Date().toISOString(),source:seed.source,sourceUrl:seed.sourceUrl,fingerprint,officialCount:seed.shares.length,resolvedCount:shares.length,unresolved,shares};
  await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,source:seed.source,sourceUrl:seed.sourceUrl,fingerprint,officialCount:seed.shares.length,accepted:shares.length,unresolved,pass:unresolved.length===0,generatedAt:new Date().toISOString()},null,2));
- if(unresolved.length){await fs.writeFile('research/output/madrid-unresolved.json',JSON.stringify(unresolved,null,2)+'\n');throw new Error(`Madrid catalogus heeft nog ${unresolved.length} onopgeloste officiële aandelen; gate blijft dicht`);}
+ if(unresolved.length){await fs.writeFile('research/output/madrid-unresolved.json',JSON.stringify(unresolved,null,2)+'\n');throw new Error(`Madrid catalogus heeft nog ${unresolved.length} onopgeloste officiële aandelen: ${unresolved.map(x=>x.isin).join(',')}`);}
  console.log(JSON.stringify({market:mic,officialCount:seed.shares.length,accepted:shares.length,fingerprint,source:seed.source}));
  process.exit(0);
 }
