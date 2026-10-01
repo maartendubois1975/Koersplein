@@ -105,7 +105,7 @@ if(mic==='XICE'){
  const expected=27;
  if(!/# of Components[\s\S]{0,200}27|Components[\s\S]{0,120}27/i.test(text))throw new Error('ICELAND_OFFICIAL_COUNT_GATE: Nasdaq OMXIGI/OMXIPI does not prove 27 components');
  const instinetUrl='https://www.instinet.com/sites/default/files/blockmatch/stocklist/europe/BlockMatchEurope_20260916.html';
- const ir=await fetch(instinetUrl,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'});if(!ir.ok)throw new Error('ICELAND_FREE_DISCOVERY: Instinet '+ir.status);
+ const ir=await fetch(instinetUrl,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'}});if(!ir.ok)throw new Error('ICELAND_FREE_DISCOVERY: Instinet '+ir.status);
  const ih=await ir.text(),candidates=[],seen=new Set();
  for(const tr of ih.matchAll(new RegExp('<tr[^>]*>([\\s\\S]*?)</tr>','gi'))){const cells=[...tr[1].matchAll(new RegExp('<td[^>]*>([\\s\\S]*?)</td>','gi'))].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\\s+/g,' ').trim());if(cells.length<6)continue;const [name,bb,isin,micCode,currency,relevantMarket]=cells;if(micCode!=='XICE'||relevantMarket!=='XICE'||!isin||seen.has(isin)||/SUBSCR|RIGHTS?|WARRANT|TEMPORARY RIGHTS?/i.test(name))continue;seen.add(isin);candidates.push({isin,name,bb,currency,sourceUrl:instinetUrl});}
  if(candidates.length!==expected)throw new Error(`ICELAND_FREE_DISCOVERY: identities ${candidates.length}/${expected}`);
