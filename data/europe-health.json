@@ -26,10 +26,10 @@
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 12,
+    "complete": 13,
     "blocked": 4,
     "ready": 2,
-    "pending": 13,
+    "pending": 12,
     "total": 31
   },
   "markets": [
@@ -432,24 +432,24 @@
     {
       "mic": "XPRA",
       "name": "Praag",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
       "reason": null,
       "catalog": {
-        "present": false,
-        "count": 0,
-        "fingerprint": null,
-        "retrievedAt": null,
-        "source": null
+        "present": true,
+        "count": 30,
+        "fingerprint": "b4add2ddb623831b70d9c5b2648559143322114138593e9494508e9341d6ef45",
+        "retrievedAt": "2026-10-01T10:10:24.644Z",
+        "source": "PSE official Prime (12) + Standard (8) + Start (10); Free Market foreign secondary listings excluded"
       },
       "sources": {
-        "status": "UNTESTED",
-        "tested": 0,
-        "fullCatalog": 0,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "status": "APPROVED",
+        "tested": 4,
+        "fullCatalog": 30,
+        "coverageRatio": 1,
+        "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-01T10:15:33.794Z"
     },
     {
       "mic": "XBUD",
@@ -716,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-01T10:08:35.824Z"
+  "generatedAt": "2026-10-01T10:15:48.632Z"
 }
