@@ -28,8 +28,8 @@
   "summary": {
     "complete": 10,
     "blocked": 4,
-    "ready": 0,
-    "pending": 17,
+    "ready": 1,
+    "pending": 16,
     "total": 31
   },
   "markets": [
@@ -345,21 +345,21 @@
       "mic": "XICE",
       "name": "Reykjavik",
       "state": "WAITING",
-      "health": "CATALOG_PENDING",
+      "health": "READY",
       "reason": null,
       "catalog": {
-        "present": false,
-        "count": 0,
-        "fingerprint": null,
-        "retrievedAt": null,
-        "source": "Nasdaq OMX Iceland All-Share (OMXIGI/OMXIPI) official universe/count; current official count verified 27 on 2026-09-30"
+        "present": true,
+        "count": 27,
+        "fingerprint": "ae368b6e51498ed0514f286d7d12d31c58beb69af4f5a2b0a34dc8296838ab75",
+        "retrievedAt": "2026-10-01T06:02:47.389Z",
+        "source": "Nasdaq Iceland Main Market 27 + direct free .IC history proof"
       },
       "sources": {
-        "status": "PREPARED",
-        "tested": 2,
-        "fullCatalog": 0,
-        "coverageRatio": 0,
-        "crossCheckRatio": null
+        "status": "APPROVED",
+        "tested": 4,
+        "fullCatalog": 27,
+        "coverageRatio": 1,
+        "crossCheckRatio": 0
       },
       "completedAt": null
     },
@@ -716,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-01T06:00:58.169Z"
+  "generatedAt": "2026-10-01T06:04:08.238Z"
 }

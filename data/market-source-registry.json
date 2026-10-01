@@ -466,28 +466,25 @@
       "lastAuditAt": "2026-10-01T05:48:24.155Z"
     },
     "XICE": {
-      "status": "PREPARED",
-      "catalogSource": "Nasdaq OMX Iceland All-Share (OMXIGI/OMXIPI) official universe/count; current official count verified 27 on 2026-09-30",
+      "status": "APPROVED",
+      "catalogSource": "Nasdaq Iceland Main Market 27 + direct free .IC history proof",
       "catalogEvidenceUrl": "https://indexes.nasdaqomx.com/Index/Overview/OMXIGI",
       "officialComponentCount": 27,
       "historySources": [
         {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY_CANDIDATE",
-          "suffix": ".IC",
-          "fields": [
-            "open",
-            "high",
-            "low",
-            "close",
-            "volume"
-          ],
-          "note": "Yahoo officially documents .IC for Nasdaq OMX Iceland; full 27-instrument preflight required before approval."
+          "provider": "yahoo-isin-resolver",
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
         },
         {
-          "provider": "yahoo-isin-resolver",
-          "role": "IDENTITY_HISTORY_FALLBACK",
-          "note": "ISIN-first resolution constrained to the documented .IC suffix."
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Full-catalog preflight: 26/27 instruments."
+        },
+        {
+          "provider": "euronext-live",
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/27; 0 additional instruments beyond primary."
         }
       ],
       "dailyUpdate": {
@@ -502,10 +499,13 @@
         "policy": "After COMPLETE, reuse the proven free Iceland .IC route; no paid source and no generic rediscovery."
       },
       "discovery": {
-        "testedFullCatalog": 0,
-        "requiredFullCatalog": 27,
-        "coverageRatio": 0,
-        "note": "Official Nasdaq scope and 27-count reverified 2026-09-30. Independent current reconstruction also yields 27 named main-market stocks. Factory gate remains strict: full identity/catalog materialization and 27/27 .IC route preflight or explicit DATA_UNAVAILABLE before APPROVED."
+        "testedDifficultSymbols": 20,
+        "testedFullCatalog": 27,
+        "coverageRatio": 1,
+        "crossCheckedSymbols": 0,
+        "crossCheckRatio": 0,
+        "sourceCountTested": 4,
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       },
       "officialIndexIdentity": {
         "gi": {
@@ -518,7 +518,8 @@
         },
         "scope": "All shares listed on Nasdaq Iceland main market"
       },
-      "lastAuditAt": "2026-09-30T13:40:00.000Z"
+      "lastAuditAt": "2026-09-30T13:40:00.000Z",
+      "catalogFingerprint": "ae368b6e51498ed0514f286d7d12d31c58beb69af4f5a2b0a34dc8296838ab75"
     },
     "XATH": {
       "status": "PREPARED_SOURCE_DISCOVERY",
