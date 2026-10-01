@@ -283,15 +283,6 @@
       "currency": "EUR"
     },
     {
-      "isin": "ES0114400007",
-      "name": "CUOTAS PARTICIPATIVAS DE CAJA DE AHORROS DEL MEDITERRANEO",
-      "mic": "XMAD",
-      "currency": "EUR",
-      "symbol": "CAM",
-      "providerSymbol": "CAM.MC",
-      "identityResolution": "ALT_PUBLIC_VERIFIED_TICKER"
-    },
-    {
       "isin": "ES0110047919",
       "name": "DEOLEO, S.A.",
       "mic": "XMAD",
@@ -577,15 +568,6 @@
       "identityResolution": "ALT_PUBLIC_VERIFIED_TICKER"
     },
     {
-      "isin": "ES0163960018",
-      "name": "MINERALES Y DERIVADOS",
-      "mic": "XMAD",
-      "currency": "EUR",
-      "symbol": "MINERSA",
-      "identityResolution": "OFFICIAL_OTHER_VENUE_DATA_UNAVAILABLE",
-      "venueEvidence": "CNMV admission market Bi (Bilbao), not Madrid"
-    },
-    {
       "isin": "ES0164180012",
       "name": "MIQUEL Y COSTAS & MIQUEL, S.A.",
       "mic": "XMAD",
@@ -834,5 +816,19 @@
       "mic": "XMAD",
       "currency": "EUR"
     }
-  ]
+  ],
+  "eligibilityPolicy": "PURCHASABLE_ORDINARY_EQUITIES_ONLY",
+  "excludedSecurities": [
+    {
+      "isin": "ES0114400007",
+      "name": "CUOTAS PARTICIPATIVAS DE CAJA DE AHORROS DEL MEDITERRANEO",
+      "reason": "NOT_ORDINARY_EQUITY_PARTICIPATION_SECURITY"
+    },
+    {
+      "isin": "ES0163960018",
+      "name": "MINERALES Y DERIVADOS",
+      "reason": "NOT_XMAD_PURCHASABLE_EQUITY_BILBAO_ONLY"
+    }
+  ],
+  "officialCount": 124
 }
