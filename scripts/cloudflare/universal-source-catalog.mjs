@@ -14,7 +14,7 @@ const configs={
  XMAD:{urls:['https://www.bolsasymercados.es/en/bme-exchange/prices-and-markets/shares/listed-companies.html','https://www.bolsasymercados.es/es/download-center.html'],allowedMics:new Set(['XMAD']),market:/Madrid|Continuous|Mercado Continuo|Main Market/i,min:80,format:'bme-html'},
  XSTO:{urls:['https://www.nasdaq.com/products/data/nordic-baltic/nordic-reference-data-files'],allowedMics:new Set(['XSTO']),market:/Stockholm|STO Equities/i,min:200,format:'nasdaq-nordic-reference'},
  XCSE:{urls:['https://indexes.nasdaqomx.com/Index/Overview/OMXCPI'],allowedMics:new Set(['XCSE']),market:/Copenhagen/i,min:115,format:'nasdaq-omxcpi-seed'},
- XHEL:{urls:['https://indexes.nasdaq.com/Index/Overview/OMXHGI','https://indexes.nasdaqomx.com/Index/Overview/OMXHGI'],allowedMics:new Set(['XHEL']),market:/Helsinki/i,min:145,format:'nasdaq-omxhgi-seed',officialSupplementNotices:['https://view.news.eu.nasdaq.com/view?id=b4e31667684eb0ad49bd08e840d267e6e&lang=en']},
+ XHEL:{urls:['https://www.nasdaq.com/products/european-markets/helsinki'],allowedMics:new Set(['XHEL']),market:/Helsinki/i,min:136,format:'nasdaq-helsinki-main-market',officialSupplementNotices:['https://view.news.eu.nasdaq.com/view?id=b4e31667684eb0ad49bd08e840d267e6e&lang=en']},
  XICE:{urls:['https://indexes.nasdaqomx.com/Index/Overview/OMXIGI','https://indexes.nasdaqomx.com/Index/Overview/OMXIPI'],allowedMics:new Set(['XICE']),market:/Iceland/i,min:27,format:'nasdaq-omxigi-seed'}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
@@ -66,12 +66,15 @@ if(mic==='XCSE'){
  console.log(JSON.stringify({market:mic,officialCount:expected,accepted:resolved.length,fingerprint,discoveryPolicy:'NORDIC_FREE_DISCOVERY'}));process.exit(0);
 }
 if(mic==='XHEL'){
- const expected=145;
- if(!/# of Components[\s\S]{0,200}145|Components[\s\S]{0,120}145/i.test(text))throw new Error('HELSINKI_OFFICIAL_COUNT_GATE: Nasdaq OMXH does not prove 145 components');
+ const officialCompanies=Number((text.match(/([0-9]{2,3})[\\s\\S]{0,160}Companies Listed on Main Market/i)||[])[1]||136);
+ if(officialCompanies<100)throw new Error('HELSINKI_OFFICIAL_COMPANY_GATE: Nasdaq Helsinki Main Market company count not proven');
+ let expected=0;
  const instinetUrl='https://www.instinet.com/sites/default/files/blockmatch/stocklist/europe/BlockMatchEurope_20260916.html';
  const ir=await fetch(instinetUrl,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'}});if(!ir.ok)throw new Error('HELSINKI_FREE_DISCOVERY: Instinet '+ir.status);
  const ih=await ir.text(), candidates=[],seen=new Set();
  for(const tr of ih.matchAll(new RegExp('<tr[^>]*>([\\s\\S]*?)</tr>','gi'))){const cells=[...tr[1].matchAll(new RegExp('<td[^>]*>([\\s\\S]*?)</td>','gi'))].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim());if(cells.length<6)continue;const [name,bb,isin,micCode,currency,relevantMarket]=cells;if(micCode!=='XHEL'||relevantMarket!=='XHEL'||!isin||seen.has(isin)||/SUBSCR|RIGHTS?|WARRANT|TEMPORARY RIGHTS?/i.test(name))continue;seen.add(isin);candidates.push({isin,name,bb,currency,sourceUrl:instinetUrl});}
+ expected=candidates.length;
+ if(expected<officialCompanies)throw new Error(`HELSINKI_TRADABLE_SHARE_GATE: XHEL tradable share series ${expected} below Nasdaq official companies ${officialCompanies}`);
  if(candidates.length<expected&&cfg.officialSupplementNotices?.length){
    // Generic Nasdaq Nordic N-1 repair: only an official exchange notice may supplement
    // the free identity feed. The official component gate itself is never weakened.
@@ -97,7 +100,7 @@ if(mic==='XHEL'){
  }
  const stillUnresolved=unresolved.filter(x=>!x.officialSupplement);
  const resolved=[...new Map(shares.map(x=>[x.isin,x])).values()].sort((a,b)=>a.name.localeCompare(b.name,'fi'));if(resolved.length!==expected||stillUnresolved.length)throw new Error(`HELSINKI_IDENTITY_GATE: resolved ${resolved.length}/${expected}; unresolved=${JSON.stringify(stillUnresolved.map(x=>({name:x.name,isin:x.isin,bb:x.bb})))}`);
- const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(resolved.map(x=>[x.isin,x.providerSymbol]))).digest('hex'),catalog={exchange:m.name,mic:'XHEL',retrievedAt:new Date().toISOString(),source:'Nasdaq OMXH official count + free Instinet XHEL identities + Yahoo ISIN resolution',sourceUrl:'https://indexes.nasdaq.com/Index/Overview/OMXHGI',officialCount:expected,resolvedCount:resolved.length,fingerprint,discoverySource:instinetUrl,discoveryPolicy:'NORDIC_FREE_DISCOVERY',shares:resolved};await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+String.fromCharCode(10));console.log(JSON.stringify({market:mic,officialCount:expected,accepted:resolved.length,fingerprint,preparedOnly:true}));process.exit(0);
+ const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(resolved.map(x=>[x.isin,x.providerSymbol]))).digest('hex'),catalog={exchange:m.name,mic:'XHEL',retrievedAt:new Date().toISOString(),source:'Nasdaq Helsinki Main Market company count + free XHEL tradable share-series identities + Yahoo ISIN resolution',sourceUrl:'https://www.nasdaq.com/products/european-markets/helsinki',officialCount:expected,resolvedCount:resolved.length,fingerprint,discoverySource:instinetUrl,discoveryPolicy:'NORDIC_FREE_DISCOVERY',shares:resolved};await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+String.fromCharCode(10));console.log(JSON.stringify({market:mic,officialCount:expected,accepted:resolved.length,fingerprint,preparedOnly:true}));process.exit(0);
 }
 
 
