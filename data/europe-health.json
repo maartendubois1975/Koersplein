@@ -26,10 +26,10 @@
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 14,
+    "complete": 15,
     "blocked": 4,
     "ready": 2,
-    "pending": 11,
+    "pending": 10,
     "total": 31
   },
   "markets": [
@@ -476,24 +476,24 @@
     {
       "mic": "XBSE",
       "name": "Boekarest",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
       "reason": null,
       "catalog": {
-        "present": false,
-        "count": 0,
-        "fingerprint": null,
-        "retrievedAt": null,
-        "source": "Bucharest Stock Exchange official Shares market"
+        "present": true,
+        "count": 89,
+        "fingerprint": "5cb3698daa6bacb74e52188787f986fe40ae3b76e2ce941acde94c4228b8a6a6",
+        "retrievedAt": "2026-10-01T12:59:06.203Z",
+        "source": "BVB official regulated Shares list snapshot 2026-10-01: 89 listed share lines"
       },
       "sources": {
         "status": "APPROVED",
-        "tested": 1,
-        "fullCatalog": 0,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "tested": 4,
+        "fullCatalog": 89,
+        "coverageRatio": 1,
+        "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-01T13:32:52.036Z"
     },
     {
       "mic": "XBUL",
@@ -716,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-01T13:28:08.052Z"
+  "generatedAt": "2026-10-01T13:33:04.789Z"
 }

@@ -686,12 +686,22 @@
     },
     "XBSE": {
       "status": "APPROVED",
-      "catalogSource": "Bucharest Stock Exchange official Shares market",
+      "catalogSource": "BVB official regulated Shares list snapshot 2026-10-01: 89 listed share lines",
       "historySources": [
+        {
+          "provider": "yahoo-isin-resolver",
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
+        },
         {
           "provider": "yahoo-chart",
           "role": "PRIMARY",
-          "note": "BVB symbol with .RO; actual daily bars required before eligibility"
+          "note": "Full-catalog preflight: 89/89 instruments."
+        },
+        {
+          "provider": "euronext-live",
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/89; 0 additional instruments beyond primary."
         }
       ],
       "dailyUpdate": {
@@ -706,10 +716,15 @@
         "policy": "Reuse proven Bucharest route for daily open/close; no rediscovery."
       },
       "discovery": {
-        "testedFullCatalog": 0,
-        "coverageRatio": null,
-        "note": "Official BVB share list -> actual tradability/history proof; metadata alone never qualifies."
-      }
+        "testedDifficultSymbols": 20,
+        "testedFullCatalog": 89,
+        "coverageRatio": 1,
+        "crossCheckedSymbols": 0,
+        "crossCheckRatio": 0,
+        "sourceCountTested": 4,
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
+      },
+      "catalogFingerprint": "5cb3698daa6bacb74e52188787f986fe40ae3b76e2ce941acde94c4228b8a6a6"
     },
     "XBUL": {
       "status": "APPROVED",
