@@ -1,7 +1,6 @@
 {
-  "marketMic": "XMAD",
-  "requestedAt": "2026-10-01T07:05:00.000Z",
-  "requestedBy": "chat",
-  "purpose": "Madrid final 121 customer-buyable equities end-to-end",
-  "instruction": "Run XMAD end-to-end through canonical factory only. Hard gate: catalog contains only ordinary equities that a customer can actually buy on XMAD; exclude participation securities, ETFs, warrants, rights, bonds, suspended/delisted non-buyable securities and securities belonging only to another venue. Then source audit, history, final validation and publish."
+  "marketMic": "XHEL",
+  "requestedAt": "2026-10-01T07:40:00.000Z",
+  "purpose": "Helsinki: fixed 3-gate chat filler — eligible tradable shares, free source coverage, handoff to canonical website backfill/publication",
+  "workflowPolicy": "CHAT_CATALOG_SOURCE_HANDOFF_ONLY"
 }
