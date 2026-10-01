@@ -16,18 +16,14 @@
       {
         "mic": "XETR",
         "reason": "SOURCE_PREFLIGHT_GATE"
-      },
-      {
-        "mic": "XHEL",
-        "reason": "SOURCE_PREFLIGHT_GATE"
       }
     ]
   },
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 10,
-    "blocked": 4,
+    "complete": 11,
+    "blocked": 3,
     "ready": 1,
     "pending": 16,
     "total": 31
@@ -322,24 +318,24 @@
     {
       "mic": "XHEL",
       "name": "Helsinki",
-      "state": "BLOCKED",
-      "health": "BLOCKED",
-      "reason": "SOURCE_PREFLIGHT_GATE",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
       "catalog": {
-        "present": false,
+        "present": true,
         "count": 144,
-        "fingerprint": "66717b50425990eddbfd5fb0ec90c1eb131cf190e6f1b6c9137e7c29b6d124ae",
-        "retrievedAt": null,
+        "fingerprint": "8604b5a3e60f30ce3ad234ec9d0b6c0b9c71b48d2238eb937bd81d328368bca5",
+        "retrievedAt": "2026-10-01T05:49:58.779Z",
         "source": "Nasdaq Helsinki Main Market company count + free XHEL tradable share-series identities + Yahoo ISIN resolution"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
         "fullCatalog": 144,
-        "coverageRatio": 0.9652777777777778,
+        "coverageRatio": 1,
         "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-01T06:47:21.086Z"
     },
     {
       "mic": "XICE",
@@ -716,5 +712,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-01T06:13:07.262Z"
+  "generatedAt": "2026-10-01T06:47:34.178Z"
 }

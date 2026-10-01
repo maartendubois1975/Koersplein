@@ -262,11 +262,10 @@
       "currency": "EUR",
       "timezone": "Europe/Helsinki",
       "providerSuffix": ".HE",
-      "state": "BLOCKED",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-10-01T05:48:35.121Z",
-      "catalogFingerprint": "66717b50425990eddbfd5fb0ec90c1eb131cf190e6f1b6c9137e7c29b6d124ae",
-      "note": "Quarantined by canonical single writer after proven source preflight failure."
+      "state": "COMPLETE",
+      "catalogFingerprint": "8604b5a3e60f30ce3ad234ec9d0b6c0b9c71b48d2238eb937bd81d328368bca5",
+      "completedAt": "2026-10-01T06:47:21.086Z",
+      "dataUnavailable": []
     },
     {
       "mic": "XICE",

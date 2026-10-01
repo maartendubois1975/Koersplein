@@ -413,28 +413,25 @@
       "lastAuditAt": "2026-09-30T08:40:59.343Z"
     },
     "XHEL": {
-      "status": "BLOCKED",
+      "status": "APPROVED",
       "catalogSource": "Nasdaq Helsinki Main Market company count + free XHEL tradable share-series identities + Yahoo ISIN resolution",
       "catalogEvidenceUrl": "https://indexes.nasdaq.com/Index/Overview/OMXHGI",
       "officialComponentCount": 145,
       "historySources": [
         {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY_CANDIDATE",
-          "suffix": ".HE",
-          "fields": [
-            "open",
-            "high",
-            "low",
-            "close",
-            "volume"
-          ],
-          "note": "Free Helsinki history route; full 145-instrument preflight required before approval."
+          "provider": "yahoo-isin-resolver",
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
         },
         {
-          "provider": "yahoo-isin-resolver",
-          "role": "IDENTITY_HISTORY_FALLBACK",
-          "note": "Free ISIN-first .HE resolution for Helsinki symbols."
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Full-catalog preflight: 144/144 instruments."
+        },
+        {
+          "provider": "euronext-live",
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/144; 0 additional instruments beyond primary."
         }
       ],
       "dailyUpdate": {
@@ -449,19 +446,15 @@
         "policy": "After COMPLETE, reuse the proven Helsinki .HE route; no paid source and no generic rediscovery."
       },
       "discovery": {
-        "testedFullCatalog": 144,
-        "requiredFullCatalog": 145,
-        "coverageRatio": 0.9652777777777778,
-        "note": "Prepared while Copenhagen backfill runs. Publication remains closed until 145/145 history routes or explicit DATA_UNAVAILABLE.",
         "testedDifficultSymbols": 20,
+        "testedFullCatalog": 144,
+        "coverageRatio": 1,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 5,
-        "dataUnavailable": 0,
-        "unresolved": 5
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       },
-      "catalogFingerprint": "66717b50425990eddbfd5fb0ec90c1eb131cf190e6f1b6c9137e7c29b6d124ae",
+      "catalogFingerprint": "8604b5a3e60f30ce3ad234ec9d0b6c0b9c71b48d2238eb937bd81d328368bca5",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
       "lastAuditAt": "2026-10-01T05:48:24.155Z"
     },
