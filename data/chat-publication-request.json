@@ -1,7 +1,7 @@
 {
   "marketMic": "XMAD",
-  "requestedAt": "2026-10-01T06:05:00.000Z",
+  "requestedAt": "2026-10-01T06:25:00.000Z",
   "requestedBy": "chat",
-  "purpose": "Madrid final 126 identity gate and source audit",
-  "instruction": "Run XMAD end-to-end through canonical factory only. Hard gate: official BME ordinary-equity universe must equal the reconciled 126-share seed before any source work; exclude ETFs, warrants, rights, bonds and MTF/Growth. Resolve every official ISIN to free history/daily routes, require full preflight or explicit proven DATA_UNAVAILABLE, persist route map, backfill history, final validation, then publish. No bypass, no parallel writer."
+  "purpose": "Madrid canonical rerun with purchasable ordinary-equities-only universe",
+  "instruction": "Run XMAD end-to-end through canonical factory only. Hard gate: catalog contains only ordinary equities that a customer can actually buy on XMAD; exclude participation securities, ETFs, warrants, rights, bonds, suspended/delisted non-buyable securities and securities belonging only to another venue. Then source audit, history, final validation and publish."
 }
