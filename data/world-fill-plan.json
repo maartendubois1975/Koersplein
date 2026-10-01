@@ -361,11 +361,20 @@
       "currency": "BGN",
       "timezone": "Europe/Sofia",
       "providerSuffix": ".SO",
-      "state": "BLOCKED",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-10-01T16:07:46.397Z",
-      "catalogFingerprint": "0c91f0666ff9c44b4787ee3a1e6fa89b7d38df9a6db8d532f0da85158925d249",
-      "note": "Quarantined by canonical single writer after proven source preflight failure."
+      "state": "COMPLETE",
+      "catalogFingerprint": "942867be9ef639ae04646fc2c2916ea9bfdc35fd0269507bb7fe43200c5dda6e",
+      "completedAt": "2026-10-01T19:16:39.584Z",
+      "dataUnavailable": [
+        {
+          "isin": "BG1100084075",
+          "symbol": "SFB",
+          "name": "148 SFB Sopharma Buildings REIT-Sofia 67.10M 9.00 - -",
+          "lastDate": "2026-09-17",
+          "recordCount": 13,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        }
+      ]
     },
     {
       "mic": "XZAG",

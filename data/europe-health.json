@@ -20,18 +20,14 @@
       {
         "mic": "XWAR",
         "reason": "SOURCE_PREFLIGHT_GATE"
-      },
-      {
-        "mic": "XBUL",
-        "reason": "SOURCE_PREFLIGHT_GATE"
       }
     ]
   },
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 15,
-    "blocked": 5,
+    "complete": 16,
+    "blocked": 4,
     "ready": 2,
     "pending": 9,
     "total": 31
@@ -502,14 +498,14 @@
     {
       "mic": "XBUL",
       "name": "Sofia",
-      "state": "BLOCKED",
-      "health": "BLOCKED",
-      "reason": "SOURCE_PREFLIGHT_GATE",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
       "catalog": {
         "present": true,
         "count": 14,
         "fingerprint": "942867be9ef639ae04646fc2c2916ea9bfdc35fd0269507bb7fe43200c5dda6e",
-        "retrievedAt": "2026-10-01T19:10:02.997Z",
+        "retrievedAt": "2026-10-01T19:13:57.122Z",
         "source": "BSE Main Market scope + Bulgarian Central Depository real ISIN identity + StockAnalysis BUL daily-history provider"
       },
       "sources": {
@@ -519,7 +515,7 @@
         "coverageRatio": 1,
         "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-01T19:16:39.584Z"
     },
     {
       "mic": "XZAG",
@@ -720,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-01T19:10:43.001Z"
+  "generatedAt": "2026-10-01T19:17:00.266Z"
 }
