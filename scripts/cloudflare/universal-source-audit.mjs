@@ -15,6 +15,7 @@ const combined=results.filter(x=>x.yahoo.ok||x.euronext.ok||x.yahooIsin.ok||x.st
 // therefore prove a usable route for every catalog instrument; a 95% preflight only
 // postpones a known failure until after an expensive backfill.
 const explicitDataUnavailableByMic={
+  XMAD:new Map([['ES0163960018',{symbol:'MINERSA',name:'MINERALES Y PRODUCTOS DERIVADOS',reason:'CNMV_OFFICIAL_ADMISSION_BILBAO_ONLY_NOT_XMAD'}]]),
   XSWX:new Map([
     ['CY0109992111',{symbol:'117016316',name:'Registered Share',reason:'SIX_LISTED_NO_USABLE_HISTORY_AFTER_FOUR_ROUTE_TESTS'}],
     ['US02079K3059',{symbol:'29798540',name:'Sponsored Foreign Shares',reason:'SIX_SPONSORED_FOREIGN_NO_USABLE_HISTORY_AFTER_FOUR_ROUTE_TESTS'}]
