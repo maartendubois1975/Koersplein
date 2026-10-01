@@ -271,16 +271,16 @@
         "policy": "Persist this route after COMPLETE; DAILY_UPDATE must reuse the proven market route and must not rediscover a generic source."
       },
       "discovery": {
-        "testedFullCatalog": 126,
+        "testedFullCatalog": 124,
         "note": "Official BME equity universe prepared in chat; full route audit must approve every line or explicitly isolate DATA_UNAVAILABLE before COMPLETE.",
         "testedDifficultSymbols": 20,
-        "coverageRatio": 0.9603174603174603,
+        "coverageRatio": 0.9758064516129032,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 5,
-        "dataUnavailable": 1,
-        "unresolved": 4
+        "uncovered": 3,
+        "dataUnavailable": 0,
+        "unresolved": 3
       },
       "historyResearch": {
         "mode": "CHAT_PROVEN_THEN_MACHINE_REUSE",
@@ -309,9 +309,9 @@
         "learnedAt": "2026-09-30",
         "note": "Historical source discovery is performed outside the website; only proven routes are persisted for factory reuse."
       },
-      "catalogFingerprint": "525567c96652fdbd022523edfe7b5cd1802257d4fa78858d2ba284b50f309751",
+      "catalogFingerprint": "ea368612caf51d43ba1c440a8ec93d04690c4c6a4cbea6164ef050256314b9d8",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-01T05:05:27.815Z"
+      "lastAuditAt": "2026-10-01T05:18:00.910Z"
     },
     "XSTO": {
       "status": "APPROVED",
