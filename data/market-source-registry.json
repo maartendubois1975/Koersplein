@@ -710,6 +710,28 @@
         "coverageRatio": null,
         "note": "Official BVB share list -> actual tradability/history proof; metadata alone never qualifies."
       }
+    },
+    "XBUL": {
+      "status": "APPROVED",
+      "catalogSource": "Bulgarian Stock Exchange official market segmentation",
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Official Bulgarian ISIN resolved to .SO; actual daily bars mandatory"
+        }
+      ],
+      "dailyUpdate": {
+        "enabled": true,
+        "identity": "ISIN",
+        "provider": "yahoo-chart",
+        "suffix": ".SO",
+        "requiredFields": [
+          "open",
+          "close"
+        ],
+        "policy": "Reuse proven Sofia route for daily open/close."
+      }
     }
   }
 }
