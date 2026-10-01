@@ -1,7 +1,7 @@
 {
   "marketMic": "XMAD",
-  "requestedAt": "2026-10-01T05:35:00.000Z",
+  "requestedAt": "2026-10-01T05:50:00.000Z",
   "requestedBy": "chat",
-  "purpose": "Madrid isolate final unresolved identities",
+  "purpose": "Madrid identify final unresolved ISINs",
   "instruction": "Run XMAD end-to-end through canonical factory only. Hard gate: official BME ordinary-equity universe must equal the reconciled 126-share seed before any source work; exclude ETFs, warrants, rights, bonds and MTF/Growth. Resolve every official ISIN to free history/daily routes, require full preflight or explicit proven DATA_UNAVAILABLE, persist route map, backfill history, final validation, then publish. No bypass, no parallel writer."
 }
