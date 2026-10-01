@@ -563,17 +563,17 @@
       "catalogFingerprint": "e7fad2ff0087d642e4f3cdde05cc221496c4edfc5307ea8c5232ce8f3442ecba",
       "catalogSource": "GPW regulated Main Market equities; current Polish quote-table identities; direct .WA history proof",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-01T09:03:55.708Z",
+      "lastAuditAt": "2026-10-01T09:14:30.589Z",
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 401,
-        "coverageRatio": 0,
+        "coverageRatio": 0.9975062344139651,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 401,
+        "uncovered": 1,
         "dataUnavailable": 0,
-        "unresolved": 401
+        "unresolved": 1
       }
     }
   }
