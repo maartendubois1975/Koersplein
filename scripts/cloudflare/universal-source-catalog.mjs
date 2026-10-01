@@ -17,7 +17,8 @@ const configs={
  XHEL:{urls:['https://www.nasdaq.com/products/european-markets/helsinki'],allowedMics:new Set(['XHEL']),market:/Helsinki/i,min:136,format:'nasdaq-helsinki-main-market',officialSupplementNotices:['https://view.news.eu.nasdaq.com/view?id=b4e31667684eb0ad49bd08e840d267e6e&lang=en']},
  XICE:{urls:['https://indexes.nasdaqomx.com/Index/Overview/OMXIGI','https://indexes.nasdaqomx.com/Index/Overview/OMXIPI'],allowedMics:new Set(['XICE']),market:/Iceland/i,min:27,format:'nasdaq-omxigi-seed'},
  XATH:{urls:['https://athens.euronext.com/en/market-data/instruments/stocks'],allowedMics:new Set(['XATH']),market:/ATHENS|ΑΓΟΡΑ ΑΞΙΩΝ/i,min:100,format:'athex-stocks'},
- XWAR:{urls:['https://www.gpw.pl/list-of-companies'],allowedMics:new Set(['XWAR']),market:/Warsaw|GPW|Main Market/i,min:380,format:'gpw-main-market'}
+ XWAR:{urls:['https://www.gpw.pl/list-of-companies'],allowedMics:new Set(['XWAR']),market:/Warsaw|GPW|Main Market/i,min:380,format:'gpw-main-market'},
+ XWBO:{urls:['https://www.wienerborse.at/en/listing/shares/companies-list/'],allowedMics:new Set(['XWBO']),market:/Vienna|Wiener/i,min:25,format:'wiener-equity'}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if((mic==='XCSE'&&t.length>500)||t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
@@ -109,6 +110,17 @@ if(mic==='XHEL'){
 }
 
 
+if(mic==='XWBO'){
+ const officialUrl='https://www.wienerborse.at/en/listing/shares/companies-list/';
+ const r=await fetch(officialUrl,{headers:{'user-agent':'Mozilla/5.0 Koersplein/1.0',accept:'text/html'}});
+ if(!r.ok)throw new Error('VIENNA_OFFICIAL_DIRECTORY '+r.status);const h=await r.text();
+ const rows=[];const seen=new Set();
+ for(const tr of h.matchAll(/<tr[^>]*>([\\s\\S]*?)<\/tr>/gi)){const cells=[...tr[1].matchAll(/<td[^>]*>([\\s\\S]*?)<\/td>/gi)].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\\s+/g,' ').trim());if(cells.length<6)continue;const [isin,issuer,country,market,segment,type]=cells;if(!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)||seen.has(isin))continue;if(/global market/i.test(segment))continue;if(!/(Equity Share|Registered Ordinary Share|Common Stock|Stammaktie)/i.test(type))continue;if(!/(Regulated Market|MTF|-)/i.test(market))continue;seen.add(isin);rows.push({isin,issuer,country,market,segment,type});}
+ if(rows.length<25)throw new Error('VIENNA_REAL_EQUITY_GATE parsed='+rows.length);
+ const shares=[];const unresolved=[];
+ for(let n=0;n<rows.length;n+=6){const batch=await Promise.all(rows.slice(n,n+6).map(async x=>{try{const sr=await fetch('https://query1.finance.yahoo.com/v1/finance/search?q='+encodeURIComponent(x.isin)+'&quotesCount=10&newsCount=0',{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!sr.ok)return null;const sp=await sr.json();const hit=(sp.quotes||[]).find(q=>String(q.symbol||'').endsWith('.VI'));if(!hit)return null;const ps=hit.symbol;const qr=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(ps)+'?period1=0&period2=4102444800&interval=1d',{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!qr.ok)return null;const qp=await qr.json(),res=qp?.chart?.result?.[0],meta=res?.meta;if(!meta||!(res?.timestamp?.length>0))return null;return {company:x.issuer,name:x.issuer,symbol:ps.replace(/\.VI$/,''),ticker:ps.replace(/\.VI$/,''),isin:x.isin,mic:'XWBO',segment:x.segment,currency:meta.currency||'EUR',providerSymbol:ps,identitySource:officialUrl,identityResolution:'OFFICIAL_WIENER_EQUITY_ISIN_TO_VI_HISTORY_PROOF'};}catch{return null}}));batch.forEach((v,i)=>v?shares.push(v):unresolved.push(rows[n+i]));}
+ const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(rows.map(x=>x.isin).sort())).digest('hex'),catalog={exchange:m.name,mic:'XWBO',retrievedAt:new Date().toISOString(),source:'Wiener Börse official company list; real equity/common shares excluding global market and non-share certificates',sourceUrl:officialUrl,officialEligibleCount:rows.length,resolvedCount:shares.length,fingerprint,discoveryPolicy:'REAL_VIENNA_EQUITIES_ONLY_THEN_FREE_SOURCE_PROOF',unresolved,shares};await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');if(unresolved.length)throw new Error(`VIENNA_SOURCE_GATE proven=${shares.length}/${rows.length} unresolved=${JSON.stringify(unresolved.map(x=>x.isin))}`);console.log(JSON.stringify({market:mic,officialEligibleCount:rows.length,accepted:shares.length,fingerprint,directSourceProof:true}));process.exit(0);
+}
 if(mic==='XWAR'){
  const officialUrl='https://www.gpw.pl/spolki';
  const official=await fetch(officialUrl,{headers:{'user-agent':'Mozilla/5.0 Koersplein/1.0',accept:'text/html'}});
