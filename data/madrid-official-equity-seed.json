@@ -781,15 +781,6 @@
       "currency": "EUR"
     },
     {
-      "isin": "ES0182484214",
-      "name": "URBAR INGENIEROS",
-      "mic": "XMAD",
-      "currency": "EUR",
-      "symbol": "UIN",
-      "providerSymbol": "UIN.MC",
-      "identityResolution": "ALT_PUBLIC_BME_TICKER"
-    },
-    {
       "isin": "ES0182280018",
       "name": "URBAS GRUPO FINANCIERO, S.A.",
       "mic": "XMAD",
@@ -828,7 +819,13 @@
       "isin": "ES0163960018",
       "name": "MINERALES Y DERIVADOS",
       "reason": "NOT_XMAD_PURCHASABLE_EQUITY_BILBAO_ONLY"
+    },
+    {
+      "isin": "ES0182484214",
+      "name": "URBAR INGENIEROS",
+      "reason": "CURRENTLY_SUSPENDED_NOT_CUSTOMER_BUYABLE_ON_XMAD",
+      "evidence": "CNMV suspension ongoing on XMAD"
     }
   ],
-  "officialCount": 124
+  "officialCount": 123
 }
