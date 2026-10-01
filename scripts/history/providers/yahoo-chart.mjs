@@ -28,6 +28,7 @@ const MARKET_RULES = {
   XWBO: { suffix: '.VI', exchanges: ['vie', 'vienna', 'vienna stock exchange', 'wiener boerse', 'wiener börse'] },
   XPRA: { suffix: '.PR', exchanges: ['pra', 'prague', 'prague stock exchange', 'pse'] },
   XBUD: { suffix: '.BD', exchanges: ['bud', 'budapest', 'budapest stock exchange', 'bse'] },
+  XBSE: { suffix: '.RO', exchanges: ['bvb', 'bucharest', 'bucharest stock exchange'] },
   FNSE: { suffix: '.ST', exchanges: ['sto', 'stockholm', 'first north sweden', 'nasdaq stockholm'] },
   SSME: { suffix: '.ST', exchanges: ['sto', 'stockholm', 'first north sweden', 'nasdaq stockholm'] }
 };
