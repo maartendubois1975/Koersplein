@@ -24,6 +24,7 @@ const MARKET_RULES = {
   XHEL: { suffix: '.HE', exchanges: ['hel', 'helsinki', 'nasdaq helsinki'] },
   XICE: { suffix: '.IC', exchanges: ['ice', 'iceland', 'nasdaq iceland', 'reykjavik'] },
   XATH: { suffix: '.AT', exchanges: ['ath', 'athens', 'athex', 'athens stock exchange'] },
+  XWAR: { suffix: '.WA', exchanges: ['wse', 'warsaw', 'warsaw stock exchange', 'gpw'] },
   FNSE: { suffix: '.ST', exchanges: ['sto', 'stockholm', 'first north sweden', 'nasdaq stockholm'] },
   SSME: { suffix: '.ST', exchanges: ['sto', 'stockholm', 'first north sweden', 'nasdaq stockholm'] }
 };
