@@ -507,15 +507,15 @@
       "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": true,
-        "count": 131,
-        "fingerprint": "22d6702ae6280bdabdcc73d65e7139551b76859fb4172c3f624a3764bf99d02a",
-        "retrievedAt": "2026-10-01T18:05:51.999Z",
-        "source": "BSE Main Market scope + native Bulgarian equity list; StockAnalysis BUL daily-history provider"
+        "count": 14,
+        "fingerprint": "942867be9ef639ae04646fc2c2916ea9bfdc35fd0269507bb7fe43200c5dda6e",
+        "retrievedAt": "2026-10-01T19:04:26.734Z",
+        "source": "BSE Main Market scope + Bulgarian Central Depository real ISIN identity + StockAnalysis BUL daily-history provider"
       },
       "sources": {
         "status": "APPROVED",
         "tested": 4,
-        "fullCatalog": 131,
+        "fullCatalog": 14,
         "coverageRatio": 1,
         "crossCheckRatio": 0
       },
@@ -720,5 +720,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-01T19:02:12.780Z"
+  "generatedAt": "2026-10-01T19:04:59.403Z"
 }

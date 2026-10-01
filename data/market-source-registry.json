@@ -728,7 +728,7 @@
     },
     "XBUL": {
       "status": "APPROVED",
-      "catalogSource": "BSE Main Market scope + native Bulgarian equity list; StockAnalysis BUL daily-history provider",
+      "catalogSource": "BSE Main Market scope + Bulgarian Central Depository real ISIN identity + StockAnalysis BUL daily-history provider",
       "historySources": [
         {
           "provider": "yahoo-isin-resolver",
@@ -738,12 +738,12 @@
         {
           "provider": "yahoo-chart",
           "role": "PRIMARY",
-          "note": "Full-catalog preflight: 0/131 instruments."
+          "note": "Full-catalog preflight: 0/14 instruments."
         },
         {
           "provider": "euronext-live",
           "role": "INDEPENDENT_FALLBACK_VALIDATION",
-          "note": "Independently tested on full catalog: 0/131; 0 additional instruments beyond primary."
+          "note": "Independently tested on full catalog: 0/14; 0 additional instruments beyond primary."
         }
       ],
       "dailyUpdate": {
@@ -757,12 +757,12 @@
         ],
         "policy": "Reuse proven BUL history route daily; no rediscovery."
       },
-      "catalogFingerprint": "22d6702ae6280bdabdcc73d65e7139551b76859fb4172c3f624a3764bf99d02a",
+      "catalogFingerprint": "942867be9ef639ae04646fc2c2916ea9bfdc35fd0269507bb7fe43200c5dda6e",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
       "lastAuditAt": "2026-10-01T16:07:34.691Z",
       "discovery": {
-        "testedDifficultSymbols": 20,
-        "testedFullCatalog": 131,
+        "testedDifficultSymbols": 14,
+        "testedFullCatalog": 14,
         "coverageRatio": 1,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
