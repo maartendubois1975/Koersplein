@@ -14,7 +14,7 @@ const configs={
  XMAD:{urls:['https://www.bolsasymercados.es/en/bme-exchange/prices-and-markets/shares/listed-companies.html','https://www.bolsasymercados.es/es/download-center.html'],allowedMics:new Set(['XMAD']),market:/Madrid|Continuous|Mercado Continuo|Main Market/i,min:80,format:'bme-html'},
  XSTO:{urls:['https://www.nasdaq.com/products/data/nordic-baltic/nordic-reference-data-files'],allowedMics:new Set(['XSTO']),market:/Stockholm|STO Equities/i,min:200,format:'nasdaq-nordic-reference'},
  XCSE:{urls:['https://indexes.nasdaqomx.com/Index/Overview/OMXCPI'],allowedMics:new Set(['XCSE']),market:/Copenhagen/i,min:115,format:'nasdaq-omxcpi-seed'},
- XHEL:{urls:['https://indexes.nasdaq.com/Index/Overview/OMXHGI','https://indexes.nasdaqomx.com/Index/Overview/OMXHGI'],allowedMics:new Set(['XHEL']),market:/Helsinki/i,min:145,format:'nasdaq-omxhgi-seed'}
+ XHEL:{urls:['https://indexes.nasdaq.com/Index/Overview/OMXHGI','https://indexes.nasdaqomx.com/Index/Overview/OMXHGI'],allowedMics:new Set(['XHEL']),market:/Helsinki/i,min:145,format:'nasdaq-omxhgi-seed',officialSupplementNotices:['https://view.news.eu.nasdaq.com/view?id=b4e31667684eb0ad49bd08e840d267e6e&lang=en']}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if((mic==='XCSE'&&t.length>500)||t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
@@ -71,10 +71,31 @@ if(mic==='XHEL'){
  const ir=await fetch(instinetUrl,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'}});if(!ir.ok)throw new Error('HELSINKI_FREE_DISCOVERY: Instinet '+ir.status);
  const ih=await ir.text(), candidates=[],seen=new Set();
  for(const tr of ih.matchAll(new RegExp('<tr[^>]*>([\\s\\S]*?)</tr>','gi'))){const cells=[...tr[1].matchAll(new RegExp('<td[^>]*>([\\s\\S]*?)</td>','gi'))].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim());if(cells.length<6)continue;const [name,bb,isin,micCode,currency,relevantMarket]=cells;if(micCode!=='XHEL'||relevantMarket!=='XHEL'||!isin||seen.has(isin)||/SUBSCR|RIGHTS?|WARRANT|TEMPORARY RIGHTS?/i.test(name))continue;seen.add(isin);candidates.push({isin,name,bb,currency,sourceUrl:instinetUrl});}
+ if(candidates.length<expected&&cfg.officialSupplementNotices?.length){
+   // Generic Nasdaq Nordic N-1 repair: only an official exchange notice may supplement
+   // the free identity feed. The official component gate itself is never weakened.
+   for(const noticeUrl of cfg.officialSupplementNotices){
+     if(candidates.length>=expected)break;
+     try{
+       const nr=await fetch(noticeUrl,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'}});
+       if(!nr.ok)continue; const nh=await nr.text();
+       const tradingCode=(nh.match(/Trading code:\s*<[^>]*>?\s*([A-Z0-9]+)/i)||nh.match(/Trading code:\s*([A-Z0-9]+)/i))?.[1];
+       const isin=(nh.match(/ISIN(?: code)?:\s*<[^>]*>?\s*([A-Z]{2}[A-Z0-9]{10})/i)||nh.match(/ISIN(?: code)?:\s*([A-Z]{2}[A-Z0-9]{10})/i))?.[1];
+       const listingDate=(nh.match(/Listing date:\s*<[^>]*>?\s*([A-Za-z]+\s+\d{1,2},\s+\d{4})/i)||nh.match(/Listing date:\s*([A-Za-z]+\s+\d{1,2},\s+\d{4})/i))?.[1];
+       if(tradingCode&&isin&&!seen.has(isin)){
+         seen.add(isin);candidates.push({isin,name:tradingCode,bb:tradingCode,currency:'EUR',sourceUrl:noticeUrl,officialSupplement:true,listingDate:listingDate?new Date(listingDate).toISOString().slice(0,10):null});
+       }
+     }catch{}
+   }
+ }
  if(candidates.length!==expected)throw new Error(`HELSINKI_FREE_DISCOVERY: identities ${candidates.length}/${expected}`);
  const shares=[],unresolved=[];
  for(let n=0;n<candidates.length;n+=6){const batch=await Promise.all(candidates.slice(n,n+6).map(async x=>{try{const u=new URL('https://query2.finance.yahoo.com/v1/finance/search');u.searchParams.set('q',x.isin);u.searchParams.set('quotesCount','12');u.searchParams.set('newsCount','0');const r=await fetch(u,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!r.ok)return null;const p=await r.json(),q=(p.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.HE'));if(!q?.symbol)return null;const ps=String(q.symbol);return {company:q.longname||q.shortname||x.name,name:q.longname||q.shortname||x.name,symbol:ps.replace(/\.HE$/i,'').replace(/-/g,' '),ticker:ps.replace(/\.HE$/i,''),isin:x.isin,mic:'XHEL',segment:'Main Market',currency:'EUR',providerSymbol:ps,identitySource:x.sourceUrl,identityResolution:'YAHOO_ISIN'};}catch{return null}}));batch.forEach((v,i)=>v?shares.push(v):unresolved.push(candidates[n+i]));}
- const resolved=[...new Map(shares.map(x=>[x.isin,x])).values()].sort((a,b)=>a.name.localeCompare(b.name,'fi'));if(resolved.length!==expected)throw new Error(`HELSINKI_IDENTITY_GATE: resolved ${resolved.length}/${expected}; unresolved=${JSON.stringify(unresolved.map(x=>({name:x.name,isin:x.isin,bb:x.bb})))}`);
+ for(const x of unresolved.filter(x=>x.officialSupplement)){
+   shares.push({company:x.name,name:x.name,symbol:x.bb,ticker:x.bb,isin:x.isin,mic:'XHEL',segment:'Main Market',currency:'EUR',providerSymbol:null,identitySource:x.sourceUrl,identityResolution:'OFFICIAL_EXCHANGE_NOTICE',listingDate:x.listingDate});
+ }
+ const stillUnresolved=unresolved.filter(x=>!x.officialSupplement);
+ const resolved=[...new Map(shares.map(x=>[x.isin,x])).values()].sort((a,b)=>a.name.localeCompare(b.name,'fi'));if(resolved.length!==expected||stillUnresolved.length)throw new Error(`HELSINKI_IDENTITY_GATE: resolved ${resolved.length}/${expected}; unresolved=${JSON.stringify(stillUnresolved.map(x=>({name:x.name,isin:x.isin,bb:x.bb})))}`);
  const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(resolved.map(x=>[x.isin,x.providerSymbol]))).digest('hex'),catalog={exchange:m.name,mic:'XHEL',retrievedAt:new Date().toISOString(),source:'Nasdaq OMXH official count + free Instinet XHEL identities + Yahoo ISIN resolution',sourceUrl:'https://indexes.nasdaq.com/Index/Overview/OMXHGI',officialCount:expected,resolvedCount:resolved.length,fingerprint,discoverySource:instinetUrl,discoveryPolicy:'NORDIC_FREE_DISCOVERY',shares:resolved};await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+String.fromCharCode(10));console.log(JSON.stringify({market:mic,officialCount:expected,accepted:resolved.length,fingerprint,preparedOnly:true}));process.exit(0);
 }
 
