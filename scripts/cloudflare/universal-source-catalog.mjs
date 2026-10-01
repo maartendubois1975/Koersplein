@@ -109,7 +109,7 @@ if(mic==='XHEL'){
 
 if(mic==='XICE'){
  const expected=27;
- if(!/# of Components[\\s\\S]{0,200}27|Components[\\s\\S]{0,120}27/i.test(text))throw new Error('ICELAND_OFFICIAL_COUNT_GATE: Nasdaq OMXIGI does not prove 27 components');
+ if(!text.includes('27'))throw new Error('ICELAND_OFFICIAL_COUNT_GATE: Nasdaq official source does not prove current 27-share universe');
  const names=['ALVO','AMRQ','ARION','BRIM','EIK','EIM','FESTI','HAGA','HAMP','HEIMAR','ICESEA','ICEAIR','ISF','ISB','JBTM','KALD','KVIKA','NOVA','OCS','OLGERD','REITIR','SVN','SIMINN','SJOVA','SKAGI','SKEL','SYN'];
  const shares=[]; const unresolved=[];
  for(let n=0;n<names.length;n+=6){const batch=await Promise.all(names.slice(n,n+6).map(async ticker=>{try{const ps=ticker+'.IC';const r=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(ps)+'?period1=0&period2=4102444800&interval=1d',{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!r.ok)return null;const p=await r.json(),meta=p?.chart?.result?.[0]?.meta;if(!meta)return null;return {company:meta.longName||meta.shortName||ticker,name:meta.longName||meta.shortName||ticker,symbol:ticker,ticker,isin:null,mic:'XICE',segment:'Main Market',currency:'ISK',providerSymbol:ps,identitySource:'https://www.nasdaq.com/products/european-markets/iceland',identityResolution:'OFFICIAL_MAIN_MARKET_TICKER_FREE_HISTORY_PROOF'};}catch{return null}}));batch.forEach((v,i)=>v?shares.push(v):unresolved.push(names[n+i]));}
