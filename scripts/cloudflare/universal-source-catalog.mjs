@@ -16,7 +16,8 @@ const configs={
  XCSE:{urls:['https://indexes.nasdaqomx.com/Index/Overview/OMXCPI'],allowedMics:new Set(['XCSE']),market:/Copenhagen/i,min:115,format:'nasdaq-omxcpi-seed'},
  XHEL:{urls:['https://www.nasdaq.com/products/european-markets/helsinki'],allowedMics:new Set(['XHEL']),market:/Helsinki/i,min:136,format:'nasdaq-helsinki-main-market',officialSupplementNotices:['https://view.news.eu.nasdaq.com/view?id=b4e31667684eb0ad49bd08e840d267e6e&lang=en']},
  XICE:{urls:['https://indexes.nasdaqomx.com/Index/Overview/OMXIGI','https://indexes.nasdaqomx.com/Index/Overview/OMXIPI'],allowedMics:new Set(['XICE']),market:/Iceland/i,min:27,format:'nasdaq-omxigi-seed'},
- XATH:{urls:['https://athens.euronext.com/en/market-data/instruments/stocks'],allowedMics:new Set(['XATH']),market:/ATHENS|ΑΓΟΡΑ ΑΞΙΩΝ/i,min:100,format:'athex-stocks'}
+ XATH:{urls:['https://athens.euronext.com/en/market-data/instruments/stocks'],allowedMics:new Set(['XATH']),market:/ATHENS|ΑΓΟΡΑ ΑΞΙΩΝ/i,min:100,format:'athex-stocks'},
+ XWAR:{urls:['https://www.gpw.pl/list-of-companies'],allowedMics:new Set(['XWAR']),market:/Warsaw|GPW|Main Market/i,min:380,format:'gpw-main-market'}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if((mic==='XCSE'&&t.length>500)||t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
@@ -108,6 +109,17 @@ if(mic==='XHEL'){
 }
 
 
+if(mic==='XWAR'){
+ const officialUrl='https://www.gpw.pl/list-of-companies';
+ const r=await fetch(officialUrl,{headers:{'user-agent':'Mozilla/5.0 Koersplein/1.0',accept:'text/html'}});
+ if(!r.ok)throw new Error('WARSAW_OFFICIAL_DIRECTORY '+r.status);
+ const h=await r.text();
+ const symbols=[...new Set([...h.matchAll(/(?:company|spolka|profile|instrument)[^"'<>]{0,100}[\/"'=:\s]+([A-Z0-9]{2,12})(?:[\/"'?<\s])/gi)].map(x=>x[1]).filter(x=>!/^(HTML|HTTP|HTTPS|MAIN|MARKET|GPW|PLN|WIG|ETF)$/.test(x)))];
+ if(symbols.length<380)throw new Error('WARSAW_TRADABLE_SHARE_GATE parsed='+symbols.length+'; expected current Main Market about 400 issuers');
+ const shares=[];const unresolved=[];
+ for(let n=0;n<symbols.length;n+=8){const batch=await Promise.all(symbols.slice(n,n+8).map(async symbol=>{const ps=symbol+'.WA';try{const q=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(ps)+'?period1=0&period2=4102444800&interval=1d',{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!q.ok)return null;const p=await q.json(),meta=p?.chart?.result?.[0]?.meta;if(!meta)return null;return {company:meta.longName||meta.shortName||symbol,name:meta.longName||meta.shortName||symbol,symbol,ticker:symbol,isin:null,mic:'XWAR',segment:'Main Market',currency:meta.currency||'PLN',providerSymbol:ps,identitySource:officialUrl,identityResolution:'OFFICIAL_GPW_MAIN_MARKET_FREE_HISTORY_PROOF'};}catch{return null}}));batch.forEach((v,i)=>v?shares.push(v):unresolved.push(symbols[n+i]));}
+ const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(symbols)).digest('hex'),catalog={exchange:m.name,mic:'XWAR',retrievedAt:new Date().toISOString(),source:'GPW official Main Market listed companies; ordinary tradable equities only',sourceUrl:officialUrl,officialCount:symbols.length,resolvedCount:shares.length,fingerprint,discoveryPolicy:'OFFICIAL_MAIN_MARKET_THEN_FREE_SOURCE_PROOF',unresolvedSourceSymbols:unresolved,shares};await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');if(unresolved.length)throw new Error(`WARSAW_SOURCE_GATE proven=${shares.length}/${symbols.length} unresolved=${JSON.stringify(unresolved)}`);console.log(JSON.stringify({market:mic,officialCount:symbols.length,accepted:shares.length,fingerprint,directSourceProof:true}));process.exit(0);
+}
 if(mic==='XATH'){
  const officialUrl='https://athens.euronext.com/en/trade/trading-products/trading-issuers';
  const symbols=["EEE","EUROB","ETE","PPC","TPEIR","ALPHA","ALWN","HTO","MOH","MTLN","ELPE","GEKTERNA","CENER","BOCHGR","VIO","AIA","TITC","BELA","OPTIMA","SBLK","AKTR","BYLOT","CREDIA","ELHA","ADMIE","EYDAP","PPA","KARE","LAMDA","KRI","AEGN","LAMPS","SB","QUEST","PRODEA","SAR","EXAE","OTOEL","AVAX","ELLAKTOR","QLCO","PLAKR","OLTH","AEM","TRASTOR","ACAG","ATTICA","NOVAL","TELL","INTEK","LAVI","REALCONS","PROF","DIMAND","INTRK","EVR","TRESTATES","PLAT","FOYRK","BLEKEDROS","ALMY","ADPS","PREMIA","BRIQ","EYAPS","FAIS","PERF","INLIF","EKTER","MODA","MERKO","IATR","ORILINA","DAIOS","ONYX","MIG","ASTAK","DOTSOFT","FLEXO","OLYMP","PAP","AVE","CAIROMEZ","EX","MOTO","MEVA","PVMEZZ","ILYDA","ASCO","SPACE","KYLO","YKNOT","EVROF","GEBKA","ELSTR","ELTON","PETRO","ELIN","QUAL","DOMIK","BIOSK","REVOIL","FRIGO","BIOKA","SIDMA","FOODL","IKTIN","KEKR","TREK","EIS","CENTR","SUNMEZZ","GCMEZZ","ELBE","NAKAS","MOYZK","XYLEK","ATEK","SOFTWEB","NAYP","VOSYS","LOGISMOS","MEDIC","VIDAVO","DROME","INTET","SPIR","MASTIHA","DOPPLER","KORDE","HAIDE","MPITR","OPTRON","KYSA","MATHIO","PROFK","LANAC","CNLCAP","PRD","CPI","AAAK","MIN","PAIR","BIOT","LEBEK","YALCO"];
