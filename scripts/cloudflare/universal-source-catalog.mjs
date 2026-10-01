@@ -136,8 +136,16 @@ if(mic==='XMAD'){
      try{
        const u=new URL('https://query2.finance.yahoo.com/v1/finance/search');u.searchParams.set('q',x.isin);u.searchParams.set('quotesCount','12');u.searchParams.set('newsCount','0');
        const r=await fetch(u,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!r.ok)return null;
-       const p=await r.json();const q=(p.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.MC')&&/MCE|Madrid/i.test(String(q.exchange||'')+' '+String(q.exchDisp||'')));
-       if(!q?.symbol)return null;return {...x,symbol:String(q.symbol).replace(/\.MC$/i,''),providerSymbol:String(q.symbol),market:'BME Main Market'};
+       const p=await r.json();let q=(p.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.MC')&&/MCE|Madrid/i.test(String(q.exchange||'')+' '+String(q.exchDisp||'')));
+       // Generic Madrid identity fallback: some valid BME equities are not indexed by ISIN
+       // in Yahoo search. Retry the same registered free route by official company name,
+       // but still accept only an explicit Madrid (.MC) equity result.
+       if(!q?.symbol){
+         const nurl=new URL('https://query2.finance.yahoo.com/v1/finance/search');nurl.searchParams.set('q',x.name);nurl.searchParams.set('quotesCount','20');nurl.searchParams.set('newsCount','0');
+         const nr=await fetch(nurl,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});
+         if(nr.ok){const np=await nr.json();q=(np.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.MC')&&/MCE|Madrid/i.test(String(q.exchange||'')+' '+String(q.exchDisp||'')));}
+       }
+       if(!q?.symbol)return null;return {...x,symbol:String(q.symbol).replace(/\.MC$/i,''),providerSymbol:String(q.symbol),market:'BME Main Market',identityResolution:'YAHOO_ISIN_OR_OFFICIAL_NAME'};
      }catch{return null}
    }));
    batch.forEach((v,i)=>{if(v)shares.push(v);else unresolved.push(seed.shares[n+i])});
