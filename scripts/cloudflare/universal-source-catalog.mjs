@@ -134,6 +134,7 @@ if(mic==='XMAD'){
  for(let n=0;n<seed.shares.length;n+=6){
    const batch=await Promise.all(seed.shares.slice(n,n+6).map(async x=>{
      try{
+       if(x.providerSymbol)return {...x,market:'BME Main Market'};
        const u=new URL('https://query2.finance.yahoo.com/v1/finance/search');u.searchParams.set('q',x.isin);u.searchParams.set('quotesCount','12');u.searchParams.set('newsCount','0');
        const r=await fetch(u,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!r.ok)return null;
        const p=await r.json();let q=(p.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.MC')&&/MCE|Madrid/i.test(String(q.exchange||'')+' '+String(q.exchDisp||'')));
