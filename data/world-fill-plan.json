@@ -213,7 +213,11 @@
       "currency": "EUR",
       "timezone": "Europe/Madrid",
       "providerSuffix": ".MC",
-      "state": "WAITING"
+      "state": "BLOCKED",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-10-01T05:05:37.598Z",
+      "catalogFingerprint": "525567c96652fdbd022523edfe7b5cd1802257d4fa78858d2ba284b50f309751",
+      "note": "Quarantined by canonical single writer after proven source preflight failure."
     },
     {
       "mic": "XSTO",

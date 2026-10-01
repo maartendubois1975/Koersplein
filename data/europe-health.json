@@ -16,6 +16,10 @@
       {
         "mic": "XETR",
         "reason": "SOURCE_PREFLIGHT_GATE"
+      },
+      {
+        "mic": "XMAD",
+        "reason": "SOURCE_PREFLIGHT_GATE"
       }
     ]
   },
@@ -23,9 +27,9 @@
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
     "complete": 9,
-    "blocked": 3,
+    "blocked": 4,
     "ready": 0,
-    "pending": 19,
+    "pending": 18,
     "total": 31
   },
   "markets": [
@@ -252,22 +256,22 @@
     {
       "mic": "XMAD",
       "name": "Madrid",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
-      "reason": null,
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
         "count": 126,
-        "fingerprint": null,
+        "fingerprint": "525567c96652fdbd022523edfe7b5cd1802257d4fa78858d2ba284b50f309751",
         "retrievedAt": null,
-        "source": "BME Equity Securities List / Madrid & Continuous Market official bulletins"
+        "source": "BME Sociedad de Bolsas Notice effective 2026-04-07, reconciled through BME regulatory notices to 2026-09-27"
       },
       "sources": {
-        "status": "PREPARED",
-        "tested": 2,
+        "status": "BLOCKED",
+        "tested": 4,
         "fullCatalog": 126,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "coverageRatio": 0.9603174603174603,
+        "crossCheckRatio": 0
       },
       "completedAt": null
     },
@@ -712,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-01T04:59:07.191Z"
+  "generatedAt": "2026-10-01T05:05:37.643Z"
 }
