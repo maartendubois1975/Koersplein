@@ -1,7 +1,7 @@
 {
   "exchange": "Sofia",
   "mic": "XBUL",
-  "retrievedAt": "2026-10-01T16:08:42.547Z",
+  "retrievedAt": "2026-10-01T18:05:51.999Z",
   "source": "BSE Main Market scope + native Bulgarian equity list; StockAnalysis BUL daily-history provider",
   "sourceUrl": "https://www.bse-sofia.bg/en/listed-instruments/by-sector",
   "officialEligibleCount": 131,
@@ -80,8 +80,8 @@
       "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
     },
     {
-      "company": "81 SLYG Shelly Group SE 2.27B 66.10 -0.45% 320.06M",
-      "name": "81 SLYG Shelly Group SE 2.27B 66.10 -0.45% 320.06M",
+      "company": "81 SLYG Shelly Group SE 2.27B 66.20 0.15% 320.06M",
+      "name": "81 SLYG Shelly Group SE 2.27B 66.20 0.15% 320.06M",
       "symbol": "SLYG",
       "ticker": "SLYG",
       "isin": "XBUL-SLYG",
@@ -122,8 +122,8 @@
       "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
     },
     {
-      "company": "85 FIB First Investment Bank AD 1.21B 4.300 2.87% 491.53M",
-      "name": "85 FIB First Investment Bank AD 1.21B 4.300 2.87% 491.53M",
+      "company": "85 FIB First Investment Bank AD 1.21B 4.260 -0.93% 491.53M",
+      "name": "85 FIB First Investment Bank AD 1.21B 4.260 -0.93% 491.53M",
       "symbol": "FIB",
       "ticker": "FIB",
       "isin": "XBUL-FIB",
@@ -444,8 +444,8 @@
       "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
     },
     {
-      "company": "116 BREF Bulgarian Real Estate Fund REIT 178.16M 2.720 -0.37% 86.59M",
-      "name": "116 BREF Bulgarian Real Estate Fund REIT 178.16M 2.720 -0.37% 86.59M",
+      "company": "116 BREF Bulgarian Real Estate Fund REIT 178.16M 2.730 0.37% 86.59M",
+      "name": "116 BREF Bulgarian Real Estate Fund REIT 178.16M 2.730 0.37% 86.59M",
       "symbol": "BREF",
       "ticker": "BREF",
       "isin": "XBUL-BREF",
@@ -724,8 +724,8 @@
       "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
     },
     {
-      "company": "138 SIRM Sirma Group JSC 87.01M 0.788 -3.67% 137.98M",
-      "name": "138 SIRM Sirma Group JSC 87.01M 0.788 -3.67% 137.98M",
+      "company": "138 SIRM Sirma Group JSC 87.01M 0.800 1.52% 137.98M",
+      "name": "138 SIRM Sirma Group JSC 87.01M 0.800 1.52% 137.98M",
       "symbol": "SIRM",
       "ticker": "SIRM",
       "isin": "XBUL-SIRM",
@@ -794,22 +794,8 @@
       "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
     },
     {
-      "company": "145 MONB Monbat AD 72.00M 0.980 -1.51% 397.00M",
-      "name": "145 MONB Monbat AD 72.00M 0.980 -1.51% 397.00M",
-      "symbol": "MONB",
-      "ticker": "MONB",
-      "isin": "XBUL-MONB",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "MONB",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + StockAnalysis BUL native Bulgarian equity list",
-      "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
-    },
-    {
-      "company": "146 TCH TK - Hold AD 71.86M 4.460 - -",
-      "name": "146 TCH TK - Hold AD 71.86M 4.460 - -",
+      "company": "145 TCH TK - Hold AD 71.86M 4.460 - -",
+      "name": "145 TCH TK - Hold AD 71.86M 4.460 - -",
       "symbol": "TCH",
       "ticker": "TCH",
       "isin": "XBUL-TCH",
@@ -817,6 +803,20 @@
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
       "providerSymbol": "TCH",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + StockAnalysis BUL native Bulgarian equity list",
+      "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
+    },
+    {
+      "company": "146 MONB Monbat AD 71.54M 0.980 -1.51% 397.00M",
+      "name": "146 MONB Monbat AD 71.54M 0.980 -1.51% 397.00M",
+      "symbol": "MONB",
+      "ticker": "MONB",
+      "isin": "XBUL-MONB",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "MONB",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + StockAnalysis BUL native Bulgarian equity list",
       "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
@@ -892,8 +892,22 @@
       "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
     },
     {
-      "company": "156 BMTL Bulmetal JSC 56.82M 4.220 -2.32% 102.05M",
-      "name": "156 BMTL Bulmetal JSC 56.82M 4.220 -2.32% 102.05M",
+      "company": "154 MFG MFG Invest AD 60.30M 2.980 11.19% 5.90M",
+      "name": "154 MFG MFG Invest AD 60.30M 2.980 11.19% 5.90M",
+      "symbol": "MFG",
+      "ticker": "MFG",
+      "isin": "XBUL-MFG",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "MFG",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + StockAnalysis BUL native Bulgarian equity list",
+      "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
+    },
+    {
+      "company": "157 BMTL Bulmetal JSC 56.82M 4.220 -2.32% 102.05M",
+      "name": "157 BMTL Bulmetal JSC 56.82M 4.220 -2.32% 102.05M",
       "symbol": "BMTL",
       "ticker": "BMTL",
       "isin": "XBUL-BMTL",
@@ -906,8 +920,8 @@
       "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
     },
     {
-      "company": "157 CHL Chernomorski Holding AD 56.59M 9.00 - 476.10K",
-      "name": "157 CHL Chernomorski Holding AD 56.59M 9.00 - 476.10K",
+      "company": "158 CHL Chernomorski Holding AD 56.59M 9.00 - 476.10K",
+      "name": "158 CHL Chernomorski Holding AD 56.59M 9.00 - 476.10K",
       "symbol": "CHL",
       "ticker": "CHL",
       "isin": "XBUL-CHL",
@@ -920,8 +934,8 @@
       "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
     },
     {
-      "company": "159 KBG Korado-Bulgaria AD 54.78M 2.200 - 47.12M",
-      "name": "159 KBG Korado-Bulgaria AD 54.78M 2.200 - 47.12M",
+      "company": "160 KBG Korado-Bulgaria AD 54.78M 2.200 - 47.12M",
+      "name": "160 KBG Korado-Bulgaria AD 54.78M 2.200 - 47.12M",
       "symbol": "KBG",
       "ticker": "KBG",
       "isin": "XBUL-KBG",
@@ -929,20 +943,6 @@
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
       "providerSymbol": "KBG",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + StockAnalysis BUL native Bulgarian equity list",
-      "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
-    },
-    {
-      "company": "160 MFG MFG Invest AD 54.77M 2.680 - 5.90M",
-      "name": "160 MFG MFG Invest AD 54.77M 2.680 - 5.90M",
-      "symbol": "MFG",
-      "ticker": "MFG",
-      "isin": "XBUL-MFG",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "MFG",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + StockAnalysis BUL native Bulgarian equity list",
       "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
@@ -1158,8 +1158,8 @@
       "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
     },
     {
-      "company": "181 HLEV Zlaten Lev Holding 31.97M 2.600 - -",
-      "name": "181 HLEV Zlaten Lev Holding 31.97M 2.600 - -",
+      "company": "182 HLEV Zlaten Lev Holding 30.38M 2.600 - -",
+      "name": "182 HLEV Zlaten Lev Holding 30.38M 2.600 - -",
       "symbol": "HLEV",
       "ticker": "HLEV",
       "isin": "XBUL-HLEV",
@@ -1494,8 +1494,8 @@
       "identityResolution": "BSE_SCOPE_NATIVE_BUL_EQUITY"
     },
     {
-      "company": "215 IMP ImPulse Growth AD 10.04M 0.755 2.03% 955.00K",
-      "name": "215 IMP ImPulse Growth AD 10.04M 0.755 2.03% 955.00K",
+      "company": "215 IMP ImPulse Growth AD 10.04M 0.745 -1.33% 955.00K",
+      "name": "215 IMP ImPulse Growth AD 10.04M 0.745 -1.33% 955.00K",
       "symbol": "IMP",
       "ticker": "IMP",
       "isin": "XBUL-IMP",
