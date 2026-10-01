@@ -469,15 +469,6 @@
       "currency": "EUR"
     },
     {
-      "isin": "ES0143421073",
-      "name": "INNOVATIVE SOLUTIONS ECOSYSTEM, S.A.",
-      "mic": "XMAD",
-      "currency": "EUR",
-      "symbol": "ISE",
-      "providerSymbol": "ISE.MC",
-      "identityResolution": "ALT_PUBLIC_BME_TICKER"
-    },
-    {
       "isin": "ES0177542018",
       "name": "INTL CONSOLIDATED AIRLINES GROUP SA",
       "mic": "XMAD",
@@ -751,15 +742,6 @@
       "currency": "EUR"
     },
     {
-      "isin": "ES0179598000",
-      "name": "TR HOTEL JARDIN DEL MAR, S.A.",
-      "mic": "XMAD",
-      "currency": "EUR",
-      "symbol": "TRH",
-      "providerSymbol": "TRH.MC",
-      "identityResolution": "ALT_PUBLIC_BME_TICKER"
-    },
-    {
       "isin": "ES0132945017",
       "name": "TUBACEX, S.A.",
       "mic": "XMAD",
@@ -825,7 +807,17 @@
       "name": "URBAR INGENIEROS",
       "reason": "CURRENTLY_SUSPENDED_NOT_CUSTOMER_BUYABLE_ON_XMAD",
       "evidence": "CNMV suspension ongoing on XMAD"
+    },
+    {
+      "isin": "ES0143421073",
+      "name": "INNOVATIVE SOLUTIONS ECOSYSTEM, S.A.",
+      "reason": "CNMV_TRADING_SUSPENSION_NOT_LIFTED_NOT_CUSTOMER_BUYABLE"
+    },
+    {
+      "isin": "ES0179598000",
+      "name": "TR HOTEL JARDIN DEL MAR, S.A.",
+      "reason": "NO_EXECUTED_TRADE_SINCE_2023_NOT_PRACTICALLY_CUSTOMER_BUYABLE"
     }
   ],
-  "officialCount": 123
+  "officialCount": 121
 }
