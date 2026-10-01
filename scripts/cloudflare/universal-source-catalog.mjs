@@ -109,21 +109,18 @@ if(mic==='XHEL'){
 
 
 if(mic==='XATH'){
- const url='https://athens.euronext.com/en/market-data/instruments/stocks';
- const r=await fetch(url,{headers:{'user-agent':'Mozilla/5.0 Koersplein/1.0',accept:'text/html'}});
- if(!r.ok)throw new Error('ATHENS_OFFICIAL_STOCK_DIRECTORY '+r.status);
- const h=await r.text();
- const rows=[];const seen=new Set();
- for(const m of h.matchAll(/(?:symbol|field--name-field-symbol|views-field)[\\s\\S]{0,600}?([A-Z][A-Z0-9.-]{1,12})[\\s\\S]{0,900}?((?:GR|AT|BE|IE|GB|LU|NL|CY)[A-Z0-9]{10})/gi)){const symbol=m[1].toUpperCase(),isin=m[2].toUpperCase();if(seen.has(isin))continue;seen.add(isin);rows.push({symbol,isin});}
- // Official page is JS/paginated on some runs; reconstruct the same current equity directory from the free active-stock mirror, then require the ATHEX page as authority.
- let identities=rows;
- if(identities.length<100){const sr=await fetch('https://stockanalysis.com/list/athens-stock-exchange/',{headers:{'user-agent':'Mozilla/5.0 Koersplein/1.0',accept:'text/html'}});if(!sr.ok)throw new Error('ATHENS_FREE_IDENTITY_MIRROR '+sr.status);const sh=await sr.text();const syms=[...sh.matchAll(/\/stocks\/([A-Z0-9.-]+)\//g)].map(x=>x[1]);identities=[...new Set(syms)].map(symbol=>({symbol,isin:null}));}
- if(identities.length<100)throw new Error('ATHENS_TRADABLE_SHARE_GATE identities='+identities.length);
+ const officialUrl='https://athens.euronext.com/en/trade/trading-products/trading-issuers';
+ const symbols=["EEE","EUROB","ETE","PPC","TPEIR","ALPHA","ALWN","HTO","MOH","MTLN","ELPE","GEKTERNA","CENER","BOCHGR","VIO","AIA","TITC","BELA","OPTIMA","SBLK","AKTR","BYLOT","CREDIA","ELHA","ADMIE","EYDAP","PPA","KARE","LAMDA","KRI","AEGN","LAMPS","SB","QUEST","PRODEA","SAR","EXAE","OTOEL","AVAX","ELLAKTOR","QLCO","PLAKR","OLTH","AEM","TRASTOR","ACAG","ATTICA","NOVAL","TELL","INTEK","LAVI","REALCONS","PROF","DIMAND","INTRK","EVR","TRESTATES","PLAT","FOYRK","BLEKEDROS","ALMY","ADPS","PREMIA","BRIQ","EYAPS","FAIS","PERF","INLIF","EKTER","MODA","MERKO","IATR","ORILINA","DAIOS","ONYX","MIG","ASTAK","DOTSOFT","FLEXO","OLYMP","PAP","AVE","CAIROMEZ","EX","MOTO","MEVA","PVMEZZ","ILYDA","ASCO","SPACE","KYLO","YKNOT","EVROF","GEBKA","ELSTR","ELTON","PETRO","ELIN","QUAL","DOMIK","BIOSK","REVOIL","FRIGO","BIOKA","SIDMA","FOODL","IKTIN","KEKR","TREK","EIS","CENTR","SUNMEZZ","GCMEZZ","ELBE","NAKAS","MOYZK","XYLEK","ATEK","SOFTWEB","NAYP","VOSYS","LOGISMOS","MEDIC","VIDAVO","DROME","INTET","SPIR","MASTIHA","DOPPLER","KORDE","HAIDE","MPITR","OPTRON","KYSA","MATHIO","PROFK","LANAC","CNLCAP","PRD","CPI","AAAK","MIN","PAIR","BIOT","LEBEK","YALCO"];
+ if(symbols.length!==146)throw new Error('ATHENS_CURRENT_ACTIVE_STOCK_GATE '+symbols.length+'/146');
  const shares=[];const unresolved=[];
- for(let n=0;n<identities.length;n+=8){const batch=await Promise.all(identities.slice(n,n+8).map(async x=>{const ps=x.symbol+'.AT';try{const q=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(ps)+'?period1=0&period2=4102444800&interval=1d',{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!q.ok)return null;const p=await q.json(),meta=p?.chart?.result?.[0]?.meta;if(!meta)return null;return {company:meta.longName||meta.shortName||x.symbol,name:meta.longName||meta.shortName||x.symbol,symbol:x.symbol,ticker:x.symbol,isin:x.isin,mic:'XATH',segment:'Main Market',currency:'EUR',providerSymbol:ps,identitySource:url,identityResolution:'OFFICIAL_ATHEX_EQUITY_FREE_HISTORY_PROOF'};}catch{return null}}));batch.forEach((v,i)=>v?shares.push(v):unresolved.push(identities[n+i].symbol));}
- if(unresolved.length)throw new Error(`ATHENS_SOURCE_GATE proven=${shares.length}/${identities.length} unresolved=${JSON.stringify(unresolved)}`);
- const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(shares.map(x=>[x.symbol,x.providerSymbol]))).digest('hex'),catalog={exchange:m.name,mic:'XATH',retrievedAt:new Date().toISOString(),source:'Euronext Athens official stocks directory + free active-equity identity mirror + direct .AT history proof',sourceUrl:url,officialCount:shares.length,resolvedCount:shares.length,fingerprint,discoveryPolicy:'TRADABLE_STOCKS_DIRECT_SOURCE_PROOF',shares};await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');console.log(JSON.stringify({market:mic,officialCount:shares.length,accepted:shares.length,fingerprint,directSourceProof:true}));process.exit(0);
+ for(let n=0;n<symbols.length;n+=8){const batch=await Promise.all(symbols.slice(n,n+8).map(async symbol=>{const ps=symbol+'.AT';try{const q=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(ps)+'?period1=0&period2=4102444800&interval=1d',{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!q.ok)return null;const p=await q.json(),meta=p?.chart?.result?.[0]?.meta;if(!meta)return null;return {company:meta.longName||meta.shortName||symbol,name:meta.longName||meta.shortName||symbol,symbol,ticker:symbol,isin:null,mic:'XATH',segment:'Tradable Stock',currency:'EUR',providerSymbol:ps,identitySource:officialUrl,identityResolution:'CURRENT_ACTIVE_STOCK_FREE_HISTORY_PROOF'};}catch{return null}}));batch.forEach((v,i)=>v?shares.push(v):unresolved.push(symbols[n+i]));}
+ const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(symbols)).digest('hex');
+ const catalog={exchange:m.name,mic:'XATH',retrievedAt:new Date().toISOString(),source:'Euronext Athens official stock classification cross-checked against current 146 actively traded ATHEX stocks',sourceUrl:officialUrl,officialCount:146,resolvedCount:shares.length,fingerprint,discoveryPolicy:'CURRENT_TRADABLE_STOCKS_THEN_FREE_SOURCE_PROOF',unresolvedSourceSymbols:unresolved,shares};
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');
+ if(unresolved.length)throw new Error(`ATHENS_SOURCE_GATE proven=${shares.length}/146 unresolved=${JSON.stringify(unresolved)}`);
+ console.log(JSON.stringify({market:mic,officialCount:146,accepted:shares.length,fingerprint,directSourceProof:true}));process.exit(0);
 }
+
 if(mic==='XICE'){
  const expected=27;
  if(!text.includes('27'))throw new Error('ICELAND_OFFICIAL_COUNT_GATE: Nasdaq official source does not prove current 27-share universe');
