@@ -1,13 +1,14 @@
-const MILAN_MICS=new Set(['XMIL','MTAA','EXGM']);
+const SUPPORTED_MICS=new Map([['XMIL','bit'],['MTAA','bit'],['EXGM','bit'],['XPRA','pra']]);
 
 export class StockAnalysisBitProvider {
   id='stockanalysis-bit';
-  supports(instrument){return MILAN_MICS.has(String(instrument?.mic||'').toUpperCase())&&Boolean(instrument?.symbol||instrument?.ticker)}
+  supports(instrument){return SUPPORTED_MICS.has(String(instrument?.mic||'').toUpperCase())&&Boolean(instrument?.symbol||instrument?.ticker)}
   async fetchDaily(instrument,{startDate='1990-01-01',endDate=new Date().toISOString().slice(0,10)}={}){
     const symbol=encodeURIComponent(String(instrument.symbol||instrument.ticker).trim().toUpperCase());
+    const venue=SUPPORTED_MICS.get(String(instrument?.mic||'').toUpperCase());
     const bars=[];
     for(let page=1;page<=20;page++){
-      const url=`https://stockanalysis.com/quote/bit/${symbol}/history/?p=${page}`;
+      const url=`https://stockanalysis.com/quote/${venue}/${symbol}/history/?p=${page}`;
       const r=await fetch(url,{headers:{'user-agent':'Mozilla/5.0 (compatible; Koersplein/1.0)','accept':'text/html'}});
       if(!r.ok)throw new Error(`StockAnalysis HTTP ${r.status} voor ${symbol}`);
       const html=await r.text();
