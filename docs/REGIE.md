@@ -108,3 +108,14 @@ Een begeleide chatoplossing is trainingsdata: leg providerfamilie, suffix-/symbo
 
 ## 16. Eén regisseur, twee ingangen
 De periodieke regisseur en expliciete chat-publicatie gebruiken dezelfde canonical state, source registry, adapters, backfillrunner en eindvalidatie. Chat is geen parallel systeem maar een begeleide ingang voor brononderzoek en structurele reparatie. De regisseur kiest per cyclus maximaal één nieuwe markt; COMPLETE-markten worden eerst op dagelijkse actualiteit gecontroleerd.
+
+## Verplichte beursvolgorde: catalogus → gratis koersdekking → upload
+
+Voor iedere nieuwe beurs geldt zonder uitzondering deze volgorde:
+
+1. **Eerst de officiële beursomvang bewijzen.** Gebruik de officiële beurs/exchange-catalogus om exact vast te stellen hoeveel gewone aandelen binnen de afgesproken scope vallen. Scheid aandelen expliciet van ETF's, warrants, rechten, obligaties en andere instrumenttypen. Een indexsamenstelling mag niet als vervanging voor de volledige beurscatalogus worden gebruikt.
+2. **Daarna alle aandelen identificeren.** Leg voor de volledige officiële catalogus minimaal naam, ticker/handelscode, ISIN en MIC vast waar beschikbaar. De bewezen officiële telling is de harde catalogus-gate.
+3. **Daarna gratis koersbronnen volledig testen.** Zoek en test gratis historische en dagelijkse koersroutes voor ieder aandeel uit de officiële catalogus. Open en close zijn verplicht voor dagelijkse updates. Gebruik meerdere gratis routes/fallbacks waar nodig. Eén defect instrument wordt lokaal geïsoleerd als DATA_UNAVAILABLE wanneer de onbeschikbaarheid aantoonbaar is; het mag gezonde instrumenten niet blokkeren.
+4. **Pas daarna uploaden/publiceren.** Geen backfill/publicatie zolang de officiële catalogus niet sluitend is en niet ieder aandeel een bewezen gratis koersroute of expliciete DATA_UNAVAILABLE-status heeft. Upload via dezelfde canonical beursbouwer; nooit via een parallel pad.
+
+Deze volgorde is een harde gate en mag niet worden omgedraaid of overgeslagen: **officieel aantal aandelen → volledige aandelenlijst → gratis koersdekking → upload/publicatie**.
