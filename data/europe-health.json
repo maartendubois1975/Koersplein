@@ -16,6 +16,10 @@
       {
         "mic": "XETR",
         "reason": "SOURCE_PREFLIGHT_GATE"
+      },
+      {
+        "mic": "XWAR",
+        "reason": "SOURCE_PREFLIGHT_GATE"
       }
     ]
   },
@@ -23,9 +27,9 @@
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
     "complete": 11,
-    "blocked": 3,
+    "blocked": 4,
     "ready": 2,
-    "pending": 15,
+    "pending": 14,
     "total": 31
   },
   "markets": [
@@ -384,22 +388,22 @@
     {
       "mic": "XWAR",
       "name": "Warschau",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
-      "reason": null,
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 401,
+        "fingerprint": "e7fad2ff0087d642e4f3cdde05cc221496c4edfc5307ea8c5232ce8f3442ecba",
         "retrievedAt": null,
-        "source": null
+        "source": "GPW regulated Main Market equities; current Polish quote-table identities; direct .WA history proof"
       },
       "sources": {
-        "status": "UNTESTED",
-        "tested": 0,
-        "fullCatalog": 0,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "status": "BLOCKED",
+        "tested": 4,
+        "fullCatalog": 401,
+        "coverageRatio": 0,
+        "crossCheckRatio": 0
       },
       "completedAt": null
     },
@@ -712,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-01T08:52:19.536Z"
+  "generatedAt": "2026-10-01T09:04:06.303Z"
 }

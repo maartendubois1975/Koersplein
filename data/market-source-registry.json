@@ -557,6 +557,24 @@
         "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       },
       "catalogFingerprint": "5703b0a2e27f065d80babfe82191f9561dd852ea6e968a594837ba15e811987a"
+    },
+    "XWAR": {
+      "status": "BLOCKED",
+      "catalogFingerprint": "e7fad2ff0087d642e4f3cdde05cc221496c4edfc5307ea8c5232ce8f3442ecba",
+      "catalogSource": "GPW regulated Main Market equities; current Polish quote-table identities; direct .WA history proof",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "lastAuditAt": "2026-10-01T09:03:55.708Z",
+      "discovery": {
+        "testedDifficultSymbols": 20,
+        "testedFullCatalog": 401,
+        "coverageRatio": 0,
+        "crossCheckedSymbols": 0,
+        "crossCheckRatio": 0,
+        "sourceCountTested": 4,
+        "uncovered": 401,
+        "dataUnavailable": 0,
+        "unresolved": 401
+      }
     }
   }
 }

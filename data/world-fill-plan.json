@@ -295,7 +295,11 @@
       "currency": "PLN",
       "timezone": "Europe/Warsaw",
       "providerSuffix": ".WA",
-      "state": "WAITING"
+      "state": "BLOCKED",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-10-01T09:04:06.247Z",
+      "catalogFingerprint": "e7fad2ff0087d642e4f3cdde05cc221496c4edfc5307ea8c5232ce8f3442ecba",
+      "note": "Quarantined by canonical single writer after proven source preflight failure."
     },
     {
       "mic": "XWBO",
