@@ -683,6 +683,33 @@
         "sourceCountTested": 4,
         "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       }
+    },
+    "XBSE": {
+      "status": "APPROVED",
+      "catalogSource": "Bucharest Stock Exchange official Shares market",
+      "historySources": [
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "BVB symbol with .RO; actual daily bars required before eligibility"
+        }
+      ],
+      "dailyUpdate": {
+        "enabled": true,
+        "identity": "ISIN",
+        "provider": "yahoo-chart",
+        "suffix": ".RO",
+        "requiredFields": [
+          "open",
+          "close"
+        ],
+        "policy": "Reuse proven Bucharest route for daily open/close; no rediscovery."
+      },
+      "discovery": {
+        "testedFullCatalog": 0,
+        "coverageRatio": null,
+        "note": "Official BVB share list -> actual tradability/history proof; metadata alone never qualifies."
+      }
     }
   }
 }
