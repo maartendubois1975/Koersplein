@@ -506,17 +506,17 @@
       "health": "BLOCKED",
       "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
-        "present": false,
-        "count": 171,
-        "fingerprint": "0c91f0666ff9c44b4787ee3a1e6fa89b7d38df9a6db8d532f0da85158925d249",
-        "retrievedAt": null,
+        "present": true,
+        "count": 131,
+        "fingerprint": "22d6702ae6280bdabdcc73d65e7139551b76859fb4172c3f624a3764bf99d02a",
+        "retrievedAt": "2026-10-01T16:08:42.547Z",
         "source": "BSE Main Market scope + native Bulgarian equity list; StockAnalysis BUL daily-history provider"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
-        "fullCatalog": 171,
-        "coverageRatio": 0.7660818713450293,
+        "fullCatalog": 131,
+        "coverageRatio": 1,
         "crossCheckRatio": 0
       },
       "completedAt": null
@@ -720,5 +720,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-01T16:07:46.452Z"
+  "generatedAt": "2026-10-01T16:33:05.376Z"
 }

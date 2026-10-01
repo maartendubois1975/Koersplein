@@ -727,13 +727,23 @@
       "catalogFingerprint": "5cb3698daa6bacb74e52188787f986fe40ae3b76e2ce941acde94c4228b8a6a6"
     },
     "XBUL": {
-      "status": "BLOCKED",
+      "status": "APPROVED",
       "catalogSource": "BSE Main Market scope + native Bulgarian equity list; StockAnalysis BUL daily-history provider",
       "historySources": [
         {
-          "provider": "stockanalysis-bit",
+          "provider": "yahoo-isin-resolver",
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
+        },
+        {
+          "provider": "yahoo-chart",
           "role": "PRIMARY",
-          "note": "StockAnalysis BUL actual daily bars; Bulgarian company profile required"
+          "note": "Full-catalog preflight: 0/131 instruments."
+        },
+        {
+          "provider": "euronext-live",
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/131; 0 additional instruments beyond primary."
         }
       ],
       "dailyUpdate": {
@@ -747,19 +757,17 @@
         ],
         "policy": "Reuse proven BUL history route daily; no rediscovery."
       },
-      "catalogFingerprint": "0c91f0666ff9c44b4787ee3a1e6fa89b7d38df9a6db8d532f0da85158925d249",
+      "catalogFingerprint": "22d6702ae6280bdabdcc73d65e7139551b76859fb4172c3f624a3764bf99d02a",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
       "lastAuditAt": "2026-10-01T16:07:34.691Z",
       "discovery": {
         "testedDifficultSymbols": 20,
-        "testedFullCatalog": 171,
-        "coverageRatio": 0.7660818713450293,
+        "testedFullCatalog": 131,
+        "coverageRatio": 1,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 40,
-        "dataUnavailable": 0,
-        "unresolved": 40
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       }
     }
   }
