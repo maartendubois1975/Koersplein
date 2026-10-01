@@ -727,8 +727,8 @@
       "catalogFingerprint": "5cb3698daa6bacb74e52188787f986fe40ae3b76e2ce941acde94c4228b8a6a6"
     },
     "XBUL": {
-      "status": "APPROVED",
-      "catalogSource": "BSE Main Market scope reconciled to Bulgarian-company BUL universe",
+      "status": "BLOCKED",
+      "catalogSource": "BSE Main Market scope + native Bulgarian equity list; StockAnalysis BUL daily-history provider",
       "historySources": [
         {
           "provider": "stockanalysis-bit",
@@ -746,6 +746,20 @@
           "close"
         ],
         "policy": "Reuse proven BUL history route daily; no rediscovery."
+      },
+      "catalogFingerprint": "0c91f0666ff9c44b4787ee3a1e6fa89b7d38df9a6db8d532f0da85158925d249",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "lastAuditAt": "2026-10-01T16:07:34.691Z",
+      "discovery": {
+        "testedDifficultSymbols": 20,
+        "testedFullCatalog": 171,
+        "coverageRatio": 0.7660818713450293,
+        "crossCheckedSymbols": 0,
+        "crossCheckRatio": 0,
+        "sourceCountTested": 4,
+        "uncovered": 40,
+        "dataUnavailable": 0,
+        "unresolved": 40
       }
     }
   }

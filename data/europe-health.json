@@ -20,6 +20,10 @@
       {
         "mic": "XWAR",
         "reason": "SOURCE_PREFLIGHT_GATE"
+      },
+      {
+        "mic": "XBUL",
+        "reason": "SOURCE_PREFLIGHT_GATE"
       }
     ]
   },
@@ -27,9 +31,9 @@
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
     "complete": 15,
-    "blocked": 4,
+    "blocked": 5,
     "ready": 2,
-    "pending": 10,
+    "pending": 9,
     "total": 31
   },
   "markets": [
@@ -498,22 +502,22 @@
     {
       "mic": "XBUL",
       "name": "Sofia",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
-      "reason": null,
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 171,
+        "fingerprint": "0c91f0666ff9c44b4787ee3a1e6fa89b7d38df9a6db8d532f0da85158925d249",
         "retrievedAt": null,
-        "source": "BSE Main Market scope reconciled to Bulgarian-company BUL universe"
+        "source": "BSE Main Market scope + native Bulgarian equity list; StockAnalysis BUL daily-history provider"
       },
       "sources": {
-        "status": "APPROVED",
-        "tested": 1,
-        "fullCatalog": 0,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "status": "BLOCKED",
+        "tested": 4,
+        "fullCatalog": 171,
+        "coverageRatio": 0.7660818713450293,
+        "crossCheckRatio": 0
       },
       "completedAt": null
     },
@@ -716,5 +720,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-01T15:52:15.573Z"
+  "generatedAt": "2026-10-01T16:07:46.452Z"
 }
