@@ -1,7 +1,7 @@
 {
-  "marketMic": "XHEL",
-  "requestedAt": "2026-10-01T04:05:00.000Z",
+  "marketMic": "XICE",
+  "requestedAt": "2026-10-01T04:10:00.000Z",
   "requestedBy": "chat",
-  "purpose": "Verify generic official Nasdaq Nordic N-1 catalog supplement and continue canonical Helsinki build",
-  "instruction": "Run Helsinki through the existing canonical factory only. Preserve official 145 gate; supplement a missing free-feed identity only from configured official Nasdaq exchange notice; classify a recent official temporary listing DATA_UNAVAILABLE only after all four existing history routes fail. Then route-map, history, final validation and publication. No parallel writer."
+  "purpose": "Build and publish Reykjavik through canonical source-first factory",
+  "instruction": "Run Reykjavik XICE end-to-end through the existing canonical factory only: official Nasdaq OMX Iceland All-Share 27-component gate, free XICE identity discovery, Yahoo ISIN .IC resolution, full 27-instrument source preflight or explicit DATA_UNAVAILABLE only when proven, route map, history, final validation and publication. One writer; no parallel workflow or weakened gate."
 }
