@@ -130,6 +130,8 @@ if(mic==='XSTO'){
 }
 if(mic==='XMAD'){
  const seed=JSON.parse(await fs.readFile('data/madrid-official-equity-seed.json','utf8'));
+ if(seed.eligibilityPolicy!=='PURCHASABLE_ORDINARY_EQUITIES_ONLY')throw new Error('Madrid catalog policy missing: purchasable ordinary equities only');
+ if(seed.shares.some(x=>['ES0114400007','ES0163960018'].includes(x.isin)))throw new Error('Madrid catalog contains excluded non-purchasable/non-XMAD security');
  const shares=[]; const unresolved=[];
  for(let n=0;n<seed.shares.length;n+=6){
    const batch=await Promise.all(seed.shares.slice(n,n+6).map(async x=>{
