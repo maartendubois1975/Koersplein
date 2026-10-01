@@ -392,17 +392,17 @@
       "health": "BLOCKED",
       "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
-        "present": false,
-        "count": 401,
-        "fingerprint": "e7fad2ff0087d642e4f3cdde05cc221496c4edfc5307ea8c5232ce8f3442ecba",
-        "retrievedAt": null,
+        "present": true,
+        "count": 400,
+        "fingerprint": "279fd6167f5d130ae440a285e9b0ad6148c1a8332bacc471cf4e2e3c5100a45a",
+        "retrievedAt": "2026-10-01T09:17:48.911Z",
         "source": "GPW regulated Main Market equities; current Polish quote-table identities; direct .WA history proof"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
-        "fullCatalog": 401,
-        "coverageRatio": 0.9975062344139651,
+        "fullCatalog": 400,
+        "coverageRatio": 1,
         "crossCheckRatio": 0
       },
       "completedAt": null
@@ -716,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-01T09:14:47.986Z"
+  "generatedAt": "2026-10-01T09:24:37.734Z"
 }

@@ -559,22 +559,37 @@
       "catalogFingerprint": "5703b0a2e27f065d80babfe82191f9561dd852ea6e968a594837ba15e811987a"
     },
     "XWAR": {
-      "status": "BLOCKED",
-      "catalogFingerprint": "e7fad2ff0087d642e4f3cdde05cc221496c4edfc5307ea8c5232ce8f3442ecba",
+      "status": "APPROVED",
+      "catalogFingerprint": "279fd6167f5d130ae440a285e9b0ad6148c1a8332bacc471cf4e2e3c5100a45a",
       "catalogSource": "GPW regulated Main Market equities; current Polish quote-table identities; direct .WA history proof",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
       "lastAuditAt": "2026-10-01T09:14:30.589Z",
       "discovery": {
         "testedDifficultSymbols": 20,
-        "testedFullCatalog": 401,
-        "coverageRatio": 0.9975062344139651,
+        "testedFullCatalog": 400,
+        "coverageRatio": 1,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 1,
-        "dataUnavailable": 0,
-        "unresolved": 1
-      }
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
+      },
+      "historySources": [
+        {
+          "provider": "yahoo-isin-resolver",
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
+        },
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Full-catalog preflight: 400/400 instruments."
+        },
+        {
+          "provider": "euronext-live",
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/400; 0 additional instruments beyond primary."
+        }
+      ]
     }
   }
 }
