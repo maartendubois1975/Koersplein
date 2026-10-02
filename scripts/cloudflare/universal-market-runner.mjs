@@ -35,7 +35,7 @@ if(seedCatalog){
   const cb=Math.max(1,Math.min(25,Number(process.env.CATALOG_BATCH_SIZE||25)));
   for(let i=0;i<instruments.length;i+=cb){let batch=instruments.slice(i,i+cb);if(mic==='XBUL'){const missing=[];for(const item of batch){try{await client.historyCoverage(item.isin)}catch{missing.push(item)}}batch=missing;}if(batch.length){try{await client.seedCatalog({markets:[],instruments:batch});}catch(error){if(mic!=='XBUL'||!/UNIQUE constraint failed: instruments\.mic, instruments\.ticker/.test(error.message))throw error;for(const item of batch){try{await client.seedCatalog({markets:[],instruments:[item]});}catch(e){if(!/UNIQUE constraint failed: instruments\.mic, instruments\.ticker/.test(e.message))throw e;console.log(`SOFIA_LEGACY_TICKER_COLLISION ${item.ticker}`)}}}}}
 }
-const hb=Math.max(1,Math.min(10,Number(process.env.HISTORY_BATCH_SIZE||10))),today=new Date().toISOString().slice(0,10);
+const hb=Math.max(1,Math.min(100,Number(process.env.HISTORY_BATCH_SIZE||10))),today=new Date().toISOString().slice(0,10);
 const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
 // Use the last fully closed trading weekday, with one extra closed-session grace day.
 // Provider/API propagation can lag a completed session; demanding T-1 at UTC midnight
