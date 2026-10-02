@@ -29,9 +29,9 @@ const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële cat
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if((mic==='XCSE'&&t.length>500)||t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XLON'){
- const urls=['https://www.londonstockexchange.com/main.c590e3c222871d64.js','https://www.londonstockexchange.com/vendor.6bb55c3096820317.js'];const found=[];
- for(const u of urls){const r=await fetch(u,{headers:{'user-agent':'Mozilla/5.0'}}),js=await r.text();found.push('STATUS '+r.status+' LEN '+js.length);for(const needle of ['api/gw/lse','api/v1','price-explorer','instruments']){let p=0,n=0;while((p=js.indexOf(needle,p))>=0&&n++<30){found.push(js.slice(Math.max(0,p-220),p+650));p+=needle.length;}}}
- throw new Error('LONDON_JS_DISCOVERY '+JSON.stringify({found:[...new Set(found)].slice(0,120)}));
+ const js=await (await fetch('https://www.londonstockexchange.com/main.c590e3c222871d64.js',{headers:{'user-agent':'Mozilla/5.0'}})).text();const found=[];
+ for(const needle of ['componentRefresh','priceexplorersearch','components/refresh']){let p=0,n=0;while((p=js.indexOf(needle,p))>=0&&n++<50){found.push(js.slice(Math.max(0,p-900),p+1600));p+=needle.length;}}
+ throw new Error('LONDON_REFRESH_DISCOVERY '+JSON.stringify({found:[...new Set(found)].slice(0,80)}));
 }
 if(mic==='XCSE'){
  const expected=115;
