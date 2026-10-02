@@ -56,7 +56,7 @@ jobs:
     timeout-minutes: 330
     concurrency:
       group: koersplein-market-${{ matrix.market_mic }}
-      cancel-in-progress: false
+      cancel-in-progress: true
     env:
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
@@ -98,13 +98,13 @@ jobs:
       - name: Historische backfill met foutisolatie
         if: ${{ inputs.preflight_only != true }}
         env:
-          HISTORY_BATCH_SIZE: 10
+          HISTORY_BATCH_SIZE: 100
           CATALOG_BATCH_SIZE: 25
           ALLOW_PARTIAL_FAILURES: 1
         run: |
           set -euo pipefail
           skip_isins=''; seed=1
-          for round in $(seq 1 500); do
+          for round in $(seq 1 100); do
             export SKIP_ISINS="$skip_isins"
             if [ "$seed" -eq 1 ]; then SEED_CATALOG=1 node scripts/cloudflare/universal-market-runner.mjs; seed=0; else SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs; fi
             attempted=$(node -e "const r=require('./research/output/world-fill-batch.json');console.log((r.attemptedIsins||[]).join(','))")
