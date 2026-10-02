@@ -30,10 +30,9 @@ let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{he
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XLON'){
  const home=await (await fetch('https://www.londonstockexchange.com/reports?tab=instruments',{headers:{'user-agent':'Mozilla/5.0'}})).text();
- const jsNames=[...home.matchAll(/src="([^"]*main\.[^"]+\.js)"/g)].map(x=>x[1]);
- const found=[];
- for(const n of jsNames){const u=new URL(n,'https://www.londonstockexchange.com/').href;const js=await (await fetch(u,{headers:{'user-agent':'Mozilla/5.0'}})).text();for(const re of [/api\\/gw\\/lse[^"'\\` ]+/g,/api\\/v1[^"'\\` ]+/g,/price-explorer.{0,300}/g,/instruments.{0,300}/g]){for(const m of js.matchAll(re))found.push(m[0].slice(0,500));}}
- throw new Error('LONDON_JS_DISCOVERY '+JSON.stringify({jsNames,found:[...new Set(found)].slice(0,80)}));
+ const jsNames=[...home.matchAll(/src="([^"]*main\\.[^"]+\\.js)"/g)].map(x=>x[1]);const found=[];
+ for(const n of jsNames){const u=new URL(n,'https://www.londonstockexchange.com/').href,js=await (await fetch(u,{headers:{'user-agent':'Mozilla/5.0'}})).text();for(const needle of ['api/gw/lse','api/v1','price-explorer','instruments']){let p=0;while((p=js.indexOf(needle,p))>=0&&found.length<200){found.push(js.slice(Math.max(0,p-180),p+500));p+=needle.length;}}}
+ throw new Error('LONDON_JS_DISCOVERY '+JSON.stringify({jsNames,found:[...new Set(found)].slice(0,100)}));
 }
 if(mic==='XCSE'){
  const expected=115;
