@@ -29,11 +29,9 @@ const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële cat
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if((mic==='XCSE'&&t.length>500)||t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XLON'){
- const tests=[
- 'https://api.londonstockexchange.com/api/v1/pages?path=live-markets%2Fmarket-data-dashboard%2Fprice-explorer&parameters=categories%3DEQUITY%26subcategories%3D1',
- 'https://api.londonstockexchange.com/api/v1/pages?path=live-markets/market-data-dashboard/price-explorer&parameters=categories%3DEQUITY%26subcategories%3D1',
- 'https://api.londonstockexchange.com/api/v1/pages?path=price-explorer&parameters=categories%3DEQUITY%26subcategories%3D1'
- ];const out=[];for(const u of tests){const r=await fetch(u,{headers:{'user-agent':'Mozilla/5.0','accept':'application/json'}}),t=await r.text();out.push({u,status:r.status,len:t.length,head:t.slice(0,3000)});}throw new Error('LONDON_HANDSHAKE '+JSON.stringify(out));
+ const base='https://api.londonstockexchange.com/api/v1/pages?path=live-markets%2Fmarket-data-dashboard%2Fprice-explorer&parameters=';
+ const params=['categories=EQUITY&subcategories=1','categories=EQUITY&subcategories=1&page=0','categories=EQUITY&subcategories=1&page=1','categories=EQUITY&subcategories=1&size=100'];
+ const out=[];for(const p of params){const r=await fetch(base+encodeURIComponent(p),{headers:{'user-agent':'Mozilla/5.0','accept':'application/json'}}),j=await r.json();const comp=(j.components||[]).find(x=>x.type==='price-explorer');const fields=(comp?.content||[]).map(x=>({name:x.name,value:x.name==='priceexplorersearch'?{totalElements:x.value?.totalElements,totalPages:x.value?.totalPages,size:x.value?.size,number:x.value?.number,first:(x.value?.content||[]).slice(0,2)}:undefined}));out.push({p,fields});}throw new Error('LONDON_PAGE_META '+JSON.stringify(out));
 }
 if(mic==='XCSE'){
  const expected=115;
