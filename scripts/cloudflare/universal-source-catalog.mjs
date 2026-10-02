@@ -29,6 +29,7 @@ const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële cat
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if((mic==='XCSE'&&t.length>500)||t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XLON'){
+ text='';source='';
  const endpoints=[
  'https://api.londonstockexchange.com/api/gw/lse/download/directory/instruments?markets=&sectors=&issuers=',
  'https://api.londonstockexchange.com/api/gw/lse/download/directories/instruments?markets=&sectors=&issuers=',
