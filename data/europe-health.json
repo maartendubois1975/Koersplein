@@ -6,10 +6,6 @@
     "structuralErrorsRequireCodeOrSourceRepair": true,
     "structuralErrors": [
       {
-        "mic": "XDUB",
-        "reason": "SOURCE_PREFLIGHT_GATE"
-      },
-      {
         "mic": "XLON",
         "reason": "OFFICIAL_CATALOG_ACCESS_GATE"
       },
@@ -22,8 +18,8 @@
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 17,
-    "blocked": 3,
+    "complete": 18,
+    "blocked": 2,
     "ready": 2,
     "pending": 9,
     "total": 31
@@ -142,24 +138,24 @@
     {
       "mic": "XDUB",
       "name": "Dublin",
-      "state": "BLOCKED",
-      "health": "BLOCKED",
-      "reason": "SOURCE_PREFLIGHT_GATE",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
       "catalog": {
-        "present": false,
+        "present": true,
         "count": 23,
         "fingerprint": "b3935506849d6eeff59edaa96cb3cdbab64052a47beb5426ced8b8e0d4b25b01",
-        "retrievedAt": null,
+        "retrievedAt": "2026-10-02T08:59:31.816Z",
         "source": "https://live.euronext.com/en/product_directory/data/stocks-dublin/download?mics=XMSM%2CXESM%2CXATL"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
         "fullCatalog": 23,
         "coverageRatio": 0.9565217391304348,
         "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-02T09:07:53.023Z"
     },
     {
       "mic": "XLIS",
@@ -712,5 +708,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-02T08:56:22.102Z"
+  "generatedAt": "2026-10-02T09:08:04.572Z"
 }

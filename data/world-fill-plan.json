@@ -73,11 +73,19 @@
       "currency": "EUR",
       "timezone": "Europe/Dublin",
       "providerSuffix": ".IR",
-      "state": "BLOCKED",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-10-02T08:56:22.062Z",
-      "note": "Quarantined by canonical single writer after proven source preflight failure.",
-      "catalogFingerprint": "b3935506849d6eeff59edaa96cb3cdbab64052a47beb5426ced8b8e0d4b25b01"
+      "state": "COMPLETE",
+      "catalogFingerprint": "b3935506849d6eeff59edaa96cb3cdbab64052a47beb5426ced8b8e0d4b25b01",
+      "completedAt": "2026-10-02T09:07:53.023Z",
+      "dataUnavailable": [
+        {
+          "isin": "IE000HBCCM49",
+          "symbol": "GDL",
+          "name": "GDL MANAGEMENT GRP",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_NEW_LISTING_2026_08_31_NO_EXECUTED_TRADES_YET_FIXED_REFERENCE_PRICE_134_50"
+        }
+      ]
     },
     {
       "mic": "XLIS",
