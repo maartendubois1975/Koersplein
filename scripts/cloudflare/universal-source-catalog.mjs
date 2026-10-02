@@ -29,19 +29,11 @@ const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële cat
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if((mic==='XCSE'&&t.length>500)||t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
 if(mic==='XLON'){
- text='';source='';
- const endpoints=[
- 'https://api.londonstockexchange.com/api/gw/lse/download/directory/instruments?markets=&sectors=&issuers=',
- 'https://api.londonstockexchange.com/api/gw/lse/download/directories/instruments?markets=&sectors=&issuers=',
- 'https://api.londonstockexchange.com/api/gw/lse/download/directory/issuers/instruments?markets=&sectors=',
- 'https://api.londonstockexchange.com/api/gw/lse/download/directories/issuers/instruments?markets=&sectors=',
- 'https://api.londonstockexchange.com/api/gw/lse/download/directories/aim/instruments?sectors=&locations=&marketcapitalizationrange='
- ];
- const probes=[];
- for(const u of endpoints){try{const r=await fetch(u,{headers:{'user-agent':'Mozilla/5.0','accept':'text/csv,application/vnd.ms-excel,*/*'}});const t=await r.text();probes.push({u,status:r.status,type:r.headers.get('content-type'),len:t.length,head:t.slice(0,180).replace(/\\s+/g,' ')});if(r.ok&&t.length>1000&&/isin|instrument|ticker|code/i.test(t)){text=t;source=u;break}}catch(e){probes.push({u,error:String(e)})}}
- if(!source)throw new Error('LONDON_ENDPOINT_PROBE '+JSON.stringify(probes));
- const lines=text.split(/\\r?\\n/).filter(Boolean);const header=lines[0];console.log('LONDON_SOURCE',source,'LINES',lines.length,'HEADER',header);
- throw new Error('LONDON_PARSE_DISCOVERY '+JSON.stringify({source,lines:lines.length,header}));
+ const home=await (await fetch('https://www.londonstockexchange.com/reports?tab=instruments',{headers:{'user-agent':'Mozilla/5.0'}})).text();
+ const jsNames=[...home.matchAll(/src="([^"]*main\.[^"]+\.js)"/g)].map(x=>x[1]);
+ const found=[];
+ for(const n of jsNames){const u=new URL(n,'https://www.londonstockexchange.com/').href;const js=await (await fetch(u,{headers:{'user-agent':'Mozilla/5.0'}})).text();for(const re of [/api\\/gw\\/lse[^"'\\` ]+/g,/api\\/v1[^"'\\` ]+/g,/price-explorer.{0,300}/g,/instruments.{0,300}/g]){for(const m of js.matchAll(re))found.push(m[0].slice(0,500));}}
+ throw new Error('LONDON_JS_DISCOVERY '+JSON.stringify({jsNames,found:[...new Set(found)].slice(0,80)}));
 }
 if(mic==='XCSE'){
  const expected=115;
