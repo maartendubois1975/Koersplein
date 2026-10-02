@@ -22,7 +22,8 @@ const configs={
  XPRA:{urls:['https://www.pse.cz/en/market-data/shares/prime-market','https://www.pse.cz/en/market-data/shares/standard-market','https://www.pse.cz/en/market-data/shares/start-market'],allowedMics:new Set(['XPRA']),market:/Prague|PSE/i,min:25,format:'pse-real-shares'},
  XBUD:{urls:['https://www.bse.hu/Products-and-Services/Equities-Section'],allowedMics:new Set(['XBUD']),market:/Budapest|BSE/i,min:35,format:'bse-real-equities'},
  XBSE:{urls:['https://www.bvb.ro/FinancialInstruments/Markets/Shares'],allowedMics:new Set(['XBSE']),market:/Bucharest|BVB/i,min:60,format:'bvb-real-shares'},
- XBUL:{urls:['https://www.bse-sofia.bg/en/market-segmentation'],allowedMics:new Set(['XBUL']),market:/Sofia|BSE/i,min:100,format:'bse-sofia-real-equities'}
+ XBUL:{urls:['https://www.bse-sofia.bg/en/market-segmentation'],allowedMics:new Set(['XBUL']),market:/Sofia|BSE/i,min:100,format:'bse-sofia-real-equities'},
+ XLON:{urls:['https://www.londonstockexchange.com/reports?tab=instruments'],allowedMics:new Set(['XLON']),market:/London|LSE|Main Market|AIM/i,min:500,format:'lse-equities'}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if((mic==='XCSE'&&t.length>500)||t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
