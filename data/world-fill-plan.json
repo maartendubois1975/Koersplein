@@ -175,13 +175,48 @@
       "currency": "EUR",
       "timezone": "Europe/Berlin",
       "providerSuffix": ".DE",
-      "state": "BLOCKED",
-      "catalogFingerprint": "08fb3055f3905ea5f88590e0d3f24a1374119337bab9e2965003c34eb5b1245c",
-      "note": "Quarantined by canonical single writer after proven source preflight failure.",
+      "state": "COMPLETE",
+      "catalogFingerprint": "0de2d9420cdb6e8e4677fb2483a9948829ee1571d5ab08fbda141d158d48436f",
       "retryReason": "PROVEN_DATA_UNAVAILABLE_POLICY_REPAIR",
       "retryAuthorizedAt": "2026-09-26T04:33:24.838Z",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-09-26T06:52:14.786Z"
+      "completedAt": "2026-10-02T06:08:59.251Z",
+      "dataUnavailable": [
+        {
+          "isin": "LU2358378979",
+          "symbol": "LRND",
+          "name": "ANCHORCORE SE         EO1",
+          "lastDate": "2026-09-18",
+          "recordCount": 10,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "US4165151048",
+          "symbol": "HFF",
+          "name": "HARTFORD INSURANCE GROUP",
+          "lastDate": "2026-09-18",
+          "recordCount": 21,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "GB00BY2Z0H74",
+          "symbol": "0VQ",
+          "name": "PURETECH HEALTH PLC  LS 1",
+          "lastDate": "2026-08-05",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "DE000A41YEE3",
+          "symbol": "BRN",
+          "name": "BRANICKS GROUP AG NA JGE",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "NO_HISTORY_AFTER_FOUR_INDEPENDENT_ROUTE_TESTS"
+        }
+      ]
     },
     {
       "mic": "XSWX",
