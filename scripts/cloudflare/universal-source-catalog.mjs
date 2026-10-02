@@ -28,6 +28,32 @@ const configs={
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if((mic==='XCSE'&&t.length>500)||t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
+if(mic==='XLON'){
+ const instinetUrl='https://www.instinet.com/sites/default/files/blockmatch/stocklist/europe/BlockMatchEurope_20260916.html';
+ const ir=await fetch(instinetUrl,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'}});
+ if(!ir.ok)throw new Error('LONDON_FREE_DISCOVERY: Instinet stock list unavailable '+ir.status);
+ const ih=await ir.text(),candidates=[],seen=new Set();
+ for(const tr of ih.matchAll(new RegExp('<tr[^>]*>([\\s\\S]*?)</tr>','gi'))){
+  const cells=[...tr[1].matchAll(new RegExp('<td[^>]*>([\\s\\S]*?)</td>','gi'))].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\\s+/g,' ').trim());
+  if(cells.length<6)continue; const [name,bb,isin,micCode,currency,relevantMarket]=cells;
+  if(micCode!=='XLON'||relevantMarket!=='XLON'||!isin||seen.has(isin))continue;
+  if(/ETF|ETP|ETC|BOND|NOTE|WARRANT|RIGHTS?|CERTIFICATE|FUND|TRUST CERT/i.test(name))continue;
+  seen.add(isin);candidates.push({isin,name,bb,currency,sourceUrl:instinetUrl});
+ }
+ if(candidates.length<500)throw new Error('LONDON_OFFICIAL_CROSSCHECK_GATE: only '+candidates.length+' current XLON equity identities');
+ const shares=[],unresolved=[];
+ for(let n=0;n<candidates.length;n+=8){const batch=await Promise.all(candidates.slice(n,n+8).map(async x=>{try{
+  const u=new URL('https://query2.finance.yahoo.com/v1/finance/search');u.searchParams.set('q',x.isin);u.searchParams.set('quotesCount','12');u.searchParams.set('newsCount','0');
+  const r=await fetch(u,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!r.ok)return null;const p=await r.json();
+  const q=(p.quotes||[]).find(q=>String(q.symbol||'').toUpperCase().endsWith('.L'));if(!q?.symbol)return null;const ps=String(q.symbol);
+  return {company:q.longname||q.shortname||x.name,name:q.longname||q.shortname||x.name,symbol:ps.replace(/\\.L$/i,'').replace(/-/g,' '),ticker:ps.replace(/\\.L$/i,''),isin:x.isin,mic:'XLON',segment:'LSE equity',currency:x.currency||'GBP',providerSymbol:ps,identitySource:x.sourceUrl,identityResolution:'XLON_VENUE_PLUS_YAHOO_ISIN'};
+ }catch{return null}}));batch.forEach((v,i)=>v?shares.push(v):unresolved.push(candidates[n+i]));}
+ const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(candidates.map(x=>x.isin))).digest('hex');
+ const catalog={exchange:m.name,mic:'XLON',retrievedAt:new Date().toISOString(),source:'LSE official equity/instrument framework cross-checked to current XLON venue identities',sourceUrl:'https://www.londonstockexchange.com/reports?tab=instruments',officialCrosscheck:'https://www.londonstockexchange.com/resources/equities-trading-resources?tab=shares',eligibleCount:candidates.length,resolvedCount:shares.length,fingerprint,unresolved,shares};
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,eligible:candidates.length,resolved:shares.length,unresolved:unresolved.length,fingerprint,pass:unresolved.length===0,generatedAt:new Date().toISOString()},null,2));
+ if(unresolved.length)throw new Error(`LONDON_SOURCE_IDENTITY_GATE resolved=${shares.length}/${candidates.length} unresolved=${unresolved.length}`);
+ console.log(JSON.stringify({market:mic,eligible:candidates.length,accepted:shares.length,fingerprint}));process.exit(0);
+}
 if(mic==='XCSE'){
  const expected=115;
  if(!/# of Components[\s\S]{0,200}115|Components[\s\S]{0,120}115/i.test(text))
