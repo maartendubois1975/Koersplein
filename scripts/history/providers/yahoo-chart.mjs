@@ -34,6 +34,7 @@ const MARKET_RULES = {
   XBUD: { suffix: '.BD', exchanges: ['bud', 'budapest', 'budapest stock exchange', 'bse'] },
   XBSE: { suffix: '.RO', exchanges: ['bvb', 'bucharest', 'bucharest stock exchange'] },
   XBUL: { suffix: '.SO', exchanges: ['bul', 'sofia', 'bulgarian stock exchange', 'bse sofia'] },
+  XLON: { suffix: '.L', exchanges: ['lse', 'london', 'london stock exchange'] },
   FNSE: { suffix: '.ST', exchanges: ['sto', 'stockholm', 'first north sweden', 'nasdaq stockholm'] },
   SSME: { suffix: '.ST', exchanges: ['sto', 'stockholm', 'first north sweden', 'nasdaq stockholm'] }
 };
