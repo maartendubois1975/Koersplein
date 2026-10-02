@@ -789,6 +789,24 @@
         "dataUnavailable": 0,
         "unresolved": 76
       }
+    },
+    "XDUB": {
+      "status": "BLOCKED",
+      "catalogFingerprint": "b3935506849d6eeff59edaa96cb3cdbab64052a47beb5426ced8b8e0d4b25b01",
+      "catalogSource": "https://live.euronext.com/en/product_directory/data/stocks-dublin/download?mics=XMSM%2CXESM%2CXATL",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "lastAuditAt": "2026-10-02T08:56:11.718Z",
+      "discovery": {
+        "testedDifficultSymbols": 20,
+        "testedFullCatalog": 23,
+        "coverageRatio": 0.9565217391304348,
+        "crossCheckedSymbols": 0,
+        "crossCheckRatio": 0,
+        "sourceCountTested": 4,
+        "uncovered": 1,
+        "dataUnavailable": 0,
+        "unresolved": 1
+      }
     }
   }
 }

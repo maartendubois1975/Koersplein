@@ -74,9 +74,10 @@
       "timezone": "Europe/Dublin",
       "providerSuffix": ".IR",
       "state": "BLOCKED",
-      "blockedReason": "OFFICIAL_CATALOG_GATE",
-      "blockedAt": "2026-09-24T04:50:00Z",
-      "note": "Run 13: official catalog gate failed; excluded from automatic selection until the official Dublin adapter is repaired and revalidated."
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-10-02T08:56:22.062Z",
+      "note": "Quarantined by canonical single writer after proven source preflight failure.",
+      "catalogFingerprint": "b3935506849d6eeff59edaa96cb3cdbab64052a47beb5426ced8b8e0d4b25b01"
     },
     {
       "mic": "XLIS",
