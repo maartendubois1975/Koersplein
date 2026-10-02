@@ -184,37 +184,20 @@
       "lastAuditAt": "2026-09-25T04:19:13.362Z"
     },
     "XETR": {
-      "status": "APPROVED",
-      "catalogFingerprint": "0de2d9420cdb6e8e4677fb2483a9948829ee1571d5ab08fbda141d158d48436f",
+      "status": "BLOCKED",
+      "catalogFingerprint": "08fb3055f3905ea5f88590e0d3f24a1374119337bab9e2965003c34eb5b1245c",
       "catalogSource": "https://www.cashmarket.deutsche-boerse.com/resource/blob/1528/b52ea43a2edac92e8283d40645d1c076/data/t7-xetr-allTradableInstruments.csv",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
       "lastAuditAt": "2026-09-26T00:05:20.377Z",
       "discovery": {
         "testedDifficultSymbols": 20,
-        "testedFullCatalog": 1417,
-        "coverageRatio": 0.9992942836979535,
+        "testedFullCatalog": 1416,
+        "coverageRatio": 0.9992937853107344,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
-      },
-      "historySources": [
-        {
-          "provider": "yahoo-isin-resolver",
-          "role": "DISCOVERY_FALLBACK",
-          "note": "ISIN-first resolver used when direct symbol and official history route fail."
-        },
-        {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY",
-          "note": "Full-catalog preflight: 1416/1417 instruments."
-        },
-        {
-          "provider": "euronext-live",
-          "role": "INDEPENDENT_FALLBACK_VALIDATION",
-          "note": "Independently tested on full catalog: 0/1417; 0 additional instruments beyond primary."
-        }
-      ]
+        "uncovered": 1
+      }
     },
     "XSWX": {
       "status": "APPROVED",
