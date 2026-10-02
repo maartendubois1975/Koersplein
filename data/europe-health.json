@@ -216,17 +216,17 @@
       "health": "BLOCKED",
       "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
-        "present": false,
-        "count": 1416,
-        "fingerprint": "08fb3055f3905ea5f88590e0d3f24a1374119337bab9e2965003c34eb5b1245c",
-        "retrievedAt": null,
+        "present": true,
+        "count": 1417,
+        "fingerprint": "0de2d9420cdb6e8e4677fb2483a9948829ee1571d5ab08fbda141d158d48436f",
+        "retrievedAt": "2026-10-02T03:47:22.429Z",
         "source": "https://www.cashmarket.deutsche-boerse.com/resource/blob/1528/b52ea43a2edac92e8283d40645d1c076/data/t7-xetr-allTradableInstruments.csv"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
-        "fullCatalog": 1416,
-        "coverageRatio": 0.9992937853107344,
+        "fullCatalog": 1417,
+        "coverageRatio": 0.9992942836979535,
         "crossCheckRatio": 0
       },
       "completedAt": null
@@ -716,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-02T03:45:08.898Z"
+  "generatedAt": "2026-10-02T04:32:42.150Z"
 }
