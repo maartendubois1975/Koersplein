@@ -227,14 +227,16 @@ if(mic==='XICE'){
  const ir=await fetch(instinetUrl,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'}});
  if(!ir.ok)throw new Error('ICELAND_FREE_DISCOVERY: Instinet stock list unavailable '+ir.status);
  const ih=await ir.text(), candidates=[], seen=new Set();
+ const officialSymbols=new Set(['ALVO','AMRQ','ARION','BRIM','EIK','EIM','FESTI','HAGA','HAMP','HEIMAR','ICESEA','ICEAIR','ISF','ISB','JBTM','KALD','KVIKA','NOVA','OCS','REITIR','SVN','SIMINN','SJOVA','SKAGI','SKEL','SYN','OLGERD']);
  for(const tr of ih.matchAll(new RegExp('<tr[^>]*>([\\s\\S]*?)</tr>','gi'))){
    const cells=[...tr[1].matchAll(new RegExp('<td[^>]*>([\\s\\S]*?)</td>','gi'))].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\\s+/g,' ').trim());
-   if(cells.length<6)continue;
-   const [name,bb,isin,micCode,currency,relevantMarket]=cells;
-   if(micCode!=='XICE'||relevantMarket!=='XICE'||!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)||seen.has(isin))continue;
-   if(/SUBSCR|RIGHTS?|WARRANT|PREF|BOND|NOTE/i.test(name))continue;
-   const ticker=String(bb||'').trim().split(/\\s+/)[0].toUpperCase();
-   if(!ticker)continue;seen.add(isin);candidates.push({isin,name,ticker,currency,sourceUrl:instinetUrl});
+   if(!cells.some(x=>String(x).toUpperCase()==='XICE'))continue;
+   const isin=cells.find(x=>/^[A-Z]{2}[A-Z0-9]{10}$/.test(String(x).trim().toUpperCase()))?.trim().toUpperCase();
+   const ticker=cells.flatMap(x=>String(x).trim().toUpperCase().split(/\\s+/)).find(x=>officialSymbols.has(x));
+   if(!isin||!ticker||seen.has(isin))continue;
+   const name=cells.find(x=>x&&x!==ticker&&x!==isin&&!/^XICE$/i.test(x))||ticker;
+   const currency=cells.find(x=>/^(ISK|EUR|USD|GBP|CAD|CHF|SEK|DKK|NOK)$/.test(String(x).trim().toUpperCase()))||'ISK';
+   seen.add(isin);candidates.push({isin,name,ticker,currency,sourceUrl:instinetUrl});
  }
  if(candidates.length!==expected)throw new Error(`ICELAND_IDENTITY_GATE: current XICE tradable share identities ${candidates.length}/${expected}`);
  const shares=[],unresolved=[];
