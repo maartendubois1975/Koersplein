@@ -780,18 +780,18 @@
       },
       "catalogFingerprint": "8d30f3706bad5373a9e0f4f1ea4138504b34fe3d0829bea810a0ceb7a7f1536e",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-01T19:57:03.179Z",
+      "lastAuditAt": "2026-10-03T17:30:44.960Z",
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 158,
-        "coverageRatio": 0.5189873417721519,
+        "coverageRatio": 0.37341772151898733,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
         "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval.",
-        "uncovered": 76,
+        "uncovered": 99,
         "dataUnavailable": 0,
-        "unresolved": 76
+        "unresolved": 99
       }
     },
     "XDUB": {
