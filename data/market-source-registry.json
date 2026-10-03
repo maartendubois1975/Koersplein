@@ -174,18 +174,18 @@
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
       "discovery": {
         "testedDifficultSymbols": 20,
-        "testedFullCatalog": 1520,
-        "coverageRatio": 0.9723684210526315,
+        "testedFullCatalog": 1503,
+        "coverageRatio": 0.9833666001330672,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 42,
+        "uncovered": 25,
         "crossCheckedSymbols": 0,
-        "dataUnavailable": 0,
-        "unresolved": 42
+        "dataUnavailable": 20,
+        "unresolved": 5
       },
       "note": "Quarantined until authorised deterministic access to the official XLON instrument catalogue is available. No full backfill and no synthetic/third-party catalogue substitution.",
-      "lastAuditAt": "2026-10-03T08:20:17.602Z",
-      "catalogFingerprint": "e6b67636f1df893481eaa901cd8becf7ea7dea95e4c3e1dbd0976d416f9ebe50"
+      "lastAuditAt": "2026-10-03T09:04:13.785Z",
+      "catalogFingerprint": "74b0bbd31246d7ab882d7ff0b3ffb41ae65e563509dd6349dfb4bc9c91d26e1a"
     },
     "XETR": {
       "status": "APPROVED",
