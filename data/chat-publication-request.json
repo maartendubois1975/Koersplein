@@ -1,6 +1,6 @@
 {
-  "marketMic": "XATH",
-  "purpose": "Complete Athens using existing D1 instrument identities",
-  "message": "Reuse stored mic+ticker identity from history manifest, then backfill repair and final validation",
-  "requestedAt": "2026-10-03T13:45:00Z"
+  "marketMic": "XICE,XWAR,XLON",
+  "purpose": "Complete remaining three repair exchanges in one matrix run",
+  "message": "Run Reykjavik Warsaw London through catalog source history repair and final validation using the D1 identity resolver",
+  "requestedAt": "2026-10-03T14:05:00Z"
 }
