@@ -7,7 +7,7 @@
     "structuralErrors": [
       {
         "mic": "XLON",
-        "reason": "OFFICIAL_CATALOG_ACCESS_GATE"
+        "reason": "SOURCE_PREFLIGHT_GATE"
       },
       {
         "mic": "XWAR",
@@ -184,20 +184,20 @@
       "name": "Londen",
       "state": "BLOCKED",
       "health": "BLOCKED",
-      "reason": "OFFICIAL_CATALOG_ACCESS_GATE",
+      "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 1520,
+        "fingerprint": "e6b67636f1df893481eaa901cd8becf7ea7dea95e4c3e1dbd0976d416f9ebe50",
         "retrievedAt": null,
-        "source": "London Stock Exchange Daily Tradeable Instruments Report"
+        "source": "London Stock Exchange Price Explorer - LSE issuer equities / Shares"
       },
       "sources": {
         "status": "BLOCKED",
-        "tested": 2,
-        "fullCatalog": 0,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "tested": 4,
+        "fullCatalog": 1520,
+        "coverageRatio": 0.9723684210526315,
+        "crossCheckRatio": 0
       },
       "completedAt": null
     },
@@ -708,5 +708,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-03T06:44:06.873Z"
+  "generatedAt": "2026-10-03T07:17:11.969Z"
 }
