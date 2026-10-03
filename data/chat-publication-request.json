@@ -1,6 +1,6 @@
 {
-  "marketMic": "XZAG",
-  "purpose": "Complete Zagreb regulated equity market",
-  "message": "Official ZSE 73-equity gate, prove free history coverage for every share, then seed/backfill/repair/final validate",
-  "requestedAt": "2026-10-03T16:15:00Z"
+  "marketMic": "XICE",
+  "purpose": "Repair Reykjavik D1 identities and complete market",
+  "message": "Seed stable XICE:TICKER identities after worker repair, backfill all 27, repair missing history, run final validation and post-run regression; do not advance while XICE is unhealthy",
+  "requestedAt": "2026-10-03T19:18:00+02:00"
 }
