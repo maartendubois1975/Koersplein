@@ -25,10 +25,12 @@ try{
  for(const m of plan.markets.filter(x=>x.state==='COMPLETE')){
   const ui=markets.find(x=>x.mic===m.mic);
   if(!ui||ui.status!=='available'||!ui.sharesData)issues.push({severity:'ERROR',type:'COMPLETE_MARKET_NOT_ON_HOMEPAGE',file:'data/markets.json',detail:m.mic});
-  const catalogRel='data/euronext-'+m.code+'.json',page=(ui?.id==='amsterdam'?'amsterdam':ui?.slug)+'.html';
+  const catalogRel='data/euronext-'+m.code+'.json',legacyPages={amsterdam:'amsterdam.html',brussels:'brussel.html',paris:'parijs.html',milan:'milaan.html',oslo:'oslo.html',lisbon:'lissabon.html',zurich:'zurich.html',stockholm:'stockholm.html'},page=ui&&legacyPages[ui.id];
   if(!files.some(x=>path.relative(root,x).replaceAll('\\','/')===catalogRel))issues.push({severity:'WARN',type:'COMPLETE_MARKET_CATALOG_REPAIR_PENDING',file:catalogRel,detail:m.mic});
-  if(!files.some(x=>path.relative(root,x).replaceAll('\\','/')===page))issues.push({severity:'ERROR',type:'COMPLETE_MARKET_PAGE_MISSING',file:page,detail:m.mic});
-  if(ui&&!app.includes(ui.id+":'"+page+"'"))issues.push({severity:'ERROR',type:'COMPLETE_MARKET_HOMEPAGE_ROUTE_MISSING',file:'app.js',detail:m.mic});
+  if(page&&!files.some(x=>path.relative(root,x).replaceAll('\\','/')===page))issues.push({severity:'ERROR',type:'COMPLETE_MARKET_PAGE_MISSING',file:page,detail:m.mic});
+  const hasUniversal=files.some(x=>path.relative(root,x).replaceAll('\\','/')==='market.html')&&files.some(x=>path.relative(root,x).replaceAll('\\','/')==='generic-market.js');
+  if(ui&&!page&&!hasUniversal)issues.push({severity:'ERROR',type:'UNIVERSAL_MARKET_PAGE_MISSING',file:'market.html',detail:m.mic});
+  if(ui&&!app.includes('marketHref'))issues.push({severity:'ERROR',type:'COMPLETE_MARKET_HOMEPAGE_ROUTE_MISSING',file:'app.js',detail:m.mic});
   if(ui&&!share.includes("'data/'+market.sharesData"))issues.push({severity:'ERROR',type:'UNIVERSAL_SHARE_ROUTE_MISSING',file:'share.js',detail:m.mic});
  }
 }catch(e){issues.push({severity:'ERROR',type:'FRONTEND_COMPLETE_MARKET_GATE_FAILED',file:'data/markets.json',detail:e.message});}
