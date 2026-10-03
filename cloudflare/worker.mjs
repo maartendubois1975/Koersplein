@@ -156,9 +156,11 @@ async function route(request, env) {
       // Canonical identity repair: early Sofia imports used temporary XBUL-* identifiers; preserve relational history.
       // Preserve the existing instrument id/history relations while replacing only that temporary ISIN.
       const collision = await env.DB.prepare('SELECT id,isin FROM instruments WHERE mic=? AND ticker=?').bind(item.mic,item.ticker).first();
-      if (collision && collision.isin !== item.isin && String(collision.isin).startsWith('XBUL-') && /^BG[A-Z0-9]{10}$/.test(item.isin)) {
+      if (collision && collision.isin !== item.isin) {
         const canonical = await env.DB.prepare('SELECT id FROM instruments WHERE isin=?').bind(item.isin).first();
-        if (!canonical) await env.DB.prepare('UPDATE instruments SET isin=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(item.isin,collision.id).run();
+        const temporary = /^(?:XBUL-|XICE:|XATH-|XWAR-)/.test(String(collision.isin));
+        const incomingCanonical = /^[A-Z]{2}[A-Z0-9]{10}$/.test(String(item.isin));
+        if (!canonical && temporary && incomingCanonical) await env.DB.prepare('UPDATE instruments SET isin=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(item.isin,collision.id).run();
       }
       await env.DB.prepare(`INSERT INTO instruments(isin,mic,ticker,company,country_code,sector,index_group,currency) VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(isin) DO UPDATE SET mic=excluded.mic,ticker=excluded.ticker,company=excluded.company,country_code=excluded.country_code,sector=excluded.sector,index_group=excluded.index_group,currency=excluded.currency,updated_at=CURRENT_TIMESTAMP WHERE instruments.mic IS NOT excluded.mic OR instruments.ticker IS NOT excluded.ticker OR instruments.company IS NOT excluded.company OR instruments.country_code IS NOT excluded.country_code OR instruments.sector IS NOT excluded.sector OR instruments.index_group IS NOT excluded.index_group OR instruments.currency IS NOT excluded.currency`).bind(item.isin, item.mic, item.ticker, item.company, item.countryCode || null, item.sector || null, item.indexGroup || null, item.currency || null).run();
       await env.DB.prepare(`INSERT INTO history_status(instrument_id) SELECT id FROM instruments WHERE isin=? ON CONFLICT(instrument_id) DO NOTHING`).bind(item.isin).run();
