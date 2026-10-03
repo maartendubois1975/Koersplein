@@ -97,6 +97,7 @@ jobs:
           NODE
       - name: Historische backfill met foutisolatie
         if: ${{ inputs.preflight_only != true }}
+        timeout-minutes: 90
         env:
           HISTORY_BATCH_SIZE: 100
           CATALOG_BATCH_SIZE: 25
