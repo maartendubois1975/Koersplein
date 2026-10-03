@@ -22,13 +22,15 @@ const unsupportedWaiting=plan.markets.filter(m=>m.state==='WAITING'&&!adapterMic
 const forced=String(process.env.FORCE_MARKET_MIC||'').trim().toUpperCase();
 let selected;
 if(forced){
-  const market=plan.markets.find(m=>m.mic===forced);
-  if(!market) throw new Error(`FORCE_MARKET_MIC onbekend: ${forced}`);
-  if(!adapterMics.has(forced)) throw new Error(`FORCE_MARKET_MIC heeft nog geen bewezen adapter: ${forced}`);
-  // Een expliciete begeleide repair mag een COMPLETE markt opnieuw door dezelfde harde gates sturen.
-  // Dit wijzigt de COMPLETE-status niet; het herbouwt uitsluitend canonical evidence/catalogus.
-  // Manual/chat selection bypasses only quarantine selection, never catalog/source/history/end gates.
-  selected=[forced];
+  const forcedMics=forced.split(',').map(x=>x.trim()).filter(Boolean);
+  if(forcedMics.length>max) throw new Error(`Te veel expliciete markten: ${forcedMics.length} > ${max}`);
+  for(const forcedMic of forcedMics){
+    const market=plan.markets.find(m=>m.mic===forcedMic);
+    if(!market) throw new Error(`FORCE_MARKET_MIC onbekend: ${forcedMic}`);
+    if(!adapterMics.has(forcedMic)) throw new Error(`FORCE_MARKET_MIC heeft nog geen bewezen adapter: ${forcedMic}`);
+  }
+  // Expliciete begeleide repairs mogen samen in één matrix-run; alle harde gates blijven actief.
+  selected=[...new Set(forcedMics)];
 } else {
   selected=[...new Set(eligible.map(m=>m.mic))].slice(0,max);
 }
