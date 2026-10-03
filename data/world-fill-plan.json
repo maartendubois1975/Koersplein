@@ -342,11 +342,21 @@
       "currency": "PLN",
       "timezone": "Europe/Warsaw",
       "providerSuffix": ".WA",
-      "state": "BLOCKED",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-10-01T09:04:06.247Z",
-      "catalogFingerprint": "e7fad2ff0087d642e4f3cdde05cc221496c4edfc5307ea8c5232ce8f3442ecba",
-      "note": "Quarantined by canonical single writer after proven source preflight failure."
+      "state": "COMPLETE",
+      "catalogFingerprint": "279fd6167f5d130ae440a285e9b0ad6148c1a8332bacc471cf4e2e3c5100a45a",
+      "completedAt": "2026-10-03T16:04:51.122Z",
+      "dataUnavailable": [
+        {
+          "isin": "XWAR-WIG",
+          "officialIsin": null,
+          "symbol": "WIG",
+          "name": "WIG",
+          "lastDate": "2019-07-26",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        }
+      ]
     },
     {
       "mic": "XWBO",
