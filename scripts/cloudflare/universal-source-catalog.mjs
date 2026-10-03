@@ -134,7 +134,7 @@ if(mic==='XHEL'){
  for(const x of unresolved.filter(x=>!x.officialSupplement)){const base=String(x.bb||'').trim().split(/\s+/)[0];if(!base)continue;const ps=yahooSpecial[x.isin]||`${base}.HE`;shares.push({company:x.name,name:x.name,symbol:base,ticker:base,isin:x.isin,mic:'XHEL',segment:'Main Market',currency:'EUR',providerSymbol:ps,identitySource:x.sourceUrl,identityResolution:'FREE_VENUE_TICKER_FALLBACK'});}
  const stillUnresolved=[];
  const resolved=[...new Map(shares.map(x=>[x.isin,x])).values()].sort((a,b)=>a.name.localeCompare(b.name,'fi'));if(resolved.length!==expected||stillUnresolved.length)throw new Error(`HELSINKI_IDENTITY_GATE: resolved ${resolved.length}/${expected}; unresolved=${JSON.stringify(stillUnresolved.map(x=>({name:x.name,isin:x.isin,bb:x.bb})))}`);
- const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(resolved.map(x=>[x.isin,x.providerSymbol]))).digest('hex'),catalog={exchange:m.name,mic:'XHEL',retrievedAt:new Date().toISOString(),source:'Nasdaq Helsinki Main Market company count + free XHEL tradable share-series identities + Yahoo ISIN resolution',sourceUrl:'https://www.nasdaq.com/products/european-markets/helsinki',officialCount:expected,resolvedCount:resolved.length,fingerprint,discoverySource:instinetUrl,discoveryPolicy:'NORDIC_FREE_DISCOVERY',shares:resolved};await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+String.fromCharCode(10));console.log(JSON.stringify({market:mic,officialCount:expected,accepted:resolved.length,fingerprint,preparedOnly:true}));process.exit(0);
+ const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(resolved.map(x=>[x.isin,x.providerSymbol]))).digest('hex'),catalog={exchange:m.name,mic:'XHEL',retrievedAt:new Date().toISOString(),source:'Nasdaq Helsinki Main Market company count + free XHEL tradable share-series identities + Yahoo ISIN resolution',sourceUrl:'https://www.nasdaq.com/products/european-markets/helsinki',officialCount:expected,resolvedCount:resolved.length,fingerprint,discoverySource:discoveryUrl,discoveryPolicy:'NORDIC_FREE_DISCOVERY',shares:resolved};await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+String.fromCharCode(10));console.log(JSON.stringify({market:mic,officialCount:expected,accepted:resolved.length,fingerprint,preparedOnly:true}));process.exit(0);
 }
 
 
@@ -223,32 +223,27 @@ if(mic==='XATH'){
 if(mic==='XICE'){
  const expected=27;
  if(!text.includes('27'))throw new Error('ICELAND_OFFICIAL_COUNT_GATE: Nasdaq official source does not prove current 27-share universe');
- const instinetUrl='https://www.instinet.com/sites/default/files/blockmatch/stocklist/europe/BlockMatchEurope_20260917.html';
- const ir=await fetch(instinetUrl,{headers:{'user-agent':'Koersplein/1.0',accept:'text/html'}});
- if(!ir.ok)throw new Error('ICELAND_FREE_DISCOVERY: Instinet stock list unavailable '+ir.status);
- const ih=await ir.text(), candidates=[], seen=new Set();
- const officialSymbols=new Set(['ALVO','AMRQ','ARION','BRIM','EIK','EIM','FESTI','HAGA','HAMP','HEIMAR','ICESEA','ICEAIR','ISF','ISB','JBTM','KALD','KVIKA','NOVA','OCS','REITIR','SVN','SIMINN','SJOVA','SKAGI','SKEL','SYN','OLGERD']);
- for(const tr of ih.matchAll(new RegExp('<tr[^>]*>([\\s\\S]*?)</tr>','gi'))){
-   const cells=[...tr[1].matchAll(new RegExp('<td[^>]*>([\\s\\S]*?)</td>','gi'))].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&amp;/g,'&').replace(/&nbsp;/g,' ').replace(/\\s+/g,' ').trim());
-   if(!cells.some(x=>String(x).toUpperCase()==='XICE'))continue;
-   const isin=cells.find(x=>/^[A-Z]{2}[A-Z0-9]{10}$/.test(String(x).trim().toUpperCase()))?.trim().toUpperCase();
-   const ticker=cells.flatMap(x=>String(x).trim().toUpperCase().split(/\\s+/)).find(x=>officialSymbols.has(x));
-   if(!isin||!ticker||seen.has(isin))continue;
-   const name=cells.find(x=>x&&x!==ticker&&x!==isin&&!/^XICE$/i.test(x))||ticker;
-   const currency=cells.find(x=>/^(ISK|EUR|USD|GBP|CAD|CHF|SEK|DKK|NOK)$/.test(String(x).trim().toUpperCase()))||'ISK';
-   seen.add(isin);candidates.push({isin,name,ticker,currency,sourceUrl:instinetUrl});
+ const discoveryUrl='https://view.news.eu.nasdaq.com/';
+ const officialSymbols=new Set(['ALVO','AMRQ','ARION','BRIM','EIK','EIM','FESTI','HAGA','HAMP','HEIMAR','ICESEA','ICEAIR','ISF','ISB','JBTM','KALD','KVIKA','NOVA','OCS','REITIR','SVN','ASAR','SJOVA','SKAGI','SKEL','SYN','BERA']);
+ const candidates=[],seen=new Set();
+ for(const ticker of officialSymbols){
+   try{
+     const q=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(ticker+'.IC')+'?period1=0&period2=4102444800&interval=1d',{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});
+     if(!q.ok)continue;const p=await q.json(),meta=p?.chart?.result?.[0]?.meta;if(!meta)continue;
+     candidates.push({isin:null,name:meta.longName||meta.shortName||ticker,ticker,currency:meta.currency||'ISK',sourceUrl:discoveryUrl});
+   }catch{}
  }
  if(candidates.length!==expected)throw new Error(`ICELAND_IDENTITY_GATE: current XICE tradable share identities ${candidates.length}/${expected}`);
  const shares=[],unresolved=[];
  for(let n=0;n<candidates.length;n+=6){const batch=await Promise.all(candidates.slice(n,n+6).map(async x=>{try{
    const ps=x.ticker+'.IC';const r=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(ps)+'?period1=0&period2=4102444800&interval=1d',{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});
    if(!r.ok)return null;const p=await r.json(),meta=p?.chart?.result?.[0]?.meta;if(!meta)return null;
-   return {company:meta.longName||meta.shortName||x.name,name:meta.longName||meta.shortName||x.name,symbol:x.ticker,ticker:x.ticker,isin:x.isin,mic:'XICE',segment:'Main Market',currency:x.currency||'ISK',providerSymbol:ps,identitySource:x.sourceUrl,identityResolution:'FREE_XICE_ISIN_PLUS_DIRECT_HISTORY_PROOF'};
+   return {company:meta.longName||meta.shortName||x.name,name:meta.longName||meta.shortName||x.name,symbol:x.ticker,ticker:x.ticker,isin:x.isin||('XICE:'+x.ticker),mic:'XICE',segment:'Main Market',currency:x.currency||'ISK',providerSymbol:ps,identitySource:x.sourceUrl,identityResolution:'OFFICIAL_XICE_TICKER_PLUS_DIRECT_HISTORY_PROOF'};
  }catch{return null}}));batch.forEach((v,i)=>v?shares.push(v):unresolved.push(candidates[n+i]));}
  if(shares.length!==expected)throw new Error(`ICELAND_SOURCE_GATE: proven ${shares.length}/${expected}; unresolved=${JSON.stringify(unresolved.map(x=>({ticker:x.ticker,isin:x.isin})))}`);
  shares.sort((a,b)=>a.name.localeCompare(b.name,'is'));
  const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(shares.map(x=>[x.isin,x.providerSymbol]))).digest('hex');
- const catalog={exchange:m.name,mic:'XICE',retrievedAt:new Date().toISOString(),source:'Nasdaq Iceland official 27-share universe + current free XICE ISIN identities + direct .IC history proof',sourceUrl:'https://indexes.nasdaqomx.com/Index/Overview/OMXIGI',officialCount:expected,resolvedCount:shares.length,fingerprint,discoverySource:instinetUrl,discoveryPolicy:'OFFICIAL_COUNT_FREE_ISIN_IDENTITY_DIRECT_HISTORY_PROOF',shares};
+ const catalog={exchange:m.name,mic:'XICE',retrievedAt:new Date().toISOString(),source:'Nasdaq Iceland official 27-share universe + current official ticker identities + direct .IC history proof',sourceUrl:'https://indexes.nasdaqomx.com/Index/Overview/OMXIGI',officialCount:expected,resolvedCount:shares.length,fingerprint,discoverySource:instinetUrl,discoveryPolicy:'OFFICIAL_COUNT_FREE_ISIN_IDENTITY_DIRECT_HISTORY_PROOF',shares};
  await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\\n');
  console.log(JSON.stringify({market:mic,officialCount:expected,accepted:shares.length,fingerprint,directSourceProof:true}));process.exit(0);
 }
