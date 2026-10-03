@@ -1,7 +1,6 @@
 {
   "marketMic": "XATH",
-  "requestedAt": "2026-10-03T13:20:00.000Z",
-  "purpose": "Complete Athens with synthetic history catalog repair",
-  "workflowPolicy": "CHAT_CATALOG_SOURCE_HANDOFF_ONLY",
-  "message": "Seed missing XATH synthetic history identities safely, then backfill and final-validate"
+  "purpose": "Complete Athens using existing D1 instrument identities",
+  "message": "Reuse stored mic+ticker identity from history manifest, then backfill repair and final validation",
+  "requestedAt": "2026-10-03T13:45:00Z"
 }
