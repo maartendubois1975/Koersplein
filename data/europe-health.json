@@ -186,17 +186,17 @@
       "health": "BLOCKED",
       "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
-        "present": false,
-        "count": 1503,
-        "fingerprint": "74b0bbd31246d7ab882d7ff0b3ffb41ae65e563509dd6349dfb4bc9c91d26e1a",
-        "retrievedAt": null,
+        "present": true,
+        "count": 1498,
+        "fingerprint": "4bddee3a21c6fa0bf958c0326153d84c0cd77bf9df14801162e00cfdc4facffb",
+        "retrievedAt": "2026-10-03T10:43:02.749Z",
         "source": "London Stock Exchange Price Explorer - LSE issuer equities / Shares"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
-        "fullCatalog": 1503,
-        "coverageRatio": 0.9833666001330672,
+        "fullCatalog": 1498,
+        "coverageRatio": 0.986648865153538,
         "crossCheckRatio": 0
       },
       "completedAt": null
@@ -365,7 +365,7 @@
         "present": true,
         "count": 146,
         "fingerprint": "5703b0a2e27f065d80babfe82191f9561dd852ea6e968a594837ba15e811987a",
-        "retrievedAt": "2026-10-03T12:27:34.692Z",
+        "retrievedAt": "2026-10-03T09:37:38.667Z",
         "source": "Euronext Athens official stock classification cross-checked against current 146 actively traded ATHEX stocks"
       },
       "sources": {
@@ -387,7 +387,7 @@
         "present": true,
         "count": 400,
         "fingerprint": "279fd6167f5d130ae440a285e9b0ad6148c1a8332bacc471cf4e2e3c5100a45a",
-        "retrievedAt": "2026-10-03T10:01:44.254Z",
+        "retrievedAt": "2026-10-02T03:38:59.038Z",
         "source": "GPW regulated Main Market equities; current Polish quote-table identities; direct .WA history proof"
       },
       "sources": {
@@ -708,5 +708,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-03T12:53:19.641Z"
+  "generatedAt": "2026-10-03T13:45:50.366Z"
 }
