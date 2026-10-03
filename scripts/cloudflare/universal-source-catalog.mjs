@@ -37,7 +37,7 @@ if(mic==='XLON'){
  if(shares.length<1500)throw new Error(`LONDON_IDENTITY_GATE accepted=${shares.length}/${first.totalElements}`);
  const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(shares.map(x=>x.isin))).digest('hex');
  const catalog={exchange:m.name,mic:'XLON',retrievedAt:new Date().toISOString(),source:'London Stock Exchange Price Explorer - LSE issuer equities / Shares',sourceUrl:'https://www.londonstockexchange.com/live-markets/market-data-dashboard/price-explorer?categories=EQUITY&subcategories=1',rawInstrumentCount:first.totalElements,eligibleCount:shares.length,resolvedCount:shares.length,fingerprint,shares};
- await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,eligible:shares.length,resolved:shares.length,fingerprint,pass:true,generatedAt:new Date().toISOString()},null,2));
+ await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,eligible:shares.length,resolved:shares.length,fingerprint,pass:true,generatedAt:new Date().toISOString()},null,2));
  console.log(JSON.stringify({market:mic,eligible:shares.length,accepted:shares.length,fingerprint}));process.exit(0);
 }
 if(mic==='XCSE'){
