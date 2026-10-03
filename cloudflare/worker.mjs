@@ -102,14 +102,14 @@ async function route(request, env) {
     const rows = await env.DB.prepare(`SELECT i.isin,i.ticker symbol,i.mic,h.first_date firstDate,h.last_date lastDate,h.record_count recordCount,h.provider FROM instruments i JOIN history_status h ON h.instrument_id=i.id WHERE h.record_count>0`).all();
     return json({ schemaVersion: 1, generatedAt: now(), instruments: Object.fromEntries(rows.results.map((row) => [row.isin, { ...row, file: `/api/history/${row.isin}` }])) }, 200, cors(request, env));
   }
-  const partitionListMatch = path.match(/^\/api\/factory\/history\/([A-Z]{2}[A-Z0-9]{10})\/partitions$/);
+  const partitionListMatch = path.match(/^\/api\/factory\/history\/([A-Z0-9][A-Z0-9:-]{2,31})\/partitions$/);
   if (partitionListMatch && request.method === 'GET') {
     if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
     const item = await instrument(env, partitionListMatch[1]); if (!item) return json({ error: 'Instrument ontbreekt' }, 404);
     const partitions = await env.DB.prepare('SELECT period,object_key,record_count,first_date,last_date,provider,checksum FROM history_partitions WHERE instrument_id=? ORDER BY period').bind(item.id).all();
     return json({ instrument: { name: item.company, symbol: item.ticker, isin: item.isin, mic: item.mic, market: item.mic, currency: item.currency }, provider: { name: item.provider || 'unknown', retrievedAt: item.updated_at || now() }, partitions: partitions.results });
   }
-  const partitionGetMatch = path.match(/^\/api\/factory\/history\/([A-Z]{2}[A-Z0-9]{10})\/partition\/(\d{4})$/);
+  const partitionGetMatch = path.match(/^\/api\/factory\/history\/([A-Z0-9][A-Z0-9:-]{2,31})\/partition\/(\d{4})$/);
   if (partitionGetMatch && request.method === 'GET') {
     if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
     const item = await instrument(env, partitionGetMatch[1]); if (!item) return json({ error: 'Instrument ontbreekt' }, 404);
@@ -117,12 +117,12 @@ async function route(request, env) {
     if (!partition) return json({ error: 'Partitie ontbreekt' }, 404);
     return json({ bars: await gunzip(await env.HISTORY.get(partition.object_key)) });
   }
-  const coverageMatch = path.match(/^\/api\/history\/([A-Z]{2}[A-Z0-9]{10})\/coverage$/);
+  const coverageMatch = path.match(/^\/api\/history\/([A-Z0-9][A-Z0-9:-]{2,31})\/coverage$/);
   if (coverageMatch && request.method === 'GET') {
     const item = await instrument(env, coverageMatch[1]);
     return item ? json({ instrument:{isin:item.isin,symbol:item.ticker,mic:item.mic}, coverage:{firstDate:item.first_date,lastDate:item.last_date,recordCount:item.record_count}, provider:item.provider },200,cors(request,env)) : json({error:'Historie niet gevonden'},404,cors(request,env));
   }
-  const historyMatch = path.match(/^\/api\/history\/([A-Z]{2}[A-Z0-9]{10})$/);
+  const historyMatch = path.match(/^\/api\/history\/([A-Z0-9][A-Z0-9:-]{2,31})$/);
   if (historyMatch && request.method === 'GET') {
     const document = await historyDocument(env, historyMatch[1]);
     return document ? json(document, 200, cors(request, env)) : json({ error: 'Historie niet gevonden' }, 404, cors(request, env));
@@ -170,7 +170,7 @@ async function route(request, env) {
     for (const item of queued.results) await env.DB.prepare("UPDATE job_items SET status='RUNNING',attempts=attempts+1,started_at=? WHERE job_id=? AND instrument_id=?").bind(now(), claim[1], item.id).run();
     return json({ items: queued.results });
   }
-  const itemPatch = path.match(/^\/api\/factory\/jobs\/([^/]+)\/items\/([A-Z]{2}[A-Z0-9]{10})$/);
+  const itemPatch = path.match(/^\/api\/factory\/jobs\/([^/]+)\/items\/([A-Z0-9][A-Z0-9:-]{2,31})$/);
   if (itemPatch && request.method === 'PATCH') {
     if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
     const body = await request.json(), target = await instrument(env, itemPatch[2]); if (!target) return json({ error: 'Instrument ontbreekt' }, 404);
@@ -181,7 +181,7 @@ async function route(request, env) {
     await env.DB.prepare('UPDATE jobs SET processed=?,success_count=?,failed_count=?,checkpoint=?,status=?,finished_at=? WHERE id=?').bind(totals.processed, totals.success, totals.failed, itemPatch[2], finished ? (totals.failed ? 'COMPLETED_WITH_ERRORS' : 'COMPLETE') : 'RUNNING', finished ? now() : null, itemPatch[1]).run();
     return json({ ...totals, finished });
   }
-  const partitionPut = path.match(/^\/api\/factory\/history\/([A-Z]{2}[A-Z0-9]{10})\/(\d{4})$/);
+  const partitionPut = path.match(/^\/api\/factory\/history\/([A-Z0-9][A-Z0-9:-]{2,31})\/(\d{4})$/);
   if (partitionPut && request.method === 'PUT') {
     if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
     const target = await instrument(env, partitionPut[1]); if (!target) return json({ error: 'Instrument ontbreekt' }, 404);
@@ -193,7 +193,7 @@ async function route(request, env) {
     await env.DB.prepare(`INSERT INTO history_partitions(instrument_id,period,object_key,record_count,first_date,last_date,provider,checksum,updated_at) VALUES(?,?,?,?,?,?,?,?,?) ON CONFLICT(instrument_id,period) DO UPDATE SET object_key=excluded.object_key,record_count=excluded.record_count,first_date=excluded.first_date,last_date=excluded.last_date,provider=excluded.provider,checksum=excluded.checksum,updated_at=excluded.updated_at`).bind(target.id, period, key, bars.length, bars[0].date, bars.at(-1).date, body.provider || 'unknown', hash, now()).run();
     return json({ period, records: bars.length, firstDate: bars[0].date, lastDate: bars.at(-1).date, checksum: hash });
   }
-  const complete = path.match(/^\/api\/factory\/history\/([A-Z]{2}[A-Z0-9]{10})\/complete$/);
+  const complete = path.match(/^\/api\/factory\/history\/([A-Z0-9][A-Z0-9:-]{2,31})\/complete$/);
   if (complete && request.method === 'POST') {
     if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
     const target = await instrument(env, complete[1]); if (!target) return json({ error: 'Instrument ontbreekt' }, 404);
