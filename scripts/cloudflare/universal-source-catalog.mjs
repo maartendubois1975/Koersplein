@@ -243,7 +243,7 @@ if(mic==='XICE'){
  if(shares.length!==expected)throw new Error(`ICELAND_SOURCE_GATE: proven ${shares.length}/${expected}; unresolved=${JSON.stringify(unresolved.map(x=>({ticker:x.ticker,isin:x.isin})))}`);
  shares.sort((a,b)=>a.name.localeCompare(b.name,'is'));
  const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(shares.map(x=>[x.isin,x.providerSymbol]))).digest('hex');
- const catalog={exchange:m.name,mic:'XICE',retrievedAt:new Date().toISOString(),source:'Nasdaq Iceland official 27-share universe + current official ticker identities + direct .IC history proof',sourceUrl:'https://indexes.nasdaqomx.com/Index/Overview/OMXIGI',officialCount:expected,resolvedCount:shares.length,fingerprint,discoverySource:instinetUrl,discoveryPolicy:'OFFICIAL_COUNT_FREE_ISIN_IDENTITY_DIRECT_HISTORY_PROOF',shares};
+ const catalog={exchange:m.name,mic:'XICE',retrievedAt:new Date().toISOString(),source:'Nasdaq Iceland official 27-share universe + current official ticker identities + direct .IC history proof',sourceUrl:'https://indexes.nasdaqomx.com/Index/Overview/OMXIGI',officialCount:expected,resolvedCount:shares.length,fingerprint,discoverySource:discoveryUrl,discoveryPolicy:'OFFICIAL_COUNT_FREE_ISIN_IDENTITY_DIRECT_HISTORY_PROOF',shares};
  await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\\n');
  console.log(JSON.stringify({market:mic,officialCount:expected,accepted:shares.length,fingerprint,directSourceProof:true}));process.exit(0);
 }
