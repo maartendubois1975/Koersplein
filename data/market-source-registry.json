@@ -481,7 +481,7 @@
     },
     "XICE": {
       "status": "APPROVED",
-      "catalogSource": "Nasdaq Iceland official 27-share universe + current official ticker identities + direct .IC history proof",
+      "catalogSource": "Nasdaq Iceland Main Market 27 + direct free .IC history proof",
       "catalogEvidenceUrl": "https://indexes.nasdaqomx.com/Index/Overview/OMXIGI",
       "officialComponentCount": 27,
       "historySources": [
@@ -493,7 +493,7 @@
         {
           "provider": "yahoo-chart",
           "role": "PRIMARY",
-          "note": "Full-catalog preflight: 27/27 instruments."
+          "note": "Full-catalog preflight: 26/27 instruments."
         },
         {
           "provider": "euronext-live",
@@ -533,7 +533,7 @@
         "scope": "All shares listed on Nasdaq Iceland main market"
       },
       "lastAuditAt": "2026-09-30T13:40:00.000Z",
-      "catalogFingerprint": "33a92975c27043cc452ea197e1b87c2260557cde3b624a5d2a5f30c8d0c13e55"
+      "catalogFingerprint": "ae368b6e51498ed0514f286d7d12d31c58beb69af4f5a2b0a34dc8296838ab75"
     },
     "XATH": {
       "status": "APPROVED",
