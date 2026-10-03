@@ -10,7 +10,7 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
   try{const data=await load('data/'+market.sharesData),shares=Array.isArray(data)?data:(data.shares||[]),share=shares.find(x=>x.isin===isin);if(share){found={market,share};break}}catch{}
  }
  if(!found)throw Error('Aandeel niet gevonden');
- const {market,share}=found,mic=share.mic||market.mic,back=market.id==='amsterdam'?'amsterdam.html':market.slug+'.html';
+ const {market,share}=found,mic=share.mic||market.mic;const legacyPages={amsterdam:'amsterdam.html',brussels:'brussel.html',paris:'parijs.html',milan:'milaan.html',oslo:'oslo.html',lisbon:'lissabon.html',zurich:'zurich.html',stockholm:'stockholm.html'};const back=legacyPages[market.id]||`market.html?market=${encodeURIComponent(market.slug||market.id)}`;
  document.title=`${share.name} — Koersplein`;document.querySelector('#crumb-share').textContent=share.name;
  const crumbs=document.querySelector('.breadcrumbs');const links=crumbs?.querySelectorAll('a');if(links?.[2]){links[2].href=back;links[2].textContent=market.name}
  const backLink=document.querySelector('.back-link');backLink.href=back;backLink.textContent=`← ${market.name}`;
