@@ -160,7 +160,12 @@ async function route(request, env) {
         const canonical = await env.DB.prepare('SELECT id FROM instruments WHERE isin=?').bind(item.isin).first();
         const temporary = /^(?:XBUL-|XICE:|XATH-|XWAR-)/.test(String(collision.isin));
         const incomingCanonical = /^[A-Z]{2}[A-Z0-9]{10}$/.test(String(item.isin));
-        if (!canonical && temporary && incomingCanonical) await env.DB.prepare('UPDATE instruments SET isin=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(item.isin,collision.id).run();
+        const incomingStableSynthetic = /^(?:XICE:)[A-Z0-9.-]+$/.test(String(item.isin));
+        // Reykjavik currently has no real ISIN in the free official identity feed for every share.
+        // Its XICE:TICKER key is therefore the stable canonical history key. Earlier rows may use
+        // a different temporary key for the same mic+ticker; migrate that row in place so its D1
+        // id/history relations survive and the history writer no longer receives a 404.
+        if (!canonical && temporary && (incomingCanonical || incomingStableSynthetic)) await env.DB.prepare('UPDATE instruments SET isin=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(item.isin,collision.id).run();
       }
       await env.DB.prepare(`INSERT INTO instruments(isin,mic,ticker,company,country_code,sector,index_group,currency) VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(isin) DO UPDATE SET mic=excluded.mic,ticker=excluded.ticker,company=excluded.company,country_code=excluded.country_code,sector=excluded.sector,index_group=excluded.index_group,currency=excluded.currency,updated_at=CURRENT_TIMESTAMP WHERE instruments.mic IS NOT excluded.mic OR instruments.ticker IS NOT excluded.ticker OR instruments.company IS NOT excluded.company OR instruments.country_code IS NOT excluded.country_code OR instruments.sector IS NOT excluded.sector OR instruments.index_group IS NOT excluded.index_group OR instruments.currency IS NOT excluded.currency`).bind(item.isin, item.mic, item.ticker, item.company, item.countryCode || null, item.sector || null, item.indexGroup || null, item.currency || null).run();
       await env.DB.prepare(`INSERT INTO history_status(instrument_id) SELECT id FROM instruments WHERE isin=? ON CONFLICT(instrument_id) DO NOTHING`).bind(item.isin).run();
