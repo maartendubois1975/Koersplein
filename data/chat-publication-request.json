@@ -1,6 +1,6 @@
 {
-  "marketMic": "XICE,XWAR,XLON",
-  "purpose": "Complete remaining three repair exchanges in one matrix run",
-  "message": "Run Reykjavik Warsaw London through catalog source history repair and final validation using the D1 identity resolver",
-  "requestedAt": "2026-10-03T14:05:00Z"
+  "marketMic": "XICE",
+  "purpose": "Retry Reykjavik after generalized identity repair",
+  "message": "Run full source history repair and final validation; do not mark complete unless final validation passes",
+  "requestedAt": "2026-10-03T15:55:00Z"
 }
