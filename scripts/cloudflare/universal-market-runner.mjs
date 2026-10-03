@@ -14,7 +14,12 @@ const path=`data/euronext-${m.code}.json`;
 const raw=JSON.parse(await fs.readFile(path,'utf8'));
 if(!sourcePlan||sourcePlan.status!=='APPROVED'||!sourcePlan.historySources?.some(x=>x.role==='PRIMARY')||(sourcePlan.discovery?.testedDifficultSymbols||0)<10||!raw.fingerprint||sourcePlan.catalogFingerprint!==raw.fingerprint)throw new Error(`BRONONDERZOEK/CATALOGUS-GATE VERPLICHT vóór backfill van ${mic}; fingerprint mismatch of approval ontbreekt`);
 const source=raw.shares||raw.instruments||[];if(!source.length)throw new Error('lege catalogus');
-const rawInstruments=source.map(x=>{const ticker=x.symbol||x.ticker,segmentMic=x.mic||m.mic;const historyKey=x.isin||`${segmentMic}-${String(ticker||'').trim().toUpperCase().replace(/[^A-Z0-9]+/g,'-')}`;return {isin:historyKey,officialIsin:x.isin||null,name:x.name||x.company,company:x.name||x.company,symbol:ticker,ticker,mic:segmentMic,market:segmentMic,currency:m.currency,countryCode:m.country,provider:'yahoo-chart',providerSymbol:x.providerSymbol||null}});
+// Reuse the identity already stored in D1 for a mic+ticker pair. Older imports can have
+// a valid 12-character placeholder identity; inventing a second synthetic identity causes
+// a mic+ticker UNIQUE collision and then every history route returns 404.
+let existingIdentityByMicTicker=new Map();
+try{const manifest=await client.historyManifest();for(const [isin,row] of Object.entries(manifest?.instruments||{})){const key=`${String(row.mic||'').toUpperCase()}\u0000${String(row.symbol||'').toUpperCase()}`;if(row.mic&&row.symbol)existingIdentityByMicTicker.set(key,isin)}}catch(e){console.log(`IDENTITY_MANIFEST_UNAVAILABLE ${e.message}`)}
+const rawInstruments=source.map(x=>{const ticker=x.symbol||x.ticker,segmentMic=x.mic||m.mic;const mt=`${String(segmentMic).toUpperCase()}\u0000${String(ticker||'').trim().toUpperCase()}`;const storedIdentity=existingIdentityByMicTicker.get(mt);const historyKey=x.isin||storedIdentity||`${segmentMic}-${String(ticker||'').trim().toUpperCase().replace(/[^A-Z0-9]+/g,'-')}`;return {isin:historyKey,officialIsin:x.isin||null,name:x.name||x.company,company:x.name||x.company,symbol:ticker,ticker,mic:segmentMic,market:segmentMic,currency:m.currency,countryCode:m.country,provider:'yahoo-chart',providerSymbol:x.providerSymbol||null}});
 const seenIsin=new Set(),seenMicTicker=new Set(),instruments=[];let duplicateIsin=0,duplicateMicTicker=0;
 for(const item of rawInstruments){
   const isin=String(item.isin||'').trim().toUpperCase(),ticker=String(item.ticker||'').trim().toUpperCase(),segmentMic=String(item.mic||m.mic).trim().toUpperCase();
