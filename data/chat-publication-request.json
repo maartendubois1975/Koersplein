@@ -1,7 +1,7 @@
 {
   "marketMic": "XICE",
-  "requestedAt": "2026-10-03T12:05:00.000Z",
-  "purpose": "Repair Reykjavik identities and complete market",
+  "requestedAt": "2026-10-03T12:15:00.000Z",
+  "purpose": "Verify repaired Reykjavik identity parser and complete market",
   "workflowPolicy": "CHAT_CATALOG_SOURCE_HANDOFF_ONLY",
-  "message": "Rebuild Reykjavik current-share identities, require real ISINs, then source proof, backfill, repair and final validation"
+  "message": "Run XICE after robust row-based ISIN/ticker parser repair through source proof, backfill, repair and final validation"
 }
