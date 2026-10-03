@@ -142,6 +142,12 @@ async function route(request, env) {
     catch (error) { await env.DB.prepare("UPDATE jobs SET status='FAILED',finished_at=?,error_summary=? WHERE id=?").bind(now(), error.message, jobId).run(); return json({ error: error.message, id: jobId }, 502); }
     return json({ id: jobId, status: 'QUEUED' }, 202);
   }
+  if (path === '/api/factory/catalog' && request.method === 'GET') {
+    if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
+    const mic = String(url.searchParams.get('mic') || '').trim().toUpperCase();
+    const rows = await env.DB.prepare(mic ? 'SELECT isin,mic,ticker,company,currency FROM instruments WHERE mic=? ORDER BY ticker' : 'SELECT isin,mic,ticker,company,currency FROM instruments ORDER BY mic,ticker').bind(...(mic ? [mic] : [])).all();
+    return json({ instruments: rows.results });
+  }
   if (path === '/api/factory/catalog' && request.method === 'PUT') {
     if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
     const body = await request.json();
