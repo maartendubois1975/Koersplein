@@ -1,7 +1,7 @@
 {
-  "marketMic": "XICE",
-  "requestedAt": "2026-10-03T13:05:00.000Z",
-  "purpose": "Complete Reykjavik with collision-safe catalog seeding",
+  "marketMic": "XATH",
+  "requestedAt": "2026-10-03T13:20:00.000Z",
+  "purpose": "Complete Athens with synthetic history catalog repair",
   "workflowPolicy": "CHAT_CATALOG_SOURCE_HANDOFF_ONLY",
-  "message": "Run XICE end-to-end; skip existing catalog identities and backfill missing history"
+  "message": "Seed missing XATH synthetic history identities safely, then backfill and final-validate"
 }
