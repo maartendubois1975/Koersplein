@@ -41,7 +41,7 @@ if(mic==='XLON'){
  const nonShare=/\\b(?:PRF|PREF(?:ERENCE)?|PREFERENCE|DEBT|BOND|NOTE|LOAN|DEBENTURE|PERP(?:ETUAL)?|ZDP|ZERO DIVIDEND)\\b/i;
  const corporateAction=/\\b(?:CASH OFFER|SHARE ALTERNATIVE OFFER|ASSD .* OFFER|TENDER OFFER)\\b/i;
  const provenNonShareIsins=new Set(['PR11778DAA65','GB0001385474','GB0001990059','GB0003401261','GB0004182944','GB0007548133','GB0007548026','GB00B3KSBH82','GB00B3KSBK12']);
- const provenNonTradableIsins=new Set(['GB00B71N6K86','GB0001297562','GB00BF2P0G38','GG00BPNZ1C58','GG00BDFZ6F78','GG00BTLMK410']);
+ const provenNonTradableIsins=new Set(['GB00B71N6K86','GB0001297562','GB00BF2P0G38','GG00BPNZ1C58','GG00BDFZ6F78','GG00BTLMK410','GB00B3P21X12','GB00B01YQ796']);
  for(const x of rows){const isin=String(x.isin||'').toUpperCase(),ticker=String(x.tidm||'').trim(),desc=String(x.description||''),issuer=String(x.issuername||desc);if(!x.islse||x.category!=='EQUITY'||!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)||!ticker||seen.has(isin))continue;
   if(provenNonShareIsins.has(isin)||nonShare.test(desc)||corporateAction.test(desc)||provenNonTradableIsins.has(isin)){rejected.push({isin,ticker,issuer,description:desc,reason:provenNonTradableIsins.has(isin)?'OFFICIAL_LSE_SUSPENDED_NOT_CURRENTLY_TRADABLE':'NOT_ORDINARY_TRADABLE_SHARE'});continue;}
   seen.add(isin);shares.push({company:issuer,name:issuer,symbol:ticker,ticker,isin,mic:'XLON',segment:'LSE issuer equity',currency:x.currency||'GBP',providerSymbol:ticker+'.L',identitySource:'https://www.londonstockexchange.com/live-markets/market-data-dashboard/price-explorer?categories=EQUITY&subcategories=1',identityResolution:'LSE_PRICE_EXPLORER_OFFICIAL'});}
