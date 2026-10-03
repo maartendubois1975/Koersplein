@@ -95,6 +95,106 @@
           "slug": "kopenhagen",
           "status": "available",
           "sharesData": "euronext-copenhagen.json"
+        },
+        {
+          "id": "dublin",
+          "name": "Dublin",
+          "country": "Ierland",
+          "mic": "XDUB",
+          "currency": "EUR",
+          "slug": "dublin",
+          "status": "available",
+          "sharesData": "euronext-dublin.json"
+        },
+        {
+          "id": "frankfurt",
+          "name": "Frankfurt / Xetra",
+          "country": "Duitsland",
+          "mic": "XETR",
+          "currency": "EUR",
+          "slug": "frankfurt",
+          "status": "available",
+          "sharesData": "euronext-frankfurt.json"
+        },
+        {
+          "id": "madrid",
+          "name": "Madrid",
+          "country": "Spanje",
+          "mic": "XMAD",
+          "currency": "EUR",
+          "slug": "madrid",
+          "status": "available",
+          "sharesData": "euronext-madrid.json"
+        },
+        {
+          "id": "helsinki",
+          "name": "Helsinki",
+          "country": "Finland",
+          "mic": "XHEL",
+          "currency": "EUR",
+          "slug": "helsinki",
+          "status": "available",
+          "sharesData": "euronext-helsinki.json"
+        },
+        {
+          "id": "athens",
+          "name": "Athene",
+          "country": "Griekenland",
+          "mic": "XATH",
+          "currency": "EUR",
+          "slug": "athens",
+          "status": "available",
+          "sharesData": "euronext-athens.json"
+        },
+        {
+          "id": "vienna",
+          "name": "Wenen",
+          "country": "Oostenrijk",
+          "mic": "XWBO",
+          "currency": "EUR",
+          "slug": "vienna",
+          "status": "available",
+          "sharesData": "euronext-vienna.json"
+        },
+        {
+          "id": "prague",
+          "name": "Praag",
+          "country": "Tsjechië",
+          "mic": "XPRA",
+          "currency": "CZK",
+          "slug": "prague",
+          "status": "available",
+          "sharesData": "euronext-prague.json"
+        },
+        {
+          "id": "budapest",
+          "name": "Boedapest",
+          "country": "Hongarije",
+          "mic": "XBUD",
+          "currency": "HUF",
+          "slug": "budapest",
+          "status": "available",
+          "sharesData": "euronext-budapest.json"
+        },
+        {
+          "id": "bucharest",
+          "name": "Boekarest",
+          "country": "Roemenië",
+          "mic": "XBSE",
+          "currency": "RON",
+          "slug": "bucharest",
+          "status": "available",
+          "sharesData": "euronext-bucharest.json"
+        },
+        {
+          "id": "sofia",
+          "name": "Sofia",
+          "country": "Bulgarije",
+          "mic": "XBUL",
+          "currency": "BGN",
+          "slug": "sofia",
+          "status": "available",
+          "sharesData": "euronext-sofia.json"
         }
       ]
     }
