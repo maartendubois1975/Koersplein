@@ -1,7 +1,7 @@
 {
   "marketMic": "XATH",
-  "requestedAt": "2026-10-03T09:25:00.000Z",
-  "purpose": "Finish Athens end-to-end from READY state",
+  "requestedAt": "2026-10-03T09:40:00.000Z",
+  "purpose": "Finish Athens after null-ISIN history-key repair",
   "workflowPolicy": "CHAT_CATALOG_SOURCE_HANDOFF_ONLY",
-  "message": "Athens final publication run: 146-stock catalog and source coverage already approved"
+  "message": "Athens rerun with stable history identity for catalog rows without published ISIN"
 }
