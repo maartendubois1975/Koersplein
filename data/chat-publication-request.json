@@ -1,6 +1,6 @@
 {
-  "marketMic": "XZAG",
-  "purpose": "Prepare and validate Zagreb while repair slots are occupied",
-  "message": "Official equity catalog, full source gate, no production bypasses; proceed only through existing strict validation chain",
-  "requestedAt": "2026-10-03T21:05:00+02:00"
+  "marketMic": "XMAD",
+  "purpose": "Resolve Madrid catalog fingerprint drift and two uncovered routes",
+  "message": "Use current 123-share official catalog; resolve the two uncovered instruments with legitimate routes or strict DATA_UNAVAILABLE evidence, then backfill/repair/final validate and persist current fingerprint. Do not restore the old 121 fingerprint.",
+  "requestedAt": "2026-10-04T08:36:00+02:00"
 }
