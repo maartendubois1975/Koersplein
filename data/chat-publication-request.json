@@ -1,6 +1,6 @@
 {
-  "marketMic": "XMAD",
-  "purpose": "Resolve Madrid catalog fingerprint drift and two uncovered routes",
-  "message": "Use current 123-share official catalog; resolve the two uncovered instruments with legitimate routes or strict DATA_UNAVAILABLE evidence, then backfill/repair/final validate and persist current fingerprint. Do not restore the old 121 fingerprint.",
-  "requestedAt": "2026-10-04T08:36:00+02:00"
+  "marketMic": "XBUL",
+  "purpose": "Repair Sofia false COMPLETE against current official equity scope",
+  "message": "Rebuild exact current tradable-equity/share-class catalog, excluding non-equities; resolve full source coverage with legitimate historical routes or strict proven DATA_UNAVAILABLE; persist only after full backfill, daily data and final validation. Never restore the obsolete 14-line catalog merely to clear fingerprint drift.",
+  "requestedAt": "2026-10-04T08:39:00+02:00"
 }
