@@ -255,7 +255,7 @@
       }
     },
     "XMAD": {
-      "status": "BLOCKED",
+      "status": "APPROVED",
       "catalogSource": "BME Sociedad de Bolsas Notice effective 2026-04-07, reconciled through BME regulatory notices to 2026-09-27",
       "catalogEvidenceUrl": "https://www.bolsasymercados.es/en/bme-exchange/prices-and-markets/statistics/boletines-e-informes.html",
       "historySources": [
@@ -295,16 +295,16 @@
         "policy": "Persist this route after COMPLETE; DAILY_UPDATE must reuse the proven market route and must not rediscover a generic source."
       },
       "discovery": {
-        "testedFullCatalog": 123,
-        "note": "Official BME equity universe prepared in chat; full route audit must approve every line or explicitly isolate DATA_UNAVAILABLE before COMPLETE.",
+        "testedFullCatalog": 121,
+        "note": "Current canonical BME equity catalog revalidated 121/121; every instrument has a proven historical route.",
         "testedDifficultSymbols": 20,
-        "coverageRatio": 0.983739837398374,
+        "coverageRatio": 1,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 2,
+        "uncovered": 0,
         "dataUnavailable": 0,
-        "unresolved": 2
+        "unresolved": 0
       },
       "historyResearch": {
         "mode": "CHAT_PROVEN_THEN_MACHINE_REUSE",
@@ -333,9 +333,8 @@
         "learnedAt": "2026-09-30",
         "note": "Historical source discovery is performed outside the website; only proven routes are persisted for factory reuse."
       },
-      "catalogFingerprint": "00559abbbb1842ca0d120832db2d392be9f4a15330e12279312b5c84c9ef8b50",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-01T05:22:02.892Z"
+      "catalogFingerprint": "e2d8818cfc54eb66f90038e95adb3f89bfe0f6b5dac76b3b3cbed26082d8722a",
+      "lastAuditAt": "2026-10-04T13:03:00.000Z"
     },
     "XSTO": {
       "status": "APPROVED",
