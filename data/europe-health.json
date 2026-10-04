@@ -8,6 +8,10 @@
       {
         "mic": "XLON",
         "reason": "SOURCE_PREFLIGHT_GATE"
+      },
+      {
+        "mic": "XZAG",
+        "reason": "SOURCE_PREFLIGHT_GATE"
       }
     ]
   },
@@ -15,9 +19,9 @@
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
     "complete": 20,
-    "blocked": 1,
+    "blocked": 2,
     "ready": 1,
-    "pending": 9,
+    "pending": 8,
     "total": 31
   },
   "markets": [
@@ -508,22 +512,22 @@
     {
       "mic": "XZAG",
       "name": "Zagreb",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
-      "reason": null,
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 73,
+        "fingerprint": "1df127daa66d2226020c720d89e376f95ee81c0b7d03bbc781ae5a38d2ba4ccb",
         "retrievedAt": null,
-        "source": null
+        "source": "Zagreb Stock Exchange official regulated-market equity directory"
       },
       "sources": {
-        "status": "UNTESTED",
-        "tested": 0,
-        "fullCatalog": 0,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "status": "BLOCKED",
+        "tested": 4,
+        "fullCatalog": 73,
+        "coverageRatio": 0,
+        "crossCheckRatio": 0
       },
       "completedAt": null
     },
@@ -704,5 +708,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-04T16:17:51.028Z"
+  "generatedAt": "2026-10-04T16:54:36.539Z"
 }

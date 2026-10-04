@@ -828,6 +828,24 @@
           "note": "Independently tested on full catalog: 0/23; 0 additional instruments beyond primary."
         }
       ]
+    },
+    "XZAG": {
+      "status": "BLOCKED",
+      "catalogFingerprint": "1df127daa66d2226020c720d89e376f95ee81c0b7d03bbc781ae5a38d2ba4ccb",
+      "catalogSource": "Zagreb Stock Exchange official regulated-market equity directory",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "lastAuditAt": "2026-10-04T16:54:26.245Z",
+      "discovery": {
+        "testedDifficultSymbols": 20,
+        "testedFullCatalog": 73,
+        "coverageRatio": 0,
+        "crossCheckedSymbols": 0,
+        "crossCheckRatio": 0,
+        "sourceCountTested": 4,
+        "uncovered": 73,
+        "dataUnavailable": 0,
+        "unresolved": 73
+      }
     }
   }
 }

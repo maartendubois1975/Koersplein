@@ -441,7 +441,11 @@
       "currency": "EUR",
       "timezone": "Europe/Zagreb",
       "providerSuffix": ".ZA",
-      "state": "WAITING"
+      "state": "BLOCKED",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-10-04T16:54:36.482Z",
+      "catalogFingerprint": "1df127daa66d2226020c720d89e376f95ee81c0b7d03bbc781ae5a38d2ba4ccb",
+      "note": "Quarantined by canonical single writer after proven source preflight failure."
     },
     {
       "mic": "XLJU",
