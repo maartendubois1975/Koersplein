@@ -182,7 +182,7 @@ if(mic==='XZAG'){
  const officialUrl='https://zse.hr/en/securities/26';
  // ZSE's own listings statistics report 73 regulated-market equity instruments for 2026-08.
  const expected=73;
- const rows=[];for(const tr of text.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)){const cells=[...tr[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&[^;]+;/g,' ').replace(/\s+/g,' ').trim());if(cells.length<4)continue;const symbol=cells[0],isin=cells[1],name=cells[2];if(!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)||!symbol)continue;if(!isin.startsWith('HR'))continue;if(/^7/.test(symbol)||/-dosp|ETF|UCITS|obveznic/i.test(name))continue;rows.push({symbol,isin,name});}
+ const rows=[];for(const tr of text.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)){const cells=[...tr[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(x=>x[1].replace(/<[^>]+>/g,' ').replace(/&[^;]+;/g,' ').replace(/\s+/g,' ').trim());if(cells.length<8)continue;const symbol=cells[0],isin=cells[1],name=cells[2],delistingDate=cells[7];if(!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)||!symbol)continue;if(!isin.startsWith('HR'))continue;if(delistingDate&&delistingDate!=='-')continue;if(/^[3457]/.test(symbol)||/-[OMD]-|dosp|ETF|UCITS|obveznic|komercijalni|treasury|bill|bond/i.test(symbol+' '+name))continue;rows.push({symbol,isin,name});}
  const uniq=[...new Map(rows.map(x=>[x.isin,x])).values()];
  if(uniq.length!==expected)throw new Error(`ZAGREB_OFFICIAL_EQUITY_GATE parsed=${uniq.length}/${expected}`);
  const shares=[],unresolved=[];
