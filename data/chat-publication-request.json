@@ -1,6 +1,6 @@
 {
   "marketMic": "XICE",
-  "purpose": "Reykjavik reseed canonical identities",
-  "message": "Reseed XICE catalog identities before history writes, then full backfill, repair and final validation.",
-  "requestedAt": "2026-10-04T19:03:00+02:00"
+  "purpose": "Reykjavik idempotent catalog rerun",
+  "message": "Run XICE after generic idempotent catalog seeding repair; require full backfill, repair and final validation.",
+  "requestedAt": "2026-10-04T19:14:00+02:00"
 }
