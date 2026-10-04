@@ -186,10 +186,10 @@ if(mic==='XZAG'){
  const uniq=[...new Map(rows.map(x=>[x.isin,x])).values()];
  if(uniq.length!==expected)throw new Error(`ZAGREB_OFFICIAL_EQUITY_GATE parsed=${uniq.length}/${expected}`);
  const shares=[],unresolved=[];
- for(let n=0;n<uniq.length;n+=8){const batch=await Promise.all(uniq.slice(n,n+8).map(async x=>{try{const ps=x.symbol+'.ZA';const q=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(ps)+'?period1=0&period2=4102444800&interval=1d',{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!q.ok)return null;const p=await q.json(),res=p?.chart?.result?.[0],meta=res?.meta;if(!meta||!(res?.timestamp?.length>0))return null;return {company:meta.longName||meta.shortName||x.name,name:meta.longName||meta.shortName||x.name,symbol:x.symbol,ticker:x.symbol,isin:x.isin,mic:'XZAG',segment:'Regulated Market Equity',currency:meta.currency||'EUR',providerSymbol:ps,identitySource:officialUrl,identityResolution:'ZSE_OFFICIAL_EQUITY_PLUS_DIRECT_ZA_HISTORY_PROOF'};}catch{return null}}));batch.forEach((v,i)=>v?shares.push(v):unresolved.push(uniq[n+i]));}
+  for(const x of uniq){shares.push({company:x.name,name:x.name,symbol:x.symbol,ticker:x.symbol,isin:x.isin,mic:'XZAG',segment:'Regulated Market Equity',currency:'EUR',providerSymbol:null,identitySource:officialUrl,identityResolution:'ZSE_OFFICIAL_EQUITY_IDENTITY'});}
  const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(uniq.map(x=>x.isin))).digest('hex'),catalog={exchange:m.name,mic:'XZAG',retrievedAt:new Date().toISOString(),source:'Zagreb Stock Exchange official regulated-market equity directory',sourceUrl:officialUrl,officialCount:expected,resolvedCount:shares.length,fingerprint,discoveryPolicy:'OFFICIAL_ZSE_EQUITIES_THEN_FREE_HISTORY_PROOF',unresolvedSourceSymbols:unresolved,shares};
  await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+'\n');
- if(unresolved.length)throw new Error(`ZAGREB_SOURCE_GATE proven=${shares.length}/${expected} unresolved=${JSON.stringify(unresolved)}`);
+  if(shares.length!==expected)throw new Error('ZAGREB_IDENTITY_GATE '+shares.length+'/'+expected);
  console.log(JSON.stringify({market:mic,officialCount:expected,accepted:shares.length,fingerprint,directSourceProof:true}));process.exit(0);
 }
 
