@@ -25,7 +25,7 @@ export class StockAnalysisBitProvider {
         bars.push({date,open:nums[0],high:nums[1],low:nums[2],close:nums[3],volume});added++;
       }
       if(!added&&page>1)break;
-      if(!/rel="next"|Next/i.test(html))break;
+      // StockAnalysis history pages do not expose a reliable next-link on every venue. Continue while rows are found; a later empty/404 page safely terminates without discarding collected bars.
     }
     const unique=[...new Map(bars.map(x=>[x.date,x])).values()].sort((a,b)=>a.date.localeCompare(b.date));
     if(!unique.length)throw new Error(`Geen StockAnalysis-historie voor ${symbol}`);
