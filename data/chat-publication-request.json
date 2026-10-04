@@ -1,6 +1,6 @@
 {
-  "marketMic": "XZAG",
-  "purpose": "Rerun Zagreb after current-live-equity parser repair",
-  "message": "Run official catalog -> full source gate -> seed -> historical backfill -> repair -> daily open/close -> site integration -> final validation. Require exact 73 current regulated-market equities or fail with evidence.",
-  "requestedAt": "2026-10-04T08:44:00+02:00"
+  "marketMic": "XBUL",
+  "purpose": "Resume Sofia false-COMPLETE repair after cancelled run",
+  "message": "Rebuild exact current tradable-equity/share-class catalog from official BSE scope, excluding non-equities. Resolve source coverage legitimately, then seed/backfill/repair/daily/site/final validation. Do not reuse obsolete 14-line fingerprint.",
+  "requestedAt": "2026-10-04T09:22:00+02:00"
 }
