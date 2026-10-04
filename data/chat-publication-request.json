@@ -1,6 +1,6 @@
 {
   "marketMic": "XZAG",
-  "purpose": "Build Zagreb from exact official equity catalog",
-  "message": "Derive exact current tradable equities/share classes from official Zagreb sources, excluding funds/bonds/ETFs/warrants/rights; verify identity and full source coverage, then seed/backfill/repair/daily/site/final validation. Do not accept the earlier unfiltered 439-security universe.",
-  "requestedAt": "2026-10-04T08:39:00+02:00"
+  "purpose": "Rerun Zagreb after current-live-equity parser repair",
+  "message": "Run official catalog -> full source gate -> seed -> historical backfill -> repair -> daily open/close -> site integration -> final validation. Require exact 73 current regulated-market equities or fail with evidence.",
+  "requestedAt": "2026-10-04T08:44:00+02:00"
 }
