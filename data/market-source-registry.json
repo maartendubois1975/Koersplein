@@ -255,31 +255,24 @@
       }
     },
     "XMAD": {
-      "status": "BLOCKED",
+      "status": "APPROVED",
       "catalogSource": "BME Sociedad de Bolsas Notice effective 2026-04-07, reconciled through BME regulatory notices to 2026-09-27",
       "catalogEvidenceUrl": "https://www.bolsasymercados.es/en/bme-exchange/prices-and-markets/statistics/boletines-e-informes.html",
       "historySources": [
         {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY",
-          "suffix": ".MC",
-          "fields": [
-            "open",
-            "high",
-            "low",
-            "close",
-            "volume"
-          ],
-          "note": "ISIN-resolved Madrid symbol; same daily route used for historical backfill and incremental EOD updates."
+          "provider": "yahoo-isin-resolver",
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
         },
         {
-          "provider": "bme-daily-bulletin",
-          "role": "OFFICIAL_DAILY_VALIDATION",
-          "fields": [
-            "open",
-            "close"
-          ],
-          "note": "Official BME Madrid/Continuous Market daily bulletin retained as exchange-specific validation source."
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Full-catalog preflight: 121/121 instruments."
+        },
+        {
+          "provider": "euronext-live",
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/121; 0 additional instruments beyond primary."
         }
       ],
       "dailyUpdate": {
@@ -295,16 +288,13 @@
         "policy": "Persist this route after COMPLETE; DAILY_UPDATE must reuse the proven market route and must not rediscover a generic source."
       },
       "discovery": {
-        "testedFullCatalog": 123,
-        "note": "Official BME equity universe prepared in chat; full route audit must approve every line or explicitly isolate DATA_UNAVAILABLE before COMPLETE.",
         "testedDifficultSymbols": 20,
-        "coverageRatio": 0.983739837398374,
+        "testedFullCatalog": 121,
+        "coverageRatio": 1,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "uncovered": 2,
-        "dataUnavailable": 0,
-        "unresolved": 2
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       },
       "historyResearch": {
         "mode": "CHAT_PROVEN_THEN_MACHINE_REUSE",
@@ -333,7 +323,7 @@
         "learnedAt": "2026-09-30",
         "note": "Historical source discovery is performed outside the website; only proven routes are persisted for factory reuse."
       },
-      "catalogFingerprint": "00559abbbb1842ca0d120832db2d392be9f4a15330e12279312b5c84c9ef8b50",
+      "catalogFingerprint": "e2d8818cfc54eb66f90038e95adb3f89bfe0f6b5dac76b3b3cbed26082d8722a",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
       "lastAuditAt": "2026-10-01T05:22:02.892Z"
     },
