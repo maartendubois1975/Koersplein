@@ -1,6 +1,6 @@
 {
-  "marketMic": "XBUL",
-  "purpose": "Rerun Sofia after StockAnalysis pagination repair",
-  "message": "Rebuild official XBUL catalog, rerun full 100% source gate using repaired thin-listing pagination, then backfill, repair and final-validate. Do not mark COMPLETE unless all 158 current equities are source-covered or individually proven DATA_UNAVAILABLE.",
-  "requestedAt": "2026-10-04T15:59:00+02:00"
+  "marketMic": "XICE",
+  "purpose": "Complete Reykjavik now",
+  "message": "Run official catalog, 100% source gate, full history backfill, missing repair and final validation. Persist COMPLETE only on proven evidence.",
+  "requestedAt": "2026-10-04T18:10:00+02:00"
 }
