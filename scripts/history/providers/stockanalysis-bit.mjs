@@ -10,7 +10,7 @@ export class StockAnalysisBitProvider {
     for(let page=1;page<=20;page++){
       const url=`https://stockanalysis.com/quote/${venue}/${symbol}/history/?p=${page}`;
       const r=await fetch(url,{headers:{'user-agent':'Mozilla/5.0 (compatible; Koersplein/1.0)','accept':'text/html'}});
-      if(!r.ok)throw new Error(`StockAnalysis HTTP ${r.status} voor ${symbol}`);
+      if(!r.ok){if(page>1&&bars.length)break;throw new Error(`StockAnalysis HTTP ${r.status} voor ${symbol}`);}
       const html=await r.text();
       const rows=[...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)];
       let added=0;
@@ -25,7 +25,7 @@ export class StockAnalysisBitProvider {
         bars.push({date,open:nums[0],high:nums[1],low:nums[2],close:nums[3],volume});added++;
       }
       if(!added&&page>1)break;
-      if(!/rel="next"|Next/i.test(html)&&page>1)break;
+      if(!/rel="next"|Next/i.test(html))break;
     }
     const unique=[...new Map(bars.map(x=>[x.date,x])).values()].sort((a,b)=>a.date.localeCompare(b.date));
     if(!unique.length)throw new Error(`Geen StockAnalysis-historie voor ${symbol}`);
