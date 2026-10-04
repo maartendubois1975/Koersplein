@@ -1,6 +1,6 @@
 {
-  "marketMic": "XZAG",
-  "purpose": "Validate repaired Zagreb equity classification now",
-  "message": "Run official ZSE catalog after RA/RB share-series classification. Require 73 current regulated equity instruments consistent with ZSE Aug-2026 official statistics, then prove free-history coverage and complete all production gates. Fail rather than fake COMPLETE.",
-  "requestedAt": "2026-10-04T09:46:00+02:00"
+  "marketMic": "XBUL",
+  "purpose": "Rerun Sofia after StockAnalysis pagination repair",
+  "message": "Rebuild official XBUL catalog, rerun full 100% source gate using repaired thin-listing pagination, then backfill, repair and final-validate. Do not mark COMPLETE unless all 158 current equities are source-covered or individually proven DATA_UNAVAILABLE.",
+  "requestedAt": "2026-10-04T15:59:00+02:00"
 }
