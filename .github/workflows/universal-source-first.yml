@@ -28,7 +28,8 @@ jobs:
       markets: ${{ steps.pick.outputs.markets }}
     steps:
       - uses: actions/checkout@v4
-        with: { ref: ${{ github.sha }} }
+        with:
+          ref: ${{ github.sha }}
       - id: pick
         name: Publiceer alleen de expliciet gekozen chat-beurs
         env:
