@@ -106,7 +106,7 @@ jobs:
           node --input-type=module <<'NODE'
           import fs from 'node:fs/promises';
           import { FactoryApiClient } from './scripts/cloudflare/client.mjs';
-          const mic=process.env.MARKET_MIC;
+          const mic='${{ matrix.market }}';
           const code=({XICE:'reykjavik',XLJU:'ljubljana',XLON:'london',XBUL:'sofia',XZAG:'zagreb'})[mic]||mic.toLowerCase();
           const raw=JSON.parse(await fs.readFile('data/euronext-'+code+'.json','utf8'));
           const shares=raw.shares||raw.instruments||[];
