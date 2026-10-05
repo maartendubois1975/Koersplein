@@ -47,7 +47,7 @@ if(mic==='XMAL'){
 
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if((mic==='XCSE'&&t.length>500)||t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
-if(mic==='XLUX'){console.log('LUX_HTML_SAMPLE '+JSON.stringify(text.slice(0,12000)));throw new Error('LUX_DIAGNOSTIC_SAMPLE');}
+if(mic==='XLUX'){const links=[...text.matchAll(/(?:href|src)=["']([^"']+)["']/gi)].map(x=>x[1]).filter(x=>/official|list|download|csv|xls|pdf|api|security|securit/i.test(x));const apis=[...text.matchAll(/https?:[^"'\\s<]+/gi)].map(x=>x[0]).filter(x=>/api|official|security|securit/i.test(x));console.log('LUX_DISCOVERY '+JSON.stringify({links:[...new Set(links)].slice(0,100),apis:[...new Set(apis)].slice(0,100)}));throw new Error('LUX_DIAGNOSTIC_LINKS');}
 if(['XTAL','XRIS','XLIT'].includes(mic)){
  const homeByMic={XTAL:'TLN',XRIS:'RIG',XLIT:'VLN'}, suffixByMic={XTAL:'.TL',XRIS:'.RG',XLIT:'.VS'}, home=homeByMic[mic],suffix=suffixByMic[mic];
  const clean=s=>String(s||'').replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/gi,' ').replace(/&amp;/gi,'&').replace(/\\s+/g,' ').trim();
