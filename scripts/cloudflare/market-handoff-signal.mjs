@@ -45,7 +45,7 @@ if(result.ready){
  const planCurrent=plan.markets.find(x=>x.mic===current.mic);
  if(planCurrent){planCurrent.state='COMPLETE';planCurrent.completedAt=new Date().toISOString();planCurrent.catalogFingerprint=result.catalogFingerprint;planCurrent.dataUnavailable=dataUnavailable;delete planCurrent.note;}
  await fs.writeFile('data/world-fill-plan.json',JSON.stringify(plan,null,2)+'\n');
- const idx=plan.markets.findIndex(x=>x.mic===current.mic);next=plan.markets.slice(idx+1).find(x=>x.state==='WAITING')||null;
+ const idx=plan.markets.findIndex(x=>x.mic===current.mic);next=plan.markets.slice(idx+1).find(x=>x.state==='WAITING')||plan.markets.slice(0,idx).find(x=>x.state==='WAITING')||null;
 }
 const signal={version:2,type:result.ready?(next?'ACTIVATE_NEXT_MARKET':'WORLD_PLAN_COMPLETE'):'KEEP_FILLING_CURRENT_MARKET',emittedAt:new Date().toISOString(),current:{mic:current.mic,code:current.code,name:current.name,...result},next:next?{mic:next.mic,code:next.code,name:next.name}:null,visibleOnPublicSite:false};
 state.updatedAt=signal.emittedAt;state.activeMic=next?.mic||current.mic;state.nextMic=next?plan.markets.slice(plan.markets.findIndex(x=>x.mic===next.mic)+1).find(x=>x.state==='WAITING')?.mic||null:null;state.markets||={};state.markets[current.mic]={...(state.markets[current.mic]||{}),state:result.ready?'COMPLETE':'FILLING',...result};if(next)state.markets[next.mic]={...(state.markets[next.mic]||{}),state:'SOURCE_RESEARCH',activatedAt:signal.emittedAt,activatedBy:`handoff:${current.mic}`};
