@@ -1,4 +1,4 @@
-const SUPPORTED_MICS=new Map([['XMIL','bit'],['MTAA','bit'],['EXGM','bit'],['XPRA','pra'],['XBUL','bul'],['XTAL','tal'],['XRIS','rse'],['XLIT','vse'],['XBRA','bsse'],['XLUX','lux'],['XMAL','mse'],['XCYS','cys']]);
+const SUPPORTED_MICS=new Map([['XMIL','bit'],['MTAA','bit'],['EXGM','bit'],['XPRA','pra'],['XBUL','bul'],['XTAL','tal'],['XRIS','rse'],['XLIT','vse'],['XBRA','bsse'],['XLUX','lux'],['XMAL','mse'],['XCYS','cys'],['XLJU','ljse']]);
 
 export class StockAnalysisBitProvider {
   id='stockanalysis-bit';
