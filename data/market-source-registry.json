@@ -887,18 +887,18 @@
       "discovery": {
         "testedDifficultSymbols": 18,
         "testedFullCatalog": 18,
-        "coverageRatio": 0,
+        "coverageRatio": 0.8888888888888888,
         "sourceCountTested": 4,
         "note": "Official LuxSE daily list identified; adapter must filter equities admitted to trading and prove free history per instrument.",
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
-        "uncovered": 18,
+        "uncovered": 2,
         "dataUnavailable": 0,
-        "unresolved": 18
+        "unresolved": 2
       },
-      "catalogFingerprint": "c42ad4dff8029367ac50d6ae8ac605682d30dd853e8b4e57860ba79f04257206",
+      "catalogFingerprint": "3b63a0258fbfac5df8aa0a3feaff3e1321cad722043e6cb54d55add42770cdec",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-05T14:20:01.125Z"
+      "lastAuditAt": "2026-10-05T14:32:00.190Z"
     },
     "XMAL": {
       "status": "BLOCKED",
