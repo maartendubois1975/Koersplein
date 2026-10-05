@@ -934,16 +934,24 @@
       "lastAuditAt": "2026-10-05T13:27:58.209Z"
     },
     "XCYS": {
-      "status": "RESEARCHING",
-      "catalogSource": "Cyprus Stock Exchange official listed securities/companies directory",
+      "status": "BLOCKED",
+      "catalogSource": "Cyprus Stock Exchange official security master cross-checked to 49 active CSE equities",
       "historySources": [],
       "discovery": {
-        "testedDifficultSymbols": 0,
-        "testedFullCatalog": 0,
-        "coverageRatio": 0,
-        "sourceCountTested": 0,
-        "note": "Official CSE route reserved; exact current equity directory and history mapping must be proven before APPROVED."
-      }
+        "testedDifficultSymbols": 20,
+        "testedFullCatalog": 49,
+        "coverageRatio": 0.7755102040816326,
+        "sourceCountTested": 4,
+        "note": "Official CSE route reserved; exact current equity directory and history mapping must be proven before APPROVED.",
+        "crossCheckedSymbols": 0,
+        "crossCheckRatio": 0,
+        "uncovered": 11,
+        "dataUnavailable": 0,
+        "unresolved": 11
+      },
+      "catalogFingerprint": "92d46c7bd21f6a5ed69a0cb0b190e0443023d90654e69ee2c7fa3f648ba76fe8",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "lastAuditAt": "2026-10-05T14:52:00.758Z"
     },
     "XLIT": {
       "status": "APPROVED",

@@ -16,6 +16,10 @@
       {
         "mic": "XZAG",
         "reason": "SOURCE_PREFLIGHT_GATE"
+      },
+      {
+        "mic": "XCYS",
+        "reason": "SOURCE_PREFLIGHT_GATE"
       }
     ]
   },
@@ -23,9 +27,9 @@
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
     "complete": 25,
-    "blocked": 3,
+    "blocked": 4,
     "ready": 1,
-    "pending": 2,
+    "pending": 1,
     "total": 31
   },
   "markets": [
@@ -626,22 +630,22 @@
     {
       "mic": "XCYS",
       "name": "Cyprus",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
-      "reason": null,
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 49,
+        "fingerprint": "92d46c7bd21f6a5ed69a0cb0b190e0443023d90654e69ee2c7fa3f648ba76fe8",
         "retrievedAt": null,
-        "source": "Cyprus Stock Exchange official listed securities/companies directory"
+        "source": "Cyprus Stock Exchange official security master cross-checked to 49 active CSE equities"
       },
       "sources": {
-        "status": "RESEARCHING",
-        "tested": 0,
-        "fullCatalog": 0,
-        "coverageRatio": 0,
-        "crossCheckRatio": null
+        "status": "BLOCKED",
+        "tested": 4,
+        "fullCatalog": 49,
+        "coverageRatio": 0.7755102040816326,
+        "crossCheckRatio": 0
       },
       "completedAt": null
     },
@@ -712,5 +716,5 @@
       "completedAt": "2026-10-05T14:02:29.552Z"
     }
   ],
-  "generatedAt": "2026-10-05T14:46:31.142Z"
+  "generatedAt": "2026-10-05T14:52:15.367Z"
 }

@@ -722,7 +722,11 @@
       "currency": "EUR",
       "timezone": "Asia/Nicosia",
       "providerSuffix": ".CY",
-      "state": "WAITING"
+      "state": "BLOCKED",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-10-05T14:52:15.318Z",
+      "catalogFingerprint": "92d46c7bd21f6a5ed69a0cb0b190e0443023d90654e69ee2c7fa3f648ba76fe8",
+      "note": "Quarantined by canonical single writer after proven source preflight failure."
     },
     {
       "mic": "XTAL",
