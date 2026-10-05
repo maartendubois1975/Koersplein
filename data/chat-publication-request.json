@@ -1,6 +1,6 @@
 {
-  "marketMic": "XICE",
-  "purpose": "Block 2 Reykjavik canonical final validation",
-  "message": "Validate 27 Reykjavik equities against their stored Worker identities and persist canonical COMPLETE only if all history/freshness gates pass.",
-  "requestedAt": "2026-10-05T20:25:00+02:00"
+  "marketMic": "XBUL",
+  "purpose": "Block 2 Sofia canonical closure",
+  "message": "Sofia market run already passed; rerun strict validation and persist canonical COMPLETE from current main without stale-plan race.",
+  "requestedAt": "2026-10-05T20:28:00+02:00"
 }
