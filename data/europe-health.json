@@ -343,7 +343,7 @@
         "present": true,
         "count": 27,
         "fingerprint": "33a92975c27043cc452ea197e1b87c2260557cde3b624a5d2a5f30c8d0c13e55",
-        "retrievedAt": "2026-10-05T18:22:24.820Z",
+        "retrievedAt": "2026-10-05T17:43:27.271Z",
         "source": "Nasdaq Iceland official 27-share universe + current official ticker identities + direct .IC history proof"
       },
       "sources": {
@@ -516,14 +516,14 @@
       "health": "BLOCKED",
       "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
-        "present": false,
+        "present": true,
         "count": 73,
         "fingerprint": "1df127daa66d2226020c720d89e376f95ee81c0b7d03bbc781ae5a38d2ba4ccb",
-        "retrievedAt": null,
+        "retrievedAt": "2026-10-05T18:07:10.754Z",
         "source": "Zagreb Stock Exchange official regulated-market equity directory"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
         "fullCatalog": 73,
         "coverageRatio": 0.958904109589041,
@@ -708,5 +708,5 @@
       "completedAt": "2026-10-05T14:02:29.552Z"
     }
   ],
-  "generatedAt": "2026-10-05T18:27:11.661Z"
+  "generatedAt": "2026-10-05T18:27:24.922Z"
 }
