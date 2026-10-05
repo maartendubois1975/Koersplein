@@ -1,6 +1,6 @@
 {
-  "marketMic": "XZAG,XBUL",
-  "purpose": "Block 2 final two markets",
-  "message": "Zagreb: official ZSE price-list history. Sofia: proven BUL history provider. Run both through strict catalog, source, Worker, full backfill, repair and final validation.",
-  "requestedAt": "2026-10-05T19:45:00+02:00"
+  "marketMic": "XBUL",
+  "purpose": "Block 2 Sofia canonical identity final closure",
+  "message": "Validate Sofia against the same canonical Worker identities used by the runner; repair remaining stale/unavailable items and persist COMPLETE only if strict end gate passes.",
+  "requestedAt": "2026-10-05T20:55:00+02:00"
 }
