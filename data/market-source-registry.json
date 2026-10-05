@@ -1051,26 +1051,11 @@
       ]
     },
     "XLJU": {
-      "status": "APPROVED",
+      "status": "BLOCKED",
       "catalogFingerprint": "59ffd7c1b396cde0cf6a300ea91adcb2b0ec330ae819b9094ef4a33e29a5eead",
       "catalogSource": "Ljubljana Stock Exchange official current instruments table",
-      "historySources": [
-        {
-          "provider": "yahoo-isin-resolver",
-          "role": "DISCOVERY_FALLBACK",
-          "note": "ISIN-first resolver used when direct symbol and official history route fail."
-        },
-        {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY",
-          "note": "Full-catalog preflight: 0/17 instruments."
-        },
-        {
-          "provider": "euronext-live",
-          "role": "INDEPENDENT_FALLBACK_VALIDATION",
-          "note": "Independently tested on full catalog: 0/17; 0 additional instruments beyond primary."
-        }
-      ],
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "lastAuditAt": "2026-10-05T18:06:51.547Z",
       "discovery": {
         "testedDifficultSymbols": 17,
         "testedFullCatalog": 17,
@@ -1078,7 +1063,9 @@
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
+        "uncovered": 1,
+        "dataUnavailable": 0,
+        "unresolved": 1
       }
     }
   }
