@@ -495,16 +495,16 @@
       "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": true,
-        "count": 14,
-        "fingerprint": "942867be9ef639ae04646fc2c2916ea9bfdc35fd0269507bb7fe43200c5dda6e",
-        "retrievedAt": "2026-10-01T19:13:57.122Z",
+        "count": 158,
+        "fingerprint": "8d30f3706bad5373a9e0f4f1ea4138504b34fe3d0829bea810a0ceb7a7f1536e",
+        "retrievedAt": "2026-10-05T17:58:31.979Z",
         "source": "BSE Main Market scope + Bulgarian Central Depository real ISIN identity + StockAnalysis BUL daily-history provider"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
         "fullCatalog": 158,
-        "coverageRatio": 0.6772151898734177,
+        "coverageRatio": 0.7721518987341772,
         "crossCheckRatio": 0
       },
       "completedAt": null
@@ -526,7 +526,7 @@
         "status": "BLOCKED",
         "tested": 4,
         "fullCatalog": 73,
-        "coverageRatio": 0.958904109589041,
+        "coverageRatio": 0,
         "crossCheckRatio": 0
       },
       "completedAt": null
@@ -708,5 +708,5 @@
       "completedAt": "2026-10-05T14:02:29.552Z"
     }
   ],
-  "generatedAt": "2026-10-05T18:00:00.067Z"
+  "generatedAt": "2026-10-05T18:01:15.873Z"
 }
