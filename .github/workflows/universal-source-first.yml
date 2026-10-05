@@ -114,14 +114,14 @@ jobs:
           const market={mic,name:raw.exchange||plan.markets.find(x=>x.mic===mic)?.name||mic,code,country:plan.markets.find(x=>x.mic===mic)?.country||null,currency:shares[0]?.currency||'EUR'};
           const client=new FactoryApiClient();
           let preflightShares=shares;
-          if(mic==='XICE'){
+          {
             try{
               const existing=await client.request('/api/factory/catalog?mic='+encodeURIComponent(mic));
               const rows=existing?.instruments||existing?.shares||[];
               const byTicker=new Map(rows.map(x=>[String(x.ticker||'').toUpperCase(),x]));
               preflightShares=shares.map(x=>{const old=byTicker.get(String(x.ticker||'').toUpperCase());return old?.isin?{...x,isin:old.isin}:x});
-              console.log('XICE_PREFLIGHT_IDENTITY_REUSE '+preflightShares.filter((x,i)=>x.isin!==shares[i].isin).length+'/'+shares.length);
-            }catch(e){console.log('XICE_PREFLIGHT_IDENTITY_REUSE unavailable: '+e.message)}
+              console.log('WORKER_PREFLIGHT_IDENTITY_REUSE '+preflightShares.filter((x,i)=>x.isin!==shares[i].isin).length+'/'+shares.length);
+            }catch(e){console.log('WORKER_PREFLIGHT_IDENTITY_REUSE unavailable: '+e.message)}
           }
           await client.seedCatalog({markets:[market],instruments:[]});
           for(let i=0;i<preflightShares.length;i+=100) await client.seedCatalog({markets:[],instruments:preflightShares.slice(i,i+100)});
