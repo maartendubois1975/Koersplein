@@ -1,6 +1,6 @@
 {
   "marketMic": "XTAL,XRIS,XLIT",
-  "purpose": "Baltic verified daily OHLC backfill",
-  "message": "Use official Nasdaq Baltic catalog identities and verified TAL/RSE/VSE daily OHLC history source; backfill, repair and final validate.",
-  "requestedAt": "2026-10-05T12:45:00+02:00"
+  "purpose": "Baltic final repair validation",
+  "message": "Re-run after official zero-trade classification and Nasdaq Baltic trading-day OHLC fallback; backfill repair and final validate all three.",
+  "requestedAt": "2026-10-05T09:15:00+02:00"
 }
