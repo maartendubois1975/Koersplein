@@ -96,6 +96,30 @@ jobs:
           }
           console.log(`SOURCE COVERAGE GATE PASS: ${r.combinedCovered} covered + ${unavailable.length} proven DATA_UNAVAILABLE = ${r.catalog}/${r.catalog}`);
           NODE
+      - name: Worker catalog write/read preflight
+        env:
+          MARKET_MIC: ${{ matrix.market }}
+          KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+          KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { FactoryApiClient } from './scripts/cloudflare/client.mjs';
+          const mic=process.env.MARKET_MIC;
+          const code=({XICE:'reykjavik',XLJU:'ljubljana',XLON:'london',XBUL:'sofia',XZAG:'zagreb'})[mic]||mic.toLowerCase();
+          const raw=JSON.parse(await fs.readFile('data/euronext-'+code+'.json','utf8'));
+          const shares=raw.shares||raw.instruments||[];
+          if(!shares.length) throw new Error('WORKER_PREFLIGHT lege catalogus '+mic);
+          const client=new FactoryApiClient();
+          await client.seedCatalog({markets:[],instruments:shares});
+          const probes=[shares[0],shares[Math.floor(shares.length/2)],shares.at(-1)].filter(Boolean);
+          const failed=[];
+          for(const item of probes){try{await client.historyCoverage(item.isin)}catch(e){if(!/Historie niet gevonden/.test(e.message)) failed.push(item.isin+': '+e.message)}}
+          if(failed.length) throw new Error('WORKER_VERSION_OR_CATALOG_GATE '+failed.join(' | '));
+          console.log('WORKER CATALOG PREFLIGHT PASS '+mic+' probes='+probes.map(x=>x.isin).join(','));
+          NODE
+
       - name: Historische backfill met foutisolatie
         if: ${{ inputs.preflight_only != true }}
         timeout-minutes: 90
