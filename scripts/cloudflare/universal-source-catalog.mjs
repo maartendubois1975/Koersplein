@@ -68,7 +68,8 @@ if(['XTAL','XRIS','XLIT'].includes(mic)){
 if(mic==='XLJU'){
  // LJSE publishes its issuer universe as HTML, not CSV. Parse only current issuer links,
  // then require a directly usable free .LJ history route before admitting an equity.
- const ljr=await fetch('https://seonet.ljse.si/default_en.aspx?doc=ISSUERS',{headers:{'user-agent':'Mozilla/5.0'}}),ljtext=await ljr.text();\n const issuerLinks=[...ljtext.matchAll(new RegExp("href=[\"']([^\"']*(?:issuer|izdajatelj)[^\"']*)[\"'][^>]*>([\\s\\S]*?)<\\/a>","gi"))];
+ const ljr=await fetch('https://seonet.ljse.si/default_en.aspx?doc=ISSUERS',{headers:{'user-agent':'Mozilla/5.0'}}),ljtext=await ljr.text();
+ const issuerLinks=[...ljtext.matchAll(new RegExp("href=[\"']([^\"']*(?:issuer|izdajatelj)[^\"']*)[\"'][^>]*>([\\s\\S]*?)<\\/a>","gi"))];
  const clean=s=>String(s||'').replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/gi,' ').replace(/&amp;/gi,'&').replace(/\\s+/g,' ').trim();
  const names=[]; const seen=new Set();
  for(const m0 of issuerLinks){const name=clean(m0[2]);if(name.length<2||/issuer|izdajatelj|seonet/i.test(name))continue;const k=name.toLocaleUpperCase('sl');if(!seen.has(k)){seen.add(k);names.push(name)}}
