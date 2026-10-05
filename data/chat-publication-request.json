@@ -1,6 +1,6 @@
 {
   "marketMic": "XTAL,XRIS,XLIT",
-  "purpose": "Baltic D1 parent-market seed and backfill",
-  "message": "Run 70/70 source-covered Baltic instruments after parent market seed fix through Worker preflight, history backfill, repair and final validation.",
-  "requestedAt": "2026-10-05T11:55:00+02:00"
+  "purpose": "Baltic official history production backfill",
+  "message": "Backfill all Baltic instruments with registered Nasdaq Baltic official OHLC provider, then repair and final-validate.",
+  "requestedAt": "2026-10-05T12:20:00+02:00"
 }
