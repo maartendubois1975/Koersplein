@@ -111,8 +111,9 @@ jobs:
           const raw=JSON.parse(await fs.readFile('data/euronext-'+code+'.json','utf8'));
           const shares=raw.shares||raw.instruments||[];
           if(!shares.length) throw new Error('WORKER_PREFLIGHT lege catalogus '+mic);
+          const market={mic,name:raw.exchange||plan.markets.find(x=>x.mic===mic)?.name||mic,code,country:plan.markets.find(x=>x.mic===mic)?.country||null,currency:shares[0]?.currency||'EUR'};
           const client=new FactoryApiClient();
-          await client.seedCatalog({markets:[],instruments:shares});
+          await client.seedCatalog({markets:[market],instruments:shares});
           const probes=[shares[0],shares[Math.floor(shares.length/2)],shares.at(-1)].filter(Boolean);
           const failed=[];
           for(const item of probes){try{await client.historyCoverage(item.isin)}catch(e){if(!/Historie niet gevonden/.test(e.message)) failed.push(item.isin+': '+e.message)}}
