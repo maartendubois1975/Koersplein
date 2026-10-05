@@ -881,16 +881,24 @@
       "lastAuditAt": "2026-10-05T13:26:50.181Z"
     },
     "XLUX": {
-      "status": "RESEARCHING",
-      "catalogSource": "Luxembourg Stock Exchange daily official list — Bourse de Luxembourg equities",
+      "status": "BLOCKED",
+      "catalogSource": "Luxembourg Stock Exchange public equity trading-data GraphQL",
       "historySources": [],
       "discovery": {
-        "testedDifficultSymbols": 0,
-        "testedFullCatalog": 0,
+        "testedDifficultSymbols": 18,
+        "testedFullCatalog": 18,
         "coverageRatio": 0,
-        "sourceCountTested": 0,
-        "note": "Official LuxSE daily list identified; adapter must filter equities admitted to trading and prove free history per instrument."
-      }
+        "sourceCountTested": 4,
+        "note": "Official LuxSE daily list identified; adapter must filter equities admitted to trading and prove free history per instrument.",
+        "crossCheckedSymbols": 0,
+        "crossCheckRatio": 0,
+        "uncovered": 18,
+        "dataUnavailable": 0,
+        "unresolved": 18
+      },
+      "catalogFingerprint": "c42ad4dff8029367ac50d6ae8ac605682d30dd853e8b4e57860ba79f04257206",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "lastAuditAt": "2026-10-05T14:20:01.125Z"
     },
     "XMAL": {
       "status": "BLOCKED",
