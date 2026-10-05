@@ -18,10 +18,6 @@
         "reason": "SOURCE_PREFLIGHT_GATE"
       },
       {
-        "mic": "XRIS",
-        "reason": "SOURCE_PREFLIGHT_GATE"
-      },
-      {
         "mic": "XLIT",
         "reason": "SOURCE_PREFLIGHT_GATE"
       }
@@ -30,8 +26,8 @@
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 20,
-    "blocked": 5,
+    "complete": 21,
+    "blocked": 4,
     "ready": 1,
     "pending": 5,
     "total": 31
@@ -678,24 +674,24 @@
     {
       "mic": "XRIS",
       "name": "Riga",
-      "state": "BLOCKED",
-      "health": "BLOCKED",
-      "reason": "SOURCE_PREFLIGHT_GATE",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
       "catalog": {
-        "present": false,
+        "present": true,
         "count": 15,
         "fingerprint": "be188c13889c19d68a66d0e219abd4005f0f40444f3289aaaaf01a9db8c08d14",
-        "retrievedAt": null,
+        "retrievedAt": "2026-10-05T13:16:41.982Z",
         "source": "Nasdaq Baltic official share list + home-market ticker + direct free history proof"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
         "fullCatalog": 15,
         "coverageRatio": 1,
         "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-05T13:17:03.782Z"
     },
     {
       "mic": "XLIT",
@@ -707,7 +703,7 @@
         "present": true,
         "count": 25,
         "fingerprint": "2407481d94208148248ef31a32acb244696a1714a981b70404ca832245821c09",
-        "retrievedAt": "2026-10-05T06:54:05.751Z",
+        "retrievedAt": "2026-10-05T13:16:38.467Z",
         "source": "Nasdaq Baltic official share list + home-market ticker + direct free history proof"
       },
       "sources": {
@@ -720,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-05T06:55:38.317Z"
+  "generatedAt": "2026-10-05T13:18:10.133Z"
 }

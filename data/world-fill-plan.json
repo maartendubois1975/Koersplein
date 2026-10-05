@@ -528,11 +528,21 @@
       "currency": "EUR",
       "timezone": "Europe/Riga",
       "providerSuffix": ".RG",
-      "state": "BLOCKED",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-10-05T06:29:52.841Z",
+      "state": "COMPLETE",
       "catalogFingerprint": "be188c13889c19d68a66d0e219abd4005f0f40444f3289aaaaf01a9db8c08d14",
-      "note": "Quarantined by canonical single writer after proven source preflight failure."
+      "completedAt": "2026-10-05T13:17:03.782Z",
+      "dataUnavailable": [
+        {
+          "isin": "LV0000101665",
+          "officialIsin": "LV0000101665",
+          "symbol": "FRGTE",
+          "name": "Frigate",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_ZERO_TRADES_ZERO_VOLUME",
+          "evidence": "2026-10-01: Nasdaq Baltic official trading page reports 0 trades and 0 volume"
+        }
+      ]
     },
     {
       "mic": "XLIT",
