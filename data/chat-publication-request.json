@@ -1,6 +1,6 @@
 {
   "marketMic": "XBUL",
-  "purpose": "Block 2 Sofia final closure",
-  "message": "Repair all remaining Sofia stale/missing histories in 100-instrument passes, then strict final validation and canonical persist. Do not stop after workflow trigger.",
-  "requestedAt": "2026-10-05T21:22:00+02:00"
+  "purpose": "Block 2 Sofia final closure retry",
+  "message": "Fresh runner retry: 100-history repair batches, strict final validation, canonical persist. Sofia is the sole remaining Block 2 market.",
+  "requestedAt": "2026-10-05T21:46:00+02:00"
 }
