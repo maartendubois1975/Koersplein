@@ -98,7 +98,7 @@ jobs:
           NODE
       - name: Worker catalog write/read preflight
         env:
-          MARKET_MIC: ${{ matrix.market }}
+          MARKET_MIC: ${{ matrix.market_mic }}
           KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
           KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
         run: |
@@ -106,7 +106,7 @@ jobs:
           node --input-type=module <<'NODE'
           import fs from 'node:fs/promises';
           import { FactoryApiClient } from './scripts/cloudflare/client.mjs';
-          const mic='${{ matrix.market }}';
+          const mic='${{ matrix.market_mic }}';
           const code=({XICE:'reykjavik',XLJU:'ljubljana',XLON:'london',XBUL:'sofia',XZAG:'zagreb'})[mic]||mic.toLowerCase();
           const raw=JSON.parse(await fs.readFile('data/euronext-'+code+'.json','utf8'));
           const shares=raw.shares||raw.instruments||[];
