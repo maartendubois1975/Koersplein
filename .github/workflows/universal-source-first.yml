@@ -116,7 +116,7 @@ jobs:
           let preflightShares=shares;
           if(mic==='XICE'){
             try{
-              const existing=await client.getCatalog({mic});
+              const existing=await client.request('/api/factory/catalog?mic='+encodeURIComponent(mic));
               const rows=existing?.instruments||existing?.shares||[];
               const byTicker=new Map(rows.map(x=>[String(x.ticker||'').toUpperCase(),x]));
               preflightShares=shares.map(x=>{const old=byTicker.get(String(x.ticker||'').toUpperCase());return old?.isin?{...x,isin:old.isin}:x});
