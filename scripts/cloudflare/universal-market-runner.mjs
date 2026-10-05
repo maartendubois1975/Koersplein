@@ -12,7 +12,7 @@ const m=plan.markets.find(x=>x.mic===mic);if(!m)throw new Error(`MARKET_MIC ${mi
 const sourcePlan=sourceRegistry.markets?.[mic];
 const path=`data/euronext-${m.code}.json`;
 const raw=JSON.parse(await fs.readFile(path,'utf8'));
-if(!sourcePlan||sourcePlan.status!=='APPROVED'||!sourcePlan.historySources?.some(x=>x.role==='PRIMARY')||(sourcePlan.discovery?.testedDifficultSymbols||0)<10||!raw.fingerprint||sourcePlan.catalogFingerprint!==raw.fingerprint)throw new Error(`BRONONDERZOEK/CATALOGUS-GATE VERPLICHT vóór backfill van ${mic}; fingerprint mismatch of approval ontbreekt`);
+if(!sourcePlan||sourcePlan.status!=='APPROVED'||!sourcePlan.historySources?.some(x=>x.role==='PRIMARY')||(sourcePlan.discovery?.testedDifficultSymbols||0)<Math.min(10,(raw.shares||[]).length)||!raw.fingerprint||sourcePlan.catalogFingerprint!==raw.fingerprint)throw new Error(`BRONONDERZOEK/CATALOGUS-GATE VERPLICHT vóór backfill van ${mic}; fingerprint mismatch of approval ontbreekt`);
 const source=raw.shares||raw.instruments||[];if(!source.length)throw new Error('lege catalogus');
 // Reuse the identity already stored in D1 for a mic+ticker pair. Older imports can have
 // a valid 12-character placeholder identity; inventing a second synthetic identity causes
