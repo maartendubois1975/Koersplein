@@ -1,6 +1,6 @@
 {
-  "marketMic": "XMAL,XBRA,XLIT",
-  "purpose": "Block 1 repaired parallel closure",
-  "message": "Run Malta, Bratislava and Vilnius after valid catalog JSON fix and Baltic recent-session fallback. Strict gates unchanged.",
-  "requestedAt": "2026-10-05T15:50:00+02:00"
+  "marketMic": "XLUX,XCYS",
+  "purpose": "Block 1 official adapter execution",
+  "message": "Run Luxembourg and Cyprus through official catalog adapters now; expose exact parser/source failures and continue only if strict identity gate passes.",
+  "requestedAt": "2026-10-05T15:58:00+02:00"
 }
