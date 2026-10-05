@@ -664,14 +664,14 @@
       "health": "BLOCKED",
       "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
-        "present": false,
+        "present": true,
         "count": 30,
         "fingerprint": "f1f33ca70b666baf7974d13788d1c7d048dae119843058209d9acdfe2d7657c4",
-        "retrievedAt": null,
+        "retrievedAt": "2026-10-05T06:31:59.095Z",
         "source": "Nasdaq Baltic official share list + home-market ticker + direct free history proof"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
         "fullCatalog": 30,
         "coverageRatio": 1,
@@ -724,5 +724,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-05T06:31:45.309Z"
+  "generatedAt": "2026-10-05T06:32:16.188Z"
 }
