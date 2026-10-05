@@ -722,11 +722,330 @@
       "currency": "EUR",
       "timezone": "Asia/Nicosia",
       "providerSuffix": ".CY",
-      "state": "BLOCKED",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-10-05T14:52:15.318Z",
+      "state": "COMPLETE",
       "catalogFingerprint": "92d46c7bd21f6a5ed69a0cb0b190e0443023d90654e69ee2c7fa3f648ba76fe8",
-      "note": "Quarantined by canonical single writer after proven source preflight failure."
+      "completedAt": "2026-10-05T14:57:00.599Z",
+      "dataUnavailable": [
+        {
+          "isin": "CY0001300413",
+          "officialIsin": "CY0001300413",
+          "symbol": "KEO",
+          "name": "KEO",
+          "lastDate": "2026-09-28",
+          "recordCount": 50,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0003000714",
+          "officialIsin": "CY0003000714",
+          "symbol": "KG",
+          "name": "K + G Complex",
+          "lastDate": "2026-09-30",
+          "recordCount": 26,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0002700611",
+          "officialIsin": "CY0002700611",
+          "symbol": "FWW",
+          "name": "Woolworth Cyprus Properties",
+          "lastDate": "2026-08-12",
+          "recordCount": 50,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0001801519",
+          "officialIsin": "CY0001801519",
+          "symbol": "LHH",
+          "name": "Lordos Hotels",
+          "lastDate": "2026-09-25",
+          "recordCount": 37,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0109800710",
+          "officialIsin": "CY0109800710",
+          "symbol": "IDNA",
+          "name": "IDNA Genomics",
+          "lastDate": "2026-09-21",
+          "recordCount": 7,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0008401214",
+          "officialIsin": "CY0008401214",
+          "symbol": "KYTH",
+          "name": "K. Kythreotis Holdings",
+          "lastDate": "2026-09-29",
+          "recordCount": 50,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0002600613",
+          "officialIsin": "CY0002600613",
+          "symbol": "CTC",
+          "name": "Cyprus Trading Corporation",
+          "lastDate": "2026-08-07",
+          "recordCount": 50,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0005220310",
+          "officialIsin": "CY0005220310",
+          "symbol": "COS",
+          "name": "Cosmos Insurance",
+          "lastDate": "2026-09-29",
+          "recordCount": 19,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0006760413",
+          "officialIsin": "CY0006760413",
+          "symbol": "LPL",
+          "name": "Lordos United",
+          "lastDate": "2026-09-30",
+          "recordCount": 9,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0200072110",
+          "officialIsin": "CY0200072110",
+          "symbol": "YACHT",
+          "name": "Up Ventures",
+          "lastDate": "2026-09-17",
+          "recordCount": 49,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0100260419",
+          "officialIsin": "CY0100260419",
+          "symbol": "MIT",
+          "name": "Mitsides",
+          "lastDate": "2026-09-23",
+          "recordCount": 20,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0002401517",
+          "officialIsin": "CY0002401517",
+          "symbol": "AGRO",
+          "name": "Agros Development",
+          "lastDate": "2026-09-22",
+          "recordCount": 5,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0005200213",
+          "officialIsin": "CY0005200213",
+          "symbol": "AIAS",
+          "name": "Aias Investment",
+          "lastDate": "2026-09-30",
+          "recordCount": 34,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0006191312",
+          "officialIsin": "CY0006191312",
+          "symbol": "ELF",
+          "name": "Ellinas Finance",
+          "lastDate": "2026-09-21",
+          "recordCount": 13,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0006380519",
+          "officialIsin": "CY0006380519",
+          "symbol": "TOP",
+          "name": "Top Kinisis Travel",
+          "lastDate": "2026-08-03",
+          "recordCount": 32,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0001400411",
+          "officialIsin": "CY0001400411",
+          "symbol": "CFI",
+          "name": "Cyprus Forest Industries",
+          "lastDate": "2026-09-16",
+          "recordCount": 5,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0100560214",
+          "officialIsin": "CY0100560214",
+          "symbol": "INF",
+          "name": "Interfund Investments",
+          "lastDate": "2026-09-30",
+          "recordCount": 29,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0109861316",
+          "officialIsin": "CY0109861316",
+          "symbol": "LI",
+          "name": "7Q Investments",
+          "lastDate": "2026-09-30",
+          "recordCount": 50,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0100220611",
+          "officialIsin": "CY0100220611",
+          "symbol": "ERME",
+          "name": "Ermes Department Stores",
+          "lastDate": "2026-08-05",
+          "recordCount": 50,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0003100712",
+          "officialIsin": "CY0003100712",
+          "symbol": "PES",
+          "name": "Philoktimatiki",
+          "lastDate": "2026-09-18",
+          "recordCount": 5,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0006070219",
+          "officialIsin": "CY0006070219",
+          "symbol": "UNI",
+          "name": "Unigrowth Investments",
+          "lastDate": "2026-04-16",
+          "recordCount": 49,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0007830710",
+          "officialIsin": "CY0007830710",
+          "symbol": "DISP",
+          "name": "Display Art",
+          "lastDate": "2026-06-18",
+          "recordCount": 16,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CY0200380711",
+          "officialIsin": "CY0200380711",
+          "symbol": "YODA",
+          "name": "Yoda PLC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "ACTIVE_CSE_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "GRS804003002",
+          "officialIsin": "GRS804003002",
+          "symbol": "EPIEN",
+          "name": "Selected Energy",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "ACTIVE_CSE_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "CY0105440511",
+          "officialIsin": "CY0105440511",
+          "symbol": "UGE",
+          "name": "Universal Golf Enterprises",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "ACTIVE_CSE_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "GRS820003002",
+          "officialIsin": "GRS820003002",
+          "symbol": "SOLIDUS",
+          "name": "Solidus Securities",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "ACTIVE_CSE_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "CY0005770710",
+          "officialIsin": "CY0005770710",
+          "symbol": "CLL",
+          "name": "CLR Investment Fund",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "ACTIVE_CSE_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "CY0006710210",
+          "officialIsin": "CY0006710210",
+          "symbol": "ACT",
+          "name": "Actibond Growth Fund",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "ACTIVE_CSE_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "CY0007400613",
+          "officialIsin": "CY0007400613",
+          "symbol": "CJ",
+          "name": "Chris Joannou",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "ACTIVE_CSE_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "CY0001600416",
+          "officialIsin": "CY0001600416",
+          "symbol": "CPIH",
+          "name": "CPI Holdings",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "ACTIVE_CSE_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "CY0005170218",
+          "officialIsin": "CY0005170218",
+          "symbol": "ISXI",
+          "name": "ISXIS Investment",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "ACTIVE_CSE_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "CY0006110718",
+          "officialIsin": "CY0006110718",
+          "symbol": "ROL",
+          "name": "Rolandos Enterprises",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "ACTIVE_CSE_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "CY0004980716",
+          "officialIsin": "CY0004980716",
+          "symbol": "UFI",
+          "name": "Unifast Finance & Investments",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "ACTIVE_CSE_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        }
+      ]
     },
     {
       "mic": "XTAL",

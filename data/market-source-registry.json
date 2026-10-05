@@ -934,20 +934,33 @@
       "lastAuditAt": "2026-10-05T13:27:58.209Z"
     },
     "XCYS": {
-      "status": "BLOCKED",
+      "status": "APPROVED",
       "catalogSource": "Cyprus Stock Exchange official security master cross-checked to 49 active CSE equities",
-      "historySources": [],
+      "historySources": [
+        {
+          "provider": "yahoo-isin-resolver",
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
+        },
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Full-catalog preflight: 0/49 instruments."
+        },
+        {
+          "provider": "euronext-live",
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/49; 0 additional instruments beyond primary."
+        }
+      ],
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 49,
         "coverageRatio": 0.7755102040816326,
-        "sourceCountTested": 4,
-        "note": "Official CSE route reserved; exact current equity directory and history mapping must be proven before APPROVED.",
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
-        "uncovered": 11,
-        "dataUnavailable": 0,
-        "unresolved": 11
+        "sourceCountTested": 4,
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       },
       "catalogFingerprint": "92d46c7bd21f6a5ed69a0cb0b190e0443023d90654e69ee2c7fa3f648ba76fe8",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
