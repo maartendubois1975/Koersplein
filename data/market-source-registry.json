@@ -750,7 +750,7 @@
       "catalogFingerprint": "5cb3698daa6bacb74e52188787f986fe40ae3b76e2ce941acde94c4228b8a6a6"
     },
     "XBUL": {
-      "status": "BLOCKED",
+      "status": "APPROVED",
       "catalogSource": "BSE Main Market scope + Bulgarian Central Depository real ISIN identity + StockAnalysis BUL daily-history provider",
       "historySources": [
         {
@@ -761,12 +761,12 @@
         {
           "provider": "yahoo-chart",
           "role": "PRIMARY",
-          "note": "Full-catalog preflight: 0/14 instruments."
+          "note": "Full-catalog preflight: 0/158 instruments."
         },
         {
           "provider": "euronext-live",
           "role": "INDEPENDENT_FALLBACK_VALIDATION",
-          "note": "Independently tested on full catalog: 0/14; 0 additional instruments beyond primary."
+          "note": "Independently tested on full catalog: 0/158; 0 additional instruments beyond primary."
         }
       ],
       "dailyUpdate": {
@@ -786,14 +786,11 @@
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 158,
-        "coverageRatio": 0.6772151898734177,
+        "coverageRatio": 0.7721518987341772,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval.",
-        "uncovered": 51,
-        "dataUnavailable": 0,
-        "unresolved": 51
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       }
     },
     "XDUB": {

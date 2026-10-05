@@ -1,7 +1,7 @@
 {
   "exchange": "Sofia",
   "mic": "XBUL",
-  "retrievedAt": "2026-10-05T17:58:31.979Z",
+  "retrievedAt": "2026-10-05T18:51:24.913Z",
   "source": "BSE Main Market scope + Bulgarian Central Depository real ISIN identity + StockAnalysis BUL daily-history provider",
   "sourceUrl": "https://www.bse-sofia.bg/en/listed-instruments/by-sector",
   "officialEligibleCount": 158,
@@ -556,22 +556,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "136 EMKA EMKA AD 108.20M 1.330 - -",
-      "name": "136 EMKA EMKA AD 108.20M 1.330 - -",
-      "symbol": "EMKA",
-      "ticker": "EMKA",
-      "isin": "BG11EMSEAT19",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "EMKA",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "137 IBG Investor.BG AD 106.47M 11.80 - -",
-      "name": "137 IBG Investor.BG AD 106.47M 11.80 - -",
+      "company": "136 IBG Investor.BG AD 106.47M 11.80 - -",
+      "name": "136 IBG Investor.BG AD 106.47M 11.80 - -",
       "symbol": "IBG",
       "ticker": "IBG",
       "isin": "BG1100019048",
@@ -579,6 +565,20 @@
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
       "providerSymbol": "IBG",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "137 EMKA EMKA AD 104.49M 1.330 - -",
+      "name": "137 EMKA EMKA AD 104.49M 1.330 - -",
+      "symbol": "EMKA",
+      "ticker": "EMKA",
+      "isin": "BG11EMSEAT19",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "EMKA",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
@@ -738,22 +738,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "150 TCH TK - Hold AD 71.86M 4.460 - -",
-      "name": "150 TCH TK - Hold AD 71.86M 4.460 - -",
-      "symbol": "TCH",
-      "ticker": "TCH",
-      "isin": "BG1100005971",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "TCH",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "151 MONB Monbat AD 71.52M 0.980 - 397.00M",
-      "name": "151 MONB Monbat AD 71.52M 0.980 - 397.00M",
+      "company": "150 MONB Monbat AD 71.52M 0.980 - 397.00M",
+      "name": "150 MONB Monbat AD 71.52M 0.980 - 397.00M",
       "symbol": "MONB",
       "ticker": "MONB",
       "isin": "BG1100075065",
@@ -761,6 +747,20 @@
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
       "providerSymbol": "MONB",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "151 TCH TK - Hold AD 71.08M 4.460 - -",
+      "name": "151 TCH TK - Hold AD 71.08M 4.460 - -",
+      "symbol": "TCH",
+      "ticker": "TCH",
+      "isin": "BG1100005971",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "TCH",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
@@ -1620,8 +1620,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "219 IMP ImPulse Growth AD 10.04M 0.760 2.01% 955.00K",
-      "name": "219 IMP ImPulse Growth AD 10.04M 0.760 2.01% 955.00K",
+      "company": "220 IMP ImPulse Growth AD 10.04M 0.760 2.01% 955.00K",
+      "name": "220 IMP ImPulse Growth AD 10.04M 0.760 2.01% 955.00K",
       "symbol": "IMP",
       "ticker": "IMP",
       "isin": "BG1100005211",
@@ -1634,8 +1634,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "221 EALF Elana Agricultural Land Fund REIT-Sofia 9.37M 0.545 - -",
-      "name": "221 EALF Elana Agricultural Land Fund REIT-Sofia 9.37M 0.545 - -",
+      "company": "222 EALF Elana Agricultural Land Fund REIT-Sofia 9.37M 0.545 - -",
+      "name": "222 EALF Elana Agricultural Land Fund REIT-Sofia 9.37M 0.545 - -",
       "symbol": "EALF",
       "ticker": "EALF",
       "isin": "BG1100062063",
@@ -1970,22 +1970,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "250 BDT Biodit AD 2.53M 0.0900 -10.00% 245.54K",
-      "name": "250 BDT Biodit AD 2.53M 0.0900 -10.00% 245.54K",
-      "symbol": "BDT",
-      "ticker": "BDT",
-      "isin": "BG1100003190",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "BDT",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "251 BLRN Boleron AD 2.48M 1.120 - -",
-      "name": "251 BLRN Boleron AD 2.48M 1.120 - -",
+      "company": "250 BLRN Boleron AD 2.48M 1.120 - -",
+      "name": "250 BLRN Boleron AD 2.48M 1.120 - -",
       "symbol": "BLRN",
       "ticker": "BLRN",
       "isin": "BG1100022232",
@@ -1998,8 +1984,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "253 CEEP CEE Properties REIT 2.37M 1.880 1.08% -",
-      "name": "253 CEEP CEE Properties REIT 2.37M 1.880 1.08% -",
+      "company": "252 CEEP CEE Properties REIT 2.37M 1.880 1.08% -",
+      "name": "252 CEEP CEE Properties REIT 2.37M 1.880 1.08% -",
       "symbol": "CEEP",
       "ticker": "CEEP",
       "isin": "BG1100006060",
@@ -2012,8 +1998,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "254 CBAM CBA Asset Management AD 2.36M 0.600 20.00% 297.61K",
-      "name": "254 CBAM CBA Asset Management AD 2.36M 0.600 20.00% 297.61K",
+      "company": "253 CBAM CBA Asset Management AD 2.36M 0.600 20.00% 297.61K",
+      "name": "253 CBAM CBA Asset Management AD 2.36M 0.600 20.00% 297.61K",
       "symbol": "CBAM",
       "ticker": "CBAM",
       "isin": "BG1100064077",
@@ -2026,8 +2012,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "255 FAVH Favorit Hold AD 2.32M 0.505 1.41% -",
-      "name": "255 FAVH Favorit Hold AD 2.32M 0.505 1.41% -",
+      "company": "254 FAVH Favorit Hold AD 2.32M 0.505 1.41% -",
+      "name": "254 FAVH Favorit Hold AD 2.32M 0.505 1.41% -",
       "symbol": "FAVH",
       "ticker": "FAVH",
       "isin": "BG1100009981",
@@ -2040,8 +2026,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "256 ZNTH Zenith Investment Holding AD 2.29M 4.800 - -",
-      "name": "256 ZNTH Zenith Investment Holding AD 2.29M 4.800 - -",
+      "company": "255 ZNTH Zenith Investment Holding AD 2.29M 4.800 - -",
+      "name": "255 ZNTH Zenith Investment Holding AD 2.29M 4.800 - -",
       "symbol": "ZNTH",
       "ticker": "ZNTH",
       "isin": "BG1100104980",
@@ -2049,6 +2035,20 @@
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
       "providerSymbol": "ZNTH",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "256 BDT Biodit AD 2.24M 0.0900 -10.00% 245.54K",
+      "name": "256 BDT Biodit AD 2.24M 0.0900 -10.00% 245.54K",
+      "symbol": "BDT",
+      "ticker": "BDT",
+      "isin": "BG1100003190",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "BDT",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
