@@ -454,7 +454,11 @@
       "currency": "EUR",
       "timezone": "Europe/Bratislava",
       "providerSuffix": ".BS",
-      "state": "WAITING"
+      "state": "BLOCKED",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-10-05T13:28:11.065Z",
+      "catalogFingerprint": "afce18d809f4a560ea337f2f31d733f202bd15c5495bc157559673e7f61dd6d5",
+      "note": "Quarantined by canonical single writer after proven source preflight failure."
     },
     {
       "mic": "XLUX",
@@ -474,7 +478,11 @@
       "currency": "EUR",
       "timezone": "Europe/Malta",
       "providerSuffix": ".MT",
-      "state": "WAITING"
+      "state": "BLOCKED",
+      "blockedReason": "SOURCE_PREFLIGHT_GATE",
+      "blockedAt": "2026-10-05T13:28:11.065Z",
+      "catalogFingerprint": "300b0baaf37a562d03b4a0dbf52eadcac5a6c8fd612f3c7c491487e2ca8775c7",
+      "note": "Quarantined by canonical single writer after proven source preflight failure."
     },
     {
       "mic": "XCYS",
