@@ -18,10 +18,6 @@
         "reason": "SOURCE_PREFLIGHT_GATE"
       },
       {
-        "mic": "XBRA",
-        "reason": "SOURCE_PREFLIGHT_GATE"
-      },
-      {
         "mic": "XLIT",
         "reason": "SOURCE_PREFLIGHT_GATE"
       }
@@ -30,8 +26,8 @@
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 22,
-    "blocked": 5,
+    "complete": 23,
+    "blocked": 4,
     "ready": 1,
     "pending": 3,
     "total": 31
@@ -568,14 +564,14 @@
     {
       "mic": "XBRA",
       "name": "Bratislava",
-      "state": "BLOCKED",
-      "health": "BLOCKED",
-      "reason": "SOURCE_PREFLIGHT_GATE",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
       "catalog": {
         "present": true,
         "count": 9,
         "fingerprint": "afce18d809f4a560ea337f2f31d733f202bd15c5495bc157559673e7f61dd6d5",
-        "retrievedAt": "2026-10-05T13:32:43.163Z",
+        "retrievedAt": "2026-10-05T13:46:34.895Z",
         "source": "Bratislava Stock Exchange securities directory; active share identities cross-checked"
       },
       "sources": {
@@ -585,7 +581,7 @@
         "coverageRatio": 0.7777777777777778,
         "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-05T13:47:37.671Z"
     },
     {
       "mic": "XLUX",
@@ -720,5 +716,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-05T13:34:44.272Z"
+  "generatedAt": "2026-10-05T13:47:52.538Z"
 }

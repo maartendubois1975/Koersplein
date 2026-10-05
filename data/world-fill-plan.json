@@ -454,11 +454,60 @@
       "currency": "EUR",
       "timezone": "Europe/Bratislava",
       "providerSuffix": ".BS",
-      "state": "BLOCKED",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-10-05T13:28:11.065Z",
+      "state": "COMPLETE",
       "catalogFingerprint": "afce18d809f4a560ea337f2f31d733f202bd15c5495bc157559673e7f61dd6d5",
-      "note": "Quarantined by canonical single writer after proven source preflight failure."
+      "completedAt": "2026-10-05T13:47:37.671Z",
+      "dataUnavailable": [
+        {
+          "isin": "SK1110004407",
+          "officialIsin": "SK1110004407",
+          "symbol": "1SLP401E",
+          "name": "Allianz - Slovenska poistovna, a.s.",
+          "lastDate": "2026-09-29",
+          "recordCount": 21,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "SK1120004439",
+          "officialIsin": "SK1120004439",
+          "symbol": "1SKF401E",
+          "name": "Zentiva, a.s.",
+          "lastDate": "2026-08-20",
+          "recordCount": 25,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CS0009013453",
+          "officialIsin": "CS0009013453",
+          "symbol": "1BSL01AE",
+          "name": "Biotika a.s.",
+          "lastDate": "2026-09-11",
+          "recordCount": 46,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "SK1120005329",
+          "officialIsin": "SK1120005329",
+          "symbol": "1PRV001E",
+          "name": "Prva strategicka, a.s.",
+          "lastDate": "2026-09-18",
+          "recordCount": 6,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CS0009005152",
+          "officialIsin": "CS0009005152",
+          "symbol": "1VIP01AE",
+          "name": "Vipo, a.s.",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSSE_CURRENT_EQUITY_NO_USABLE_FREE_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        }
+      ]
     },
     {
       "mic": "XLUX",
