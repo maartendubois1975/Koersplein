@@ -25,11 +25,28 @@ const configs={
  XBUL:{urls:['https://www.bse-sofia.bg/en/market-segmentation'],allowedMics:new Set(['XBUL']),market:/Sofia|BSE/i,min:100,format:'bse-sofia-real-equities'},
  XLON:{urls:['https://www.londonstockexchange.com/reports?tab=instruments'],allowedMics:new Set(['XLON']),market:/London|LSE|Main Market|AIM/i,min:500,format:'lse-equities'},
  XZAG:{urls:['https://zse.hr/en/securities/26'],allowedMics:new Set(['XZAG']),market:/Zagreb|Prime|Official|Regular/i,min:70,format:'zse-equities'},
+ XTAL:{urls:['https://nasdaqbaltic.com/statistics/en/shares'],allowedMics:new Set(['XTAL']),market:/Tallinn|TLN/i,min:10,format:'nasdaq-baltic-shares'},
+ XRIS:{urls:['https://nasdaqbaltic.com/statistics/en/shares'],allowedMics:new Set(['XRIS']),market:/Riga|RIG/i,min:5,format:'nasdaq-baltic-shares'},
+ XLIT:{urls:['https://nasdaqbaltic.com/statistics/en/shares'],allowedMics:new Set(['XLIT']),market:/Vilnius|VLN/i,min:15,format:'nasdaq-baltic-shares'},
  XLJU:{urls:['https://ljse.si/en/issuers/12','https://seonet.ljse.si/default_en.aspx?doc=ISSUERS'],allowedMics:new Set(['XLJU']),market:/Ljubljana|LJSE|Prime|Shares/i,min:10,format:'ljse-official-equities'}
 };
 const cfg=configs[mic];if(!cfg)throw new Error(`Geen goedgekeurde officiële catalogusadapter voor ${mic}; markt blijft geblokkeerd tot een markt-specifieke adapter bestaat`);
 let text='',source='';for(const url of cfg.urls){try{const r=await fetch(url,{headers:{'user-agent':mic==='XCSE'?'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36':'Koersplein/1.0',accept:mic==='XCSE'?'text/html,application/xhtml+xml':'text/csv,text/plain,*/*'}});if(r.ok){const t=(await r.text()).replace(/^\uFEFF/,'');if((mic==='XCSE'&&t.length>500)||t.split(/\r?\n/).length>5){text=t;source=url;break}}}catch{}}
 if(!text)throw new Error('Officiële product-directory download niet gevonden voor '+m.name);
+if(['XTAL','XRIS','XLIT'].includes(mic)){
+ const homeByMic={XTAL:'TLN',XRIS:'RIG',XLIT:'VLN'}, suffixByMic={XTAL:'.TL',XRIS:'.RG',XLIT:'.VS'}, home=homeByMic[mic],suffix=suffixByMic[mic];
+ const clean=s=>String(s||'').replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/gi,' ').replace(/&amp;/gi,'&').replace(/\\s+/g,' ').trim();
+ const rows=[];
+ for(const tr of text.matchAll(new RegExp('<tr[^>]*>([\\s\\S]*?)</tr>','gi'))){const cells=[...tr[1].matchAll(new RegExp('<td[^>]*>([\\s\\S]*?)</td>','gi'))].map(x=>clean(x[1]));if(cells.length<2)continue;const name=cells[0],ticker=cells[1];if(!name||!ticker||!/^[A-Z0-9.-]{2,16}$/.test(ticker))continue;if(!ticker.toUpperCase().endsWith(home==='TLN'?'T':home==='RIG'?'R':'L')&&!cells.some(x=>x===home))continue;rows.push({name,ticker});}
+ const uniq=[...new Map(rows.map(x=>[x.ticker,x])).values()];if(uniq.length<cfg.min)throw new Error('BALTIC_OFFICIAL_LIST_GATE '+mic+' parsed='+uniq.length);
+ const shares=[],unresolved=[];
+ for(let n=0;n<uniq.length;n+=6){const batch=await Promise.all(uniq.slice(n,n+6).map(async x=>{try{const ps=x.ticker+suffix;const hr=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(ps)+'?period1=0&period2=4102444800&interval=1d',{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!hr.ok)return null;const hp=await hr.json(),res=hp?.chart?.result?.[0],meta=res?.meta;if(!meta||!(res?.timestamp?.length>0))return null;return {company:meta.longName||meta.shortName||x.name,name:meta.longName||meta.shortName||x.name,symbol:x.ticker,ticker:x.ticker,isin:mic+':'+x.ticker,mic,segment:'Nasdaq Baltic shares',currency:meta.currency||'EUR',providerSymbol:ps,identitySource:source,identityResolution:'NASDAQ_BALTIC_OFFICIAL_TICKER_HOME_MARKET_PLUS_DIRECT_HISTORY_PROOF'};}catch{return null}}));batch.forEach((v,i)=>v?shares.push(v):unresolved.push(uniq[n+i]));}
+ if(shares.length<cfg.min)throw new Error('BALTIC_HISTORY_GATE '+mic+' proven='+shares.length+'/'+uniq.length+' unresolved='+JSON.stringify(unresolved));
+ shares.sort((a,b)=>a.ticker.localeCompare(b.ticker));const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(shares.map(x=>[x.ticker,x.providerSymbol]))).digest('hex');
+ const catalog={exchange:m.name,mic,retrievedAt:new Date().toISOString(),source:'Nasdaq Baltic official share list + home-market ticker + direct free history proof',sourceUrl:source,officialTickerCandidates:uniq.length,resolvedCount:shares.length,fingerprint,discoveryPolicy:'NASDAQ_BALTIC_OFFICIAL_SHARE_LIST_HOME_MARKET_THEN_DIRECT_HISTORY_PROOF',unresolved,shares};
+ await fs.writeFile('data/euronext-'+m.code+'.json',JSON.stringify(catalog,null,2)+'\\n');await fs.mkdir('research/output',{recursive:true});await fs.writeFile('research/output/'+m.code+'-catalog-gate.json',JSON.stringify({market:mic,source,officialTickerCandidates:uniq.length,accepted:shares.length,unresolved,fingerprint,pass:unresolved.length===0,generatedAt:new Date().toISOString()},null,2));
+ if(unresolved.length)throw new Error('BALTIC_SOURCE_GATE '+mic+' unresolved='+JSON.stringify(unresolved));console.log(JSON.stringify({market:mic,officialTickerCandidates:uniq.length,accepted:shares.length,fingerprint,directSourceProof:true}));process.exit(0);
+}
 if(mic==='XLJU'){
  // LJSE publishes its issuer universe as HTML, not CSV. Parse only current issuer links,
  // then require a directly usable free .LJ history route before admitting an equity.
