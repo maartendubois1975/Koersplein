@@ -65,33 +65,7 @@ if(['XTAL','XRIS','XLIT'].includes(mic)){
  await fs.writeFile('data/euronext-'+m.code+'.json',JSON.stringify(catalog,null,2)+String.fromCharCode(10));await fs.mkdir('research/output',{recursive:true});await fs.writeFile('research/output/'+m.code+'-catalog-gate.json',JSON.stringify({market:mic,source,officialTickerCandidates:uniq.length,accepted:shares.length,unresolved,fingerprint,pass:unresolved.length===0,generatedAt:new Date().toISOString()},null,2));
  if(unresolved.length)throw new Error('BALTIC_SOURCE_GATE '+mic+' unresolved='+JSON.stringify(unresolved));console.log(JSON.stringify({market:mic,officialTickerCandidates:uniq.length,accepted:shares.length,fingerprint,directSourceProof:true}));process.exit(0);
 }
-if(mic==='XLJU'){
- // LJSE publishes its issuer universe as HTML, not CSV. Parse only current issuer links,
- // then require a directly usable free .LJ history route before admitting an equity.
- const issuerLinks=[...text.matchAll(new RegExp("href=[\"']([^\"']*(?:issuer|izdajatelj)[^\"']*)[\"'][^>]*>([\\s\\S]*?)<\\/a>","gi"))];
- const clean=s=>String(s||'').replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/gi,' ').replace(/&amp;/gi,'&').replace(/\\s+/g,' ').trim();
- const names=[]; const seen=new Set();
- for(const m0 of issuerLinks){const name=clean(m0[2]);if(name.length<2||/issuer|izdajatelj|seonet/i.test(name))continue;const k=name.toLocaleUpperCase('sl');if(!seen.has(k)){seen.add(k);names.push(name)}}
- // Fallback for the current LJSE issuer cards/table when anchor labels are wrapped.
- if(names.length<cfg.min){for(const m0 of text.matchAll(new RegExp("(?:issuer-name|company-name|naziv)[^>]*>([\\s\\S]*?)<\\/","gi"))){const name=clean(m0[1]);const k=name.toLocaleUpperCase('sl');if(name.length>1&&!seen.has(k)){seen.add(k);names.push(name)}}}
- if(names.length<cfg.min)throw new Error(`LJUBLJANA_OFFICIAL_HTML_GATE: only ${names.length} issuer identities parsed from official LJSE HTML`);
- const shares=[],unresolved=[];
- for(let n=0;n<names.length;n+=5){const batch=await Promise.all(names.slice(n,n+5).map(async name=>{try{
-   const u=new URL('https://query2.finance.yahoo.com/v1/finance/search');u.searchParams.set('q',name);u.searchParams.set('quotesCount','12');u.searchParams.set('newsCount','0');
-   const sr=await fetch(u,{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});if(!sr.ok)return null;const sp=await sr.json();
-   const q=(sp.quotes||[]).find(x=>String(x.symbol||'').toUpperCase().endsWith('.LJ'));if(!q?.symbol)return null;
-   const ps=String(q.symbol),hr=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(ps)+'?period1=0&period2=4102444800&interval=1d',{headers:{'user-agent':'Koersplein-history/1.0',accept:'application/json'}});
-   if(!hr.ok)return null;const hp=await hr.json(),res=hp?.chart?.result?.[0],meta=res?.meta;if(!meta||!(res?.timestamp?.length>0))return null;
-   return {company:meta.longName||meta.shortName||name,name:meta.longName||meta.shortName||name,symbol:ps.replace(/\\.LJ$/i,''),ticker:ps.replace(/\\.LJ$/i,''),isin:null,mic:'XLJU',segment:'LJSE regulated shares',currency:meta.currency||'EUR',providerSymbol:ps,identitySource:source,identityResolution:'OFFICIAL_LJSE_ISSUER_HTML_PLUS_DIRECT_LJ_HISTORY_PROOF'};
- }catch{return null}}));batch.forEach((v,i)=>v?shares.push(v):unresolved.push(names[n+i]));}
- const bySymbol=new Map();for(const x of shares)bySymbol.set(x.symbol.toUpperCase(),x);const unique=[...bySymbol.values()];
- if(unique.length<cfg.min)throw new Error(`LJUBLJANA_SOURCE_GATE: proven ${unique.length}/${names.length}; unresolved=${JSON.stringify(unresolved)}`);
- unique.sort((a,b)=>a.name.localeCompare(b.name,'sl'));const fingerprint=(await import('node:crypto')).createHash('sha256').update(JSON.stringify(unique.map(x=>[x.symbol,x.providerSymbol]))).digest('hex');
- const catalog={exchange:m.name,mic:'XLJU',retrievedAt:new Date().toISOString(),source:'Ljubljana Stock Exchange official issuer directory + direct free .LJ history proof',sourceUrl:source,officialIssuerCandidates:names.length,resolvedCount:unique.length,fingerprint,discoveryPolicy:'OFFICIAL_LJSE_HTML_ISSUERS_THEN_DIRECT_HISTORY_PROOF',unresolved,shares:unique};
- await fs.writeFile(`data/euronext-${m.code}.json`,JSON.stringify(catalog,null,2)+String.fromCharCode(10));await fs.mkdir('research/output',{recursive:true});await fs.writeFile(`research/output/${m.code}-catalog-gate.json`,JSON.stringify({market:mic,source,fingerprint,officialIssuerCandidates:names.length,accepted:unique.length,unresolved,pass:unresolved.length===0,generatedAt:new Date().toISOString()},null,2));
- if(unresolved.length)throw new Error(`LJUBLJANA_SOURCE_GATE unresolved official issuers: ${JSON.stringify(unresolved)}`);
- console.log(JSON.stringify({market:mic,officialIssuerCandidates:names.length,accepted:unique.length,fingerprint,directSourceProof:true}));process.exit(0);
-}
+if(mic==='XLJU'){const urls=['https://ljse.si/en/issuers/12','https://seonet.ljse.si/default_en.aspx?doc=ISSUERS'];for(const u of urls){const r=await fetch(u,{headers:{'user-agent':'Mozilla/5.0'}}),h=await r.text();const scripts=[...h.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)].map(x=>x[1]);const links=[...h.matchAll(/href=["']([^"']+)["']/gi)].map(x=>x[1]).filter(x=>/issuer|share|security|csv|xls|json|api/i.test(x));console.log('LJ_DISCOVERY '+u+' '+JSON.stringify({status:r.status,links:[...new Set(links)].slice(0,100),scripts}));}throw new Error('LJ_DISCOVERY_DONE');}
 if(mic==='XLON'){
  const base='https://api.londonstockexchange.com/api/v1/pages?path=live-markets%2Fmarket-data-dashboard%2Fprice-explorer&parameters=';
  const getPage=async page=>{const p=`categories=EQUITY&subcategories=1&showonlylse=true&size=100&page=${page}`,r=await fetch(base+encodeURIComponent(p),{headers:{'user-agent':'Mozilla/5.0','accept':'application/json'}});if(!r.ok)throw new Error('LSE_PRICE_EXPLORER_HTTP_'+r.status);const j=await r.json(),comp=(j.components||[]).find(x=>x.type==='price-explorer'),v=(comp?.content||[]).find(x=>x.name==='priceexplorersearch')?.value;if(!v)throw new Error('LSE_PRICE_EXPLORER_PAYLOAD');return v};
