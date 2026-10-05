@@ -16,6 +16,18 @@
       {
         "mic": "XZAG",
         "reason": "SOURCE_PREFLIGHT_GATE"
+      },
+      {
+        "mic": "XTAL",
+        "reason": "SOURCE_PREFLIGHT_GATE"
+      },
+      {
+        "mic": "XRIS",
+        "reason": "SOURCE_PREFLIGHT_GATE"
+      },
+      {
+        "mic": "XLIT",
+        "reason": "SOURCE_PREFLIGHT_GATE"
       }
     ]
   },
@@ -23,9 +35,9 @@
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
     "complete": 19,
-    "blocked": 3,
+    "blocked": 6,
     "ready": 1,
-    "pending": 8,
+    "pending": 5,
     "total": 31
   },
   "markets": [
@@ -648,69 +660,69 @@
     {
       "mic": "XTAL",
       "name": "Tallinn",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
-      "reason": null,
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 30,
+        "fingerprint": "f1f33ca70b666baf7974d13788d1c7d048dae119843058209d9acdfe2d7657c4",
         "retrievedAt": null,
-        "source": null
+        "source": "Nasdaq Baltic official share list + home-market ticker + direct free history proof"
       },
       "sources": {
-        "status": "UNTESTED",
-        "tested": 0,
-        "fullCatalog": 0,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "status": "BLOCKED",
+        "tested": 4,
+        "fullCatalog": 30,
+        "coverageRatio": 0,
+        "crossCheckRatio": 0
       },
       "completedAt": null
     },
     {
       "mic": "XRIS",
       "name": "Riga",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
-      "reason": null,
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 15,
+        "fingerprint": "be188c13889c19d68a66d0e219abd4005f0f40444f3289aaaaf01a9db8c08d14",
         "retrievedAt": null,
-        "source": null
+        "source": "Nasdaq Baltic official share list + home-market ticker + direct free history proof"
       },
       "sources": {
-        "status": "UNTESTED",
-        "tested": 0,
-        "fullCatalog": 0,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "status": "BLOCKED",
+        "tested": 4,
+        "fullCatalog": 15,
+        "coverageRatio": 0,
+        "crossCheckRatio": 0
       },
       "completedAt": null
     },
     {
       "mic": "XLIT",
       "name": "Vilnius",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
-      "reason": null,
+      "state": "BLOCKED",
+      "health": "BLOCKED",
+      "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
         "present": false,
-        "count": 0,
-        "fingerprint": null,
+        "count": 25,
+        "fingerprint": "2407481d94208148248ef31a32acb244696a1714a981b70404ca832245821c09",
         "retrievedAt": null,
-        "source": null
+        "source": "Nasdaq Baltic official share list + home-market ticker + direct free history proof"
       },
       "sources": {
-        "status": "UNTESTED",
-        "tested": 0,
-        "fullCatalog": 0,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "status": "BLOCKED",
+        "tested": 4,
+        "fullCatalog": 25,
+        "coverageRatio": 0,
+        "crossCheckRatio": 0
       },
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-05T06:26:07.613Z"
+  "generatedAt": "2026-10-05T06:29:52.895Z"
 }
