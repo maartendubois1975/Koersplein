@@ -18,10 +18,6 @@
         "reason": "SOURCE_PREFLIGHT_GATE"
       },
       {
-        "mic": "XTAL",
-        "reason": "SOURCE_PREFLIGHT_GATE"
-      },
-      {
         "mic": "XRIS",
         "reason": "SOURCE_PREFLIGHT_GATE"
       },
@@ -34,8 +30,8 @@
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 19,
-    "blocked": 6,
+    "complete": 20,
+    "blocked": 5,
     "ready": 1,
     "pending": 5,
     "total": 31
@@ -660,9 +656,9 @@
     {
       "mic": "XTAL",
       "name": "Tallinn",
-      "state": "BLOCKED",
-      "health": "BLOCKED",
-      "reason": "SOURCE_PREFLIGHT_GATE",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
       "catalog": {
         "present": true,
         "count": 30,
@@ -677,7 +673,7 @@
         "coverageRatio": 1,
         "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-05T06:52:01.832Z"
     },
     {
       "mic": "XRIS",
@@ -724,5 +720,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-05T06:49:07.677Z"
+  "generatedAt": "2026-10-05T06:53:16.284Z"
 }
