@@ -1,6 +1,6 @@
 {
   "marketMic": "XTAL,XRIS,XLIT",
-  "purpose": "Baltic repair production regression",
-  "message": "Re-run repaired Baltic provider-symbol and JSON paths through all strict gates.",
-  "requestedAt": "2026-10-05T09:00:00+02:00"
+  "purpose": "Official Nasdaq Baltic history validation",
+  "message": "Run Tallinn Riga Vilnius through official Nasdaq Baltic ISIN/history gates, then source audit, Worker preflight, backfill, repair and final validation.",
+  "requestedAt": "2026-10-05T09:40:00+02:00"
 }
