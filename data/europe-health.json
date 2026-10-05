@@ -22,10 +22,6 @@
         "reason": "SOURCE_PREFLIGHT_GATE"
       },
       {
-        "mic": "XMAL",
-        "reason": "SOURCE_PREFLIGHT_GATE"
-      },
-      {
         "mic": "XLIT",
         "reason": "SOURCE_PREFLIGHT_GATE"
       }
@@ -34,8 +30,8 @@
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 21,
-    "blocked": 6,
+    "complete": 22,
+    "blocked": 5,
     "ready": 1,
     "pending": 3,
     "total": 31
@@ -583,7 +579,7 @@
         "source": "Bratislava Stock Exchange securities directory; active share identities cross-checked"
       },
       "sources": {
-        "status": "APPROVED",
+        "status": "BLOCKED",
         "tested": 4,
         "fullCatalog": 9,
         "coverageRatio": 0.7777777777777778,
@@ -616,24 +612,24 @@
     {
       "mic": "XMAL",
       "name": "Malta",
-      "state": "BLOCKED",
-      "health": "BLOCKED",
-      "reason": "SOURCE_PREFLIGHT_GATE",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
       "catalog": {
-        "present": false,
+        "present": true,
         "count": 33,
         "fingerprint": "300b0baaf37a562d03b4a0dbf52eadcac5a6c8fd612f3c7c491487e2ca8775c7",
-        "retrievedAt": null,
+        "retrievedAt": "2026-10-05T13:29:40.655Z",
         "source": "Malta Stock Exchange Official List PDF"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
         "fullCatalog": 33,
         "coverageRatio": 0.9393939393939394,
         "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-05T13:33:17.133Z"
     },
     {
       "mic": "XCYS",
@@ -724,5 +720,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-05T13:33:11.197Z"
+  "generatedAt": "2026-10-05T13:33:31.742Z"
 }

@@ -848,37 +848,24 @@
       }
     },
     "XBRA": {
-      "status": "APPROVED",
+      "status": "BLOCKED",
       "catalogSource": "Bratislava Stock Exchange securities directory; active share identities cross-checked",
-      "historySources": [
-        {
-          "provider": "yahoo-isin-resolver",
-          "role": "DISCOVERY_FALLBACK",
-          "note": "ISIN-first resolver used when direct symbol and official history route fail."
-        },
-        {
-          "provider": "yahoo-chart",
-          "role": "PRIMARY",
-          "note": "Full-catalog preflight: 0/9 instruments."
-        },
-        {
-          "provider": "euronext-live",
-          "role": "INDEPENDENT_FALLBACK_VALIDATION",
-          "note": "Independently tested on full catalog: 0/9; 0 additional instruments beyond primary."
-        }
-      ],
+      "historySources": [],
       "discovery": {
         "testedDifficultSymbols": 9,
         "testedFullCatalog": 9,
         "coverageRatio": 0.7777777777777778,
+        "sourceCountTested": 4,
+        "note": "Official BSSE shares directory identified; market-specific identity/history adapter still requires proof before APPROVED.",
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
-        "sourceCountTested": 4,
-        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
+        "uncovered": 2,
+        "dataUnavailable": 2,
+        "unresolved": 0
       },
       "catalogFingerprint": "afce18d809f4a560ea337f2f31d733f202bd15c5495bc157559673e7f61dd6d5",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-05T13:26:50.181Z"
+      "lastAuditAt": "2026-10-05T13:31:41.585Z"
     },
     "XLUX": {
       "status": "RESEARCHING",
@@ -893,20 +880,33 @@
       }
     },
     "XMAL": {
-      "status": "BLOCKED",
+      "status": "APPROVED",
       "catalogSource": "Malta Stock Exchange Official List PDF",
-      "historySources": [],
+      "historySources": [
+        {
+          "provider": "yahoo-isin-resolver",
+          "role": "DISCOVERY_FALLBACK",
+          "note": "ISIN-first resolver used when direct symbol and official history route fail."
+        },
+        {
+          "provider": "yahoo-chart",
+          "role": "PRIMARY",
+          "note": "Full-catalog preflight: 0/33 instruments."
+        },
+        {
+          "provider": "euronext-live",
+          "role": "INDEPENDENT_FALLBACK_VALIDATION",
+          "note": "Independently tested on full catalog: 0/33; 0 additional instruments beyond primary."
+        }
+      ],
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 33,
         "coverageRatio": 0.9393939393939394,
-        "sourceCountTested": 4,
-        "note": "Official MSE list and equity symbols identified; spreadsheet/PDF parser and history proof required before APPROVED.",
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
-        "uncovered": 2,
-        "dataUnavailable": 0,
-        "unresolved": 2
+        "sourceCountTested": 4,
+        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       },
       "catalogFingerprint": "300b0baaf37a562d03b4a0dbf52eadcac5a6c8fd612f3c7c491487e2ca8775c7",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
