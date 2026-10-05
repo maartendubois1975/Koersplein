@@ -846,6 +846,54 @@
         "dataUnavailable": 0,
         "unresolved": 73
       }
+    },
+    "XBRA": {
+      "status": "RESEARCHING",
+      "catalogSource": "Bratislava Stock Exchange official shares/trading directory",
+      "historySources": [],
+      "discovery": {
+        "testedDifficultSymbols": 0,
+        "testedFullCatalog": 0,
+        "coverageRatio": 0,
+        "sourceCountTested": 0,
+        "note": "Official BSSE shares directory identified; market-specific identity/history adapter still requires proof before APPROVED."
+      }
+    },
+    "XLUX": {
+      "status": "RESEARCHING",
+      "catalogSource": "Luxembourg Stock Exchange daily official list — Bourse de Luxembourg equities",
+      "historySources": [],
+      "discovery": {
+        "testedDifficultSymbols": 0,
+        "testedFullCatalog": 0,
+        "coverageRatio": 0,
+        "sourceCountTested": 0,
+        "note": "Official LuxSE daily list identified; adapter must filter equities admitted to trading and prove free history per instrument."
+      }
+    },
+    "XMAL": {
+      "status": "RESEARCHING",
+      "catalogSource": "Malta Stock Exchange Official List (official_list.xls/pdf)",
+      "historySources": [],
+      "discovery": {
+        "testedDifficultSymbols": 0,
+        "testedFullCatalog": 0,
+        "coverageRatio": 0,
+        "sourceCountTested": 0,
+        "note": "Official MSE list and equity symbols identified; spreadsheet/PDF parser and history proof required before APPROVED."
+      }
+    },
+    "XCYS": {
+      "status": "RESEARCHING",
+      "catalogSource": "Cyprus Stock Exchange official listed securities/companies directory",
+      "historySources": [],
+      "discovery": {
+        "testedDifficultSymbols": 0,
+        "testedFullCatalog": 0,
+        "coverageRatio": 0,
+        "sourceCountTested": 0,
+        "note": "Official CSE route reserved; exact current equity directory and history mapping must be proven before APPROVED."
+      }
     }
   }
 }
