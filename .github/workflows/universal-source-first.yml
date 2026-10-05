@@ -96,6 +96,11 @@ jobs:
           }
           console.log(`SOURCE COVERAGE GATE PASS: ${r.combinedCovered} covered + ${unavailable.length} proven DATA_UNAVAILABLE = ${r.catalog}/${r.catalog}`);
           NODE
+      - name: Deploy Cloudflare Worker schema/identity fixes
+        if: ${{ matrix.market_mic == 'XICE' }}
+        working-directory: cloudflare
+        run: npx wrangler deploy
+
       - name: Worker catalog write/read preflight
         env:
           MARKET_MIC: ${{ matrix.market_mic }}
