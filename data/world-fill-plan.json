@@ -787,11 +787,31 @@
       "currency": "EUR",
       "timezone": "Europe/Vilnius",
       "providerSuffix": ".VS",
-      "state": "BLOCKED",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-10-05T06:29:52.841Z",
+      "state": "COMPLETE",
       "catalogFingerprint": "2407481d94208148248ef31a32acb244696a1714a981b70404ca832245821c09",
-      "note": "Quarantined by canonical single writer after proven source preflight failure."
+      "completedAt": "2026-10-05T14:02:29.552Z",
+      "dataUnavailable": [
+        {
+          "isin": "EE3100126368",
+          "officialIsin": "EE3100126368",
+          "symbol": "CTS1L",
+          "name": "City Service",
+          "lastDate": "2026-09-15",
+          "recordCount": 11,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "LT0000131872",
+          "officialIsin": "LT0000131872",
+          "symbol": "NTU1L",
+          "name": "Novaturas",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "SEARCHED_NO_SURVIVING_EVIDENCE",
+          "evidence": "Official current Nasdaq Baltic identity; no usable daily bars survived Nasdaq Baltic, StockAnalysis, Yahoo direct or Yahoo ISIN repair routes after repeated production retries"
+        }
+      ]
     }
   ],
   "gates": {
