@@ -74,7 +74,7 @@ if(mic==='XLJU'){
  const names=[]; const seen=new Set();
  for(const m0 of issuerLinks){const name=clean(m0[2]);if(name.length<2||/issuer|izdajatelj|seonet/i.test(name))continue;const k=name.toLocaleUpperCase('sl');if(!seen.has(k)){seen.add(k);names.push(name)}}
  // Fallback for the current LJSE issuer cards/table when anchor labels are wrapped.
- if(names.length<cfg.min){for(const m0 of ljtext.matchAll(new RegExp("(?:issuer-name|company-name|naziv)[^>]*>([\\s\\S]*?)<\\/","gi"))){const name=clean(m0[1]);const k=name.toLocaleUpperCase('sl');if(name.length>1&&!seen.has(k)){seen.add(k);names.push(name)}}}
+ if(names.length<cfg.min){for(const tr of ljtext.matchAll(new RegExp('<tr[^>]*>([\\\\s\\\\S]*?)<\\\\/tr>','gi'))){const cells=[...tr[1].matchAll(new RegExp('<td[^>]*>([\\\\s\\\\S]*?)<\\\\/td>','gi'))].map(x=>clean(x[1]));const name=cells[0];if(!name||name.length<3||/issuer|url|testni|ljubljanska borza/i.test(name))continue;const k=name.toLocaleUpperCase('sl');if(!seen.has(k)){seen.add(k);names.push(name)}}}
  if(names.length<cfg.min)throw new Error(`LJUBLJANA_OFFICIAL_HTML_GATE: only ${names.length} issuer identities parsed from official LJSE HTML`);
  const shares=[],unresolved=[];
  for(let n=0;n<names.length;n+=5){const batch=await Promise.all(names.slice(n,n+5).map(async name=>{try{
