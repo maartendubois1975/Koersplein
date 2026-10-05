@@ -782,18 +782,18 @@
       },
       "catalogFingerprint": "8d30f3706bad5373a9e0f4f1ea4138504b34fe3d0829bea810a0ceb7a7f1536e",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-04T15:54:08.606Z",
+      "lastAuditAt": "2026-10-05T17:56:25.363Z",
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 158,
-        "coverageRatio": 0.5822784810126582,
+        "coverageRatio": 0.6772151898734177,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
         "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval.",
-        "uncovered": 66,
+        "uncovered": 51,
         "dataUnavailable": 0,
-        "unresolved": 66
+        "unresolved": 51
       }
     },
     "XDUB": {
@@ -834,7 +834,7 @@
       "catalogFingerprint": "1df127daa66d2226020c720d89e376f95ee81c0b7d03bbc781ae5a38d2ba4ccb",
       "catalogSource": "Zagreb Stock Exchange official regulated-market equity directory",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-05T17:47:53.610Z",
+      "lastAuditAt": "2026-10-05T16:15:12.065Z",
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 73,
