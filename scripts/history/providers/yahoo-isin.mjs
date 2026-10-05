@@ -15,7 +15,7 @@ export class YahooIsinProvider {
   for(const q of quotes){
    try{
     const y=new YahooChartProvider();
-    return await y.fetchDaily({...instrument,providerSymbol:q.symbol,allowProviderExchangeMismatch:String(instrument.mic||'').toUpperCase()==='XSWX'},opts);
+    return await y.fetchDaily({...instrument,providerSymbol:q.symbol,allowProviderExchangeMismatch:['XSWX','XLUX'].includes(String(instrument.mic||'').toUpperCase())},opts);
    }catch(e){last=e}
   }
   throw last||Error(`Geen gevalideerde Yahoo ISIN-route voor ${instrument.isin}`);
