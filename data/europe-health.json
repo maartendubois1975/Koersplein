@@ -16,18 +16,14 @@
       {
         "mic": "XZAG",
         "reason": "SOURCE_PREFLIGHT_GATE"
-      },
-      {
-        "mic": "XLUX",
-        "reason": "SOURCE_PREFLIGHT_GATE"
       }
     ]
   },
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 24,
-    "blocked": 4,
+    "complete": 25,
+    "blocked": 3,
     "ready": 1,
     "pending": 2,
     "total": 31
@@ -586,24 +582,24 @@
     {
       "mic": "XLUX",
       "name": "Luxemburg",
-      "state": "BLOCKED",
-      "health": "BLOCKED",
-      "reason": "SOURCE_PREFLIGHT_GATE",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
       "catalog": {
-        "present": false,
+        "present": true,
         "count": 18,
         "fingerprint": "3b63a0258fbfac5df8aa0a3feaff3e1321cad722043e6cb54d55add42770cdec",
-        "retrievedAt": null,
+        "retrievedAt": "2026-10-05T14:33:55.785Z",
         "source": "Luxembourg Stock Exchange public equity trading-data GraphQL"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
         "fullCatalog": 18,
-        "coverageRatio": 0.8888888888888888,
+        "coverageRatio": 1,
         "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-05T14:37:14.625Z"
     },
     {
       "mic": "XMAL",
@@ -716,5 +712,5 @@
       "completedAt": "2026-10-05T14:02:29.552Z"
     }
   ],
-  "generatedAt": "2026-10-05T14:32:11.436Z"
+  "generatedAt": "2026-10-05T14:37:27.238Z"
 }
