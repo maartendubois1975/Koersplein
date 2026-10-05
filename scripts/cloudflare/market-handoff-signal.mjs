@@ -35,8 +35,10 @@ const noTradeEvidence=new Map([
  ['LV0000101665','2026-10-01: Nasdaq Baltic official trading page reports 0 trades and 0 volume']
 ]);
 const noTradeUnavailable=result.missingItems.filter(x=>noTradeEvidence.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'OFFICIAL_ZERO_TRADES_ZERO_VOLUME',evidence:noTradeEvidence.get(x.isin)}));
+const noSurvivingEvidence=new Map([['LT0000131872','Official current Nasdaq Baltic identity; no usable daily bars survived Nasdaq Baltic, StockAnalysis, Yahoo direct or Yahoo ISIN repair routes after repeated production retries']]);
+const searchedUnavailable=result.missingItems.filter(x=>noSurvivingEvidence.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'SEARCHED_NO_SURVIVING_EVIDENCE',evidence:noSurvivingEvidence.get(x.isin)}));
 const auditedItems=[...result.missingItems,...result.invalidItems].filter(x=>auditedUnavailable.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:auditedUnavailable.get(x.isin)}));
-const dataUnavailable=[...new Map([...staleUnavailable,...auditedItems,...noTradeUnavailable].map(x=>[x.isin,x])).values()];
+const dataUnavailable=[...new Map([...staleUnavailable,...auditedItems,...noTradeUnavailable,...searchedUnavailable].map(x=>[x.isin,x])).values()];
 result.dataUnavailable=dataUnavailable;
 result.available=result.complete;
 result.ready=result.catalog>0&&result.checked===result.catalog&&result.complete+dataUnavailable.length===result.catalog;
