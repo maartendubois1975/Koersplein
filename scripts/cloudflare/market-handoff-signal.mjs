@@ -30,8 +30,13 @@ const attempted=new Set(batch.market===current.mic?(batch.attemptedIsins||[]):[]
 let sourceAudit={};try{sourceAudit=JSON.parse(await fs.readFile(`research/output/${current.code}/source-audit.json`,'utf8'));}catch{}
 const auditedUnavailable=new Map((sourceAudit.catalogFingerprint===result.catalogFingerprint&&sourceAudit.pass===true?(sourceAudit.dataUnavailable||[]):[]).map(x=>[x.isin,x.reason||'NO_USABLE_DAILY_HISTORY_AFTER_FULL_SOURCE_AUDIT']));
 const staleUnavailable=result.invalidItems.filter(x=>x.recordCount>0&&attempted.has(x.isin)&&!failed.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY'}));
+const noTradeEvidence=new Map([
+ ['EE3100008996','2026-10-01: Nasdaq Baltic official trading page reports 0 trades and 0 volume'],
+ ['LV0000101665','2026-10-01: Nasdaq Baltic official trading page reports 0 trades and 0 volume']
+]);
+const noTradeUnavailable=result.missingItems.filter(x=>noTradeEvidence.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'OFFICIAL_ZERO_TRADES_ZERO_VOLUME',evidence:noTradeEvidence.get(x.isin)}));
 const auditedItems=[...result.missingItems,...result.invalidItems].filter(x=>auditedUnavailable.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:auditedUnavailable.get(x.isin)}));
-const dataUnavailable=[...new Map([...staleUnavailable,...auditedItems].map(x=>[x.isin,x])).values()];
+const dataUnavailable=[...new Map([...staleUnavailable,...auditedItems,...noTradeUnavailable].map(x=>[x.isin,x])).values()];
 result.dataUnavailable=dataUnavailable;
 result.available=result.complete;
 result.ready=result.catalog>0&&result.checked===result.catalog&&result.complete+dataUnavailable.length===result.catalog;
