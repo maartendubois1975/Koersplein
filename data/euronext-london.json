@@ -1,10 +1,10 @@
 {
   "exchange": "Londen",
   "mic": "XLON",
-  "retrievedAt": "2026-10-03T13:45:57.452Z",
+  "retrievedAt": "2026-10-05T05:54:27.532Z",
   "source": "London Stock Exchange Price Explorer - LSE issuer equities / Shares",
   "sourceUrl": "https://www.londonstockexchange.com/live-markets/market-data-dashboard/price-explorer?categories=EQUITY&subcategories=1",
-  "rawInstrumentCount": 1542,
+  "rawInstrumentCount": 1543,
   "eligibleCount": 1498,
   "resolvedCount": 1498,
   "rejectedCount": 22,
@@ -164,7 +164,7 @@
       "reason": "OFFICIAL_LSE_SUSPENDED_NOT_CURRENTLY_TRADABLE"
     }
   ],
-  "fingerprint": "4bddee3a21c6fa0bf958c0326153d84c0cd77bf9df14801162e00cfdc4facffb",
+  "fingerprint": "5678d63afe9888d46429de311dce440ccfe5abb206dbc0b5f000d4e1ecf8eeb4",
   "shares": [
     {
       "company": "1947 OIL & GAS PLC",
@@ -11750,6 +11750,19 @@
       "identityResolution": "LSE_PRICE_EXPLORER_OFFICIAL"
     },
     {
+      "company": "MOLECULE GROUP PLC",
+      "name": "MOLECULE GROUP PLC",
+      "symbol": "MOL",
+      "ticker": "MOL",
+      "isin": "GB00BTQLZH16",
+      "mic": "XLON",
+      "segment": "LSE issuer equity",
+      "currency": "GBX",
+      "providerSymbol": "MOL.L",
+      "identitySource": "https://www.londonstockexchange.com/live-markets/market-data-dashboard/price-explorer?categories=EQUITY&subcategories=1",
+      "identityResolution": "LSE_PRICE_EXPLORER_OFFICIAL"
+    },
+    {
       "company": "MOLTEN VENTURES PLC",
       "name": "MOLTEN VENTURES PLC",
       "symbol": "GROW",
@@ -18922,19 +18935,6 @@
       "segment": "LSE issuer equity",
       "currency": "GBX",
       "providerSymbol": "VSL.L",
-      "identitySource": "https://www.londonstockexchange.com/live-markets/market-data-dashboard/price-explorer?categories=EQUITY&subcategories=1",
-      "identityResolution": "LSE_PRICE_EXPLORER_OFFICIAL"
-    },
-    {
-      "company": "VULCAN TWO GROUP PLC",
-      "name": "VULCAN TWO GROUP PLC",
-      "symbol": "VUL",
-      "ticker": "VUL",
-      "isin": "GB00BTQLZH16",
-      "mic": "XLON",
-      "segment": "LSE issuer equity",
-      "currency": "GBX",
-      "providerSymbol": "VUL.L",
       "identitySource": "https://www.londonstockexchange.com/live-markets/market-data-dashboard/price-explorer?categories=EQUITY&subcategories=1",
       "identityResolution": "LSE_PRICE_EXPLORER_OFFICIAL"
     },

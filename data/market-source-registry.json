@@ -168,7 +168,7 @@
         {
           "provider": "yahoo-chart",
           "role": "PRIMARY",
-          "note": "Full-catalog preflight: 1459/1498 instruments."
+          "note": "Full-catalog preflight: 1458/1498 instruments."
         },
         {
           "provider": "euronext-live",
@@ -188,7 +188,7 @@
       },
       "note": "Quarantined until authorised deterministic access to the official XLON instrument catalogue is available. No full backfill and no synthetic/third-party catalogue substitution.",
       "lastAuditAt": "2026-10-03T13:56:25.556Z",
-      "catalogFingerprint": "4bddee3a21c6fa0bf958c0326153d84c0cd77bf9df14801162e00cfdc4facffb"
+      "catalogFingerprint": "5678d63afe9888d46429de311dce440ccfe5abb206dbc0b5f000d4e1ecf8eeb4"
     },
     "XETR": {
       "status": "APPROVED",
@@ -782,18 +782,18 @@
       },
       "catalogFingerprint": "8d30f3706bad5373a9e0f4f1ea4138504b34fe3d0829bea810a0ceb7a7f1536e",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-05T06:11:24.784Z",
+      "lastAuditAt": "2026-10-04T15:54:08.606Z",
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 158,
-        "coverageRatio": 0.3860759493670886,
+        "coverageRatio": 0.5822784810126582,
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
         "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval.",
-        "uncovered": 97,
+        "uncovered": 66,
         "dataUnavailable": 0,
-        "unresolved": 97
+        "unresolved": 66
       }
     },
     "XDUB": {
@@ -834,7 +834,7 @@
       "catalogFingerprint": "1df127daa66d2226020c720d89e376f95ee81c0b7d03bbc781ae5a38d2ba4ccb",
       "catalogSource": "Zagreb Stock Exchange official regulated-market equity directory",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-05T06:04:00.093Z",
+      "lastAuditAt": "2026-10-04T16:54:26.245Z",
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 73,
