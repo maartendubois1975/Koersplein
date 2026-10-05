@@ -644,11 +644,218 @@
       "currency": "EUR",
       "timezone": "Europe/Zagreb",
       "providerSuffix": ".ZA",
-      "state": "BLOCKED",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-10-04T16:54:36.482Z",
+      "state": "COMPLETE",
       "catalogFingerprint": "1df127daa66d2226020c720d89e376f95ee81c0b7d03bbc781ae5a38d2ba4ccb",
-      "note": "Quarantined by canonical single writer after proven source preflight failure."
+      "completedAt": "2026-10-05T18:45:45.031Z",
+      "dataUnavailable": [
+        {
+          "isin": "HRCKMLRA0008",
+          "officialIsin": "HRCKMLRA0008",
+          "symbol": "CKML",
+          "name": "Čakovečki mlinovi,d.d.",
+          "lastDate": "2026-09-25",
+          "recordCount": 1635,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRGRNLRA0006",
+          "officialIsin": "HRGRNLRA0006",
+          "symbol": "GRNL",
+          "name": "Granolio d.d.",
+          "lastDate": "2026-09-30",
+          "recordCount": 502,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRZB00RA0003",
+          "officialIsin": "HRZB00RA0003",
+          "symbol": "ZB",
+          "name": "Zagrebačka burza d.d.",
+          "lastDate": "2026-09-30",
+          "recordCount": 660,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRBRINRA0006",
+          "officialIsin": "HRBRINRA0006",
+          "symbol": "BRIN",
+          "name": "ZAIF Breza d.d.",
+          "lastDate": "2026-09-16",
+          "recordCount": 576,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRCRALRA0005",
+          "officialIsin": "HRCRALRA0005",
+          "symbol": "CRAL",
+          "name": "Croatia Airlines d.d.",
+          "lastDate": "2026-09-25",
+          "recordCount": 165,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRDDJHRA0007",
+          "officialIsin": "HRDDJHRA0007",
+          "symbol": "DDJH",
+          "name": "ĐURO ĐAKOVIĆ GRUPA d.d.",
+          "lastDate": "2026-09-29",
+          "recordCount": 2617,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRGARBRA0003",
+          "officialIsin": "HRGARBRA0003",
+          "symbol": "GARB",
+          "name": "THE GARDEN COLLECTIVE d.d.",
+          "lastDate": "2025-12-10",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRHIMRRA0001",
+          "officialIsin": "HRHIMRRA0001",
+          "symbol": "HIMR",
+          "name": "Imperial Riviera d. d.",
+          "lastDate": "2026-09-21",
+          "recordCount": 1255,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRSLPFRA0004",
+          "officialIsin": "HRSLPFRA0004",
+          "symbol": "INSP",
+          "name": "INSPIRIO ZAIF d.d.",
+          "lastDate": "2026-09-24",
+          "recordCount": 1291,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRKBZ0RA0005",
+          "officialIsin": "HRKBZ0RA0005",
+          "symbol": "KBZ",
+          "name": "AGRAM BANKA d.d.",
+          "lastDate": "2026-09-29",
+          "recordCount": 228,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRMDSPRA0005",
+          "officialIsin": "HRMDSPRA0005",
+          "symbol": "MDSP",
+          "name": "MODRA ŠPILJA d.d.",
+          "lastDate": "2026-05-04",
+          "recordCount": 83,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRMRSKRA0004",
+          "officialIsin": "HRMRSKRA0004",
+          "symbol": "MRSK",
+          "name": "MARASKA d.d.",
+          "lastDate": "2026-03-06",
+          "recordCount": 12,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRSTJDRA0006",
+          "officialIsin": "HRSTJDRA0006",
+          "symbol": "STJD",
+          "name": "STANOVI JADRAN d.d.",
+          "lastDate": "2024-12-10",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRTRFMRA0000",
+          "officialIsin": "HRTRFMRA0000",
+          "symbol": "TRFM",
+          "name": "TERRA FIRMA d. d.",
+          "lastDate": "2026-07-17",
+          "recordCount": 203,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRVDZGRA0006",
+          "officialIsin": "HRVDZGRA0006",
+          "symbol": "VDZG",
+          "name": "VODOPRIVREDA ZAGREB d.d.",
+          "lastDate": "2024-12-16",
+          "recordCount": 4,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRVIDURA0009",
+          "officialIsin": "HRVIDURA0009",
+          "symbol": "VIDU",
+          "name": "VILLA DUBROVNIK d.d.",
+          "lastDate": "2025-07-15",
+          "recordCount": 16,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRVJSNRA0000",
+          "officialIsin": "HRVJSNRA0000",
+          "symbol": "VJSN",
+          "name": "VJESNIK d.d. u likvidaciji",
+          "lastDate": "2026-06-08",
+          "recordCount": 208,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRZPKLRA0008",
+          "officialIsin": "HRZPKLRA0008",
+          "symbol": "ZPKL",
+          "name": "ZAGREBAČKE PEKARNE KLARA d.d.",
+          "lastDate": "2026-07-29",
+          "recordCount": 115,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "HRDLPRRA0007",
+          "officialIsin": "HRDLPRRA0007",
+          "symbol": "DLPR",
+          "name": "PROFESSIO ENERGIA d.d.",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_ZSE_CURRENT_EQUITY_NO_TRADES_IN_FIVE_YEAR_OFFICIAL_PRICE_LIST_WINDOW_AND_NO_ALTERNATE_FREE_HISTORY"
+        },
+        {
+          "isin": "HRPLAGPA0005",
+          "officialIsin": "HRPLAGPA0005",
+          "symbol": "PLAG2",
+          "name": "PLAVA LAGUNA d. d.",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_ZSE_CURRENT_EQUITY_NO_TRADES_IN_FIVE_YEAR_OFFICIAL_PRICE_LIST_WINDOW_AND_NO_ALTERNATE_FREE_HISTORY"
+        },
+        {
+          "isin": "HRQTLGRA0001",
+          "officialIsin": "HRQTLGRA0001",
+          "symbol": "QTLG",
+          "name": "Quattro logistika d.d.",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_ZSE_CURRENT_EQUITY_NO_TRADES_IN_FIVE_YEAR_OFFICIAL_PRICE_LIST_WINDOW_AND_NO_ALTERNATE_FREE_HISTORY"
+        }
+      ]
     },
     {
       "mic": "XLJU",
