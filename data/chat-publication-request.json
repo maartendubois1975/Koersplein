@@ -1,6 +1,6 @@
 {
-  "marketMic": "XBUL,XZAG",
-  "purpose": "Block 4 hard-market regression",
-  "message": "Re-run Sofia and Zagreb through strict expanded four-family source preflight and all downstream gates. Keep unresolved instruments blocking COMPLETE.",
-  "requestedAt": "2026-10-05T08:14:00+02:00"
+  "marketMic": "XICE",
+  "purpose": "Block 6 Worker compatibility regression",
+  "message": "Run Reykjavik through strict Worker catalog preflight before any history writes; continue only if live Worker can seed/read canonical XICE identities.",
+  "requestedAt": "2026-10-05T08:23:00+02:00"
 }
