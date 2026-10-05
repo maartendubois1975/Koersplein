@@ -170,11 +170,222 @@
       "currency": "GBP",
       "timezone": "Europe/London",
       "providerSuffix": ".L",
-      "state": "BLOCKED",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "blockedAt": "2026-10-05T16:42:51.326Z",
+      "state": "COMPLETE",
       "catalogFingerprint": "5678d63afe9888d46429de311dce440ccfe5abb206dbc0b5f000d4e1ecf8eeb4",
-      "note": "Quarantined by canonical single writer after proven source preflight failure."
+      "completedAt": "2026-10-05T17:36:05.928Z",
+      "dataUnavailable": [
+        {
+          "isin": "GB0001490449",
+          "officialIsin": "GB0001490449",
+          "symbol": "44GL",
+          "name": "BRUNNER INVESTMENT TRUST PLC",
+          "lastDate": "2026-08-11",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "GB0005776561",
+          "officialIsin": "GB0005776561",
+          "symbol": "DNE",
+          "name": "DUNEDIN ENTERPRISE INVESTMENT TRUST PLC",
+          "lastDate": "2025-01-03",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BMG4587L1090",
+          "officialIsin": "BMG4587L1090",
+          "symbol": "HKLB",
+          "name": "HONG KONG LAND HOLDINGS LD",
+          "lastDate": "2024-12-03",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BMG507361001",
+          "officialIsin": "BMG507361001",
+          "symbol": "JARB",
+          "name": "JARDINE MATHESON HOLDINGS LD",
+          "lastDate": "2024-10-02",
+          "recordCount": 1,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "CA00900Q1037",
+          "officialIsin": "CA00900Q1037",
+          "symbol": "AII",
+          "name": "AIMIA INC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "CNE1000001S0",
+          "officialIsin": "CNE1000001S0",
+          "symbol": "AIRC",
+          "name": "AIR CHINA LD",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "GB00BNVSX371",
+          "officialIsin": "GB00BNVSX371",
+          "symbol": "ALTR",
+          "name": "ALT RESOURCES PLC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "CNE1000002Z3",
+          "officialIsin": "CNE1000002Z3",
+          "symbol": "DAT",
+          "name": "DATANG INTERNATIONAL POWER GENERATION COMPANY LD",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "GB00BPCSN963",
+          "officialIsin": "GB00BPCSN963",
+          "symbol": "FJVA",
+          "name": "FIDELITY JAPAN TRUST PLC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "GB00BPCSNB84",
+          "officialIsin": "GB00BPCSNB84",
+          "symbol": "FJVB",
+          "name": "FIDELITY JAPAN TRUST PLC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "GB0004251863",
+          "officialIsin": "GB0004251863",
+          "symbol": "HID",
+          "name": "HIDONG ESTATE PLC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "ZW0009011934",
+          "officialIsin": "ZW0009011934",
+          "symbol": "HWA",
+          "name": "HWANGE COLLIERY COMPANY LIMITED",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "KE0000000281",
+          "officialIsin": "KE0000000281",
+          "symbol": "KAKU",
+          "name": "KAKUZI LD",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "VGG5869Z1045",
+          "officialIsin": "VGG5869Z1045",
+          "symbol": "MACA",
+          "name": "MAC ALPHA LIMITED",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "VGG5878H1038",
+          "officialIsin": "VGG5878H1038",
+          "symbol": "MAC3",
+          "name": "MARWYN ACQUISITION COMPANY III LIMITED",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "ZW0009012114",
+          "officialIsin": "ZW0009012114",
+          "symbol": "MIK",
+          "name": "MEIKLES LIMITED",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "GB00BQSB9762",
+          "officialIsin": "GB00BQSB9762",
+          "symbol": "MINA",
+          "name": "MITON UK MICROCAP TRUST PLC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "GB00BQSB9879",
+          "officialIsin": "GB00BQSB9879",
+          "symbol": "MINB",
+          "name": "MITON UK MICROCAP TRUST PLC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "GB00C08SQN99",
+          "officialIsin": "GB00C08SQN99",
+          "symbol": "PACA",
+          "name": "PACIFIC ASSETS TRUST PLC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "GB00C08SQP14",
+          "officialIsin": "GB00C08SQP14",
+          "symbol": "PACB",
+          "name": "PACIFIC ASSETS TRUST PLC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "GB00BXNX1R02",
+          "officialIsin": "GB00BXNX1R02",
+          "symbol": "SYSA",
+          "name": "SYSTEM1 GROUP PLC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "GB00BXNX2007",
+          "officialIsin": "GB00BXNX2007",
+          "symbol": "SYSB",
+          "name": "SYSTEM1 GROUP PLC",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        },
+        {
+          "isin": "KYG382681016",
+          "officialIsin": "KYG382681016",
+          "symbol": "TGE",
+          "name": "THE GENERATION ESSENTIALS GROUP",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LSE_CURRENT_EQUITY_OR_SHARE_CLASS_NO_USABLE_FREE_LONDON_HISTORY_AFTER_FOUR_ROUTE_TESTS"
+        }
+      ]
     },
     {
       "mic": "XETR",

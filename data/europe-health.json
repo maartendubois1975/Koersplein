@@ -6,10 +6,6 @@
     "structuralErrorsRequireCodeOrSourceRepair": true,
     "structuralErrors": [
       {
-        "mic": "XLON",
-        "reason": "SOURCE_PREFLIGHT_GATE"
-      },
-      {
         "mic": "XBUL",
         "reason": "SOURCE_PREFLIGHT_GATE"
       },
@@ -22,8 +18,8 @@
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 26,
-    "blocked": 3,
+    "complete": 27,
+    "blocked": 2,
     "ready": 1,
     "pending": 1,
     "total": 31
@@ -186,14 +182,14 @@
     {
       "mic": "XLON",
       "name": "Londen",
-      "state": "BLOCKED",
-      "health": "BLOCKED",
-      "reason": "SOURCE_PREFLIGHT_GATE",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
+      "reason": null,
       "catalog": {
         "present": true,
         "count": 1498,
         "fingerprint": "5678d63afe9888d46429de311dce440ccfe5abb206dbc0b5f000d4e1ecf8eeb4",
-        "retrievedAt": "2026-10-05T16:47:30.146Z",
+        "retrievedAt": "2026-10-05T17:07:38.516Z",
         "source": "London Stock Exchange Price Explorer - LSE issuer equities / Shares"
       },
       "sources": {
@@ -203,7 +199,7 @@
         "coverageRatio": 0.986648865153538,
         "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-05T17:36:05.928Z"
     },
     {
       "mic": "XETR",
@@ -712,5 +708,5 @@
       "completedAt": "2026-10-05T14:02:29.552Z"
     }
   ],
-  "generatedAt": "2026-10-05T17:35:40.379Z"
+  "generatedAt": "2026-10-05T17:36:19.442Z"
 }
