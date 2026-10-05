@@ -1,6 +1,6 @@
 {
   "marketMic": "XTAL,XRIS,XLIT",
-  "purpose": "Official Nasdaq Baltic history validation",
-  "message": "Run Tallinn Riga Vilnius through official Nasdaq Baltic ISIN/history gates, then source audit, Worker preflight, backfill, repair and final validation.",
-  "requestedAt": "2026-10-05T09:40:00+02:00"
+  "purpose": "Baltic official-source source-audit regression",
+  "message": "Re-run Baltic markets with Nasdaq Baltic recognized as their primary proven history source through all strict gates.",
+  "requestedAt": "2026-10-05T10:10:00+02:00"
 }
