@@ -113,8 +113,18 @@ jobs:
           if(!shares.length) throw new Error('WORKER_PREFLIGHT lege catalogus '+mic);
           const market={mic,name:raw.exchange||plan.markets.find(x=>x.mic===mic)?.name||mic,code,country:plan.markets.find(x=>x.mic===mic)?.country||null,currency:shares[0]?.currency||'EUR'};
           const client=new FactoryApiClient();
-          await client.seedCatalog({markets:[market],instruments:shares});
-          const probes=[shares[0],shares[Math.floor(shares.length/2)],shares.at(-1)].filter(Boolean);
+          let preflightShares=shares;
+          if(mic==='XICE'){
+            try{
+              const existing=await client.getCatalog({mic});
+              const rows=existing?.instruments||existing?.shares||[];
+              const byTicker=new Map(rows.map(x=>[String(x.ticker||'').toUpperCase(),x]));
+              preflightShares=shares.map(x=>{const old=byTicker.get(String(x.ticker||'').toUpperCase());return old?.isin?{...x,isin:old.isin}:x});
+              console.log('XICE_PREFLIGHT_IDENTITY_REUSE '+preflightShares.filter((x,i)=>x.isin!==shares[i].isin).length+'/'+shares.length);
+            }catch(e){console.log('XICE_PREFLIGHT_IDENTITY_REUSE unavailable: '+e.message)}
+          }
+          await client.seedCatalog({markets:[market],instruments:preflightShares});
+          const probes=[preflightShares[0],preflightShares[Math.floor(preflightShares.length/2)],preflightShares.at(-1)].filter(Boolean);
           const failed=[];
           for(const item of probes){try{await client.historyCoverage(item.isin)}catch(e){if(!/Historie niet gevonden/.test(e.message)) failed.push(item.isin+': '+e.message)}}
           if(failed.length) throw new Error('WORKER_VERSION_OR_CATALOG_GATE '+failed.join(' | '));
