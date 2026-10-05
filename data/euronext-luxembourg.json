@@ -1,12 +1,12 @@
 {
   "exchange": "Luxemburg",
   "mic": "XLUX",
-  "retrievedAt": "2026-10-05T14:33:55.785Z",
+  "retrievedAt": "2026-10-05T15:59:17.057Z",
   "source": "Luxembourg Stock Exchange public equity trading-data GraphQL",
   "sourceUrl": "https://www.luxse.com/market-overview/trading-data",
-  "officialCount": 18,
-  "resolvedCount": 18,
-  "fingerprint": "3b63a0258fbfac5df8aa0a3feaff3e1321cad722043e6cb54d55add42770cdec",
+  "officialCount": 14,
+  "resolvedCount": 14,
+  "fingerprint": "9a0c76332ef6bbfc218f0d009caa24abe8f68487883ea3afda83296e5d44cf91",
   "shares": [
     {
       "company": "Socfinaf",
@@ -41,23 +41,6 @@
       "instrumentSubtype": "ACT",
       "listingDate": "1974-01-23T00:00:00.000Z",
       "tradingCode": "LU0092047413"
-    },
-    {
-      "company": "RTLGroup",
-      "name": "RTLGroup",
-      "symbol": "RTLL",
-      "ticker": "RTLL",
-      "isin": "LU0061462528",
-      "mic": "XLUX",
-      "segment": "MFX",
-      "currency": "EUR",
-      "providerSymbol": null,
-      "identitySource": "https://www.luxse.com/market-overview/trading-data",
-      "identityResolution": "LUXSE_PUBLIC_GRAPHQL_EQUITY_BBO_MNEMO",
-      "marketRule": "EUR",
-      "instrumentSubtype": "ACT",
-      "listingDate": "1975-06-24T00:00:00.000Z",
-      "tradingCode": "NSCLU1462523"
     },
     {
       "company": "Luxempart",
@@ -111,40 +94,6 @@
       "tradingCode": "NSCLU8087323"
     },
     {
-      "company": "SamsungSDICo   GDS",
-      "name": "SamsungSDICo   GDS",
-      "symbol": "SMSDI",
-      "ticker": "SMSDI",
-      "isin": "US7960542030",
-      "mic": "XLUX",
-      "segment": "MFL",
-      "currency": "USD",
-      "providerSymbol": null,
-      "identitySource": "https://www.luxse.com/market-overview/trading-data",
-      "identityResolution": "LUXSE_PUBLIC_GRAPHQL_EQUITY_BBO_MNEMO",
-      "marketRule": "LUX",
-      "instrumentSubtype": "GDS",
-      "listingDate": "1999-06-18T00:00:00.000Z",
-      "tradingCode": "US7960542030"
-    },
-    {
-      "company": "ArcelorMittal",
-      "name": "ArcelorMittal",
-      "symbol": "MTL",
-      "ticker": "MTL",
-      "isin": "LU1598757687",
-      "mic": "XLUX",
-      "segment": "MFX",
-      "currency": "EUR",
-      "providerSymbol": null,
-      "identitySource": "https://www.luxse.com/market-overview/trading-data",
-      "identityResolution": "LUXSE_PUBLIC_GRAPHQL_EQUITY_BBO_MNEMO",
-      "marketRule": "EUR",
-      "instrumentSubtype": "ACT",
-      "listingDate": "2002-02-18T00:00:00.000Z",
-      "tradingCode": "NSCLU1598755"
-    },
-    {
       "company": "SKhynixInc.   GDS",
       "name": "SKhynixInc.   GDS",
       "symbol": "HYNSE",
@@ -194,23 +143,6 @@
       "instrumentSubtype": "ACT",
       "listingDate": "2010-01-18T00:00:00.000Z",
       "tradingCode": "NSCLU0060534"
-    },
-    {
-      "company": "Aperam",
-      "name": "Aperam",
-      "symbol": "APAML",
-      "ticker": "APAML",
-      "isin": "LU0569974404",
-      "mic": "XLUX",
-      "segment": "MFX",
-      "currency": "EUR",
-      "providerSymbol": null,
-      "identitySource": "https://www.luxse.com/market-overview/trading-data",
-      "identityResolution": "LUXSE_PUBLIC_GRAPHQL_EQUITY_BBO_MNEMO",
-      "marketRule": "EUR",
-      "instrumentSubtype": "ACT",
-      "listingDate": "2011-01-31T00:00:00.000Z",
-      "tradingCode": "LU0569974404"
     },
     {
       "company": "UltratechCement Level 1  GDS",
