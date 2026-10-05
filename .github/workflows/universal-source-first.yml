@@ -107,7 +107,7 @@ jobs:
           import fs from 'node:fs/promises';
           import { FactoryApiClient } from './scripts/cloudflare/client.mjs';
           const mic='${{ matrix.market_mic }}';
-          const code=({XICE:'reykjavik',XLJU:'ljubljana',XLON:'london',XBUL:'sofia',XZAG:'zagreb'})[mic]||mic.toLowerCase();
+          const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));const code=plan.markets.find(x=>x.mic===mic)?.code;if(!code)throw new Error('WORKER_PREFLIGHT onbekende market code '+mic);
           const raw=JSON.parse(await fs.readFile('data/euronext-'+code+'.json','utf8'));
           const shares=raw.shares||raw.instruments||[];
           if(!shares.length) throw new Error('WORKER_PREFLIGHT lege catalogus '+mic);
