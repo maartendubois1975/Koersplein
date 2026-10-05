@@ -123,7 +123,8 @@ jobs:
               console.log('XICE_PREFLIGHT_IDENTITY_REUSE '+preflightShares.filter((x,i)=>x.isin!==shares[i].isin).length+'/'+shares.length);
             }catch(e){console.log('XICE_PREFLIGHT_IDENTITY_REUSE unavailable: '+e.message)}
           }
-          await client.seedCatalog({markets:[market],instruments:preflightShares});
+          await client.seedCatalog({markets:[market],instruments:[]});
+          for(let i=0;i<preflightShares.length;i+=100) await client.seedCatalog({markets:[],instruments:preflightShares.slice(i,i+100)});
           const probes=[preflightShares[0],preflightShares[Math.floor(preflightShares.length/2)],preflightShares.at(-1)].filter(Boolean);
           const failed=[];
           for(const item of probes){try{await client.historyCoverage(item.isin)}catch(e){if(!/Historie niet gevonden/.test(e.message)) failed.push(item.isin+': '+e.message)}}
