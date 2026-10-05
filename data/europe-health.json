@@ -576,14 +576,14 @@
       "health": "BLOCKED",
       "reason": "SOURCE_PREFLIGHT_GATE",
       "catalog": {
-        "present": false,
+        "present": true,
         "count": 9,
         "fingerprint": "afce18d809f4a560ea337f2f31d733f202bd15c5495bc157559673e7f61dd6d5",
-        "retrievedAt": null,
+        "retrievedAt": "2026-10-05T13:32:43.163Z",
         "source": "Bratislava Stock Exchange securities directory; active share identities cross-checked"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
         "fullCatalog": 9,
         "coverageRatio": 0.7777777777777778,
@@ -724,5 +724,5 @@
       "completedAt": null
     }
   ],
-  "generatedAt": "2026-10-05T13:28:50.844Z"
+  "generatedAt": "2026-10-05T13:33:11.197Z"
 }
