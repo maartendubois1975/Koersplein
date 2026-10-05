@@ -18,9 +18,9 @@
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 28,
+    "complete": 29,
     "blocked": 2,
-    "ready": 1,
+    "ready": 0,
     "pending": 0,
     "total": 31
   },
@@ -336,14 +336,14 @@
     {
       "mic": "XICE",
       "name": "Reykjavik",
-      "state": "WAITING",
-      "health": "READY",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
       "reason": null,
       "catalog": {
         "present": true,
         "count": 27,
         "fingerprint": "33a92975c27043cc452ea197e1b87c2260557cde3b624a5d2a5f30c8d0c13e55",
-        "retrievedAt": "2026-10-05T17:43:27.271Z",
+        "retrievedAt": "2026-10-05T18:22:24.820Z",
         "source": "Nasdaq Iceland official 27-share universe + current official ticker identities + direct .IC history proof"
       },
       "sources": {
@@ -353,7 +353,7 @@
         "coverageRatio": 1,
         "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-05T18:22:58.299Z"
     },
     {
       "mic": "XATH",
@@ -545,7 +545,7 @@
         "source": "Ljubljana Stock Exchange official current instruments table"
       },
       "sources": {
-        "status": "BLOCKED",
+        "status": "APPROVED",
         "tested": 4,
         "fullCatalog": 17,
         "coverageRatio": 0.9411764705882353,
@@ -708,5 +708,5 @@
       "completedAt": "2026-10-05T14:02:29.552Z"
     }
   ],
-  "generatedAt": "2026-10-05T18:22:15.542Z"
+  "generatedAt": "2026-10-05T18:23:08.966Z"
 }
