@@ -2,6 +2,7 @@ import { YahooChartProvider } from './providers/yahoo-chart.mjs';
 import { EuronextLiveProvider } from './providers/euronext-live.mjs';
 import { YahooIsinProvider } from './providers/yahoo-isin.mjs';
 import { StockAnalysisBitProvider } from './providers/stockanalysis-bit.mjs';
+import { NasdaqBalticProvider } from './providers/nasdaq-baltic.mjs';
 
 export class ProviderRegistry {
   #providers = [];
@@ -44,4 +45,4 @@ export class ProviderRegistry {
   }
 }
 
-export const createDefaultProviderRegistry = () => new ProviderRegistry([new YahooChartProvider(), new EuronextLiveProvider(), new YahooIsinProvider(), new StockAnalysisBitProvider()]);
+export const createDefaultProviderRegistry = () => new ProviderRegistry([new NasdaqBalticProvider(), new YahooChartProvider(), new EuronextLiveProvider(), new YahooIsinProvider(), new StockAnalysisBitProvider()]);
