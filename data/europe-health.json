@@ -18,10 +18,10 @@
   "canonicalState": "data/world-fill-plan.json",
   "sourceRegistry": "data/market-source-registry.json",
   "summary": {
-    "complete": 27,
+    "complete": 28,
     "blocked": 2,
     "ready": 1,
-    "pending": 1,
+    "pending": 0,
     "total": 31
   },
   "markets": [
@@ -534,24 +534,24 @@
     {
       "mic": "XLJU",
       "name": "Ljubljana",
-      "state": "WAITING",
-      "health": "CATALOG_PENDING",
+      "state": "COMPLETE",
+      "health": "COMPLETE",
       "reason": null,
       "catalog": {
-        "present": false,
-        "count": 0,
-        "fingerprint": null,
-        "retrievedAt": null,
-        "source": null
+        "present": true,
+        "count": 17,
+        "fingerprint": "59ffd7c1b396cde0cf6a300ea91adcb2b0ec330ae819b9094ef4a33e29a5eead",
+        "retrievedAt": "2026-10-05T18:09:33.016Z",
+        "source": "Ljubljana Stock Exchange official current instruments table"
       },
       "sources": {
-        "status": "UNTESTED",
-        "tested": 0,
-        "fullCatalog": 0,
-        "coverageRatio": null,
-        "crossCheckRatio": null
+        "status": "APPROVED",
+        "tested": 4,
+        "fullCatalog": 17,
+        "coverageRatio": 0.9411764705882353,
+        "crossCheckRatio": 0
       },
-      "completedAt": null
+      "completedAt": "2026-10-05T18:12:09.409Z"
     },
     {
       "mic": "XBRA",
@@ -708,5 +708,5 @@
       "completedAt": "2026-10-05T14:02:29.552Z"
     }
   ],
-  "generatedAt": "2026-10-05T18:03:49.136Z"
+  "generatedAt": "2026-10-05T18:12:21.928Z"
 }

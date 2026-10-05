@@ -655,7 +655,50 @@
       "currency": "EUR",
       "timezone": "Europe/Ljubljana",
       "providerSuffix": ".LJ",
-      "state": "WAITING"
+      "state": "COMPLETE",
+      "completedAt": "2026-10-05T18:12:09.409Z",
+      "catalogFingerprint": "59ffd7c1b396cde0cf6a300ea91adcb2b0ec330ae819b9094ef4a33e29a5eead",
+      "dataUnavailable": [
+        {
+          "isin": "SI0031100843",
+          "officialIsin": "SI0031100843",
+          "symbol": "CETG",
+          "name": "CETIS",
+          "lastDate": "2026-09-14",
+          "recordCount": 15,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "SI0031117995",
+          "officialIsin": "SI0031117995",
+          "symbol": "RELR",
+          "name": "RELAX",
+          "lastDate": "2026-06-18",
+          "recordCount": 28,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "SI0031100637",
+          "officialIsin": "SI0031100637",
+          "symbol": "TCRG",
+          "name": "TERME CATEZ",
+          "lastDate": "2026-09-18",
+          "recordCount": 22,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "SI0031101304",
+          "officialIsin": "SI0031101304",
+          "symbol": "MKOG",
+          "name": "MELAMIN",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_LJSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_LJSE_STOCKANALYSIS_PLUS_ALTERNATE_ROUTE_TESTS"
+        }
+      ]
     },
     {
       "mic": "XBRA",
