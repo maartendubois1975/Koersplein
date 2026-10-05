@@ -161,7 +161,7 @@ jobs:
             ready=$(node -e "const s=require('./research/output/market-handoff-signal.json');console.log(s.current.ready?'yes':'no')")
             [ "$ready" = yes ] && break
             export SKIP_ISINS=''
-            SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs
+            HISTORY_BATCH_SIZE=100 SEED_CATALOG=0 node scripts/cloudflare/universal-market-runner.mjs
             sleep $((repair * 5))
           done
       - name: Eindvalidatie
