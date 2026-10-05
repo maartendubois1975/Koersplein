@@ -1,6 +1,6 @@
 {
-  "marketMic": "XICE",
-  "purpose": "Block 6 Worker compatibility regression",
-  "message": "Run Reykjavik through strict Worker catalog preflight before any history writes; continue only if live Worker can seed/read canonical XICE identities.",
-  "requestedAt": "2026-10-05T08:23:00+02:00"
+  "marketMic": "XTAL,XRIS,XLIT",
+  "purpose": "Block 7 Baltic adapter production validation",
+  "message": "Validate new Tallinn Riga Vilnius official Nasdaq Baltic adapters through strict catalog/source/Worker/history/final gates; do not mark COMPLETE on unresolved identities.",
+  "requestedAt": "2026-10-05T08:30:00+02:00"
 }
