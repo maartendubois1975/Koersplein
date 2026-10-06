@@ -1,6 +1,6 @@
 {
   "marketMic": "XBUL",
-  "purpose": "Block 3 Sofia bounded final closure",
-  "message": "Retry after bounded Sofia source-gate concurrency repair; preserve strict 100% source proof, then Worker preflight, history repair, final validation and canonical persist. Night orchestration remains off.",
-  "requestedAt": "2026-10-06T06:24:00+02:00"
+  "purpose": "Block 3 Sofia full history repair",
+  "message": "Run Sofia after parallel history repair fix. Preserve strict source audit and final gate; repair all retrievable histories, accept DATA_UNAVAILABLE only with run/source evidence, then canonical persist. Night orchestration remains off.",
+  "requestedAt": "2026-10-06T06:48:00+02:00"
 }
