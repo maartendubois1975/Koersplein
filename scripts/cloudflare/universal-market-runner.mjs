@@ -49,7 +49,6 @@ const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
 // the same five instruments until the 330-minute job timeout.
 const latestExpectedTradingDate=(()=>{const d=new Date(`${today}T12:00:00Z`);let closed=0;while(closed<2){d.setUTCDate(d.getUTCDate()-1);if(d.getUTCDay()!==0&&d.getUTCDay()!==6)closed++;}return d.toISOString().slice(0,10)})();
 const runSkip=new Set(String(process.env.SKIP_ISINS||'').split(',').map(x=>x.trim()).filter(Boolean));
-try{const prev=JSON.parse(await fs.readFile('research/output/world-fill-batch.json','utf8'));if(prev.market===mic)for(const isin of prev.attemptedIsins||[])runSkip.add(isin);}catch{}
 const candidates=[];let alreadyCurrent=0,excluded=0,inspectionFailed=0,skippedRunFailures=0;
 for(const item of instruments){
   if(unavailable.has(item.isin)){excluded++;continue}
@@ -69,7 +68,7 @@ const failedMap=new Map(priorFailed.map(x=>[x.isin,x]));
 for(const isin of attemptedIsins)failedMap.delete(isin);
 for(const item of failed)failedMap.set(item.isin,item);
 failed=[...failedMap.values()];
-const report={market:mic,catalog:instruments.length,catalogRaw:rawInstruments.length,duplicateIsin,duplicateMicTicker,batchRequested:hb,candidates:candidates.length,attemptedIsins:attemptedUnion,alreadyCurrent,excludedProviderUnavailable:excluded,skippedRunFailures,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-attemptedUnion.length-skippedRunFailures),freshnessCutoff,latestExpectedTradingDate};
+const report={market:mic,catalog:instruments.length,catalogRaw:rawInstruments.length,duplicateIsin,duplicateMicTicker,batchRequested:hb,candidates:candidates.length,attemptedIsins:attemptedUnion,newAttemptedIsins:attemptedIsins,alreadyCurrent,excludedProviderUnavailable:excluded,skippedRunFailures,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-attemptedUnion.length-skippedRunFailures),freshnessCutoff,latestExpectedTradingDate};
 console.log(JSON.stringify(report,null,2));
 await fs.mkdir('research/output',{recursive:true});await fs.writeFile('research/output/world-fill-batch.json',JSON.stringify({...report,generatedAt:new Date().toISOString()},null,2));
 if(failed.length===candidates.length&&candidates.length&&process.env.ALLOW_PARTIAL_FAILURES!=='1')process.exitCode=2;
