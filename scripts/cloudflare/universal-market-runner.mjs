@@ -57,7 +57,7 @@ for(const item of instruments){
   candidates.push(item);if(candidates.length>=hb)break;
 }
 let complete=0,failed=[];
-const historyConcurrency=mic==='XETR'?10:(mic==='XBUL'?8:1);
+const historyConcurrency=mic==='XETR'?10:(mic==='XBUL'?2:1);
 for(let ci=0;ci<candidates.length;ci+=historyConcurrency){await Promise.all(candidates.slice(ci,ci+historyConcurrency).map(async item=>{try{const {provider,result}=await registry.fetchDaily(item,{startDate:'1990-01-01',endDate:today},item.provider||'yahoo-chart');if(!result.bars.length)throw new Error('geen historie');for(const [period,bars] of partitionBars(result.bars))await client.putPartition(item.isin,period,{bars,provider:provider.id});await client.completeHistory(item.isin,{provider:provider.id});complete++;}catch(e){failed.push({isin:item.isin,symbol:item.symbol,mic:item.mic,error:e.message})}}));}
 const attemptedIsins=candidates.map(x=>x.isin);
 const report={market:mic,catalog:instruments.length,catalogRaw:rawInstruments.length,duplicateIsin,duplicateMicTicker,batchRequested:hb,candidates:candidates.length,attemptedIsins,alreadyCurrent,excludedProviderUnavailable:excluded,skippedRunFailures,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-attemptedIsins.length-skippedRunFailures),freshnessCutoff,latestExpectedTradingDate};
