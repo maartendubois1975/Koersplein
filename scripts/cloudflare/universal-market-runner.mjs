@@ -49,6 +49,7 @@ const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
 // the same five instruments until the 330-minute job timeout.
 const latestExpectedTradingDate=(()=>{const d=new Date(`${today}T12:00:00Z`);let closed=0;while(closed<2){d.setUTCDate(d.getUTCDate()-1);if(d.getUTCDay()!==0&&d.getUTCDay()!==6)closed++;}return d.toISOString().slice(0,10)})();
 const runSkip=new Set(String(process.env.SKIP_ISINS||'').split(',').map(x=>x.trim()).filter(Boolean));
+try{const prev=JSON.parse(await fs.readFile('research/output/world-fill-batch.json','utf8'));if(prev.market===mic)for(const isin of prev.attemptedIsins||[])runSkip.add(isin);}catch{}
 const candidates=[];let alreadyCurrent=0,excluded=0,inspectionFailed=0,skippedRunFailures=0;
 for(const item of instruments){
   if(unavailable.has(item.isin)){excluded++;continue}
