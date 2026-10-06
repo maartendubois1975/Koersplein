@@ -60,7 +60,15 @@ let complete=0,failed=[];
 const historyConcurrency=mic==='XETR'?10:(mic==='XBUL'?2:1);
 for(let ci=0;ci<candidates.length;ci+=historyConcurrency){await Promise.all(candidates.slice(ci,ci+historyConcurrency).map(async item=>{try{const {provider,result}=await registry.fetchDaily(item,{startDate:'1990-01-01',endDate:today},item.provider||'yahoo-chart');if(!result.bars.length)throw new Error('geen historie');for(const [period,bars] of partitionBars(result.bars))await client.putPartition(item.isin,period,{bars,provider:provider.id});await client.completeHistory(item.isin,{provider:provider.id});complete++;}catch(e){failed.push({isin:item.isin,symbol:item.symbol,mic:item.mic,error:e.message})}}));}
 const attemptedIsins=candidates.map(x=>x.isin);
-const report={market:mic,catalog:instruments.length,catalogRaw:rawInstruments.length,duplicateIsin,duplicateMicTicker,batchRequested:hb,candidates:candidates.length,attemptedIsins,alreadyCurrent,excludedProviderUnavailable:excluded,skippedRunFailures,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-attemptedIsins.length-skippedRunFailures),freshnessCutoff,latestExpectedTradingDate};
+let prior={};try{prior=JSON.parse(await fs.readFile('research/output/world-fill-batch.json','utf8'));}catch{}
+const priorAttempts=prior.market===mic?(prior.attemptedIsins||[]):[];
+const priorFailed=prior.market===mic?(prior.failed||[]):[];
+const attemptedUnion=[...new Set([...priorAttempts,...attemptedIsins])];
+const failedMap=new Map(priorFailed.map(x=>[x.isin,x]));
+for(const isin of attemptedIsins)failedMap.delete(isin);
+for(const item of failed)failedMap.set(item.isin,item);
+failed=[...failedMap.values()];
+const report={market:mic,catalog:instruments.length,catalogRaw:rawInstruments.length,duplicateIsin,duplicateMicTicker,batchRequested:hb,candidates:candidates.length,attemptedIsins:attemptedUnion,alreadyCurrent,excludedProviderUnavailable:excluded,skippedRunFailures,inspectionFailed,complete,failed,remainingHint:Math.max(0,instruments.length-excluded-alreadyCurrent-attemptedUnion.length-skippedRunFailures),freshnessCutoff,latestExpectedTradingDate};
 console.log(JSON.stringify(report,null,2));
 await fs.mkdir('research/output',{recursive:true});await fs.writeFile('research/output/world-fill-batch.json',JSON.stringify({...report,generatedAt:new Date().toISOString()},null,2));
 if(failed.length===candidates.length&&candidates.length&&process.env.ALLOW_PARTIAL_FAILURES!=='1')process.exitCode=2;
