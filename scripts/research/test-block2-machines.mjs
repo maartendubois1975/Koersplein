@@ -1,0 +1,8 @@
+import assert from 'node:assert/strict';import fs from 'node:fs/promises';
+import {pricePatternFeatures,anomalySignals,loserGuard} from './machine-specialists-core.mjs';
+import {ensembleByHorizon} from './ensemble-horizon-core.mjs';
+const c=JSON.parse(await fs.readFile('research/machine-arena-europe-v1.json','utf8'));assert.deepEqual(c.machines.map(x=>x.id),['M01','M02','M03','M04','M05','M06','M07','M08','M09','M10','M11']);assert.deepEqual(c.machines.filter(x=>x.futureAccess).map(x=>x.id),['M02']);
+const bars=Array.from({length:260},(_,i)=>({date:new Date(Date.UTC(2020,0,1+i)).toISOString().slice(0,10),close:100+i*.2,volume:i>238?300:100}));const f=pricePatternFeatures(bars,259);for(const k of ['momentum5d','momentum20d','momentum60d','momentum120d','momentum250d','volumeAnomaly'])assert.ok(k in f);assert.equal(anomalySignals(f).anomalyActive,true);assert.equal(typeof loserGuard(f).guardActive,'boolean');
+const none=ensembleByHorizon([{instrument:'X',components:[]}],[]);assert.equal(none.status,'INSUFFICIENT_VALIDATED_COMPONENTS');
+const good=ensembleByHorizon([{instrument:'X',riskVeto:false,components:[{componentId:'A',predictions:{'3m':.1,'6m':.2,'12m':.3,'24m':.4}}]}],[{componentId:'A',oos:true,pointInTime:true,passed:true,sampleSize:100,weight:1}]);assert.equal(good.status,'READY');assert.equal(good.rankings['24m'][0].instrument,'X');
+console.log(JSON.stringify({status:'PASS',machines:11,futureAccess:['M02'],horizons:[3,6,12,24],patternWindows:[5,20,60,120,250],validatedOnlyEnsemble:true}));
