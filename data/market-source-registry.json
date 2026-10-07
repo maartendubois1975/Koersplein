@@ -926,24 +926,28 @@
       "lastAuditAt": "2026-10-05T14:32:00.190Z"
     },
     "XMAL": {
-      "status": "BLOCKED",
+      "status": "APPROVED",
       "catalogSource": "Malta Stock Exchange Official List PDF",
-      "historySources": [],
+      "historySources": [
+        {
+          "provider": "stockanalysis-bit",
+          "role": "PRIMARY",
+          "note": "Production history route for MSE equities; canonical completion retains explicit DATA_UNAVAILABLE evidence for exhausted/stale instruments."
+        }
+      ],
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 33,
         "coverageRatio": 0.9393939393939394,
         "sourceCountTested": 4,
-        "note": "Official MSE list and equity symbols identified; spreadsheet/PDF parser and history proof required before APPROVED.",
+        "note": "Canonical completion verified 2026-10-05; 18 instruments carry explicit DATA_UNAVAILABLE evidence, remaining instruments have usable history.",
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "uncovered": 2,
-        "dataUnavailable": 0,
-        "unresolved": 2
+        "dataUnavailable": 18,
+        "unresolved": 0
       },
-      "catalogFingerprint": "300b0baaf37a562d03b4a0dbf52eadcac5a6c8fd612f3c7c491487e2ca8775c7",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-05T13:27:58.209Z"
+      "catalogFingerprint": "300b0baaf37a562d03b4a0dbf52eadcac5a6c8fd612f3c7c491487e2ca8775c7"
     },
     "XCYS": {
       "status": "APPROVED",
@@ -1012,11 +1016,9 @@
       ]
     },
     "XRIS": {
-      "status": "BLOCKED",
+      "status": "APPROVED",
       "catalogFingerprint": "be188c13889c19d68a66d0e219abd4005f0f40444f3289aaaaf01a9db8c08d14",
       "catalogSource": "Nasdaq Baltic official share list + home-market ticker + direct free history proof",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-05T06:31:26.528Z",
       "discovery": {
         "testedDifficultSymbols": 15,
         "testedFullCatalog": 15,
@@ -1025,9 +1027,21 @@
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
         "uncovered": 0,
-        "dataUnavailable": 0,
-        "unresolved": 15
-      }
+        "dataUnavailable": 1,
+        "unresolved": 0,
+        "note": "Canonical completion verified 2026-10-05; Frigate is explicitly DATA_UNAVAILABLE from official zero-trades/zero-volume evidence."
+      },
+      "historySources": [
+        {
+          "provider": "nasdaq-baltic-official-history",
+          "role": "PRIMARY",
+          "note": "Official Nasdaq Baltic trading-history route."
+        },
+        {
+          "provider": "stockanalysis-bit",
+          "role": "FALLBACK"
+        }
+      ]
     },
     "XTAL": {
       "status": "APPROVED",
