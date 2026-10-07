@@ -781,8 +781,6 @@
         "policy": "Reuse proven BUL history route daily; no rediscovery."
       },
       "catalogFingerprint": "8d30f3706bad5373a9e0f4f1ea4138504b34fe3d0829bea810a0ceb7a7f1536e",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-05T17:56:25.363Z",
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 158,
@@ -790,8 +788,9 @@
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
-      }
+        "note": "Official BSE catalog fully source-gated; canonical Sofia completion persisted with 158/158 instruments classified as current-history covered or evidence-backed DATA_UNAVAILABLE."
+      },
+      "approvedAt": "2026-10-07T14:35:36.320Z"
     },
     "XDUB": {
       "status": "APPROVED",
