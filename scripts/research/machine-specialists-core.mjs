@@ -1,24 +1,8 @@
-export function pricePatternFeatures(bars,i){
- const pct=(a,b)=>a&&b?b/a-1:null, mean=a=>a.length?a.reduce((s,x)=>s+x,0)/a.length:null;
- const sd=a=>{if(a.length<2)return null;const m=mean(a);return Math.sqrt(mean(a.map(x=>(x-m)**2)))};
- if(i<252)return null;const c=bars[i].close, closes=bars.slice(i-252,i+1).map(x=>x.close);
- const returns=bars.slice(i-125,i+1).map((x,j,a)=>j?pct(a[j-1].close,x.close):null).filter(Number.isFinite);
- const m1=pct(bars[i-21]?.close,c),m3=pct(bars[i-63]?.close,c),m6=pct(bars[i-126]?.close,c),m12=pct(bars[i-252]?.close,c);
- const prior3=pct(bars[i-126]?.close,bars[i-63]?.close);
- const high=Math.max(...closes),low=Math.min(...closes);
- return {momentum1m:m1,momentum3m:m3,momentum6m:m6,momentum12m:m12,acceleration:m3==null||prior3==null?null:m3-prior3,volatility126:sd(returns),distance52wHigh:high?c/high-1:null,recovery52w:low?c/low-1:null};
-}
-export function anomalyLoserGuard(features){
- const f=features||{};let warnings=[];
- if(Number.isFinite(f.volatility126)&&f.volatility126>.05)warnings.push('EXTREME_VOLATILITY');
- if(Number.isFinite(f.distance52wHigh)&&f.distance52wHigh<-.40)warnings.push('DEEP_DRAWDOWN');
- if(Number.isFinite(f.momentum3m)&&f.momentum3m<-.20)warnings.push('NEGATIVE_3M_MOMENTUM');
- if(Number.isFinite(f.acceleration)&&f.acceleration<-.20)warnings.push('SHARP_DECELERATION');
- return {warnings,guardActive:warnings.length>0};
-}
-export function peerRelativeFeatures(row,peerRows){
- const finite=(x)=>Number.isFinite(Number(x));const peers=peerRows.filter(x=>x!==row&&finite(x?.features?.momentum6m));
- if(!finite(row?.features?.momentum6m)||!peers.length)return {peerCount:peers.length,relativeMomentum6m:null,percentile:null};
- const vals=peers.map(x=>Number(x.features.momentum6m)).sort((a,b)=>a-b),v=Number(row.features.momentum6m);
- return {peerCount:peers.length,relativeMomentum6m:v-vals.reduce((a,b)=>a+b,0)/vals.length,percentile:vals.filter(x=>x<=v).length/vals.length};
-}
+const pct=(a,b)=>Number.isFinite(a)&&a!==0&&Number.isFinite(b)?b/a-1:null;
+const mean=a=>a.length?a.reduce((s,x)=>s+x,0)/a.length:null;
+const sd=a=>{if(a.length<2)return null;const m=mean(a);return Math.sqrt(mean(a.map(x=>(x-m)**2)))};
+export function pricePatternFeatures(bars,i){if(i<250)return null;const c=Number(bars[i].close);const look=n=>pct(Number(bars[i-n]?.close),c);const closes=bars.slice(i-250,i+1).map(x=>Number(x.close)).filter(Number.isFinite);const rets=bars.slice(i-120,i+1).map((x,j,a)=>j?pct(Number(a[j-1].close),Number(x.close)):null).filter(Number.isFinite);const vols=bars.slice(i-20,i+1).map(x=>Number(x.volume)).filter(Number.isFinite);const prevVols=bars.slice(Math.max(0,i-120),Math.max(0,i-20)).map(x=>Number(x.volume)).filter(Number.isFinite);const high=Math.max(...closes),low=Math.min(...closes);return{momentum5d:look(5),momentum20d:look(20),momentum60d:look(60),momentum120d:look(120),momentum250d:look(250),volatility120:sd(rets),distance250dHigh:high?c/high-1:null,recovery250d:low?c/low-1:null,volume20Mean:mean(vols),volumePriorMean:mean(prevVols),volumeAnomaly:mean(vols)!=null&&mean(prevVols)>0?mean(vols)/mean(prevVols)-1:null};}
+export function anomalySignals(f){if(!f)return{signals:[],anomalyActive:false};const s=[];if(Number.isFinite(f.volumeAnomaly)&&Math.abs(f.volumeAnomaly)>.75)s.push(f.volumeAnomaly>0?'VOLUME_SURGE':'VOLUME_DROUGHT');if(Number.isFinite(f.momentum20d)&&Number.isFinite(f.momentum120d)&&Math.abs(f.momentum20d-f.momentum120d)>.25)s.push('MOMENTUM_REGIME_BREAK');if(Number.isFinite(f.volatility120)&&f.volatility120>.05)s.push('VOLATILITY_ANOMALY');return{signals:s,anomalyActive:s.length>0};}
+export function loserGuard(f){if(!f)return{warnings:[],guardActive:false};const w=[];if(Number.isFinite(f.distance250dHigh)&&f.distance250dHigh<-.40)w.push('DEEP_DRAWDOWN');if(Number.isFinite(f.momentum60d)&&f.momentum60d<-.20)w.push('NEGATIVE_60D_MOMENTUM');if(Number.isFinite(f.momentum20d)&&Number.isFinite(f.momentum120d)&&f.momentum20d-f.momentum120d<-.20)w.push('SHARP_DECELERATION');if(Number.isFinite(f.volatility120)&&f.volatility120>.06)w.push('EXTREME_VOLATILITY');return{warnings:w,guardActive:w.length>0};}
+export const anomalyLoserGuard=loserGuard;
+export function peerRelativeFeatures(row,peerRows){const v=Number(row?.features?.momentum120d);const peers=peerRows.filter(x=>x!==row&&Number.isFinite(Number(x?.features?.momentum120d))).map(x=>Number(x.features.momentum120d)).sort((a,b)=>a-b);if(!Number.isFinite(v)||!peers.length)return{peerCount:peers.length,relativeMomentum120d:null,percentile:null};return{peerCount:peers.length,relativeMomentum120d:v-mean(peers),percentile:peers.filter(x=>x<=v).length/peers.length};}
