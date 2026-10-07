@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "status": "COMPLETE",
+  "block": "Live Koersplein",
+  "scope": "31 COMPLETE European markets",
+  "horizonsMonths": [3,6,12,24],
+  "topPerHorizon": 5,
+  "statuses": ["NEW","HOLD","EXIT"],
+  "weeklyEdition": "Monday",
+  "betweenEditions": ["NEW","EXIT","MATERIAL_RANK_MOVE","RISK_VETO"],
+  "immutableSnapshots": true,
+  "noForcedCandidates": true,
+  "customerScore": "none"
+}
