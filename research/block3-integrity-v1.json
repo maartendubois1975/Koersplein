@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "status": "COMPLETE",
+  "block": "Historical bookkeeping and anti-leakage",
+  "predictionLedger": {
+    "appendOnly": true,
+    "hashVerified": true,
+    "duplicatePredictionRejected": true,
+    "outcomesSeparate": true
+  },
+  "versioning": [
+    "dataSnapshotId",
+    "modelArtifactId",
+    "codeVersion",
+    "universeSnapshotId",
+    "corporateActionSnapshotId",
+    "evidenceIds"
+  ],
+  "survivorship": {
+    "rule": "delisted, bankrupt, acquired and merged companies remain reconstructable in historical universes when source evidence exists; current membership is never backprojected"
+  },
+  "corporateActions": {
+    "explicitOnly": true,
+    "events": [
+      "SPLIT",
+      "REVERSE_SPLIT",
+      "DIVIDEND",
+      "SPECIAL_DIVIDEND",
+      "RIGHTS_ISSUE",
+      "CAPITAL_RETURN",
+      "MERGER",
+      "ACQUISITION",
+      "SPINOFF"
+    ],
+    "silentPriceAdjustmentForbidden": true
+  },
+  "antiLeakage": [
+    "tradableTime <= prediction cutoff",
+    "future vintages invisible",
+    "immutable frozen predictions",
+    "outcomes stored separately",
+    "point-in-time universe",
+    "point-in-time corporate actions",
+    "hash-verified lineage"
+  ]
+}
