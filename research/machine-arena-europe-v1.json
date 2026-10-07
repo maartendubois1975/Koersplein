@@ -1,22 +1,75 @@
 {
-  "version": 1,
+  "version": 2,
   "name": "Koersplein Machine Arena Europe",
   "scope": "All 31 canonical COMPLETE European markets",
-  "principle": "Each forecast is frozen at T. No machine in the blind path may access evidence, prices or revisions that became available after T.",
-  "customerOutput": "No synthetic 0-100 score. Rank the strongest candidates separately for 3, 6, 12 and 24 months.",
-  "horizonsMonths": [3,6,12,24],
+  "foundation": {
+    "name": "Data Truth / PIT Foundation",
+    "countedAsMachine": false
+  },
+  "principle": "Every blind forecast is frozen at T; only M02 Hindsight may inspect future outcomes and it may propose hypotheses but never promote them.",
+  "customerOutput": "No synthetic 0-100 score. Rank strongest candidates separately for 3, 6, 12 and 24 months.",
+  "horizonsMonths": [
+    3,
+    6,
+    12,
+    24
+  ],
   "machines": [
-    {"id":"M01","name":"Data Truth","role":"Point-in-time universe, prices, corporate actions and provenance","futureAccess":false},
-    {"id":"M02","name":"Time Machine","role":"Blind historical forecasts using only information available at T","futureAccess":false},
-    {"id":"M03","name":"Hindsight Researcher","role":"Study winners and losers with future outcomes visible; propose explanations only","futureAccess":true},
-    {"id":"M04","name":"Independent Judge","role":"Falsify hindsight hypotheses on untouched purged/embargoed periods and markets","futureAccess":false},
-    {"id":"M05","name":"Sector & Peer Specialist","role":"Compare companies within sector, industry, size and economically similar peer groups","futureAccess":false},
-    {"id":"M06","name":"Market Regime Specialist","role":"Learn conditional behaviour across bull/bear, rates, inflation, growth, stress and liquidity regimes","futureAccess":false},
-    {"id":"M07","name":"Relative Winner","role":"Predict which shares outperform their sector, peers and local market","futureAccess":false},
-    {"id":"M08","name":"Price & Volume Pattern","role":"Test reproducible multi-horizon price, momentum, volatility, drawdown, breakout and volume patterns","futureAccess":false},
-    {"id":"M09","name":"Fundamental Specialist","role":"Use only fundamentals whose publication/tradable timestamp was known at T","futureAccess":false},
-    {"id":"M10","name":"Anomaly & Loser Guard","role":"Find unusual behaviour and precursors of severe drawdowns; challenge bullish candidates","futureAccess":false},
-    {"id":"M11","name":"Ensemble & Horizon Selector","role":"Combine only independently validated machines and rank candidates per horizon without publishing a synthetic score","futureAccess":false}
+    {
+      "id": "M01",
+      "name": "Time Machine",
+      "futureAccess": false
+    },
+    {
+      "id": "M02",
+      "name": "Hindsight Researcher",
+      "futureAccess": true
+    },
+    {
+      "id": "M03",
+      "name": "Independent Judge",
+      "futureAccess": false
+    },
+    {
+      "id": "M04",
+      "name": "Sector & Type Specialist",
+      "futureAccess": false
+    },
+    {
+      "id": "M05",
+      "name": "Market Regime Specialist",
+      "futureAccess": false
+    },
+    {
+      "id": "M06",
+      "name": "Relative Winner",
+      "futureAccess": false
+    },
+    {
+      "id": "M07",
+      "name": "Price & Volume Pattern",
+      "futureAccess": false
+    },
+    {
+      "id": "M08",
+      "name": "Fundamental Specialist",
+      "futureAccess": false
+    },
+    {
+      "id": "M09",
+      "name": "Anomaly Specialist",
+      "futureAccess": false
+    },
+    {
+      "id": "M10",
+      "name": "Loser Guard",
+      "futureAccess": false
+    },
+    {
+      "id": "M11",
+      "name": "Ensemble & Horizon Selector",
+      "futureAccess": false
+    }
   ],
   "hardGates": {
     "pointInTimeOnly": true,
@@ -28,11 +81,20 @@
     "missingIsNotZero": true,
     "allTrialsRecorded": true,
     "dailyHighPreferredForThresholdHit": true,
-    "fallbackToObservedCloseMustBeExplicit": true
+    "fallbackToObservedCloseMustBeExplicit": true,
+    "validatedComponentsOnlyInEnsemble": true
   },
   "evaluation": {
-    "thresholdsPct": [10,20,30],
-    "primaryHorizonsMonths": [3,6,12,24],
-    "store": ["predictionDate","instrument","market","sector","peerGroup","horizonMonths","rank","modelVersion","evidenceIds","actualMaxUpside","actualMaxDrawdown","timeToThresholdDays","censored"]
+    "thresholdsPct": [
+      10,
+      20,
+      30
+    ],
+    "primaryHorizonsMonths": [
+      3,
+      6,
+      12,
+      24
+    ]
   }
 }
