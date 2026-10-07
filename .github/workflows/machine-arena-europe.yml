@@ -17,7 +17,9 @@ jobs:
       - name: Validate 31-market / 11-machine contract
         run: node scripts/research/europe-machine-arena-readiness.mjs
       - name: Test sector/peer pattern and loser specialist cores
-        run: node scripts/research/test-machine-specialists.mjs
+        run: |
+          node scripts/research/test-machine-specialists.mjs
+          node scripts/research/test-sector-classification.mjs
       - uses: actions/upload-artifact@v4
         with:
           name: machine-arena-readiness
