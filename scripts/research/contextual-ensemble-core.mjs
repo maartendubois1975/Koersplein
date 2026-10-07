@@ -1,0 +1,8 @@
+import {judgeTrials,learnWeights,championChallenger,driftStatus} from './learning-selection-core.mjs';
+const ctx=(x,h,sector,regime)=>x.horizonMonths===h&&(x.sector===sector||x.sector==='ALL')&&(x.regime===regime||x.regime==='ALL');
+export function selectValidatedComponents(trials,{predictionTime,horizonMonths,sector='ALL',regime='ALL'}){
+ const judged=judgeTrials(trials);const weights=learnWeights(judged,{cutoff:predictionTime}).filter(x=>ctx(x,horizonMonths,sector,regime));return weights.filter(x=>x.weight>0).sort((a,b)=>b.weight-a.weight);
+}
+export function rankContextual(rows,trials,{predictionTime,sector='ALL',regime='ALL',drift={}}){
+ const rankings={};for(const h of [3,6,12,24]){const weights=selectValidatedComponents(trials,{predictionTime,horizonMonths:h,sector,regime});const wm=new Map(weights.map(x=>[x.componentId,x.weight]));const scored=[];for(const r of rows){const parts=(r.components||[]).filter(x=>wm.has(x.componentId)&&Number.isFinite(x.predictions?.[h+'m']));if(!parts.length||r.riskVeto)continue;const z=parts.reduce((s,x)=>s+wm.get(x.componentId),0);scored.push({instrument:r.instrument,ticker:r.ticker,company:r.company,horizonMonths:h,expectedReturn:parts.reduce((s,x)=>s+x.predictions[h+'m']*wm.get(x.componentId),0)/z,components:parts.map(x=>x.componentId),status:'ELIGIBLE'});}rankings[h+'m']=scored.sort((a,b)=>b.expectedReturn-a.expectedReturn).map((x,i)=>({...x,rank:i+1}));}return{status:Object.values(rankings).some(x=>x.length)?'READY':'NO_PROVEN_COMPONENTS',sector,regime,predictionTime,rankings,champions:championChallenger(learnWeights(judgeTrials(trials),{cutoff:predictionTime})),drift};}
+export {driftStatus};
