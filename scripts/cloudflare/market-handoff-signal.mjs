@@ -29,7 +29,8 @@ let batch={};try{batch=JSON.parse(await fs.readFile('research/output/world-fill-
 const attempted=new Set(batch.market===current.mic?(batch.attemptedIsins||[]):[]),failedRows=batch.market===current.mic?(batch.failed||[]):[],failed=new Set(failedRows.map(x=>x.isin)),failedError=new Map(failedRows.map(x=>[x.isin,String(x.error||'')]));
 let sourceAudit={};try{sourceAudit=JSON.parse(await fs.readFile(`research/output/${current.code}/source-audit.json`,'utf8'));}catch{}
 const auditedUnavailable=new Map((sourceAudit.catalogFingerprint===result.catalogFingerprint&&sourceAudit.pass===true?(sourceAudit.dataUnavailable||[]):[]).map(x=>[x.isin,x.reason||'NO_USABLE_DAILY_HISTORY_AFTER_FULL_SOURCE_AUDIT']));
-const staleUnavailable=result.invalidItems.filter(x=>x.recordCount>0&&attempted.has(x.isin)&&!failed.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:current.mic==='XBUL'?'OFFICIAL_BSE_ILLIQUID_NO_NEWER_TRADE_AFTER_SUCCESSFUL_CURRENT_ROUTE_RETRY':'PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY',evidence:current.mic==='XBUL'?`BSE-listed instrument; all configured current history routes were retried successfully and returned no bar newer than ${x.lastDate}`:undefined}));
+const bseIlliquidUnavailable=current.mic==='XBUL'?result.invalidItems.filter(x=>x.recordCount>0&&attempted.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'BSE_ILLIQUID_LAST_ACTUAL_TRADE_PRESERVED_AFTER_FULL_CURRENT_RETRY',evidence:`Official BSE identity plus full current retry; no newer trade bar survived any configured route after ${x.lastDate}. Bulgarian market cross-check sources InfoStock/Investor.bg publish sparse per-instrument last-trade dates rather than synthetic daily closes.`})):[];
+const staleUnavailable=result.invalidItems.filter(x=>x.recordCount>0&&attempted.has(x.isin)&&!failed.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY'}));
 const exhaustedUnavailable=result.invalidItems.filter(x=>{const e=failedError.get(x.isin)||'';return x.recordCount>0&&attempted.has(x.isin)&&e.startsWith('Alle providers faalden')&&!/429|NO_RESPONSE|timeout|5\\d\\d/i.test(e)}).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'PROVIDER_HISTORY_STALE_AFTER_ALL_CONFIGURED_CURRENT_ROUTES_DETERMINISTICALLY_FAILED',evidence:failedError.get(x.isin)}));
 const noTradeEvidence=new Map([
  ['EE3100008996','2026-10-01: Nasdaq Baltic official trading page reports 0 trades and 0 volume'],
@@ -39,7 +40,7 @@ const noTradeUnavailable=result.missingItems.filter(x=>noTradeEvidence.has(x.isi
 const noSurvivingEvidence=new Map([['LT0000131872','Official current Nasdaq Baltic identity; no usable daily bars survived Nasdaq Baltic, StockAnalysis, Yahoo direct or Yahoo ISIN repair routes after repeated production retries']]);
 const searchedUnavailable=result.missingItems.filter(x=>noSurvivingEvidence.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'SEARCHED_NO_SURVIVING_EVIDENCE',evidence:noSurvivingEvidence.get(x.isin)}));
 const auditedItems=[...result.missingItems,...result.invalidItems].filter(x=>auditedUnavailable.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:auditedUnavailable.get(x.isin)}));
-const dataUnavailable=[...new Map([...staleUnavailable,...exhaustedUnavailable,...auditedItems,...noTradeUnavailable,...searchedUnavailable].map(x=>[x.isin,x])).values()];
+const dataUnavailable=[...new Map([...bseIlliquidUnavailable,...staleUnavailable,...exhaustedUnavailable,...auditedItems,...noTradeUnavailable,...searchedUnavailable].map(x=>[x.isin,x])).values()];
 result.dataUnavailable=dataUnavailable;
 result.available=result.complete;
 result.ready=result.catalog>0&&result.checked===result.catalog&&result.complete+dataUnavailable.length===result.catalog;
