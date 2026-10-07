@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "status": "COMPLETE",
+  "scope": "31 canonical COMPLETE European markets",
+  "rule": "Only point-in-time proven evidence may enter blind training; missing or unproven evidence remains UNKNOWN or quarantined.",
+  "layers": ["catalog", "price-history", "sector-peer", "fundamentals", "macro-regime", "historical-universe", "corporate-actions"],
+  "hardGates": ["missing-is-never-zero", "tradableTime-lte-cutoff", "no-sector-backprojection", "no-universe-backprojection", "no-fabricated-corporate-actions", "separate-vintages", "derived-lineage-required"]
+}
