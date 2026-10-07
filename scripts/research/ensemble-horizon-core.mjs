@@ -1,0 +1,6 @@
+const H=[3,6,12,24];
+export function judgeComponent(x){const ok=Boolean(x&&x.oos===true&&x.pointInTime===true&&x.passed===true&&Number.isFinite(x.sampleSize)&&x.sampleSize>0);return{...x,eligible:ok,reasons:ok?[]:['INDEPENDENT_OOS_PASS_REQUIRED']};}
+export function ensembleByHorizon(rows,judgements){
+ const eligible=new Map(judgements.map(judgeComponent).filter(x=>x.eligible).map(x=>[x.componentId,x]));
+ const out={};for(const h of H){const candidates=[];for(const r of rows){const parts=(r.components||[]).filter(x=>eligible.has(x.componentId)&&Number.isFinite(x.predictions?.[h+'m']));if(!parts.length)continue;const weighted=parts.map(x=>({x,w:Number(eligible.get(x.componentId).weight)||1}));const z=weighted.reduce((s,p)=>s+p.w,0);candidates.push({instrument:r.instrument,ticker:r.ticker,company:r.company,horizonMonths:h,expectedReturn:weighted.reduce((s,p)=>s+p.x.predictions[h+'m']*p.w,0)/z,components:weighted.map(p=>p.x.componentId),riskVeto:Boolean(r.riskVeto)});}out[h+'m']=candidates.filter(x=>!x.riskVeto).sort((a,b)=>b.expectedReturn-a.expectedReturn).map((x,i)=>({...x,rank:i+1}));}return{status:eligible.size?'READY':'INSUFFICIENT_VALIDATED_COMPONENTS',eligibleComponents:[...eligible.keys()],rankings:out};}
+export const HORIZONS=H;
