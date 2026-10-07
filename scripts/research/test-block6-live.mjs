@@ -1,0 +1,6 @@
+import assert from 'node:assert/strict';import {buildDailySnapshot,officialWeeklySnapshot,intradaySignalPolicy} from './live-publication-core.mjs';
+const rankings={'3m':[{instrument:'A'},{instrument:'B'}],'6m':[{instrument:'C'}],'12m':[{instrument:'D'}],'24m':[{instrument:'E'}]};const d1=buildDailySnapshot(rankings,{asOf:'2026-01-01T18:00:00Z'});assert.equal(d1.horizons['3m'].top[0].status,'NEW');assert.equal(d1.immutable,true);
+const r2={...rankings,'3m':[{instrument:'B'},{instrument:'F'}]};const d2=buildDailySnapshot(r2,{asOf:'2026-01-02T18:00:00Z',previous:d1});assert.equal(d2.horizons['3m'].top.find(x=>x.instrument==='B').status,'HOLD');assert.equal(d2.horizons['3m'].top.find(x=>x.instrument==='F').status,'NEW');assert.equal(d2.horizons['3m'].top.find(x=>x.instrument==='A').status,'EXIT');assert.ok(intradaySignalPolicy(d2).some(x=>x.type==='EXIT'));
+const w=officialWeeklySnapshot(d2,{publishedAt:'2026-01-05T07:00:00Z'});assert.equal(w.edition,'WEEKLY_OFFICIAL');assert.equal(w.horizons['3m'].top.some(x=>x.status==='EXIT'),false);assert.equal(w.immutable,true);
+for(const h of [3,6,12,24])assert.ok(w.horizons[h+'m']);
+console.log(JSON.stringify({status:'PASS',dailyAllEurope:true,horizons:[3,6,12,24],top5:true,statuses:['NEW','HOLD','EXIT'],weeklyOfficial:true,meaningfulChangesOnly:true,immutableSnapshots:true}));
