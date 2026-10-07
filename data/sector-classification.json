@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "schema": "koersplein-sector-classification-v1",
+  "purpose": "Source-backed sector and industry identity for peer comparisons. Never infer from company name.",
+  "requiredFields": ["isin","sector","industry","source","retrievedAt"],
+  "optionalFields": ["validFrom","validTo","classificationStandard","sourceUrl","evidenceId"],
+  "rules": [
+    "No name-based or ticker-based guessing.",
+    "Missing classification remains UNKNOWN and does not block non-sector machines.",
+    "Historical peer tests may only use classifications proven valid at prediction time.",
+    "Current classifications must never be silently projected backwards.",
+    "Every classification preserves source and retrieval timestamp."
+  ],
+  "records": []
+}
