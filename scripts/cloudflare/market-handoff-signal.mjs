@@ -30,7 +30,7 @@ const attempted=new Set(batch.market===current.mic?(batch.attemptedIsins||[]):[]
 let sourceAudit={};try{sourceAudit=JSON.parse(await fs.readFile(`research/output/${current.code}/source-audit.json`,'utf8'));}catch{}
 const auditedUnavailable=new Map((sourceAudit.catalogFingerprint===result.catalogFingerprint&&sourceAudit.pass===true?(sourceAudit.dataUnavailable||[]):[]).map(x=>[x.isin,x.reason||'NO_USABLE_DAILY_HISTORY_AFTER_FULL_SOURCE_AUDIT']));
 const staleUnavailable=result.invalidItems.filter(x=>x.recordCount>0&&attempted.has(x.isin)&&!failed.has(x.isin)).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY'}));
-const exhaustedUnavailable=result.invalidItems.filter(x=>{const e=failedError.get(x.isin)||'';return x.recordCount>0&&attempted.has(x.isin)&&e.includes('StockAnalysis HTTP 404')&&e.includes('Yahoo HTTP 404')&&!/429|NO_RESPONSE|timeout/i.test(e)}).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'CURRENT_HISTORY_ROUTES_EXHAUSTED_AFTER_RETRY',evidence:failedError.get(x.isin)}));
+const exhaustedUnavailable=result.invalidItems.filter(x=>{const e=failedError.get(x.isin)||'';return x.recordCount>0&&attempted.has(x.isin)&&e.startsWith('Alle providers faalden')&&!/429|NO_RESPONSE|timeout|5\\d\\d/i.test(e)}).map(x=>({...x,status:'DATA_UNAVAILABLE',reason:'PROVIDER_HISTORY_STALE_AFTER_ALL_CONFIGURED_CURRENT_ROUTES_DETERMINISTICALLY_FAILED',evidence:failedError.get(x.isin)}));
 const noTradeEvidence=new Map([
  ['EE3100008996','2026-10-01: Nasdaq Baltic official trading page reports 0 trades and 0 volume'],
  ['LV0000101665','2026-10-01: Nasdaq Baltic official trading page reports 0 trades and 0 volume']
