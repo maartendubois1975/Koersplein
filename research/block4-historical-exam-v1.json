@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "status": "COMPLETE",
+  "block": "Historical Europe examination engine",
+  "scope": "31 canonical COMPLETE European markets",
+  "horizonsMonths": [
+    3,
+    6,
+    12,
+    24
+  ],
+  "thresholdsPct": [
+    10,
+    20,
+    30
+  ],
+  "outcomes": {
+    "thresholdBasis": "daily high preferred; observed close fallback explicitly labelled",
+    "maxUpside": true,
+    "maxDrawdown": true,
+    "timeToThresholdDays": true,
+    "censoring": true
+  },
+  "validation": {
+    "chronologicalWalkForward": true,
+    "purgeByForecastHorizon": true,
+    "embargo": true,
+    "untouchedFinalHoldout": true,
+    "allTrialsRecorded": true
+  },
+  "benchmarks": [
+    "equal-weight/base market",
+    "simple 6m momentum top decile",
+    "random/base-rate"
+  ],
+  "metrics": [
+    "precision@5",
+    "mean return@5",
+    "max drawdown@5",
+    "Brier score",
+    "log loss"
+  ],
+  "promotionRule": "No complex machine may influence the live ensemble unless it beats relevant simple benchmarks on unseen point-in-time data and passes the independent Judge."
+}
