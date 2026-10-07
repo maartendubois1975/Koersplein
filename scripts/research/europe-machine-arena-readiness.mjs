@@ -6,12 +6,15 @@ if(complete.length!==31) throw Error(`EUROPE_NOT_COMPLETE_${complete.length}_OF_
 const required=['M01','M02','M03','M04','M05','M06','M07','M08','M09','M10','M11'];
 const ids=contract.machines.map(x=>x.id);
 for(const id of required) if(!ids.includes(id)) throw Error(`MACHINE_MISSING_${id}`);
-for(const m of contract.machines) if(m.id!=='M03'&&m.futureAccess) throw Error(`FUTURE_LEAK_CONTRACT_${m.id}`);
+for(const m of contract.machines) if(m.id!=='M02'&&m.futureAccess) throw Error(`FUTURE_LEAK_CONTRACT_${m.id}`);
 if(!contract.hardGates.pointInTimeOnly||!contract.hardGates.predictionsImmutable||!contract.hardGates.independentOutOfSampleValidation) throw Error('ARENA_HARD_GATES_DISABLED');
 const existing={
  pointInTime:'scripts/research/pit-core.mjs',
  blindTimeMachine:'scripts/research/machine1-v2-core.mjs',
  hindsight:'scripts/research/hindsight-postmortem.mjs',
+ specialists:'scripts/research/machine-specialists-core.mjs',
+ pitSpecialists:'scripts/research/pit-specialists-core.mjs',
+ ensemble:'scripts/research/ensemble-horizon-core.mjs',
  judge:'scripts/research/machine3-validation-core.mjs',
  relative:'scripts/research/relative-core.mjs',
  regime:'scripts/research/macro-regime-core.mjs',
