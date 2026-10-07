@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import {pricePatternFeatures,anomalyLoserGuard} from './machine-specialists-core.mjs';
+import {classificationFor} from './sector-classification-core.mjs';
 
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
 if(!API) throw new Error('KOERSPLEIN_API_URL ontbreekt');
@@ -19,12 +20,12 @@ for(const item of instruments){
   for(let i=12;i<monthly.length;i++){
    const now=monthly[i], m3=monthly[Math.max(0,i-3)],m6=monthly[Math.max(0,i-6)],m12=monthly[Math.max(0,i-12)];
    const signals={momentum3m:pct(m3.close,now.close),momentum6m:pct(m6.close,now.close),momentum12m:pct(m12.close,now.close)};
-   const barIndex=bars.findIndex(b=>b.date===now.date);const pattern=barIndex>=252?pricePatternFeatures(bars,barIndex):null;const loserGuard=anomalyLoserGuard(pattern);
+   const barIndex=bars.findIndex(b=>b.date===now.date);const pattern=barIndex>=252?pricePatternFeatures(bars,barIndex):null;const loserGuard=anomalyLoserGuard(pattern);const classification=classificationFor(item.isin,now.date);
    // Baseline v1: puur point-in-time prijsmodel. Geen toekomstige of nog niet ingelezen fundamentele/news-data.
    const score=(signals.momentum3m??0)*.2+(signals.momentum6m??0)*.3+(signals.momentum12m??0)*.5;
    const predictions={};const realized={};
    for(const h of [3,6,12,24]){predictions[`${h}m`]=score;const future=nearest(bars,addMonths(now.date,h));realized[`${h}m`]=future?pct(now.close,future.close):null;}
-   results.push({instrument:item.isin,ticker:item.ticker||item.symbol,company:item.company||item.name,predictionDate:now.date,informationCutoff:now.date,modelVersion:'machine1-price-specialists-v2',availableSignals:{...signals,pattern,loserGuard},missingSignals:['fundamentals-point-in-time','analyst-revisions','news-sentiment','macro-point-in-time','flows-options-short'],predictions,realized});
+   results.push({instrument:item.isin,ticker:item.ticker||item.symbol,company:item.company||item.name,predictionDate:now.date,informationCutoff:now.date,modelVersion:'machine1-price-specialists-v2',availableSignals:{...signals,pattern,loserGuard,classification},missingSignals:['fundamentals-point-in-time','analyst-revisions','news-sentiment','macro-point-in-time','flows-options-short'],predictions,realized});
   }
  }catch(e){failed++;console.error(JSON.stringify({isin:item.isin,error:e.message}));}
 }
