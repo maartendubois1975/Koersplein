@@ -1,6 +1,9 @@
 name: Machine Arena Europe
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/arena-run-trigger'
 permissions:
   contents: read
 concurrency:
