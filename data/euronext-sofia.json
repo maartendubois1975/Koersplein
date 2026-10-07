@@ -1,7 +1,7 @@
 {
   "exchange": "Sofia",
   "mic": "XBUL",
-  "retrievedAt": "2026-10-06T16:54:02.594Z",
+  "retrievedAt": "2026-10-07T05:11:04.066Z",
   "source": "BSE Main Market scope + Bulgarian Central Depository real ISIN identity + StockAnalysis BUL daily-history provider",
   "sourceUrl": "https://www.bse-sofia.bg/en/listed-instruments/by-sector",
   "officialEligibleCount": 158,
@@ -10,36 +10,8 @@
   "discoveryPolicy": "Real Bulgarian ISIN required for every accepted BSE Main Market equity; pseudo identifiers forbidden; history source gate mandatory",
   "shares": [
     {
-      "company": "88 SFA Sopharma AD 2.51B 2.500 -3.10% 2.76B",
-      "name": "88 SFA Sopharma AD 2.51B 2.500 -3.10% 2.76B",
-      "symbol": "SFA",
-      "ticker": "SFA",
-      "isin": "BG11SOSOBT18",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "SFA",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "89 SLYG Shelly Group SE 2.22B 65.60 -0.91% 320.06M",
-      "name": "89 SLYG Shelly Group SE 2.22B 65.60 -0.91% 320.06M",
-      "symbol": "SLYG",
-      "ticker": "SLYG",
-      "isin": "BG1100003166",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "SLYG",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "90 THQM Tchaikapharma High Quality Medicines AD 1.63B 8.60 - 69.28M",
-      "name": "90 THQM Tchaikapharma High Quality Medicines AD 1.63B 8.60 - 69.28M",
+      "company": "89 THQM Tchaikapharma High Quality Medicines AD 1.63B 8.60 - 69.28M",
+      "name": "89 THQM Tchaikapharma High Quality Medicines AD 1.63B 8.60 - 69.28M",
       "symbol": "THQM",
       "ticker": "THQM",
       "isin": "BG1100008074",
@@ -52,8 +24,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "91 EUBG Eurohold Bulgaria AD 1.36B 1.400 -2.78% 3.39B",
-      "name": "91 EUBG Eurohold Bulgaria AD 1.36B 1.400 -2.78% 3.39B",
+      "company": "90 EUBG Eurohold Bulgaria AD 1.36B 1.500 7.14% 3.39B",
+      "name": "90 EUBG Eurohold Bulgaria AD 1.36B 1.500 7.14% 3.39B",
       "symbol": "EUBG",
       "ticker": "EUBG",
       "isin": "BG1100114062",
@@ -66,8 +38,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "93 FIB First Investment Bank AD 1.21B 4.340 0.93% 491.53M",
-      "name": "93 FIB First Investment Bank AD 1.21B 4.340 0.93% 491.53M",
+      "company": "91 SFA Sopharma AD 1.35B 2.500 - 2.76B",
+      "name": "91 SFA Sopharma AD 1.35B 2.500 - 2.76B",
+      "symbol": "SFA",
+      "ticker": "SFA",
+      "isin": "BG11SOSOBT18",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "SFA",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "93 FIB First Investment Bank AD 1.25B 4.340 0.93% 491.53M",
+      "name": "93 FIB First Investment Bank AD 1.25B 4.340 0.93% 491.53M",
       "symbol": "FIB",
       "ticker": "FIB",
       "isin": "BG1100106050",
@@ -80,8 +66,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "96 SPDY Speedy AD 873.19M 87.00 -0.57% 556.06M",
-      "name": "96 SPDY Speedy AD 873.19M 87.00 -0.57% 556.06M",
+      "company": "94 SLYG Shelly Group SE 1.19B 65.80 0.31% 320.06M",
+      "name": "94 SLYG Shelly Group SE 1.19B 65.80 0.31% 320.06M",
+      "symbol": "SLYG",
+      "ticker": "SLYG",
+      "isin": "BG1100003166",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "SLYG",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "97 SPDY Speedy AD 873.19M 87.00 -0.57% 556.06M",
+      "name": "97 SPDY Speedy AD 873.19M 87.00 -0.57% 556.06M",
       "symbol": "SPDY",
       "ticker": "SPDY",
       "isin": "BG1100007126",
@@ -94,8 +94,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "100 CCB Central Cooperative Bank AD 440.88M 1.850 - 286.51M",
-      "name": "100 CCB Central Cooperative Bank AD 440.88M 1.850 - 286.51M",
+      "company": "101 CCB Central Cooperative Bank AD 440.88M 1.850 - 286.51M",
+      "name": "101 CCB Central Cooperative Bank AD 440.88M 1.850 - 286.51M",
       "symbol": "CCB",
       "ticker": "CCB",
       "isin": "BG1100014973",
@@ -108,8 +108,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "101 MSH M+S Hydraulic AD 435.98M 5.90 - 166.81M",
-      "name": "101 MSH M+S Hydraulic AD 435.98M 5.90 - 166.81M",
+      "company": "102 MSH M+S Hydraulic AD 435.98M 5.90 - 166.81M",
+      "name": "102 MSH M+S Hydraulic AD 435.98M 5.90 - 166.81M",
       "symbol": "MSH",
       "ticker": "MSH",
       "isin": "BG11MPKAAT18",
@@ -122,8 +122,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "102 SO Smart Organic AD 382.77M 17.40 0.58% 134.57M",
-      "name": "102 SO Smart Organic AD 382.77M 17.40 0.58% 134.57M",
+      "company": "103 SO Smart Organic AD 386.89M 17.40 0.58% 134.57M",
+      "name": "103 SO Smart Organic AD 386.89M 17.40 0.58% 134.57M",
       "symbol": "SO",
       "ticker": "SO",
       "isin": "BG1100005153",
@@ -131,20 +131,6 @@
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
       "providerSymbol": "SO",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "103 GR6 Gradus AD 363.87M 1.180 2.61% 239.65M",
-      "name": "103 GR6 Gradus AD 363.87M 1.180 2.61% 239.65M",
-      "symbol": "GR6",
-      "ticker": "GR6",
-      "isin": "BG1100002184",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "GR6",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
@@ -178,8 +164,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "106 DUH Doverie United Holding AD 277.75M 7.00 -0.57% 678.68M",
-      "name": "106 DUH Doverie United Holding AD 277.75M 7.00 -0.57% 678.68M",
+      "company": "106 DUH Doverie United Holding AD 275.14M 7.00 -0.57% 678.68M",
+      "name": "106 DUH Doverie United Holding AD 275.14M 7.00 -0.57% 678.68M",
       "symbol": "DUH",
       "ticker": "DUH",
       "isin": "BG1100038980",
@@ -220,22 +206,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "110 CHIM Chimimport AD 255.71M 0.605 -3.20% 1.01B",
-      "name": "110 CHIM Chimimport AD 255.71M 0.605 -3.20% 1.01B",
-      "symbol": "CHIM",
-      "ticker": "CHIM",
-      "isin": "BG1100046066",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "CHIM",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "111 TIB Telematic Interactive Bulgaria AD 248.30M 10.40 - 150.78M",
-      "name": "111 TIB Telematic Interactive Bulgaria AD 248.30M 10.40 - 150.78M",
+      "company": "110 TIB Telematic Interactive Bulgaria AD 247.13M 10.40 - 150.78M",
+      "name": "110 TIB Telematic Interactive Bulgaria AD 247.13M 10.40 - 150.78M",
       "symbol": "TIB",
       "ticker": "TIB",
       "isin": "BG1100014213",
@@ -248,22 +220,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "112 TBD TPP-Bobov Dol AD 247.70M 15.00 - 500.48M",
-      "name": "112 TBD TPP-Bobov Dol AD 247.70M 15.00 - 500.48M",
-      "symbol": "TBD",
-      "ticker": "TBD",
-      "isin": "BG1100015210",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "TBD",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "113 ATOM Atomenergoremont AD 246.25M 8.50 8.28% 111.77M",
-      "name": "113 ATOM Atomenergoremont AD 246.25M 8.50 8.28% 111.77M",
+      "company": "111 ATOM Atomenergoremont AD 246.25M 8.50 8.28% 111.77M",
+      "name": "111 ATOM Atomenergoremont AD 246.25M 8.50 8.28% 111.77M",
       "symbol": "ATOM",
       "ticker": "ATOM",
       "isin": "BG1100007159",
@@ -276,8 +234,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "114 235H 235 Holdings AD 245.29M 25.00 - 11.27M",
-      "name": "114 235H 235 Holdings AD 245.29M 25.00 - 11.27M",
+      "company": "112 235H 235 Holdings AD 245.29M 25.00 - 11.27M",
+      "name": "112 235H 235 Holdings AD 245.29M 25.00 - 11.27M",
       "symbol": "235H",
       "ticker": "235H",
       "isin": "BG1100017174",
@@ -290,50 +248,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "116 ATER Advance Terrafund REIT 229.54M 1.445 0.35% 34.44M",
-      "name": "116 ATER Advance Terrafund REIT 229.54M 1.445 0.35% 34.44M",
-      "symbol": "ATER",
-      "ticker": "ATER",
-      "isin": "BG1100025052",
+      "company": "115 GR6 Gradus AD 191.66M 1.160 -1.70% 239.65M",
+      "name": "115 GR6 Gradus AD 191.66M 1.160 -1.70% 239.65M",
+      "symbol": "GR6",
+      "ticker": "GR6",
+      "isin": "BG1100002184",
       "mic": "XBUL",
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
-      "providerSymbol": "ATER",
+      "providerSymbol": "GR6",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "117 TPLR Toplofikatsia-Ruse AD 214.41M 4.000 - 182.60M",
-      "name": "117 TPLR Toplofikatsia-Ruse AD 214.41M 4.000 - 182.60M",
-      "symbol": "TPLR",
-      "ticker": "TPLR",
-      "isin": "BG1100013207",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "TPLR",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "118 SFT Sopharma Trading AD 203.15M 3.140 0.64% 2.38B",
-      "name": "118 SFT Sopharma Trading AD 203.15M 3.140 0.64% 2.38B",
-      "symbol": "SFT",
-      "ticker": "SFT",
-      "isin": "BG1100086070",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "SFT",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "120 HRZ Rodna Zemya Holding AD 187.16M 1.750 - 198.39M",
-      "name": "120 HRZ Rodna Zemya Holding AD 187.16M 1.750 - 198.39M",
+      "company": "116 HRZ Rodna Zemya Holding AD 187.16M 1.750 - 198.39M",
+      "name": "116 HRZ Rodna Zemya Holding AD 187.16M 1.750 - 198.39M",
       "symbol": "HRZ",
       "ticker": "HRZ",
       "isin": "BG1100051983",
@@ -346,8 +276,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "121 BSE Bulgarian Stock Exchange AD 185.70M 7.54 - 24.93M",
-      "name": "121 BSE Bulgarian Stock Exchange AD 185.70M 7.54 - 24.93M",
+      "company": "117 BSE Bulgarian Stock Exchange AD 185.70M 7.54 - 24.93M",
+      "name": "117 BSE Bulgarian Stock Exchange AD 185.70M 7.54 - 24.93M",
       "symbol": "BSE",
       "ticker": "BSE",
       "isin": "BG1100016978",
@@ -360,8 +290,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "122 BREF Bulgarian Real Estate Fund REIT 179.09M 2.770 - 86.59M",
-      "name": "122 BREF Bulgarian Real Estate Fund REIT 179.09M 2.770 - 86.59M",
+      "company": "118 BREF Bulgarian Real Estate Fund REIT 179.09M 2.770 - 86.59M",
+      "name": "118 BREF Bulgarian Real Estate Fund REIT 179.09M 2.770 - 86.59M",
       "symbol": "BREF",
       "ticker": "BREF",
       "isin": "BG1100001053",
@@ -374,8 +304,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "123 GTH Galata Investment Company AD 178.92M 1.380 - 10.44M",
-      "name": "123 GTH Galata Investment Company AD 178.92M 1.380 - 10.44M",
+      "company": "119 GTH Galata Investment Company AD 178.92M 1.380 - 10.44M",
+      "name": "119 GTH Galata Investment Company AD 178.92M 1.380 - 10.44M",
       "symbol": "GTH",
       "ticker": "GTH",
       "isin": "BG1100035135",
@@ -388,8 +318,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "124 BSP Balkan and Sea Properties REIT-Varna 172.47M 13.20 - 3.98M",
-      "name": "124 BSP Balkan and Sea Properties REIT-Varna 172.47M 13.20 - 3.98M",
+      "company": "120 BSP Balkan and Sea Properties REIT-Varna 172.47M 13.20 - 3.98M",
+      "name": "120 BSP Balkan and Sea Properties REIT-Varna 172.47M 13.20 - 3.98M",
       "symbol": "BSP",
       "ticker": "BSP",
       "isin": "BG1100099065",
@@ -402,8 +332,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "125 HSI Sila Holding AD 167.81M 1.820 - 1.56M",
-      "name": "125 HSI Sila Holding AD 167.81M 1.820 - 1.56M",
+      "company": "121 HSI Sila Holding AD 167.81M 1.820 - 1.56M",
+      "name": "121 HSI Sila Holding AD 167.81M 1.820 - 1.56M",
       "symbol": "HSI",
       "ticker": "HSI",
       "isin": "BG1100027983",
@@ -416,8 +346,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "126 CHSB Himsnab Bulgaria AD 167.55M 35.60 0.57% 74.87M",
-      "name": "126 CHSB Himsnab Bulgaria AD 167.55M 35.60 0.57% 74.87M",
+      "company": "122 CHSB Himsnab Bulgaria AD 167.55M 35.60 0.57% 74.87M",
+      "name": "122 CHSB Himsnab Bulgaria AD 167.55M 35.60 0.57% 74.87M",
       "symbol": "CHSB",
       "ticker": "CHSB",
       "isin": "BG11EMTOAT16",
@@ -430,22 +360,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "127 SFI Sopharma Properties REIT 164.70M 4.020 0.50% 14.41M",
-      "name": "127 SFI Sopharma Properties REIT 164.70M 4.020 0.50% 14.41M",
-      "symbol": "SFI",
-      "ticker": "SFI",
-      "isin": "BG1100031068",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "SFI",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "128 ALFB Alpha Bulgaria AD 159.22M 3.220 -4.73% 806.41K",
-      "name": "128 ALFB Alpha Bulgaria AD 159.22M 3.220 -4.73% 806.41K",
+      "company": "123 ALFB Alpha Bulgaria AD 165.59M 3.220 -4.73% 806.41K",
+      "name": "123 ALFB Alpha Bulgaria AD 165.59M 3.220 -4.73% 806.41K",
       "symbol": "ALFB",
       "ticker": "ALFB",
       "isin": "BG1100038097",
@@ -458,8 +374,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "131 TXIM Texim Bank AD 149.42M 1.820 - 32.77M",
-      "name": "131 TXIM Texim Bank AD 149.42M 1.820 - 32.77M",
+      "company": "125 TXIM Texim Bank AD 149.42M 1.820 - 32.77M",
+      "name": "125 TXIM Texim Bank AD 149.42M 1.820 - 32.77M",
       "symbol": "TXIM",
       "ticker": "TXIM",
       "isin": "BG1100001921",
@@ -472,8 +388,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "132 IHB Industrial Holding Bulgaria AD 144.55M 0.800 - 102.74M",
-      "name": "132 IHB Industrial Holding Bulgaria AD 144.55M 0.800 - 102.74M",
+      "company": "126 IHB Industrial Holding Bulgaria AD 144.55M 0.800 - 102.74M",
+      "name": "126 IHB Industrial Holding Bulgaria AD 144.55M 0.800 - 102.74M",
       "symbol": "IHB",
       "ticker": "IHB",
       "isin": "BG1100019980",
@@ -486,22 +402,36 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "133 TBS Telelink Business Services Group AD 137.21M 5.90 -1.67% 283.55M",
-      "name": "133 TBS Telelink Business Services Group AD 137.21M 5.90 -1.67% 283.55M",
-      "symbol": "TBS",
-      "ticker": "TBS",
-      "isin": "BG1100017190",
+      "company": "127 CHIM Chimimport AD 138.14M 0.610 0.83% 1.01B",
+      "name": "127 CHIM Chimimport AD 138.14M 0.610 0.83% 1.01B",
+      "symbol": "CHIM",
+      "ticker": "CHIM",
+      "isin": "BG1100046066",
       "mic": "XBUL",
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
-      "providerSymbol": "TBS",
+      "providerSymbol": "CHIM",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "134 HNVK Holding Nov Vek AD 128.69M 12.00 1.70% 35.14M",
-      "name": "134 HNVK Holding Nov Vek AD 128.69M 12.00 1.70% 35.14M",
+      "company": "128 TBD TPP-Bobov Dol AD 130.58M 15.00 - 500.48M",
+      "name": "128 TBD TPP-Bobov Dol AD 130.58M 15.00 - 500.48M",
+      "symbol": "TBD",
+      "ticker": "TBD",
+      "isin": "BG1100015210",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "TBD",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "129 HNVK Holding Nov Vek AD 128.69M 12.00 1.70% 35.14M",
+      "name": "129 HNVK Holding Nov Vek AD 128.69M 12.00 1.70% 35.14M",
       "symbol": "HNVK",
       "ticker": "HNVK",
       "isin": "BG1100058988",
@@ -514,22 +444,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "135 FPP Fairplay Properties REIT 119.23M 0.800 11.11% 11.56M",
-      "name": "135 FPP Fairplay Properties REIT 119.23M 0.800 11.11% 11.56M",
-      "symbol": "FPP",
-      "ticker": "FPP",
-      "isin": "BG1100042057",
+      "company": "130 ATER Advance Terrafund REIT 122.98M 1.445 - 34.44M",
+      "name": "130 ATER Advance Terrafund REIT 122.98M 1.445 - 34.44M",
+      "symbol": "ATER",
+      "ticker": "ATER",
+      "isin": "BG1100025052",
       "mic": "XBUL",
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
-      "providerSymbol": "FPP",
+      "providerSymbol": "ATER",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "136 VEGA Fin Collection Holding AD 113.83M 42.00 - -",
-      "name": "136 VEGA Fin Collection Holding AD 113.83M 42.00 - -",
+      "company": "131 VEGA Fin Collection Holding AD 113.83M 42.00 - -",
+      "name": "131 VEGA Fin Collection Holding AD 113.83M 42.00 - -",
       "symbol": "VEGA",
       "ticker": "VEGA",
       "isin": "BG11VEPLAT12",
@@ -542,8 +472,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "137 ALB Albena AD 112.14M 14.20 - 146.63M",
-      "name": "137 ALB Albena AD 112.14M 14.20 - 146.63M",
+      "company": "132 TPLR Toplofikatsia-Ruse AD 113.40M 4.000 - 182.60M",
+      "name": "132 TPLR Toplofikatsia-Ruse AD 113.40M 4.000 - 182.60M",
+      "symbol": "TPLR",
+      "ticker": "TPLR",
+      "isin": "BG1100013207",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "TPLR",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "133 ALB Albena AD 112.20M 14.20 - 146.63M",
+      "name": "133 ALB Albena AD 112.20M 14.20 - 146.63M",
       "symbol": "ALB",
       "ticker": "ALB",
       "isin": "BG11ALBAAT17",
@@ -556,8 +500,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "139 IBG Investor.BG AD 106.47M 11.80 - -",
-      "name": "139 IBG Investor.BG AD 106.47M 11.80 - -",
+      "company": "135 SFT Sopharma Trading AD 108.31M 3.160 0.64% 2.38B",
+      "name": "135 SFT Sopharma Trading AD 108.31M 3.160 0.64% 2.38B",
+      "symbol": "SFT",
+      "ticker": "SFT",
+      "isin": "BG1100086070",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "SFT",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "136 IBG Investor.BG AD 106.47M 11.80 - -",
+      "name": "136 IBG Investor.BG AD 106.47M 11.80 - -",
       "symbol": "IBG",
       "ticker": "IBG",
       "isin": "BG1100019048",
@@ -570,8 +528,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "140 EMKA EMKA AD 104.49M 1.290 -3.01% -",
-      "name": "140 EMKA EMKA AD 104.49M 1.290 -3.01% -",
+      "company": "137 EMKA EMKA AD 104.49M 1.290 -3.01% -",
+      "name": "137 EMKA EMKA AD 104.49M 1.290 -3.01% -",
       "symbol": "EMKA",
       "ticker": "EMKA",
       "isin": "BG11EMSEAT19",
@@ -584,8 +542,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "141 ALCM Alcomet AD 97.76M 2.880 0.70% 608.79M",
-      "name": "141 ALCM Alcomet AD 97.76M 2.880 0.70% 608.79M",
+      "company": "138 ALCM Alcomet AD 97.76M 2.880 0.70% 608.79M",
+      "name": "138 ALCM Alcomet AD 97.76M 2.880 0.70% 608.79M",
       "symbol": "ALCM",
       "ticker": "ALCM",
       "isin": "BG11ALSUAT14",
@@ -598,8 +556,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "142 PFB Port Flot-Burgas AD 94.54M 5.00 - 16.59M",
-      "name": "142 PFB Port Flot-Burgas AD 94.54M 5.00 - 16.59M",
+      "company": "139 PFB Port Flot-Burgas AD 94.54M 5.00 - 16.59M",
+      "name": "139 PFB Port Flot-Burgas AD 94.54M 5.00 - 16.59M",
       "symbol": "PFB",
       "ticker": "PFB",
       "isin": "BG1100005195",
@@ -612,8 +570,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "143 HES Hydraulic Elements and Systems AD 94.36M 2.740 0.74% 85.44M",
-      "name": "143 HES Hydraulic Elements and Systems AD 94.36M 2.740 0.74% 85.44M",
+      "company": "141 HES Hydraulic Elements and Systems AD 93.50M 2.740 0.74% 85.44M",
+      "name": "141 HES Hydraulic Elements and Systems AD 93.50M 2.740 0.74% 85.44M",
       "symbol": "HES",
       "ticker": "HES",
       "isin": "BG11HIYMAT14",
@@ -626,36 +584,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "145 AGH Agria Group Holding AD 88.82M 7.05 -1.40% 763.85M",
-      "name": "145 AGH Agria Group Holding AD 88.82M 7.05 -1.40% 763.85M",
-      "symbol": "AGH",
-      "ticker": "AGH",
-      "isin": "BG1100085072",
+      "company": "142 SFI Sopharma Properties REIT 88.24M 4.020 0.50% 14.41M",
+      "name": "142 SFI Sopharma Properties REIT 88.24M 4.020 0.50% 14.41M",
+      "symbol": "SFI",
+      "ticker": "SFI",
+      "isin": "BG1100031068",
       "mic": "XBUL",
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
-      "providerSymbol": "AGH",
+      "providerSymbol": "SFI",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "146 SIRM Sirma Group JSC 84.82M 0.790 -1.00% 137.98M",
-      "name": "146 SIRM Sirma Group JSC 84.82M 0.790 -1.00% 137.98M",
-      "symbol": "SIRM",
-      "ticker": "SIRM",
-      "isin": "BG11SIPLAT13",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "SIRM",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "147 HYDR Green Innovation AD 82.49M 9.50 -1.04% 8.61M",
-      "name": "147 HYDR Green Innovation AD 82.49M 9.50 -1.04% 8.61M",
+      "company": "143 HYDR Green Innovation AD 82.49M 9.50 -1.04% 8.61M",
+      "name": "143 HYDR Green Innovation AD 82.49M 9.50 -1.04% 8.61M",
       "symbol": "HYDR",
       "ticker": "HYDR",
       "isin": "BG1100023222",
@@ -668,8 +612,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "148 NEOH Neochim AD 82.41M 17.00 - 459.65M",
-      "name": "148 NEOH Neochim AD 82.41M 17.00 - 459.65M",
+      "company": "144 NEOH Neochim AD 82.41M 17.00 - 459.65M",
+      "name": "144 NEOH Neochim AD 82.41M 17.00 - 459.65M",
       "symbol": "NEOH",
       "ticker": "NEOH",
       "isin": "BG11NEDIAT11",
@@ -682,22 +626,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "149 SCOM Sofia Commerce-Pawn Brokerage AD 82.40M 2.460 -1.60% 17.47M",
-      "name": "149 SCOM Sofia Commerce-Pawn Brokerage AD 82.40M 2.460 -1.60% 17.47M",
-      "symbol": "SCOM",
-      "ticker": "SCOM",
-      "isin": "BG1100053054",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "SCOM",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "150 HRC HR Capital AD 82.19M 4.780 -13.09% 20.41M",
-      "name": "150 HRC HR Capital AD 82.19M 4.780 -13.09% 20.41M",
+      "company": "145 HRC HR Capital AD 82.19M 4.780 -13.09% 20.41M",
+      "name": "145 HRC HR Capital AD 82.19M 4.780 -13.09% 20.41M",
       "symbol": "HRC",
       "ticker": "HRC",
       "isin": "BG1100016218",
@@ -710,8 +640,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "151 SBPF Super Borovets Property Fund REIT 77.71M 1.730 - 1.40M",
-      "name": "151 SBPF Super Borovets Property Fund REIT 77.71M 1.730 - 1.40M",
+      "company": "147 SBPF Super Borovets Property Fund REIT 77.71M 1.730 - 1.40M",
+      "name": "147 SBPF Super Borovets Property Fund REIT 77.71M 1.730 - 1.40M",
       "symbol": "SBPF",
       "ticker": "SBPF",
       "isin": "BG1100041067",
@@ -724,8 +654,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "152 CGRN CM Green Energy Fund AD 76.92M 1.150 - -",
-      "name": "152 CGRN CM Green Energy Fund AD 76.92M 1.150 - -",
+      "company": "148 CGRN CM Green Energy Fund AD 76.92M 1.150 - -",
+      "name": "148 CGRN CM Green Energy Fund AD 76.92M 1.150 - -",
       "symbol": "CGRN",
       "ticker": "CGRN",
       "isin": "BG1100032082",
@@ -738,22 +668,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "153 MONB Monbat AD 71.23M 0.980 - 397.00M",
-      "name": "153 MONB Monbat AD 71.23M 0.980 - 397.00M",
-      "symbol": "MONB",
-      "ticker": "MONB",
-      "isin": "BG1100075065",
+      "company": "149 TBS Telelink Business Services Group AD 72.57M 5.90 -1.67% 283.55M",
+      "name": "149 TBS Telelink Business Services Group AD 72.57M 5.90 -1.67% 283.55M",
+      "symbol": "TBS",
+      "ticker": "TBS",
+      "isin": "BG1100017190",
       "mic": "XBUL",
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
-      "providerSymbol": "MONB",
+      "providerSymbol": "TBS",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "154 TCH TK - Hold AD 71.08M 4.460 - -",
-      "name": "154 TCH TK - Hold AD 71.08M 4.460 - -",
+      "company": "150 TCH TK - Hold AD 71.43M 4.460 - -",
+      "name": "150 TCH TK - Hold AD 71.43M 4.460 - -",
       "symbol": "TCH",
       "ticker": "TCH",
       "isin": "BG1100005971",
@@ -766,8 +696,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "155 ASKR Asenova Krepost AD 69.36M 8.40 - -",
-      "name": "155 ASKR Asenova Krepost AD 69.36M 8.40 - -",
+      "company": "151 ASKR Asenova Krepost AD 69.36M 8.40 - -",
+      "name": "151 ASKR Asenova Krepost AD 69.36M 8.40 - -",
       "symbol": "ASKR",
       "ticker": "ASKR",
       "isin": "BG11ASASBT10",
@@ -780,8 +710,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "156 SFB Sopharma Buildings REIT-Sofia 67.10M 9.00 - -",
-      "name": "156 SFB Sopharma Buildings REIT-Sofia 67.10M 9.00 - -",
+      "company": "152 SFB Sopharma Buildings REIT-Sofia 67.10M 9.00 - -",
+      "name": "152 SFB Sopharma Buildings REIT-Sofia 67.10M 9.00 - -",
       "symbol": "SFB",
       "ticker": "SFB",
       "isin": "BG1100084075",
@@ -794,8 +724,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "157 AMON AmonRa Energy AD 65.01M 5.50 - -",
-      "name": "157 AMON AmonRa Energy AD 65.01M 5.50 - -",
+      "company": "153 AMON AmonRa Energy AD 65.01M 5.50 - -",
+      "name": "153 AMON AmonRa Energy AD 65.01M 5.50 - -",
       "symbol": "AMON",
       "ticker": "AMON",
       "isin": "BG1100021226",
@@ -808,8 +738,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "158 KABL TK-Properties AD 64.81M 0.705 0.71% -",
-      "name": "158 KABL TK-Properties AD 64.81M 0.705 0.71% -",
+      "company": "154 KABL TK-Properties AD 64.81M 0.705 0.71% -",
+      "name": "154 KABL TK-Properties AD 64.81M 0.705 0.71% -",
       "symbol": "KABL",
       "ticker": "KABL",
       "isin": "BG11KAJMAT16",
@@ -822,8 +752,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "159 RGL Regala Invest AD 62.33M 1.760 - 333.53K",
-      "name": "159 RGL Regala Invest AD 62.33M 1.760 - 333.53K",
+      "company": "155 FPP Fairplay Properties REIT 62.84M 0.800 11.11% 11.56M",
+      "name": "155 FPP Fairplay Properties REIT 62.84M 0.800 11.11% 11.56M",
+      "symbol": "FPP",
+      "ticker": "FPP",
+      "isin": "BG1100042057",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "FPP",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "156 RGL Regala Invest AD 62.33M 1.760 - 333.53K",
+      "name": "156 RGL Regala Invest AD 62.33M 1.760 - 333.53K",
       "symbol": "RGL",
       "ticker": "RGL",
       "isin": "BG1100036133",
@@ -836,8 +780,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "160 CCBR Grand Vision Properties REIT 61.77M 30.00 - 1.01M",
-      "name": "160 CCBR Grand Vision Properties REIT 61.77M 30.00 - 1.01M",
+      "company": "157 CCBR Grand Vision Properties REIT 61.77M 30.00 - 1.01M",
+      "name": "157 CCBR Grand Vision Properties REIT 61.77M 30.00 - 1.01M",
       "symbol": "CCBR",
       "ticker": "CCBR",
       "isin": "BG1100120051",
@@ -850,8 +794,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "161 WISR Wiser Technology AD 61.33M 1.690 -0.59% 75.29M",
-      "name": "161 WISR Wiser Technology AD 61.33M 1.690 -0.59% 75.29M",
+      "company": "158 WISR Wiser Technology AD 61.03M 1.690 -0.59% 75.29M",
+      "name": "158 WISR Wiser Technology AD 61.03M 1.690 -0.59% 75.29M",
       "symbol": "WISR",
       "ticker": "WISR",
       "isin": "BG1100007076",
@@ -864,8 +808,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "162 PLG Puldin Properties Invest REIT 58.58M 1.600 - 892.12K",
-      "name": "162 PLG Puldin Properties Invest REIT 58.58M 1.600 - 892.12K",
+      "company": "159 PLG Puldin Properties Invest REIT 58.58M 1.600 - 892.12K",
+      "name": "159 PLG Puldin Properties Invest REIT 58.58M 1.600 - 892.12K",
       "symbol": "PLG",
       "ticker": "PLG",
       "isin": "BG1100102067",
@@ -878,8 +822,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "163 SUN Slantse Stara Zagora Tabac AD 56.86M 10.60 - 584.91K",
-      "name": "163 SUN Slantse Stara Zagora Tabac AD 56.86M 10.60 - 584.91K",
+      "company": "160 SUN Slantse Stara Zagora Tabac AD 56.86M 10.60 - 584.91K",
+      "name": "160 SUN Slantse Stara Zagora Tabac AD 56.86M 10.60 - 584.91K",
       "symbol": "SUN",
       "ticker": "SUN",
       "isin": "BG11SLSTAT17",
@@ -892,8 +836,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "164 CHL Chernomorski Holding AD 56.59M 9.00 - 476.10K",
-      "name": "164 CHL Chernomorski Holding AD 56.59M 9.00 - 476.10K",
+      "company": "161 CHL Chernomorski Holding AD 56.59M 9.00 - 476.10K",
+      "name": "161 CHL Chernomorski Holding AD 56.59M 9.00 - 476.10K",
       "symbol": "CHL",
       "ticker": "CHL",
       "isin": "BG1100069985",
@@ -906,8 +850,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "166 MFG MFG Invest AD 56.01M 2.780 - 5.90M",
-      "name": "166 MFG MFG Invest AD 56.01M 2.780 - 5.90M",
+      "company": "163 MFG MFG Invest AD 56.01M 2.780 - 5.90M",
+      "name": "163 MFG MFG Invest AD 56.01M 2.780 - 5.90M",
       "symbol": "MFG",
       "ticker": "MFG",
       "isin": "BG1100020228",
@@ -920,8 +864,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "167 RPF Roi Property Fund REIT 55.88M 4.780 - 3.67M",
-      "name": "167 RPF Roi Property Fund REIT 55.88M 4.780 - 3.67M",
+      "company": "164 RPF Roi Property Fund REIT 55.88M 4.780 - 3.67M",
+      "name": "164 RPF Roi Property Fund REIT 55.88M 4.780 - 3.67M",
       "symbol": "RPF",
       "ticker": "RPF",
       "isin": "BG1100026076",
@@ -934,22 +878,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "168 KBG Korado-Bulgaria AD 54.78M 2.220 - 47.12M",
-      "name": "168 KBG Korado-Bulgaria AD 54.78M 2.220 - 47.12M",
-      "symbol": "KBG",
-      "ticker": "KBG",
-      "isin": "BG11LUSTAT13",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "KBG",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "169 HREP Republica Holding AD 54.72M 1.970 2.60% -",
-      "name": "169 HREP Republica Holding AD 54.72M 1.970 2.60% -",
+      "company": "165 HREP Republica Holding AD 54.72M 1.970 2.60% -",
+      "name": "165 HREP Republica Holding AD 54.72M 1.970 2.60% -",
       "symbol": "HREP",
       "ticker": "HREP",
       "isin": "BG1100059986",
@@ -962,8 +892,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "171 RDNA Elea Capital Holding AD 53.54M 13.00 -3.70% -",
-      "name": "171 RDNA Elea Capital Holding AD 53.54M 13.00 -3.70% -",
+      "company": "167 RDNA Elea Capital Holding AD 53.54M 13.00 -3.70% -",
+      "name": "167 RDNA Elea Capital Holding AD 53.54M 13.00 -3.70% -",
       "symbol": "RDNA",
       "ticker": "RDNA",
       "isin": "BG11RODOAT17",
@@ -976,8 +906,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "172 TPLB Toplofikatsia-Burgas AD 52.11M 0.950 - 64.65M",
-      "name": "172 TPLB Toplofikatsia-Burgas AD 52.11M 0.950 - 64.65M",
+      "company": "168 TPLB Toplofikatsia-Burgas AD 52.11M 0.950 - 64.65M",
+      "name": "168 TPLB Toplofikatsia-Burgas AD 52.11M 0.950 - 64.65M",
       "symbol": "TPLB",
       "ticker": "TPLB",
       "isin": "BG1100012209",
@@ -990,22 +920,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "173 TPLP Toplofikacia Pleven AD-Pleven 51.08M 1.320 1.54% -",
-      "name": "173 TPLP Toplofikacia Pleven AD-Pleven 51.08M 1.320 1.54% -",
-      "symbol": "TPLP",
-      "ticker": "TPLP",
-      "isin": "BG1100004214",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "TPLP",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "174 SLR Slantcho AD 49.46M 8.00 14.29% 8.01M",
-      "name": "174 SLR Slantcho AD 49.46M 8.00 14.29% 8.01M",
+      "company": "169 SLR Slantcho AD 49.46M 8.00 14.29% 8.01M",
+      "name": "169 SLR Slantcho AD 49.46M 8.00 14.29% 8.01M",
       "symbol": "SLR",
       "ticker": "SLR",
       "isin": "BG1100037008",
@@ -1018,8 +934,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "175 KAU Kauchuk AD 46.77M 26.00 1.56% -",
-      "name": "175 KAU Kauchuk AD 46.77M 26.00 1.56% -",
+      "company": "170 AGH Agria Group Holding AD 47.59M 7.05 -1.40% 763.85M",
+      "name": "170 AGH Agria Group Holding AD 47.59M 7.05 -1.40% 763.85M",
+      "symbol": "AGH",
+      "ticker": "AGH",
+      "isin": "BG1100085072",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "AGH",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "171 KAU Kauchuk AD 46.77M 26.00 1.56% -",
+      "name": "171 KAU Kauchuk AD 46.77M 26.00 1.56% -",
       "symbol": "KAU",
       "ticker": "KAU",
       "isin": "BG11KAPAAT12",
@@ -1032,8 +962,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "176 EAC ELANA Agrocredit AD 46.42M 0.520 -0.95% 6.28M",
-      "name": "176 EAC ELANA Agrocredit AD 46.42M 0.520 -0.95% 6.28M",
+      "company": "172 EAC ELANA Agrocredit AD 46.42M 0.520 -0.95% 6.28M",
+      "name": "172 EAC ELANA Agrocredit AD 46.42M 0.520 -0.95% 6.28M",
       "symbol": "EAC",
       "ticker": "EAC",
       "isin": "BG1100040101",
@@ -1046,8 +976,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "177 NGAZ Oil and Gas Exploration and Production AD 44.95M 1.900 -12.04% 36.82M",
-      "name": "177 NGAZ Oil and Gas Exploration and Production AD 44.95M 1.900 -12.04% 36.82M",
+      "company": "173 SIRM Sirma Group JSC 45.45M 0.790 - 137.98M",
+      "name": "173 SIRM Sirma Group JSC 45.45M 0.790 - 137.98M",
+      "symbol": "SIRM",
+      "ticker": "SIRM",
+      "isin": "BG11SIPLAT13",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "SIRM",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "174 NGAZ Oil and Gas Exploration and Production AD 44.95M 1.900 -12.04% 36.82M",
+      "name": "174 NGAZ Oil and Gas Exploration and Production AD 44.95M 1.900 -12.04% 36.82M",
       "symbol": "NGAZ",
       "ticker": "NGAZ",
       "isin": "BG1100019022",
@@ -1060,8 +1004,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "178 ALT Alteron REIT 44.85M 15.40 - -317.30K",
-      "name": "178 ALT Alteron REIT 44.85M 15.40 - -317.30K",
+      "company": "175 ALT Alteron REIT 44.85M 15.40 - -317.30K",
+      "name": "175 ALT Alteron REIT 44.85M 15.40 - -317.30K",
       "symbol": "ALT",
       "ticker": "ALT",
       "isin": "BG1100111076",
@@ -1074,36 +1018,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "179 BPEF Bulgarian Private Equity Fund AD 43.94M 1.180 -1.67% 848.72K",
-      "name": "179 BPEF Bulgarian Private Equity Fund AD 43.94M 1.180 -1.67% 848.72K",
-      "symbol": "BPEF",
-      "ticker": "BPEF",
-      "isin": "BG1100001129",
+      "company": "176 SCOM Sofia Commerce-Pawn Brokerage AD 43.97M 2.460 -1.60% 17.47M",
+      "name": "176 SCOM Sofia Commerce-Pawn Brokerage AD 43.97M 2.460 -1.60% 17.47M",
+      "symbol": "SCOM",
+      "ticker": "SCOM",
+      "isin": "BG1100053054",
       "mic": "XBUL",
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
-      "providerSymbol": "BPEF",
+      "providerSymbol": "SCOM",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "180 TOPL Toplivo AD 43.07M 4.200 - -",
-      "name": "180 TOPL Toplivo AD 43.07M 4.200 - -",
-      "symbol": "TOPL",
-      "ticker": "TOPL",
-      "isin": "BG11TOSOAT18",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "TOPL",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "181 HMAR Helios Marine AD 42.13M 9.30 - 84.06K",
-      "name": "181 HMAR Helios Marine AD 42.13M 9.30 - 84.06K",
+      "company": "177 HMAR Helios Marine AD 41.74M 9.30 - 84.06K",
+      "name": "177 HMAR Helios Marine AD 41.74M 9.30 - 84.06K",
       "symbol": "HMAR",
       "ticker": "HMAR",
       "isin": "BG1100006243",
@@ -1116,8 +1046,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "182 RSW Reisswolf Bulgaria AD 40.57M 2.560 1.59% 2.36M",
-      "name": "182 RSW Reisswolf Bulgaria AD 40.57M 2.560 1.59% 2.36M",
+      "company": "178 RSW Reisswolf Bulgaria AD 40.57M 2.560 1.59% 2.36M",
+      "name": "178 RSW Reisswolf Bulgaria AD 40.57M 2.560 1.59% 2.36M",
       "symbol": "RSW",
       "ticker": "RSW",
       "isin": "BG1100039103",
@@ -1130,8 +1060,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "184 HIKA Industrial Capital Holding AD 38.39M 1.280 0.79% -",
-      "name": "184 HIKA Industrial Capital Holding AD 38.39M 1.280 0.79% -",
+      "company": "180 HIKA Industrial Capital Holding AD 38.39M 1.280 0.79% -",
+      "name": "180 HIKA Industrial Capital Holding AD 38.39M 1.280 0.79% -",
       "symbol": "HIKA",
       "ticker": "HIKA",
       "isin": "BG1100010989",
@@ -1144,36 +1074,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "185 BPF Bravo Property Fund REIT 38.08M 0.550 - 5.22M",
-      "name": "185 BPF Bravo Property Fund REIT 38.08M 0.550 - 5.22M",
-      "symbol": "BPF",
-      "ticker": "BPF",
-      "isin": "BG1100016176",
+      "company": "181 MONB Monbat AD 37.77M 0.970 -1.02% 397.00M",
+      "name": "181 MONB Monbat AD 37.77M 0.970 -1.02% 397.00M",
+      "symbol": "MONB",
+      "ticker": "MONB",
+      "isin": "BG1100075065",
       "mic": "XBUL",
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
-      "providerSymbol": "BPF",
+      "providerSymbol": "MONB",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "186 11C Eleven Capital AD 37.37M 8.70 - 2.52M",
-      "name": "186 11C Eleven Capital AD 37.37M 8.70 - 2.52M",
-      "symbol": "11C",
-      "ticker": "11C",
-      "isin": "BG1100011193",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "11C",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "187 HSOF Holding Sveta Sofia AD 37.26M 1.980 -2.94% 4.28M",
-      "name": "187 HSOF Holding Sveta Sofia AD 37.26M 1.980 -2.94% 4.28M",
+      "company": "182 HSOF Holding Sveta Sofia AD 37.26M 1.980 -2.94% 4.28M",
+      "name": "182 HSOF Holding Sveta Sofia AD 37.26M 1.980 -2.94% 4.28M",
       "symbol": "HSOF",
       "ticker": "HSOF",
       "isin": "BG1100008983",
@@ -1186,8 +1102,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "188 IDH Industry Development Holding AD 36.16M 1.920 4.35% -",
-      "name": "188 IDH Industry Development Holding AD 36.16M 1.920 4.35% -",
+      "company": "183 11C Eleven Capital AD 37.12M 8.70 - 2.52M",
+      "name": "183 11C Eleven Capital AD 37.12M 8.70 - 2.52M",
+      "symbol": "11C",
+      "ticker": "11C",
+      "isin": "BG1100011193",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "11C",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "184 IDH Industry Development Holding AD 36.16M 1.920 4.35% -",
+      "name": "184 IDH Industry Development Holding AD 36.16M 1.920 4.35% -",
       "symbol": "IDH",
       "ticker": "IDH",
       "isin": "BG1100043980",
@@ -1200,8 +1130,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "189 TIZ TIZ Invest AD 34.88M 13.40 - -",
-      "name": "189 TIZ TIZ Invest AD 34.88M 13.40 - -",
+      "company": "185 TIZ TIZ Invest AD 34.88M 13.40 - -",
+      "name": "185 TIZ TIZ Invest AD 34.88M 13.40 - -",
       "symbol": "TIZ",
       "ticker": "TIZ",
       "isin": "BG1100018248",
@@ -1214,8 +1144,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "190 HCEN Holding Center AD 30.54M 21.60 0.94% -",
-      "name": "190 HCEN Holding Center AD 30.54M 21.60 0.94% -",
+      "company": "186 HCEN Holding Center AD 30.54M 21.60 0.94% -",
+      "name": "186 HCEN Holding Center AD 30.54M 21.60 0.94% -",
       "symbol": "HCEN",
       "ticker": "HCEN",
       "isin": "BG1100080982",
@@ -1228,8 +1158,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "192 GAMZ Severcoop Gamza Holding AD 28.94M 2.800 27.27% -",
-      "name": "192 GAMZ Severcoop Gamza Holding AD 28.94M 2.800 27.27% -",
+      "company": "187 KBG Korado-Bulgaria AD 29.23M 2.220 - 47.12M",
+      "name": "187 KBG Korado-Bulgaria AD 29.23M 2.220 - 47.12M",
+      "symbol": "KBG",
+      "ticker": "KBG",
+      "isin": "BG11LUSTAT13",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "KBG",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "188 GAMZ Severcoop Gamza Holding AD 28.94M 2.800 27.27% -",
+      "name": "188 GAMZ Severcoop Gamza Holding AD 28.94M 2.800 27.27% -",
       "symbol": "GAMZ",
       "ticker": "GAMZ",
       "isin": "BG1100026985",
@@ -1242,8 +1186,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "194 FORM Formoplast AD 27.77M 3.900 - 569.78M",
-      "name": "194 FORM Formoplast AD 27.77M 3.900 - 569.78M",
+      "company": "189 FORM Formoplast AD 27.77M 3.900 - 569.78M",
+      "name": "189 FORM Formoplast AD 27.77M 3.900 - 569.78M",
       "symbol": "FORM",
       "ticker": "FORM",
       "isin": "BG11FOKAAT18",
@@ -1256,8 +1200,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "195 PREM Premier Fund REIT 26.89M 7.90 - 260.12K",
-      "name": "195 PREM Premier Fund REIT 26.89M 7.90 - 260.12K",
+      "company": "190 TPLP Toplofikacia Pleven AD-Pleven 27.08M 1.320 1.54% -",
+      "name": "190 TPLP Toplofikacia Pleven AD-Pleven 27.08M 1.320 1.54% -",
+      "symbol": "TPLP",
+      "ticker": "TPLP",
+      "isin": "BG1100004214",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "TPLP",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "191 PREM Premier Fund REIT 26.89M 7.90 - 260.12K",
+      "name": "191 PREM Premier Fund REIT 26.89M 7.90 - 260.12K",
       "symbol": "PREM",
       "ticker": "PREM",
       "isin": "BG1100009064",
@@ -1270,8 +1228,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "196 OPBI Opportunity Bulgaria Investment AD 26.56M 1.380 2.22% -",
-      "name": "196 OPBI Opportunity Bulgaria Investment AD 26.56M 1.380 2.22% -",
+      "company": "192 OPBI Opportunity Bulgaria Investment AD 26.56M 1.380 2.22% -",
+      "name": "192 OPBI Opportunity Bulgaria Investment AD 26.56M 1.380 2.22% -",
       "symbol": "OPBI",
       "ticker": "OPBI",
       "isin": "BG1100026092",
@@ -1284,8 +1242,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "197 HEKI Ekip-98 Holding AD 25.68M 17.00 - -",
-      "name": "197 HEKI Ekip-98 Holding AD 25.68M 17.00 - -",
+      "company": "193 HEKI Ekip-98 Holding AD 25.68M 17.00 - -",
+      "name": "193 HEKI Ekip-98 Holding AD 25.68M 17.00 - -",
       "symbol": "HEKI",
       "ticker": "HEKI",
       "isin": "BG1100007985",
@@ -1298,8 +1256,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "198 ETR Etropal AD 24.80M 2.620 -1.50% 16.92M",
-      "name": "198 ETR Etropal AD 24.80M 2.620 -1.50% 16.92M",
+      "company": "194 ETR Etropal AD 24.80M 2.620 -1.50% 16.92M",
+      "name": "194 ETR Etropal AD 24.80M 2.620 -1.50% 16.92M",
       "symbol": "ETR",
       "ticker": "ETR",
       "isin": "BG1100001038",
@@ -1312,8 +1270,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "199 EXPR Exclusive Property REIT-Sofia 23.25M 1.280 - 2.13M",
-      "name": "199 EXPR Exclusive Property REIT-Sofia 23.25M 1.280 - 2.13M",
+      "company": "195 BPEF Bulgarian Private Equity Fund AD 23.29M 1.180 -1.67% 848.72K",
+      "name": "195 BPEF Bulgarian Private Equity Fund AD 23.29M 1.180 -1.67% 848.72K",
+      "symbol": "BPEF",
+      "ticker": "BPEF",
+      "isin": "BG1100001129",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "BPEF",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "196 EXPR Exclusive Property REIT-Sofia 23.25M 1.280 - 2.13M",
+      "name": "196 EXPR Exclusive Property REIT-Sofia 23.25M 1.280 - 2.13M",
       "symbol": "EXPR",
       "ticker": "EXPR",
       "isin": "BG1100083069",
@@ -1326,8 +1298,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "200 PF99 Port Fleet 99 AD 23.16M 6.00 - 11.05M",
-      "name": "200 PF99 Port Fleet 99 AD 23.16M 6.00 - 11.05M",
+      "company": "197 PF99 Port Fleet 99 AD 23.16M 6.00 - 11.05M",
+      "name": "197 PF99 Port Fleet 99 AD 23.16M 6.00 - 11.05M",
       "symbol": "PF99",
       "ticker": "PF99",
       "isin": "BG1100019196",
@@ -1340,8 +1312,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "201 ZHBG Zarneni Hrani Bulgaria AD 22.20M 0.0600 -1.64% 62.97M",
-      "name": "201 ZHBG Zarneni Hrani Bulgaria AD 22.20M 0.0600 -1.64% 62.97M",
+      "company": "198 TOPL Toplivo AD 22.75M 4.200 - -",
+      "name": "198 TOPL Toplivo AD 22.75M 4.200 - -",
+      "symbol": "TOPL",
+      "ticker": "TOPL",
+      "isin": "BG11TOSOAT18",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "TOPL",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "199 ZHBG Zarneni Hrani Bulgaria AD 22.20M 0.0600 -1.64% 62.97M",
+      "name": "199 ZHBG Zarneni Hrani Bulgaria AD 22.20M 0.0600 -1.64% 62.97M",
       "symbol": "ZHBG",
       "ticker": "ZHBG",
       "isin": "BG1100109070",
@@ -1354,8 +1340,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "202 PCH Phoenix Capital Holding AD 21.63M 950.00 - -",
-      "name": "202 PCH Phoenix Capital Holding AD 21.63M 950.00 - -",
+      "company": "200 PCH Phoenix Capital Holding AD 21.63M 950.00 - -",
+      "name": "200 PCH Phoenix Capital Holding AD 21.63M 950.00 - -",
       "symbol": "PCH",
       "ticker": "PCH",
       "isin": "BG1100003141",
@@ -1368,8 +1354,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "203 SLSP SLS Realty REIT 20.75M 4.400 - 70.00K",
-      "name": "203 SLSP SLS Realty REIT 20.75M 4.400 - 70.00K",
+      "company": "201 SLSP SLS Realty REIT 20.75M 4.400 - 70.00K",
+      "name": "201 SLSP SLS Realty REIT 20.75M 4.400 - 70.00K",
       "symbol": "SLSP",
       "ticker": "SLSP",
       "isin": "BG1100065074",
@@ -1382,8 +1368,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "204 LAV Lavena AD 20.64M 1.100 10.00% 28.63M",
-      "name": "204 LAV Lavena AD 20.64M 1.100 10.00% 28.63M",
+      "company": "202 LAV Lavena AD 20.64M 1.100 10.00% 28.63M",
+      "name": "202 LAV Lavena AD 20.64M 1.100 10.00% 28.63M",
       "symbol": "LAV",
       "ticker": "LAV",
       "isin": "BG11LASUAT14",
@@ -1396,8 +1382,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "205 VINA RES Invest Holding AD 20.35M 1.050 5.00% -",
-      "name": "205 VINA RES Invest Holding AD 20.35M 1.050 5.00% -",
+      "company": "203 VINA RES Invest Holding AD 20.35M 1.050 5.00% -",
+      "name": "203 VINA RES Invest Holding AD 20.35M 1.050 5.00% -",
       "symbol": "VINA",
       "ticker": "VINA",
       "isin": "BG11VIASAT18",
@@ -1410,8 +1396,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "207 SNRG Synergon Holding AD 16.42M 0.474 -1.25% -",
-      "name": "207 SNRG Synergon Holding AD 16.42M 0.474 -1.25% -",
+      "company": "204 BPF Bravo Property Fund REIT 20.18M 0.550 - 5.22M",
+      "name": "204 BPF Bravo Property Fund REIT 20.18M 0.550 - 5.22M",
+      "symbol": "BPF",
+      "ticker": "BPF",
+      "isin": "BG1100016176",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "BPF",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "206 SNRG Synergon Holding AD 16.42M 0.474 -1.25% -",
+      "name": "206 SNRG Synergon Holding AD 16.42M 0.474 -1.25% -",
       "symbol": "SNRG",
       "ticker": "SNRG",
       "isin": "BG1100033981",
@@ -1424,8 +1424,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "209 PET Petrol AD 15.77M 0.308 - 534.72M",
-      "name": "209 PET Petrol AD 15.77M 0.308 - 534.72M",
+      "company": "208 PET Petrol AD 15.77M 0.308 - 534.72M",
+      "name": "208 PET Petrol AD 15.77M 0.308 - 534.72M",
       "symbol": "PET",
       "ticker": "PET",
       "isin": "BG11PESOBT13",
@@ -1438,8 +1438,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "210 HUG Holding Coop-Yug AD 15.76M 2.960 13.85% -",
-      "name": "210 HUG Holding Coop-Yug AD 15.76M 2.960 13.85% -",
+      "company": "209 HUG Holding Coop-Yug AD 15.76M 2.960 13.85% -",
+      "name": "209 HUG Holding Coop-Yug AD 15.76M 2.960 13.85% -",
       "symbol": "HUG",
       "ticker": "HUG",
       "isin": "BG1100017984",
@@ -1452,8 +1452,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "211 RBL Real Bulland AD 15.30M 0.800 - 310.15K",
-      "name": "211 RBL Real Bulland AD 15.30M 0.800 - 310.15K",
+      "company": "210 RBL Real Bulland AD 15.30M 0.800 - 310.15K",
+      "name": "210 RBL Real Bulland AD 15.30M 0.800 - 310.15K",
       "symbol": "RBL",
       "ticker": "RBL",
       "isin": "BG1100006136",
@@ -1592,22 +1592,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "221 ELHM Elhim Iskra AD 11.06M 0.236 - 24.71M",
-      "name": "221 ELHM Elhim Iskra AD 11.06M 0.236 - 24.71M",
-      "symbol": "ELHM",
-      "ticker": "ELHM",
-      "isin": "BG11ELPABT16",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "ELHM",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "222 BTH Bulgartabac Holding AD 10.34M 0.725 -66.74% 96.19M",
-      "name": "222 BTH Bulgartabac Holding AD 10.34M 0.725 -66.74% 96.19M",
+      "company": "221 BTH Bulgartabac Holding AD 10.34M 0.725 -66.74% 96.19M",
+      "name": "221 BTH Bulgartabac Holding AD 10.34M 0.725 -66.74% 96.19M",
       "symbol": "BTH",
       "ticker": "BTH",
       "isin": "BG11BUSOGT14",
@@ -1620,8 +1606,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "225 IMP ImPulse Growth AD 9.52M 0.740 -2.63% 955.00K",
-      "name": "225 IMP ImPulse Growth AD 9.52M 0.740 -2.63% 955.00K",
+      "company": "224 IMP ImPulse Growth AD 9.52M 0.720 -2.70% 955.00K",
+      "name": "224 IMP ImPulse Growth AD 9.52M 0.720 -2.70% 955.00K",
       "symbol": "IMP",
       "ticker": "IMP",
       "isin": "BG1100005211",
@@ -1634,8 +1620,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "226 EALF Elana Agricultural Land Fund REIT-Sofia 9.37M 0.545 - -",
-      "name": "226 EALF Elana Agricultural Land Fund REIT-Sofia 9.37M 0.545 - -",
+      "company": "225 EALF Elana Agricultural Land Fund REIT-Sofia 9.37M 0.545 - -",
+      "name": "225 EALF Elana Agricultural Land Fund REIT-Sofia 9.37M 0.545 - -",
       "symbol": "EALF",
       "ticker": "EALF",
       "isin": "BG1100062063",
@@ -1648,22 +1634,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "227 VPOM Vipom AD 7.76M 13.40 34.00% 2.30M",
-      "name": "227 VPOM Vipom AD 7.76M 13.40 34.00% 2.30M",
-      "symbol": "VPOM",
-      "ticker": "VPOM",
-      "isin": "BG11VIVIAT15",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "VPOM",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "228 ZLP Zlatni Piasaci AD 7.54M 0.600 4.35% -",
-      "name": "228 ZLP Zlatni Piasaci AD 7.54M 0.600 4.35% -",
+      "company": "227 ZLP Zlatni Piasaci AD 7.54M 0.600 4.35% -",
+      "name": "227 ZLP Zlatni Piasaci AD 7.54M 0.600 4.35% -",
       "symbol": "ZLP",
       "ticker": "ZLP",
       "isin": "BG11ZLVAAT14",
@@ -1676,8 +1648,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "229 BHC Bulgarian Holding Company AD 6.91M 0.550 - -",
-      "name": "229 BHC Bulgarian Holding Company AD 6.91M 0.550 - -",
+      "company": "228 BHC Bulgarian Holding Company AD 6.91M 0.550 - -",
+      "name": "228 BHC Bulgarian Holding Company AD 6.91M 0.550 - -",
       "symbol": "BHC",
       "ticker": "BHC",
       "isin": "BG1100001988",
@@ -1690,22 +1662,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "230 FZLS Fazerles AD 6.73M 6.90 4.55% 14.17M",
-      "name": "230 FZLS Fazerles AD 6.73M 6.90 4.55% 14.17M",
-      "symbol": "FZLS",
-      "ticker": "FZLS",
-      "isin": "BG11FASIAT18",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "FZLS",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "231 BGI BGI Group AD 6.32M 0.500 - -",
-      "name": "231 BGI BGI Group AD 6.32M 0.500 - -",
+      "company": "229 BGI BGI Group AD 6.32M 0.500 - -",
+      "name": "229 BGI BGI Group AD 6.32M 0.500 - -",
       "symbol": "BGI",
       "ticker": "BGI",
       "isin": "BG1100016077",
@@ -1718,8 +1676,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "234 MKR Momina Krepost AD 5.99M 1.890 - -",
-      "name": "234 MKR Momina Krepost AD 5.99M 1.890 - -",
+      "company": "231 MKR Momina Krepost AD 5.99M 1.890 - -",
+      "name": "231 MKR Momina Krepost AD 5.99M 1.890 - -",
       "symbol": "MKR",
       "ticker": "MKR",
       "isin": "BG11MOVEAT12",
@@ -1732,8 +1690,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "236 CDM Capman Debts Management AD 5.75M 0.500 - 32.32K",
-      "name": "236 CDM Capman Debts Management AD 5.75M 0.500 - 32.32K",
+      "company": "233 CDM Capman Debts Management AD 5.75M 0.500 - 32.32K",
+      "name": "233 CDM Capman Debts Management AD 5.75M 0.500 - 32.32K",
       "symbol": "CDM",
       "ticker": "CDM",
       "isin": "BG1100005203",
@@ -1746,8 +1704,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "237 BBRD Billboard AD 4.97M 0.171 -0.58% 37.61M",
-      "name": "237 BBRD Billboard AD 4.97M 0.171 -0.58% 37.61M",
+      "company": "234 ELHM Elhim Iskra AD 5.17M 0.206 -12.71% 24.71M",
+      "name": "234 ELHM Elhim Iskra AD 5.17M 0.206 -12.71% 24.71M",
+      "symbol": "ELHM",
+      "ticker": "ELHM",
+      "isin": "BG11ELPABT16",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "ELHM",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "235 BBRD Billboard AD 4.97M 0.171 -0.58% 37.61M",
+      "name": "235 BBRD Billboard AD 4.97M 0.171 -0.58% 37.61M",
       "symbol": "BBRD",
       "ticker": "BBRD",
       "isin": "BG1100088076",
@@ -1760,8 +1732,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "238 XBT Expat Beta Reit - Sofia 4.80M 0.486 5.65% 101.36K",
-      "name": "238 XBT Expat Beta Reit - Sofia 4.80M 0.486 5.65% 101.36K",
+      "company": "236 XBT Expat Beta Reit - Sofia 4.80M 0.486 5.65% 101.36K",
+      "name": "236 XBT Expat Beta Reit - Sofia 4.80M 0.486 5.65% 101.36K",
       "symbol": "XBT",
       "ticker": "XBT",
       "isin": "BG1100018081",
@@ -1774,8 +1746,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "239 HPLD Paldin Holding AD 4.69M 9.00 - -",
-      "name": "239 HPLD Paldin Holding AD 4.69M 9.00 - -",
+      "company": "237 HPLD Paldin Holding AD 4.69M 9.00 - -",
+      "name": "237 HPLD Paldin Holding AD 4.69M 9.00 - -",
       "symbol": "HPLD",
       "ticker": "HPLD",
       "isin": "BG1100048989",
@@ -1788,8 +1760,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "240 DOBH Euro Invest Managment AD 4.30M 7.75 - -",
-      "name": "240 DOBH Euro Invest Managment AD 4.30M 7.75 - -",
+      "company": "238 DOBH Euro Invest Managment AD 4.30M 7.75 - -",
+      "name": "238 DOBH Euro Invest Managment AD 4.30M 7.75 - -",
       "symbol": "DOBH",
       "ticker": "DOBH",
       "isin": "BG1100016986",
@@ -1802,22 +1774,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "241 SIN Sin Cars Industry AD 4.14M 0.108 -16.92% 9.32M",
-      "name": "241 SIN Sin Cars Industry AD 4.14M 0.108 -16.92% 9.32M",
-      "symbol": "SIN",
-      "ticker": "SIN",
-      "isin": "BG1100008199",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "SIN",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "242 TSBS Transstroy-Burgas AD-Burgas 4.00M 24.00 9.09% -",
-      "name": "242 TSBS Transstroy-Burgas AD-Burgas 4.00M 24.00 9.09% -",
+      "company": "239 TSBS Transstroy-Burgas AD-Burgas 4.00M 24.00 9.09% -",
+      "name": "239 TSBS Transstroy-Burgas AD-Burgas 4.00M 24.00 9.09% -",
       "symbol": "TSBS",
       "ticker": "TSBS",
       "isin": "BG11TRBUAT16",
@@ -1830,22 +1788,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "243 BEE Bee Smart Technologies AD 3.83M 4.980 0.40% 1.30M",
-      "name": "243 BEE Bee Smart Technologies AD 3.83M 4.980 0.40% 1.30M",
-      "symbol": "BEE",
-      "ticker": "BEE",
-      "isin": "BG1100017216",
-      "mic": "XBUL",
-      "segment": "BSE Main Market Bulgarian equity",
-      "currency": "BGN",
-      "providerSymbol": "BEE",
-      "historyProvider": "stockanalysis-bit",
-      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
-      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
-    },
-    {
-      "company": "244 GGS Global Gaming Solutions AD 3.74M 0.185 - -",
-      "name": "244 GGS Global Gaming Solutions AD 3.74M 0.185 - -",
+      "company": "240 GGS Global Gaming Solutions AD 3.74M 0.185 - -",
+      "name": "240 GGS Global Gaming Solutions AD 3.74M 0.185 - -",
       "symbol": "GGS",
       "ticker": "GGS",
       "isin": "BG1100019246",
@@ -1858,8 +1802,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "246 MELH Mel Invest Holding AD 3.44M 0.500 - -",
-      "name": "246 MELH Mel Invest Holding AD 3.44M 0.500 - -",
+      "company": "241 FZLS Fazerles AD 3.55M 6.90 4.55% 14.17M",
+      "name": "241 FZLS Fazerles AD 3.55M 6.90 4.55% 14.17M",
+      "symbol": "FZLS",
+      "ticker": "FZLS",
+      "isin": "BG11FASIAT18",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "FZLS",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "243 MELH Mel Invest Holding AD 3.44M 0.500 - -",
+      "name": "243 MELH Mel Invest Holding AD 3.44M 0.500 - -",
       "symbol": "MELH",
       "ticker": "MELH",
       "isin": "BG1100010971",
@@ -1872,8 +1830,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "247 FFI Forucom REIT-Haskovo 3.27M 0.930 - 2.18M",
-      "name": "247 FFI Forucom REIT-Haskovo 3.27M 0.930 - 2.18M",
+      "company": "245 FFI Forucom REIT-Haskovo 3.27M 0.930 - 2.18M",
+      "name": "245 FFI Forucom REIT-Haskovo 3.27M 0.930 - 2.18M",
       "symbol": "FFI",
       "ticker": "FFI",
       "isin": "BG1100057063",
@@ -1886,8 +1844,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "248 NIS Immovable Properties Sofia REIT Sofia 3.12M 4.800 - 1.11M",
-      "name": "248 NIS Immovable Properties Sofia REIT Sofia 3.12M 4.800 - 1.11M",
+      "company": "246 NIS Immovable Properties Sofia REIT Sofia 3.12M 4.800 - 1.11M",
+      "name": "246 NIS Immovable Properties Sofia REIT Sofia 3.12M 4.800 - 1.11M",
       "symbol": "NIS",
       "ticker": "NIS",
       "isin": "BG1100101069",
@@ -1900,8 +1858,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "249 HPT Hydropneumotechnics AD 3.06M 40.00 27.39% -",
-      "name": "249 HPT Hydropneumotechnics AD 3.06M 40.00 27.39% -",
+      "company": "247 HPT Hydropneumotechnics AD 3.06M 40.00 27.39% -",
+      "name": "247 HPT Hydropneumotechnics AD 3.06M 40.00 27.39% -",
       "symbol": "HPT",
       "ticker": "HPT",
       "isin": "BG11HIKAAT14",
@@ -1914,8 +1872,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "250 SLB Slanchev Bryag AD 3.03M 0.800 -6.43% -",
-      "name": "250 SLB Slanchev Bryag AD 3.03M 0.800 -6.43% -",
+      "company": "248 SLB Slanchev Bryag AD 3.03M 0.800 -6.43% -",
+      "name": "248 SLB Slanchev Bryag AD 3.03M 0.800 -6.43% -",
       "symbol": "SLB",
       "ticker": "SLB",
       "isin": "BG11SLNEAT19",
@@ -1928,8 +1886,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "251 NAD NIC Nadejda AD 3.03M 0.400 -21.66% -",
-      "name": "251 NAD NIC Nadejda AD 3.03M 0.400 -21.66% -",
+      "company": "249 NAD NIC Nadejda AD 3.03M 0.400 -21.66% -",
+      "name": "249 NAD NIC Nadejda AD 3.03M 0.400 -21.66% -",
       "symbol": "NAD",
       "ticker": "NAD",
       "isin": "BG1100041984",
@@ -1942,8 +1900,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "252 MELI Mellifera AD 2.66M 1.300 -12.16% 193.00K",
-      "name": "252 MELI Mellifera AD 2.66M 1.300 -12.16% 193.00K",
+      "company": "250 VPOM Vipom AD 2.69M 9.00 - 2.30M",
+      "name": "250 VPOM Vipom AD 2.69M 9.00 - 2.30M",
+      "symbol": "VPOM",
+      "ticker": "VPOM",
+      "isin": "BG11VIVIAT15",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "VPOM",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "251 MELI Mellifera AD 2.66M 1.300 -12.16% 193.00K",
+      "name": "251 MELI Mellifera AD 2.66M 1.300 -12.16% 193.00K",
       "symbol": "MELI",
       "ticker": "MELI",
       "isin": "BG1100016226",
@@ -1956,8 +1928,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "253 KRS Technology and Innovation Corporation AD 2.62M 0.130 -40.91% 1.66M",
-      "name": "253 KRS Technology and Innovation Corporation AD 2.62M 0.130 -40.91% 1.66M",
+      "company": "252 KRS Technology and Innovation Corporation AD 2.62M 0.130 -40.91% 1.66M",
+      "name": "252 KRS Technology and Innovation Corporation AD 2.62M 0.130 -40.91% 1.66M",
       "symbol": "KRS",
       "ticker": "KRS",
       "isin": "BG1100006979",
@@ -1970,8 +1942,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "254 BLRN Boleron AD 2.48M 1.120 - -",
-      "name": "254 BLRN Boleron AD 2.48M 1.120 - -",
+      "company": "253 BLRN Boleron AD 2.48M 1.120 - -",
+      "name": "253 BLRN Boleron AD 2.48M 1.120 - -",
       "symbol": "BLRN",
       "ticker": "BLRN",
       "isin": "BG1100022232",
@@ -1984,8 +1956,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "257 CEEP CEE Properties REIT 2.37M 1.880 1.08% -",
-      "name": "257 CEEP CEE Properties REIT 2.37M 1.880 1.08% -",
+      "company": "256 CEEP CEE Properties REIT 2.37M 1.880 1.08% -",
+      "name": "256 CEEP CEE Properties REIT 2.37M 1.880 1.08% -",
       "symbol": "CEEP",
       "ticker": "CEEP",
       "isin": "BG1100006060",
@@ -1998,8 +1970,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "258 CBAM CBA Asset Management AD 2.36M 0.600 20.00% 297.61K",
-      "name": "258 CBAM CBA Asset Management AD 2.36M 0.600 20.00% 297.61K",
+      "company": "257 CBAM CBA Asset Management AD 2.36M 0.600 20.00% 297.61K",
+      "name": "257 CBAM CBA Asset Management AD 2.36M 0.600 20.00% 297.61K",
       "symbol": "CBAM",
       "ticker": "CBAM",
       "isin": "BG1100064077",
@@ -2012,8 +1984,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "259 FAVH Favorit Hold AD 2.32M 0.505 1.41% -",
-      "name": "259 FAVH Favorit Hold AD 2.32M 0.505 1.41% -",
+      "company": "258 FAVH Favorit Hold AD 2.32M 0.505 1.41% -",
+      "name": "258 FAVH Favorit Hold AD 2.32M 0.505 1.41% -",
       "symbol": "FAVH",
       "ticker": "FAVH",
       "isin": "BG1100009981",
@@ -2026,8 +1998,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "260 ZNTH Zenith Investment Holding AD 2.29M 4.800 - -",
-      "name": "260 ZNTH Zenith Investment Holding AD 2.29M 4.800 - -",
+      "company": "259 ZNTH Zenith Investment Holding AD 2.29M 4.800 - -",
+      "name": "259 ZNTH Zenith Investment Holding AD 2.29M 4.800 - -",
       "symbol": "ZNTH",
       "ticker": "ZNTH",
       "isin": "BG1100104980",
@@ -2040,8 +2012,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "261 BDT Biodit AD 2.24M 0.0810 - 245.54K",
-      "name": "261 BDT Biodit AD 2.24M 0.0810 - 245.54K",
+      "company": "260 BDT Biodit AD 2.24M 0.0810 - 245.54K",
+      "name": "260 BDT Biodit AD 2.24M 0.0810 - 245.54K",
       "symbol": "BDT",
       "ticker": "BDT",
       "isin": "BG1100003190",
@@ -2054,22 +2026,36 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "262 SBS Specialized Business Systems AD 1.89M 1.000 - 3.60M",
-      "name": "262 SBS Specialized Business Systems AD 1.89M 1.000 - 3.60M",
-      "symbol": "SBS",
-      "ticker": "SBS",
-      "isin": "BG1100093068",
+      "company": "261 SIN Sin Cars Industry AD 2.22M 0.108 -16.92% 9.32M",
+      "name": "261 SIN Sin Cars Industry AD 2.22M 0.108 -16.92% 9.32M",
+      "symbol": "SIN",
+      "ticker": "SIN",
+      "isin": "BG1100008199",
       "mic": "XBUL",
       "segment": "BSE Main Market Bulgarian equity",
       "currency": "BGN",
-      "providerSymbol": "SBS",
+      "providerSymbol": "SIN",
       "historyProvider": "stockanalysis-bit",
       "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "264 ORGT Orgtechnica Ad 1.28M 2.600 4.00% -",
-      "name": "264 ORGT Orgtechnica Ad 1.28M 2.600 4.00% -",
+      "company": "262 BEE Bee Smart Technologies AD 2.03M 4.980 0.40% 1.30M",
+      "name": "262 BEE Bee Smart Technologies AD 2.03M 4.980 0.40% 1.30M",
+      "symbol": "BEE",
+      "ticker": "BEE",
+      "isin": "BG1100017216",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "BEE",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "265 ORGT Orgtechnica Ad 1.28M 2.600 4.00% -",
+      "name": "265 ORGT Orgtechnica Ad 1.28M 2.600 4.00% -",
       "symbol": "ORGT",
       "ticker": "ORGT",
       "isin": "BG11ORSIAT18",
@@ -2082,8 +2068,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "265 FUES Fund Estates REIT 1.22M 0.0270 -40.00% 5.86M",
-      "name": "265 FUES Fund Estates REIT 1.22M 0.0270 -40.00% 5.86M",
+      "company": "266 FUES Fund Estates REIT 1.22M 0.0270 -40.00% 5.86M",
+      "name": "266 FUES Fund Estates REIT 1.22M 0.0270 -40.00% 5.86M",
       "symbol": "FUES",
       "ticker": "FUES",
       "isin": "BG1100036042",
@@ -2096,8 +2082,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "266 INF Infinity Capital AD 1.12M 0.400 - 163.00K",
-      "name": "266 INF Infinity Capital AD 1.12M 0.400 - 163.00K",
+      "company": "267 INF Infinity Capital AD 1.12M 0.400 - 163.00K",
+      "name": "267 INF Infinity Capital AD 1.12M 0.400 - 163.00K",
       "symbol": "INF",
       "ticker": "INF",
       "isin": "BG1100008215",
@@ -2110,8 +2096,22 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "267 KTEX Katex AD 940.19K 0.200 - -",
-      "name": "267 KTEX Katex AD 940.19K 0.200 - -",
+      "company": "268 SBS Specialized Business Systems AD 1.00M 1.000 - 3.60M",
+      "name": "268 SBS Specialized Business Systems AD 1.00M 1.000 - 3.60M",
+      "symbol": "SBS",
+      "ticker": "SBS",
+      "isin": "BG1100093068",
+      "mic": "XBUL",
+      "segment": "BSE Main Market Bulgarian equity",
+      "currency": "BGN",
+      "providerSymbol": "SBS",
+      "historyProvider": "stockanalysis-bit",
+      "identitySource": "BSE Main Market scope + Bulgarian Central Depository ISIN registry",
+      "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
+    },
+    {
+      "company": "269 KTEX Katex AD 940.19K 0.200 - -",
+      "name": "269 KTEX Katex AD 940.19K 0.200 - -",
       "symbol": "KTEX",
       "ticker": "KTEX",
       "isin": "BG1100018990",
@@ -2124,8 +2124,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "268 UTXH Yutex Holding AD 600.18K 0.520 -74.00% -",
-      "name": "268 UTXH Yutex Holding AD 600.18K 0.520 -74.00% -",
+      "company": "270 UTXH Yutex Holding AD 600.18K 0.520 -74.00% -",
+      "name": "270 UTXH Yutex Holding AD 600.18K 0.520 -74.00% -",
       "symbol": "UTXH",
       "ticker": "UTXH",
       "isin": "BG1100063988",
@@ -2138,8 +2138,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "269 VELB Velbazhd AD 557.26K 0.765 - -",
-      "name": "269 VELB Velbazhd AD 557.26K 0.765 - -",
+      "company": "271 VELB Velbazhd AD 557.26K 0.765 - -",
+      "name": "271 VELB Velbazhd AD 557.26K 0.765 - -",
       "symbol": "VELB",
       "ticker": "VELB",
       "isin": "BG11VEKYAT12",
@@ -2152,8 +2152,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "270 GPP Zavod za Shlifovachni Mashini AD 389.05K 1.023 -48.85% -",
-      "name": "270 GPP Zavod za Shlifovachni Mashini AD 389.05K 1.023 -48.85% -",
+      "company": "272 GPP Zavod za Shlifovachni Mashini AD 389.05K 1.023 -48.85% -",
+      "name": "272 GPP Zavod za Shlifovachni Mashini AD 389.05K 1.023 -48.85% -",
       "symbol": "GPP",
       "ticker": "GPP",
       "isin": "BG11ZAASAT12",
@@ -2166,8 +2166,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "271 LOMP Lomsko Pivo AD 338.87K 0.0400 -33.33% 2.52M",
-      "name": "271 LOMP Lomsko Pivo AD 338.87K 0.0400 -33.33% 2.52M",
+      "company": "273 LOMP Lomsko Pivo AD 178.60K 0.0400 -33.33% 2.52M",
+      "name": "273 LOMP Lomsko Pivo AD 178.60K 0.0400 -33.33% 2.52M",
       "symbol": "LOMP",
       "ticker": "LOMP",
       "isin": "BG1100043071",
@@ -2180,8 +2180,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "272 BZAH Bulgarska Zahar AD 135.28K 0.0980 292.00% -",
-      "name": "272 BZAH Bulgarska Zahar AD 135.28K 0.0980 292.00% -",
+      "company": "274 BZAH Bulgarska Zahar AD 135.28K 0.0980 292.00% -",
+      "name": "274 BZAH Bulgarska Zahar AD 135.28K 0.0980 292.00% -",
       "symbol": "BZAH",
       "ticker": "BZAH",
       "isin": "BG11BADOAT11",
@@ -2194,8 +2194,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "273 VIDA Vidachim AD 60.98K 0.0110 13.40% -9.60K",
-      "name": "273 VIDA Vidachim AD 60.98K 0.0110 13.40% -9.60K",
+      "company": "275 VIDA Vidachim AD 60.98K 0.0110 13.40% -9.60K",
+      "name": "275 VIDA Vidachim AD 60.98K 0.0110 13.40% -9.60K",
       "symbol": "VIDA",
       "ticker": "VIDA",
       "isin": "BG11VIVIBT14",
@@ -2208,8 +2208,8 @@
       "identityResolution": "BSE_SYMBOL_CSD_REAL_ISIN"
     },
     {
-      "company": "274 DRON Dronamics Capital AD - 1.200 -5.51% -",
-      "name": "274 DRON Dronamics Capital AD - 1.200 -5.51% -",
+      "company": "276 DRON Dronamics Capital AD - 1.200 - -",
+      "name": "276 DRON Dronamics Capital AD - 1.200 - -",
       "symbol": "DRON",
       "ticker": "DRON",
       "isin": "BG1200007216",
