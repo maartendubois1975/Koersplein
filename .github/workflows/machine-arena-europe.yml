@@ -18,6 +18,8 @@ jobs:
         run: node scripts/research/block1-data-readiness.mjs
       - name: Validate Block 2 eleven-machine build
         run: node scripts/research/test-block2-machines.mjs
+      - name: Validate Block 3 historical integrity
+        run: node scripts/research/test-block3-integrity.mjs
       - name: Validate 31-market / 11-machine contract
         run: node scripts/research/europe-machine-arena-readiness.mjs
       - name: Test sector/peer pattern and loser specialist cores
