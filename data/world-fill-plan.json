@@ -632,9 +632,1176 @@
       "currency": "BGN",
       "timezone": "Europe/Sofia",
       "providerSuffix": ".SO",
-      "state": "BLOCKED",
+      "state": "COMPLETE",
       "catalogFingerprint": "8d30f3706bad5373a9e0f4f1ea4138504b34fe3d0829bea810a0ceb7a7f1536e",
-      "blockedReason": "SOURCE_PREFLIGHT_GATE"
+      "completedAt": "2026-10-07T12:12:39.141Z",
+      "dataUnavailable": [
+        {
+          "isin": "BG1100008074",
+          "officialIsin": "BG1100008074",
+          "symbol": "THQM",
+          "name": "91 THQM Tchaikapharma High Quality Medicines AD 1.70B 8.60 - 69.28M",
+          "lastDate": "2026-10-02",
+          "recordCount": 45,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100014973",
+          "officialIsin": "BG1100014973",
+          "symbol": "CCB",
+          "name": "99 CCB Central Cooperative Bank AD 460.03M 1.850 1.09% 286.51M",
+          "lastDate": "2026-10-01",
+          "recordCount": 57,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "BSE_ILLIQUID_LAST_ACTUAL_TRADE_PRESERVED_AFTER_FULL_CURRENT_RETRY",
+          "evidence": "Official BSE identity plus full current retry; no newer trade bar survived any configured route after 2026-10-01. Bulgarian market cross-check sources InfoStock/Investor.bg publish sparse per-instrument last-trade dates rather than synthetic daily closes."
+        },
+        {
+          "isin": "BG1100010104",
+          "officialIsin": "BG1100010104",
+          "symbol": "VAM",
+          "name": "104 VAM Velgraf Asset Management AD 357.83M 2.700 - 7.39M",
+          "lastDate": "2026-09-16",
+          "recordCount": 16,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100036984",
+          "officialIsin": "BG1100036984",
+          "symbol": "HVAR",
+          "name": "105 HVAR Holding Varna AD 313.26M 25.60 1.59% 103.45M",
+          "lastDate": "2026-09-29",
+          "recordCount": 50,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100007159",
+          "officialIsin": "BG1100007159",
+          "symbol": "ATOM",
+          "name": "107 ATOM Atomenergoremont AD 255.13M 8.50 8.28% 111.77M",
+          "lastDate": "2026-09-29",
+          "recordCount": 11,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100015210",
+          "officialIsin": "BG1100015210",
+          "symbol": "TBD",
+          "name": "108 TBD TPP-Bobov Dol AD 247.70M 15.00 - 500.48M",
+          "lastDate": "2026-09-23",
+          "recordCount": 13,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100013207",
+          "officialIsin": "BG1100013207",
+          "symbol": "TPLR",
+          "name": "111 TPLR Toplofikatsia-Ruse AD 221.66M 4.000 - 182.60M",
+          "lastDate": "2026-09-30",
+          "recordCount": 12,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100051983",
+          "officialIsin": "BG1100051983",
+          "symbol": "HRZ",
+          "name": "115 HRZ Rodna Zemya Holding AD 187.16M 1.750 - 198.39M",
+          "lastDate": "2026-09-18",
+          "recordCount": 9,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11EMTOAT16",
+          "officialIsin": "BG11EMTOAT16",
+          "symbol": "CHSB",
+          "name": "118 CHSB Himsnab Bulgaria AD 173.71M 35.60 0.57% 74.87M",
+          "lastDate": "2026-09-29",
+          "recordCount": 15,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100008132",
+          "officialIsin": "BG1100008132",
+          "symbol": "SYN",
+          "name": "121 SYN Synthetica AD 144.00M 48.00 - 22.82M",
+          "lastDate": "2026-09-30",
+          "recordCount": 34,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100098059",
+          "officialIsin": "BG1100098059",
+          "symbol": "BACB",
+          "name": "123 BACB Bulgarian-American Credit Bank AD 138.27M 5.60 - 95.18M",
+          "lastDate": "2026-09-29",
+          "recordCount": 24,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100058988",
+          "officialIsin": "BG1100058988",
+          "symbol": "HNVK",
+          "name": "125 HNVK Holding Nov Vek AD 128.69M 12.00 1.70% 35.14M",
+          "lastDate": "2026-09-17",
+          "recordCount": 16,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11VEPLAT12",
+          "officialIsin": "BG11VEPLAT12",
+          "symbol": "VEGA",
+          "name": "127 VEGA Fin Collection Holding AD 113.83M 42.00 - -",
+          "lastDate": "2026-03-31",
+          "recordCount": 13,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100005195",
+          "officialIsin": "BG1100005195",
+          "symbol": "PFB",
+          "name": "130 PFB Port Flot-Burgas AD 97.80M 5.00 - 16.59M",
+          "lastDate": "2026-09-30",
+          "recordCount": 7,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100035135",
+          "officialIsin": "BG1100035135",
+          "symbol": "GTH",
+          "name": "131 GTH Galata Investment Company AD 94.63M 1.380 - 10.44M",
+          "lastDate": "2026-09-30",
+          "recordCount": 14,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100099065",
+          "officialIsin": "BG1100099065",
+          "symbol": "BSP",
+          "name": "133 BSP Balkan and Sea Properties REIT-Varna 91.41M 13.20 - 3.98M",
+          "lastDate": "2026-09-29",
+          "recordCount": 15,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100027983",
+          "officialIsin": "BG1100027983",
+          "symbol": "HSI",
+          "name": "135 HSI Sila Holding AD 88.75M 1.820 - 1.56M",
+          "lastDate": "2026-09-30",
+          "recordCount": 13,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100038097",
+          "officialIsin": "BG1100038097",
+          "symbol": "ALFB",
+          "name": "136 ALFB Alpha Bulgaria AD 88.29M 3.380 - 806.41K",
+          "lastDate": "2026-09-28",
+          "recordCount": 7,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100001921",
+          "officialIsin": "BG1100001921",
+          "symbol": "TXIM",
+          "name": "142 TXIM Texim Bank AD 79.71M 1.820 - 32.77M",
+          "lastDate": "2026-10-01",
+          "recordCount": 11,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100017190",
+          "officialIsin": "BG1100017190",
+          "symbol": "TBS",
+          "name": "144 TBS Telelink Business Services Group AD 72.57M 5.90 -1.67% 283.55M",
+          "lastDate": "2026-09-30",
+          "recordCount": 50,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11ASASBT10",
+          "officialIsin": "BG11ASASBT10",
+          "symbol": "ASKR",
+          "name": "145 ASKR Asenova Krepost AD 69.36M 8.40 - -",
+          "lastDate": "2026-09-15",
+          "recordCount": 8,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100084075",
+          "officialIsin": "BG1100084075",
+          "symbol": "SFB",
+          "name": "146 SFB Sopharma Buildings REIT-Sofia 67.10M 9.00 - -",
+          "lastDate": "2026-09-17",
+          "recordCount": 13,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100042057",
+          "officialIsin": "BG1100042057",
+          "symbol": "FPP",
+          "name": "148 FPP Fairplay Properties REIT 62.84M 0.800 11.11% 11.56M",
+          "lastDate": "2026-09-25",
+          "recordCount": 31,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100036133",
+          "officialIsin": "BG1100036133",
+          "symbol": "RGL",
+          "name": "149 RGL Regala Invest AD 62.33M 1.760 - 333.53K",
+          "lastDate": "2026-05-19",
+          "recordCount": 9,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100059986",
+          "officialIsin": "BG1100059986",
+          "symbol": "HREP",
+          "name": "152 HREP Republica Holding AD 56.60M 1.970 2.60% -",
+          "lastDate": "2026-09-30",
+          "recordCount": 27,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100069985",
+          "officialIsin": "BG1100069985",
+          "symbol": "CHL",
+          "name": "153 CHL Chernomorski Holding AD 56.59M 9.00 - 476.10K",
+          "lastDate": "2026-09-17",
+          "recordCount": 23,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100019048",
+          "officialIsin": "BG1100019048",
+          "symbol": "IBG",
+          "name": "154 IBG Investor.BG AD 56.43M 11.80 - -",
+          "lastDate": "2026-09-29",
+          "recordCount": 12,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11LUSTAT13",
+          "officialIsin": "BG11LUSTAT13",
+          "symbol": "KBG",
+          "name": "157 KBG Korado-Bulgaria AD 54.78M 2.220 - 47.12M",
+          "lastDate": "2026-10-02",
+          "recordCount": 38,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11ALSUAT14",
+          "officialIsin": "BG11ALSUAT14",
+          "symbol": "ALCM",
+          "name": "161 ALCM Alcomet AD 51.70M 2.880 0.70% 608.79M",
+          "lastDate": "2026-09-30",
+          "recordCount": 37,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11KAPAAT12",
+          "officialIsin": "BG11KAPAAT12",
+          "symbol": "KAU",
+          "name": "166 KAU Kauchuk AD 46.77M 26.00 1.56% -",
+          "lastDate": "2026-09-18",
+          "recordCount": 19,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100001129",
+          "officialIsin": "BG1100001129",
+          "symbol": "BPEF",
+          "name": "167 BPEF Bulgarian Private Equity Fund AD 45.55M 1.180 -1.67% 848.72K",
+          "lastDate": "2026-09-29",
+          "recordCount": 13,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100019022",
+          "officialIsin": "BG1100019022",
+          "symbol": "NGAZ",
+          "name": "168 NGAZ Oil and Gas Exploration and Production AD 44.95M 1.900 -12.04% 36.82M",
+          "lastDate": "2026-09-09",
+          "recordCount": 10,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100111076",
+          "officialIsin": "BG1100111076",
+          "symbol": "ALT",
+          "name": "169 ALT Alteron REIT 44.85M 15.40 - -317.30K",
+          "lastDate": "2026-09-09",
+          "recordCount": 6,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11TOSOAT18",
+          "officialIsin": "BG11TOSOAT18",
+          "symbol": "TOPL",
+          "name": "170 TOPL Toplivo AD 44.47M 4.200 - -",
+          "lastDate": "2026-09-28",
+          "recordCount": 9,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11NEDIAT11",
+          "officialIsin": "BG11NEDIAT11",
+          "symbol": "NEOH",
+          "name": "172 NEOH Neochim AD 43.96M 17.00 -1.73% 459.65M",
+          "lastDate": "2026-10-01",
+          "recordCount": 50,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100016218",
+          "officialIsin": "BG1100016218",
+          "symbol": "HRC",
+          "name": "173 HRC HR Capital AD 43.56M 4.780 -13.09% 20.41M",
+          "lastDate": "2026-09-29",
+          "recordCount": 50,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100008983",
+          "officialIsin": "BG1100008983",
+          "symbol": "HSOF",
+          "name": "176 HSOF Holding Sveta Sofia AD 38.50M 1.980 -2.94% 4.28M",
+          "lastDate": "2026-09-28",
+          "recordCount": 14,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100043980",
+          "officialIsin": "BG1100043980",
+          "symbol": "IDH",
+          "name": "179 IDH Industry Development Holding AD 37.48M 1.920 4.35% -",
+          "lastDate": "2026-09-29",
+          "recordCount": 10,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100021226",
+          "officialIsin": "BG1100021226",
+          "symbol": "AMON",
+          "name": "180 AMON AmonRa Energy AD 34.38M 5.50 - -",
+          "lastDate": "2026-09-30",
+          "recordCount": 21,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100026985",
+          "officialIsin": "BG1100026985",
+          "symbol": "GAMZ",
+          "name": "187 GAMZ Severcoop Gamza Holding AD 28.94M 2.800 27.27% -",
+          "lastDate": "2026-09-11",
+          "recordCount": 14,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100004214",
+          "officialIsin": "BG1100004214",
+          "symbol": "TPLP",
+          "name": "188 TPLP Toplofikacia Pleven AD-Pleven 27.08M 1.320 1.54% -",
+          "lastDate": "2026-09-29",
+          "recordCount": 14,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100007985",
+          "officialIsin": "BG1100007985",
+          "symbol": "HEKI",
+          "name": "189 HEKI Ekip-98 Holding AD 25.68M 17.00 - -",
+          "lastDate": "2026-09-23",
+          "recordCount": 8,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100001038",
+          "officialIsin": "BG1100001038",
+          "symbol": "ETR",
+          "name": "190 ETR Etropal AD 24.80M 2.620 -1.50% 16.92M",
+          "lastDate": "2026-09-28",
+          "recordCount": 28,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100019196",
+          "officialIsin": "BG1100019196",
+          "symbol": "PF99",
+          "name": "192 PF99 Port Fleet 99 AD 23.16M 6.00 - 11.05M",
+          "lastDate": "2026-09-14",
+          "recordCount": 9,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100109070",
+          "officialIsin": "BG1100109070",
+          "symbol": "ZHBG",
+          "name": "193 ZHBG Zarneni Hrani Bulgaria AD 22.96M 0.0600 -1.64% 62.97M",
+          "lastDate": "2026-09-30",
+          "recordCount": 50,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11VIASAT18",
+          "officialIsin": "BG11VIASAT18",
+          "symbol": "VINA",
+          "name": "196 VINA RES Invest Holding AD 20.35M 1.050 5.00% -",
+          "lastDate": "2026-09-09",
+          "recordCount": 22,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100010989",
+          "officialIsin": "BG1100010989",
+          "symbol": "HIKA",
+          "name": "197 HIKA Industrial Capital Holding AD 20.31M 1.280 0.79% -",
+          "lastDate": "2026-09-30",
+          "recordCount": 47,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100016176",
+          "officialIsin": "BG1100016176",
+          "symbol": "BPF",
+          "name": "198 BPF Bravo Property Fund REIT 20.18M 0.550 - 5.22M",
+          "lastDate": "2026-09-29",
+          "recordCount": 34,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100018248",
+          "officialIsin": "BG1100018248",
+          "symbol": "TIZ",
+          "name": "200 TIZ TIZ Invest AD 18.45M 13.40 - -",
+          "lastDate": "2026-09-30",
+          "recordCount": 8,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100033981",
+          "officialIsin": "BG1100033981",
+          "symbol": "SNRG",
+          "name": "201 SNRG Synergon Holding AD 17.02M 0.474 -1.25% -",
+          "lastDate": "2026-09-29",
+          "recordCount": 34,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100017984",
+          "officialIsin": "BG1100017984",
+          "symbol": "HUG",
+          "name": "204 HUG Holding Coop-Yug AD 15.76M 2.960 13.85% -",
+          "lastDate": "2026-09-17",
+          "recordCount": 11,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11FOKAAT18",
+          "officialIsin": "BG11FOKAAT18",
+          "symbol": "FORM",
+          "name": "205 FORM Formoplast AD 14.82M 3.900 0.52% 569.78M",
+          "lastDate": "2026-10-01",
+          "recordCount": 27,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11DESLAT11",
+          "officialIsin": "BG11DESLAT11",
+          "symbol": "DEX",
+          "name": "206 DEX Decotex AD 14.45M 0.500 - -",
+          "lastDate": "2026-09-14",
+          "recordCount": 20,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100009064",
+          "officialIsin": "BG1100009064",
+          "symbol": "PREM",
+          "name": "207 PREM Premier Fund REIT 14.22M 7.90 - 260.12K",
+          "lastDate": "2026-09-30",
+          "recordCount": 8,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100026092",
+          "officialIsin": "BG1100026092",
+          "symbol": "OPBI",
+          "name": "208 OPBI Opportunity Bulgaria Investment AD 14.08M 1.380 2.22% -",
+          "lastDate": "2026-09-29",
+          "recordCount": 13,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100016119",
+          "officialIsin": "BG1100016119",
+          "symbol": "FCAD",
+          "name": "211 FCAD Futures Capital AD 13.65M 17.00 - -",
+          "lastDate": "2026-09-21",
+          "recordCount": 14,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100017059",
+          "officialIsin": "BG1100017059",
+          "symbol": "WMG",
+          "name": "213 WMG Web Media Group AD 12.29M 0.810 - 2.92M",
+          "lastDate": "2026-09-09",
+          "recordCount": 6,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100065074",
+          "officialIsin": "BG1100065074",
+          "symbol": "SLSP",
+          "name": "215 SLSP SLS Realty REIT 11.00M 4.400 - 70.00K",
+          "lastDate": "2026-09-29",
+          "recordCount": 23,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11LASUAT14",
+          "officialIsin": "BG11LASUAT14",
+          "symbol": "LAV",
+          "name": "216 LAV Lavena AD 10.90M 1.100 10.00% 28.63M",
+          "lastDate": "2026-09-28",
+          "recordCount": 38,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100062063",
+          "officialIsin": "BG1100062063",
+          "symbol": "EALF",
+          "name": "221 EALF Elana Agricultural Land Fund REIT-Sofia 9.37M 0.545 - -",
+          "lastDate": "2026-08-06",
+          "recordCount": 8,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11PESOBT13",
+          "officialIsin": "BG11PESOBT13",
+          "symbol": "PET",
+          "name": "223 PET Petrol AD 8.41M 0.308 - 534.72M",
+          "lastDate": "2026-10-01",
+          "recordCount": 40,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100006136",
+          "officialIsin": "BG1100006136",
+          "symbol": "RBL",
+          "name": "224 RBL Real Bulland AD 8.11M 0.800 - 310.15K",
+          "lastDate": "2026-09-29",
+          "recordCount": 13,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11ZLVAAT14",
+          "officialIsin": "BG11ZLVAAT14",
+          "symbol": "ZLP",
+          "name": "226 ZLP Zlatni Piasaci AD 7.54M 0.600 4.35% -",
+          "lastDate": "2026-09-08",
+          "recordCount": 10,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100001988",
+          "officialIsin": "BG1100001988",
+          "symbol": "BHC",
+          "name": "227 BHC Bulgarian Holding Company AD 6.91M 0.550 - -",
+          "lastDate": "2026-09-18",
+          "recordCount": 11,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100003059",
+          "officialIsin": "BG1100003059",
+          "symbol": "AKTV",
+          "name": "228 AKTV Aktiv Properties REIT 6.36M 2.900 - -",
+          "lastDate": "2026-09-23",
+          "recordCount": 6,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100005203",
+          "officialIsin": "BG1100005203",
+          "symbol": "CDM",
+          "name": "232 CDM Capman Debts Management AD 5.94M 0.500 - 32.32K",
+          "lastDate": "2026-09-28",
+          "recordCount": 7,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100088076",
+          "officialIsin": "BG1100088076",
+          "symbol": "BBRD",
+          "name": "235 BBRD Billboard AD 4.97M 0.171 -0.58% 37.61M",
+          "lastDate": "2026-09-08",
+          "recordCount": 19,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100018081",
+          "officialIsin": "BG1100018081",
+          "symbol": "XBT",
+          "name": "236 XBT Expat Beta Reit - Sofia 4.80M 0.486 5.65% 101.36K",
+          "lastDate": "2026-09-15",
+          "recordCount": 7,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11TRBUAT16",
+          "officialIsin": "BG11TRBUAT16",
+          "symbol": "TSBS",
+          "name": "238 TSBS Transstroy-Burgas AD-Burgas 4.00M 24.00 9.09% -",
+          "lastDate": "2026-06-30",
+          "recordCount": 8,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11FASIAT18",
+          "officialIsin": "BG11FASIAT18",
+          "symbol": "FZLS",
+          "name": "239 FZLS Fazerles AD 3.55M 6.90 4.55% 14.17M",
+          "lastDate": "2026-09-24",
+          "recordCount": 17,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100057063",
+          "officialIsin": "BG1100057063",
+          "symbol": "FFI",
+          "name": "242 FFI Forucom REIT-Haskovo 3.27M 0.930 - 2.18M",
+          "lastDate": "2026-08-24",
+          "recordCount": 6,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11MOVEAT12",
+          "officialIsin": "BG11MOVEAT12",
+          "symbol": "MKR",
+          "name": "243 MKR Momina Krepost AD 3.20M 1.890 - -",
+          "lastDate": "2026-10-02",
+          "recordCount": 4,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11HIKAAT14",
+          "officialIsin": "BG11HIKAAT14",
+          "symbol": "HPT",
+          "name": "244 HPT Hydropneumotechnics AD 3.06M 40.00 27.39% -",
+          "lastDate": "2026-07-31",
+          "recordCount": 49,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG11SLNEAT19",
+          "officialIsin": "BG11SLNEAT19",
+          "symbol": "SLB",
+          "name": "245 SLB Slanchev Bryag AD 3.03M 0.800 -6.43% -",
+          "lastDate": "2026-09-08",
+          "recordCount": 6,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100016226",
+          "officialIsin": "BG1100016226",
+          "symbol": "MELI",
+          "name": "248 MELI Mellifera AD 2.66M 1.300 -12.16% 193.00K",
+          "lastDate": "2026-08-26",
+          "recordCount": 5,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100006979",
+          "officialIsin": "BG1100006979",
+          "symbol": "KRS",
+          "name": "249 KRS Technology and Innovation Corporation AD 2.62M 0.130 -40.91% 1.66M",
+          "lastDate": "2026-07-02",
+          "recordCount": 5,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100022232",
+          "officialIsin": "BG1100022232",
+          "symbol": "BLRN",
+          "name": "250 BLRN Boleron AD 2.48M 1.120 1.82% -",
+          "lastDate": "2026-10-01",
+          "recordCount": 22,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100009981",
+          "officialIsin": "BG1100009981",
+          "symbol": "FAVH",
+          "name": "254 FAVH Favorit Hold AD 2.32M 0.505 1.41% -",
+          "lastDate": "2026-08-31",
+          "recordCount": 49,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100104980",
+          "officialIsin": "BG1100104980",
+          "symbol": "ZNTH",
+          "name": "256 ZNTH Zenith Investment Holding AD 2.29M 4.800 - -",
+          "lastDate": "2026-09-16",
+          "recordCount": 6,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100017216",
+          "officialIsin": "BG1100017216",
+          "symbol": "BEE",
+          "name": "258 BEE Bee Smart Technologies AD 2.03M 4.980 0.40% 1.30M",
+          "lastDate": "2026-09-29",
+          "recordCount": 15,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100019246",
+          "officialIsin": "BG1100019246",
+          "symbol": "GGS",
+          "name": "259 GGS Global Gaming Solutions AD 1.98M 0.185 - -",
+          "lastDate": "2026-09-24",
+          "recordCount": 24,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100036042",
+          "officialIsin": "BG1100036042",
+          "symbol": "FUES",
+          "name": "266 FUES Fund Estates REIT 1.22M 0.0270 -40.00% 5.86M",
+          "lastDate": "2026-09-03",
+          "recordCount": 4,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100008215",
+          "officialIsin": "BG1100008215",
+          "symbol": "INF",
+          "name": "268 INF Infinity Capital AD 1.12M 0.400 - 163.00K",
+          "lastDate": "2026-09-15",
+          "recordCount": 15,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100043071",
+          "officialIsin": "BG1100043071",
+          "symbol": "LOMP",
+          "name": "273 LOMP Lomsko Pivo AD 349.33K 0.0400 -33.33% 2.52M",
+          "lastDate": "2026-09-25",
+          "recordCount": 23,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "PROVIDER_HISTORY_STALE_AFTER_SUCCESSFUL_RETRY"
+        },
+        {
+          "isin": "BG1100017174",
+          "officialIsin": "BG1100017174",
+          "symbol": "235H",
+          "name": "109 235H 235 Holdings AD 245.29M 25.00 - 11.27M",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100032082",
+          "officialIsin": "BG1100032082",
+          "symbol": "CGRN",
+          "name": "140 CGRN CM Green Energy Fund AD 80.61M 1.150 - -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100041067",
+          "officialIsin": "BG1100041067",
+          "symbol": "SBPF",
+          "name": "143 SBPF Super Borovets Property Fund REIT 77.71M 1.730 - 1.40M",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG11KAJMAT16",
+          "officialIsin": "BG11KAJMAT16",
+          "symbol": "KABL",
+          "name": "147 KABL TK-Properties AD 64.81M 0.705 0.71% -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100120051",
+          "officialIsin": "BG1100120051",
+          "symbol": "CCBR",
+          "name": "150 CCBR Grand Vision Properties REIT 61.77M 30.00 - 1.01M",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100026076",
+          "officialIsin": "BG1100026076",
+          "symbol": "RPF",
+          "name": "156 RPF Roi Property Fund REIT 55.88M 4.780 - 3.67M",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG11RODOAT17",
+          "officialIsin": "BG11RODOAT17",
+          "symbol": "RDNA",
+          "name": "159 RDNA Elea Capital Holding AD 53.54M 13.00 -3.70% -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100012209",
+          "officialIsin": "BG1100012209",
+          "symbol": "TPLB",
+          "name": "160 TPLB Toplofikatsia-Burgas AD 52.11M 0.950 -5.00% 64.65M",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100037008",
+          "officialIsin": "BG1100037008",
+          "symbol": "SLR",
+          "name": "163 SLR Slantcho AD 49.46M 8.00 14.29% 8.01M",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100039103",
+          "officialIsin": "BG1100039103",
+          "symbol": "RSW",
+          "name": "174 RSW Reisswolf Bulgaria AD 42.04M 2.560 1.59% 2.36M",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100102067",
+          "officialIsin": "BG1100102067",
+          "symbol": "PLG",
+          "name": "182 PLG Puldin Properties Invest REIT 30.88M 1.600 3.23% 892.12K",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100080982",
+          "officialIsin": "BG1100080982",
+          "symbol": "HCEN",
+          "name": "183 HCEN Holding Center AD 30.54M 21.60 0.94% -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG11SLSTAT17",
+          "officialIsin": "BG11SLSTAT17",
+          "symbol": "SUN",
+          "name": "185 SUN Slantse Stara Zagora Tabac AD 29.98M 10.60 0.95% 584.91K",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100083069",
+          "officialIsin": "BG1100083069",
+          "symbol": "EXPR",
+          "name": "191 EXPR Exclusive Property REIT-Sofia 23.25M 1.280 - 2.13M",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100003141",
+          "officialIsin": "BG1100003141",
+          "symbol": "PCH",
+          "name": "195 PCH Phoenix Capital Holding AD 21.63M 950.00 - -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100069068",
+          "officialIsin": "BG1100069068",
+          "symbol": "ERG",
+          "name": "209 ERG ERG Capital-3 REIT-Sofia 13.88M 3.440 - 126.00K",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100072070",
+          "officialIsin": "BG1100072070",
+          "symbol": "BPI",
+          "name": "210 BPI Bolkan Property Instruments REIT 13.67M 7.00 - 24.00K",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG11VAVAGT15",
+          "officialIsin": "BG11VAVAGT15",
+          "symbol": "VPLD",
+          "name": "212 VPLD Varna-Plod Ad 12.43M 120.00 -5.91% 10.24M",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100020988",
+          "officialIsin": "BG1100020988",
+          "symbol": "BTRH",
+          "name": "214 BTRH Bulgarski Transporten Holding AD 11.38M 18.00 1,647.57% -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG11BUSOGT14",
+          "officialIsin": "BG11BUSOGT14",
+          "symbol": "BTH",
+          "name": "218 BTH Bulgartabac Holding AD 10.34M 0.725 -66.74% 96.19M",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100016077",
+          "officialIsin": "BG1100016077",
+          "symbol": "BGI",
+          "name": "229 BGI BGI Group AD 6.32M 0.500 - -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100101069",
+          "officialIsin": "BG1100101069",
+          "symbol": "NIS",
+          "name": "231 NIS Immovable Properties Sofia REIT Sofia 6.10M 4.800 - 1.11M",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100048989",
+          "officialIsin": "BG1100048989",
+          "symbol": "HPLD",
+          "name": "237 HPLD Paldin Holding AD 4.69M 9.00 - -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100041984",
+          "officialIsin": "BG1100041984",
+          "symbol": "NAD",
+          "name": "246 NAD NIC Nadejda AD 3.03M 0.400 -21.66% -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100006060",
+          "officialIsin": "BG1100006060",
+          "symbol": "CEEP",
+          "name": "252 CEEP CEE Properties REIT 2.37M 1.880 1.08% -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100064077",
+          "officialIsin": "BG1100064077",
+          "symbol": "CBAM",
+          "name": "253 CBAM CBA Asset Management AD 2.36M 0.600 20.00% 297.61K",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100016986",
+          "officialIsin": "BG1100016986",
+          "symbol": "DOBH",
+          "name": "255 DOBH Euro Invest Managment AD 2.30M 7.75 -3.13% -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100093068",
+          "officialIsin": "BG1100093068",
+          "symbol": "SBS",
+          "name": "260 SBS Specialized Business Systems AD 1.95M 1.000 - 3.60M",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100010971",
+          "officialIsin": "BG1100010971",
+          "symbol": "MELH",
+          "name": "261 MELH Mel Invest Holding AD 1.82M 0.500 - -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG11ORSIAT18",
+          "officialIsin": "BG11ORSIAT18",
+          "symbol": "ORGT",
+          "name": "264 ORGT Orgtechnica Ad 1.28M 2.600 4.00% -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100018990",
+          "officialIsin": "BG1100018990",
+          "symbol": "KTEX",
+          "name": "269 KTEX Katex AD 940.19K 0.200 - -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG1100063988",
+          "officialIsin": "BG1100063988",
+          "symbol": "UTXH",
+          "name": "270 UTXH Yutex Holding AD 600.18K 0.520 -74.00% -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG11VEKYAT12",
+          "officialIsin": "BG11VEKYAT12",
+          "symbol": "VELB",
+          "name": "271 VELB Velbazhd AD 557.26K 0.765 - -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG11ZAASAT12",
+          "officialIsin": "BG11ZAASAT12",
+          "symbol": "GPP",
+          "name": "272 GPP Zavod za Shlifovachni Mashini AD 389.05K 1.023 -48.85% -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG11BADOAT11",
+          "officialIsin": "BG11BADOAT11",
+          "symbol": "BZAH",
+          "name": "274 BZAH Bulgarska Zahar AD 135.28K 0.0980 292.00% -",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        },
+        {
+          "isin": "BG11VIVIBT14",
+          "officialIsin": "BG11VIVIBT14",
+          "symbol": "VIDA",
+          "name": "275 VIDA Vidachim AD 60.98K 0.0110 13.40% -9.60K",
+          "error": null,
+          "status": "DATA_UNAVAILABLE",
+          "reason": "OFFICIAL_BSE_CURRENT_EQUITY_NO_USABLE_FREE_DAILY_HISTORY_AFTER_OFFICIAL_DELAYED_DATA_PLUS_FOUR_HISTORY_ROUTE_TESTS"
+        }
+      ]
     },
     {
       "mic": "XZAG",
