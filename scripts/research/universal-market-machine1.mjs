@@ -11,12 +11,13 @@ const addMonths=(date,n)=>{const d=new Date(date+'T00:00:00Z');d.setUTCMonth(d.g
 const nearest=(bars,date)=>bars.find(b=>b.date>=date)||null;
 const history=async isin=>{const r=await fetch(`${API}/api/history/${encodeURIComponent(isin)}`);if(!r.ok)throw new Error(`history ${r.status}`);return r.json()};
 const getBars=x=>Array.isArray(x)?x:(x.bars||x.records||x.history||[]);
-const results=[];let failed=0,skippedMissingIsin=0;
+const results=[];let failed=0,skippedMissingIsin=0,insufficientHistory=0,usableInstruments=0;const historyCoverage=[];
 for(const item of instruments){
  if(typeof item.isin!=='string'||!item.isin.trim()){skippedMissingIsin++;continue;}
  try{
   const raw=await history(item.isin); const bars=getBars(raw).filter(b=>b?.date&&Number.isFinite(Number(b.close))).map(b=>({...b,close:Number(b.close)})).sort((a,b)=>a.date.localeCompare(b.date));
-  if(bars.length<260) continue;
+  if(bars.length<260){insufficientHistory++;historyCoverage.push({identity:item.isin,status:'INSUFFICIENT_HISTORY',bars:bars.length,firstDate:bars[0]?.date||null,lastDate:bars.at(-1)?.date||null});continue;}
+  usableInstruments++;historyCoverage.push({identity:item.isin,status:'HISTORY_AVAILABLE',bars:bars.length,firstDate:bars[0]?.date||null,lastDate:bars.at(-1)?.date||null});
   const monthly=[];let last='';for(const b of bars){const k=monthKey(b.date);if(k!==last){monthly.push(b);last=k;}else monthly[monthly.length-1]=b;}
   for(let i=12;i<monthly.length;i++){
    const now=monthly[i], m3=monthly[Math.max(0,i-3)],m6=monthly[Math.max(0,i-6)],m12=monthly[Math.max(0,i-12)];
@@ -28,10 +29,11 @@ for(const item of instruments){
    for(const h of [3,6,12,24]){predictions[`${h}m`]=score;const future=nearest(bars,addMonths(now.date,h));realized[`${h}m`]=future?pct(now.close,future.close):null;}
    results.push({instrument:item.isin,ticker:item.ticker||item.symbol,company:item.company||item.name,predictionDate:now.date,informationCutoff:now.date,modelVersion:'machine1-11-specialists-v3',availableSignals:{...signals,pattern,anomaly,loserGuard:riskGuard,classification},missingSignals:['fundamentals-point-in-time','analyst-revisions','news-sentiment','macro-point-in-time','flows-options-short'],predictions,realized});
   }
- }catch(e){failed++;console.error(JSON.stringify({isin:item.isin,error:e.message}));}
+ }catch(e){failed++;historyCoverage.push({identity:item.isin,status:'HISTORY_FETCH_ERROR',error:e.message});console.error(JSON.stringify({isin:item.isin,error:e.message}));}
 }
 await fs.mkdir(`research/output/${mic}`,{recursive:true});
-const summary={generatedAt:new Date().toISOString(),market:mic,marketName:market.name,mode:'BLIND_WALK_FORWARD',modelVersion:'machine1-11-specialists-v3',instruments:instruments.length,observations:results.length,failed,skippedMissingIsin,coverageStatus:results.length>0?'OBSERVATIONS_PRESENT':'NO_OBSERVATIONS',strictPointInTime:true,note:'Eerste nulmeting op uitsluitend historische prijsinformatie; ontbrekende signaalfamilies zijn expliciet gemarkeerd en krijgen geen fictieve waarden.'};
+const summary={generatedAt:new Date().toISOString(),market:mic,marketName:market.name,mode:'BLIND_WALK_FORWARD',modelVersion:'machine1-11-specialists-v3',instruments:instruments.length,observations:results.length,failed,skippedMissingIsin,insufficientHistory,usableInstruments,historyCoverageFile:'machine1-history-coverage.json',coverageStatus:results.length>0?'OBSERVATIONS_PRESENT':'NO_OBSERVATIONS',strictPointInTime:true,note:'Eerste nulmeting op uitsluitend historische prijsinformatie; ontbrekende signaalfamilies zijn expliciet gemarkeerd en krijgen geen fictieve waarden.'};
+await fs.writeFile(`research/output/${mic}/machine1-history-coverage.json`,JSON.stringify({market:mic,source:'KOERSPLEIN_HISTORY_API',generatedAt:new Date().toISOString(),catalogInstruments:instruments.length,missingIsin:skippedMissingIsin,usableInstruments,insufficientHistory,failed,records:historyCoverage},null,2));
 await fs.writeFile(`research/output/${mic}/machine1-summary.json`,JSON.stringify(summary,null,2));
 await fs.writeFile(`research/output/${mic}/machine1-results.jsonl`,results.map(x=>JSON.stringify(x)).join('\n')+'\n');
 console.log(JSON.stringify(summary,null,2));
