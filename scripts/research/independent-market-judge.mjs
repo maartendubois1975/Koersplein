@@ -12,9 +12,10 @@ for(const h of [3,6,12,24]){
  const provisional=eligible.length-verified.length;
  const exam=chronologicalExamFolds(verified,{horizonMonths:h,embargoMonths:h,holdoutMonths:24});
  const scores=exam.folds.map(f=>rankingMetrics(f.test.map(r=>({prediction:r.predictions[k],actual:r.realized[k]}))));
+ const holdoutSet=new Set(exam.holdout);
  const holdoutRanking=rankingMetrics(exam.holdout.map(r=>({prediction:r.predictions[k],actual:r.realized[k]})));
  const holdoutBenchmark=benchmarkScores(exam.holdout,h);
- report.horizons[k]={maturedSamples:eligible.length,verifiedIdentitySamples:verified.length,provisionalIdentityExcluded:provisional,folds:exam.folds.length,holdoutSamples:exam.holdout.length,foldMetrics:scores,developmentBenchmark:benchmarkScores(verified.filter(r=>!exam.holdout.includes(r)),h),holdoutRanking,holdoutBenchmark,validated:false};
+ report.horizons[k]={maturedSamples:eligible.length,verifiedIdentitySamples:verified.length,provisionalIdentityExcluded:provisional,folds:exam.folds.length,holdoutSamples:exam.holdout.length,foldMetrics:scores,developmentBenchmark:benchmarkScores(verified.filter(r=>!holdoutSet.has(r)),h),holdoutRanking,holdoutBenchmark,validated:false};
 }
 await fs.writeFile(`${dir}/independent-judge-diagnostic.json`,JSON.stringify(report,null,2));
 console.log(JSON.stringify({market:mic,status:report.status,observations:rows.length,horizons:Object.fromEntries(Object.entries(report.horizons).map(([k,v])=>[k,{samples:v.maturedSamples,folds:v.folds}]))}));
