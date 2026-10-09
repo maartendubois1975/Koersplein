@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import {pricePatternFeatures,anomalySignals,loserGuard} from './machine-specialists-core.mjs';
 import {classificationFor} from './sector-classification-core.mjs';
+import {loadMarketBars} from './market-history-source.mjs';
 
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
 if(!API) throw new Error('KOERSPLEIN_API_URL ontbreekt');
@@ -13,27 +14,28 @@ const history=async isin=>{const r=await fetch(`${API}/api/history/${encodeURICo
 const getBars=x=>Array.isArray(x)?x:(x.bars||x.records||x.history||[]);
 const results=[];let failed=0,skippedMissingIsin=0,insufficientHistory=0,usableInstruments=0;const historyCoverage=[];
 for(const item of instruments){
- if(typeof item.isin!=='string'||!item.isin.trim()){skippedMissingIsin++;continue;}
+ const hasIsin=typeof item.isin==='string'&&Boolean(item.isin.trim());
+ if(!hasIsin)skippedMissingIsin++;
  try{
-  const raw=await history(item.isin); const bars=getBars(raw).filter(b=>b?.date&&Number.isFinite(Number(b.close))).map(b=>({...b,close:Number(b.close)})).sort((a,b)=>a.date.localeCompare(b.date));
-  if(bars.length<260){insufficientHistory++;historyCoverage.push({identity:item.isin,status:'INSUFFICIENT_HISTORY',bars:bars.length,firstDate:bars[0]?.date||null,lastDate:bars.at(-1)?.date||null});continue;}
-  usableInstruments++;historyCoverage.push({identity:item.isin,status:'HISTORY_AVAILABLE',bars:bars.length,firstDate:bars[0]?.date||null,lastDate:bars.at(-1)?.date||null});
+  const loaded=await loadMarketBars(item,mic,history);const identity=loaded.identityKey;const bars=getBars(loaded.bars).filter(b=>b?.date&&Number.isFinite(Number(b.close))).map(b=>({...b,close:Number(b.close)})).sort((a,b)=>a.date.localeCompare(b.date));
+  if(bars.length<260){insufficientHistory++;historyCoverage.push({identity,status:'INSUFFICIENT_HISTORY',provisionalIdentity:loaded.provisionalIdentity,source:loaded.source,bars:bars.length,firstDate:bars[0]?.date||null,lastDate:bars.at(-1)?.date||null});continue;}
+  usableInstruments++;historyCoverage.push({identity,status:'HISTORY_AVAILABLE',provisionalIdentity:loaded.provisionalIdentity,source:loaded.source,bars:bars.length,firstDate:bars[0]?.date||null,lastDate:bars.at(-1)?.date||null});
   const monthly=[];let last='';for(const b of bars){const k=monthKey(b.date);if(k!==last){monthly.push(b);last=k;}else monthly[monthly.length-1]=b;}
   for(let i=12;i<monthly.length;i++){
    const now=monthly[i], m3=monthly[Math.max(0,i-3)],m6=monthly[Math.max(0,i-6)],m12=monthly[Math.max(0,i-12)];
    const signals={momentum3m:pct(m3.close,now.close),momentum6m:pct(m6.close,now.close),momentum12m:pct(m12.close,now.close)};
-   const barIndex=bars.findIndex(b=>b.date===now.date);const pattern=barIndex>=252?pricePatternFeatures(bars,barIndex):null;const anomaly=anomalySignals(pattern);const riskGuard=loserGuard(pattern);const classification=classificationFor(item.isin,now.date);
+   const barIndex=bars.findIndex(b=>b.date===now.date);const pattern=barIndex>=252?pricePatternFeatures(bars,barIndex):null;const anomaly=anomalySignals(pattern);const riskGuard=loserGuard(pattern);const classification=hasIsin?classificationFor(item.isin,now.date):null;
    // Baseline v1: puur point-in-time prijsmodel. Geen toekomstige of nog niet ingelezen fundamentele/news-data.
    const score=(signals.momentum3m??0)*.2+(signals.momentum6m??0)*.3+(signals.momentum12m??0)*.5;
    const predictions={};const realized={};
    for(const h of [3,6,12,24]){predictions[`${h}m`]=score;const future=nearest(bars,addMonths(now.date,h));realized[`${h}m`]=future?pct(now.close,future.close):null;}
-   results.push({instrument:item.isin,ticker:item.ticker||item.symbol,company:item.company||item.name,predictionDate:now.date,informationCutoff:now.date,modelVersion:'machine1-11-specialists-v3',availableSignals:{...signals,pattern,anomaly,loserGuard:riskGuard,classification},missingSignals:['fundamentals-point-in-time','analyst-revisions','news-sentiment','macro-point-in-time','flows-options-short'],predictions,realized});
+   results.push({instrument:identity,isin:loaded.isin,provisionalIdentity:loaded.provisionalIdentity,historySource:loaded.source,ticker:item.ticker||item.symbol,company:item.company||item.name,predictionDate:now.date,informationCutoff:now.date,modelVersion:'machine1-11-specialists-v3',availableSignals:{...signals,pattern,anomaly,loserGuard:riskGuard,classification},missingSignals:['fundamentals-point-in-time','analyst-revisions','news-sentiment','macro-point-in-time','flows-options-short'],predictions,realized});
   }
- }catch(e){failed++;historyCoverage.push({identity:item.isin,status:'HISTORY_FETCH_ERROR',error:e.message});console.error(JSON.stringify({isin:item.isin,error:e.message}));}
+ }catch(e){failed++;historyCoverage.push({identity:item.isin||item.providerSymbol||null,status:'HISTORY_FETCH_ERROR',error:e.message});console.error(JSON.stringify({identity:item.isin||item.providerSymbol||null,error:e.message}));}
 }
 await fs.mkdir(`research/output/${mic}`,{recursive:true});
-const summary={generatedAt:new Date().toISOString(),market:mic,marketName:market.name,mode:'BLIND_WALK_FORWARD',modelVersion:'machine1-11-specialists-v3',instruments:instruments.length,observations:results.length,failed,skippedMissingIsin,insufficientHistory,usableInstruments,historyCoverageFile:'machine1-history-coverage.json',coverageStatus:results.length>0?'OBSERVATIONS_PRESENT':'NO_OBSERVATIONS',strictPointInTime:true,note:'Eerste nulmeting op uitsluitend historische prijsinformatie; ontbrekende signaalfamilies zijn expliciet gemarkeerd en krijgen geen fictieve waarden.'};
-await fs.writeFile(`research/output/${mic}/machine1-history-coverage.json`,JSON.stringify({market:mic,source:'KOERSPLEIN_HISTORY_API',generatedAt:new Date().toISOString(),catalogInstruments:instruments.length,missingIsin:skippedMissingIsin,usableInstruments,insufficientHistory,failed,records:historyCoverage},null,2));
+const summary={generatedAt:new Date().toISOString(),market:mic,marketName:market.name,mode:'BLIND_WALK_FORWARD',modelVersion:'machine1-11-specialists-v3',instruments:instruments.length,observations:results.length,failed,skippedMissingIsin,insufficientHistory,usableInstruments,historyCoverageFile:'machine1-history-coverage.json',coverageStatus:results.length>0?'OBSERVATIONS_PRESENT':'NO_OBSERVATIONS',strictPointInTime:true,provisionalSymbolIdentitiesNotValidated:true,note:'Eerste nulmeting op uitsluitend historische prijsinformatie; ontbrekende signaalfamilies zijn expliciet gemarkeerd en krijgen geen fictieve waarden.'};
+await fs.writeFile(`research/output/${mic}/machine1-history-coverage.json`,JSON.stringify({market:mic,source:'KOERSPLEIN_HISTORY_API_OR_PROVISIONAL_SYMBOL',generatedAt:new Date().toISOString(),catalogInstruments:instruments.length,missingIsin:skippedMissingIsin,usableInstruments,insufficientHistory,failed,records:historyCoverage},null,2));
 await fs.writeFile(`research/output/${mic}/machine1-summary.json`,JSON.stringify(summary,null,2));
 await fs.writeFile(`research/output/${mic}/machine1-results.jsonl`,results.map(x=>JSON.stringify(x)).join('\n')+'\n');
 console.log(JSON.stringify(summary,null,2));
