@@ -1,6 +1,9 @@
 name: Machine Arena Europe Repair Validation
 on:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - fix/arena-history-quality-gate-20261010
