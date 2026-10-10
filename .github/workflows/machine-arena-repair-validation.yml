@@ -1,0 +1,67 @@
+name: Machine Arena Europe Repair Validation
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - fix/arena-history-quality-gate-20261010
+permissions:
+  contents: read
+concurrency:
+  group: koersplein-machine-arena-repair-validation
+  cancel-in-progress: false
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: ${{ github.sha }} }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Validate Block 1 data layer
+        run: node scripts/research/block1-data-readiness.mjs
+      - name: Validate Block 2 eleven-machine build
+        run: node scripts/research/test-block2-machines.mjs
+      - name: Validate Block 3 historical integrity
+        run: node scripts/research/test-block3-integrity.mjs
+      - name: Validate Block 4 historical examination engine
+        run: node scripts/research/test-block4-exam.mjs
+      - name: Validate Block 5 learning and selection
+        run: node scripts/research/test-block5-learning.mjs
+      - name: Validate Block 6 live publication
+        run: node scripts/research/test-block6-live.mjs
+      - name: Validate 31-market / 11-machine contract
+        run: node scripts/research/europe-machine-arena-readiness.mjs
+      - name: Test sector/peer pattern and loser specialist cores
+        run: |
+          node scripts/research/test-machine-specialists.mjs
+          node scripts/research/test-sector-classification.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: machine-arena-readiness
+          path: research/output/machine-arena/
+          retention-days: 90
+  historical:
+    needs: readiness
+    strategy:
+      fail-fast: false
+      matrix:
+        mic: [XBRU,XAMS,XPAR,XMIL,XOSL,XDUB,XLIS,XLON,XETR,XSWX,XMAD,XSTO,XCSE,XHEL,XICE,XATH,XWAR,XWBO,XPRA,XBUD,XBSE,XBUL,XZAG,XLJU,XBRA,XLUX,XMAL,XCYS,XTAL,XRIS,XLIT]
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      MARKET_MIC: ${{ matrix.mic }}
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: ${{ github.sha }} }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Frozen historical blind pipeline
+        run: node scripts/research/complete-market-pipeline.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: machine-arena-${{ matrix.mic }}
+          path: research/output/${{ matrix.mic }}/
+          retention-days: 90
