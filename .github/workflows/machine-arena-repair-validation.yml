@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with: { ref: ${{ github.sha }} }
+        with:
+          ref: ${{ github.sha }}
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
       - name: Validate Block 1 data layer
@@ -54,7 +55,8 @@ jobs:
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-        with: { ref: ${{ github.sha }} }
+        with:
+          ref: ${{ github.sha }}
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
       - name: Frozen historical blind pipeline
