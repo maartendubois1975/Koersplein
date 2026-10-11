@@ -24,11 +24,11 @@ export async function loadMarketBars(item,mic,loadByIsin){
  if(!symbol||!item.identitySource||!item.identityResolution)throw Error('MISSING_ISIN_AND_SOURCE_PROVEN_SYMBOL '+(item.ticker||item.symbol||''));
  const identityKey=isin||mic+':'+symbol;
  const cache=path.join(os.tmpdir(),'koersplein-arena-price-cache',mic,encodeURIComponent(symbol)+'.json');
- try{const cached=JSON.parse(await fs.readFile(cache,'utf8'));return {...cached,identityKey,isin,provisionalIdentity:true,source:'YAHOO_CHART_FALLBACK_PROVISIONAL'};}catch(error){if(error.code!=='ENOENT')throw error}
+ try{const cached=JSON.parse(await fs.readFile(cache,'utf8'));if(Array.isArray(cached.bars)&&cached.bars.length>=(apiFallback?.bars.length||0))return {...cached,identityKey,isin,provisionalIdentity:true,source:'YAHOO_CHART_FALLBACK_PROVISIONAL'};}catch(error){if(error.code!=='ENOENT'&&!(error instanceof SyntaxError))throw error}
  let result;
  try { result=await yahoo.fetchDaily({...item,mic,providerSymbol:symbol},{startDate:'1990-01-01',endDate:new Date().toISOString().slice(0,10)}); }
  catch(error) { if(apiFallback) return apiFallback; throw error; }
- if((result.bars||[]).length<(apiFallback?.bars.length||0)) return apiFallback;
+ if(!Array.isArray(result?.bars)||result.bars.length<(apiFallback?.bars.length||0)) {if(apiFallback)return apiFallback;throw Error('INVALID_YAHOO_HISTORY_BARS '+symbol);}
  const payload={bars:result.bars,identityKey,isin,provisionalIdentity:true,source:'YAHOO_CHART_FALLBACK_PROVISIONAL',retrievedAt:new Date().toISOString(),providerMeta:result.providerMeta};
  await fs.mkdir(path.dirname(cache),{recursive:true});
  await fs.writeFile(cache,JSON.stringify(payload));
