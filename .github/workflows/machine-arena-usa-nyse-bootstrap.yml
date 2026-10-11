@@ -1,0 +1,25 @@
+name: Machine Arena USA NYSE Universe Bootstrap
+on:
+  push:
+    branches:
+      - feature/arena-usa-nyse-bootstrap-20261011
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  nyse-universe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch official NYSE directory and verify counts
+        run: node scripts/research/usa-nyse-universe.mjs
+      - name: Upload NYSE candidate register and coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: machine-arena-usa-nyse-universe
+          path: research/output/usa/XNYS/
+          retention-days: 90
