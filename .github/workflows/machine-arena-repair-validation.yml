@@ -82,7 +82,7 @@ jobs:
       - name: Download all 31 market artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: machine-arena-*
+          pattern: machine-arena-X*
           path: research/output/market-artifacts
       - name: Reassemble per-market summaries for audit
         run: |
