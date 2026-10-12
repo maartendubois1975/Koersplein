@@ -22,7 +22,6 @@ jobs:
       - name: Validate official NYSE symbol universe
         run: node scripts/research/usa-nyse-universe.mjs
       - name: Validate historical NYSE OHLCV via SIP
-        if: env.ALPACA_API_KEY_ID != '' && env.ALPACA_API_SECRET_KEY != ''
         run: node scripts/research/usa-nyse-history.mjs
       - name: Publish private validation artifacts
         if: always()
