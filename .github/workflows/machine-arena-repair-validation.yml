@@ -69,3 +69,30 @@ jobs:
           name: machine-arena-${{ matrix.mic }}
           path: research/output/${{ matrix.mic }}/
           retention-days: 90
+
+  final-audit:
+    needs: [readiness, historical]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Download all 31 market artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: machine-arena-*
+          path: research/output/market-artifacts
+      - name: Reassemble per-market summaries for audit
+        run: |
+          node scripts/research/reassemble-europe-market-artifacts.mjs
+      - name: Audit all 31 markets
+        run: node scripts/research/europe-31-market-audit.mjs
+      - name: Publish final Europe audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: machine-arena-europe-final-report
+          path: research/output/machine-arena/europe-31-market-audit.json
+          retention-days: 90
