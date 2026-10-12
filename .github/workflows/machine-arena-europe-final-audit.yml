@@ -1,0 +1,26 @@
+name: Machine Arena Europe 31 Market Final Audit
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - fix/arena-history-quality-gate-20261010
+permissions:
+  contents: read
+jobs:
+  market-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check all 31 market baselines (missing evidence fails closed)
+        run: node scripts/research/europe-31-market-audit.mjs
+      - name: Upload audit report even when incomplete
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: machine-arena-europe-31-market-audit
+          path: research/output/machine-arena/europe-31-market-audit.json
+          retention-days: 90
