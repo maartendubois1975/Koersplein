@@ -18,6 +18,8 @@ jobs:
           ref: ${{ github.sha }}
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
+      - name: Test strict European historical coverage gate
+        run: node scripts/research/test-europe-historical-quality.mjs
       - name: Validate Block 1 data layer
         run: node scripts/research/block1-data-readiness.mjs
       - name: Validate Block 2 eleven-machine build
