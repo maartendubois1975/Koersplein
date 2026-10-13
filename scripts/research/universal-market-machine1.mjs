@@ -15,7 +15,7 @@ const getBars=x=>Array.isArray(x)?x:(x.bars||x.records||x.history||[]);
 const results=[];let failed=0,skippedMissingIsin=0,insufficientHistory=0,usableInstruments=0,provisionalIdentities=0;const historyCoverage=[];
 for(const item of instruments){
  const hasIsin=typeof item.isin==='string'&&Boolean(item.isin.trim());
- if(!hasIsin)skippedMissingIsin++;
+ if(!hasIsin){skippedMissingIsin++;provisionalIdentities++;historyCoverage.push({identity:item.providerSymbol||item.ticker||item.symbol||null,status:'MISSING_ISIN',provisionalIdentity:true});continue;}
  try{
   const loaded=await loadMarketBars(item,mic,history);const identity=loaded.identityKey;if(loaded.provisionalIdentity)provisionalIdentities++;const bars=getBars(loaded.bars).filter(b=>b?.date&&Number.isFinite(Number(b.close))).map(b=>({...b,close:Number(b.close)})).sort((a,b)=>a.date.localeCompare(b.date));
   if(bars.length<260){insufficientHistory++;historyCoverage.push({identity,status:'INSUFFICIENT_HISTORY',provisionalIdentity:loaded.provisionalIdentity,source:loaded.source,bars:bars.length,firstDate:bars[0]?.date||null,lastDate:bars.at(-1)?.date||null});continue;}
