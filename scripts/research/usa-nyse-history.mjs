@@ -39,4 +39,4 @@ for(const item of symbols){
 }
 const report={generatedAt:new Date().toISOString(),market:'XNYS',source:'Alpaca SIP',adjustment:'raw',start,end,offset,requested:symbols.length,successful:manifest.filter(x=>x.status==='HISTORY_AVAILABLE').length,failed:manifest.filter(x=>x.status==='FAILED').length,results:manifest,publicationApproved:false,independentValidation:false};
 await fs.writeFile(path.join(dir,'history-coverage.json'),JSON.stringify(report,null,2));
-if(report.failed>0)process.exitCode=1;
+if(report.failed>0 || report.successful!==report.requested || report.requested===0)process.exitCode=1;
