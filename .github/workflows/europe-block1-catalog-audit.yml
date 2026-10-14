@@ -1,0 +1,49 @@
+name: Europe Block 1 Catalog Audit
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - fix/europe-block1-independent-repair-20261014
+    paths:
+      - 'scripts/research/block1-*'
+      - 'scripts/research/isin-identity-core.mjs'
+      - 'data/euronext-*.json'
+      - 'data/world-fill-plan.json'
+      - '.github/workflows/europe-block1-catalog-audit.yml'
+permissions:
+  contents: read
+concurrency:
+  group: europe-block1-catalog-audit
+  cancel-in-progress: true
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit all 31 catalogues
+        id: audit
+        continue-on-error: true
+        run: node scripts/research/block1-data-readiness.mjs
+      - name: Inventory and quarantine unverified instruments
+        id: quarantine
+        continue-on-error: true
+        run: node scripts/research/block1-instrument-quarantine.mjs
+      - name: Preserve complete audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: europe-block1-catalog-evidence
+          path: research/output/machine-arena/block1-*.json
+          retention-days: 90
+      - name: Enforce fail-closed result
+        if: always()
+        env:
+          AUDIT: ${{ steps.audit.outcome }}
+          QUARANTINE: ${{ steps.quarantine.outcome }}
+        run: |
+          echo "Audit: $AUDIT; quarantine: $QUARANTINE"
+          test "$AUDIT" = success && test "$QUARANTINE" = success
