@@ -39,6 +39,7 @@ jobs:
           node scripts/research/test-machine-specialists.mjs
           node scripts/research/test-sector-classification.mjs
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: machine-arena-readiness
           path: research/output/machine-arena/
