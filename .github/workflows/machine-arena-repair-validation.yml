@@ -22,6 +22,9 @@ jobs:
         run: node scripts/research/test-europe-historical-quality.mjs
       - name: Validate Block 1 data layer
         run: node scripts/research/block1-data-readiness.mjs
+      - name: Quarantine unverified security types and identities
+        if: always()
+        run: node scripts/research/block1-instrument-quarantine.mjs
       - name: Validate Block 2 eleven-machine build
         run: node scripts/research/test-block2-machines.mjs
       - name: Validate Block 3 historical integrity
