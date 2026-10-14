@@ -1,0 +1,45 @@
+name: Europe Block 1 Source Reconciliation
+on:
+  workflow_dispatch:
+    inputs:
+      config_path:
+        description: Reviewed JSON source configuration path in repository
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Download, normalize and reconcile official snapshot
+        id: reconcile
+        continue-on-error: true
+        env:
+          CONFIG_PATH: ${{ inputs.config_path }}
+        run: |
+          case "$CONFIG_PATH" in
+            config/block1-sources/*.json) ;;
+            *) echo "Only reviewed repository configurations permitted"; exit 2 ;;
+          esac
+          node scripts/research/block1-v2-source-runner.mjs "$CONFIG_PATH"
+      - name: Preserve source and reconciliation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: block1-source-reconciliation
+          path: |
+            research/output/block1-source-downloads/
+            research/output/block1-official-snapshots/
+            research/output/block1-reconciliation/
+          retention-days: 30
+      - name: Enforce source comparison result
+        if: always()
+        env:
+          RESULT: ${{ steps.reconcile.outcome }}
+        run: test "$RESULT" = success
