@@ -5,10 +5,10 @@ const mic=process.env.MARKET_MIC;if(!mic)throw Error('MARKET_MIC ontbreekt');
 const run=(machine,file)=>{const r=spawnSync(process.execPath,[file],{stdio:'inherit',env:{...process.env,MARKET_MIC:mic}});if(r.status!==0)throw Error(`${machine} faalde voor ${mic}: ${file}`);return {machine,file,status:'PASS'}};
 const beforeQuality=[
  ['M01','scripts/research/complete-market-gate.mjs'],
- ['M02','scripts/research/universal-opportunity-map.mjs'],
- ['M03-M10-blind-data-probe','scripts/research/universal-market-machine1.mjs']
+['M03-M10-blind-data-probe','scripts/research/universal-market-machine1.mjs']
 ];
 const afterQuality=[
+ ['M02','scripts/research/universal-opportunity-map.mjs'],
  ['M07-relative','scripts/research/universal-relative-specialist.mjs'],
  ['M03-diagnostic','scripts/research/independent-market-judge.mjs']
 ];
