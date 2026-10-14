@@ -14,10 +14,12 @@ for(const market of plan.markets){
   const isin=typeof item.isin==='string'?item.isin.trim():null;
   const type=String(item.instrumentType||item.securityType||item.type||'').toUpperCase();
   const source=item.instrumentTypeSource||item.securityTypeSource||item.classificationSource||null;
+  const sourceUrl=item.instrumentTypeSourceUrl||item.securityTypeSourceUrl||item.classificationSourceUrl||null;
+  const verifiedAt=item.instrumentTypeVerifiedAt||item.securityTypeVerifiedAt||item.classificationVerifiedAt||null;
   const issues=[];
   if(!isin)issues.push('MISSING_ISIN');
   else if(!isValidIsin(isin))issues.push('INVALID_ISIN');
-  if(!type||!source)issues.push('UNVERIFIED_SECURITY_TYPE');
+  if(!type||!source||!sourceUrl||!verifiedAt)issues.push('UNVERIFIED_SECURITY_TYPE');
   else if(!types.has(type))issues.push('NOT_VERIFIED_ORDINARY_SHARE');
   const accepted=issues.length===0;
   output.totals.instruments++;
@@ -25,7 +27,7 @@ for(const market of plan.markets){
   if(issues.includes('MISSING_ISIN'))output.totals.missingIsin++;
   if(issues.includes('INVALID_ISIN'))output.totals.invalidIsin++;
   if(issues.includes('UNVERIFIED_SECURITY_TYPE'))output.totals.missingTypeEvidence++;
-  rows.push({symbol:item.providerSymbol||item.symbol||item.ticker||null,isin,declaredType:type||null,typeSource:source,eligible:accepted,issues});
+  rows.push({symbol:item.providerSymbol||item.symbol||item.ticker||null,isin,declaredType:type||null,typeSource:source,typeSourceUrl:sourceUrl,typeVerifiedAt:verifiedAt,eligible:accepted,issues});
  }
  output.markets.push({mic:market.mic,name:market.name,count:rows.length,verifiedCommonShares:rows.filter(x=>x.eligible).length,quarantined:rows.filter(x=>!x.eligible).length,records:rows});
 }
