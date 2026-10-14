@@ -32,6 +32,10 @@ jobs:
         id: quarantine
         continue-on-error: true
         run: node scripts/research/block1-instrument-quarantine.mjs
+      - name: Audit normalized security and listing identities (v2)
+        id: v2
+        continue-on-error: true
+        run: node scripts/research/block1-v2-audit.mjs
       - name: Preserve complete audit evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -44,6 +48,7 @@ jobs:
         env:
           AUDIT: ${{ steps.audit.outcome }}
           QUARANTINE: ${{ steps.quarantine.outcome }}
+          V2: ${{ steps.v2.outcome }}
         run: |
           echo "Audit: $AUDIT; quarantine: $QUARANTINE"
-          test "$AUDIT" = success && test "$QUARANTINE" = success
+          test "$AUDIT" = success && test "$QUARANTINE" = success && test "$V2" = success
