@@ -1,0 +1,14 @@
+import fs from 'node:fs/promises';
+import {spawnSync} from 'node:child_process';
+const configPath=process.argv[2];
+if(!configPath)throw Error('Usage: node block1-v2-source-runner.mjs <approved-config.json>');
+const config=JSON.parse(await fs.readFile(configPath,'utf8'));
+if(!config.fields?.symbol||!config.fields?.isin||!config.fields?.securityType)throw Error('Source field mapping required');
+const run=(file,args)=>{const r=spawnSync(process.execPath,[file,...args],{stdio:'inherit'});if(r.status!==0)throw Error(file+' failed: '+r.status)};
+run('scripts/research/block1-v2-download-source.mjs',[configPath]);
+const adapted={mic:config.mic,sourceUrl:config.url,inputFile:'research/output/block1-source-downloads/'+config.mic+'.json',fields:config.fields,recordsPath:config.recordsPath};
+await fs.mkdir('research/output/block1-source-downloads',{recursive:true});
+const adapterConfig='research/output/block1-source-downloads/'+config.mic+'-adapter.json';
+await fs.writeFile(adapterConfig,JSON.stringify(adapted,null,2));
+run('scripts/research/block1-v2-snapshot-adapter.mjs',[adapterConfig]);
+run('scripts/research/block1-v2-source-reconciliation.mjs',['research/output/block1-official-snapshots/'+config.mic+'.json']);
