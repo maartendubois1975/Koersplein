@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {assessHistoricalCoverage as assess} from './europe-historical-quality-core.mjs';
 import {isValidIsin} from './isin-identity-core.mjs';
+import {addCalendarMonthsClamped,findMaturedHorizonBar} from './horizon-label-core.mjs';
 
 const records=Array.from({length:5},(_,i)=>({identity:'TEST'+i,status:'HISTORY_AVAILABLE',provisionalIdentity:false,source:'verified-test-source',bars:260,firstDate:'2024-01-02',lastDate:'2025-01-02'}));
 const evidence={catalogInstruments:5,usableInstruments:5,insufficientHistory:0,failed:0,missingIsin:0,provisionalIdentities:0,records};
@@ -35,4 +36,15 @@ for (const isin of ['LU2458332611','CH0198251305','ES0125220311','GB00B1YW4409']
 for (const isin of ['XICE:ALVO','XICE:AMRQ',null,'','ES0125220312','LU2458332612','lu2458332611','WIG20']) {
   assert.equal(isValidIsin(isin), false, String(isin));
 }
+
+// Do not label a 3-month prediction with a return realized many months late.
+assert.equal(addCalendarMonthsClamped('2024-01-31',1),'2024-02-29');
+assert.equal(addCalendarMonthsClamped('2023-01-31',1),'2023-02-28');
+assert.equal(addCalendarMonthsClamped('2020-01-31',3),'2020-04-30');
+assert.equal(findMaturedHorizonBar([{date:'2020-12-31',close:150}],'2020-04-30'),null);
+assert.equal(findMaturedHorizonBar([{date:'2024-05-03',close:101}],'2024-04-30')?.close,101);
+assert.equal(findMaturedHorizonBar([{date:'2024-05-11',close:101}],'2024-04-30'),null);
+assert.equal(findMaturedHorizonBar([{date:'2024-04-30',close:100}],'2024-04-30')?.close,100);
+assert.equal(findMaturedHorizonBar([],'2024-04-30'),null);
+
 console.log('EUROPE_HISTORICAL_COVERAGE_AND_ISIN_GATE_TEST_PASS');

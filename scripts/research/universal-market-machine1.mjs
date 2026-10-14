@@ -2,14 +2,14 @@ import fs from 'node:fs/promises';
 import {pricePatternFeatures,anomalySignals,loserGuard} from './machine-specialists-core.mjs';
 import {classificationFor} from './sector-classification-core.mjs';
 import {loadMarketBars} from './market-history-source.mjs';
+import {addCalendarMonthsClamped,findMaturedHorizonBar} from './horizon-label-core.mjs';
 
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
 if(!API) throw new Error('KOERSPLEIN_API_URL ontbreekt');
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));const mic=process.env.MARKET_MIC;if(!mic)throw new Error('MARKET_MIC ontbreekt');const market=plan.markets.find(x=>x.mic===mic);if(!market||market.state!=='COMPLETE')throw new Error(`Markt ${mic} is niet COMPLETE`);const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));const instruments=Array.isArray(catalog)?catalog:(catalog.instruments||catalog.shares||[]);
 const pct=(a,b)=>a&&b?(b/a-1):null;
 const monthKey=d=>d.slice(0,7);
-const addMonths=(date,n)=>{const d=new Date(date+'T00:00:00Z');d.setUTCMonth(d.getUTCMonth()+n);return d.toISOString().slice(0,10)};
-const nearest=(bars,date)=>bars.find(b=>b.date>=date)||null;
+
 const history=async isin=>{const r=await fetch(`${API}/api/history/${encodeURIComponent(isin)}`);if(!r.ok)throw new Error(`history ${r.status}`);return r.json()};
 const getBars=x=>Array.isArray(x)?x:(x.bars||x.records||x.history||[]);
 const results=[];let failed=0,skippedMissingIsin=0,insufficientHistory=0,usableInstruments=0,provisionalIdentities=0;const historyCoverage=[];
@@ -28,7 +28,7 @@ for(const item of instruments){
    // Baseline v1: puur point-in-time prijsmodel. Geen toekomstige of nog niet ingelezen fundamentele/news-data.
    const score=(signals.momentum3m??0)*.2+(signals.momentum6m??0)*.3+(signals.momentum12m??0)*.5;
    const predictions={};const realized={};
-   for(const h of [3,6,12,24]){predictions[`${h}m`]=score;const future=nearest(bars,addMonths(now.date,h));realized[`${h}m`]=future?pct(now.close,future.close):null;}
+   for(const h of [3,6,12,24]){predictions[`${h}m`]=score;const future=findMaturedHorizonBar(bars,addCalendarMonthsClamped(now.date,h));realized[`${h}m`]=future?pct(now.close,future.close):null;}
    results.push({instrument:identity,isin:loaded.isin,provisionalIdentity:loaded.provisionalIdentity,historySource:loaded.source,ticker:item.ticker||item.symbol,company:item.company||item.name,predictionDate:now.date,informationCutoff:now.date,modelVersion:'machine1-11-specialists-v3',availableSignals:{...signals,pattern,anomaly,loserGuard:riskGuard,classification},missingSignals:['fundamentals-point-in-time','analyst-revisions','news-sentiment','macro-point-in-time','flows-options-short'],predictions,realized});
   }
  }catch(e){failed++;historyCoverage.push({identity:item.isin||item.providerSymbol||null,status:'HISTORY_FETCH_ERROR',error:e.message});console.error(JSON.stringify({identity:item.isin||item.providerSymbol||null,error:e.message}));}
