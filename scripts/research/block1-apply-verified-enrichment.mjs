@@ -21,25 +21,33 @@ for(const [i,r] of evidence.records.entries()){
  updates.set(key,r);
 }
 if(errors.length)throw Error(JSON.stringify(errors));
-const changes=[],notFound=[];
+const changes=[],notFound=[],staged=[];
 for(const market of plan.markets){
  const raw=JSON.parse(await fs.readFile('data/euronext-'+market.code+'.json','utf8'));
  const items=Array.isArray(raw)?raw:(raw.shares||raw.instruments||[]);
- const bySymbol=new Map(items.map((item,index)=>[String(item.providerSymbol||item.symbol||item.ticker),index]));
+ const bySymbol=new Map();
+ const ambiguous=new Set();
+ for(const [index,item] of items.entries()){
+  const symbol=String(item.providerSymbol||item.symbol||item.ticker||'');
+  if(bySymbol.has(symbol))ambiguous.add(symbol);
+  else bySymbol.set(symbol,index);
+ }
  const updated=items.map(item=>({...item}));
  for(const [key,r] of updates){
   if(r.mic!==market.mic)continue;
   const index=bySymbol.get(r.symbol);
   if(index===undefined){notFound.push(key);continue;}
+  if(ambiguous.has(r.symbol)){errors.push({key,error:'AMBIGUOUS_SYMBOL'});continue;}
   const old=updated[index];
   if(old.isin&&isValidIsin(old.isin)&&old.isin!==r.isin){errors.push({key,error:'ISIN_CONFLICT',existing:old.isin,proposed:r.isin});continue;}
   updated[index]={...old,isin:r.isin,securityType:r.securityType,securityTypeSource:r.sourceName||'Official listing evidence',securityTypeSourceUrl:r.sourceUrl,securityTypeVerifiedAt:r.verifiedAt};
   changes.push({mic:r.mic,symbol:r.symbol,isin:r.isin,type:r.securityType,sourceUrl:r.sourceUrl});
  }
  const output='research/output/block1-enriched/euronext-'+market.code+'.json';
- await fs.mkdir('research/output/block1-enriched',{recursive:true});
- await fs.writeFile(output,JSON.stringify(Array.isArray(raw)?updated:{...raw,[Array.isArray(raw.shares)?'shares':'instruments']:updated},null,2));
+ staged.push({output,content:JSON.stringify(Array.isArray(raw)?updated:{...raw,[Array.isArray(raw.shares)?'shares':'instruments']:updated},null,2)});
 }
 if(notFound.length||errors.length)throw Error(JSON.stringify({notFound,errors}));
+await fs.mkdir('research/output/block1-enriched',{recursive:true});
+for(const item of staged)await fs.writeFile(item.output,item.content);
 await fs.writeFile('research/output/block1-enriched/manifest.json',JSON.stringify({generatedAt:new Date().toISOString(),status:'REVIEW_REQUIRED_NOT_PRODUCTION',changes},null,2));
 console.log(JSON.stringify({status:'REVIEW_REQUIRED_NOT_PRODUCTION',changes:changes.length,output:'research/output/block1-enriched'}));
