@@ -24,6 +24,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Verify Block 1 v2 core behavior
+        run: node scripts/research/block1-v2-selftest.mjs
       - name: Audit all 31 catalogues
         id: audit
         continue-on-error: true
