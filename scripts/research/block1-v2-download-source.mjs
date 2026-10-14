@@ -1,0 +1,17 @@
+import fs from 'node:fs/promises';
+import crypto from 'node:crypto';
+const file=process.argv[2];
+if(!file)throw Error('Usage: node block1-v2-download-source.mjs <approved-config.json>');
+const config=JSON.parse(await fs.readFile(file,'utf8'));
+if(!config.mic||!config.url||!Array.isArray(config.allowedHosts)||!config.allowedHosts.length)throw Error('Incomplete approved source config');
+const url=new URL(config.url);
+if(url.protocol!=='https:'||!config.allowedHosts.includes(url.hostname))throw Error('Unapproved source host');
+const response=await fetch(url,{redirect:'error',signal:AbortSignal.timeout(30000),headers:{accept:'application/json'}});
+if(!response.ok)throw Error('Source HTTP '+response.status);
+const bytes=Buffer.from(await response.arrayBuffer());
+if(bytes.length>15000000)throw Error('Source exceeds size limit');
+JSON.parse(bytes.toString('utf8'));
+await fs.mkdir('research/output/block1-source-downloads',{recursive:true});
+const output='research/output/block1-source-downloads/'+config.mic+'.json';
+await fs.writeFile(output,bytes);
+console.log(JSON.stringify({mic:config.mic,output,sha256:crypto.createHash('sha256').update(bytes).digest('hex'),bytes:bytes.length}));
