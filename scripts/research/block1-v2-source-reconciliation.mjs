@@ -21,16 +21,22 @@ for(const item of snapshot.records){
  if(!item.isin||!isValidIsin(item.isin)){issues.push({symbol:k,reason:'INVALID_OFFICIAL_ISIN'});continue;}
  official.set(k,item);
 }
-const matched=[],missingFromCatalog=[],missingFromSnapshot=[],conflicts=[];
+const matched=[],missingFromCatalog=[],missingFromSnapshot=[],conflicts=[],renamedTickers=[];
+const currentByIsin=new Map();
+for(const [symbol,item] of current){const isin=String(item.isin||'').trim();if(isValidIsin(isin)){const rows=currentByIsin.get(isin)||[];rows.push(symbol);currentByIsin.set(isin,rows)}}
 for(const [symbol,item] of official){
  const old=current.get(symbol);
- if(!old){missingFromCatalog.push({symbol,isin:item.isin});continue;}
+ if(!old){
+  const sameSecurity=currentByIsin.get(item.isin)||[];
+  if(sameSecurity.length){renamedTickers.push({officialSymbol:symbol,existingSymbols:sameSecurity,isin:item.isin,reviewRequired:true});continue;}
+  missingFromCatalog.push({symbol,isin:item.isin});continue;
+ }
  if(old.isin&&isValidIsin(old.isin)&&old.isin!==item.isin)conflicts.push({symbol,oldIsin:old.isin,officialIsin:item.isin});
  else matched.push({symbol,isin:item.isin,securityType:item.securityType||null,sourceUrl:snapshot.sourceUrl});
 }
-for(const [symbol,item] of current)if(!official.has(symbol))missingFromSnapshot.push({symbol,isin:item.isin||null});
-const report={mic:market.mic,sourceUrl:snapshot.sourceUrl,retrievedAt:snapshot.retrievedAt,sourceSnapshotIndependentlyVerified:false,counts:{current:items.length,official:snapshot.records.length,matched:matched.length,missingFromCatalog:missingFromCatalog.length,missingFromSnapshot:missingFromSnapshot.length,conflicts:conflicts.length,issues:issues.length},matched,missingFromCatalog,missingFromSnapshot,conflicts,issues};
+for(const [symbol,item] of current)if(!official.has(symbol)&&!renamedTickers.some(r=>r.existingSymbols.includes(symbol)))missingFromSnapshot.push({symbol,isin:item.isin||null});
+const report={mic:market.mic,sourceUrl:snapshot.sourceUrl,retrievedAt:snapshot.retrievedAt,sourceSnapshotIndependentlyVerified:false,counts:{current:items.length,official:snapshot.records.length,matched:matched.length,missingFromCatalog:missingFromCatalog.length,missingFromSnapshot:missingFromSnapshot.length,renamedTickers:renamedTickers.length,conflicts:conflicts.length,issues:issues.length},matched,missingFromCatalog,missingFromSnapshot,renamedTickers,conflicts,issues};
 await fs.mkdir('research/output/block1-reconciliation',{recursive:true});
 await fs.writeFile('research/output/block1-reconciliation/'+market.code+'.json',JSON.stringify(report,null,2));
 console.log(JSON.stringify({mic:market.mic,counts:report.counts}));
-if(conflicts.length||issues.length||missingFromCatalog.length)process.exitCode=1;
+if(conflicts.length||issues.length||missingFromCatalog.length||renamedTickers.length||missingFromSnapshot.length)process.exitCode=1;
