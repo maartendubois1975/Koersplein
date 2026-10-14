@@ -2,7 +2,10 @@ import assert from 'node:assert/strict';
 import {assessHistoricalCoverage as assess} from './europe-historical-quality-core.mjs';
 import {isValidIsin} from './isin-identity-core.mjs';
 
-const full = assess({instruments:5,usableInstruments:5,observations:100,failed:0,insufficientHistory:0});
+const records=Array.from({length:5},(_,i)=>({identity:'TEST'+i,status:'HISTORY_AVAILABLE',provisionalIdentity:false,source:'verified-test-source',bars:260,firstDate:'2024-01-02',lastDate:'2025-01-02'}));
+const evidence={catalogInstruments:5,usableInstruments:5,insufficientHistory:0,failed:0,missingIsin:0,provisionalIdentities:0,records};
+const validCoverage={instruments:5,usableInstruments:5,observations:100,failed:0,insufficientHistory:0,skippedMissingIsin:0,provisionalIdentities:0};
+const full = assess(validCoverage,evidence);
 assert.equal(full.complete, true);
 for (const input of [
   {instruments:0,usableInstruments:0,observations:0},
@@ -13,7 +16,18 @@ for (const input of [
   {instruments:-1,usableInstruments:0,observations:100},
   {instruments:5,usableInstruments:5,observations:-1},
   {instruments:5,usableInstruments:5,observations:Infinity}
-]) assert.equal(assess(input).complete, false, JSON.stringify(input));
+]) assert.equal(assess(input,evidence).complete, false, JSON.stringify(input));
+
+assert.equal(assess(validCoverage).complete,false,'aggregate-only must fail');
+assert.equal(assess({...validCoverage,observations:1},evidence).complete,true,'signal rows are not bar counts');
+for(const [name,detail] of [
+ ['wrong catalog',{...evidence,catalogInstruments:4}],
+ ['short records',{...evidence,records:records.slice(1)}],
+ ['bad bar count',{...evidence,records:[{...records[0],bars:1},...records.slice(1)]}],
+ ['missing source',{...evidence,records:[{...records[0],source:''},...records.slice(1)]}],
+ ['missing date',{...evidence,records:[{...records[0],firstDate:null},...records.slice(1)]}],
+ ['wrong status',{...evidence,records:[{...records[0],status:'INSUFFICIENT_HISTORY'},...records.slice(1)]}]
+]) assert.equal(assess(validCoverage,detail).complete,false,name);
 
 for (const isin of ['LU2458332611','CH0198251305','ES0125220311','GB00B1YW4409']) {
   assert.equal(isValidIsin(isin), true, isin);
