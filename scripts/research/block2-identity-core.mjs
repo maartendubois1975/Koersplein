@@ -6,6 +6,8 @@ export function listingIdentity(row, market) {
  const isin=String(row.isin||'').trim().toUpperCase();
  const type=String(row.instrumentType||row.securityType||row.type||'').toUpperCase();
  const issues=[];
+ const declaredSymbols=[row.providerSymbol,row.symbol,row.ticker].map(v=>String(v??'').trim()).filter(Boolean);
+ if(new Set(declaredSymbols.map(s=>s.toUpperCase())).size>1)issues.push('CONFLICTING_SYMBOL_FIELDS');
  if(!symbol)issues.push('MISSING_SYMBOL');
  if(!isin)issues.push('MISSING_ISIN');
  else if(!isValidIsin(isin))issues.push('INVALID_ISIN');
