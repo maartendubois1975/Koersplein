@@ -15,6 +15,12 @@ for(const market of plan.markets){
   const type=String(item.instrumentType||item.securityType||item.type||'').toUpperCase();
   const source=item.instrumentTypeSource||item.securityTypeSource||item.classificationSource||null;
   const issues=[];
+  const symbol=String(item.providerSymbol||item.symbol||item.ticker||'').trim();
+  const listingKey=`${market.mic}:${symbol}`;
+  if(!symbol)issues.push('MISSING_LISTING_SYMBOL');
+  else if(listingKeys.has(listingKey))issues.push('DUPLICATE_LISTING_SYMBOL');
+  listingKeys.add(listingKey);
+  if(item.mic && item.mic!==market.mic)issues.push('MIC_REQUIRES_OFFICIAL_SEGMENT_REVIEW');
   if(!isin)issues.push('MISSING_ISIN');
   else if(!isValidIsin(isin))issues.push('INVALID_ISIN');
   if(!type||!source)issues.push('UNVERIFIED_SECURITY_TYPE');
@@ -25,7 +31,7 @@ for(const market of plan.markets){
   if(issues.includes('MISSING_ISIN'))output.totals.missingIsin++;
   if(issues.includes('INVALID_ISIN'))output.totals.invalidIsin++;
   if(issues.includes('UNVERIFIED_SECURITY_TYPE'))output.totals.missingTypeEvidence++;
-  rows.push({symbol:item.providerSymbol||item.symbol||item.ticker||null,isin,declaredType:type||null,typeSource:source,eligible:accepted,issues});
+  rows.push({symbol:symbol||null,isin,declaredType:type||null,typeSource:source,eligible:accepted,issues});
  }
  output.markets.push({mic:market.mic,name:market.name,count:rows.length,verifiedCommonShares:rows.filter(x=>x.eligible).length,quarantined:rows.filter(x=>!x.eligible).length,records:rows});
 }
