@@ -14,6 +14,7 @@ on:
       - 'scripts/research/model-arena.mjs'
       - 'scripts/research/publish-live-europe.mjs'
       - 'scripts/research/block1-instrument-quarantine.mjs'
+      - 'scripts/research/test-block1-quarantine-functional.mjs'
       - 'scripts/research/block1-data-readiness.mjs'
       - 'scripts/research/forecast-evidence-core.mjs'
       - 'scripts/research/test-forecast-evidence.mjs'
@@ -33,6 +34,8 @@ jobs:
           node-version: '22'
       - name: Validate architecture baseline
         run: node scripts/research/test-block1-architecture-baseline.mjs
+      - name: Execute Block 1 quarantine fixture tests
+        run: node scripts/research/test-block1-quarantine-functional.mjs
       - name: Verify listing quarantine includes duplicate and venue guards
         run: |
           node --input-type=module <<'NODE'
