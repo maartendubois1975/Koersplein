@@ -40,6 +40,8 @@ jobs:
           assert.match(judge,/validated:false/);
           console.log('Judge remains diagnostic-only and excludes untraceable forecasts');
           NODE
+      - name: Verify chained forecast evidence
+        run: node scripts/research/test-forecast-evidence.mjs
       - name: Validate live snapshot transitions
         run: node scripts/research/test-block6-live.mjs
       - name: Verify unproven rankings cannot publish
