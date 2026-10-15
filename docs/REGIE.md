@@ -119,3 +119,36 @@ Voor iedere nieuwe beurs geldt zonder uitzondering deze volgorde:
 4. **Pas daarna uploaden/publiceren.** Geen backfill/publicatie zolang de officiële catalogus niet sluitend is en niet ieder aandeel een bewezen gratis koersroute of expliciete DATA_UNAVAILABLE-status heeft. Upload via dezelfde canonical beursbouwer; nooit via een parallel pad.
 
 Deze volgorde is een harde gate en mag niet worden omgedraaid of overgeslagen: **officieel aantal aandelen → volledige aandelenlijst → gratis koersdekking → upload/publicatie**.
+
+
+## 13. Uitvoeringscontract: grote, afgeronde bouwblokken (15 oktober 2026)
+
+Dit is een blijvende opdracht van de projecteigenaar en geldt voor handmatige sessies, regie, planning en uitvoerende machines. Het voorkomt een terugval naar cosmetische microcommits en herhaalde verzoeken om "Verder".
+
+- **"Verder", "Ga verder", "Doe" en "Maak af" betekenen:** pak zelfstandig het eerstvolgende inhoudelijke bouwblok op, werk dit van bron/data via code en integratie tot controleerbare uitkomst af. Vraag niet na elke kleine wijziging om een nieuwe opdracht.
+- **Een bouwblok is geen commit.** Een bouwblok heeft een meetbaar doel, expliciete acceptatiecriteria, daadwerkelijke uitvoering op representatieve echte data, onafhankelijke verificatie waar nodig, CI-/runbewijs en een overzicht van wat nog niet werkt.
+- **Geen cosmetische voortgang:** testasserties, logging, documentatie, tellers en extra workflows zijn ondersteunend en mogen nooit de enige opbrengst van een "Verder"-opdracht zijn, behalve als ze een bewezen productieblokkerende fout verhelpen.
+- **Bouw in zo groot mogelijke veilige, samenhangende batches.** Bundel verwante wijzigingen; controleer na de batch. Beperk onnodige losse GitHub-writes en CI-runs. Bewaar de fail-closed productiebeveiliging.
+- **Blokkadeprotocol:** zoek eerst zelfstandig alternatieve officiële bronnen, onderzoek de volledige dataketen en probeer een aantoonbaar andere route. Bij een echte externe blokkade: registreer bron, oorzaak, exacte omvang, reeds onderzochte routes en wat nodig is; ga ondertussen door met onafhankelijk uitvoerbaar werk. Geen eindeloze retries en geen verzonnen marktdata.
+- **Rapporteer pas na een volledig bouwblok** of een echte structurele blokkade; noem aantallen gerepareerde records, bronbewijs, geslaagde/mislukte end-to-end runs en resterende gaten. Noem nooit een geslaagde smoke-test gelijk aan voltooide marktcertificering.
+- **Europa-werkvolgorde:** (1) één representatieve beurs volledig end-to-end certificeren met officiële identiteit, type en historie; (2) bewezen bronimport en verificatie hergebruiken voor de overige 30 markten in grote batches; (3) de elf machines koppelen; (4) onafhankelijke holdout-/backtests; (5) Europese competitie en kwaliteitsbewaking; (6) alleen bewezen resultaten en gewichten naar live na expliciete kwaliteitsgate.
+- **Voortgang meten:** rapporteer afzonderlijk catalogusdekking, valide ISIN, onafhankelijk geverifieerde identiteit, historische dekking, modelvalidatie en productiegeschiktheid. 0 gecertificeerd blijft 0% productiegeschikt, ook bij groene CI.
+- **Volgende-sessie-overdracht:** werkelijke status, open blokkades, prioriteit, commit/PR, meetbare acceptatiecriteria en de eerstvolgende volledige batch moeten uit de repository en run-artifacts terug te vinden zijn. Dit document is de vaste regiebron, niet uitsluitend chatgeheugen.
+
+Deze paragraaf verandert de bestaande eisen van bronbewijs, quarantaine en onafhankelijke productievrijgave niet.
+
+
+## 14. Verplicht saneringsprogramma Europa — zes ondeelbare bouwblokken (15 oktober 2026)
+
+Deze sectie vervangt voor Europa de eerdere uitvoeringsvolgorde in §13 waar die botst: **eerst gecontroleerd saneren en de bestaande koersen behouden, pas daarna uitbreiden**.
+
+**Harde afspraak:** bij opdracht "Blok N", "Verder" of "Maak af" voert de uitvoerder het volledige eerstvolgende open blok uit, inclusief dependencyonderzoek, wijzigingen, regressietests, CI-bewijs en afsluitende status. Een half blok is NIET AF. Niet stoppen na één commit, een testaanpassing of een plan. Alleen een aantoonbare externe blokkade kan uitvoering onderbreken; noteer die met bewijs en voer onafhankelijk werk uit. **Verwijderen is definitief in de Git-werkboom na merge**, maar Git-geschiedenis blijft voor herstel; herschrijf geschiedenis niet.
+
+1. **Blok 1 — bewezen ongebruikte ballast weg (één afgeronde PR):** volledige repo- en website-callgraph, workflow triggers, API-routes, deploy-assets en historische consumers controleren; identificeer oude Atlas-archieven, dubbele onderzoeksroutes en niet-bereikbare bestanden. Verwijder uitsluitend bewezen ongebruikte onderdelen; pas verwijzingen/tests aan; behoud alle productiekoersen, provideradapters en D1-tabellen. Eindcriterium: nul gebroken referenties, relevante tests groen, verwijderlijst met onderbouwing.
+2. **Blok 2 — bestaande koerswaarheid herstellen:** inventariseer alle 31 COMPLETE-markten en de door eigenaar genoemde 32e, lees werkelijk productie-/staging-D1 manifest, tel instrumenten, bars, datumdekking en providers, herstel bestaande MIC+ticker↔historische sleutels zonder koersverlies. Eindcriterium: per markt bewijs van dekking en nul onverklaarde verloren reeksen.
+3. **Blok 3 — dubbele bron- en updatepaden consolideren:** één canonical catalogus/bronselectie, historische backfill en dagelijkse update; verwijder vervangen code en workflows *nadat* de nieuwe route op echte marktdata geslaagd is.
+4. **Blok 4 — Machine Arena consolideren:** bestaande elf machines, historische examinator, judge, modelcompetitie en publicatie op dezelfde gecontroleerde historie aansluiten; verwijder bewezen overlappende of dode onderzoekspaden.
+5. **Blok 5 — website en API opschonen:** verwijder uitsluitend ongebruikte pagina's, scripts, routes en schermonderdelen; behoud zichtbare gebruikersfuncties en bewezen koersreeksen. Controleer navigatie, instrumentpagina's, markten, analyses en publicatie.
+6. **Blok 6 — definitieve end-to-end vrijgave:** run alle markten, historie, dagupdate, machine- en websitecontroles; vergelijk vóór/na en sluit alleen met meetbaar bewijs af. Verwijder resterende dode compatibiliteitscode; merge naar main pas na groene regressie en data-behoud.
+
+**Per blok verplicht vastleggen:** startcommit, exact verwijderde bestanden/routes, bewijs van nul aanroepers, tests en workflowrun met commit-SHA, resterende blokkades, status AF/NIET AF, volgende blok. Een document of inventarisatie is nooit op zichzelf een afgerond blok. Geen productie-data verwijderen op basis van een GitHub-inventaris alleen.

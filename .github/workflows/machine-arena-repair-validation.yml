@@ -1,0 +1,128 @@
+name: Machine Arena Europe Repair Validation
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: koersplein-machine-arena-repair-validation-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  architecture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Verify architecture without remote data access
+        run: node scripts/research/test-block1-architecture-baseline.mjs
+  readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Test strict European historical coverage gate
+        run: node scripts/research/test-europe-historical-quality.mjs
+      - name: Verify Block 1 architecture baseline
+        run: node scripts/research/test-block1-architecture-baseline.mjs
+      - name: Quarantine unverified security types and identities
+        run: node scripts/research/block1-instrument-quarantine.mjs
+      - name: Validate Block 1 data layer against quarantine output
+        if: always()
+        run: node scripts/research/block1-data-readiness.mjs
+      - name: Validate Block 2 eleven-machine build
+        if: always()
+        run: node scripts/research/test-block2-machines.mjs
+      - name: Validate Block 3 historical integrity
+        if: always()
+        run: node scripts/research/test-block3-integrity.mjs
+      - name: Validate Block 4 historical examination engine
+        if: always()
+        run: node scripts/research/test-block4-exam.mjs
+      - name: Validate Block 5 learning and selection
+        if: always()
+        run: node scripts/research/test-block5-learning.mjs
+      - name: Validate Block 6 live publication
+        if: always()
+        run: node scripts/research/test-block6-live.mjs
+      - name: Validate 31-market / 11-machine contract
+        if: always()
+        run: node scripts/research/europe-machine-arena-readiness.mjs
+      - name: Test sector/peer pattern and loser specialist cores
+        if: always()
+        run: |
+          node scripts/research/test-machine-specialists.mjs
+          node scripts/research/test-sector-classification.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: machine-arena-readiness
+          path: research/output/machine-arena/
+          retention-days: 90
+  historical:
+    needs: readiness
+    # Never fan out 31 long-running market jobs when the catalog readiness gate fails.
+    if: ${{ success() }}
+    strategy:
+      fail-fast: false
+      matrix:
+        mic: [XBRU,XAMS,XPAR,XMIL,XOSL,XDUB,XLIS,XLON,XETR,XSWX,XMAD,XSTO,XCSE,XHEL,XICE,XATH,XWAR,XWBO,XPRA,XBUD,XBSE,XBUL,XZAG,XLJU,XBRA,XLUX,XMAL,XCYS,XTAL,XRIS,XLIT]
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      MARKET_MIC: ${{ matrix.mic }}
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Fail-closed historical coverage preflight
+        run: node scripts/research/europe-history-preflight.mjs
+      - name: Frozen historical blind pipeline
+        run: node scripts/research/complete-market-pipeline.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: machine-arena-${{ matrix.mic }}
+          path: research/output/${{ matrix.mic }}/
+          retention-days: 90
+
+  final-audit:
+    needs: [readiness, historical]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Download all 31 market artifacts
+        if: ${{ needs.historical.result == 'success' }}
+        uses: actions/download-artifact@v4
+        with:
+          pattern: machine-arena-X*
+          path: research/output/market-artifacts
+      - name: Reassemble per-market summaries for audit
+        if: ${{ needs.historical.result == 'success' }}
+        run: |
+          node scripts/research/reassemble-europe-market-artifacts.mjs
+      - name: Audit all 31 markets
+        if: ${{ needs.historical.result == 'success' }}
+        run: node scripts/research/europe-31-market-audit.mjs
+      - name: Publish final Europe audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: machine-arena-europe-final-report
+          path: research/output/machine-arena/europe-31-market-audit.json
+          retention-days: 90

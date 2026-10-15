@@ -1,10 +1,12 @@
 import fs from 'node:fs/promises';
+import {isValidIsin} from './isin-identity-core.mjs';
 const need=async p=>{try{await fs.access(p);return true}catch{return false}};
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
-const markets=plan.markets.filter(x=>x.state==='COMPLETE');
+const markets=plan.markets;
+const declaredComplete=markets.filter(x=>x.state==='COMPLETE').length;
 const required=['research/pit-contract-v1.json','research/universe-contract-v1.json','research/fundamentals-contract-v1.json','research/block5-macro-contract.json','data/sector-classification.json','scripts/research/pit-core.mjs','scripts/research/universe-core.mjs','scripts/research/fundamentals-core.mjs','scripts/research/macro-regime-core.mjs','scripts/research/sector-classification-core.mjs'];
 const missing=[];for(const p of required)if(!(await need(p)))missing.push(p);
-if(markets.length!==31)throw Error('BLOCK1: expected 31 COMPLETE Europe markets, got '+markets.length);
+if(markets.length!==31)throw Error('BLOCK1: expected 31 Europe markets, got '+markets.length);
 if(missing.length)throw Error('BLOCK1 missing foundations: '+missing.join(', '));
 const sector=JSON.parse(await fs.readFile('data/sector-classification.json','utf8'));
 for(const r of sector.records||[])for(const k of ['isin','sector','industry','source','retrievedAt'])if(!r[k])throw Error('BLOCK1 invalid sector record '+(r.isin||'UNKNOWN')+': '+k);
@@ -17,18 +19,37 @@ const rows=[];for(const m of markets){
   const keys=shares.map(x=>String(x.providerSymbol||x.symbol||x.ticker||'').trim());
   const uniqueIsins=new Set(known.map(x=>x.isin.trim()));
   const duplicates=known.length-uniqueIsins.size;
+  const invalidIsin=known.filter(x=>!isValidIsin(x.isin.trim())).length;
+  const unclassified=shares.filter(x=>!x.instrumentType&&!x.securityType&&!x.type).length;
+  const wrongMic=shares.filter(x=>x.mic&&x.mic!==m.mic).length;
+  const provisionalIsin=known.filter(x=>!isValidIsin(x.isin.trim())).length;
   const missingListing=keys.filter(x=>!x).length;
   const duplicateListings=keys.length-new Set(keys.filter(Boolean)).size-missingListing;
   const verifiedSymbolFallback=shares.filter(x=>!x.isin&&x.providerSymbol&&x.identitySource&&x.identityResolution).length;
   const sourceSymbolCandidates=shares.filter(x=>!x.isin&&x.providerSymbol&&x.identitySource&&x.identityResolution).map(x=>({symbol:x.providerSymbol,source:x.identitySource,resolution:x.identityResolution}));
-  const status=!shares.length||duplicates||missingListing||duplicateListings?'INVALID_CATALOG':known.length===shares.length?'IDENTITIES_PRESENT':'PARTIAL_IDENTITIES';
-  rows.push({mic:m.mic,market:m.name,declaredState:m.state,catalog: file,instruments:shares.length,verifiedIsin:known.length,missingIsin:shares.length-known.length,verifiedSymbolFallback,sourceSymbolCandidates:sourceSymbolCandidates.length,sourceSymbolProvenanceStatus:'CATALOG_ASSERTION_ONLY_NOT_HISTORICALLY_VERIFIED',duplicateKnownIsin:duplicates,missingListing,duplicateListings,status,historyCoverage:'NOT_MEASURED_BY_CATALOG_AUDIT',historicalMembership:'NOT_VERIFIED',delistedCoverage:'NOT_VERIFIED'});
+  const status=!shares.length||duplicates||invalidIsin||missingListing||duplicateListings?'INVALID_CATALOG':known.length!==shares.length?'PARTIAL_IDENTITIES':unclassified?'CLASSIFICATION_UNVERIFIED':'CATALOG_STRUCTURE_PASS_ONLY';
+  rows.push({mic:m.mic,market:m.name,declaredState:m.state,catalog: file,instruments:shares.length,verifiedIsin:known.length,missingIsin:shares.length-known.length,verifiedSymbolFallback,sourceSymbolCandidates:sourceSymbolCandidates.length,sourceSymbolProvenanceStatus:'CATALOG_ASSERTION_ONLY_NOT_HISTORICALLY_VERIFIED',duplicateKnownIsin:duplicates,invalidIsin,provisionalIsin,wrongMic,listingMicReviewRequired:wrongMic>0,listingMicNote:'Different segment MICs can be valid; verify against official exchange venue hierarchy',unclassifiedInstrumentType:unclassified,classificationEvidence:'NOT_INDEPENDENTLY_VERIFIED',officialRegisterEvidence:'NOT_INDEPENDENTLY_VERIFIED',missingListing,duplicateListings,status,historyCoverage:'NOT_MEASURED_BY_CATALOG_AUDIT',historicalMembership:'NOT_VERIFIED',delistedCoverage:'NOT_VERIFIED'});
  }catch(e){rows.push({mic:m.mic,market:m.name,status:'CATALOG_ERROR',error:e.message})}
 }
 const invalid=rows.filter(x=>x.status==='INVALID_CATALOG'||x.status==='CATALOG_ERROR');
 const partial=rows.filter(x=>x.status==='PARTIAL_IDENTITIES');
-const report={generatedAt:new Date().toISOString(),block:'BLOCK_1_DATA_LAYER',status:invalid.length?'FAIL':partial.length?'PARTIAL_IDENTITIES':'CATALOG_IDENTITIES_PRESENT',markets:markets.length,sectorRecords:(sector.records||[]).length,totals:{instruments:rows.reduce((s,x)=>s+(x.instruments||0),0),verifiedIsin:rows.reduce((s,x)=>s+(x.verifiedIsin||0),0),missingIsin:rows.reduce((s,x)=>s+(x.missingIsin||0),0),marketsPartial:partial.length,marketsInvalid:invalid.length,sourceSymbolCandidates:rows.reduce((s,x)=>s+(x.sourceSymbolCandidates||0),0)},marketCoverage:rows,limitations:['Catalog identity audit does not prove historical bars or source-symbol history','COMPLETE state is not historical research readiness','Historical membership and delisted universe coverage not proven'],safety:{pointInTime:true,missingNotZero:true,noSectorBackprojection:true,noUniverseBackprojection:true,corporateActionsRequireProvenance:true,unprovenVintageQuarantined:true}};
+const unclassifiedMarkets=rows.filter(x=>x.status==='CLASSIFICATION_UNVERIFIED');
+// Catalog syntax is not proof of official equity eligibility or data lineage.
+// Reconcile against the independently executed instrument quarantine report.
+// Missing, stale or mismatched evidence is never treated as a pass.
+let independentVerificationPending=true;
+let evidenceGate={status:'MISSING_OR_UNREADABLE_QUARANTINE_REPORT'};
+try {
+ const quarantine=JSON.parse(await fs.readFile('research/output/machine-arena/block1-instrument-quarantine.json','utf8'));
+ const catalogCount=rows.reduce((sum,row)=>sum+(row.instruments||0),0);
+ const matching=quarantine.totals?.instruments===catalogCount && quarantine.markets?.length===markets.length &&
+  quarantine.markets.every(q=>rows.some(r=>r.mic===q.mic && r.instruments===q.count));
+ const clean=quarantine.totals?.quarantined===0 && quarantine.totals?.verifiedCommonShares===catalogCount && catalogCount>0;
+ // Metadata can be self-attested: even a clean inventory is NOT independent external verification.
+ evidenceGate={status:matching&&clean?'STRUCTURAL_EVIDENCE_PRESENT_EXTERNAL_VERIFICATION_REQUIRED':'QUARANTINE_NOT_CLEAN_OR_MISMATCHED',matching,clean};
+} catch(error) { evidenceGate={status:'MISSING_OR_UNREADABLE_QUARANTINE_REPORT',reason:error.message}; }
+const report={generatedAt:new Date().toISOString(),block:'BLOCK_1_DATA_LAYER',status:invalid.length?'FAIL':partial.length?'PARTIAL_IDENTITIES':unclassifiedMarkets.length?'CLASSIFICATION_UNVERIFIED':'BLOCKED_OFFICIAL_VERIFICATION_PENDING',markets:markets.length,declaredComplete,evidenceGate,sectorRecords:(sector.records||[]).length,totals:{instruments:rows.reduce((s,x)=>s+(x.instruments||0),0),verifiedIsin:rows.reduce((s,x)=>s+(x.verifiedIsin||0),0),missingIsin:rows.reduce((s,x)=>s+(x.missingIsin||0),0),marketsPartial:partial.length,marketsInvalid:invalid.length,marketsUnclassified:unclassifiedMarkets.length,wrongMic:rows.reduce((s,x)=>s+(x.wrongMic||0),0),invalidIsin:rows.reduce((s,x)=>s+(x.invalidIsin||0),0),unclassifiedInstrumentType:rows.reduce((s,x)=>s+(x.unclassifiedInstrumentType||0),0),sourceSymbolCandidates:rows.reduce((s,x)=>s+(x.sourceSymbolCandidates||0),0)},marketCoverage:rows,limitations:['Catalog identity audit does not prove historical bars or source-symbol history','COMPLETE state is not historical research readiness','Historical membership and delisted universe coverage not proven'],safety:{pointInTime:true,missingNotZero:true,noSectorBackprojection:true,noUniverseBackprojection:true,corporateActionsRequireProvenance:true,unprovenVintageQuarantined:true}};
 await fs.mkdir('research/output/machine-arena',{recursive:true});
 await fs.writeFile('research/output/machine-arena/block1-readiness.json',JSON.stringify(report,null,2));
 console.log(JSON.stringify(report,null,2));
-if(invalid.length)process.exitCode=1;
+if(invalid.length||partial.length||unclassifiedMarkets.length||independentVerificationPending)process.exitCode=1;

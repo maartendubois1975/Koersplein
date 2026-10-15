@@ -1,20 +1,18 @@
 name: Machine Arena Europe
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/arena-run-trigger'
 permissions:
   contents: read
 concurrency:
-  group: koersplein-machine-arena-europe
+  group: koersplein-machine-arena-europe-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   readiness:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with: { ref: main }
+        with:
+          ref: ${{ github.ref_name }}
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
       - name: Validate Block 1 data layer
@@ -36,12 +34,16 @@ jobs:
           node scripts/research/test-machine-specialists.mjs
           node scripts/research/test-sector-classification.mjs
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: machine-arena-readiness
           path: research/output/machine-arena/
           retention-days: 90
   historical:
+    # Do not start 31 costly historical jobs when global readiness has failed.
+    # Individual market quarantine remains enforced inside the historical pipeline.
     needs: readiness
+    if: ${{ success() }}
     strategy:
       fail-fast: false
       matrix:
@@ -54,7 +56,8 @@ jobs:
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-        with: { ref: main }
+        with:
+          ref: ${{ github.ref_name }}
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
       - name: Frozen historical blind pipeline

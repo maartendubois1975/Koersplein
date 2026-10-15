@@ -1,10 +1,13 @@
 name: Koersplein A-tot-Z audit
 on:
   push:
-    branches: [main]
+    branches: [main, fix/arena-history-quality-gate-20261010]
     paths:
       - '.github/workflows/codebase-audit.yml'
       - 'scripts/audit/**'
+      - 'scripts/archive/**'
+      - 'data/atlas-archive/**'
+      - 'docs/REGIE.md'
       - 'data/markets.json'
       - 'data/world-fill-plan.json'
       - 'data/euronext-*.json'
@@ -17,9 +20,6 @@ on:
       - 'scripts/cloudflare/**'
       - 'scripts/research/**'
       - 'data/machine-pipeline.json'
-      - '.github/workflows/paris-*.yml'
-      - '.github/workflows/world-fill-controller.yml'
-      - '.github/workflows/market-handoff-controller.yml'
       - '.github/workflows/universal-source-first.yml'
       - '.github/workflows/complete-market-analysis.yml'
       - '.github/workflows/daily-opportunity-ledger.yml'
@@ -35,7 +35,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-        with: { ref: main }
+        
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - name: Controleer JavaScript JSON workflows en architectuur

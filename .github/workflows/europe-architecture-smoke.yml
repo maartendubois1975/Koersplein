@@ -1,0 +1,266 @@
+name: Europe Architecture Smoke Test
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - fix/arena-history-quality-gate-20261010
+    paths:
+      - 'scripts/research/test-block1-architecture-baseline.mjs'
+      - '.github/workflows/europe-architecture-smoke.yml'
+      - '.github/workflows/complete-market-analysis.yml'
+      - '.github/workflows/daily-opportunity-ledger.yml'
+      - 'scripts/research/complete-market-pipeline.mjs'
+      - 'scripts/research/independent-market-judge.mjs'
+      - 'scripts/research/model-arena.mjs'
+      - 'scripts/research/publish-live-europe.mjs'
+      - 'scripts/research/block1-instrument-quarantine.mjs'
+      - 'scripts/research/test-block1-quarantine-functional.mjs'
+      - 'scripts/research/block2-identity-core.mjs'
+      - 'scripts/research/block2-build-manifest.mjs'
+      - 'scripts/research/test-block2-identity.mjs'
+      - 'data/euronext-*.json'
+      - 'scripts/research/block2-official-source-compare.mjs'
+      - 'scripts/research/block2-official-source-import.mjs'
+      - 'scripts/research/block2-athex-rds-import.mjs'
+      - 'scripts/research/test-block2-athex-rds-import.mjs'
+      - 'scripts/research/test-block2-official-source-import.mjs'
+      - 'scripts/research/test-block2-official-source-compare.mjs'
+      - 'scripts/research/block1-data-readiness.mjs'
+      - 'scripts/research/forecast-evidence-core.mjs'
+      - 'scripts/research/test-forecast-evidence.mjs'
+      - 'scripts/research/europe-machine-arena-readiness.mjs'
+      - '.github/workflows/machine-arena-europe.yml'
+      - '.github/workflows/machine-arena-repair-validation.yml'
+permissions:
+  contents: read
+jobs:
+  architecture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate architecture baseline
+        run: node scripts/research/test-block1-architecture-baseline.mjs
+      - name: Test Block 2 identity and source-verification lock
+        run: node scripts/research/test-block2-identity.mjs
+      - name: Test ATHEX RDS InstrumentSeries importer
+        run: node scripts/research/test-block2-athex-rds-import.mjs
+      - name: Test official exchange CSV importer
+        run: node scripts/research/test-block2-official-source-import.mjs
+      - name: Test official exchange source comparison
+        run: node scripts/research/test-block2-official-source-compare.mjs
+      - name: Build 31-market Block 2 identity manifest (expected blocked)
+        run: |
+          set +e
+          node scripts/research/block2-build-manifest.mjs
+          code=$?
+          set -e
+          test "$code" -ne 0
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const report=JSON.parse(await fs.readFile('research/output/machine-arena/block2-identity-manifest.json','utf8'));
+          assert.equal(report.markets.length,31);
+          assert.equal(report.sourceInventory.length,31);
+          assert.equal(report.issueSummary.length,31);
+          assert.equal(report.sourceAudit.length,31);
+          assert.equal(report.sourceClaims.length,31);
+          assert.equal(report.marketReadiness.length,31);
+          assert.ok(report.marketReadiness.every(m=>m.readyForProduction===false&&m.certified===0));
+          assert.ok(report.marketReadiness.every(m=>m.isinCoverage>=0&&m.isinCoverage<=100));
+          assert.ok(report.marketReadiness.every(m=>m.primaryDocumentMatches<=m.total));
+          const athens=report.marketReadiness.find(m=>m.mic==='XATH');
+          assert.ok(athens,'Athens market readiness missing');
+          assert.equal(athens.isinCoverage,100);
+          assert.equal(athens.total,146);
+          assert.ok(athens.unsubstantiatedClaims>=65);
+          assert.equal(report.verificationBacklog.length,31);
+          assert.ok(report.targetedRepairQueue.every(x=>x.issues.length>0&&x.row>=0));
+          assert.equal(report.targetedRepairQueue.filter(x=>x.issues.includes('MISSING_ISIN')).length,report.verificationBacklog.reduce((n,m)=>n+m.missingIsin,0));
+          assert.ok(report.verificationBacklog.every(x=>['missingIsin','invalidIsin','missingRegisterEvidence','unverifiedType'].every(k=>Number.isInteger(x[k])&&x[k]>=0)));
+          assert.ok(report.verificationBacklog.every(x=>x.missingIsin<=report.markets.find(m=>m.mic===x.mic).total));
+          assert.equal(report.sourceClaims.reduce((n,m)=>n+m.total,0),report.totals.instruments);
+          assert.ok(report.sourceClaims.every(m=>m.withIdentitySource<=m.total&&m.withOfficialRegisterEvidence<=m.total&&m.withIsin<=m.total));
+          assert.equal(report.unresolvedSamples.length,31);
+          assert.ok(report.unresolvedSamples.every(x=>x.samples.length<=15));
+          assert.ok(report.unresolvedSamples.every(x=>x.samples.every(s=>s.issues.length>0)));
+          assert.ok(report.sourceAudit.every(x=>['URL','DESCRIPTIVE_TEXT','MISSING'].includes(x.sourceKind)));
+          assert.ok(report.sourceAudit.every(x=>x.sourceVerified===false));
+          assert.ok(report.priorityQueue.every(x=>x.issue!=='INDEPENDENT_SOURCE_VERIFICATION_REQUIRED'));
+          assert.ok(report.priorityQueue.every((x,i,a)=>i===0||a[i-1].count>=x.count));
+          assert.equal(report.issueSummary.reduce((n,m)=>n+m.total,0),report.totals.instruments);
+          assert.equal(new Set(report.sourceInventory.map(x=>x.mic)).size,31);
+          assert.ok(report.sourceInventory.every(x=>x.externalSnapshotVerified===false));
+          assert.equal(report.totals.catalogErrors,0,'All 31 catalogs must be readable and structurally valid');
+          assert.equal(report.totals.instruments,report.totals.blocked,'All unverified listings must remain blocked');
+          assert.ok(report.totals.instruments>0,'No empty universe accepted');
+          assert.equal(report.totals.certified,0);
+          assert.equal(report.status,'OFFICIAL_VERIFICATION_REQUIRED');
+          console.log(JSON.stringify(report.totals));
+          NODE
+      - name: Upload Block 2 identity evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: block2-31-market-identity-manifest
+          path: research/output/machine-arena/block2-identity-manifest.json
+          retention-days: 30
+      - name: Verify Warsaw index classification
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const warsaw=JSON.parse(await fs.readFile('data/euronext-warsaw.json','utf8'));
+          for(const symbol of ['WIG','WIG20','SWIG80','MWIG40','WIG30','NCINDEX']){
+            const row=warsaw.shares.find(x=>x.symbol===symbol);
+            assert.ok(row,`Missing benchmark ${symbol}`);
+            assert.equal(row.instrumentType,'INDEX');
+            assert.equal(row.securityType,'INDEX');
+            assert.notEqual(row.instrumentType,'ORDINARY_SHARE');
+            assert.equal(row.isin,null,'Index must not be assigned a fabricated equity ISIN');
+          }
+          NODE
+      - name: Execute Block 1 quarantine fixture tests
+        run: node scripts/research/test-block1-quarantine-functional.mjs
+      - name: Execute full 31-market quarantine and readiness integration (expected blocked)
+        run: |
+          mkdir -p research/output/machine-arena
+          set +e
+          node scripts/research/block1-instrument-quarantine.mjs > /tmp/block1-quarantine.log 2>&1
+          quarantine_exit=$?
+          node scripts/research/block1-data-readiness.mjs > /tmp/block1-readiness.log 2>&1
+          readiness_exit=$?
+          set -e
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const quarantine=JSON.parse(await fs.readFile('research/output/machine-arena/block1-instrument-quarantine.json','utf8'));
+          const readiness=JSON.parse(await fs.readFile('research/output/machine-arena/block1-readiness.json','utf8'));
+          assert.equal(quarantine.markets.length,31);
+          assert.equal(readiness.marketCoverage.length,31);
+          assert.equal(quarantine.totals.instruments,readiness.totals.instruments);
+          assert.equal(quarantine.markets.reduce((n,m)=>n+m.count,0),quarantine.totals.instruments);
+          assert.equal(quarantine.totals.verifiedCommonShares+quarantine.totals.quarantined,quarantine.totals.instruments);
+          assert.notEqual(readiness.status,'READY');
+          assert.notEqual(readiness.evidenceGate.status,'MISSING_OR_UNREADABLE_QUARANTINE_REPORT');
+          console.log(JSON.stringify({integration:'PASS_BLOCKED_AS_DESIGNED',quarantineStatus:quarantine.status,readinessStatus:readiness.status,totals:quarantine.totals,evidenceGate:readiness.evidenceGate.status}));
+          NODE
+          test "$quarantine_exit" -ne 0
+          test "$readiness_exit" -ne 0
+      - name: Upload Block 1 integration evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: block1-31-market-integration
+          path: |
+            research/output/machine-arena/block1-instrument-quarantine.json
+            research/output/machine-arena/block1-readiness.json
+            /tmp/block1-quarantine.log
+            /tmp/block1-readiness.log
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Verify listing quarantine includes duplicate and venue guards
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const source=await fs.readFile('scripts/research/block1-instrument-quarantine.mjs','utf8');
+          assert.match(source,/new Set\(\)/);
+          assert.match(source,/DUPLICATE_LISTING_SYMBOL/);
+          assert.match(source,/MIC_REQUIRES_OFFICIAL_SEGMENT_REVIEW/);
+          assert.match(source,/MISSING_INDEPENDENT_REGISTER_EVIDENCE/);
+          assert.match(source,/evidence\.isin===isin/);
+          assert.match(source,/evidence\.mic===market\.mic/);
+          assert.match(source,/BLOCK1_EXPECTED_31_UNIQUE_MARKETS/);
+          assert.match(source,/BLOCK1_INVALID_CATALOG_SHAPE/);
+          assert.match(source,/BLOCKED_EMPTY_CATALOG/);
+          console.log('PASS: listing duplicates and mismatched MICs cannot silently pass');
+          NODE
+      - name: Verify official evidence cannot be bypassed by catalog structure
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const source=await fs.readFile('scripts/research/block1-data-readiness.mjs','utf8');
+          assert.match(source,/BLOCKED_OFFICIAL_VERIFICATION_PENDING/);
+          assert.match(source,/independentVerificationPending/);
+          assert.match(source,/process\.exitCode=1/);
+          console.log('PASS: catalog structure alone cannot mark Block 1 data ready');
+          NODE
+      - name: Verify quarantine runs before readiness reconciliation
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const workflow=await fs.readFile('.github/workflows/machine-arena-repair-validation.yml','utf8');
+          assert.ok(workflow.indexOf('run: node scripts/research/block1-instrument-quarantine.mjs') < workflow.indexOf('run: node scripts/research/block1-data-readiness.mjs'));
+          assert.match(workflow,/Validate Block 1 data layer against quarantine output\n        if: always\(\)/);
+          console.log('PASS: Block 1 readiness uses current-run quarantine output');
+          NODE
+      - name: Verify research ledger does not publish unvalidated live data
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const workflow=await fs.readFile('.github/workflows/daily-opportunity-ledger.yml','utf8');
+          assert.doesNotMatch(workflow,/run: node scripts\/research\/publish-live-europe\.mjs/);
+          assert.doesNotMatch(workflow,/git add[^\n]*data\/live-europe-latest\.json/);
+          assert.match(workflow,/run: node scripts\/research\/daily-opportunity-ledger\.mjs/);
+          assert.match(workflow,/if: \$\{\{ github\.ref == 'refs\/heads\/main' \}\}/);
+          const complete=await fs.readFile('.github/workflows/complete-market-analysis.yml','utf8');
+          assert.match(complete,/github\.ref == 'refs\/heads\/main'/);
+          console.log('PASS: experimental ledger writes cannot be blocked by or publish live validation');
+          NODE
+      - name: Verify judge cannot promote diagnostic results
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const judge=await fs.readFile('scripts/research/independent-market-judge.mjs','utf8');
+          assert.match(judge,/status:'NOT_VALIDATED'/);
+          assert.match(judge,/r\.frozen===true/);
+          assert.match(judge,/r\.evidenceHash/);
+          assert.match(judge,/r\.modelVersion/);
+          assert.match(judge,/validated:false/);
+          console.log('Judge remains diagnostic-only and excludes untraceable forecasts');
+          NODE
+      - name: Verify Europe matrix respects readiness
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const workflow=await fs.readFile('.github/workflows/machine-arena-europe.yml','utf8');
+          assert.match(workflow,/historical:[\s\S]*?needs: readiness\s+if: \$\{\{ success\(\) \}\}/);
+          assert.doesNotMatch(workflow,/historical:[\s\S]*?if: \$\{\{ always\(\) \}\}/);
+          console.log('PASS: historical market matrix cannot bypass readiness');
+          NODE
+      - name: Verify chained forecast evidence
+        run: node scripts/research/test-forecast-evidence.mjs
+      - name: Validate live snapshot transitions
+        run: node scripts/research/test-block6-live.mjs
+      - name: Verify unproven rankings cannot publish
+        run: |
+          mkdir -p /tmp/koersplein-test
+          printf '%s\n' '{"rankings":{"3m":[{"instrument":"A","validationStatus":"VALIDATED","holdoutValidated":true,"outOfSampleValidated":true}],"6m":[{"instrument":"B","validationStatus":"VALIDATED","holdoutValidated":true,"outOfSampleValidated":true}],"12m":[{"instrument":"C","validationStatus":"VALIDATED","holdoutValidated":true,"outOfSampleValidated":true}],"24m":[{"instrument":"D","validationStatus":"VALIDATED","holdoutValidated":true,"outOfSampleValidated":true}]}}' > /tmp/koersplein-test/rankings.json
+          if LIVE_RANKINGS_FILE=/tmp/koersplein-test/rankings.json LIVE_VALIDATION_EVIDENCE_FILE=/tmp/koersplein-test/nonexistent-evidence.json node scripts/research/publish-live-europe.mjs; then
+            echo 'Unproven rankings unexpectedly published' >&2
+            exit 1
+          fi
+      - name: Verify validation evidence must match exact rankings
+        run: |
+          mkdir -p /tmp/koersplein-hash-test
+          cp /tmp/koersplein-test/rankings.json /tmp/koersplein-hash-test/rankings.json
+          printf '%s\n' '{"status":"VALIDATED","outOfSampleValidated":true,"holdoutValidated":true,"reportId":"independent-report","rankingsSha256":"invalid","horizons":{"3m":{"status":"VALIDATED"},"6m":{"status":"VALIDATED"},"12m":{"status":"VALIDATED"},"24m":{"status":"VALIDATED"}}}' > /tmp/koersplein-hash-test/evidence.json
+          if LIVE_RANKINGS_FILE=/tmp/koersplein-hash-test/rankings.json LIVE_VALIDATION_EVIDENCE_FILE=/tmp/koersplein-hash-test/evidence.json node scripts/research/publish-live-europe.mjs; then
+            echo 'Mismatched evidence unexpectedly published' >&2
+            exit 1
+          fi
+      - name: Verify missing rankings fail closed
+        run: |
+          if LIVE_RANKINGS_FILE=/tmp/koersplein-missing-rankings.json node scripts/research/publish-live-europe.mjs; then
+            echo 'Missing rankings unexpectedly published' >&2
+            exit 1
+          fi

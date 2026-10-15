@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {sealForecast,verifyForecastChain} from './forecast-evidence-core.mjs';
+const base={market:'XAMS',isin:'NL0000000001',modelVersion:'m01-v1',predictionDate:'2026-01-01',horizonMonths:3,forecast:0.12,createdAt:'2026-01-01T08:00:00Z',sourceSnapshotHash:'a'.repeat(64)};
+const first=sealForecast(base);
+const second=sealForecast({...base,isin:'NL0000000002',previousHash:first.evidenceHash});
+assert.deepEqual(verifyForecastChain([first,second]),{valid:true,lastHash:second.evidenceHash,count:2});
+assert.equal(verifyForecastChain([{...first,forecast:0.9},second]).reason,'RECORD_CHANGED');
+assert.equal(verifyForecastChain([second]).reason,'CHAIN_BROKEN');
+assert.throws(()=>sealForecast({...base,sourceSnapshotHash:'unknown'}),/FORECAST_SOURCE_INVALID/);
+assert.throws(()=>sealForecast({...base,createdAt:'2027-01-01T08:00:00Z'}),/FORECAST_TIMESTAMP_INVALID/);
+console.log('PASS: chained forecast evidence rejects mutation, missing predecessor and invalid source');

@@ -4,11 +4,13 @@ const mic=process.env.MARKET_MIC;if(!mic)throw Error('MARKET_MIC ontbreekt');
 const dir=`research/output/${mic}`;
 const raw=await fs.readFile(`${dir}/machine1-results.jsonl`,'utf8');
 const rows=raw.split(/\r?\n/).filter(Boolean).map(x=>JSON.parse(x));
-const report={generatedAt:new Date().toISOString(),market:mic,judge:'M03_INDEPENDENT_BASELINE_DIAGNOSTIC',status:'NOT_VALIDATED',observations:rows.length,horizons:{},limitations:['Only M01 baseline predictions exist; not an 11-machine competition','No immutable precommitted forecasts verified','No independent untouched holdout promotion authorized','Provisional symbol identities excluded from validation metrics; historical universe membership remains unverified']};
+const invalid=rows.filter(r=>!r.predictionDate||!r.isin||r.provisionalIdentity===true||r.frozen!==true||!r.modelVersion||!r.evidenceHash);
+if(invalid.length)console.warn(JSON.stringify({market:mic,unverifiableForecastRows:invalid.length,publicationEligible:false}));
+const report={generatedAt:new Date().toISOString(),market:mic,judge:'M03_INDEPENDENT_BASELINE_DIAGNOSTIC',status:'NOT_VALIDATED',observations:rows.length,unverifiableForecastRows:invalid.length,publicationEligible:false,horizons:{},limitations:['Only M01 baseline predictions exist; not an 11-machine competition','No immutable precommitted forecasts verified','No independent untouched holdout promotion authorized','Provisional symbol identities excluded from validation metrics; historical universe membership remains unverified']};
 for(const h of [3,6,12,24]){
  const k=`${h}m`;
  const eligible=rows.filter(r=>Number.isFinite(r.predictions?.[k])&&Number.isFinite(r.realized?.[k])&&Date.parse(r.predictionDate)<Date.now()-h*30.4375*86400000);
- const verified=eligible.filter(r=>r.provisionalIdentity!==true);
+ const verified=eligible.filter(r=>r.provisionalIdentity!==true&&r.frozen===true&&typeof r.evidenceHash==='string'&&r.evidenceHash.length===64&&typeof r.modelVersion==='string'&&r.modelVersion.length>0&&typeof r.isin==='string'&&r.isin.length===12);
  const provisional=eligible.length-verified.length;
  const exam=chronologicalExamFolds(verified,{horizonMonths:h,embargoMonths:h,holdoutMonths:24});
  const scores=exam.folds.map(f=>rankingMetrics(f.test.map(r=>({prediction:r.predictions[k],actual:r.realized[k]}))));

@@ -47,12 +47,26 @@ for(const file of await walk(root,'market-handoff-signal.json')){
   }catch{}
 }
 
+// Existing canonical blocks remain authoritative even without a fresh artifact.
+for(const m of plan.markets){
+  const source=registry.markets[m.mic];
+  if(source?.status==='BLOCKED')blocked.set(m.mic,{reason:source.blockedReason||'SOURCE_PREFLIGHT_GATE',fingerprint:source.catalogFingerprint||null});
+}
 let changed=0;
 for(const m of plan.markets){
+  const b=blocked.get(m.mic);
+  if(b){if(m.state!=='BLOCKED'||m.blockedReason!==b.reason||m.catalogFingerprint!==b.fingerprint){m.state='BLOCKED';m.blockedReason=b.reason;m.blockedAt=new Date().toISOString();m.catalogFingerprint=b.fingerprint;m.note='Quarantined by canonical single writer after proven source preflight failure.';changed++;}continue;}
   const p=proven.get(m.mic);
   if(p){if(m.state!=='COMPLETE'||m.catalogFingerprint!==p.fingerprint){m.state='COMPLETE';m.completedAt=p.completedAt;m.catalogFingerprint=p.fingerprint;m.dataUnavailable=p.dataUnavailable;delete m.note;delete m.blockedReason;delete m.blockedAt;changed++;}continue;}
-  const b=blocked.get(m.mic);
-  if(b&&m.state!=='COMPLETE'&&(m.state!=='BLOCKED'||m.blockedReason!==b.reason||m.catalogFingerprint!==b.fingerprint)){m.state='BLOCKED';m.blockedReason=b.reason;m.blockedAt=new Date().toISOString();m.catalogFingerprint=b.fingerprint;m.note='Quarantined by canonical single writer after proven source preflight failure.';changed++;}
+  // A legacy COMPLETE flag alone is not evidence. Fail closed until a matching
+  // approved-source handoff proves catalog, identity and historical coverage.
+  if(m.state==='COMPLETE'){
+    m.state='PENDING_VALIDATION';
+    m.note='Previous COMPLETE has no verified handoff evidence in this reduction; revalidation required.';
+    delete m.completedAt;
+    delete m.dataUnavailable;
+    changed++;
+  }
 }
 await fs.writeFile(planPath,JSON.stringify(plan,null,2)+'\n');
 await fs.writeFile(registryPath,JSON.stringify(registry,null,2)+'\n');
@@ -60,9 +74,9 @@ await fs.writeFile(registryPath,JSON.stringify(registry,null,2)+'\n');
 try{
  const front=JSON.parse(await fs.readFile(marketsPath,'utf8'));
  const all=(front.venues||[]).flatMap(v=>v.markets||[]);
- for(const m of plan.markets.filter(x=>x.state==='COMPLETE')){
+ for(const m of plan.markets){
    const x=all.find(y=>y.mic===m.mic);
-   if(x&&x.sharesData)x.status='available';
+   if(x) x.status=m.state==='COMPLETE' && !blocked.has(m.mic) && registry.markets?.[m.mic]?.status==='APPROVED' && Boolean(m.catalogFingerprint) && registry.markets[m.mic].catalogFingerprint===m.catalogFingerprint ? 'available' : 'unavailable';
  }
  await fs.writeFile(marketsPath,JSON.stringify(front,null,2)+'\n');
 }catch{}
