@@ -6,9 +6,12 @@ import {isValidIsin} from './isin-identity-core.mjs';
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const output={schema:1,generatedAt:new Date().toISOString(),status:'NOT_VERIFIED',markets:[],totals:{instruments:0,verifiedCommonShares:0,quarantined:0,missingIsin:0,invalidIsin:0,missingTypeEvidence:0,missingRegisterEvidence:0}};
 const types=new Set(['COMMON_STOCK','ORDINARY_SHARE']);
+const expectedMarkets=new Set(plan.markets.map(m=>m.mic));
+if(expectedMarkets.size!==31 || plan.markets.length!==31)throw new Error('BLOCK1_EXPECTED_31_UNIQUE_MARKETS');
 for(const market of plan.markets){
  const raw=JSON.parse(await fs.readFile('data/euronext-'+market.code+'.json','utf8'));
  const items=Array.isArray(raw)?raw:(raw.shares||raw.instruments||[]);
+ if(!Array.isArray(items))throw new Error(`BLOCK1_INVALID_CATALOG_SHAPE:${market.mic}`);
  const rows=[];
  const listingKeys=new Set();
  for(const item of items){
@@ -48,8 +51,8 @@ for(const market of plan.markets){
  }
  output.markets.push({mic:market.mic,name:market.name,count:rows.length,verifiedCommonShares:rows.filter(x=>x.eligible).length,quarantined:rows.filter(x=>!x.eligible).length,records:rows});
 }
-output.status=output.totals.quarantined?'BLOCKED_UNVERIFIED_INSTRUMENTS':'VERIFIED_STRUCTURE_ONLY';
+output.status=output.totals.instruments===0?'BLOCKED_EMPTY_CATALOG':output.totals.quarantined?'BLOCKED_UNVERIFIED_INSTRUMENTS':'VERIFIED_STRUCTURE_ONLY';
 await fs.mkdir('research/output/machine-arena',{recursive:true});
 await fs.writeFile('research/output/machine-arena/block1-instrument-quarantine.json',JSON.stringify(output,null,2));
 console.log(JSON.stringify({status:output.status,totals:output.totals,markets:output.markets.map(({mic,count,verifiedCommonShares,quarantined})=>({mic,count,verifiedCommonShares,quarantined}))}));
-if(output.totals.quarantined)process.exitCode=1;
+if(output.totals.quarantined || output.totals.instruments===0)process.exitCode=1;
