@@ -48,9 +48,11 @@ const aprilAthens=athens.shares.filter(row=>row.identitySource==='https://www.at
 assert.equal(aprilAthens.length,89);
 assert.equal(athens.shares.filter(row=>!row.isin).length,14);
 for(const [symbol,isin] of Object.entries({PVMEZZ:'CY0109561015',SUNMEZZ:'CY0200222111',DOPPLER:'GRS502003007'})){assert.equal(athens.shares.find(row=>row.symbol===symbol).isin,isin);}
-assert.equal(athens.shares.filter(row=>row.identityEvidenceStatus?.startsWith('SOURCE_NOT_VERIFIED')).length,89);
-assert.equal(athens.shares.filter(row=>row.identitySourceClaimStatus==='UNSUBSTANTIATED_PER_INSTRUMENT').length,89);
+assert.equal(athens.shares.filter(row=>row.identityEvidenceStatus?.startsWith('SOURCE_NOT_VERIFIED')).length,65);
+assert.equal(athens.shares.filter(row=>row.identityEvidenceStatus==='PRIMARY_SOURCE_MATCH_CONFIRMED_2026_04_07').length,24);
+assert.equal(athens.shares.filter(row=>row.identitySourceClaimStatus==='UNSUBSTANTIATED_PER_INSTRUMENT').length,65);
 assert.ok(athens.shares.filter(row=>row.identitySourceClaimStatus==='UNSUBSTANTIATED_PER_INSTRUMENT').every(row=>row.identityResolution.startsWith('UNVERIFIED_HISTORICAL_ISIN_CANDIDATE')));
+assert.ok(athens.shares.filter(row=>row.identityEvidenceStatus==='PRIMARY_SOURCE_MATCH_CONFIRMED_2026_04_07').every(row=>row.identityResolution.includes('CERTIFICATION_PENDING')));
 assert.equal(athens.shares.find(row=>row.symbol==='ADPS').isin,'GRS570003004');
 assert.equal(athens.shares.find(row=>row.symbol==='SOFTWEB').isin,'GRS538003005');
 assert.equal(athens.shares.find(row=>row.symbol==='SOFTWEB').identityMarketSegment,'ALTERNATIVE_MARKET');
