@@ -1,9 +1,6 @@
 name: Dagelijkse Kansscanner
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/daily-opportunity-ledger.yml'
 permissions:
   contents: write
 concurrency:
