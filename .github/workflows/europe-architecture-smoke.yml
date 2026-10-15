@@ -13,6 +13,7 @@ on:
       - 'scripts/research/independent-market-judge.mjs'
       - 'scripts/research/model-arena.mjs'
       - 'scripts/research/publish-live-europe.mjs'
+      - 'scripts/research/block1-instrument-quarantine.mjs'
       - 'scripts/research/forecast-evidence-core.mjs'
       - 'scripts/research/test-forecast-evidence.mjs'
       - 'scripts/research/europe-machine-arena-readiness.mjs'
@@ -30,6 +31,17 @@ jobs:
           node-version: '22'
       - name: Validate architecture baseline
         run: node scripts/research/test-block1-architecture-baseline.mjs
+      - name: Verify listing quarantine includes duplicate and venue guards
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const source=await fs.readFile('scripts/research/block1-instrument-quarantine.mjs','utf8');
+          assert.match(source,/new Set\(\)/);
+          assert.match(source,/DUPLICATE_LISTING_SYMBOL/);
+          assert.match(source,/MIC_REQUIRES_OFFICIAL_SEGMENT_REVIEW/);
+          console.log('PASS: listing duplicates and mismatched MICs cannot silently pass');
+          NODE
       - name: Verify research ledger does not publish unvalidated live data
         run: |
           node --input-type=module <<'NODE'
