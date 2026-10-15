@@ -47,12 +47,17 @@ for(const file of await walk(root,'market-handoff-signal.json')){
   }catch{}
 }
 
+// Existing canonical blocks remain authoritative even without a fresh artifact.
+for(const m of plan.markets){
+  const source=registry.markets[m.mic];
+  if(source?.status==='BLOCKED')blocked.set(m.mic,{reason:source.blockedReason||'SOURCE_PREFLIGHT_GATE',fingerprint:source.catalogFingerprint||null});
+}
 let changed=0;
 for(const m of plan.markets){
+  const b=blocked.get(m.mic);
+  if(b){if(m.state!=='BLOCKED'||m.blockedReason!==b.reason||m.catalogFingerprint!==b.fingerprint){m.state='BLOCKED';m.blockedReason=b.reason;m.blockedAt=new Date().toISOString();m.catalogFingerprint=b.fingerprint;m.note='Quarantined by canonical single writer after proven source preflight failure.';changed++;}continue;}
   const p=proven.get(m.mic);
   if(p){if(m.state!=='COMPLETE'||m.catalogFingerprint!==p.fingerprint){m.state='COMPLETE';m.completedAt=p.completedAt;m.catalogFingerprint=p.fingerprint;m.dataUnavailable=p.dataUnavailable;delete m.note;delete m.blockedReason;delete m.blockedAt;changed++;}continue;}
-  const b=blocked.get(m.mic);
-  if(b&&(m.state!=='BLOCKED'||m.blockedReason!==b.reason||m.catalogFingerprint!==b.fingerprint)){m.state='BLOCKED';m.blockedReason=b.reason;m.blockedAt=new Date().toISOString();m.catalogFingerprint=b.fingerprint;m.note='Quarantined by canonical single writer after proven source preflight failure.';changed++;}
 }
 await fs.writeFile(planPath,JSON.stringify(plan,null,2)+'\n');
 await fs.writeFile(registryPath,JSON.stringify(registry,null,2)+'\n');
