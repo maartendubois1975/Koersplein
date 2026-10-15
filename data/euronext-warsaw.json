@@ -146,7 +146,10 @@
       "currency": "PLN",
       "providerSymbol": "NCINDEX.WA",
       "identitySource": "https://www.gpw.pl/spolki",
-      "identityResolution": "GPW_MAIN_MARKET_CURRENT_QUOTE_AND_HISTORY_PROOF"
+      "identityResolution": "NEWCONNECT_INDEX_NOT_COMMON_SHARE;EXCLUDE_FROM_EQUITY_CERTIFICATION",
+      "instrumentType": "INDEX",
+      "securityType": "INDEX",
+      "identityEvidenceStatus": "NOT_EQUITY_INDEX"
     },
     {
       "company": "11 bit studios S.A.",
