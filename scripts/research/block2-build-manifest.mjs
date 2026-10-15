@@ -8,6 +8,7 @@ const unresolvedSamples=[];
 const sourceClaims=[];
 const verificationBacklog=[];
 const targetedRepairQueue=[];
+const resolveSymbol=row=>[row.providerSymbol,row.symbol,row.ticker].map(v=>String(v??'').trim()).find(Boolean)||null;
 for(const market of plan.markets){
  try{
   const raw=JSON.parse(await fs.readFile('data/euronext-'+market.code+'.json','utf8'));
@@ -16,11 +17,11 @@ for(const market of plan.markets){
   markets.push(manifest);
   for(const [index,entry] of manifest.listings.entries()){
    const actionable=entry.issues.filter(issue=>['MISSING_SYMBOL','MISSING_ISIN','INVALID_ISIN','WRONG_MIC','DUPLICATE_SYMBOL','DUPLICATE_LISTING_IDENTITY'].includes(issue));
-   if(actionable.length)targetedRepairQueue.push({mic:market.mic,row:index,symbol:rows[index].providerSymbol||rows[index].symbol||rows[index].ticker||null,isin:rows[index].isin||null,issues:actionable,identitySource:rows[index].identitySource||null});
+   if(actionable.length)targetedRepairQueue.push({mic:market.mic,row:index,symbol:resolveSymbol(rows[index]),isin:rows[index].isin||null,issues:actionable,identitySource:rows[index].identitySource||null});
   }
   verificationBacklog.push({mic:market.mic,missingIsin:manifest.listings.filter(x=>x.issues.includes('MISSING_ISIN')).length,invalidIsin:manifest.listings.filter(x=>x.issues.includes('INVALID_ISIN')).length,missingRegisterEvidence:manifest.listings.filter(x=>x.issues.includes('MISSING_REGISTER_EVIDENCE')).length,unverifiedType:manifest.listings.filter(x=>x.issues.includes('UNVERIFIED_TYPE')).length});
   sourceClaims.push({mic:market.mic,withIdentitySource:rows.filter(r=>typeof r.identitySource==='string'&&r.identitySource.startsWith('https://')).length,withOfficialRegisterEvidence:rows.filter(r=>!!r.officialRegisterEvidence).length,withIsin:rows.filter(r=>!!r.isin).length,total:rows.length});
-  unresolvedSamples.push({mic:market.mic,samples:rows.map((row,i)=>({row:i,symbol:row.providerSymbol||row.symbol||row.ticker||null,isin:row.isin||null,issues:manifest.listings[i].issues.filter(issue=>issue!=='INDEPENDENT_SOURCE_VERIFICATION_REQUIRED'),claimedIdentitySource:row.identitySource||null})).filter(x=>x.issues.length).slice(0,15)});
+  unresolvedSamples.push({mic:market.mic,samples:rows.map((row,i)=>({row:i,symbol:resolveSymbol(row),isin:row.isin||null,issues:manifest.listings[i].issues.filter(issue=>issue!=='INDEPENDENT_SOURCE_VERIFICATION_REQUIRED'),claimedIdentitySource:row.identitySource||null})).filter(x=>x.issues.length).slice(0,15)});
   sourceInventory.push({mic:market.mic,catalogSourceUrl:typeof raw.source==='string'?raw.source:null,catalogRetrievedAt:raw.retrievedAt||null,catalogRows:manifest.total,sourceMetadataPresent:!!raw.source,externalSnapshotVerified:false});
  }catch(error){markets.push({mic:market.mic,total:0,certified:0,blocked:0,status:'CATALOG_ERROR',error:error.message});sourceInventory.push({mic:market.mic,catalogSourceUrl:null,catalogRetrievedAt:null,catalogRows:0,sourceMetadataPresent:false,externalSnapshotVerified:false,error:error.message});}
 }
