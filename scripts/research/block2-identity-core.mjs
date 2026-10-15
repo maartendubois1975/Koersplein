@@ -10,6 +10,8 @@ export function listingIdentity(row, market) {
  const declaredSymbols=[row.providerSymbol,row.symbol,row.ticker].map(v=>String(v??'').trim()).filter(Boolean);
  if(new Set(declaredSymbols.map(s=>s.toUpperCase())).size>1)issues.push('CONFLICTING_SYMBOL_FIELDS');
  if(!symbol)issues.push('MISSING_SYMBOL');
+ if(row.identitySourceClaimStatus==='UNSUBSTANTIATED_PER_INSTRUMENT')issues.push('UNSUBSTANTIATED_IDENTITY_SOURCE');
+ if(row.identityEvidenceStatus==='SOURCE_NOT_VERIFIED_PER_INSTRUMENT;REQUIRES_PRIMARY_DOCUMENT_MATCH')issues.push('PRIMARY_DOCUMENT_MATCH_REQUIRED');
  if(!isin)issues.push('MISSING_ISIN');
  else if(!isValidIsin(isin))issues.push('INVALID_ISIN');
  if(row.mic&&row.mic!==market.mic)issues.push('WRONG_MIC');
