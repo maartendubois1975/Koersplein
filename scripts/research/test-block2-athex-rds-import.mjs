@@ -7,7 +7,7 @@ import {spawnSync} from 'node:child_process';
 const dir=await fs.mkdtemp(path.join(os.tmpdir(),'athex-rds-'));
 try{
  const input=path.join(dir,'InstrumentSeries-20261015-G-v1.csv'),meta=path.join(dir,'meta.json'),output=path.join(dir,'out.json');
- const make=(symbol,isin,type='CS',right='N')=>{const x=Array(27).fill('');x[0]=symbol;x[8]=type;x[11]=right;x[18]=isin;x[25]='Y';x[26]='A';return x.join(';')+';'};
+ const make=(symbol,isin,type='CS',right='N')=>{const x=Array(27).fill('');x[0]=symbol;x[7]='5';x[8]=type;x[11]=right;x[18]=isin;x[25]='Y';x[26]='A';return x.join(';')+';'};
  const csv=[make('AAPL','US0378331005'),make('MSFT','US5949181045'),make('RIGHT','US0378331005','CS','R'),make('BOND','US0378331005','PS')].join('\n')+'\n';
  const sha=s=>createHash('sha256').update(s).digest('hex');
  const run=()=>spawnSync(process.execPath,['scripts/research/block2-athex-rds-import.mjs',input,meta,output],{encoding:'utf8'});
