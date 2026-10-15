@@ -43,6 +43,9 @@ jobs:
           assert.match(source,/MISSING_INDEPENDENT_REGISTER_EVIDENCE/);
           assert.match(source,/evidence\.isin===isin/);
           assert.match(source,/evidence\.mic===market\.mic/);
+          assert.match(source,/BLOCK1_EXPECTED_31_UNIQUE_MARKETS/);
+          assert.match(source,/BLOCK1_INVALID_CATALOG_SHAPE/);
+          assert.match(source,/BLOCKED_EMPTY_CATALOG/);
           console.log('PASS: listing duplicates and mismatched MICs cannot silently pass');
           NODE
       - name: Verify research ledger does not publish unvalidated live data
