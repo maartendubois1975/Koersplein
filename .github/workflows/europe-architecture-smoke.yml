@@ -1,0 +1,27 @@
+name: Europe Architecture Smoke Test
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - fix/arena-history-quality-gate-20261010
+    paths:
+      - 'scripts/research/test-block1-architecture-baseline.mjs'
+      - '.github/workflows/europe-architecture-smoke.yml'
+      - '.github/workflows/complete-market-analysis.yml'
+      - '.github/workflows/daily-opportunity-ledger.yml'
+      - 'scripts/research/complete-market-pipeline.mjs'
+      - 'scripts/research/independent-market-judge.mjs'
+      - 'scripts/research/model-arena.mjs'
+permissions:
+  contents: read
+jobs:
+  architecture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate architecture baseline
+        run: node scripts/research/test-block1-architecture-baseline.mjs
