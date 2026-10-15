@@ -26,6 +26,7 @@ assert.equal(listingIdentity(eee,{mic:'XATH'}).certified,false);
 const warsaw=JSON.parse(await fs.readFile('data/euronext-warsaw.json','utf8'));
 const eurocash=warsaw.shares.find(row=>row.symbol==='EUR');
 assert.equal(eurocash.isin,'PLEURCH00011');
-assert.ok(eurocash.identitySource.startsWith('https://www.londonstockexchange.com/'));
+assert.equal(eurocash.identitySource,'https://www.grupaeurocash.pl/dla-inwestora/informacje-gieldowe');
+assert.ok(eurocash.identityCrossCheckSource.startsWith('https://www.bankier.pl/'));
 assert.equal(listingIdentity(eurocash,{mic:'XWAR'}).certified,false);
 console.log('PASS Block 2 deterministic identities, duplicates and independent-verification lock');
