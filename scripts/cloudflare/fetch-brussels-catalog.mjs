@@ -17,9 +17,18 @@ for (const line of lines.slice(1)) {
   const isin=pick(row,['isin','isincode']);
   const symbol=pick(row,['symbol','symbool','ticker','mnemo']);
   const market=pick(row,['market','markt','markets']);
+  // Keep explicit security-type evidence only when the official download actually
+  // supplies a type column. Never infer ordinary shares from the URL or name.
+  const rawType=pick(row,['instrumenttype','securitytype','producttype','typeofinstrument','typeinstrument']);
+  const normalizedType=rawType.trim().toUpperCase();
+  const instrumentType=/^(ORDINARY SHARES?|COMMON (STOCK|SHARES?)|EQUITY SHARES?)$/.test(normalizedType)?'ORDINARY_SHARE':
+    /^(PREFERENCE SHARES?|PREFERRED (STOCK|SHARES?))$/.test(normalizedType)?'PREFERRED_SHARE':
+    /^(ETF|EXCHANGE TRADED FUND)$/.test(normalizedType)?'ETF':
+    /^(ADR|AMERICAN DEPOSITARY RECEIPT)$/.test(normalizedType)?'ADR':null;
   if (!name || !/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin) || !symbol) continue;
   if (!/Brussels|Brussel/i.test(market || 'Brussels')) continue;
-  if (!shares.some(x=>x.isin===isin)) shares.push({ name, symbol, isin, market: market || 'Euronext Brussels' });
+  if (!shares.some(x=>x.isin===isin)) shares.push({ name, symbol, isin, market: market || 'Euronext Brussels',
+    ...(instrumentType?{instrumentType,instrumentTypeSource:url,instrumentTypeRaw:rawType}:{}) });
 }
 if (shares.length < 40) throw new Error(`Te weinig Brusselse aandelen herkend: ${shares.length}`);
 shares.sort((a,b)=>a.name.localeCompare(b.name,'en'));
