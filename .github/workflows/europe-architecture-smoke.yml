@@ -15,6 +15,9 @@ on:
       - 'scripts/research/publish-live-europe.mjs'
       - 'scripts/research/block1-instrument-quarantine.mjs'
       - 'scripts/research/test-block1-quarantine-functional.mjs'
+      - 'scripts/research/block2-identity-core.mjs'
+      - 'scripts/research/block2-build-manifest.mjs'
+      - 'scripts/research/test-block2-identity.mjs'
       - 'scripts/research/block1-data-readiness.mjs'
       - 'scripts/research/forecast-evidence-core.mjs'
       - 'scripts/research/test-forecast-evidence.mjs'
@@ -34,6 +37,31 @@ jobs:
           node-version: '22'
       - name: Validate architecture baseline
         run: node scripts/research/test-block1-architecture-baseline.mjs
+      - name: Test Block 2 identity and source-verification lock
+        run: node scripts/research/test-block2-identity.mjs
+      - name: Build 31-market Block 2 identity manifest (expected blocked)
+        run: |
+          set +e
+          node scripts/research/block2-build-manifest.mjs
+          code=$?
+          set -e
+          test "$code" -ne 0
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const report=JSON.parse(await fs.readFile('research/output/machine-arena/block2-identity-manifest.json','utf8'));
+          assert.equal(report.markets.length,31);
+          assert.equal(report.totals.certified,0);
+          assert.equal(report.status,'OFFICIAL_VERIFICATION_REQUIRED');
+          console.log(JSON.stringify(report.totals));
+          NODE
+      - name: Upload Block 2 identity evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: block2-31-market-identity-manifest
+          path: research/output/machine-arena/block2-identity-manifest.json
+          retention-days: 30
       - name: Execute Block 1 quarantine fixture tests
         run: node scripts/research/test-block1-quarantine-functional.mjs
       - name: Execute full 31-market quarantine and readiness integration (expected blocked)
