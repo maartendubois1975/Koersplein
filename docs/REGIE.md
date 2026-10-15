@@ -136,3 +136,19 @@ Dit is een blijvende opdracht van de projecteigenaar en geldt voor handmatige se
 - **Volgende-sessie-overdracht:** werkelijke status, open blokkades, prioriteit, commit/PR, meetbare acceptatiecriteria en de eerstvolgende volledige batch moeten uit de repository en run-artifacts terug te vinden zijn. Dit document is de vaste regiebron, niet uitsluitend chatgeheugen.
 
 Deze paragraaf verandert de bestaande eisen van bronbewijs, quarantaine en onafhankelijke productievrijgave niet.
+
+
+## 14. Verplicht saneringsprogramma Europa — zes ondeelbare bouwblokken (15 oktober 2026)
+
+Deze sectie vervangt voor Europa de eerdere uitvoeringsvolgorde in §13 waar die botst: **eerst gecontroleerd saneren en de bestaande koersen behouden, pas daarna uitbreiden**.
+
+**Harde afspraak:** bij opdracht "Blok N", "Verder" of "Maak af" voert de uitvoerder het volledige eerstvolgende open blok uit, inclusief dependencyonderzoek, wijzigingen, regressietests, CI-bewijs en afsluitende status. Een half blok is NIET AF. Niet stoppen na één commit, een testaanpassing of een plan. Alleen een aantoonbare externe blokkade kan uitvoering onderbreken; noteer die met bewijs en voer onafhankelijk werk uit. **Verwijderen is definitief in de Git-werkboom na merge**, maar Git-geschiedenis blijft voor herstel; herschrijf geschiedenis niet.
+
+1. **Blok 1 — bewezen ongebruikte ballast weg (één afgeronde PR):** volledige repo- en website-callgraph, workflow triggers, API-routes, deploy-assets en historische consumers controleren; identificeer oude Atlas-archieven, dubbele onderzoeksroutes en niet-bereikbare bestanden. Verwijder uitsluitend bewezen ongebruikte onderdelen; pas verwijzingen/tests aan; behoud alle productiekoersen, provideradapters en D1-tabellen. Eindcriterium: nul gebroken referenties, relevante tests groen, verwijderlijst met onderbouwing.
+2. **Blok 2 — bestaande koerswaarheid herstellen:** inventariseer alle 31 COMPLETE-markten en de door eigenaar genoemde 32e, lees werkelijk productie-/staging-D1 manifest, tel instrumenten, bars, datumdekking en providers, herstel bestaande MIC+ticker↔historische sleutels zonder koersverlies. Eindcriterium: per markt bewijs van dekking en nul onverklaarde verloren reeksen.
+3. **Blok 3 — dubbele bron- en updatepaden consolideren:** één canonical catalogus/bronselectie, historische backfill en dagelijkse update; verwijder vervangen code en workflows *nadat* de nieuwe route op echte marktdata geslaagd is.
+4. **Blok 4 — Machine Arena consolideren:** bestaande elf machines, historische examinator, judge, modelcompetitie en publicatie op dezelfde gecontroleerde historie aansluiten; verwijder bewezen overlappende of dode onderzoekspaden.
+5. **Blok 5 — website en API opschonen:** verwijder uitsluitend ongebruikte pagina's, scripts, routes en schermonderdelen; behoud zichtbare gebruikersfuncties en bewezen koersreeksen. Controleer navigatie, instrumentpagina's, markten, analyses en publicatie.
+6. **Blok 6 — definitieve end-to-end vrijgave:** run alle markten, historie, dagupdate, machine- en websitecontroles; vergelijk vóór/na en sluit alleen met meetbaar bewijs af. Verwijder resterende dode compatibiliteitscode; merge naar main pas na groene regressie en data-behoud.
+
+**Per blok verplicht vastleggen:** startcommit, exact verwijderde bestanden/routes, bewijs van nul aanroepers, tests en workflowrun met commit-SHA, resterende blokkades, status AF/NIET AF, volgende blok. Een document of inventarisatie is nooit op zichzelf een afgerond blok. Geen productie-data verwijderen op basis van een GitHub-inventaris alleen.
