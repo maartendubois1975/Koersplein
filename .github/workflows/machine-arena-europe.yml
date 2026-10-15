@@ -41,10 +41,10 @@ jobs:
           path: research/output/machine-arena/
           retention-days: 90
   historical:
-    # A failed global catalog audit must not suppress every independent market.
-    # Each market pipeline retains its own fail-closed quality gate.
+    # Do not start 31 costly historical jobs when global readiness has failed.
+    # Individual market quarantine remains enforced inside the historical pipeline.
     needs: readiness
-    if: ${{ always() }}
+    if: ${{ success() }}
     strategy:
       fail-fast: false
       matrix:
