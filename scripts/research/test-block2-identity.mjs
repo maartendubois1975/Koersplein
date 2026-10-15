@@ -90,6 +90,16 @@ assert.equal(eee.isin,'CH0198251305');
 assert.ok(eee.identitySource.startsWith('https://www.athexgroup.gr/'));
 assert.equal(listingIdentity(eee,{mic:'XATH'}).certified,false);
 const warsaw=JSON.parse(await fs.readFile('data/euronext-warsaw.json','utf8'));
+const warsawIndices=['WIG','WIG20','SWIG80','MWIG40','WIG30'];
+for(const symbol of warsawIndices){
+ const row=warsaw.shares.find(r=>r.symbol===symbol);
+ assert.ok(row,'Expected Warsaw benchmark '+symbol);
+ assert.equal(row.instrumentType,'INDEX');
+ assert.equal(row.securityType,'INDEX');
+ assert.equal(row.identityEvidenceStatus,'NOT_EQUITY_INDEX');
+ assert.equal(listingIdentity(row,{mic:'XWAR'}).certified,false);
+ assert.ok(listingIdentity(row,{mic:'XWAR'}).issues.includes('UNVERIFIED_TYPE'));
+}
 const eurocash=warsaw.shares.find(row=>row.symbol==='EUR');
 assert.equal(eurocash.isin,'PLEURCH00011');
 assert.equal(eurocash.identitySource,'https://www.grupaeurocash.pl/dla-inwestora/informacje-gieldowe');
