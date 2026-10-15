@@ -51,6 +51,9 @@ for(const [symbol,isin] of Object.entries({PVMEZZ:'CY0109561015',SUNMEZZ:'CY0200
 assert.equal(athens.shares.filter(row=>row.identityEvidenceStatus?.startsWith('SOURCE_NOT_VERIFIED')).length,65);
 assert.equal(athens.shares.filter(row=>row.identityEvidenceStatus==='PRIMARY_SOURCE_MATCH_CONFIRMED_2026_04_07').length,24);
 assert.equal(athens.shares.filter(row=>row.identitySourceClaimStatus==='UNSUBSTANTIATED_PER_INSTRUMENT').length,65);
+const unresolvedSourceRow=athens.shares.find(row=>row.identitySourceClaimStatus==='UNSUBSTANTIATED_PER_INSTRUMENT');
+assert.ok(listingIdentity(unresolvedSourceRow,{mic:'XATH'}).issues.includes('UNSUBSTANTIATED_IDENTITY_SOURCE'));
+assert.ok(listingIdentity(unresolvedSourceRow,{mic:'XATH'}).issues.includes('PRIMARY_DOCUMENT_MATCH_REQUIRED'));
 assert.ok(athens.shares.filter(row=>row.identitySourceClaimStatus==='UNSUBSTANTIATED_PER_INSTRUMENT').every(row=>row.identityResolution.startsWith('UNVERIFIED_HISTORICAL_ISIN_CANDIDATE')));
 assert.ok(athens.shares.filter(row=>row.identityEvidenceStatus==='PRIMARY_SOURCE_MATCH_CONFIRMED_2026_04_07').every(row=>row.identityResolution.includes('CERTIFICATION_PENDING')));
 assert.equal(athens.shares.find(row=>row.symbol==='ADPS').isin,'GRS570003004');
