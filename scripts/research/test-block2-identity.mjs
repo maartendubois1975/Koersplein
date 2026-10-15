@@ -46,7 +46,7 @@ assert.ok(athens.shares.find(row=>row.symbol==='EUROB').identityResolution.inclu
 assert.ok(sourcedAthens.every(row=>listingIdentity(row,{mic:'XATH'}).certified===false));
 const aprilAthens=athens.shares.filter(row=>row.identitySource==='https://www.athexgroup.gr/sites/default/files/2026-04/ENPR20260407ATHEXGROUP.pdf');
 assert.equal(aprilAthens.length,89);
-assert.equal(athens.shares.filter(row=>!row.isin).length,5);
+assert.equal(athens.shares.filter(row=>!row.isin).length,1);
 for(const [symbol,isin] of Object.entries({PVMEZZ:'CY0109561015',SUNMEZZ:'CY0200222111',DOPPLER:'GRS502003007'})){assert.equal(athens.shares.find(row=>row.symbol===symbol).isin,isin);}
 assert.equal(athens.shares.filter(row=>row.identityEvidenceStatus?.startsWith('SOURCE_NOT_VERIFIED')).length,65);
 assert.equal(athens.shares.filter(row=>row.identityEvidenceStatus==='PRIMARY_SOURCE_MATCH_CONFIRMED_2026_04_07').length,24);
