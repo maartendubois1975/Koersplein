@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';
-import {marketManifest} from './block2-identity-core.mjs';
+import {marketManifest,canonicalSymbol} from './block2-identity-core.mjs';
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 if(plan.markets?.length!==31||new Set(plan.markets.map(m=>m.mic)).size!==31)throw Error('EXPECTED_31_UNIQUE_MARKETS');
 const markets=[];
@@ -8,7 +8,7 @@ const unresolvedSamples=[];
 const sourceClaims=[];
 const verificationBacklog=[];
 const targetedRepairQueue=[];
-const resolveSymbol=row=>[row.providerSymbol,row.symbol,row.ticker].map(v=>String(v??'').trim()).find(Boolean)||null;
+const resolveSymbol=row=>canonicalSymbol(row)||null;
 for(const market of plan.markets){
  try{
   const raw=JSON.parse(await fs.readFile('data/euronext-'+market.code+'.json','utf8'));
