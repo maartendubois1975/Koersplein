@@ -32,8 +32,13 @@ const marketReadiness=markets.map(m=>{
  const backlog=verificationBacklog.find(s=>s.mic===m.mic);
  return {mic:m.mic,total:m.total||0,isinCoverage:m.total?Number(((evidence?.withIsin||0)/m.total*100).toFixed(2)):0,primaryDocumentMatches:evidence?.primaryDocumentMatches||0,unsubstantiatedClaims:evidence?.sourceClaimsWithoutPerInstrumentProof||0,missingIsin:backlog?.missingIsin||0,certified:0,readyForProduction:false,blocker:m.error||'INDEPENDENT_REGISTER_VERIFICATION_REQUIRED'};
 });
+const marketRepairPriority=marketReadiness.map(m=>{
+ const backlog=verificationBacklog.find(v=>v.mic===m.mic);
+ const critical=(backlog?.missingIsin||0)+(backlog?.invalidIsin||0)+(backlog?.duplicateSymbols||0)+(backlog?.missingSymbols||0);
+ return {...m,criticalIdentityIssues:critical,verificationGap:m.total-m.primaryDocumentMatches,repairPriorityScore:critical*10+m.unsubstantiatedClaims*3+(m.total-m.primaryDocumentMatches)};
+}).sort((a,b)=>b.repairPriorityScore-a.repairPriorityScore||a.mic.localeCompare(b.mic));
 const priorityQueue=issueSummary.flatMap(m=>Object.entries(m.issues).filter(([issue])=>issue!=='INDEPENDENT_SOURCE_VERIFICATION_REQUIRED').map(([issue,count])=>({mic:m.mic,issue,count}))).sort((a,b)=>b.count-a.count||a.mic.localeCompare(b.mic)||a.issue.localeCompare(b.issue));
-const report={schema:1,status:'OFFICIAL_VERIFICATION_REQUIRED',generatedAt:new Date().toISOString(),markets,sourceInventory,sourceAudit,sourceClaims,marketReadiness,verificationBacklog,targetedRepairQueue,issueSummary,priorityQueue,unresolvedSamples,totals:{markets:markets.length,instruments:markets.reduce((n,m)=>n+(m.total||0),0),certified:0,blocked:markets.reduce((n,m)=>n+(m.blocked||0),0),catalogErrors:markets.filter(m=>m.status==='CATALOG_ERROR').length}};
+const report={schema:1,status:'OFFICIAL_VERIFICATION_REQUIRED',generatedAt:new Date().toISOString(),markets,sourceInventory,sourceAudit,sourceClaims,marketReadiness,marketRepairPriority,verificationBacklog,targetedRepairQueue,issueSummary,priorityQueue,unresolvedSamples,totals:{markets:markets.length,instruments:markets.reduce((n,m)=>n+(m.total||0),0),certified:0,blocked:markets.reduce((n,m)=>n+(m.blocked||0),0),catalogErrors:markets.filter(m=>m.status==='CATALOG_ERROR').length}};
 await fs.mkdir('research/output/machine-arena',{recursive:true});
 await fs.writeFile('research/output/machine-arena/block2-identity-manifest.json',JSON.stringify(report,null,2));
 console.log(JSON.stringify({status:report.status,totals:report.totals}));
