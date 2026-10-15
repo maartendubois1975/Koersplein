@@ -8,7 +8,7 @@ try{
  const catalog=path.join(dir,'catalog.json'),source=path.join(dir,'source.json'),output=path.join(dir,'result.json');
  const run=()=>spawnSync(process.execPath,['scripts/research/block2-official-source-compare.mjs',catalog,source,output],{encoding:'utf8'});
  await fs.writeFile(catalog,JSON.stringify({shares:[{symbol:'AAPL',isin:'US0378331005'},{symbol:'MSFT',isin:'US5949181045'},{symbol:'OTHER',isin:null}]}));
- await fs.writeFile(source,JSON.stringify({sourceUrl:'https://example.org/official',coverage:'COMPLETE_MARKET',asOf:'2026-10-15',records:[{symbol:'AAPL',isin:'US0378331005',recordId:'1'},{symbol:'MSFT',isin:'US0378331005',recordId:'2'}]}));
+ await fs.writeFile(source,JSON.stringify({sourceUrl:'https://example.org/official',coverage:'COMPLETE_MARKET',completenessEvidence:{verified:true},asOf:'2026-10-15',records:[{symbol:'AAPL',isin:'US0378331005',recordId:'1'},{symbol:'MSFT',isin:'US0378331005',recordId:'2'}]}));
  let result=run();assert.equal(result.status,1,result.stderr);
  let report=JSON.parse(await fs.readFile(output,'utf8'));
  assert.equal(report.summary.PRIMARY_SOURCE_MATCH,1);
