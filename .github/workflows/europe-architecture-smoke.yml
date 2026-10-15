@@ -53,6 +53,8 @@ jobs:
           assert.equal(report.markets.length,31);
           assert.equal(report.sourceInventory.length,31);
           assert.equal(report.issueSummary.length,31);
+          assert.ok(report.priorityQueue.every(x=>x.issue!=='INDEPENDENT_SOURCE_VERIFICATION_REQUIRED'));
+          assert.ok(report.priorityQueue.every((x,i,a)=>i===0||a[i-1].count>=x.count));
           assert.equal(report.issueSummary.reduce((n,m)=>n+m.total,0),report.totals.instruments);
           assert.equal(new Set(report.sourceInventory.map(x=>x.mic)).size,31);
           assert.ok(report.sourceInventory.every(x=>x.externalSnapshotVerified===false));
