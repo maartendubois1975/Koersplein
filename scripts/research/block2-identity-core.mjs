@@ -1,14 +1,22 @@
 import {createHash} from 'node:crypto';
 import {isValidIsin} from './isin-identity-core.mjs';
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
-export const canonicalSymbol = row => [row.providerSymbol,row.symbol,row.ticker].map(v=>String(v??'').trim()).find(Boolean)?.toUpperCase()||'';
+export const canonicalSymbol = row => [row.symbol,row.ticker,row.providerSymbol].map(v=>String(v??'').trim()).find(Boolean)?.toUpperCase()||'';
 export function listingIdentity(row, market) {
  const symbol=canonicalSymbol(row);
  const isin=String(row.isin||'').trim().toUpperCase();
  const type=String(row.instrumentType||row.securityType||row.type||'').toUpperCase();
  const issues=[];
- const declaredSymbols=[row.providerSymbol,row.symbol,row.ticker].map(v=>String(v??'').trim()).filter(Boolean);
- if(new Set(declaredSymbols.map(s=>s.toUpperCase())).size>1)issues.push('CONFLICTING_SYMBOL_FIELDS');
+ const exchangeSymbols=[row.symbol,row.ticker].map(v=>String(v??'').trim().toUpperCase()).filter(Boolean);
+ if(new Set(exchangeSymbols).size>1)issues.push('CONFLICTING_SYMBOL_FIELDS');
+ const providerSymbol=String(row.providerSymbol??'').trim().toUpperCase();
+ const exchangeSymbol=exchangeSymbols[0]||'';
+ const providerSuffix=String(market.providerSuffix??'').trim().toUpperCase();
+ if(providerSymbol&&exchangeSymbol&&providerSymbol!==exchangeSymbol){
+  const knownSuffix=!!providerSuffix&&providerSymbol===exchangeSymbol+providerSuffix;
+  const isinLookupAlias=providerSymbol===isin&&isValidIsin(isin);
+  if(!knownSuffix&&!isinLookupAlias)issues.push('PROVIDER_MAPPING_REVIEW_REQUIRED');
+ }
  if(!symbol)issues.push('MISSING_SYMBOL');
  if(row.identitySourceClaimStatus==='UNSUBSTANTIATED_PER_INSTRUMENT')issues.push('UNSUBSTANTIATED_IDENTITY_SOURCE');
  if(row.identityEvidenceStatus==='OFFICIAL_SOURCE_MISMATCH')issues.push('OFFICIAL_SOURCE_IDENTITY_MISMATCH');
