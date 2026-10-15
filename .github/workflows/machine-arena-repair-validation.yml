@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: koersplein-machine-arena-repair-validation
+  group: koersplein-machine-arena-repair-validation-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   readiness:
@@ -49,6 +49,8 @@ jobs:
           retention-days: 90
   historical:
     needs: readiness
+    # Run independent market diagnostics even when global readiness fails.
+    if: ${{ always() }}
     strategy:
       fail-fast: false
       matrix:
