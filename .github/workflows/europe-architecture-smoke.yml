@@ -20,6 +20,8 @@ on:
       - 'scripts/research/test-block2-identity.mjs'
       - 'scripts/research/block2-official-source-compare.mjs'
       - 'scripts/research/block2-official-source-import.mjs'
+      - 'scripts/research/block2-athex-rds-import.mjs'
+      - 'scripts/research/test-block2-athex-rds-import.mjs'
       - 'scripts/research/test-block2-official-source-import.mjs'
       - 'scripts/research/test-block2-official-source-compare.mjs'
       - 'scripts/research/block1-data-readiness.mjs'
@@ -43,6 +45,8 @@ jobs:
         run: node scripts/research/test-block1-architecture-baseline.mjs
       - name: Test Block 2 identity and source-verification lock
         run: node scripts/research/test-block2-identity.mjs
+      - name: Test ATHEX RDS InstrumentSeries importer
+        run: node scripts/research/test-block2-athex-rds-import.mjs
       - name: Test official exchange CSV importer
         run: node scripts/research/test-block2-official-source-import.mjs
       - name: Test official exchange source comparison
