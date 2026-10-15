@@ -54,5 +54,5 @@ for(const market of plan.markets){
 output.status=output.totals.instruments===0?'BLOCKED_EMPTY_CATALOG':output.totals.quarantined?'BLOCKED_UNVERIFIED_INSTRUMENTS':'VERIFIED_STRUCTURE_ONLY';
 await fs.mkdir('research/output/machine-arena',{recursive:true});
 await fs.writeFile('research/output/machine-arena/block1-instrument-quarantine.json',JSON.stringify(output,null,2));
-console.log(JSON.stringify({status:output.status,totals:output.totals,markets:output.markets.map(({mic,count,verifiedCommonShares,quarantined})=>({mic,count,verifiedCommonShares,quarantined}))}));
+console.log(JSON.stringify({status:output.status,totals:output.totals,markets:output.markets.map(({mic,count,verifiedCommonShares,quarantined,records})=>({mic,count,verifiedCommonShares,quarantined,missingIsin:records.filter(r=>r.issues.includes('MISSING_ISIN')).length,invalidIsin:records.filter(r=>r.issues.includes('INVALID_ISIN')).length}))}));
 if(output.totals.quarantined || output.totals.instruments===0)process.exitCode=1;
