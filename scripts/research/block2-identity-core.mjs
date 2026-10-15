@@ -20,10 +20,12 @@ export function listingIdentity(row, market) {
 export function marketManifest(market,rows) {
  if(!Array.isArray(rows))throw Error('INVALID_CATALOG_SHAPE');
  const seen=new Set();
+ const identities=new Set();
  const listings=rows.map(row=>{
   const result=listingIdentity(row,market);
   const symbol=result.identity?.symbol;
   if(symbol){if(seen.has(symbol))result.issues.push('DUPLICATE_SYMBOL');seen.add(symbol);}
+  if(result.identityHash){if(identities.has(result.identityHash))result.issues.push('DUPLICATE_LISTING_IDENTITY');identities.add(result.identityHash);}
   return result;
  });
  return {schema:1,mic:market.mic,fingerprint:hash(listings),total:listings.length,certified:0,blocked:listings.length,listings};
