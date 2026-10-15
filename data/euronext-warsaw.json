@@ -156,13 +156,14 @@
       "name": "11 bit studios S.A.",
       "symbol": "11B",
       "ticker": "11B",
-      "isin": null,
+      "isin": "PL11BTS00015",
       "mic": "XWAR",
       "segment": "Main Market",
       "currency": "PLN",
       "providerSymbol": "11B.WA",
-      "identitySource": "https://www.gpw.pl/spolki",
-      "identityResolution": "GPW_MAIN_MARKET_CURRENT_QUOTE_AND_HISTORY_PROOF"
+      "identitySource": "https://www.gpw.pl/spolka?isin=PL11BTS00015",
+      "identityResolution": "OFFICIAL_GPW_ISSUER_LINK_ENCODES_ISIN;FULL_REGISTER_CERTIFICATION_PENDING",
+      "identityEvidenceStatus": "OFFICIAL_GPW_COMPANY_LINK_MATCH_2026_10_15;INDEPENDENT_REGISTER_VERIFICATION_PENDING"
     },
     {
       "company": "3R Games S.A.",
