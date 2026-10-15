@@ -12,6 +12,7 @@ on:
       - 'scripts/research/complete-market-pipeline.mjs'
       - 'scripts/research/independent-market-judge.mjs'
       - 'scripts/research/model-arena.mjs'
+      - 'scripts/research/publish-live-europe.mjs'
 permissions:
   contents: read
 jobs:
@@ -25,3 +26,11 @@ jobs:
           node-version: '22'
       - name: Validate architecture baseline
         run: node scripts/research/test-block1-architecture-baseline.mjs
+      - name: Validate live snapshot transitions
+        run: node scripts/research/test-block6-live.mjs
+      - name: Verify missing rankings fail closed
+        run: |
+          if LIVE_RANKINGS_FILE=/tmp/koersplein-missing-rankings.json node scripts/research/publish-live-europe.mjs; then
+            echo 'Missing rankings unexpectedly published' >&2
+            exit 1
+          fi
