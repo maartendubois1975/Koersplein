@@ -18,6 +18,7 @@ on:
       - 'scripts/research/block2-identity-core.mjs'
       - 'scripts/research/block2-build-manifest.mjs'
       - 'scripts/research/test-block2-identity.mjs'
+      - 'data/euronext-*.json'
       - 'scripts/research/block2-official-source-compare.mjs'
       - 'scripts/research/block2-official-source-import.mjs'
       - 'scripts/research/block2-athex-rds-import.mjs'
@@ -107,6 +108,20 @@ jobs:
           name: block2-31-market-identity-manifest
           path: research/output/machine-arena/block2-identity-manifest.json
           retention-days: 30
+      - name: Verify Warsaw index classification
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const warsaw=JSON.parse(await fs.readFile('data/euronext-warsaw.json','utf8'));
+          for(const symbol of ['WIG','WIG20','SWIG80','MWIG40','WIG30']){
+            const row=warsaw.shares.find(x=>x.symbol===symbol);
+            assert.ok(row,`Missing benchmark ${symbol}`);
+            assert.equal(row.instrumentType,'INDEX');
+            assert.equal(row.securityType,'INDEX');
+            assert.notEqual(row.instrumentType,'ORDINARY_SHARE');
+          }
+          NODE
       - name: Execute Block 1 quarantine fixture tests
         run: node scripts/research/test-block1-quarantine-functional.mjs
       - name: Execute full 31-market quarantine and readiness integration (expected blocked)
