@@ -9,6 +9,7 @@ const hash=createHash('sha256').update(bytes).digest('hex');
 if(hash!==meta.expectedSha256)throw Error('SOURCE_HASH_MISMATCH');
 if(!meta.sourceUrl?.startsWith('https://')||!Number.isFinite(Date.parse(meta.asOf||'')))throw Error('SOURCE_PROVENANCE_REQUIRED');
 if(meta.fieldPositions?.symbol!==1||meta.fieldPositions?.isin!==19||meta.fieldPositions?.instrumentType!==9||meta.fieldPositions?.rightsFlag!==12)throw Error('EXPLICIT_VERIFIED_FIELD_MAPPING_REQUIRED');
+if(meta.fieldMappingVerified!==true||!meta.fieldMappingSourceUrl?.startsWith('https://'))throw Error('OFFICIAL_FIELD_MAPPING_EVIDENCE_REQUIRED');
 const filename=path.basename(sourcePath);
 const match=/^InstrumentSeries-(\d{8})-G-v\d+\.csv$/i.exec(filename);
 if(!match||meta.asOf.slice(0,10).replaceAll('-','')!==match[1])throw Error('ATHEX_PRODUCTION_FILENAME_DATE_REQUIRED');
