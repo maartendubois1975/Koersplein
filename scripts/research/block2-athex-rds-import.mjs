@@ -23,11 +23,12 @@ for(let i=0;i<lines.length;i++){
  if(cols.length<27)throw Error('SHORT_RDS_ROW_'+(i+1));
  const field=n=>(cols[n-1]||'').trim();
  const symbol=field(1).toUpperCase(),isin=field(19).toUpperCase(),type=field(9).toUpperCase(),right=field(12).toUpperCase();
- const reason=type!=='CS'?'NOT_COMMON_STOCK':right==='R'?'SUBSCRIPTION_RIGHT':!isValidIsin(isin)?'INVALID_ISIN':!symbol?'MISSING_SYMBOL':seen.has(symbol)?'DUPLICATE_SYMBOL':null;
+ const reason=field(8)!=='5'?'NOT_EQUITY_PRODUCT':type!=='CS'?'NOT_COMMON_STOCK':right!=='N'?(right==='R'?'SUBSCRIPTION_RIGHT':'UNKNOWN_RIGHT_FLAG'):!isValidIsin(isin)?'INVALID_ISIN':!symbol?'MISSING_SYMBOL':seen.has(symbol)?'DUPLICATE_SYMBOL':null;
  if(reason){if(reason==='DUPLICATE_SYMBOL')throw Error('DUPLICATE_RDS_SYMBOL_'+symbol);rejected.push({line:i+1,symbol,reason});continue;}
  seen.add(symbol);
  records.push({symbol,isin,recordId:filename+':'+(i+1),instrumentType:'COMMON_STOCK',exchange:field(3),venue:field(4),market:field(6),isTraded:field(26),status:field(27),englishName:field(24)});
 }
+if(rejected.some(x=>x.reason==='UNKNOWN_RIGHT_FLAG'))throw Error('UNKNOWN_RIGHT_FLAG_IN_SOURCE');
 if(!records.length)throw Error('NO_VALID_COMMON_STOCKS');
 if(records.length+rejected.length!==lines.length)throw Error('SOURCE_ROW_ACCOUNTING_MISMATCH');
 const output={schema:1,sourceUrl:meta.sourceUrl,asOf:meta.asOf,coverage:'PARTIAL_MARKET',inputSha256:hash,sourceRetrievedAt:meta.sourceRetrievedAt,retrievalMethod:meta.retrievalMethod,retrievedBy:meta.retrievedBy,sourceAuthenticityVerified:false,sourceFormat:'ATHEX_RDS_INSTRUMENT_SERIES',records,rejected,sourceRows:lines.length};
