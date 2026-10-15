@@ -37,7 +37,9 @@ const sourcedAthens=athens.shares.filter(row=>row.identitySource==='https://www.
 assert.ok(sourcedAthens.length>=35);
 assert.equal(athens.shares.find(row=>row.symbol==='ETE').isin,'GRS003003035');
 assert.equal(athens.shares.find(row=>row.symbol==='ALPHA').isin,'GRS830003000');
-assert.ok(sourcedAthens.every(row=>row.identityResolution.includes('CURRENT_REGISTER_AND_INDEPENDENT_CERTIFICATION_PENDING')));
+assert.ok(sourcedAthens.every(row=>row.identityResolution.includes('CERTIFICATION_PENDING')||row.identityResolution.includes('CERTIFICATION_BLOCKED')));
+assert.ok(athens.shares.find(row=>row.symbol==='EUROB').identityCorporateActionSource.includes('EUROBANK_Prospectus_2025.pdf'));
+assert.ok(athens.shares.find(row=>row.symbol==='EUROB').identityResolution.includes('REVERSE_MERGER'));
 assert.ok(sourcedAthens.every(row=>listingIdentity(row,{mic:'XATH'}).certified===false));
 const eee=athens.shares.find(row=>row.symbol==='EEE');
 assert.equal(eee.isin,'CH0198251305');
