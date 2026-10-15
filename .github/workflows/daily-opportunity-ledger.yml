@@ -8,6 +8,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   select:
+    # Branch dispatch must never check out main and write production data.
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     timeout-minutes: 120
     env:
