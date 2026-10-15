@@ -15,7 +15,7 @@ for(const market of plan.markets){
   const manifest=marketManifest(market,rows);
   markets.push(manifest);
   for(const [index,entry] of manifest.listings.entries()){
-   const actionable=entry.issues.filter(issue=>['MISSING_ISIN','INVALID_ISIN','WRONG_MIC','DUPLICATE_SYMBOL','DUPLICATE_LISTING_IDENTITY'].includes(issue));
+   const actionable=entry.issues.filter(issue=>['MISSING_SYMBOL','MISSING_ISIN','INVALID_ISIN','WRONG_MIC','DUPLICATE_SYMBOL','DUPLICATE_LISTING_IDENTITY'].includes(issue));
    if(actionable.length)targetedRepairQueue.push({mic:market.mic,row:index,symbol:rows[index].providerSymbol||rows[index].symbol||rows[index].ticker||null,isin:rows[index].isin||null,issues:actionable,identitySource:rows[index].identitySource||null});
   }
   verificationBacklog.push({mic:market.mic,missingIsin:manifest.listings.filter(x=>x.issues.includes('MISSING_ISIN')).length,invalidIsin:manifest.listings.filter(x=>x.issues.includes('INVALID_ISIN')).length,missingRegisterEvidence:manifest.listings.filter(x=>x.issues.includes('MISSING_REGISTER_EVIDENCE')).length,unverifiedType:manifest.listings.filter(x=>x.issues.includes('UNVERIFIED_TYPE')).length});
