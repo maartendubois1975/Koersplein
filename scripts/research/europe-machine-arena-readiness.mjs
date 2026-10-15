@@ -23,7 +23,7 @@ const existing={
  europePipeline:'scripts/research/complete-market-pipeline.mjs'
 };
 for(const [name,path] of Object.entries(existing)){try{await fs.access(path)}catch{throw Error(`FOUNDATION_MISSING_${name}_${path}`)}}
-const report={generatedAt:new Date().toISOString(),status:'READY_TO_EXECUTE_PHASE_1',markets:complete.map(x=>x.mic),marketCount:complete.length,machineCount:contract.machines.length,horizonsMonths:contract.horizonsMonths,foundations:existing,nextPhase:{name:'historical-Europe-baseline',purpose:'Run frozen blind forecasts across all COMPLETE European markets, then score outcomes separately; hindsight remains isolated.',customerRanking:'Top candidates separately for 3/6/12/24 months; no 0-100 score.'}};
+const report={generatedAt:new Date().toISOString(),status:'STRUCTURAL_CONTRACT_ONLY_NOT_DATA_READY',markets:complete.map(x=>x.mic),marketCount:complete.length,machineCount:contract.machines.length,horizonsMonths:contract.horizonsMonths,foundations:existing,validation:{officialRegistersVerified:false,historyCoverageVerified:false,allElevenMachinesCompared:false,outOfSampleValidated:false,holdoutValidated:false},nextPhase:{name:'historical-Europe-baseline',purpose:'Run frozen blind forecasts across all COMPLETE European markets, then score outcomes separately; hindsight remains isolated.',customerRanking:'Top candidates separately for 3/6/12/24 months; no 0-100 score.'}};
 await fs.mkdir('research/output/machine-arena',{recursive:true});
 await fs.writeFile('research/output/machine-arena/readiness.json',JSON.stringify(report,null,2));
 console.log(JSON.stringify(report,null,2));
