@@ -6,6 +6,10 @@ const evidenceFile=process.env.LIVE_VALIDATION_EVIDENCE_FILE||'research/output/l
 let evidence;try{evidence=JSON.parse(await fs.readFile(evidenceFile,'utf8'))}catch(e){if(e.code==='ENOENT')throw Error('LIVE_VALIDATION_EVIDENCE_MISSING: publication blocked');throw e}
 if(evidence?.status!=='VALIDATED'||evidence?.outOfSampleValidated!==true||evidence?.holdoutValidated!==true||!evidence?.reportId)throw Error('LIVE_VALIDATION_EVIDENCE_INVALID: publication blocked');
 if(![3,6,12,24].every(h=>evidence?.horizons?.[h+'m']?.status==='VALIDATED'))throw Error('LIVE_VALIDATION_HORIZONS_UNVERIFIED: publication blocked');
+const crypto=await import('node:crypto');
+const digest=crypto.createHash('sha256').update(await fs.readFile(input)).digest('hex');
+if(evidence?.rankingsSha256!==digest)throw Error('LIVE_VALIDATION_RANKINGS_HASH_MISMATCH: publication blocked');
+if(evidence?.reportId===digest)throw Error('LIVE_VALIDATION_REPORT_NOT_DISTINCT: publication blocked');
 let previous=null;try{previous=JSON.parse(await fs.readFile('data/live-europe-latest.json','utf8'))}catch(e){if(e.code!=='ENOENT')throw e}
 const now=new Date(),daily=buildDailySnapshot(rankings,{asOf:now.toISOString(),previous,topN:5});await fs.mkdir('data/live-history',{recursive:true});const day=now.toISOString().slice(0,10);await fs.writeFile('data/live-europe-latest.json',JSON.stringify(daily,null,2));await fs.writeFile('data/live-history/'+day+'-'+daily.snapshotId.slice(0,12)+'.json',JSON.stringify(daily,null,2));await fs.writeFile('data/live-meaningful-changes.json',JSON.stringify({asOf:daily.asOf,signals:intradaySignalPolicy(daily)},null,2));
 if(now.getUTCDay()===1||process.env.FORCE_WEEKLY==='1'){const weekly=officialWeeklySnapshot(daily,{publishedAt:now.toISOString()});await fs.writeFile('data/live-europe-weekly.json',JSON.stringify(weekly,null,2));}
