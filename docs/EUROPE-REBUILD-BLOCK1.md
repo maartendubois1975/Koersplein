@@ -92,3 +92,13 @@ Branch changes made: the daily ledger is the only intended Top5 writer, the comp
 ## Functional acceptance progress (2026-10-15)
 
 Executable negative and positive fixtures now live in `scripts/research/test-block1-quarantine-functional.mjs`, called by `.github/workflows/europe-architecture-smoke.yml`. The fixture tests spawn the actual quarantine script against isolated temporary 31-market catalogs, asserting exit codes and reason codes for invalid ISIN, missing source evidence, duplicate symbol, wrong MIC, missing listing symbol and missing classification provenance. This is stronger than static string checks, but is **not** official source verification or a real 31-market integration run. Record the exact GitHub Actions run outcome before accepting the functional harness. Production remains unchanged.
+
+## Block 1 technical acceptance record — 2026-10-15
+
+**Result: B1_ARCHITECTURE_ACCEPTED_WITH_DATA_GATE_BLOCKED.** GitHub Actions run [38687071073](https://github.com/maartendubois1975/Koersplein/actions/runs/38687071073), commit `bf1a7e6622423d5170871bd9d6992194dc54e213`, completed SUCCESS. The job executed isolated negative/positive instrument quarantine fixtures, the real 31-market quarantine-to-readiness integration with expected nonzero gate exits, static workflow ownership/ordering checks, forecast chain tests, live snapshot transition tests and negative publication tests. The 31-market integration step completed SUCCESS; upload-artifact step completed SUCCESS.
+
+Evidence artifact: `block1-31-market-integration` (GitHub artifact ID `11950287453`, 90,701 bytes, SHA256 `bdb94df5e871111331eaae7c61a208a167d281904d090089369540dd71b3d569`; expires 2026-11-14). Contains the quarantine/readiness reports and available logs. The architecture smoke job itself is green, **not** the blocked official market data gate.
+
+**Acceptance scope:** technical architecture, isolated functional rejection behavior, real-catalog count reconciliation, and fail-closed research/publication boundaries. **Explicitly not accepted:** independent source authenticity for 31 markets, actual verified common shares, historical price/corporate-action quality, eleven independently fitted models, PIT/OOS/holdout, ranking efficacy, live deployment. Those belong to B2–B8 and must not inherit B1 acceptance. The smoke integration intentionally treats blocked real data as correct behavior. No merge to main and no production deployment was performed.
+
+**Next gate:** B2 official source verification and immutable identity registry, with independent evidence for each instrument and market; then B3 historic data quality. Keep publication locked until all subsequent gates pass.
