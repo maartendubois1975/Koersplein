@@ -10,6 +10,7 @@ if(hash!==meta.expectedSha256)throw Error('SOURCE_HASH_MISMATCH');
 if(!meta.sourceUrl?.startsWith('https://')||!Number.isFinite(Date.parse(meta.asOf||'')))throw Error('SOURCE_PROVENANCE_REQUIRED');
 if(meta.fieldPositions?.symbol!==1||meta.fieldPositions?.isin!==19||meta.fieldPositions?.instrumentType!==9||meta.fieldPositions?.rightsFlag!==12)throw Error('EXPLICIT_VERIFIED_FIELD_MAPPING_REQUIRED');
 if(meta.fieldMappingVerified!==true||!meta.fieldMappingSourceUrl?.startsWith('https://'))throw Error('OFFICIAL_FIELD_MAPPING_EVIDENCE_REQUIRED');
+if(meta.fieldMappingSourceUrl.includes('example.org'))throw Error('PLACEHOLDER_MAPPING_SOURCE_NOT_ALLOWED');
 const filename=path.basename(sourcePath);
 const match=/^InstrumentSeries-(\d{8})-G-v\d+\.csv$/i.exec(filename);
 if(!match||meta.asOf.slice(0,10).replaceAll('-','')!==match[1])throw Error('ATHEX_PRODUCTION_FILENAME_DATE_REQUIRED');
@@ -27,6 +28,7 @@ for(let i=0;i<lines.length;i++){
  records.push({symbol,isin,recordId:filename+':'+(i+1),instrumentType:'COMMON_STOCK',exchange:field(3),venue:field(4),market:field(6),isTraded:field(26),status:field(27),englishName:field(24)});
 }
 if(!records.length)throw Error('NO_VALID_COMMON_STOCKS');
+if(records.length+rejected.length!==lines.length)throw Error('SOURCE_ROW_ACCOUNTING_MISMATCH');
 const output={schema:1,sourceUrl:meta.sourceUrl,asOf:meta.asOf,coverage:'PARTIAL_MARKET',inputSha256:hash,sourceAuthenticityVerified:false,sourceFormat:'ATHEX_RDS_INSTRUMENT_SERIES',records,rejected,sourceRows:lines.length};
 await fs.mkdir(path.dirname(outputPath),{recursive:true});
 await fs.writeFile(outputPath,JSON.stringify(output,null,2)+'\n');
