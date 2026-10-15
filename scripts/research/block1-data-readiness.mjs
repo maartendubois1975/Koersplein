@@ -35,8 +35,20 @@ const invalid=rows.filter(x=>x.status==='INVALID_CATALOG'||x.status==='CATALOG_E
 const partial=rows.filter(x=>x.status==='PARTIAL_IDENTITIES');
 const unclassifiedMarkets=rows.filter(x=>x.status==='CLASSIFICATION_UNVERIFIED');
 // Catalog syntax is not proof of official equity eligibility or data lineage.
-const independentVerificationPending=true;
-const report={generatedAt:new Date().toISOString(),block:'BLOCK_1_DATA_LAYER',status:invalid.length?'FAIL':partial.length?'PARTIAL_IDENTITIES':unclassifiedMarkets.length?'CLASSIFICATION_UNVERIFIED':'BLOCKED_OFFICIAL_VERIFICATION_PENDING',markets:markets.length,declaredComplete,sectorRecords:(sector.records||[]).length,totals:{instruments:rows.reduce((s,x)=>s+(x.instruments||0),0),verifiedIsin:rows.reduce((s,x)=>s+(x.verifiedIsin||0),0),missingIsin:rows.reduce((s,x)=>s+(x.missingIsin||0),0),marketsPartial:partial.length,marketsInvalid:invalid.length,marketsUnclassified:unclassifiedMarkets.length,wrongMic:rows.reduce((s,x)=>s+(x.wrongMic||0),0),invalidIsin:rows.reduce((s,x)=>s+(x.invalidIsin||0),0),unclassifiedInstrumentType:rows.reduce((s,x)=>s+(x.unclassifiedInstrumentType||0),0),sourceSymbolCandidates:rows.reduce((s,x)=>s+(x.sourceSymbolCandidates||0),0)},marketCoverage:rows,limitations:['Catalog identity audit does not prove historical bars or source-symbol history','COMPLETE state is not historical research readiness','Historical membership and delisted universe coverage not proven'],safety:{pointInTime:true,missingNotZero:true,noSectorBackprojection:true,noUniverseBackprojection:true,corporateActionsRequireProvenance:true,unprovenVintageQuarantined:true}};
+// Reconcile against the independently executed instrument quarantine report.
+// Missing, stale or mismatched evidence is never treated as a pass.
+let independentVerificationPending=true;
+let evidenceGate={status:'MISSING_OR_UNREADABLE_QUARANTINE_REPORT'};
+try {
+ const quarantine=JSON.parse(await fs.readFile('research/output/machine-arena/block1-instrument-quarantine.json','utf8'));
+ const catalogCount=rows.reduce((sum,row)=>sum+(row.instruments||0),0);
+ const matching=quarantine.totals?.instruments===catalogCount && quarantine.markets?.length===markets.length &&
+  quarantine.markets.every(q=>rows.some(r=>r.mic===q.mic && r.instruments===q.count));
+ const clean=quarantine.totals?.quarantined===0 && quarantine.totals?.verifiedCommonShares===catalogCount && catalogCount>0;
+ // Metadata can be self-attested: even a clean inventory is NOT independent external verification.
+ evidenceGate={status:matching&&clean?'STRUCTURAL_EVIDENCE_PRESENT_EXTERNAL_VERIFICATION_REQUIRED':'QUARANTINE_NOT_CLEAN_OR_MISMATCHED',matching,clean};
+} catch(error) { evidenceGate={status:'MISSING_OR_UNREADABLE_QUARANTINE_REPORT',reason:error.message}; }
+const report={generatedAt:new Date().toISOString(),block:'BLOCK_1_DATA_LAYER',status:invalid.length?'FAIL':partial.length?'PARTIAL_IDENTITIES':unclassifiedMarkets.length?'CLASSIFICATION_UNVERIFIED':'BLOCKED_OFFICIAL_VERIFICATION_PENDING',markets:markets.length,declaredComplete,evidenceGate,sectorRecords:(sector.records||[]).length,totals:{instruments:rows.reduce((s,x)=>s+(x.instruments||0),0),verifiedIsin:rows.reduce((s,x)=>s+(x.verifiedIsin||0),0),missingIsin:rows.reduce((s,x)=>s+(x.missingIsin||0),0),marketsPartial:partial.length,marketsInvalid:invalid.length,marketsUnclassified:unclassifiedMarkets.length,wrongMic:rows.reduce((s,x)=>s+(x.wrongMic||0),0),invalidIsin:rows.reduce((s,x)=>s+(x.invalidIsin||0),0),unclassifiedInstrumentType:rows.reduce((s,x)=>s+(x.unclassifiedInstrumentType||0),0),sourceSymbolCandidates:rows.reduce((s,x)=>s+(x.sourceSymbolCandidates||0),0)},marketCoverage:rows,limitations:['Catalog identity audit does not prove historical bars or source-symbol history','COMPLETE state is not historical research readiness','Historical membership and delisted universe coverage not proven'],safety:{pointInTime:true,missingNotZero:true,noSectorBackprojection:true,noUniverseBackprojection:true,corporateActionsRequireProvenance:true,unprovenVintageQuarantined:true}};
 await fs.mkdir('research/output/machine-arena',{recursive:true});
 await fs.writeFile('research/output/machine-arena/block1-readiness.json',JSON.stringify(report,null,2));
 console.log(JSON.stringify(report,null,2));
