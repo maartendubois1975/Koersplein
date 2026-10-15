@@ -34,7 +34,7 @@ assert.equal(listingIdentity({...base,isin:'us0378331005'},market).identity.isin
 assert.equal(manifest.listings[0].identityHash,manifest.listings[1].identityHash);
 const athens=JSON.parse(await fs.readFile('data/euronext-athens.json','utf8'));
 const sourcedAthens=athens.shares.filter(row=>row.identitySource==='https://www.athexgroup.gr/sites/default/files/2025-10/ENPR20251013ATHEXGROUP.pdf');
-assert.ok(sourcedAthens.length>=35);
+assert.equal(sourcedAthens.length,34); // EUROB moved to the December successor-listing primary source
 assert.equal(athens.shares.find(row=>row.symbol==='ETE').isin,'GRS003003035');
 assert.equal(athens.shares.find(row=>row.symbol==='ALPHA').isin,'GRS830003000');
 assert.ok(sourcedAthens.every(row=>row.identityResolution.includes('CERTIFICATION_PENDING')||row.identityResolution.includes('CERTIFICATION_BLOCKED')));
