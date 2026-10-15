@@ -36,6 +36,15 @@ jobs:
             echo 'Unproven rankings unexpectedly published' >&2
             exit 1
           fi
+      - name: Verify validation evidence must match exact rankings
+        run: |
+          mkdir -p /tmp/koersplein-hash-test
+          cp /tmp/koersplein-test/rankings.json /tmp/koersplein-hash-test/rankings.json
+          printf '%s\n' '{"status":"VALIDATED","outOfSampleValidated":true,"holdoutValidated":true,"reportId":"independent-report","rankingsSha256":"invalid","horizons":{"3m":{"status":"VALIDATED"},"6m":{"status":"VALIDATED"},"12m":{"status":"VALIDATED"},"24m":{"status":"VALIDATED"}}}' > /tmp/koersplein-hash-test/evidence.json
+          if LIVE_RANKINGS_FILE=/tmp/koersplein-hash-test/rankings.json LIVE_VALIDATION_EVIDENCE_FILE=/tmp/koersplein-hash-test/evidence.json node scripts/research/publish-live-europe.mjs; then
+            echo 'Mismatched evidence unexpectedly published' >&2
+            exit 1
+          fi
       - name: Verify missing rankings fail closed
         run: |
           if LIVE_RANKINGS_FILE=/tmp/koersplein-missing-rankings.json node scripts/research/publish-live-europe.mjs; then
