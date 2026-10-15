@@ -1619,13 +1619,15 @@
       "name": "Vidavo S.A.",
       "symbol": "VIDAVO",
       "ticker": "VIDAVO",
-      "isin": null,
+      "isin": "GRS511003006",
       "mic": "XATH",
       "segment": "Tradable Stock",
       "currency": "EUR",
       "providerSymbol": "VIDAVO.AT",
-      "identitySource": "https://athens.euronext.com/en/trade/trading-products/trading-issuers",
-      "identityResolution": "CURRENT_ACTIVE_STOCK_FREE_HISTORY_PROOF"
+      "identitySource": "https://www.athexgroup.gr/sites/default/files/2025-09/VIDAVO%2012%20-%2009%20-%202025.pdf",
+      "identityResolution": "ATHEX_OFFICIAL_2025_09_12_SHARE_DATA_CONFIRMS_VIDAVO_ORDINARY_SHARE_GRS511003006;TEMPORARY_RIGHT_VIDAVOR_GRX511003006_EXCLUDED;CURRENT_REGISTER_AND_INDEPENDENT_CERTIFICATION_PENDING",
+      "identityMarketSegment": "ALTERNATIVE_MARKET",
+      "excludedRightsIsin": "GRX511003006"
     },
     {
       "company": "Dromeas SA",
