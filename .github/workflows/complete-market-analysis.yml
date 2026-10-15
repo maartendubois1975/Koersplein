@@ -11,7 +11,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   matrix:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    # Repair-branch dispatch must not silently run the production checkout.
+    if: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success') }}
     runs-on: ubuntu-latest
     outputs:
       markets: ${{ steps.mk.outputs.markets }}
