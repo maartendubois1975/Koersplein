@@ -114,12 +114,13 @@ jobs:
           import fs from 'node:fs/promises';
           import assert from 'node:assert/strict';
           const warsaw=JSON.parse(await fs.readFile('data/euronext-warsaw.json','utf8'));
-          for(const symbol of ['WIG','WIG20','SWIG80','MWIG40','WIG30']){
+          for(const symbol of ['WIG','WIG20','SWIG80','MWIG40','WIG30','NCINDEX']){
             const row=warsaw.shares.find(x=>x.symbol===symbol);
             assert.ok(row,`Missing benchmark ${symbol}`);
             assert.equal(row.instrumentType,'INDEX');
             assert.equal(row.securityType,'INDEX');
             assert.notEqual(row.instrumentType,'ORDINARY_SHARE');
+            assert.equal(row.isin,null,'Index must not be assigned a fabricated equity ISIN');
           }
           NODE
       - name: Execute Block 1 quarantine fixture tests
