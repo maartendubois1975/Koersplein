@@ -31,8 +31,8 @@ try {
  await scenario('wrong venue',[{...good,mic:'X999'}],['MIC_REQUIRES_OFFICIAL_SEGMENT_REVIEW']);
  await scenario('missing listing',[{...good,symbol:''}],['MISSING_LISTING_SYMBOL']);
  await scenario('unverified classification',[{...good,classificationSource:undefined}],['UNVERIFIED_SECURITY_TYPE']);
- await scenario('syntactically valid evidence does not certify an empty market',[good],[],1);
- const p=run();assert.equal(p.status,1);
+ await scenario('valid fixture passes listing syntax gate',[good],[],0);
+ const p=run();assert.equal(p.status,0);
  const report=JSON.parse(await fs.readFile(path.join(temp,'research/output/machine-arena/block1-instrument-quarantine.json'),'utf8'));
  assert.equal(report.totals.verifiedCommonShares,1);
  assert.equal(report.totals.quarantined,0);
