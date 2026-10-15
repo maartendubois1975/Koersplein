@@ -10,6 +10,7 @@ for(const market of plan.markets){
  const raw=JSON.parse(await fs.readFile('data/euronext-'+market.code+'.json','utf8'));
  const items=Array.isArray(raw)?raw:(raw.shares||raw.instruments||[]);
  const rows=[];
+ const listingKeys=new Set();
  for(const item of items){
   const isin=typeof item.isin==='string'?item.isin.trim():null;
   const type=String(item.instrumentType||item.securityType||item.type||'').toUpperCase();
