@@ -64,3 +64,17 @@ Reproducible run evidence: GitHub Actions run 38680765045, readiness job 1162445
 Critical test acceptance: distinguish UNIT_PASS, DATA_PASS, HISTORICAL_PASS, PIT_PASS, OOS_PASS, HOLDOUT_PASS and PRODUCTION_PASS. No transition may be inferred from a different category. Machine statuses remain NOT_PROVEN until their own real-data evidence exists.
 
 Additional source gap: model-arena.mjs outputs status CONFIGURED and five declared models, not fitted model artifacts or OOS competition. complete-market-analysis.yml can publish top5-three-month.json to main, while canonical European validation remains unproven; production promotion must be gated by independent validation before replacing this route.
+
+## Writer/trigger ownership audit — additional findings
+- .github/workflows/complete-market-analysis.yml: workflow_dispatch and successful daily-open-close workflow_run; checks out main; selects markets by COMPLETE state; runs per-market pipeline and cross-market research; cross-market job commits data/top5-three-month.json directly to main. Production writer A.
+- .github/workflows/daily-opportunity-ledger.yml: manual or push-triggered; checks out main; runs daily ledger, top5 compatibility, publish-live-europe; commits multiple live data files directly to main. Production writer B, overlapping top5 with writer A.
+- .github/workflows/codebase-audit.yml: push on main or manual; read-only audit, checks out main; not a publication gate.
+- .github/workflows/machine-arena-repair-validation.yml: branch-specific push/manual; checkout github.sha; diagnostics and 31-market matrix; uploads artifacts, no main write.
+- .github/workflows/machine-arena-europe.yml: manual or trigger-file push; readiness and 31-market diagnostics; artifacts only.
+- scripts/cloudflare/universal-market-runner.mjs: mutates remote Factory API catalog/history, accepts ticker-based reused identity or generated MIC-TICKER fallback; this is a separate operational data writer, not a safe official identity authority.
+- scripts/cloudflare/market-handoff-signal.mjs: assesses remote history freshness/counts, can map ticker to stored history identity; not sufficient for independently verified instrument identity.
+- scripts/cloudflare/reduce-europe-completions.mjs: writes canonical plan, registry and frontend market statuses from artifacts; correct intended single writer for state, but artifact evidence semantics require strengthening.
+
+Proposed exclusive owners: official listing identity = validated source snapshot importer; historical bar partitions = provider ingestion writer keyed by immutable verified listing identity; market readiness = evidence reducer after independent gates; machine predictions = immutable experiment ledger; research promotion = independent judge; live site data = single publication job only. Existing duplicate production writers remain active until parity and rollback are proven.
+
+Read-only architecture acceptance evidence is NOT a production-ready certificate. Tests should run on the branch without secrets, mutations or publishing.
