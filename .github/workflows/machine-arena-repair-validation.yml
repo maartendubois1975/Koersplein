@@ -10,6 +10,17 @@ concurrency:
   group: koersplein-machine-arena-repair-validation-${{ github.ref }}
   cancel-in-progress: false
 jobs:
+  architecture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Verify architecture without remote data access
+        run: node scripts/research/test-block1-architecture-baseline.mjs
   readiness:
     runs-on: ubuntu-latest
     steps:
@@ -51,8 +62,8 @@ jobs:
           retention-days: 90
   historical:
     needs: readiness
-    # Run independent market diagnostics even when global readiness fails.
-    if: ${{ always() }}
+    # Never fan out 31 long-running market jobs when the catalog readiness gate fails.
+    if: ${{ success() }}
     strategy:
       fail-fast: false
       matrix:
