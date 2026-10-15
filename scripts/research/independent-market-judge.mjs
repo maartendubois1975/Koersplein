@@ -4,6 +4,8 @@ const mic=process.env.MARKET_MIC;if(!mic)throw Error('MARKET_MIC ontbreekt');
 const dir=`research/output/${mic}`;
 const raw=await fs.readFile(`${dir}/machine1-results.jsonl`,'utf8');
 const rows=raw.split(/\r?\n/).filter(Boolean).map(x=>JSON.parse(x));
+const invalid=rows.filter(r=>!r.predictionDate||!r.isin||r.provisionalIdentity===true||r.frozen!==true||!r.modelVersion||!r.evidenceHash);
+if(invalid.length)console.warn(JSON.stringify({market:mic,unverifiableForecastRows:invalid.length,publicationEligible:false}));
 const report={generatedAt:new Date().toISOString(),market:mic,judge:'M03_INDEPENDENT_BASELINE_DIAGNOSTIC',status:'NOT_VALIDATED',observations:rows.length,horizons:{},limitations:['Only M01 baseline predictions exist; not an 11-machine competition','No immutable precommitted forecasts verified','No independent untouched holdout promotion authorized','Provisional symbol identities excluded from validation metrics; historical universe membership remains unverified']};
 for(const h of [3,6,12,24]){
  const k=`${h}m`;
