@@ -54,6 +54,8 @@ assert.equal(athens.shares.filter(row=>row.identitySourceClaimStatus==='UNSUBSTA
 const unresolvedSourceRow=athens.shares.find(row=>row.identitySourceClaimStatus==='UNSUBSTANTIATED_PER_INSTRUMENT');
 assert.ok(listingIdentity(unresolvedSourceRow,{mic:'XATH'}).issues.includes('UNSUBSTANTIATED_IDENTITY_SOURCE'));
 assert.ok(listingIdentity(unresolvedSourceRow,{mic:'XATH'}).issues.includes('PRIMARY_DOCUMENT_MATCH_REQUIRED'));
+assert.ok(listingIdentity({...unresolvedSourceRow,identityEvidenceStatus:'OFFICIAL_SOURCE_MISMATCH'},{mic:'XATH'}).issues.includes('OFFICIAL_SOURCE_IDENTITY_MISMATCH'));
+assert.ok(listingIdentity({...unresolvedSourceRow,identityEvidenceStatus:'OFFICIAL_SOURCE_NOT_FOUND'},{mic:'XATH'}).issues.includes('OFFICIAL_SOURCE_INSTRUMENT_NOT_FOUND'));
 assert.ok(athens.shares.filter(row=>row.identitySourceClaimStatus==='UNSUBSTANTIATED_PER_INSTRUMENT').every(row=>row.identityResolution.startsWith('UNVERIFIED_HISTORICAL_ISIN_CANDIDATE')));
 assert.ok(athens.shares.filter(row=>row.identityEvidenceStatus==='PRIMARY_SOURCE_MATCH_CONFIRMED_2026_04_07').every(row=>row.identityResolution.includes('CERTIFICATION_PENDING')));
 assert.equal(athens.shares.find(row=>row.symbol==='ADPS').isin,'GRS570003004');
