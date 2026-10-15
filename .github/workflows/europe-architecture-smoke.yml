@@ -19,6 +19,7 @@ on:
       - 'scripts/research/test-forecast-evidence.mjs'
       - 'scripts/research/europe-machine-arena-readiness.mjs'
       - '.github/workflows/machine-arena-europe.yml'
+      - '.github/workflows/machine-arena-repair-validation.yml'
 permissions:
   contents: read
 jobs:
@@ -59,6 +60,16 @@ jobs:
           assert.match(source,/independentVerificationPending/);
           assert.match(source,/process\.exitCode=1/);
           console.log('PASS: catalog structure alone cannot mark Block 1 data ready');
+          NODE
+      - name: Verify quarantine runs before readiness reconciliation
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const workflow=await fs.readFile('.github/workflows/machine-arena-repair-validation.yml','utf8');
+          assert.ok(workflow.indexOf('run: node scripts/research/block1-instrument-quarantine.mjs') < workflow.indexOf('run: node scripts/research/block1-data-readiness.mjs'));
+          assert.match(workflow,/Validate Block 1 data layer against quarantine output\n        if: always\(\)/);
+          console.log('PASS: Block 1 readiness uses current-run quarantine output');
           NODE
       - name: Verify research ledger does not publish unvalidated live data
         run: |
