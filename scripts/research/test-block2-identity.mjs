@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
 import {listingIdentity,marketManifest} from './block2-identity-core.mjs';
 const market={mic:'XAMS'};
 const base={symbol:'TEST',isin:'US0378331005',instrumentType:'COMMON_STOCK'};
@@ -17,4 +18,9 @@ assert.ok(manifest.listings[1].issues.includes('DUPLICATE_SYMBOL'));
 assert.ok(manifest.listings[1].issues.includes('DUPLICATE_LISTING_IDENTITY'));
 assert.equal(listingIdentity({...base,isin:'us0378331005'},market).identity.isin,'US0378331005');
 assert.equal(manifest.listings[0].identityHash,manifest.listings[1].identityHash);
+const athens=JSON.parse(await fs.readFile('data/euronext-athens.json','utf8'));
+const eee=athens.shares.find(row=>row.symbol==='EEE');
+assert.equal(eee.isin,'CH0198251305');
+assert.ok(eee.identitySource.startsWith('https://www.athexgroup.gr/'));
+assert.equal(listingIdentity(eee,{mic:'XATH'}).certified,false);
 console.log('PASS Block 2 deterministic identities, duplicates and independent-verification lock');
