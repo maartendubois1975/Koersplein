@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {spawnSync} from 'node:child_process';
+const dir=await fs.mkdtemp(path.join(os.tmpdir(),'block2-official-'));
+try{
+ const catalog=path.join(dir,'catalog.json'),source=path.join(dir,'source.json'),output=path.join(dir,'result.json');
+ const run=()=>spawnSync(process.execPath,['scripts/research/block2-official-source-compare.mjs',catalog,source,output],{encoding:'utf8'});
+ await fs.writeFile(catalog,JSON.stringify({shares:[{symbol:'AAPL',isin:'US0378331005'},{symbol:'MSFT',isin:'US5949181045'},{symbol:'OTHER',isin:null}]}));
+ await fs.writeFile(source,JSON.stringify({sourceUrl:'https://example.org/official',asOf:'2026-10-15',records:[{symbol:'AAPL',isin:'US0378331005',recordId:'1'},{symbol:'MSFT',isin:'US0378331005',recordId:'2'}]}));
+ let result=run();assert.equal(result.status,1,result.stderr);
+ let report=JSON.parse(await fs.readFile(output,'utf8'));
+ assert.equal(report.summary.PRIMARY_SOURCE_MATCH,1);
+ assert.equal(report.summary.OFFICIAL_SOURCE_MISMATCH,1);
+ assert.equal(report.summary.OFFICIAL_SOURCE_NOT_FOUND,1);
+ assert.equal(report.certified,false);
+ assert.equal(report.sourceAuthenticityVerified,false);
+ await fs.writeFile(source,JSON.stringify({sourceUrl:'http://invalid.example',asOf:'not-a-date',records:[]}));
+ result=run();assert.notEqual(result.status,0);
+ await fs.writeFile(source,JSON.stringify({sourceUrl:'https://example.org/official',asOf:'2026-10-15',records:[{symbol:'AAPL',isin:'US0378331005'},{symbol:'AAPL',isin:'US0378331005'}]}));
+ result=run();assert.notEqual(result.status,0);
+ console.log('PASS official source comparison: match, mismatch, missing, provenance, duplicate guard');
+}finally{await fs.rm(dir,{recursive:true,force:true});}
