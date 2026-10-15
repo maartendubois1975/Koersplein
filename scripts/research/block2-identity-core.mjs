@@ -2,7 +2,7 @@ import {createHash} from 'node:crypto';
 import {isValidIsin} from './isin-identity-core.mjs';
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export function listingIdentity(row, market) {
- const symbol=[row.providerSymbol,row.symbol,row.ticker].map(v=>String(v??'').trim()).find(Boolean)||'';
+ const symbol=[row.providerSymbol,row.symbol,row.ticker].map(v=>String(v??'').trim()).find(Boolean)?.toUpperCase()||'';
  const isin=String(row.isin||'').trim().toUpperCase();
  const type=String(row.instrumentType||row.securityType||row.type||'').toUpperCase();
  const issues=[];
