@@ -1,8 +1,9 @@
 import {createHash} from 'node:crypto';
 import {isValidIsin} from './isin-identity-core.mjs';
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+export const canonicalSymbol = row => [row.providerSymbol,row.symbol,row.ticker].map(v=>String(v??'').trim()).find(Boolean)?.toUpperCase()||'';
 export function listingIdentity(row, market) {
- const symbol=[row.providerSymbol,row.symbol,row.ticker].map(v=>String(v??'').trim()).find(Boolean)?.toUpperCase()||'';
+ const symbol=canonicalSymbol(row);
  const isin=String(row.isin||'').trim().toUpperCase();
  const type=String(row.instrumentType||row.securityType||row.type||'').toUpperCase();
  const issues=[];
@@ -25,7 +26,7 @@ export function marketManifest(market,rows) {
  const identities=new Set();
  const listings=rows.map(row=>{
   const result=listingIdentity(row,market);
-  const symbol=result.identity?.symbol||[row.providerSymbol,row.symbol,row.ticker].map(v=>String(v??'').trim()).find(Boolean)?.toUpperCase()||'';
+  const symbol=canonicalSymbol(row);
   if(symbol){if(seen.has(symbol))result.issues.push('DUPLICATE_SYMBOL');seen.add(symbol);}
   if(result.identityHash){if(identities.has(result.identityHash))result.issues.push('DUPLICATE_LISTING_IDENTITY');identities.add(result.identityHash);}
   return result;
