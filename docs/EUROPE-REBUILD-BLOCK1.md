@@ -39,3 +39,28 @@ A blocked instrument has explicit evidence and reason; a blocked market never st
 B1 architecture, ownership, acceptance harness; B2 official 31 market catalogs; B3 history and corporate actions; B4 canonical market factory; B5 eleven independent machine contracts; B6 blinded PIT walk-forward/OOS/holdout; B7 independent QA and ranking; B8 publication and daily operations.
 
 This document is an architecture and evidence inventory, not a claim that B1 tests have passed.
+
+## Deep audit addendum — machine-by-machine execution evidence (2026-10-15)
+Reviewed actual test-block2/3/4/5/6 scripts, universal-market-machine1, independent-market-judge, model-arena, universal-opportunity-map, and repair workflow job 116244550652.
+
+| Machine | Intended role | Observed executable evidence | Assessment |
+|---|---|---|---|
+| M01 | Historical blind time machine | universal-market-machine1 runs monthly price-momentum baseline and writes predictions AND realized labels in one results file | Baseline implementation; no independently precommitted prediction ledger demonstrated in market run |
+| M02 | Hindsight researcher | Opportunity-map is executed after coverage gate, but is not proven to be the contract's isolated hindsight researcher | Not verified |
+| M03 | Independent judge | independent-market-judge writes NOT_VALIDATED and says only M01 baseline exists | Explicitly not validated |
+| M04 | Sector/type specialist | classificationFor attached to M01 features, with synthetic core tests | Not independently evaluated |
+| M05 | Market regime | Declared missing in M01 missingSignals; separate modules exist | No proven market execution |
+| M06 | Relative winner | universal-relative-specialist runs after coverage gate | No proven independent OOS |
+| M07 | Price/volume pattern | Features computed within M01 | No standalone competition evidence |
+| M08 | Fundamental specialist | Explicitly missing PIT fundamentals in M01 | No proven execution |
+| M09 | Anomaly | Features computed within M01 | No standalone competition evidence |
+| M10 | Loser guard | Risk guard computed within M01 | No standalone competition evidence |
+| M11 | Horizon ensemble | Synthetic test of ensembleByHorizon, but not called in complete-market-pipeline | No live validated ensemble evidence |
+
+Synthetic test limitations: test-block2 uses 260 generated bars; test-block4 uses artificial 2000–2025 monthly rows; test-block5 uses synthetic trials with predeclared oos/holdoutPassed. These establish unit behavior, not actual model validation. test-block6 verifies snapshot status transitions on hand-authored rankings, not production feeds.
+
+Reproducible run evidence: GitHub Actions run 38680765045, readiness job 116244550652, quarantine output: 7110 instruments; 0 verified ordinary shares; 7110 quarantined; 546 missing ISIN; 27 invalid ISIN; 7110 without classification provenance. This is an observed blocker and must not be bypassed.
+
+Critical test acceptance: distinguish UNIT_PASS, DATA_PASS, HISTORICAL_PASS, PIT_PASS, OOS_PASS, HOLDOUT_PASS and PRODUCTION_PASS. No transition may be inferred from a different category. Machine statuses remain NOT_PROVEN until their own real-data evidence exists.
+
+Additional source gap: model-arena.mjs outputs status CONFIGURED and five declared models, not fitted model artifacts or OOS competition. complete-market-analysis.yml can publish top5-three-month.json to main, while canonical European validation remains unproven; production promotion must be gated by independent validation before replacing this route.
