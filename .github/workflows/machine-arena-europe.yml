@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: koersplein-machine-arena-europe
+  group: koersplein-machine-arena-europe-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   readiness:
@@ -41,7 +41,10 @@ jobs:
           path: research/output/machine-arena/
           retention-days: 90
   historical:
+    # A failed global catalog audit must not suppress every independent market.
+    # Each market pipeline retains its own fail-closed quality gate.
     needs: readiness
+    if: ${{ always() }}
     strategy:
       fail-fast: false
       matrix:
