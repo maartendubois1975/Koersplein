@@ -8,6 +8,8 @@ assert.equal(valid.identity.isin,base.isin);
 assert.equal(valid.certified,false);
 assert.ok(valid.issues.includes('INDEPENDENT_SOURCE_VERIFICATION_REQUIRED'));
 assert.ok(listingIdentity({...base,isin:null},market).issues.includes('MISSING_ISIN'));
+assert.ok(listingIdentity({...base,symbol:''},market).issues.includes('MISSING_SYMBOL'));
+assert.equal(listingIdentity({...base,symbol:''},market).certified,false);
 assert.ok(listingIdentity({...base,isin:'INVALID'},market).issues.includes('INVALID_ISIN'));
 assert.ok(listingIdentity({...base,mic:'XPAR'},market).issues.includes('WRONG_MIC'));
 assert.ok(listingIdentity({...base,instrumentType:'ETF'},market).issues.includes('UNVERIFIED_TYPE'));
