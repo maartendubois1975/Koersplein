@@ -47,6 +47,22 @@ assert.ok(sourcedAthens.every(row=>listingIdentity(row,{mic:'XATH'}).certified==
 const aprilAthens=athens.shares.filter(row=>row.identitySource==='https://www.athexgroup.gr/sites/default/files/2026-04/ENPR20260407ATHEXGROUP.pdf');
 assert.equal(aprilAthens.length,89);
 assert.equal(athens.shares.filter(row=>!row.isin).length,0);
+assert.equal(athens.shares.length,146);
+assert.equal(new Set(athens.shares.map(row=>row.symbol)).size,146,'Athens symbols must be unique');
+assert.equal(new Set(athens.shares.map(row=>row.isin)).size,146,'Athens ISINs must be unique');
+function validIsinChecksum(isin){
+  if(!/^[A-Z]{2}[A-Z0-9]{9}[0-9]$/.test(isin))return false;
+  const expanded=[...isin].map(c=>/[A-Z]/.test(c)?String(c.charCodeAt(0)-55):c).join('');
+  let sum=0,doubleDigit=false;
+  for(let i=expanded.length-1;i>=0;i--){
+    const value=Number(expanded[i])*(doubleDigit?2:1);
+    sum+=Math.floor(value/10)+(value%10);
+    doubleDigit=!doubleDigit;
+  }
+  return sum%10===0;
+}
+assert.ok(athens.shares.every(row=>validIsinChecksum(row.isin)),'Every Athens ISIN must have a valid ISO 6166 check digit');
+assert.ok(athens.shares.every(row=>listingIdentity(row,{mic:'XATH'}).certified===false),'Full ISIN coverage does not imply source certification');
 for(const [symbol,isin] of Object.entries({PVMEZZ:'CY0109561015',SUNMEZZ:'CY0200222111',DOPPLER:'GRS502003007'})){assert.equal(athens.shares.find(row=>row.symbol===symbol).isin,isin);}
 assert.equal(athens.shares.filter(row=>row.identityEvidenceStatus?.startsWith('SOURCE_NOT_VERIFIED')).length,65);
 assert.equal(athens.shares.filter(row=>row.identityEvidenceStatus==='PRIMARY_SOURCE_MATCH_CONFIRMED_2026_04_07').length,24);
