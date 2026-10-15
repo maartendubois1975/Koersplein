@@ -54,6 +54,9 @@ jobs:
           assert.equal(report.sourceInventory.length,31);
           assert.equal(report.issueSummary.length,31);
           assert.equal(report.sourceAudit.length,31);
+          assert.equal(report.sourceClaims.length,31);
+          assert.equal(report.sourceClaims.reduce((n,m)=>n+m.total,0),report.totals.instruments);
+          assert.ok(report.sourceClaims.every(m=>m.withIdentitySource<=m.total&&m.withOfficialRegisterEvidence<=m.total&&m.withIsin<=m.total));
           assert.equal(report.unresolvedSamples.length,31);
           assert.ok(report.unresolvedSamples.every(x=>x.samples.length<=15));
           assert.ok(report.unresolvedSamples.every(x=>x.samples.every(s=>s.issues.length>0)));
