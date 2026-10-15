@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {listingIdentity,marketManifest} from './block2-identity-core.mjs';
+const market={mic:'XAMS'};
+const base={symbol:'TEST',isin:'US0378331005',instrumentType:'COMMON_STOCK'};
+const valid=listingIdentity(base,market);
+assert.equal(valid.identity.isin,base.isin);
+assert.equal(valid.certified,false);
+assert.ok(valid.issues.includes('INDEPENDENT_SOURCE_VERIFICATION_REQUIRED'));
+assert.ok(listingIdentity({...base,isin:null},market).issues.includes('MISSING_ISIN'));
+assert.ok(listingIdentity({...base,isin:'INVALID'},market).issues.includes('INVALID_ISIN'));
+assert.ok(listingIdentity({...base,mic:'XPAR'},market).issues.includes('WRONG_MIC'));
+assert.ok(listingIdentity({...base,instrumentType:'ETF'},market).issues.includes('UNVERIFIED_TYPE'));
+const manifest=marketManifest(market,[base,base]);
+assert.equal(manifest.total,2);
+assert.equal(manifest.certified,0);
+assert.ok(manifest.listings[1].issues.includes('DUPLICATE_SYMBOL'));
+assert.equal(manifest.listings[0].identityHash,manifest.listings[1].identityHash);
+console.log('PASS Block 2 deterministic identities, duplicates and independent-verification lock');
