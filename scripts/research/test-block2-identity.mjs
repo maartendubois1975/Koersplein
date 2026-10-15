@@ -14,5 +14,7 @@ const manifest=marketManifest(market,[base,base]);
 assert.equal(manifest.total,2);
 assert.equal(manifest.certified,0);
 assert.ok(manifest.listings[1].issues.includes('DUPLICATE_SYMBOL'));
+assert.ok(manifest.listings[1].issues.includes('DUPLICATE_LISTING_IDENTITY'));
+assert.equal(listingIdentity({...base,isin:'us0378331005'},market).identity.isin,'US0378331005');
 assert.equal(manifest.listings[0].identityHash,manifest.listings[1].identityHash);
 console.log('PASS Block 2 deterministic identities, duplicates and independent-verification lock');
