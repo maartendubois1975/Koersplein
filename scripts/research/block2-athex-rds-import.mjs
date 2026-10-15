@@ -11,6 +11,7 @@ if(!meta.sourceUrl?.startsWith('https://')||!Number.isFinite(Date.parse(meta.asO
 if(meta.fieldPositions?.symbol!==1||meta.fieldPositions?.isin!==19||meta.fieldPositions?.instrumentType!==9||meta.fieldPositions?.rightsFlag!==12)throw Error('EXPLICIT_VERIFIED_FIELD_MAPPING_REQUIRED');
 if(meta.fieldMappingVerified!==true||!meta.fieldMappingSourceUrl?.startsWith('https://'))throw Error('OFFICIAL_FIELD_MAPPING_EVIDENCE_REQUIRED');
 if(meta.fieldMappingSourceUrl.includes('example.org'))throw Error('PLACEHOLDER_MAPPING_SOURCE_NOT_ALLOWED');
+if(!meta.sourceRetrievedAt||!Number.isFinite(Date.parse(meta.sourceRetrievedAt))||!meta.retrievalMethod||!meta.retrievedBy)throw Error('SOURCE_RETRIEVAL_AUDIT_REQUIRED');
 const filename=path.basename(sourcePath);
 const match=/^InstrumentSeries-(\d{8})-G-v\d+\.csv$/i.exec(filename);
 if(!match||meta.asOf.slice(0,10).replaceAll('-','')!==match[1])throw Error('ATHEX_PRODUCTION_FILENAME_DATE_REQUIRED');
@@ -29,7 +30,7 @@ for(let i=0;i<lines.length;i++){
 }
 if(!records.length)throw Error('NO_VALID_COMMON_STOCKS');
 if(records.length+rejected.length!==lines.length)throw Error('SOURCE_ROW_ACCOUNTING_MISMATCH');
-const output={schema:1,sourceUrl:meta.sourceUrl,asOf:meta.asOf,coverage:'PARTIAL_MARKET',inputSha256:hash,sourceAuthenticityVerified:false,sourceFormat:'ATHEX_RDS_INSTRUMENT_SERIES',records,rejected,sourceRows:lines.length};
+const output={schema:1,sourceUrl:meta.sourceUrl,asOf:meta.asOf,coverage:'PARTIAL_MARKET',inputSha256:hash,sourceRetrievedAt:meta.sourceRetrievedAt,retrievalMethod:meta.retrievalMethod,retrievedBy:meta.retrievedBy,sourceAuthenticityVerified:false,sourceFormat:'ATHEX_RDS_INSTRUMENT_SERIES',records,rejected,sourceRows:lines.length};
 await fs.mkdir(path.dirname(outputPath),{recursive:true});
 await fs.writeFile(outputPath,JSON.stringify(output,null,2)+'\n');
 console.log(JSON.stringify({rows:lines.length,commonStocks:records.length,rejected:rejected.length,authenticityVerified:false}));
