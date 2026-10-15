@@ -4,7 +4,7 @@ import {isValidIsin} from './isin-identity-core.mjs';
 // Evidence-based inventory only. Never infer security type from a company name,
 // ticker, exchange suffix or ISIN country prefix.
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
-const output={schema:1,generatedAt:new Date().toISOString(),status:'NOT_VERIFIED',markets:[],totals:{instruments:0,verifiedCommonShares:0,quarantined:0,missingIsin:0,invalidIsin:0,missingTypeEvidence:0,missingRegisterEvidence:0}};
+const output={schema:1,generatedAt:new Date().toISOString(),status:'NOT_VERIFIED',markets:[],totals:{instruments:0,verifiedCommonShares:0,quarantined:0,missingIsin:0,missingEquityCandidateIsin:0,nonEquityMissingIsin:0,invalidIsin:0,missingTypeEvidence:0,missingRegisterEvidence:0}};
 const types=new Set(['COMMON_STOCK','ORDINARY_SHARE']);
 const expectedMarkets=new Set(plan.markets.map(m=>m.mic));
 if(expectedMarkets.size!==31 || plan.markets.length!==31)throw new Error('BLOCK1_EXPECTED_31_UNIQUE_MARKETS');
@@ -43,7 +43,11 @@ for(const market of plan.markets){
   const accepted=issues.length===0;
   output.totals.instruments++;
   if(accepted)output.totals.verifiedCommonShares++;else output.totals.quarantined++;
-  if(issues.includes('MISSING_ISIN'))output.totals.missingIsin++;
+  if(issues.includes('MISSING_ISIN')){
+    output.totals.missingIsin++;
+    if(type==='INDEX')output.totals.nonEquityMissingIsin++;
+    else output.totals.missingEquityCandidateIsin++;
+  }
   if(issues.includes('INVALID_ISIN'))output.totals.invalidIsin++;
   if(issues.includes('UNVERIFIED_SECURITY_TYPE'))output.totals.missingTypeEvidence++;
   if(issues.includes('MISSING_INDEPENDENT_REGISTER_EVIDENCE'))output.totals.missingRegisterEvidence++;
@@ -54,5 +58,5 @@ for(const market of plan.markets){
 output.status=output.totals.instruments===0?'BLOCKED_EMPTY_CATALOG':output.totals.quarantined?'BLOCKED_UNVERIFIED_INSTRUMENTS':'VERIFIED_STRUCTURE_ONLY';
 await fs.mkdir('research/output/machine-arena',{recursive:true});
 await fs.writeFile('research/output/machine-arena/block1-instrument-quarantine.json',JSON.stringify(output,null,2));
-console.log(JSON.stringify({status:output.status,totals:output.totals,markets:output.markets.map(({mic,count,verifiedCommonShares,quarantined,records})=>({mic,count,verifiedCommonShares,quarantined,missingIsin:records.filter(r=>r.issues.includes('MISSING_ISIN')).length,invalidIsin:records.filter(r=>r.issues.includes('INVALID_ISIN')).length}))}));
+console.log(JSON.stringify({status:output.status,totals:output.totals,markets:output.markets.map(({mic,count,verifiedCommonShares,quarantined,records})=>({mic,count,verifiedCommonShares,quarantined,missingIsin:records.filter(r=>r.issues.includes('MISSING_ISIN')).length,invalidIsin:records.filter(r=>r.issues.includes('INVALID_ISIN')).length,nonEquityMissingIsin:records.filter(r=>r.declaredType==='INDEX'&&r.issues.includes('MISSING_ISIN')).length,missingEquityCandidateIsin:records.filter(r=>r.declaredType!=='INDEX'&&r.issues.includes('MISSING_ISIN')).length}))}));
 if(output.totals.quarantined || output.totals.instruments===0)process.exitCode=1;
