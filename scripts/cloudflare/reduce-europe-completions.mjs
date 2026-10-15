@@ -58,6 +58,15 @@ for(const m of plan.markets){
   if(b){if(m.state!=='BLOCKED'||m.blockedReason!==b.reason||m.catalogFingerprint!==b.fingerprint){m.state='BLOCKED';m.blockedReason=b.reason;m.blockedAt=new Date().toISOString();m.catalogFingerprint=b.fingerprint;m.note='Quarantined by canonical single writer after proven source preflight failure.';changed++;}continue;}
   const p=proven.get(m.mic);
   if(p){if(m.state!=='COMPLETE'||m.catalogFingerprint!==p.fingerprint){m.state='COMPLETE';m.completedAt=p.completedAt;m.catalogFingerprint=p.fingerprint;m.dataUnavailable=p.dataUnavailable;delete m.note;delete m.blockedReason;delete m.blockedAt;changed++;}continue;}
+  // A legacy COMPLETE flag alone is not evidence. Fail closed until a matching
+  // approved-source handoff proves catalog, identity and historical coverage.
+  if(m.state==='COMPLETE'){
+    m.state='PENDING_VALIDATION';
+    m.note='Previous COMPLETE has no verified handoff evidence in this reduction; revalidation required.';
+    delete m.completedAt;
+    delete m.dataUnavailable;
+    changed++;
+  }
 }
 await fs.writeFile(planPath,JSON.stringify(plan,null,2)+'\n');
 await fs.writeFile(registryPath,JSON.stringify(registry,null,2)+'\n');
