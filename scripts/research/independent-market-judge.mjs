@@ -10,7 +10,7 @@ const report={generatedAt:new Date().toISOString(),market:mic,judge:'M03_INDEPEN
 for(const h of [3,6,12,24]){
  const k=`${h}m`;
  const eligible=rows.filter(r=>Number.isFinite(r.predictions?.[k])&&Number.isFinite(r.realized?.[k])&&Date.parse(r.predictionDate)<Date.now()-h*30.4375*86400000);
- const verified=eligible.filter(r=>r.provisionalIdentity!==true);
+ const verified=eligible.filter(r=>r.provisionalIdentity!==true&&r.frozen===true&&typeof r.evidenceHash==='string'&&r.evidenceHash.length===64&&typeof r.modelVersion==='string'&&r.modelVersion.length>0&&typeof r.isin==='string'&&r.isin.length===12);
  const provisional=eligible.length-verified.length;
  const exam=chronologicalExamFolds(verified,{horizonMonths:h,embargoMonths:h,holdoutMonths:24});
  const scores=exam.folds.map(f=>rankingMetrics(f.test.map(r=>({prediction:r.predictions[k],actual:r.realized[k]}))));
