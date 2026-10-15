@@ -9,7 +9,7 @@ assert.equal(listingIdentity({...base,symbol:'test'},market).identityHash,valid.
 const caseDuplicate=marketManifest(market,[base,{...base,symbol:'test'}]);
 assert.ok(caseDuplicate.listings[1].issues.includes('DUPLICATE_SYMBOL'));
 assert.ok(caseDuplicate.listings[1].issues.includes('DUPLICATE_LISTING_IDENTITY'));
-assert.ok(listingIdentity({...base,providerSymbol:'OTHER'},market).issues.includes('CONFLICTING_SYMBOL_FIELDS'));
+assert.ok(listingIdentity({...base,providerSymbol:'OTHER'},market).issues.includes('PROVIDER_MAPPING_REVIEW_REQUIRED'));
 assert.ok(!listingIdentity({...base,providerSymbol:'test'},market).issues.includes('CONFLICTING_SYMBOL_FIELDS'));
 assert.equal(listingIdentity({...base,providerSymbol:'   '},market).identity.symbol,'TEST');
 assert.ok(marketManifest(market,[{...base,providerSymbol:'   '},base]).listings[1].issues.includes('DUPLICATE_SYMBOL'));
