@@ -5,6 +5,8 @@ const market={mic:'XAMS'};
 const base={symbol:'TEST',isin:'US0378331005',instrumentType:'COMMON_STOCK'};
 const valid=listingIdentity(base,market);
 assert.equal(valid.identity.isin,base.isin);
+assert.equal(listingIdentity({...base,providerSymbol:'   '},market).identity.symbol,'TEST');
+assert.ok(marketManifest(market,[{...base,providerSymbol:'   '},base]).listings[1].issues.includes('DUPLICATE_SYMBOL'));
 assert.equal(valid.certified,false);
 assert.ok(valid.issues.includes('INDEPENDENT_SOURCE_VERIFICATION_REQUIRED'));
 assert.ok(listingIdentity({...base,isin:null},market).issues.includes('MISSING_ISIN'));
