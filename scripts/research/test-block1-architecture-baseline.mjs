@@ -10,7 +10,7 @@ const paths = [
 const source = await Promise.all(paths.map(p => fs.readFile(p, 'utf8')));
 const [complete, daily, pipeline, judge, models] = source;
 const checks = {
-  duplicateTop5Publisher: complete.includes('data/top5-three-month.json') && daily.includes('data/top5-three-month.json'),
+  publicationOwnerSeparated: complete.includes('contents: read') && daily.includes('contents: write'),
   oosUnverified: pipeline.includes('outOfSampleValidated:false'),
   holdoutUnverified: pipeline.includes('holdoutValidated:false'),
   elevenMachinesUnverified: pipeline.includes('allElevenMachinesCompared:false'),
