@@ -78,3 +78,13 @@ Additional source gap: model-arena.mjs outputs status CONFIGURED and five declar
 Proposed exclusive owners: official listing identity = validated source snapshot importer; historical bar partitions = provider ingestion writer keyed by immutable verified listing identity; market readiness = evidence reducer after independent gates; machine predictions = immutable experiment ledger; research promotion = independent judge; live site data = single publication job only. Existing duplicate production writers remain active until parity and rollback are proven.
 
 Read-only architecture acceptance evidence is NOT a production-ready certificate. Tests should run on the branch without secrets, mutations or publishing.
+
+## Block 1 lock-in decision (2026-10-15)
+
+Architecture acceptance and external data certification are separate gates. B1_ARCHITECTURE may pass only when the branch smoke test, source-owner checks, catalog quarantine, fail-closed readiness, and workflow ordering are verified. B1_DATA_CERTIFIED requires authentic independently checked exchange listings, security classifications, history provenance and licensing; it is not implied by B1_ARCHITECTURE. The combined Europe system remains BLOCKED until the latter is proven. This prevents an indefinitely expanding architecture block from being mislabeled production-ready.
+
+Branch changes made: the daily ledger is the only intended Top5 writer, the complete-market analysis writer is read-only; live rankings require validation evidence and cannot be emitted by the ledger; Europe matrix waits for readiness; 31-market quarantine rejects absent/duplicate listing symbols, bad ISINs, missing classification/register metadata, wrong venue and empty catalogs; readiness reconciles quarantine counts but still fails pending independent external verification. Heavy repair workflow is dispatch-only; branch smoke is automatic.
+
+**Evidence boundary:** the smoke suite contains structural/static checks and negative publication tests, not an independent exchange data audit. A syntactically complete officialRegisterEvidence object is self-asserted until its source is independently fetched and verified. The data readiness process deliberately exits nonzero even if all catalog fields are filled. Do not weaken this gate to make a workflow green.
+
+**Current remaining release blockers:** independently verify the 31 source registers and instrument types; establish legal provenance/rights and point-in-time historic coverage; independently validate the 11 machines, holdout and ranking horizons; inspect the full repair workflow run and publication rollback. No merge, main write or site release is authorized by this architecture record.
