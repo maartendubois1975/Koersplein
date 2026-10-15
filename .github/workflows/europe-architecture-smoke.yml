@@ -55,6 +55,9 @@ jobs:
           assert.equal(report.issueSummary.length,31);
           assert.equal(report.sourceAudit.length,31);
           assert.equal(report.sourceClaims.length,31);
+          assert.equal(report.verificationBacklog.length,31);
+          assert.ok(report.verificationBacklog.every(x=>['missingIsin','invalidIsin','missingRegisterEvidence','unverifiedType'].every(k=>Number.isInteger(x[k])&&x[k]>=0)));
+          assert.ok(report.verificationBacklog.every(x=>x.missingIsin<=report.markets.find(m=>m.mic===x.mic).total));
           assert.equal(report.sourceClaims.reduce((n,m)=>n+m.total,0),report.totals.instruments);
           assert.ok(report.sourceClaims.every(m=>m.withIdentitySource<=m.total&&m.withOfficialRegisterEvidence<=m.total&&m.withIsin<=m.total));
           assert.equal(report.unresolvedSamples.length,31);
