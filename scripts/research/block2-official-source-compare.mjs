@@ -7,6 +7,7 @@ const official=JSON.parse(await fs.readFile(sourcePath,'utf8'));
 if(!Array.isArray(official.records)||!official.sourceUrl?.startsWith('https://')||!Number.isFinite(Date.parse(official.asOf||'')))throw Error('OFFICIAL_SOURCE_METADATA_REQUIRED');
 if(official.coverage!=='COMPLETE_MARKET'&&official.coverage!=='PARTIAL_MARKET')throw Error('OFFICIAL_SOURCE_COVERAGE_REQUIRED');
 if(!official.records.length)throw Error('EMPTY_OFFICIAL_SOURCE');
+if(official.coverage==='COMPLETE_MARKET'&&official.completenessEvidence?.verified!==true)throw Error('COMPLETE_MARKET_REQUIRES_VERIFIED_COMPLETENESS_EVIDENCE');
 const rows=Array.isArray(catalog)?catalog:(catalog.shares||catalog.instruments);
 if(!Array.isArray(rows))throw Error('INVALID_CATALOG');
 const normalized=v=>String(v??'').trim().toUpperCase();
