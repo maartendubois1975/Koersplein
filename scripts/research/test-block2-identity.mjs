@@ -46,10 +46,12 @@ assert.ok(athens.shares.find(row=>row.symbol==='EUROB').identityResolution.inclu
 assert.ok(sourcedAthens.every(row=>listingIdentity(row,{mic:'XATH'}).certified===false));
 const aprilAthens=athens.shares.filter(row=>row.identitySource==='https://www.athexgroup.gr/sites/default/files/2026-04/ENPR20260407ATHEXGROUP.pdf');
 assert.equal(aprilAthens.length,89);
-assert.equal(athens.shares.filter(row=>!row.isin).length,19);
+assert.equal(athens.shares.filter(row=>!row.isin).length,18);
 assert.equal(athens.shares.find(row=>row.symbol==='SOFTWEB').isin,'GRS538003005');
 assert.equal(athens.shares.find(row=>row.symbol==='SOFTWEB').identityMarketSegment,'ALTERNATIVE_MARKET');
-assert.equal(athens.shares.find(row=>row.symbol==='VIDAVO').isin,null); // VIDAVOR rights ISIN must never be mistaken for VIDAVO shares
+assert.equal(athens.shares.find(row=>row.symbol==='VIDAVO').isin,'GRS511003006');
+assert.equal(athens.shares.find(row=>row.symbol==='VIDAVO').excludedRightsIsin,'GRX511003006');
+assert.notEqual(athens.shares.find(row=>row.symbol==='VIDAVO').isin,athens.shares.find(row=>row.symbol==='VIDAVO').excludedRightsIsin);
 assert.equal(athens.shares.find(row=>row.symbol==='DOTSOFT').isin,'GRS531003002');
 assert.equal(athens.shares.find(row=>row.symbol==='DOTSOFT').identityMarketSegment,'ALTERNATIVE_MARKET');
 assert.equal(athens.shares.find(row=>row.symbol==='TPEIR').isin,'GRS831003009');
