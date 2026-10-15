@@ -3,7 +3,7 @@ import {isValidIsin} from './isin-identity-core.mjs';
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export function listingIdentity(row, market) {
  const symbol=String(row.providerSymbol||row.symbol||row.ticker||'').trim();
- const isin=String(row.isin||'').trim();
+ const isin=String(row.isin||'').trim().toUpperCase();
  const type=String(row.instrumentType||row.securityType||row.type||'').toUpperCase();
  const issues=[];
  if(!symbol)issues.push('MISSING_SYMBOL');
