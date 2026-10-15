@@ -40,6 +40,16 @@ jobs:
           assert.match(judge,/validated:false/);
           console.log('Judge remains diagnostic-only and excludes untraceable forecasts');
           NODE
+      - name: Verify Europe matrix respects readiness
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const workflow=await fs.readFile('.github/workflows/machine-arena-europe.yml','utf8');
+          assert.match(workflow,/historical:[\s\S]*?needs: readiness\s+if: \$\{\{ success\(\) \}\}/);
+          assert.doesNotMatch(workflow,/historical:[\s\S]*?if: \$\{\{ always\(\) \}\}/);
+          console.log('PASS: historical market matrix cannot bypass readiness');
+          NODE
       - name: Verify chained forecast evidence
         run: node scripts/research/test-forecast-evidence.mjs
       - name: Validate live snapshot transitions
