@@ -67,6 +67,15 @@ jobs:
           assert.equal(report.issueSummary.length,31);
           assert.equal(report.sourceAudit.length,31);
           assert.equal(report.sourceClaims.length,31);
+          assert.equal(report.marketReadiness.length,31);
+          assert.ok(report.marketReadiness.every(m=>m.readyForProduction===false&&m.certified===0));
+          assert.ok(report.marketReadiness.every(m=>m.isinCoverage>=0&&m.isinCoverage<=100));
+          assert.ok(report.marketReadiness.every(m=>m.primaryDocumentMatches<=m.total));
+          const athens=report.marketReadiness.find(m=>m.mic==='XATH');
+          assert.ok(athens,'Athens market readiness missing');
+          assert.equal(athens.isinCoverage,100);
+          assert.equal(athens.total,146);
+          assert.ok(athens.unsubstantiatedClaims>=65);
           assert.equal(report.verificationBacklog.length,31);
           assert.ok(report.targetedRepairQueue.every(x=>x.issues.length>0&&x.row>=0));
           assert.equal(report.targetedRepairQueue.filter(x=>x.issues.includes('MISSING_ISIN')).length,report.verificationBacklog.reduce((n,m)=>n+m.missingIsin,0));
