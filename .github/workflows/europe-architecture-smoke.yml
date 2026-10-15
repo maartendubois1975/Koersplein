@@ -54,6 +54,9 @@ jobs:
           assert.equal(report.sourceInventory.length,31);
           assert.equal(new Set(report.sourceInventory.map(x=>x.mic)).size,31);
           assert.ok(report.sourceInventory.every(x=>x.externalSnapshotVerified===false));
+          assert.equal(report.totals.catalogErrors,0,'All 31 catalogs must be readable and structurally valid');
+          assert.equal(report.totals.instruments,report.totals.blocked,'All unverified listings must remain blocked');
+          assert.ok(report.totals.instruments>0,'No empty universe accepted');
           assert.equal(report.totals.certified,0);
           assert.equal(report.status,'OFFICIAL_VERIFICATION_REQUIRED');
           console.log(JSON.stringify(report.totals));
