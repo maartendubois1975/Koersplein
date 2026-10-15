@@ -36,6 +36,43 @@ jobs:
         run: node scripts/research/test-block1-architecture-baseline.mjs
       - name: Execute Block 1 quarantine fixture tests
         run: node scripts/research/test-block1-quarantine-functional.mjs
+      - name: Execute full 31-market quarantine and readiness integration (expected blocked)
+        run: |
+          mkdir -p research/output/machine-arena
+          set +e
+          node scripts/research/block1-instrument-quarantine.mjs > /tmp/block1-quarantine.log 2>&1
+          quarantine_exit=$?
+          node scripts/research/block1-data-readiness.mjs > /tmp/block1-readiness.log 2>&1
+          readiness_exit=$?
+          set -e
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const quarantine=JSON.parse(await fs.readFile('research/output/machine-arena/block1-instrument-quarantine.json','utf8'));
+          const readiness=JSON.parse(await fs.readFile('research/output/machine-arena/block1-readiness.json','utf8'));
+          assert.equal(quarantine.markets.length,31);
+          assert.equal(readiness.marketCoverage.length,31);
+          assert.equal(quarantine.totals.instruments,readiness.totals.instruments);
+          assert.equal(quarantine.markets.reduce((n,m)=>n+m.count,0),quarantine.totals.instruments);
+          assert.equal(quarantine.totals.verifiedCommonShares+quarantine.totals.quarantined,quarantine.totals.instruments);
+          assert.notEqual(readiness.status,'READY');
+          assert.notEqual(readiness.evidenceGate.status,'MISSING_OR_UNREADABLE_QUARANTINE_REPORT');
+          console.log(JSON.stringify({integration:'PASS_BLOCKED_AS_DESIGNED',quarantineStatus:quarantine.status,readinessStatus:readiness.status,totals:quarantine.totals,evidenceGate:readiness.evidenceGate.status}));
+          NODE
+          test "$quarantine_exit" -ne 0
+          test "$readiness_exit" -ne 0
+      - name: Upload Block 1 integration evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: block1-31-market-integration
+          path: |
+            research/output/machine-arena/block1-instrument-quarantine.json
+            research/output/machine-arena/block1-readiness.json
+            /tmp/block1-quarantine.log
+            /tmp/block1-readiness.log
+          if-no-files-found: warn
+          retention-days: 30
       - name: Verify listing quarantine includes duplicate and venue guards
         run: |
           node --input-type=module <<'NODE'
