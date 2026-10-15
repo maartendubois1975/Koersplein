@@ -13,6 +13,7 @@ on:
       - 'scripts/research/independent-market-judge.mjs'
       - 'scripts/research/model-arena.mjs'
       - 'scripts/research/publish-live-europe.mjs'
+      - 'scripts/research/independent-market-judge.mjs'
 permissions:
   contents: read
 jobs:
@@ -26,6 +27,19 @@ jobs:
           node-version: '22'
       - name: Validate architecture baseline
         run: node scripts/research/test-block1-architecture-baseline.mjs
+      - name: Verify judge cannot promote diagnostic results
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const judge=await fs.readFile('scripts/research/independent-market-judge.mjs','utf8');
+          assert.match(judge,/status:'NOT_VALIDATED'/);
+          assert.match(judge,/r\.frozen===true/);
+          assert.match(judge,/r\.evidenceHash/);
+          assert.match(judge,/r\.modelVersion/);
+          assert.match(judge,/validated:false/);
+          console.log('Judge remains diagnostic-only and excludes untraceable forecasts');
+          NODE
       - name: Validate live snapshot transitions
         run: node scripts/research/test-block6-live.mjs
       - name: Verify unproven rankings cannot publish
