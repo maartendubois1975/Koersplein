@@ -51,6 +51,9 @@ jobs:
           import assert from 'node:assert/strict';
           const report=JSON.parse(await fs.readFile('research/output/machine-arena/block2-identity-manifest.json','utf8'));
           assert.equal(report.markets.length,31);
+          assert.equal(report.sourceInventory.length,31);
+          assert.equal(new Set(report.sourceInventory.map(x=>x.mic)).size,31);
+          assert.ok(report.sourceInventory.every(x=>x.externalSnapshotVerified===false));
           assert.equal(report.totals.certified,0);
           assert.equal(report.status,'OFFICIAL_VERIFICATION_REQUIRED');
           console.log(JSON.stringify(report.totals));
