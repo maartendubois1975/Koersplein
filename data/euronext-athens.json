@@ -2085,13 +2085,15 @@
       "name": "YALCO - Socrates D. Constantinou & Son S.A.",
       "symbol": "YALCO",
       "ticker": "YALCO",
-      "isin": null,
+      "isin": "GRS249003005",
       "mic": "XATH",
-      "segment": "Tradable Stock",
+      "segment": "Under Suspension",
       "currency": "EUR",
       "providerSymbol": "YALCO.AT",
       "identitySource": "https://athens.euronext.com/en/trade/trading-products/trading-issuers",
-      "identityResolution": "CURRENT_ACTIVE_STOCK_FREE_HISTORY_PROOF"
+      "identityResolution": "OFFICIAL_ISSUER_TABLE_SYMBOL_ISIN_MATCH;UNDER_SUSPENSION;INDEPENDENT_CERTIFICATION_PENDING",
+      "identityEvidenceStatus": "PRIMARY_SOURCE_MATCH_CONFIRMED_2026_10_15",
+      "identitySourceClaimStatus": "EURONEXT_ATHENS_OFFICIAL_TRADING_ISSUERS_MATCH"
     }
   ]
 }
