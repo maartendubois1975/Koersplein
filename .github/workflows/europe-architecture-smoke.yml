@@ -81,6 +81,8 @@ jobs:
           assert.doesNotMatch(workflow,/git add[^\n]*data\/live-europe-latest\.json/);
           assert.match(workflow,/run: node scripts\/research\/daily-opportunity-ledger\.mjs/);
           assert.match(workflow,/if: \$\{\{ github\.ref == 'refs\/heads\/main' \}\}/);
+          const complete=await fs.readFile('.github/workflows/complete-market-analysis.yml','utf8');
+          assert.match(complete,/github\.ref == 'refs\/heads\/main'/);
           console.log('PASS: experimental ledger writes cannot be blocked by or publish live validation');
           NODE
       - name: Verify judge cannot promote diagnostic results
