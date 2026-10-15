@@ -11,7 +11,7 @@ try{
  const csv=[make('AAPL','US0378331005'),make('MSFT','US5949181045'),make('RIGHT','US0378331005','CS','R'),make('BOND','US0378331005','PS')].join('\n')+'\n';
  const sha=s=>createHash('sha256').update(s).digest('hex');
  const run=()=>spawnSync(process.execPath,['scripts/research/block2-athex-rds-import.mjs',input,meta,output],{encoding:'utf8'});
- await fs.writeFile(input,csv);await fs.writeFile(meta,JSON.stringify({sourceUrl:'https://portal.athexgroup.gr/rds',asOf:'2026-10-15',expectedSha256:sha(csv)}));
+ await fs.writeFile(input,csv);await fs.writeFile(meta,JSON.stringify({sourceUrl:'https://portal.athexgroup.gr/rds',asOf:'2026-10-15',expectedSha256:sha(csv),fieldPositions:{symbol:1,isin:19,instrumentType:9,rightsFlag:12}}));
  let r=run();assert.equal(r.status,0,r.stderr);const data=JSON.parse(await fs.readFile(output,'utf8'));
  assert.equal(data.records.length,2);assert.equal(data.rejected.length,2);assert.equal(data.sourceAuthenticityVerified,false);
  await fs.writeFile(input,csv+'\n');r=run();assert.notEqual(r.status,0);
