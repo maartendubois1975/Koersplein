@@ -28,6 +28,14 @@ jobs:
         run: node scripts/research/test-block1-architecture-baseline.mjs
       - name: Validate live snapshot transitions
         run: node scripts/research/test-block6-live.mjs
+      - name: Verify unproven rankings cannot publish
+        run: |
+          mkdir -p /tmp/koersplein-test
+          printf '%s\n' '{"rankings":{"3m":[{"instrument":"A","validationStatus":"VALIDATED","holdoutValidated":true,"outOfSampleValidated":true}],"6m":[{"instrument":"B","validationStatus":"VALIDATED","holdoutValidated":true,"outOfSampleValidated":true}],"12m":[{"instrument":"C","validationStatus":"VALIDATED","holdoutValidated":true,"outOfSampleValidated":true}],"24m":[{"instrument":"D","validationStatus":"VALIDATED","holdoutValidated":true,"outOfSampleValidated":true}]}}' > /tmp/koersplein-test/rankings.json
+          if LIVE_RANKINGS_FILE=/tmp/koersplein-test/rankings.json LIVE_VALIDATION_EVIDENCE_FILE=/tmp/koersplein-test/nonexistent-evidence.json node scripts/research/publish-live-europe.mjs; then
+            echo 'Unproven rankings unexpectedly published' >&2
+            exit 1
+          fi
       - name: Verify missing rankings fail closed
         run: |
           if LIVE_RANKINGS_FILE=/tmp/koersplein-missing-rankings.json node scripts/research/publish-live-europe.mjs; then
