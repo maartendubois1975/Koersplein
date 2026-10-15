@@ -23,7 +23,7 @@ export function marketManifest(market,rows) {
  const identities=new Set();
  const listings=rows.map(row=>{
   const result=listingIdentity(row,market);
-  const symbol=String(row.providerSymbol||row.symbol||row.ticker||'').trim();
+  const symbol=[row.providerSymbol,row.symbol,row.ticker].map(v=>String(v??'').trim()).find(Boolean)||'';
   if(symbol){if(seen.has(symbol))result.issues.push('DUPLICATE_SYMBOL');seen.add(symbol);}
   if(result.identityHash){if(identities.has(result.identityHash))result.issues.push('DUPLICATE_LISTING_IDENTITY');identities.add(result.identityHash);}
   return result;
