@@ -119,3 +119,20 @@ Voor iedere nieuwe beurs geldt zonder uitzondering deze volgorde:
 4. **Pas daarna uploaden/publiceren.** Geen backfill/publicatie zolang de officiële catalogus niet sluitend is en niet ieder aandeel een bewezen gratis koersroute of expliciete DATA_UNAVAILABLE-status heeft. Upload via dezelfde canonical beursbouwer; nooit via een parallel pad.
 
 Deze volgorde is een harde gate en mag niet worden omgedraaid of overgeslagen: **officieel aantal aandelen → volledige aandelenlijst → gratis koersdekking → upload/publicatie**.
+
+
+## 13. Uitvoeringscontract: grote, afgeronde bouwblokken (15 oktober 2026)
+
+Dit is een blijvende opdracht van de projecteigenaar en geldt voor handmatige sessies, regie, planning en uitvoerende machines. Het voorkomt een terugval naar cosmetische microcommits en herhaalde verzoeken om "Verder".
+
+- **"Verder", "Ga verder", "Doe" en "Maak af" betekenen:** pak zelfstandig het eerstvolgende inhoudelijke bouwblok op, werk dit van bron/data via code en integratie tot controleerbare uitkomst af. Vraag niet na elke kleine wijziging om een nieuwe opdracht.
+- **Een bouwblok is geen commit.** Een bouwblok heeft een meetbaar doel, expliciete acceptatiecriteria, daadwerkelijke uitvoering op representatieve echte data, onafhankelijke verificatie waar nodig, CI-/runbewijs en een overzicht van wat nog niet werkt.
+- **Geen cosmetische voortgang:** testasserties, logging, documentatie, tellers en extra workflows zijn ondersteunend en mogen nooit de enige opbrengst van een "Verder"-opdracht zijn, behalve als ze een bewezen productieblokkerende fout verhelpen.
+- **Bouw in zo groot mogelijke veilige, samenhangende batches.** Bundel verwante wijzigingen; controleer na de batch. Beperk onnodige losse GitHub-writes en CI-runs. Bewaar de fail-closed productiebeveiliging.
+- **Blokkadeprotocol:** zoek eerst zelfstandig alternatieve officiële bronnen, onderzoek de volledige dataketen en probeer een aantoonbaar andere route. Bij een echte externe blokkade: registreer bron, oorzaak, exacte omvang, reeds onderzochte routes en wat nodig is; ga ondertussen door met onafhankelijk uitvoerbaar werk. Geen eindeloze retries en geen verzonnen marktdata.
+- **Rapporteer pas na een volledig bouwblok** of een echte structurele blokkade; noem aantallen gerepareerde records, bronbewijs, geslaagde/mislukte end-to-end runs en resterende gaten. Noem nooit een geslaagde smoke-test gelijk aan voltooide marktcertificering.
+- **Europa-werkvolgorde:** (1) één representatieve beurs volledig end-to-end certificeren met officiële identiteit, type en historie; (2) bewezen bronimport en verificatie hergebruiken voor de overige 30 markten in grote batches; (3) de elf machines koppelen; (4) onafhankelijke holdout-/backtests; (5) Europese competitie en kwaliteitsbewaking; (6) alleen bewezen resultaten en gewichten naar live na expliciete kwaliteitsgate.
+- **Voortgang meten:** rapporteer afzonderlijk catalogusdekking, valide ISIN, onafhankelijk geverifieerde identiteit, historische dekking, modelvalidatie en productiegeschiktheid. 0 gecertificeerd blijft 0% productiegeschikt, ook bij groene CI.
+- **Volgende-sessie-overdracht:** werkelijke status, open blokkades, prioriteit, commit/PR, meetbare acceptatiecriteria en de eerstvolgende volledige batch moeten uit de repository en run-artifacts terug te vinden zijn. Dit document is de vaste regiebron, niet uitsluitend chatgeheugen.
+
+Deze paragraaf verandert de bestaande eisen van bronbewijs, quarantaine en onafhankelijke productievrijgave niet.
