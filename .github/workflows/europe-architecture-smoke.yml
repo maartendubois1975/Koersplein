@@ -14,6 +14,7 @@ on:
       - 'scripts/research/model-arena.mjs'
       - 'scripts/research/publish-live-europe.mjs'
       - 'scripts/research/block1-instrument-quarantine.mjs'
+      - 'scripts/research/block1-data-readiness.mjs'
       - 'scripts/research/forecast-evidence-core.mjs'
       - 'scripts/research/test-forecast-evidence.mjs'
       - 'scripts/research/europe-machine-arena-readiness.mjs'
@@ -47,6 +48,17 @@ jobs:
           assert.match(source,/BLOCK1_INVALID_CATALOG_SHAPE/);
           assert.match(source,/BLOCKED_EMPTY_CATALOG/);
           console.log('PASS: listing duplicates and mismatched MICs cannot silently pass');
+          NODE
+      - name: Verify official evidence cannot be bypassed by catalog structure
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import assert from 'node:assert/strict';
+          const source=await fs.readFile('scripts/research/block1-data-readiness.mjs','utf8');
+          assert.match(source,/BLOCKED_OFFICIAL_VERIFICATION_PENDING/);
+          assert.match(source,/independentVerificationPending/);
+          assert.match(source,/process\.exitCode=1/);
+          console.log('PASS: catalog structure alone cannot mark Block 1 data ready');
           NODE
       - name: Verify research ledger does not publish unvalidated live data
         run: |
