@@ -102,7 +102,7 @@ function adminPage() {
 async function route(request, env) {
   const url = new URL(request.url), path = url.pathname;
   if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: { ...cors(request, env), 'access-control-allow-methods': 'GET,POST,PATCH,PUT,OPTIONS', 'access-control-allow-headers': 'content-type,authorization' } });
-  if (path === '/health') return json({ ok: true, storage: { metadata: 'D1', history: 'R2' } });
+  if (path === '/health') return json({ ok: true, authentication: 'github-oidc-v1', storage: { metadata: 'D1', history: 'R2' } });
   if (path === '/beheer' || path === '/beheer/') return isAdmin(request, env) ? adminPage() : json({ error: 'Beheer vereist Cloudflare Access' }, 401);
   if (path === '/api/history/manifest.json') {
     const rows = await env.DB.prepare(`SELECT i.isin,i.ticker symbol,i.mic,h.first_date firstDate,h.last_date lastDate,h.record_count recordCount,h.provider FROM instruments i JOIN history_status h ON h.instrument_id=i.id WHERE h.record_count>0`).all();

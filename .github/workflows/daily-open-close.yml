@@ -32,6 +32,32 @@ jobs:
         run: node scripts/cloudflare/test-github-oidc.mjs
       - name: Verify factory credentials before long-running update
         run: |
+          node --input-type=module <<'JS'
+          import {FactoryApiClient} from './scripts/cloudflare/client.mjs';
+          import {verifyGithubIdentity} from './cloudflare/github-oidc.mjs';
+          import fs from 'node:fs/promises';
+          const client = new FactoryApiClient();
+          const token = await client.credentials();
+          const claims = JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString());
+          console.log('OIDC_SCOPE_CHECK', JSON.stringify({
+            repository: claims.repository === 'maartendubois1975/Koersplein',
+            repositoryId: claims.repository_id === '1369316270',
+            ownerId: claims.repository_owner_id === '305800938',
+            main: claims.ref === 'refs/heads/main',
+            workflow: claims.workflow_ref === 'maartendubois1975/Koersplein/.github/workflows/daily-open-close.yml@refs/heads/main',
+            reusable: claims.job_workflow_ref !== undefined,
+            hosted: claims.runner_environment === 'github-hosted',
+            lifetime: claims.exp - claims.iat,
+            verified: await verifyGithubIdentity(token)
+          }));
+          const runtime = JSON.parse(await fs.readFile('data/runtime-config.json','utf8')).apiBaseUrl;
+          for (const base of new Set([client.baseUrl,runtime])) {
+            const response = await fetch(base+'/health');
+            console.log('WORKER_HEALTH', base === runtime ? 'runtime-config' : 'actions-config', response.status, await response.text());
+            const factory = await fetch(base+'/api/factory/catalog', {headers:{authorization:'Bearer '+token}});
+            console.log('WORKER_AUTH', base === runtime ? 'runtime-config' : 'actions-config', factory.status);
+          }
+          JS
           node --input-type=module -e "import {FactoryApiClient} from './scripts/cloudflare/client.mjs'; try { await new FactoryApiClient().catalog(); console.log('FACTORY_AUTH_OK'); } catch(e) { console.error('FACTORY_AUTH_FAILED: '+e.message); process.exit(1); }"
       - name: Voeg nieuwste volledige open en slot toe aan COMPLETE beurzen
         run: |
