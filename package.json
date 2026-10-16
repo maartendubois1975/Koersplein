@@ -26,7 +26,8 @@
     "research:paris:test": "node scripts/research/test-paris-pipeline.mjs && node scripts/research/test-paris-input.mjs && node scripts/research/test-analytics.mjs && node scripts/research/test-learning.mjs && node scripts/research/test-block1-complete.mjs && node scripts/research/test-paris-universe.mjs",
     "research:paris:core": "node scripts/research/run-paris-core.mjs",
     "research:paris:full": "node scripts/research/run-paris-full.mjs",
-    "research:paris:events": "node scripts/research/fetch-paris-macro.mjs"
+    "research:paris:events": "node scripts/research/fetch-paris-macro.mjs",
+    "audit:codebase": "node scripts/audit/codebase-audit.mjs"
   },
   "engines": {
     "node": ">=22.5"
