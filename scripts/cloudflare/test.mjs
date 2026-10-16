@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { cloudflareCatalog } from './catalog.mjs';
 import { mergeBars, partitionBars, encodePartition, decodePartition, objectKey, STORAGE_FORMAT } from './history-format.mjs';
 
 const bars = mergeBars(
@@ -11,3 +12,12 @@ assert.equal(objectKey({ mic: 'XAMS', isin: 'NL0010273215', period: '2026' }), '
 assert.equal(STORAGE_FORMAT, 'ndjson+gzip-v1');
 await import('../../cloudflare/worker.mjs');
 console.log('Cloudflare-opslagformaat en Worker-syntax: OK');
+
+const catalog = await cloudflareCatalog();
+assert.equal(catalog.markets.length,31);
+assert.equal(catalog.unresolved.length,542);
+assert.ok(catalog.instruments.length > 6000);
+assert.equal(new Set(catalog.instruments.map(x=>x.isin)).size,catalog.instruments.length);
+assert.ok(catalog.instruments.every(x=>x.isin && x.mic));
+assert.equal(catalog.markets.find(x=>x.mic==='XAMS').timezone,'Europe/Amsterdam');
+console.log('31 Europese markten en ISIN-veilig Cloudflare catalogus: OK');
