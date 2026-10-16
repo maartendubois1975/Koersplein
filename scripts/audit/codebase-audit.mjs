@@ -22,6 +22,14 @@ for(const f of files.filter(x=>path.relative(root,x).replaceAll('\\\\','/').star
 }
 const obsoleteTriggers=files.filter(x=>{const rel=path.relative(root,x).replaceAll('\\','/');return rel.startsWith('.research-triggers/')||/\.trigger$/.test(rel)||rel==='.source-first-trigger'});
 for(const f of obsoleteTriggers) issues.push({severity:'ERROR',type:'OBSOLETE_RUN_TRIGGER_PRESENT',file:path.relative(root,f).replaceAll('\\','/')});
+// Block reintroduction of removed legacy Atlas runtime, while retaining the cold-data manifest.
+const retiredRuntimePrefixes=['scripts/archive/','data/atlas-archive/'];
+const retiredRuntimeFiles=['.github/workflows/world-fill-controller.yml','.github/workflows/market-handoff-controller.yml'];
+for(const file of files){
+ const rel=path.relative(root,file).split(path.sep).join('/');
+ if(retiredRuntimePrefixes.some(prefix=>rel.startsWith(prefix))||retiredRuntimeFiles.includes(rel))
+  issues.push({severity:'ERROR',type:'RETIRED_RUNTIME_FILE_REINTRODUCED',file:rel});
+}
 const protectedFrontend=['index.html','app.js','market.js','share.html','share.js'];
 for(const rel of protectedFrontend){if(!files.some(x=>path.relative(root,x).replaceAll('\\','/')===rel))issues.push({severity:'ERROR',type:'FRONTEND_CONTRACT_FILE_MISSING',file:rel});}
 
