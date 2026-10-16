@@ -30,6 +30,7 @@ export class FactoryApiClient {
     }
     throw lastError;
   }
+  catalog() { return this.request('/api/factory/catalog'); }
   historyManifest() { return this.request('/api/history/manifest.json'); }
   seedCatalog(payload) { return this.request('/api/factory/catalog', { method: 'PUT', body: JSON.stringify(payload) }); }
   job(id) { return this.request(`/api/factory/jobs/${encodeURIComponent(id)}`); }
