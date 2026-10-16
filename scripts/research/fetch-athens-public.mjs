@@ -1,7 +1,18 @@
 import fs from 'node:fs/promises';
 import {reconcile} from './reconcile-isin.mjs';
 const url='https://athens.euronext.com/en/trade/trading-products/trading-issuers';
-const pages=await Promise.all('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(async letter=>{const res=await fetch(url+'?letter='+letter,{headers:{'User-Agent':'Mozilla/5.0'}});if(!res.ok)throw Error('Issuer listing HTTP '+res.status+' '+letter);return res.text()}));
+const pages=[];
+for(const letter of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'){
+ let page=null;
+ for(let attempt=0;attempt<3;attempt++){
+  const res=await fetch(url+'?letter='+letter,{headers:{'User-Agent':'Mozilla/5.0'}});
+  if(res.ok){page=await res.text();break}
+  console.error('Issuer listing status '+res.status+' letter '+letter+' attempt '+(attempt+1));
+  await new Promise(resolve=>setTimeout(resolve,1500*(attempt+1)));
+ }
+ if(page)pages.push(page);
+ await new Promise(resolve=>setTimeout(resolve,350));
+}
 const html=pages.join('\n');
 const catalog=JSON.parse(await fs.readFile(new URL('../../data/euronext-athens.json',import.meta.url)));
 const symbols=new Set(catalog.shares.map(s=>s.symbol));
