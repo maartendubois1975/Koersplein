@@ -17,7 +17,7 @@ console.log('Cloudflare-opslagformaat en Worker-syntax: OK');
 
 const catalog = await cloudflareCatalog();
 assert.equal(catalog.markets.length,31);
-assert.equal(catalog.unresolved.length,40);
+assert.equal(catalog.unresolved.length,15);
 assert.ok(catalog.instruments.length > 6000);
 assert.equal(new Set(catalog.instruments.map(x=>x.isin)).size,catalog.instruments.length);
 assert.ok(catalog.instruments.every(x=>x.isin && x.mic));
