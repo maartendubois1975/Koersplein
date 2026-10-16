@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { coverageReport } from '../audit/europe-history-coverage.mjs';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -14,6 +15,10 @@ const directory = await mkdtemp(join(tmpdir(), 'koersplein-factory-'));
 const db = openDatabase(join(directory, 'test.sqlite'));
 try {
   const seeded = await seedAmsterdam(db);
+  const initialCoverage = coverageReport(db,['XAMS','XWAR']);
+  assert.equal(initialCoverage.totals.instruments,124);
+  assert.equal(initialCoverage.totals.withHistory,0);
+  assert.equal(initialCoverage.markets.find(x=>x.mic==='XWAR').instruments,0);
   assert.equal(seeded.instruments, 124);
   assert.deepEqual(db.prepare('SELECT index_group,COUNT(*) count FROM instruments GROUP BY index_group ORDER BY index_group').all().map((row) => ({ ...row })), [
     { index_group:'AEX', count:30 }, { index_group:'AMX', count:25 }, { index_group:'AScX', count:20 }, { index_group:'Overig', count:49 }
@@ -29,6 +34,9 @@ try {
     { date:today, open:102, high:105, low:101, close:104, volume:1000, adjustedClose:104 }
   ];
   assert.equal(storeBars(db, asml, bars, 'fixture').added, 2);
+  const afterImport = coverageReport(db,['XAMS','XWAR']);
+  assert.equal(afterImport.totals.withHistory,1);
+  assert.equal(afterImport.totals.reportedBars,2);
   assert.equal(storeBars(db, asml, bars, 'fixture').added, 0, 'herhaalde import is idempotent');
   storeBars(db, adyen, bars.map((bar) => ({ ...bar, close:bar.close * 2, high:bar.high * 2, low:bar.low * 2, open:bar.open * 2, adjustedClose:bar.adjustedClose * 2 })), 'fixture');
   assert.equal(historyManifest(db).instruments[asml.isin].records, 2);
