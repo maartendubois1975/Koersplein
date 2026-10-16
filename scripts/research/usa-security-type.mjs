@@ -13,7 +13,7 @@ export function classifyUSListing({symbol='',name='',etf='N',testIssue='N'}={}) 
   if(/\brights?\b/i.test(n)||/\.R$/.test(s)) return {type:'RIGHT',reason:'RIGHT_DESCRIPTOR_OR_SUFFIX'};
   if(/\bamerican depositary\b|\bamerican depository\b|\bADR\b|\bADS\b|\bglobal depositary\b/i.test(n)) return {type:'ADR',reason:'DEPOSITARY_DESCRIPTOR'};
   if(/\b(?:senior|subordinated|convertible) notes?\b|\bdebentures?\b|\bbonds?\b|\bETNs?\b|\bnotes? due \d{4}\b/i.test(n)) return {type:'DEBT',reason:'DEBT_DESCRIPTOR'};
-  if(/\b(?:closed.end|mutual|investment|income|opportunities) fund\b|\btrust fund\b/i.test(n)) return {type:'FUND_REVIEW',reason:'FUND_DESCRIPTOR'};
+  if(/\b(?:closed[ -]?end|mutual|investment|income|opportunities) fund\b|\bfund\b|\binvestment trust\b/i.test(n)) return {type:'FUND_REVIEW',reason:'FUND_DESCRIPTOR'};
   if(/\bcommon (?:stock|shares?)\b|\bordinary shares?\b|\bclass [A-Z] shares?\b|\bshares? of common\b/i.test(n)) return {type:'COMMON_CANDIDATE',reason:'EQUITY_DESCRIPTOR_NOT_INDEPENDENTLY_VERIFIED'};
   return {type:'REVIEW',reason:'NO_UNAMBIGUOUS_EQUITY_DESCRIPTOR'};
 }
