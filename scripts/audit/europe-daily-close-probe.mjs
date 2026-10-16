@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 const root=new URL('../../',import.meta.url);
 const markets=JSON.parse(await fs.readFile(new URL('data/markets.json',root))).venues.find(v=>v.id==='euronext').markets;
 const date='2026-10-16', previous='2026-10-15';
+const suffixes={XAMS:'.AS',XBRU:'.BR',XPAR:'.PA',XMIL:'.MI',XOSL:'.OL',XLIS:'.LS',XSWX:'.SW',XSTO:'.ST',XCSE:'.CO',XDUB:'.IR',XETR:'.DE',XMAD:'.MC',XHEL:'.HE',XATH:'.AT',XWBO:'.VI',XPRA:'.PR',XBUD:'.BD',XBSE:'.RO',XBUL:'.BG',XWAR:'.WA',XLON:'.L',XICE:'.IC',XZAG:'.ZA',XLJU:'.LJ',XBRA:'.SK',XLUX:'.LU',XMAL:'.MT',XCYS:'.CY',XTAL:'.TL',XRIS:'.RG',XLIT:'.VS'};
 const results=[];
 for(const market of markets){
  const catalog=JSON.parse(await fs.readFile(new URL('data/'+market.sharesData,root)));
@@ -12,7 +13,9 @@ for(const market of markets){
  try{
   const end=Math.floor(Date.parse('2026-10-18T00:00:00Z')/1000);
   const start=Math.floor(Date.parse('2026-10-14T00:00:00Z')/1000);
-  const url='https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(ticker)+'?period1='+start+'&period2='+end+'&interval=1d';
+  const candidate=ticker.includes('.')?ticker:ticker+(suffixes[market.mic]||'');
+  row.requestedTicker=candidate;
+  const url='https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(candidate)+'?period1='+start+'&period2='+end+'&interval=1d';
   const res=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0'} ,signal:AbortSignal.timeout(12000)});
   if(!res.ok){row.status='http_'+res.status;results.push(row);continue}
   const body=await res.json();const chart=body.chart?.result?.[0];const q=chart?.indicators?.quote?.[0];const times=chart?.timestamp||[];
