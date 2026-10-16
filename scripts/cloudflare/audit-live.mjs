@@ -37,8 +37,19 @@ export function compareCloudflareCoverage(expected, liveCatalog, manifest) {
 }
 
 if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href) {
-  const client = new FactoryApiClient();
   const expected = await cloudflareCatalog();
-  const [liveCatalog, manifest] = await Promise.all([client.catalog(),client.historyManifest()]);
-  console.log(JSON.stringify(compareCloudflareCoverage(expected,liveCatalog,manifest),null,2));
+  const api = String(process.env.KOERSPLEIN_API_URL || 'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/, '');
+  const response = await fetch(api + '/api/history/manifest.json', {signal:AbortSignal.timeout(30000)});
+  if (!response.ok) throw Error(`Public history manifest: HTTP ${response.status}`);
+  const manifest = await response.json();
+  if (!manifest?.instruments || typeof manifest.instruments !== 'object') throw Error('Invalid public history manifest');
+  const observed = manifest.instruments;
+  const markets = expected.markets.map(m => {
+    const instruments = expected.instruments.filter(i=>i.mic===m.mic);
+    const found = instruments.filter(i=>observed[i.isin]?.mic===m.mic);
+    const stale = found.filter(i=>!observed[i.isin].lastDate || observed[i.isin].lastDate < new Date(Date.now()-7*86400000).toISOString().slice(0,10));
+    return {mic:m.mic,name:m.name,expected:instruments.length,withHistory:found.length,recent:found.length-stale.length,stale:stale.length,missing:instruments.length-found.length};
+  });
+  const totals={markets:markets.length,expected:markets.reduce((n,m)=>n+m.expected,0),withHistory:markets.reduce((n,m)=>n+m.withHistory,0),recent:markets.reduce((n,m)=>n+m.recent,0),missing:markets.reduce((n,m)=>n+m.missing,0),stale:markets.reduce((n,m)=>n+m.stale,0)};
+  console.log(JSON.stringify({schemaVersion:2,generatedAt:new Date().toISOString(),evidence:'PUBLIC_LIVE_MANIFEST_READ_ONLY',warning:'Manifest metadata does not prove individual OHLC bars; independent daily bar audit remains required.',totals,markets},null,2));
 }
