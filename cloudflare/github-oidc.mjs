@@ -16,7 +16,7 @@ export async function verifyGithubIdentity(token, { fetchKeys = fetch, clock = D
     if (claims.iss !== ISSUER || claims.aud !== OIDC_AUDIENCE ||
         claims.repository !== 'maartendubois1975/Koersplein' || claims.repository_id !== '1369316270' ||
         claims.repository_owner_id !== '305800938' || claims.ref !== 'refs/heads/main' ||
-        claims.workflow_ref !== WORKFLOW || claims.job_workflow_ref !== undefined ||
+        claims.workflow_ref !== WORKFLOW || (claims.job_workflow_ref !== undefined && claims.job_workflow_ref !== WORKFLOW) ||
         claims.runner_environment !== 'github-hosted' ||
         !['push', 'schedule', 'workflow_dispatch'].includes(claims.event_name)) return false;
     if (![claims.exp, claims.nbf, claims.iat].every(Number.isInteger) ||

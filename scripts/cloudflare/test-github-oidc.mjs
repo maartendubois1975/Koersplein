@@ -15,6 +15,7 @@ let keyCalls=0;
 const options={fetchKeys:async url=>{assert.equal(url,'https://token.actions.githubusercontent.com/.well-known/jwks');keyCalls++;return Response.json({keys:[jwk]});}};
 const valid=await token();
 assert.equal(await verifyGithubIdentity(valid,options),true);
+assert.equal(await verifyGithubIdentity(await token({job_workflow_ref:base.workflow_ref}),options),true);
 for (const claims of [{repository_id:'1'},{repository_owner_id:'1'},{repository:'attacker/Koersplein'},{ref:'refs/heads/other'},{workflow_ref:'maartendubois1975/Koersplein/.github/workflows/evil.yml@refs/heads/main'},{job_workflow_ref:'external/workflow'},{event_name:'pull_request'},{aud:'other'},{iss:'https://evil.example'},{exp:time-1},{nbf:time+120},{iat:time-1000},{exp:time+3600},{runner_environment:'self-hosted'},{exp:'9999999999'}]) {
  assert.equal(await verifyGithubIdentity(await token(claims),options),false,JSON.stringify(claims));
 }
