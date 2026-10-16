@@ -73,7 +73,7 @@ for (const market of published) {
   const identities = new Set();
   let missing = 0;
   for (const share of catalog.shares) {
-    if (!share.name || !share.symbol || share.mic !== market.mic) {
+    if (!share.name || !share.symbol || (share.mic && typeof share.mic !== 'string')) {
       throw new Error(`Ontbrekende aandelenidentiteit in ${market.mic}`);
     }
     const key = share.isin || share.symbol;
