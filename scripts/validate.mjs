@@ -59,6 +59,38 @@ for (const market of completeMarkets) {
 for (const market of published) {
   if (!completeMics.has(market.mic)) throw new Error(`Gepubliceerde Europese markt ontbreekt in COMPLETE-administratie: ${market.mic}`);
 }
+
+// Validate every published share catalog, not only the first Euronext venues.
+// Athens and Warsaw have source-proven symbols but unresolved ISINs: do not
+// fabricate identifiers or silently treat these markets as fully identified.
+let publishedShares = 0;
+const marketsWithUnresolvedIsins = [];
+for (const market of published) {
+  const catalog = await readJson('../data/' + market.sharesData);
+  if (catalog.mic !== market.mic || !Array.isArray(catalog.shares) || !catalog.shares.length) {
+    throw new Error(`Ongeldige of lege Europese aandelenlijst: ${market.mic}`);
+  }
+  const identities = new Set();
+  let missing = 0;
+  for (const share of catalog.shares) {
+    if (!share.name || !share.symbol || share.mic !== market.mic) {
+      throw new Error(`Ontbrekende aandelenidentiteit in ${market.mic}`);
+    }
+    const key = share.isin || share.symbol;
+    if (identities.has(key)) throw new Error(`Dubbele aandelenidentiteit in ${market.mic}: ${key}`);
+    identities.add(key);
+    if (!share.isin) missing++;
+  }
+  if (missing && !['XATH', 'XWAR'].includes(market.mic)) {
+    throw new Error(`Onverwacht ontbrekende ISINs in ${market.mic}: ${missing}`);
+  }
+  if (missing) marketsWithUnresolvedIsins.push(`${market.mic}:${missing}`);
+  if (market.mic === 'XWAR' && catalog.shares.some(share => ['WIG','WIG20','WIG30','NCINDEX'].includes(share.symbol))) {
+    throw new Error('Warschau bevat opnieuw beursindices tussen de aandelen.');
+  }
+  publishedShares += catalog.shares.length;
+}
+console.log(`Europese cataloguscontrole: ${published.length} markten, ${publishedShares} aandelen; ISIN-achterstand ${marketsWithUnresolvedIsins.join(', ') || 'geen'}.`);
 if (!regionsData.regions.some((region) => region.id === 'europe' && region.status === 'available')) throw new Error('Europa ontbreekt.');
 if (regionsData.regions.filter((region) => region.status === 'available').length !== 1) throw new Error('Alleen Europa mag nu actief zijn.');
 
