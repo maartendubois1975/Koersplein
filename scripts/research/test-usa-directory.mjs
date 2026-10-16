@@ -13,7 +13,7 @@ const cases = [
   ['A', 'Agilent Technologies, Inc. Common Stock', 'COMMON_CANDIDATE'],
   ['AAP', 'Advance Auto Parts Inc.', 'REVIEW'],
   ['AB', 'AllianceBernstein Holding L.P. Units', 'UNIT'],
-  ['ACP', 'abrdn Income Credit Strategies Fund Common Shares', 'COMMON_CANDIDATE'],
+  ['ACP', 'abrdn Income Credit Strategies Fund Common Shares', 'FUND_REVIEW'],
 ];
 for (const [symbol, name, type] of cases)
   assert.equal(classifyUSListing({symbol, name}).type, type, symbol);
