@@ -12,7 +12,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: koersplein-daily-open-close-v3
+  group: koersplein-daily-open-close-v4
   cancel-in-progress: false
 jobs:
   update-and-verify:
@@ -26,6 +26,9 @@ jobs:
         with: { ref: main }
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
+      - name: Verify factory credentials before long-running update
+        run: |
+          node --input-type=module -e "import {FactoryApiClient} from './scripts/cloudflare/client.mjs'; try { await new FactoryApiClient().catalog(); console.log('FACTORY_AUTH_OK'); } catch(e) { console.error('FACTORY_AUTH_FAILED: '+e.message); process.exit(1); }"
       - name: Voeg nieuwste volledige open en slot toe aan COMPLETE beurzen
         run: |
           for attempt in 1 2 3; do
@@ -34,7 +37,7 @@ jobs:
             sleep $((attempt * 30))
           done
       - name: Verifieer open en slot
-        if: always()
+        if: success()
         run: |
           for attempt in 1 2 3; do
             node scripts/cloudflare/audit-daily-open-close.mjs && break
