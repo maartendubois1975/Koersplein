@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { cloudflareCatalog } from './catalog.mjs';
 import { compareCloudflareCoverage } from './audit-live.mjs';
+import { planCatalogSync } from './sync-plan.mjs';
 import { mergeBars, partitionBars, encodePartition, decodePartition, objectKey, STORAGE_FORMAT } from './history-format.mjs';
 
 const bars = mergeBars(
@@ -27,3 +28,10 @@ const sample = compareCloudflareCoverage({markets:[{mic:'XAMS'},{mic:'XWAR'}], i
 assert.deepEqual(sample.totals,{markets:2,expected:2,registered:1,withHistory:1,reportedBars:200});
 assert.equal(sample.markets.find(x=>x.mic==='XAMS').missing[0],'NL0012969182');
 assert.equal(sample.unresolvedWithoutIsin,1);
+
+const sync = planCatalogSync({markets:[{mic:'XAMS'}],instruments:[{isin:'NL1',mic:'XAMS'},{isin:'NL2',mic:'XAMS'}],unresolved:[]},{instruments:[{isin:'NL1',mic:'XAMS'}]},1);
+assert.equal(sync.missing,1);
+assert.equal(sync.alreadyRegistered,1);
+assert.equal(sync.batches.length,2);
+assert.equal(sync.batches[1].instruments[0].isin,'NL2');
+assert.equal(planCatalogSync({markets:[],instruments:[{isin:'NL1',mic:'XPAR'}],unresolved:[]},{instruments:[{isin:'NL1',mic:'XAMS'}]}).conflicts.length,1);
