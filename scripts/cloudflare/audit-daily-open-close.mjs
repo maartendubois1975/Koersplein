@@ -5,7 +5,7 @@ const client=new FactoryApiClient();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const complete=plan.markets.filter(x=>x.state==='COMPLETE');
 const out=[];
-const MAX_STALE_CALENDAR_DAYS=5;
+const MAX_STALE_CALENDAR_DAYS=7;
 const cutoff=new Date(Date.now()-MAX_STALE_CALENDAR_DAYS*86400000).toISOString().slice(0,10);
 for(const market of complete){
   const file=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
