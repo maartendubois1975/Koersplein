@@ -1,3 +1,4 @@
+import { verifyGithubIdentity, allowsDailyRequest } from './github-oidc.mjs';
 const JOB_TYPES = new Set(['HISTORY_BACKFILL', 'DAILY_UPDATE', 'REPAIR_MISSING', 'VALIDATE_HISTORY', 'CHECK_AMSTERDAM']);
 const json = (value, status = 200, headers = {}) => new Response(JSON.stringify(value), { status, headers: { 'content-type': 'application/json; charset=utf-8', ...headers } });
 const now = () => new Date().toISOString();
@@ -8,7 +9,12 @@ const safeEqual = (a, b) => {
   let diff = 0; for (let i = 0; i < left.length; i += 1) diff |= left[i] ^ right[i];
   return diff === 0;
 };
-const isFactory = (request, env) => safeEqual(request.headers.get('authorization'), `Bearer ${env.FACTORY_TOKEN}`);
+const isFactory = async (request, env) => {
+  const authorization = request.headers.get('authorization') || '';
+  if (env.FACTORY_TOKEN && safeEqual(authorization, `Bearer ${env.FACTORY_TOKEN}`)) return true;
+  return allowsDailyRequest(request) && authorization.startsWith('Bearer ') &&
+    await verifyGithubIdentity(authorization.slice(7));
+};
 const adminEmail = (request) => request.headers.get('Cf-Access-Authenticated-User-Email') || '';
 const isAdmin = (request, env) => Boolean(env.ADMIN_EMAIL && adminEmail(request).toLowerCase() === env.ADMIN_EMAIL.toLowerCase());
 
@@ -104,14 +110,14 @@ async function route(request, env) {
   }
   const partitionListMatch = path.match(/^\/api\/factory\/history\/([A-Z0-9][A-Z0-9:-]{2,31})\/partitions$/);
   if (partitionListMatch && request.method === 'GET') {
-    if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
+    if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401);
     const item = await instrument(env, partitionListMatch[1]); if (!item) return json({ error: 'Instrument ontbreekt' }, 404);
     const partitions = await env.DB.prepare('SELECT period,object_key,record_count,first_date,last_date,provider,checksum FROM history_partitions WHERE instrument_id=? ORDER BY period').bind(item.id).all();
     return json({ instrument: { name: item.company, symbol: item.ticker, isin: item.isin, mic: item.mic, market: item.mic, currency: item.currency }, provider: { name: item.provider || 'unknown', retrievedAt: item.updated_at || now() }, partitions: partitions.results });
   }
   const partitionGetMatch = path.match(/^\/api\/factory\/history\/([A-Z0-9][A-Z0-9:-]{2,31})\/partition\/(\d{4})$/);
   if (partitionGetMatch && request.method === 'GET') {
-    if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
+    if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401);
     const item = await instrument(env, partitionGetMatch[1]); if (!item) return json({ error: 'Instrument ontbreekt' }, 404);
     const partition = await env.DB.prepare('SELECT object_key FROM history_partitions WHERE instrument_id=? AND period=?').bind(item.id, partitionGetMatch[2]).first();
     if (!partition) return json({ error: 'Partitie ontbreekt' }, 404);
@@ -143,14 +149,14 @@ async function route(request, env) {
     return json({ id: jobId, status: 'QUEUED' }, 202);
   }
   if (path === '/api/factory/catalog' && request.method === 'GET') {
-    if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
+    if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401);
     const mic = String(url.searchParams.get('mic') || '').trim().toUpperCase();
     const rows = await env.DB.prepare(mic ? 'SELECT isin,mic,ticker,company,currency FROM instruments WHERE mic=? ORDER BY ticker' : 'SELECT isin,mic,ticker,company,currency FROM instruments ORDER BY mic,ticker').bind(...(mic ? [mic] : [])).all();
     const markets = await env.DB.prepare('SELECT mic,code,name,currency FROM markets ORDER BY mic').all();
     return json({ instruments: rows.results, markets: markets.results });
   }
   if (path === '/api/factory/catalog' && request.method === 'PUT') {
-    if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
+    if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401);
     const body = await request.json();
     for (const market of body.markets || []) await env.DB.prepare(`INSERT INTO markets(mic,code,name,exchange_group,country_code,currency,timezone) VALUES(?,?,?,?,?,?,?) ON CONFLICT(mic) DO UPDATE SET code=excluded.code,name=excluded.name,exchange_group=excluded.exchange_group,country_code=COALESCE(excluded.country_code,markets.country_code),currency=excluded.currency,timezone=COALESCE(excluded.timezone,markets.timezone),updated_at=CURRENT_TIMESTAMP WHERE markets.code IS NOT excluded.code OR markets.name IS NOT excluded.name OR markets.exchange_group IS NOT excluded.exchange_group OR (excluded.country_code IS NOT NULL AND markets.country_code IS NOT excluded.country_code) OR markets.currency IS NOT excluded.currency OR (excluded.timezone IS NOT NULL AND markets.timezone IS NOT excluded.timezone)`).bind(market.mic, market.code, market.name, market.exchangeGroup || null, market.countryCode || null, market.currency || null, market.timezone || null).run();
     for (const item of body.instruments || []) {
@@ -182,10 +188,10 @@ async function route(request, env) {
     return json({ markets: body.markets?.length || 0, instruments: body.instruments?.length || 0 });
   }
   const jobGet = path.match(/^\/api\/factory\/jobs\/([^/]+)$/);
-  if (jobGet && request.method === 'GET') { if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401); return json(await env.DB.prepare('SELECT * FROM jobs WHERE id=?').bind(jobGet[1]).first()); }
+  if (jobGet && request.method === 'GET') { if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401); return json(await env.DB.prepare('SELECT * FROM jobs WHERE id=?').bind(jobGet[1]).first()); }
   const claim = path.match(/^\/api\/factory\/jobs\/([^/]+)\/claim$/);
   if (claim && request.method === 'POST') {
-    if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
+    if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401);
     const body = await request.json(), limit = Math.max(1, Math.min(100, Number(body.limit) || 25));
     await env.DB.prepare("UPDATE jobs SET status='RUNNING',started_at=COALESCE(started_at,?) WHERE id=?").bind(now(), claim[1]).run();
     const queued = await env.DB.prepare(`SELECT i.*,h.status history_status,h.first_date,h.last_date,h.record_count,h.provider FROM job_items ji JOIN instruments i ON i.id=ji.instrument_id LEFT JOIN history_status h ON h.instrument_id=i.id WHERE ji.job_id=? AND ji.status IN ('PENDING','RETRY') ORDER BY i.id LIMIT ?`).bind(claim[1], limit).all();
@@ -194,7 +200,7 @@ async function route(request, env) {
   }
   const itemPatch = path.match(/^\/api\/factory\/jobs\/([^/]+)\/items\/([A-Z0-9][A-Z0-9:-]{2,31})$/);
   if (itemPatch && request.method === 'PATCH') {
-    if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
+    if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401);
     const body = await request.json(), target = await instrument(env, itemPatch[2]); if (!target) return json({ error: 'Instrument ontbreekt' }, 404);
     const status = body.status === 'FAILED' ? 'FAILED' : 'COMPLETE';
     await env.DB.prepare('UPDATE job_items SET status=?,records_added=?,first_date=?,last_date=?,error=?,finished_at=? WHERE job_id=? AND instrument_id=?').bind(status, body.recordsAdded || 0, body.firstDate || null, body.lastDate || null, body.error || null, now(), itemPatch[1], target.id).run();
@@ -205,7 +211,7 @@ async function route(request, env) {
   }
   const partitionPut = path.match(/^\/api\/factory\/history\/([A-Z0-9][A-Z0-9:-]{2,31})\/(\d{4})$/);
   if (partitionPut && request.method === 'PUT') {
-    if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
+    if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401);
     const target = await instrument(env, partitionPut[1]); if (!target) return json({ error: 'Instrument ontbreekt' }, 404);
     const body = await request.json(), period = partitionPut[2], key = `history/v1/mic=${target.mic}/isin=${target.isin}/year=${period}/prices.ndjson.gz`;
     const existing = await gunzip(await env.HISTORY.get(key)); const bars = merge(existing, body.bars || []).filter((bar) => bar.date.startsWith(period));
@@ -217,7 +223,7 @@ async function route(request, env) {
   }
   const complete = path.match(/^\/api\/factory\/history\/([A-Z0-9][A-Z0-9:-]{2,31})\/complete$/);
   if (complete && request.method === 'POST') {
-    if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
+    if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401);
     const target = await instrument(env, complete[1]); if (!target) return json({ error: 'Instrument ontbreekt' }, 404);
     const body = await request.json(), coverage = await env.DB.prepare('SELECT SUM(record_count) record_count,MIN(first_date) first_date,MAX(last_date) last_date FROM history_partitions WHERE instrument_id=?').bind(target.id).first();
     await env.DB.prepare(`UPDATE history_status SET status='COMPLETE',first_date=?,last_date=?,record_count=?,provider=?,storage_format='ndjson+gzip-v1',manifest_key=?,last_checked=?,error=NULL,updated_at=? WHERE instrument_id=?`).bind(coverage.first_date, coverage.last_date, coverage.record_count || 0, body.provider || target.provider || 'unknown', `history/v1/mic=${target.mic}/isin=${target.isin}/manifest.json`, now(), now(), target.id).run();
