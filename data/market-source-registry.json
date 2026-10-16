@@ -790,7 +790,14 @@
         "sourceCountTested": 4,
         "note": "Official BSE catalog fully source-gated; canonical Sofia completion persisted with 158/158 instruments classified as current-history covered or evidence-backed DATA_UNAVAILABLE."
       },
-      "approvedAt": "2026-10-07T14:35:36.320Z"
+      "approvedAt": "2026-10-07T14:35:36.320Z",
+      "dailyCloseAudit": {
+        "asOf": "2026-10-16",
+        "status": "NOT_VERIFIED",
+        "candidateOfficialSource": "https://download.bse-sofia.bg/QuarterlyBulletin/",
+        "validationRequired": "Match exact MIC+ISIN and last complete trading day; require positive official open and close, provenance, coverage, rights and repeatable fetch before APPROVED_FOR_DAILY_OHLC.",
+        "note": "Up to 10 representative Yahoo symbols returned HTTP 404 in latest live audit; official source requires parser and proof."
+      }
     },
     "XDUB": {
       "status": "APPROVED",
@@ -856,7 +863,14 @@
           "role": "INDEPENDENT_FALLBACK_VALIDATION",
           "note": "Independently tested on full catalog: 0/73; 0 additional instruments beyond primary."
         }
-      ]
+      ],
+      "dailyCloseAudit": {
+        "asOf": "2026-10-16",
+        "status": "NOT_VERIFIED",
+        "candidateOfficialSource": "https://zse.hr/en/end-users/32",
+        "validationRequired": "Match exact MIC+ISIN and last complete trading day; require positive official open and close, provenance, coverage, rights and repeatable fetch before APPROVED_FOR_DAILY_OHLC.",
+        "note": "Up to 10 representative Yahoo symbols returned HTTP 404 in latest live audit; official source requires parser and proof."
+      }
     },
     "XBRA": {
       "status": "APPROVED",
@@ -889,7 +903,14 @@
       },
       "catalogFingerprint": "afce18d809f4a560ea337f2f31d733f202bd15c5495bc157559673e7f61dd6d5",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-05T13:26:50.181Z"
+      "lastAuditAt": "2026-10-05T13:26:50.181Z",
+      "dailyCloseAudit": {
+        "asOf": "2026-10-16",
+        "status": "NOT_VERIFIED",
+        "candidateOfficialSource": "https://www.bsse.sk/",
+        "validationRequired": "Match exact MIC+ISIN and last complete trading day; require positive official open and close, provenance, coverage, rights and repeatable fetch before APPROVED_FOR_DAILY_OHLC.",
+        "note": "Up to 10 representative Yahoo symbols returned HTTP 404 in latest live audit; official source requires parser and proof."
+      }
     },
     "XLUX": {
       "status": "APPROVED",
@@ -922,7 +943,14 @@
       },
       "catalogFingerprint": "9a0c76332ef6bbfc218f0d009caa24abe8f68487883ea3afda83296e5d44cf91",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-05T14:32:00.190Z"
+      "lastAuditAt": "2026-10-05T14:32:00.190Z",
+      "dailyCloseAudit": {
+        "asOf": "2026-10-16",
+        "status": "NOT_VERIFIED",
+        "candidateOfficialSource": "https://www.luxse.com/",
+        "validationRequired": "Match exact MIC+ISIN and last complete trading day; require positive official open and close, provenance, coverage, rights and repeatable fetch before APPROVED_FOR_DAILY_OHLC.",
+        "note": "Yahoo SOFAF.LU reported open=0, close=24: rejected"
+      }
     },
     "XMAL": {
       "status": "APPROVED",
@@ -946,7 +974,14 @@
         "dataUnavailable": 18,
         "unresolved": 0
       },
-      "catalogFingerprint": "300b0baaf37a562d03b4a0dbf52eadcac5a6c8fd612f3c7c491487e2ca8775c7"
+      "catalogFingerprint": "300b0baaf37a562d03b4a0dbf52eadcac5a6c8fd612f3c7c491487e2ca8775c7",
+      "dailyCloseAudit": {
+        "asOf": "2026-10-16",
+        "status": "NOT_VERIFIED",
+        "candidateOfficialSource": "https://www.borzamalta.com.mt/publications-and-statistics",
+        "validationRequired": "Match exact MIC+ISIN and last complete trading day; require positive official open and close, provenance, coverage, rights and repeatable fetch before APPROVED_FOR_DAILY_OHLC.",
+        "note": "Historical stockanalysis-bit route exists but latest daily OHLC not independently confirmed"
+      }
     },
     "XCYS": {
       "status": "APPROVED",
@@ -979,7 +1014,14 @@
       },
       "catalogFingerprint": "92d46c7bd21f6a5ed69a0cb0b190e0443023d90654e69ee2c7fa3f648ba76fe8",
       "blockedReason": "SOURCE_PREFLIGHT_GATE",
-      "lastAuditAt": "2026-10-05T14:52:00.758Z"
+      "lastAuditAt": "2026-10-05T14:52:00.758Z",
+      "dailyCloseAudit": {
+        "asOf": "2026-10-16",
+        "status": "NOT_VERIFIED",
+        "candidateOfficialSource": "https://www.cse.com.cy/",
+        "validationRequired": "Match exact MIC+ISIN and last complete trading day; require positive official open and close, provenance, coverage, rights and repeatable fetch before APPROVED_FOR_DAILY_OHLC.",
+        "note": "Up to 10 representative Yahoo symbols returned HTTP 404 in latest live audit; official source requires parser and proof."
+      }
     },
     "XLIT": {
       "status": "APPROVED",
@@ -1104,6 +1146,13 @@
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
         "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
+      },
+      "dailyCloseAudit": {
+        "asOf": "2026-10-16",
+        "status": "NOT_VERIFIED",
+        "candidateOfficialSource": "https://ljse.si/en/market-data-33/32",
+        "validationRequired": "Match exact MIC+ISIN and last complete trading day; require positive official open and close, provenance, coverage, rights and repeatable fetch before APPROVED_FOR_DAILY_OHLC.",
+        "note": "Up to 10 representative Yahoo symbols returned HTTP 404 in latest live audit; official source requires parser and proof."
       }
     }
   }
