@@ -27,11 +27,13 @@ on:
       - '.github/workflows/universal-source-first.yml'
       - '.github/workflows/complete-market-analysis.yml'
       - '.github/workflows/daily-opportunity-ledger.yml'
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: koersplein-codebase-audit
+  group: koersplein-codebase-audit-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   audit:

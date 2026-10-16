@@ -71,5 +71,24 @@ for(const f of sourceFiles){
  }
 }
 
+// Check local Node entrypoints invoked by npm scripts and workflow steps.
+const packageJson=JSON.parse(await fs.readFile(path.join(root,'package.json'),'utf8'));
+for(const [name,command] of Object.entries(packageJson.scripts||{})){
+ for(const match of command.matchAll(/(?:^|[;&|]\s*|\s)node\s+(?!--)([^\s;&|]+)/g)){
+  const target=match[1].replace(/^['"]|['"]$/g,'');
+  if(target.startsWith('-')||target.includes('$')||target.includes('*'))continue;
+  if(!currentPaths.has(target))issues.push({severity:'ERROR',type:'MISSING_PACKAGE_ENTRYPOINT',file:'package.json',detail:name+': '+target});
+ }
+}
+for(const f of files.filter(x=>path.relative(root,x).split(path.sep).join('/').startsWith('.github/workflows/')&&/\.ya?ml$/.test(x))){
+ const rel=path.relative(root,f).split(path.sep).join('/');
+ const body=await fs.readFile(f,'utf8');
+ for(const match of body.matchAll(/(?:^|\s)node\s+(?!--)(scripts\/[^\s;&|"'#]+)/gm)){
+  const target=match[1];
+  if(target.includes('$')||target.includes('*'))continue;
+  if(!currentPaths.has(target))issues.push({severity:'ERROR',type:'MISSING_WORKFLOW_ENTRYPOINT',file:rel,detail:target});
+ }
+}
+
 const report={generatedAt:new Date().toISOString(),stats,errors:issues.filter(x=>x.severity==='ERROR').length,warnings:issues.filter(x=>x.severity==='WARN').length,info:issues.filter(x=>x.severity==='INFO').length,issues};
 await fs.mkdir('research/output/audit',{recursive:true});await fs.writeFile('research/output/audit/codebase-audit.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));if(report.errors)process.exitCode=2;

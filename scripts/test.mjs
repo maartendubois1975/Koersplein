@@ -37,7 +37,7 @@ assert.ok(html.includes('Koershistorie') && html.includes('Gevalideerde marktdat
 assert.ok(app.includes('share.html?isin=') && app.includes('[share.name,share.symbol,share.isin]'), 'Aandelen moeten klikbaar en op naam/ticker/ISIN doorzoekbaar blijven');
 assert.ok(detail.includes('Koersplein-analyse'));
 assert.ok(detail.includes('Kans- en risicoanalyse wordt beschikbaar') && !detail.includes('model-contract'));
-assert.ok(detail.includes('history-state') && detailScript.includes('manifest.json') && detailScript.includes('renderHistoryChart'));
+assert.ok(detail.includes('history-state') && detailScript.includes('/api/history/') && detailScript.includes('runtime.apiBaseUrl') && detailScript.includes('renderHistoryChart'));
 assert.ok(!detailScript.includes('catch { /*'), 'Historiefouten mogen niet stil worden ingeslikt');
 assert.ok(css.includes('@media(max-width:640px)') && css.includes('.chart-shell svg{height:220px}'));
 
