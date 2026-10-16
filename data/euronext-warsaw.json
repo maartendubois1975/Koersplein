@@ -5,7 +5,7 @@
   "source": "GPW regulated Main Market equities; current Polish quote-table identities; direct .WA history proof",
   "sourceUrl": "https://www.gpw.pl/spolki",
   "officialCompanyBenchmark": 402,
-  "resolvedCount": 396,
+  "resolvedCount": 394,
   "fingerprint": "279fd6167f5d130ae440a285e9b0ad6148c1a8332bacc471cf4e2e3c5100a45a",
   "discoveryPolicy": "REAL_MAIN_MARKET_EQUITIES_ONLY_THEN_FREE_SOURCE_PROOF",
   "rejectedNonProvenSymbols": [
@@ -51,32 +51,6 @@
       "segment": "Main Market",
       "currency": "PLN",
       "providerSymbol": "EUR.WA",
-      "identitySource": "https://www.gpw.pl/spolki",
-      "identityResolution": "GPW_MAIN_MARKET_CURRENT_QUOTE_AND_HISTORY_PROOF"
-    },
-    {
-      "company": "sWIG80",
-      "name": "sWIG80",
-      "symbol": "SWIG80",
-      "ticker": "SWIG80",
-      "isin": null,
-      "mic": "XWAR",
-      "segment": "Main Market",
-      "currency": "PLN",
-      "providerSymbol": "SWIG80.WA",
-      "identitySource": "https://www.gpw.pl/spolki",
-      "identityResolution": "GPW_MAIN_MARKET_CURRENT_QUOTE_AND_HISTORY_PROOF"
-    },
-    {
-      "company": "mWIG40",
-      "name": "mWIG40",
-      "symbol": "MWIG40",
-      "ticker": "MWIG40",
-      "isin": null,
-      "mic": "XWAR",
-      "segment": "Main Market",
-      "currency": "PLN",
-      "providerSymbol": "MWIG40.WA",
       "identitySource": "https://www.gpw.pl/spolki",
       "identityResolution": "GPW_MAIN_MARKET_CURRENT_QUOTE_AND_HISTORY_PROOF"
     },
@@ -5194,7 +5168,9 @@
     "WIG",
     "WIG20",
     "WIG30",
-    "NCINDEX"
+    "NCINDEX",
+    "SWIG80",
+    "MWIG40"
   ],
-  "catalogCorrection": "Removed four benchmark indices misclassified as listed equities; retained all genuine stock records and historical data."
+  "catalogCorrection": "Excluded six Warsaw benchmark indices (WIG, WIG20, WIG30, NCINDEX, SWIG80, MWIG40) from equities; historical data unchanged."
 }
