@@ -21,9 +21,12 @@ try {
 
   const asml = getInstrument(db, 'NL0010273215');
   const adyen = getInstrument(db, 'NL0012969182');
+  // Keep the fixture current: DAILY_UPDATE intentionally fetches dates after the last stored bar.
+  const today = new Date().toISOString().slice(0, 10);
+  const yesterday = new Date(Date.parse(today + 'T00:00:00Z') - 86400000).toISOString().slice(0, 10);
   const bars = [
-    { date:'2026-09-14', open:100, high:103, low:99, close:102, volume:null, adjustedClose:102 },
-    { date:'2026-09-15', open:102, high:105, low:101, close:104, volume:1000, adjustedClose:104 }
+    { date:yesterday, open:100, high:103, low:99, close:102, volume:null, adjustedClose:102 },
+    { date:today, open:102, high:105, low:101, close:104, volume:1000, adjustedClose:104 }
   ];
   assert.equal(storeBars(db, asml, bars, 'fixture').added, 2);
   assert.equal(storeBars(db, asml, bars, 'fixture').added, 0, 'herhaalde import is idempotent');
@@ -43,7 +46,7 @@ try {
   assert.equal(dailyResult.status, 'COMPLETED');
   assert.equal(providerRequests, 0, 'actuele reeksen veroorzaken geen providerrequest');
 
-  db.prepare("DELETE FROM daily_prices WHERE trading_date='2026-09-15'").run();
+  db.prepare('DELETE FROM daily_prices WHERE trading_date=?').run(today);
   refreshHistoryStatus(db, asml.id);
   refreshHistoryStatus(db, adyen.id);
   const isolatingProvider = { id:'fixture', supports:() => true, async fetchDaily(instrument) {
