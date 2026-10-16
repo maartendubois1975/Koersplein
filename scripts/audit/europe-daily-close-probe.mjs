@@ -33,7 +33,7 @@ for(const market of markets){
  if(row.status==='today'||row.status==='yesterday')break;
  }
  if(alternativeMics.has(market.mic) && !results.some(r=>r.mic===market.mic && (r.status==='today'||r.status==='yesterday'))){
-  const shares=catalog.shares.slice(0,2);
+  const shares=(market.mic==='XZAG'||market.mic==='XBRA')?catalog.shares.slice(0,9):catalog.shares.slice(0,2);
   for(const share of shares){
    const a={mic:market.mic,market:market.name,ticker:share.symbol,isin:share.isin,provider:alternative.id,status:'not_tested'};
    try{
