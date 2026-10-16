@@ -106,5 +106,16 @@ for(const f of files.filter(x=>path.relative(root,x).split(path.sep).join('/').s
  }
 }
 
+// Fail on byte-identical executable source copies; do not delete historical research data.
+const executableSources=files.filter(f=>/\\.(?:mjs|js)$/.test(f));
+const exactSourceCopies=new Map();
+for(const file of executableSources){
+ const rel=path.relative(root,file).split(path.sep).join('/');
+ const body=await fs.readFile(file,'utf8');
+ if(!body.trim())continue;
+ const previous=exactSourceCopies.get(body);
+ if(previous)issues.push({severity:'ERROR',type:'DUPLICATE_EXECUTABLE_SOURCE',file:rel,detail:'Identical source also exists at '+previous});
+ else exactSourceCopies.set(body,rel);
+}
 const report={generatedAt:new Date().toISOString(),stats,errors:issues.filter(x=>x.severity==='ERROR').length,warnings:issues.filter(x=>x.severity==='WARN').length,info:issues.filter(x=>x.severity==='INFO').length,issues};
 await fs.mkdir('research/output/audit',{recursive:true});await fs.writeFile('research/output/audit/codebase-audit.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));if(report.errors)process.exitCode=2;
