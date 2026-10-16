@@ -6,6 +6,7 @@ export function compareCloudflareCoverage(expected, liveCatalog, manifest) {
     throw new Error('Ongeldig antwoord van de live Cloudflare API');
   }
   const live = new Map(liveCatalog.instruments.map(x => [x.isin,x]));
+  const registeredMarketMics = Array.isArray(liveCatalog.markets) ? new Set(liveCatalog.markets.map(x => x.mic)) : null;
   const history = manifest.instruments;
   const expectedByMic = new Map(expected.markets.map(x => [x.mic,{ mic:x.mic, expected:0, registered:0, withHistory:0, bars:0, missing:[] }]));
   for (const item of expected.instruments) {
@@ -23,11 +24,12 @@ export function compareCloudflareCoverage(expected, liveCatalog, manifest) {
       row.bars += Number(h.recordCount || h.records);
     }
   }
-  const markets = [...expectedByMic.values()];
+  const markets = [...expectedByMic.values()].map(row => ({...row, marketRegistered:registeredMarketMics ? registeredMarketMics.has(row.mic) : null }));
   return { schemaVersion:1, generatedAt:new Date().toISOString(), evidence:'LIVE_CLOUDFLARE_READ_ONLY',
     warning:'History counts reflect API manifest status, not independently verified daily bars or full backfill.',
     unresolvedWithoutIsin:expected.unresolved.length,
-    totals:{ markets:markets.length, expected:markets.reduce((n,x)=>n+x.expected,0),
+    missingMarkets:registeredMarketMics ? markets.filter(x=>!x.marketRegistered).map(x=>x.mic) : null,
+    totals:{ markets:markets.length, registeredMarkets:registeredMarketMics ? markets.filter(x=>x.marketRegistered).length : null, expected:markets.reduce((n,x)=>n+x.expected,0),
       registered:markets.reduce((n,x)=>n+x.registered,0),
       withHistory:markets.reduce((n,x)=>n+x.withHistory,0),
       reportedBars:markets.reduce((n,x)=>n+x.bars,0)},

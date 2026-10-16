@@ -25,7 +25,7 @@ assert.equal(catalog.markets.find(x=>x.mic==='XAMS').timezone,'Europe/Amsterdam'
 console.log('31 Europese markten en ISIN-veilig Cloudflare catalogus: OK');
 
 const sample = compareCloudflareCoverage({markets:[{mic:'XAMS'},{mic:'XWAR'}], instruments:[{isin:'NL0010273215',mic:'XAMS'},{isin:'NL0012969182',mic:'XAMS'}],unresolved:[{mic:'XWAR',symbol:'ABC'}]}, {instruments:[{isin:'NL0010273215',mic:'XAMS'}]}, {instruments:{NL0010273215:{recordCount:200}}});
-assert.deepEqual(sample.totals,{markets:2,expected:2,registered:1,withHistory:1,reportedBars:200});
+assert.deepEqual(sample.totals,{markets:2,registeredMarkets:null,expected:2,registered:1,withHistory:1,reportedBars:200});
 assert.equal(sample.markets.find(x=>x.mic==='XAMS').missing[0],'NL0012969182');
 assert.equal(sample.unresolvedWithoutIsin,1);
 
@@ -35,3 +35,7 @@ assert.equal(sync.alreadyRegistered,1);
 assert.equal(sync.batches.length,2);
 assert.equal(sync.batches[1].instruments[0].isin,'NL2');
 assert.equal(planCatalogSync({markets:[],instruments:[{isin:'NL1',mic:'XPAR'}],unresolved:[]},{instruments:[{isin:'NL1',mic:'XAMS'}]}).conflicts.length,1);
+
+const verifiedMarkets = compareCloudflareCoverage({markets:[{mic:'XAMS'},{mic:'XWAR'}],instruments:[],unresolved:[]},{instruments:[],markets:[{mic:'XAMS'}]},{instruments:{}});
+assert.deepEqual(verifiedMarkets.missingMarkets,['XWAR']);
+assert.equal(verifiedMarkets.totals.registeredMarkets,1);

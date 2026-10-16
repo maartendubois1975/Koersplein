@@ -146,7 +146,8 @@ async function route(request, env) {
     if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
     const mic = String(url.searchParams.get('mic') || '').trim().toUpperCase();
     const rows = await env.DB.prepare(mic ? 'SELECT isin,mic,ticker,company,currency FROM instruments WHERE mic=? ORDER BY ticker' : 'SELECT isin,mic,ticker,company,currency FROM instruments ORDER BY mic,ticker').bind(...(mic ? [mic] : [])).all();
-    return json({ instruments: rows.results });
+    const markets = await env.DB.prepare('SELECT mic,code,name,currency FROM markets ORDER BY mic').all();
+    return json({ instruments: rows.results, markets: markets.results });
   }
   if (path === '/api/factory/catalog' && request.method === 'PUT') {
     if (!isFactory(request, env)) return json({ error: 'Niet geautoriseerd' }, 401);
