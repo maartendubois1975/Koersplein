@@ -15,6 +15,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Offline directory and security-type regressions
+        run: node scripts/research/test-usa-directory.mjs
       - name: Fetch official NYSE directory and verify counts
         run: node scripts/research/usa-nyse-universe.mjs
       - name: Upload NYSE candidate register and coverage report
