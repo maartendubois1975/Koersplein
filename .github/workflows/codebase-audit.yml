@@ -1,14 +1,14 @@
 name: Koersplein A-tot-Z audit
 on:
   push:
-    branches: [main, cleanup/europe-block1-20261015]
+    branches: [main, 'cleanup/**']
     paths:
       - '.github/workflows/codebase-audit.yml'
       - 'scripts/audit/**'
       - 'scripts/archive/**'
       - 'data/atlas-archive/**'
-      - 'scripts/archive/**'
-      - 'data/atlas-archive/**'
+      - 'scripts/validate.mjs'
+      - 'package.json'
       - 'data/markets.json'
       - 'data/world-fill-plan.json'
       - 'data/euronext-*.json'
