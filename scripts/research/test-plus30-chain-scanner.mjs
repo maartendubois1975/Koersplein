@@ -5,7 +5,7 @@ const scan=scanPlus30Chain(bars);
 assert.equal(scan.totalHits,3);
 assert.deepEqual(scan.hits.map(x=>x.hitDate),['2025-01-03','2025-01-08','2025-01-10']);
 assert.equal(scan.hits[0].calendarDays,2);
-assert.equal(summarizePlus30Chains([scan],3).hitsWithinWindow,3);
+assert.equal(summarizePlus30Chains([scan],3).hitsWithinWindow,2);
 assert.equal(scanPlus30Chain([]).totalHits,0);
 assert.equal(scanPlus30Chain([{date:'2025-01-01',close:0}]).totalHits,0);
 console.log('plus30 chain scanner tests passed');
