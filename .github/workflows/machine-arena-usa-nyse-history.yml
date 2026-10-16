@@ -1,9 +1,6 @@
 name: Machine Arena USA NYSE History Validation
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - feature/arena-usa-nyse-bootstrap-20261011
 permissions:
   contents: read
 jobs:

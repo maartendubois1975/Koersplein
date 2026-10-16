@@ -25,3 +25,13 @@ Sources:
 - Safety checks blocked writing the replacement of `scripts/research/usa-nyse-history.mjs`. The existing importer therefore still uses its weaker checks; do not claim the new validator is active in ingestion.
 - The American bootstrap workflow may run offline OHLCV tests, but green CI does not establish history access, point-in-time membership, delisted coverage, corporate-action adjustments, ISIN crosswalk or market-data redistribution rights.
 - XNYS/XNAS remain RESEARCH_ONLY; no production merge, historical backfill, machine training or publication approved.
+
+## 2026-10-17 — Official TXSE source distinction and CI stabilization (RESEARCH ONLY)
+
+- Official Nasdaq Trader `otherlisted.txt` Exchange=F is a TXSE **primary listing** signal, not proof of current active trading, share class, ISIN, or the complete TXSE dual-listed universe.
+- TXSE's official `/symbols` provides daily **tradable symbols**, not the issuer-listing universe; latest visible snapshot is 2026-10-16. The official `/all-listings` page currently says listings data is temporarily unavailable. Do not equate all NMS symbols tradable on TXSE with TXSE-listed common equity.
+- TXSE's own Oct 2026 readiness alert identifies ET/SUN/SUNC/USAC as common partnership units (excluded), DDS as Class A common stock, and DDT as capital securities (excluded). No new TXSE symbol is APPROVED without independently dated active listing/trading, share-class and ISIN evidence.
+- Official source URLs: https://www.txse.com/symbols ; https://www.txse.com/all-listings ; https://www.txse.com/alerts/fd5b0975-9e94-495c-8237-fbfe868484bc ; https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt
+- Existing branch codebase audit had two `UNAPPROVED_WORKFLOW_PRESENT` errors for USA-only workflows (CI run 38970459253). The narrow USA workflow allowlist fix was prepared. Historical Alpaca workflow was changed to manual-only to avoid guaranteed missing-credentials failures on every USA branch push; this does not approve its market-data rights.
+- Local fail-closed TXSE catalog prototype passed 17 synthetic offline assertions, but it has NOT been committed or proven on live exchange data. No live XNYS/XNAS/TXSE OHLC canary was proven in this run; the current European probe is available on main only, not this older USA branch.
+- Block 1 INCOMPLETE: no full active listing/ISIN catalog, no approved USA history source, no backfill, training, merge or publication.
