@@ -1,0 +1,25 @@
+name: Koersplein Athens RDS manifest
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/athens-rds-manifest.yml'
+permissions:
+  contents: read
+jobs:
+  manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch official production RDS index and identify InstrumentSeries
+        run: |
+          node --input-type=module <<'NODE'
+          const url='https://portal.athexgroup.gr/web/guest/rds/-/rdsFile/PROD_LatestReports_csv';
+          const r=await fetch(url,{redirect:'follow'});
+          const body=await r.text();
+          console.log(JSON.stringify({status:r.status,url:r.url,bytes:body.length,head:body.slice(0,1400),instrumentLines:body.split(/\r?\n/).filter(x=>/InstrumentSeries/i.test(x)).slice(0,12)}));
+          if(!r.ok)process.exitCode=1;
+          NODE
