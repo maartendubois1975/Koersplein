@@ -33,4 +33,6 @@ jobs:
           title: 'Populate 393 verified Warsaw ISINs from official GPW'
           commit-message: 'Populate verified official GPW identifiers'
           body: 'Official GPW evidence from successful GitHub Actions run 38932704267; only identity fields, no price history modifications.'
-          add-paths: |\n            data/euronext-warsaw.json\n            scripts/cloudflare/test.mjs
+          add-paths: |
+            data/euronext-warsaw.json
+            scripts/cloudflare/test.mjs
