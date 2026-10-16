@@ -18,3 +18,10 @@ Sources:
 - https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt
 - https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt
 - https://docs.alpaca.markets/us/docs/market-data-faq
+
+## 2026-10-16 — Offline OHLCV gate preparation
+
+- Standalone fail-closed daily OHLCV validator and 23 deterministic offline regressions prepared; local Node tests passed. This is NOT an integrated historical importer or proof of any valid market bars.
+- Safety checks blocked writing the replacement of `scripts/research/usa-nyse-history.mjs`. The existing importer therefore still uses its weaker checks; do not claim the new validator is active in ingestion.
+- The American bootstrap workflow may run offline OHLCV tests, but green CI does not establish history access, point-in-time membership, delisted coverage, corporate-action adjustments, ISIN crosswalk or market-data redistribution rights.
+- XNYS/XNAS remain RESEARCH_ONLY; no production merge, historical backfill, machine training or publication approved.
