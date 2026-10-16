@@ -1,0 +1,42 @@
+name: Koersplein live Europese koersdekking
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/live-europe-coverage.yml'
+permissions:
+  contents: read
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check API configuration
+        id: config
+        run: |
+          if [ -n "$KOERSPLEIN_API_URL" ] && [ -n "$KOERSPLEIN_FACTORY_TOKEN" ]; then
+            echo 'available=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'available=false' >> "$GITHUB_OUTPUT"
+            echo 'Live audit overgeslagen: vereiste Cloudflare secrets ontbreken.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Compare live European catalog and history
+        if: steps.config.outputs.available == 'true'
+        run: |
+          mkdir -p research/output/audit
+          npm run cloudflare:audit-live > research/output/audit/live-europe-coverage.json
+          node --input-type=module -e "import fs from 'node:fs'; const r=JSON.parse(fs.readFileSync('research/output/audit/live-europe-coverage.json','utf8')); console.log(JSON.stringify(r.totals)); fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, 'Live Europese koersdekking: '+JSON.stringify(r.totals)+'\\n');"
+      - uses: actions/upload-artifact@v4
+        if: steps.config.outputs.available == 'true'
+        with:
+          name: live-europe-coverage
+          path: research/output/audit/live-europe-coverage.json
+          retention-days: 30
