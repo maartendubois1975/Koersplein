@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { cloudflareCatalog } from './catalog.mjs';
+import { compareCloudflareCoverage } from './audit-live.mjs';
 import { mergeBars, partitionBars, encodePartition, decodePartition, objectKey, STORAGE_FORMAT } from './history-format.mjs';
 
 const bars = mergeBars(
@@ -21,3 +22,8 @@ assert.equal(new Set(catalog.instruments.map(x=>x.isin)).size,catalog.instrument
 assert.ok(catalog.instruments.every(x=>x.isin && x.mic));
 assert.equal(catalog.markets.find(x=>x.mic==='XAMS').timezone,'Europe/Amsterdam');
 console.log('31 Europese markten en ISIN-veilig Cloudflare catalogus: OK');
+
+const sample = compareCloudflareCoverage({markets:[{mic:'XAMS'},{mic:'XWAR'}], instruments:[{isin:'NL0010273215',mic:'XAMS'},{isin:'NL0012969182',mic:'XAMS'}],unresolved:[{mic:'XWAR',symbol:'ABC'}]}, {instruments:[{isin:'NL0010273215',mic:'XAMS'}]}, {instruments:{NL0010273215:{recordCount:200}}});
+assert.deepEqual(sample.totals,{markets:2,expected:2,registered:1,withHistory:1,reportedBars:200});
+assert.equal(sample.markets.find(x=>x.mic==='XAMS').missing[0],'NL0012969182');
+assert.equal(sample.unresolvedWithoutIsin,1);
