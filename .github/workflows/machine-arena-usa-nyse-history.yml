@@ -1,0 +1,32 @@
+name: Machine Arena USA NYSE History Validation
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/arena-usa-nyse-bootstrap-20261011
+permissions:
+  contents: read
+jobs:
+  nyse-history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      ALPACA_API_KEY_ID: ${{ secrets.ALPACA_API_KEY_ID }}
+      ALPACA_API_SECRET_KEY: ${{ secrets.ALPACA_API_SECRET_KEY }}
+      NYSE_HISTORY_BATCH_SIZE: '20'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate official NYSE symbol universe
+        run: node scripts/research/usa-nyse-universe.mjs
+      - name: Validate historical NYSE OHLCV via SIP
+        run: node scripts/research/usa-nyse-history.mjs
+      - name: Upload summary only (no licensed OHLCV bars)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: machine-arena-usa-nyse-history-validation
+          path: research/output/usa/XNYS/history-coverage.json
+          retention-days: 30
