@@ -23,9 +23,11 @@ for(const row of html.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)){
  const cells=[...row[1].matchAll(/<t[dh]\b[^>]*>([\s\S]*?)<\/t[dh]>/gi)].map(m=>strip(m[1]));
  const isin=cells.find(v=>/^[A-Z]{2}[A-Z0-9]{9}[0-9]$/.test(v));
  const symbol=cells.find(v=>symbols.has(v));
- if(isin&&symbol&&cells.some(v=>v==='Stock'))evidence.push({symbol,isin,sourceUrl:url,sourceDate:date,sourceDocument:'Euronext Athens Trading Issuers'});
+ if(isin&&symbol)evidence.push({symbol,isin,sourceUrl:url,sourceDate:date,sourceDocument:'Euronext Athens Trading Issuers'});
 }
 const report=reconcile(catalog,evidence);
+const missing=catalog.shares.filter(s=>!s.isin).map(s=>({symbol:s.symbol,name:s.name}));
+console.log(JSON.stringify({missing,unmatched:evidence.filter(e=>!report.accepted.some(a=>a.symbol===e.symbol)).slice(0,30)}));
 await fs.mkdir('research/output/audit',{recursive:true});
 await fs.writeFile('research/output/audit/athens-public-evidence.json',JSON.stringify(report,null,2));
 console.log(JSON.stringify({pages:pages.length,bytes:html.length,parsed:evidence.length,accepted:report.accepted.length,rejected:report.rejected.length,remaining:report.unresolved,examples:evidence.slice(0,2)}));
