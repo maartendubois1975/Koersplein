@@ -6,14 +6,16 @@ export function classifyUSListing({symbol='',name='',etf='N',testIssue='N'}={}) 
   if(!['Y','N'].includes(etf)||!['Y','N'].includes(testIssue)) return {type:'REVIEW',reason:'UNKNOWN_SOURCE_FLAG'};
   if(testIssue==='Y') return {type:'TEST',reason:'OFFICIAL_TEST_FLAG'};
   if(etf==='Y') return {type:'ETF',reason:'OFFICIAL_ETF_FLAG'};
-  // Units may describe their embedded warrants, rights or preferred shares; classify the traded unit first.
+  // A traded unit may contain warrants, rights, preferred shares or common shares.
+  // Classify the wrapper first, not its components.
   if(/\.U$/.test(s)||/\bunits?\b/i.test(n)) return {type:'UNIT',reason:'UNIT_DESCRIPTOR_OR_SUFFIX'};
   if(/\bpreferred\b|\bpreference shares?\b|\bpreference stock\b/i.test(n)||/\$[A-Z0-9]+$/.test(s)) return {type:'PREFERRED',reason:'PREFERRED_DESCRIPTOR_OR_SUFFIX'};
   if(/\bwarrants?\b/i.test(n)||/\.(?:W|WS)(?:[0-9]+)?$/.test(s)) return {type:'WARRANT',reason:'WARRANT_DESCRIPTOR_OR_SUFFIX'};
   if(/\brights?\b/i.test(n)||/\.R$/.test(s)) return {type:'RIGHT',reason:'RIGHT_DESCRIPTOR_OR_SUFFIX'};
   if(/\bamerican depositary\b|\bamerican depository\b|\bADR\b|\bADS\b|\bglobal depositary\b/i.test(n)) return {type:'ADR',reason:'DEPOSITARY_DESCRIPTOR'};
   if(/\b(?:senior|subordinated|convertible) notes?\b|\bdebentures?\b|\bbonds?\b|\bETNs?\b|\bnotes? due \d{4}\b/i.test(n)) return {type:'DEBT',reason:'DEBT_DESCRIPTOR'};
-  if(/\b(?:closed.end|mutual|investment|income|opportunities) fund\b|\btrust fund\b/i.test(n)) return {type:'FUND_REVIEW',reason:'FUND_DESCRIPTOR'};
+  // A fund can issue "Common Shares": those are not proof of operating-company equity.
+  if(/\b(?:funds?|closed.end investment)\b/i.test(n)) return {type:'FUND_REVIEW',reason:'FUND_DESCRIPTOR'};
   if(/\bcommon (?:stock|shares?)\b|\bordinary shares?\b|\bclass [A-Z] shares?\b|\bshares? of common\b/i.test(n)) return {type:'COMMON_CANDIDATE',reason:'EQUITY_DESCRIPTOR_NOT_INDEPENDENTLY_VERIFIED'};
   return {type:'REVIEW',reason:'NO_UNAMBIGUOUS_EQUITY_DESCRIPTOR'};
 }
