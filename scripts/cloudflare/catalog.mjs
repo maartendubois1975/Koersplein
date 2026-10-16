@@ -16,6 +16,10 @@ export async function cloudflareCatalog() {
   const venue = marketData.venues.find(item => item.id === 'euronext');
   const mappingByIsin = new Map(mappings.providerMappings.map(item => [item.isin, item]));
   const markets = [], instruments = [], unresolved = [];
+  const legacyMarketMetadata = {
+    XAMS:['NL','Europe/Amsterdam'], XBRU:['BE','Europe/Brussels'],
+    XPAR:['FR','Europe/Paris'], XMIL:['IT','Europe/Rome']
+  };
   const globalIdentity = new Set();
   for (const market of venue.markets.filter(item => item.status === 'available')) {
     const catalog = await readJson(market.sharesData);
@@ -26,7 +30,8 @@ export async function cloudflareCatalog() {
     const groupByIsin = new Map((indices?.indices || []).flatMap(index =>
       index.constituents.map(member => [member.isin, index.id])));
     markets.push({ mic:market.mic, code:market.id, name:market.name,
-      exchangeGroup:venue.name, countryCode:null, currency:market.currency, timezone:null });
+      exchangeGroup:venue.name, countryCode:legacyMarketMetadata[market.mic]?.[0] || null,
+      currency:market.currency, timezone:legacyMarketMetadata[market.mic]?.[1] || null });
     for (const share of catalog.shares) {
       if (!share.isin) {
         unresolved.push({ mic:market.mic, symbol:share.symbol });
