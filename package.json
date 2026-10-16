@@ -27,7 +27,8 @@
     "research:paris:core": "node scripts/research/run-paris-core.mjs",
     "research:paris:full": "node scripts/research/run-paris-full.mjs",
     "research:paris:events": "node scripts/research/fetch-paris-macro.mjs",
-    "audit:codebase": "node scripts/audit/codebase-audit.mjs"
+    "audit:codebase": "node scripts/audit/codebase-audit.mjs",
+    "history:coverage": "node scripts/audit/europe-history-coverage.mjs"
   },
   "engines": {
     "node": ">=22.5"
