@@ -39,3 +39,24 @@ Laat `SCHEDULER_ENABLED=false` tot de golden import en beheercontrole groen zijn
 D1 bevat geen massale dagelijkse historie, alleen kleine index- en statusrijen. R2 groeit lineair per instrumentjaar. Bij circa 60.000 bedrijven kunnen marktjobs worden opgesplitst in beperkte batches/concurrencygroepen; een storing blijft één job-item. Nieuwe markten vereisen catalogusdata met MIC en een provideradapter, niet een nieuw schema. Voor miljoenen analytische scans kan later een apart Parquet-/warehousepad worden toegevoegd; individuele grafieken blijven de compacte jaarobjecten lezen.
 
 De volledige Amsterdam-backfill wordt in deze wijziging bewust niet gestart.
+
+## Dagelijkse update zonder gedeeld token
+
+De dagelijkse workflow gebruikt `KOERSPLEIN_AUTH_MODE=github-oidc` en `id-token: write`.
+De client vraagt bij GitHub een ondertekend identiteitsbewijs voor audience
+`koersplein-factory:1369316270` en vernieuwt dit voor het verloopt. Er wordt geen
+sleutel in broncode of artifacts opgeslagen. GitHub maskeert het bewijs in logs.
+
+De Worker controleert de RS256-handtekening met GitHubs vaste JWKS-endpoint,
+issuer, audience, repository-ID `1369316270`, eigenaar-ID `305800938`, branch
+`main`, exact `.github/workflows/daily-open-close.yml`, GitHub-hosted runner en
+geldigheid van maximaal tien minuten. Pull requests, forks en herbruikbare
+workflows krijgen via deze route geen toegang. De route staat uitsluitend de
+cataloguscontrole, het lezen van historiepartities en het schrijven/afronden van
+koerspartities toe; cataloguswijzigingen, jobs en beheerroutes zijn uitgesloten.
+De bestaande `FACTORY_TOKEN`-route blijft bruikbaar voor overige clients, mits
+een niet-lege secret is ingesteld. OIDC wijzigt geen D1/R2-bindingen of gegevens.
+
+Na deployment van de Worker kan de bestaande dagelijkse workflow worden gestart
+of opnieuw uitgevoerd. Een succesvolle build bewijst nog geen geslaagde
+koersupdate: controleer `FACTORY_AUTH_OK`, het update-artifact en de koersaudit.

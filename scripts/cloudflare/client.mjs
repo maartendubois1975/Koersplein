@@ -2,8 +2,29 @@ const sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
 
 export class FactoryApiClient {
   constructor({ baseUrl = process.env.KOERSPLEIN_API_URL, token = process.env.KOERSPLEIN_FACTORY_TOKEN } = {}) {
-    if (!baseUrl || !token) throw new Error('KOERSPLEIN_API_URL en KOERSPLEIN_FACTORY_TOKEN zijn vereist');
+    if (!baseUrl || (!token && process.env.KOERSPLEIN_AUTH_MODE !== 'github-oidc')) throw new Error('KOERSPLEIN_API_URL en KOERSPLEIN_FACTORY_TOKEN zijn vereist');
     this.baseUrl = baseUrl.replace(/\/$/, ''); this.token = token;
+  }
+  async credentials() {
+    if (process.env.KOERSPLEIN_AUTH_MODE !== 'github-oidc') return this.token;
+    if (this.identityToken && this.identityUntil > Date.now()) return this.identityToken;
+    const requestUrl = process.env.ACTIONS_ID_TOKEN_REQUEST_URL;
+    const requestToken = process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN;
+    if (!requestUrl || !requestToken) throw new Error('GitHub Actions OIDC identity is unavailable');
+    const url = new URL(requestUrl);
+    // The request URL and credential come only from the GitHub-hosted runner.
+    if (url.protocol !== 'https:') throw new Error('Invalid OIDC request URL');
+    url.searchParams.set('audience', 'koersplein-factory:1369316270');
+    const response = await fetch(url, { headers: { authorization: `Bearer ${requestToken}` }, signal: AbortSignal.timeout(15000) });
+    if (!response.ok) throw new Error(`GitHub OIDC request HTTP ${response.status}`);
+    const data = await response.json();
+    if (typeof data.value !== 'string' || data.value.split('.').length !== 3) throw new Error('Invalid GitHub OIDC response');
+    console.log(`::add-mask::${data.value}`);
+    const claims = JSON.parse(Buffer.from(data.value.split('.')[1], 'base64url').toString('utf8'));
+    if (!Number.isFinite(claims.exp) || claims.exp * 1000 <= Date.now() + 30000) throw new Error('GitHub OIDC identity already expired');
+    this.identityToken = data.value;
+    this.identityUntil = Math.min(claims.exp * 1000 - 30000, Date.now() + 240000);
+    return this.identityToken;
   }
   async request(path, options = {}) {
     const method=options.method||'GET';
@@ -13,7 +34,7 @@ export class FactoryApiClient {
       try{
         const response = await fetch(`${this.baseUrl}${path}`, {
           ...options,
-          headers: { authorization: `Bearer ${this.token}`, 'content-type': 'application/json', ...(options.headers || {}) }
+          headers: { authorization: `Bearer ${await this.credentials()}`, 'content-type': 'application/json', ...(options.headers || {}) }
         });
         if(response.ok) return response.status === 204 ? null : response.json();
         const body=await response.text();
