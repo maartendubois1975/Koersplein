@@ -48,5 +48,28 @@ for(const f of files.filter(x=>/\.(mjs|js|json|ya?ml|html|toml)$/.test(x))){
  }
 }
 
+
+const sourceFiles=files.filter(f=>/\\.(?:mjs|js|html)$/.test(f));
+for(const f of sourceFiles){
+ const rel=path.relative(root,f).split(path.sep).join('/');
+ const body=await fs.readFile(f,'utf8');
+ const targets=[];
+ if(/\\.(?:mjs|js)$/.test(rel)){
+  for(const match of body.matchAll(/(?:\\bfrom\\s*|\\bimport\\s*\\(|\\bimport\\s*|\\brequire\\s*\\()\\s*['"]([^'"]+)['"]/g))targets.push(match[1]);
+ }else{
+  for(const match of body.matchAll(/<(?:script|link)\\b[^>]*?\\b(?:src|href)\\s*=\\s*["']([^"']+)["']/gi))targets.push(match[1]);
+ }
+ for(const target of targets){
+  if(!target.startsWith('./')&&!target.startsWith('../')&&!target.startsWith('/'))continue;
+  const clean=target.split(/[?#]/)[0];
+  if(!clean||clean==='/')continue;
+  const resolved=clean.startsWith('/')?path.resolve(root,'.'+clean):path.resolve(path.dirname(f),clean);
+  const normalized=path.relative(root,resolved).split(path.sep).join('/');
+  if(normalized.startsWith('../')||path.isAbsolute(normalized))continue;
+  if(!currentPaths.has(normalized)&&!currentPaths.has(normalized+'/index.js')&&!currentPaths.has(normalized+'/index.mjs'))
+   issues.push({severity:'ERROR',type:'BROKEN_LOCAL_DEPENDENCY',file:rel,detail:target});
+ }
+}
+
 const report={generatedAt:new Date().toISOString(),stats,errors:issues.filter(x=>x.severity==='ERROR').length,warnings:issues.filter(x=>x.severity==='WARN').length,info:issues.filter(x=>x.severity==='INFO').length,issues};
 await fs.mkdir('research/output/audit',{recursive:true});await fs.writeFile('research/output/audit/codebase-audit.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));if(report.errors)process.exitCode=2;
