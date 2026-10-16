@@ -5,8 +5,6 @@ on:
     paths:
       - '.github/workflows/codebase-audit.yml'
       - 'scripts/audit/**'
-      - 'scripts/archive/**'
-      - 'data/atlas-archive/**'
       - 'scripts/validate.mjs'
       - 'package.json'
       - 'data/markets.json'
@@ -21,9 +19,6 @@ on:
       - 'scripts/cloudflare/**'
       - 'scripts/research/**'
       - 'data/machine-pipeline.json'
-      - '.github/workflows/paris-*.yml'
-      - '.github/workflows/world-fill-controller.yml'
-      - '.github/workflows/market-handoff-controller.yml'
       - '.github/workflows/universal-source-first.yml'
       - '.github/workflows/complete-market-analysis.yml'
       - '.github/workflows/daily-opportunity-ledger.yml'
