@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {scanPlus30Chain,summarizePlus30Chains} from './plus30-chain-scanner.mjs';
+const bars=[{date:'2025-01-01',close:100},{date:'2025-01-03',close:130},{date:'2025-01-05',close:150},{date:'2025-01-08',close:169},{date:'2025-01-10',close:220}];
+const scan=scanPlus30Chain(bars);
+assert.equal(scan.totalHits,3);
+assert.deepEqual(scan.hits.map(x=>x.hitDate),['2025-01-03','2025-01-08','2025-01-10']);
+assert.equal(scan.hits[0].calendarDays,2);
+assert.equal(summarizePlus30Chains([scan],3).hitsWithinWindow,3);
+assert.equal(scanPlus30Chain([]).totalHits,0);
+assert.equal(scanPlus30Chain([{date:'2025-01-01',close:0}]).totalHits,0);
+console.log('plus30 chain scanner tests passed');
