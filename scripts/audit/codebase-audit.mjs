@@ -12,6 +12,14 @@ for(const f of files.filter(x=>path.relative(root,x).replaceAll('\\','/').starts
   const rel=path.relative(root,f).replaceAll('\\','/'),name=path.basename(rel);
   if(!allowedWorkflows.has(name)) issues.push({severity:'ERROR',type:'UNAPPROVED_WORKFLOW_PRESENT',file:rel});
 }
+// Prevent removed archive and retired workflow triggers from being reintroduced.
+const retiredAuditTriggerPaths=['scripts/archive/**','data/atlas-archive/**','.github/workflows/paris-*.yml','.github/workflows/world-fill-controller.yml','.github/workflows/market-handoff-controller.yml'];
+for(const f of files.filter(x=>path.relative(root,x).replaceAll('\\\\','/').startsWith('.github/workflows/')&&/\\.ya?ml$/.test(x))){
+ const rel=path.relative(root,f).replaceAll('\\\\','/'),body=await fs.readFile(f,'utf8');
+ for(const retired of retiredAuditTriggerPaths){
+  if(body.split('\\n').some(line=>line.trim().replace(/^[-\\s'\\\"]+|['\\\"]+$/g,'')===retired))issues.push({severity:'ERROR',type:'RETIRED_WORKFLOW_TRIGGER',file:rel,detail:retired});
+ }
+}
 const obsoleteTriggers=files.filter(x=>{const rel=path.relative(root,x).replaceAll('\\','/');return rel.startsWith('.research-triggers/')||/\.trigger$/.test(rel)||rel==='.source-first-trigger'});
 for(const f of obsoleteTriggers) issues.push({severity:'ERROR',type:'OBSOLETE_RUN_TRIGGER_PRESENT',file:path.relative(root,f).replaceAll('\\','/')});
 const protectedFrontend=['index.html','app.js','market.js','share.html','share.js'];
