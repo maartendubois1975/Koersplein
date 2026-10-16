@@ -49,5 +49,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: koersplein-codebase-audit
-          path: research/output/audit/codebase-audit.json
+          path: |
+            research/output/audit/codebase-audit.json
+            research/output/audit/dependency-inventory.json
           retention-days: 90
