@@ -4,10 +4,12 @@ const markets=JSON.parse(await fs.readFile(new URL('data/markets.json',root))).v
 const date='2026-10-16', previous='2026-10-15';
 const suffixes={XAMS:'.AS',XBRU:'.BR',XPAR:'.PA',XMIL:'.MI',XOSL:'.OL',XLIS:'.LS',XSWX:'.SW',XSTO:'.ST',XCSE:'.CO',XDUB:'.IR',XETR:'.DE',XMAD:'.MC',XHEL:'.HE',XATH:'.AT',XWBO:'.VI',XPRA:'.PR',XBUD:'.BD',XBSE:'.RO',XBUL:'.BG',XWAR:'.WA',XLON:'.L',XICE:'.IC',XZAG:'.ZA',XLJU:'.LJ',XBRA:'.SK',XLUX:'.LU',XMAL:'.MT',XCYS:'.CY',XTAL:'.TL',XRIS:'.RG',XLIT:'.VS'};
 const results=[];
+const retryMarkets=new Set(['XSWX','XBUL','XZAG','XLJU','XBRA','XMAL','XCYS','XTAL','XRIS','XLIT']);
 for(const market of markets){
  const catalog=JSON.parse(await fs.readFile(new URL('data/'+market.sharesData,root)));
- const sample=catalog.shares.find(s=>s.providerSymbol&&s.isin)||catalog.shares.find(s=>s.symbol&&s.isin);
- const ticker=sample?.providerSymbol||sample?.symbol;
+ const samples=retryMarkets.has(market.mic)?catalog.shares.slice(0,10):[catalog.shares.find(s=>s.providerSymbol&&s.isin)||catalog.shares.find(s=>s.symbol&&s.isin)];
+ for(const sample of samples){
+ const ticker=sample?.providerSymbol?.match(/^[A-Z]{2}[A-Z0-9]{9}[0-9]$/)?sample?.symbol:(sample?.providerSymbol||sample?.symbol);
  const row={mic:market.mic,market:market.name,ticker,isin:sample?.isin||null,date:null,open:null,close:null,provider:'Yahoo chart',status:'not_tested'};
  if(!ticker){row.status='no_provider_symbol';results.push(row);console.log(JSON.stringify(row));continue}
  try{
@@ -25,6 +27,8 @@ for(const market of markets){
  }catch(e){row.status='error';row.error=String(e.message).slice(0,150)}
  results.push(row);
  console.log(JSON.stringify(row));
+ if(row.status==='today'||row.status==='yesterday')break;
+ }
 }
 await fs.mkdir('research/output/audit',{recursive:true});
 await fs.writeFile('research/output/audit/europe-daily-close-20261016.json',JSON.stringify({date,previous,markets:results.length,results},null,2));
