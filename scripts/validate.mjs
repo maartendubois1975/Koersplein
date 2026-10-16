@@ -45,10 +45,20 @@ const requiredPublishedMarkets = ['amsterdam','brussels','paris','milan'];
 for (const id of requiredPublishedMarkets) if (!euronext?.markets.some((market) => market.id === id && market.status === 'available')) throw new Error(`Euronext ${id} ontbreekt in de actieve marktstructuur.`);
 // Published markets are additive: once a market has passed its own end validation it may
 // become available without making older market fill/repair workflows invalid.
-const knownMarketIds = new Set(['amsterdam','brussels','paris','milan','oslo','dublin','lisbon']);
-const unknownPublished = (euronext?.markets || []).filter((market) => market.status === 'available' && !knownMarketIds.has(market.id));
-if (unknownPublished.length) throw new Error(`Onbekende gepubliceerde Europese markt(en): ${unknownPublished.map(x=>x.id).join(', ')}.`);
-for (const id of ['dublin','lisbon']) if (!euronext?.markets.some((market) => market.id === id && market.status === 'planned')) throw new Error(`Euronext ${id} moet gepland blijven tot de eigen eindvalidatie is geslaagd.`);
+// The canonical completion plan is authoritative for published European markets.
+// Do not reject newly completed venues using a stale hard-coded allowlist.
+const worldPlan = await readJson('../data/world-fill-plan.json');
+const completeMarkets = worldPlan.markets.filter(market => market.state === 'COMPLETE');
+const completeMics = new Set(completeMarkets.map(market => market.mic));
+if (completeMics.size !== completeMarkets.length) throw new Error('Dubbele MIC in de complete Europese marktadministratie.');
+const published = (euronext?.markets || []).filter(market => market.status === 'available');
+for (const market of completeMarkets) {
+  const match = published.find(item => item.mic === market.mic);
+  if (!match || !match.sharesData) throw new Error(`Complete Europese markt ontbreekt in publicatie: ${market.mic}`);
+}
+for (const market of published) {
+  if (!completeMics.has(market.mic)) throw new Error(`Gepubliceerde Europese markt ontbreekt in COMPLETE-administratie: ${market.mic}`);
+}
 if (!regionsData.regions.some((region) => region.id === 'europe' && region.status === 'available')) throw new Error('Europa ontbreekt.');
 if (regionsData.regions.filter((region) => region.status === 'available').length !== 1) throw new Error('Alleen Europa mag nu actief zijn.');
 
