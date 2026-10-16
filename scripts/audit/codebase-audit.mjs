@@ -35,13 +35,13 @@ try{
 }catch(e){issues.push({severity:'ERROR',type:'FRONTEND_COMPLETE_MARKET_GATE_FAILED',file:'data/markets.json',detail:e.message});}
 
 const retiredAtlasFiles=['scripts/archive/atlas-export.sql','scripts/archive/atlas-normalize.mjs','scripts/archive/atlas-research-evaluate.mjs','scripts/archive/atlas-validate.mjs','data/atlas-archive/README.md','data/atlas-archive/schema.json'];
-const currentPaths=new Set(files.map(f=>path.relative(root,f).replaceAll('\\\\','/')));
+const currentPaths=new Set(files.map(f=>path.relative(root,f).split(path.sep).join('/')));
 for(const retired of retiredAtlasFiles){
  if(currentPaths.has(retired))issues.push({severity:'ERROR',type:'RETIRED_ATLAS_FILE_REINTRODUCED',file:retired});
 }
-for(const f of files.filter(x=>/\\.(mjs|js|json|ya?ml|html|toml)$/.test(x))){
- const rel=path.relative(root,f).replaceAll('\\\\','/');
- if(rel.startsWith('research/output/'))continue;
+for(const f of files.filter(x=>/\.(mjs|js|json|ya?ml|html|toml)$/.test(x))){
+ const rel=path.relative(root,f).split(path.sep).join('/');
+ if(rel==='scripts/audit/codebase-audit.mjs'||rel.startsWith('research/output/'))continue;
  const body=await fs.readFile(f,'utf8');
  for(const retired of retiredAtlasFiles){
   if(body.includes(retired))issues.push({severity:'ERROR',type:'RETIRED_ATLAS_REFERENCE',file:rel,detail:retired});
