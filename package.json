@@ -31,7 +31,7 @@
     "history:coverage": "node scripts/audit/europe-history-coverage.mjs",
     "cloudflare:audit-live": "node scripts/cloudflare/audit-live.mjs",
     "cloudflare:sync-plan": "node scripts/cloudflare/sync-plan.mjs",
-    "isin:verify": "node scripts/research/test-reconcile-isin.mjs"
+    "isin:verify": "node scripts/research/test-reconcile-isin.mjs && node scripts/research/test-import-isin-evidence.mjs"
   },
   "engines": {
     "node": ">=22.5"
