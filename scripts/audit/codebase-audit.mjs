@@ -124,7 +124,7 @@ const referenceBodies=await Promise.all(referenceFiles.map(async f=>({path:path.
 const unreferencedScriptCandidates=[];
 for(const f of sourceEntries){
  const rel=path.relative(root,f).split(path.sep).join('/');
- if(/(?:^|\\/)(?:test[^/]*|[^/]*test|server|cli|index)\\.(?:mjs|js)$/.test(rel))continue;
+ if(['server.mjs','cli.mjs','index.mjs'].includes(path.basename(rel))||path.basename(rel).startsWith('test')||path.basename(rel).includes('.test.'))continue;
  const filename=path.basename(rel),withoutExtension=rel.replace(/\\.(?:mjs|js)$/,'');
  const referenced=referenceBodies.some(entry=>entry.path!==rel&&(entry.body.includes(rel)||entry.body.includes(withoutExtension)||entry.body.includes(filename)));
  if(!referenced)unreferencedScriptCandidates.push(rel);
