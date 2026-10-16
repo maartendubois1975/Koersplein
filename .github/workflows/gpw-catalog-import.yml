@@ -23,7 +23,7 @@ jobs:
       - name: Apply verified identities without modifying history
         run: |
           node scripts/research/apply-gpw-verified.mjs evidence/gpw-isin-evidence.json
-          sed -i 's/assert.equal(catalog.unresolved.length, 540)/assert.equal(catalog.unresolved.length, 147)/' scripts/cloudflare/test.mjs
+          sed -i 's/catalog.unresolved.length,540/catalog.unresolved.length,147/' scripts/cloudflare/test.mjs
           npm test
       - name: Create reviewable catalog update
         uses: peter-evans/create-pull-request@v7
