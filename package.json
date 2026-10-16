@@ -29,7 +29,8 @@
     "research:paris:events": "node scripts/research/fetch-paris-macro.mjs",
     "audit:codebase": "node scripts/audit/codebase-audit.mjs",
     "history:coverage": "node scripts/audit/europe-history-coverage.mjs",
-    "cloudflare:audit-live": "node scripts/cloudflare/audit-live.mjs"
+    "cloudflare:audit-live": "node scripts/cloudflare/audit-live.mjs",
+    "cloudflare:sync-plan": "node scripts/cloudflare/sync-plan.mjs"
   },
   "engines": {
     "node": ">=22.5"
