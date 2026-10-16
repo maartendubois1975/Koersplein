@@ -1,9 +1,12 @@
+import { StockAnalysisBitProvider } from '../history/providers/stockanalysis-bit.mjs';
 import fs from 'node:fs/promises';
 const root=new URL('../../',import.meta.url);
 const markets=JSON.parse(await fs.readFile(new URL('data/markets.json',root))).venues.find(v=>v.id==='euronext').markets;
 const date='2026-10-16', previous='2026-10-15';
 const suffixes={XAMS:'.AS',XBRU:'.BR',XPAR:'.PA',XMIL:'.MI',XOSL:'.OL',XLIS:'.LS',XSWX:'.SW',XSTO:'.ST',XCSE:'.CO',XDUB:'.IR',XETR:'.DE',XMAD:'.MC',XHEL:'.HE',XATH:'.AT',XWBO:'.VI',XPRA:'.PR',XBUD:'.BD',XBSE:'.RO',XBUL:'.BG',XWAR:'.WA',XLON:'.L',XICE:'.IC',XZAG:'.ZA',XLJU:'.LJ',XBRA:'.SK',XLUX:'.LU',XMAL:'.MT',XCYS:'.CY',XTAL:'.TL',XRIS:'.RG',XLIT:'.VS'};
 const results=[];
+const alternative=new StockAnalysisBitProvider();
+const alternativeMics=new Set(['XBUL','XZAG','XLJU','XBRA','XMAL','XCYS','XLUX']);
 const retryMarkets=new Set(['XSWX','XBUL','XZAG','XLJU','XBRA','XMAL','XCYS','XTAL','XRIS','XLIT']);
 for(const market of markets){
  const catalog=JSON.parse(await fs.readFile(new URL('data/'+market.sharesData,root)));
@@ -28,6 +31,23 @@ for(const market of markets){
  results.push(row);
  console.log(JSON.stringify(row));
  if(row.status==='today'||row.status==='yesterday')break;
+ }
+ if(alternativeMics.has(market.mic) && !results.some(r=>r.mic===market.mic && (r.status==='today'||r.status==='yesterday'))){
+  const shares=catalog.shares.slice(0,4);
+  for(const share of shares){
+   const a={mic:market.mic,market:market.name,ticker:share.symbol,isin:share.isin,provider:alternative.id,status:'not_tested'};
+   try{
+    if(!alternative.supports({mic:market.mic,symbol:share.symbol})){a.status='unsupported_mic';}
+    else{
+     const data=await alternative.fetchDaily({mic:market.mic,symbol:share.symbol},{startDate:previous,endDate:date});
+     const bar=data.bars.filter(b=>b.date===date||b.date===previous).at(-1);
+     if(!bar)a.status='no_dated_bar';
+     else {a.date=bar.date;a.open=bar.open;a.close=bar.close;a.status=bar.open>0&&bar.close>0?'dated_ohlc':'invalid_ohlc';}
+    }
+   }catch(e){a.status='error';a.error=String(e.message).slice(0,140)}
+   results.push(a);console.log(JSON.stringify(a));
+   if(a.status==='dated_ohlc'||a.status==='unsupported_mic')break;
+  }
  }
 }
 await fs.mkdir('research/output/audit',{recursive:true});
