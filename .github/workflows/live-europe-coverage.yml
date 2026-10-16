@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/live-europe-coverage.yml'
+      - 'scripts/cloudflare/**'
+      - 'data/markets.json'
+      - 'data/euronext-*.json'
 permissions:
   contents: read
 jobs:
@@ -26,7 +29,7 @@ jobs:
             echo 'available=true' >> "$GITHUB_OUTPUT"
           else
             echo 'available=false' >> "$GITHUB_OUTPUT"
-            echo 'Live audit overgeslagen: vereiste Cloudflare secrets ontbreken.' >> "$GITHUB_STEP_SUMMARY"
+            echo 'Live audit overgeslagen: KOERSPLEIN_API_URL of KOERSPLEIN_FACTORY_TOKEN ontbreekt in GitHub Secrets.' >> "$GITHUB_STEP_SUMMARY"
           fi
       - name: Compare live European catalog and history
         if: steps.config.outputs.available == 'true'
