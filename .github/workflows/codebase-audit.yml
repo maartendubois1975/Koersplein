@@ -7,6 +7,8 @@ on:
       - 'scripts/audit/**'
       - 'scripts/archive/**'
       - 'data/atlas-archive/**'
+      - 'scripts/archive/**'
+      - 'data/atlas-archive/**'
       - 'data/markets.json'
       - 'data/world-fill-plan.json'
       - 'data/euronext-*.json'
