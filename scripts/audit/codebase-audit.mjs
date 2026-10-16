@@ -49,15 +49,15 @@ for(const f of files.filter(x=>/\.(mjs|js|json|ya?ml|html|toml)$/.test(x))){
 }
 
 
-const sourceFiles=files.filter(f=>/\\.(?:mjs|js|html)$/.test(f));
+const sourceFiles=files.filter(f=>/\.(?:mjs|js|html)$/.test(f));
 for(const f of sourceFiles){
  const rel=path.relative(root,f).split(path.sep).join('/');
  const body=await fs.readFile(f,'utf8');
  const targets=[];
- if(/\\.(?:mjs|js)$/.test(rel)){
-  for(const match of body.matchAll(/(?:\\bfrom\\s*|\\bimport\\s*\\(|\\bimport\\s*|\\brequire\\s*\\()\\s*['"]([^'"]+)['"]/g))targets.push(match[1]);
+ if(/\.(?:mjs|js)$/.test(rel)){
+  for(const match of body.matchAll(/(?:\bfrom\s*|\bimport\s*\(|\bimport\s*|\brequire\s*\()\s*['"]([^'"]+)['"]/g))targets.push(match[1]);
  }else{
-  for(const match of body.matchAll(/<(?:script|link)\\b[^>]*?\\b(?:src|href)\\s*=\\s*["']([^"']+)["']/gi))targets.push(match[1]);
+  for(const match of body.matchAll(/<(?:script|link)\b[^>]*?\b(?:src|href)\s*=\s*["']([^"']+)["']/gi))targets.push(match[1]);
  }
  for(const target of targets){
   if(!target.startsWith('./')&&!target.startsWith('../')&&!target.startsWith('/'))continue;
