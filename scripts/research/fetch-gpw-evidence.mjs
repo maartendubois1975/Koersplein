@@ -5,7 +5,7 @@ export function parseGpwCompanyLinks(html, sourceDate) {
   const rows = [], seen = new Set();
   // GPW company links embed the exchange's ISIN in /spolka?isin=...
   // and the visible ticker in parentheses, e.g. NAME (11B).
-  const pattern = /<a\b[^>]*href=["'][^"']*\/spolka\?isin=([A-Z0-9]{12})[^"']*["'][^>]*>([\s\S]*?)<\/a>/gi;
+  const pattern = /<a\b[^>]*href=["'][^"']*\/?spolka\?isin=([A-Z0-9]{12})[^"']*["'][^>]*>([\s\S]*?)<\/a>/gi;
   for (const match of html.matchAll(pattern)) {
     const visible = match[2].replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();
     const ticker = /\(([A-Z0-9]{1,12})\)\s*$/.exec(visible)?.[1];
