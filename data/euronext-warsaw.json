@@ -6814,13 +6814,18 @@
       "name": "Wise Energy S.A.",
       "symbol": "FMG",
       "ticker": "FMG",
-      "isin": null,
+      "isin": "PLTHP0000011",
       "mic": "XWAR",
       "segment": "Main Market",
       "currency": "PLN",
       "providerSymbol": "FMG.WA",
       "identitySource": "https://www.gpw.pl/spolki",
-      "identityResolution": "GPW_MAIN_MARKET_CURRENT_QUOTE_AND_HISTORY_PROOF"
+      "identityResolution": "GPW_MAIN_MARKET_CURRENT_QUOTE_AND_HISTORY_PROOF",
+      "isinEvidence": {
+        "sourceUrl": "https://strefainwestorow.pl/wiadomosci/20260904/gpw-w-sprawie-dopuszczenia-i-wprowadzenia-do-obrotu-gieldowego-na-glownym-rynku",
+        "sourceDocument": "GPW resolution 1273/2026 confirming existing traded ISIN PLTHP0000011 and assimilation",
+        "sourceDate": "2026-09-04"
+      }
     },
     {
       "company": "WISE Finance S.A.",
