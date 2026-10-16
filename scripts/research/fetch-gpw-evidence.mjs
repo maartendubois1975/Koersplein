@@ -26,6 +26,10 @@ if (process.argv[1]?.endsWith('/fetch-gpw-evidence.mjs')) {
   if(!response.ok)throw new Error('GPW HTTP '+response.status);
   const html=await response.text();
   const report=await extractGpwEvidence(html,date);
-  if(report.accepted.length===0) {\n    const hrefs=[...html.matchAll(/href=[\"']([^\"']*spolka[^\"']*)[\"']/gi)].slice(0,8).map(m=>m[1].slice(0,140));\n    console.error(JSON.stringify({httpStatus:response.status,finalUrl:response.url,htmlBytes:html.length,companyHrefExamples:hrefs,isinOccurrences:(html.match(/isin=/gi)||[]).length,sourceTickerOccurrences:(html.match(/11B/g)||[]).length,parsed:parseGpwCompanyLinks(html,date).length,accepted:report.accepted.length}));\n    throw new Error('No verified GPW company links found; see safe source diagnostics above');\n  }
+  if(report.accepted.length===0) {
+    const hrefs=[...html.matchAll(/href=[\"']([^\"']*spolka[^\"']*)[\"']/gi)].slice(0,8).map(m=>m[1].slice(0,140));
+    console.error(JSON.stringify({httpStatus:response.status,finalUrl:response.url,htmlBytes:html.length,companyHrefExamples:hrefs,isinOccurrences:(html.match(/isin=/gi)||[]).length,sourceTickerOccurrences:(html.match(/11B/g)||[]).length,parsed:parseGpwCompanyLinks(html,date).length,accepted:report.accepted.length}));
+    throw new Error('No verified GPW company links found; see safe source diagnostics above');
+  }
   console.log(JSON.stringify(report,null,2));
 }
