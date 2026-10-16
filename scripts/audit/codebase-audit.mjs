@@ -117,5 +117,19 @@ for(const file of executableSources){
  if(previous)issues.push({severity:'ERROR',type:'DUPLICATE_EXECUTABLE_SOURCE',file:rel,detail:'Identical source also exists at '+previous});
  else exactSourceCopies.set(body,rel);
 }
+// Conservative inventory: identify potentially unreferenced scripts without deleting dynamic entrypoints.
+const sourceEntries=files.filter(f=>path.relative(root,f).split(path.sep).join('/').startsWith('scripts/')&&/\\.(?:mjs|js)$/.test(f));
+const referenceFiles=files.filter(f=>/\\.(?:mjs|js|json|ya?ml|html|md)$/.test(f)&&!path.relative(root,f).split(path.sep).join('/').startsWith('research/output/'));
+const referenceBodies=await Promise.all(referenceFiles.map(async f=>({path:path.relative(root,f).split(path.sep).join('/'),body:await fs.readFile(f,'utf8')})));
+const unreferencedScriptCandidates=[];
+for(const f of sourceEntries){
+ const rel=path.relative(root,f).split(path.sep).join('/');
+ if(/(?:^|\\/)(?:test[^/]*|[^/]*test|server|cli|index)\\.(?:mjs|js)$/.test(rel))continue;
+ const filename=path.basename(rel),withoutExtension=rel.replace(/\\.(?:mjs|js)$/,'');
+ const referenced=referenceBodies.some(entry=>entry.path!==rel&&(entry.body.includes(rel)||entry.body.includes(withoutExtension)||entry.body.includes(filename)));
+ if(!referenced)unreferencedScriptCandidates.push(rel);
+}
+await fs.mkdir('research/output/audit',{recursive:true});
+await fs.writeFile('research/output/audit/dependency-inventory.json',JSON.stringify({generatedAt:new Date().toISOString(),scannedScripts:sourceEntries.length,candidates:unreferencedScriptCandidates,warning:'Candidates are NOT confirmed unused; dynamic imports, external callers and scheduled invocations require manual review.'},null,2));
 const report={generatedAt:new Date().toISOString(),stats,errors:issues.filter(x=>x.severity==='ERROR').length,warnings:issues.filter(x=>x.severity==='WARN').length,info:issues.filter(x=>x.severity==='INFO').length,issues};
 await fs.mkdir('research/output/audit',{recursive:true});await fs.writeFile('research/output/audit/codebase-audit.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));if(report.errors)process.exitCode=2;
