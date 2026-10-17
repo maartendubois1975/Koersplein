@@ -48,6 +48,21 @@ for(const market of targetMarkets){
  const primary=source.historySources?.find(x=>x.role==='PRIMARY')?.provider;if(!primary)throw Error(`${market.mic}: geen PRIMARY bronroute`);
  if(!providers.get(primary))throw Error(`${market.mic}: onbekende PRIMARY provider ${primary}; bronregister corrigeren`);
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),shares=catalog.shares||catalog.instruments||[];
+ // Reykjavik uses stable XICE:TICKER identity. Ensure D1 has these keys before R2 history writes.
+ // The Worker migrates an older temporary key in place while retaining its history relations.
+ if(market.mic==='XICE'){
+  const existing=await client.request('/api/factory/catalog?mic=XICE');
+  const byTicker=new Map((existing.instruments||[]).map(x=>[String(x.ticker||'').toUpperCase(),x.isin]));
+  const needsSeed=shares.filter(s=>s.isin&&s.symbol&&byTicker.get(String(s.symbol).toUpperCase())!==s.isin);
+  if(needsSeed.length){
+   await client.seedCatalog({markets:[],instruments:needsSeed.map(s=>({isin:s.isin,mic:'XICE',ticker:s.symbol,company:s.company||s.name||s.symbol,countryCode:market.country,currency:s.currency||market.currency}))});
+   console.log('XICE_CATALOG_SEEDED',JSON.stringify({count:needsSeed.length}));
+  }
+  const verified=await client.request('/api/factory/catalog?mic=XICE');
+  const verifiedKeys=new Set((verified.instruments||[]).map(x=>x.isin));
+  const unresolved=shares.filter(s=>!verifiedKeys.has(s.isin));
+  if(unresolved.length)throw Error('XICE_CATALOG_IDENTITY_UNRESOLVED '+unresolved.map(x=>x.isin).join(','));
+ }
  const unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));let advanced=0,current=0,skipped=0,missing=0,deferredMissing=0,failed=[];
  for(const s of shares){
   if(unavailable.has(s.isin)){skipped++;continue}
