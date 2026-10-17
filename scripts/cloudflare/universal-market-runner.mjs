@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import { FactoryApiClient } from './client.mjs';
 import { createDefaultProviderRegistry } from '../history/provider-registry.mjs';
+import {storageIdentityResolver,newListingStorageKey} from './storage-identity.mjs';
 import { partitionBars } from './history-format.mjs';
 
 const client=new FactoryApiClient();
@@ -17,10 +18,16 @@ const source=raw.shares||raw.instruments||[];if(!source.length)throw new Error('
 // Reuse the identity already stored in D1 for a mic+ticker pair. Older imports can have
 // a valid 12-character placeholder identity; inventing a second synthetic identity causes
 // a mic+ticker UNIQUE collision and then every history route returns 404.
-let existingIdentityByMicTicker=new Map();
-try{const manifest=await client.historyManifest();for(const [isin,row] of Object.entries(manifest?.instruments||{})){const key=`${String(row.mic||'').toUpperCase()}\u0000${String(row.symbol||'').toUpperCase()}`;if(row.mic&&row.symbol)existingIdentityByMicTicker.set(key,isin)}}catch(e){console.log(`IDENTITY_MANIFEST_UNAVAILABLE ${e.message}`)}
-try{const existing=await client.request('/api/factory/catalog?mic='+encodeURIComponent(mic));for(const row of (existing?.instruments||existing?.shares||[])){const key=`${String(row.mic||mic).toUpperCase()}\u0000${String(row.ticker||row.symbol||'').toUpperCase()}`;if((row.isin||row.id)&&!existingIdentityByMicTicker.has(key))existingIdentityByMicTicker.set(key,row.isin||row.id)}}catch(e){console.log(`IDENTITY_CATALOG_UNAVAILABLE ${e.message}`)}
-const rawInstruments=source.map(x=>{const ticker=x.symbol||x.ticker,segmentMic=x.mic||m.mic;const mt=`${String(segmentMic).toUpperCase()}\u0000${String(ticker||'').trim().toUpperCase()}`;const storedIdentity=existingIdentityByMicTicker.get(mt);const officialIsin=x.isin||null;const preferOfficialIdentity=String(segmentMic).toUpperCase()==='XBUL'&&officialIsin;const historyKey=preferOfficialIdentity?officialIsin:(storedIdentity||officialIsin||`${segmentMic}-${String(ticker||'').trim().toUpperCase().replace(/[^A-Z0-9]+/g,'-')}`);return {isin:historyKey,officialIsin,name:x.name||x.company,company:x.name||x.company,symbol:ticker,ticker,mic:segmentMic,market:segmentMic,currency:m.currency,countryCode:m.country,provider:String(segmentMic).toUpperCase()==='XZAG'?'zse-price-list':(['XTAL','XRIS','XLIT','XLJU','XBUL'].includes(String(segmentMic).toUpperCase())?'stockanalysis-bit':'yahoo-chart'),providerSymbol:x.providerSymbol||null}});
+const storedCatalog=await client.catalog();
+const resolveStorage=storageIdentityResolver(storedCatalog.instruments||[],mic);
+const rawInstruments=source.map(x=>{
+ const ticker=x.symbol||x.ticker,segmentMic=x.mic||m.mic;
+ const officialIsin=x.isin||null;
+ const identityInput={...x,mic:segmentMic};
+ const fallback=officialIsin||`${segmentMic}-${String(ticker||'').trim().toUpperCase().replace(/[^A-Z0-9]+/g,'-')}`;
+ const historyKey=resolveStorage(identityInput)||newListingStorageKey({...identityInput,isin:fallback},segmentMic);
+ return {isin:historyKey,officialIsin,name:x.name||x.company,company:x.name||x.company,symbol:ticker,ticker,mic:segmentMic,market:segmentMic,currency:m.currency,countryCode:m.country,provider:String(segmentMic).toUpperCase()==='XZAG'?'zse-price-list':(['XTAL','XRIS','XLIT','XLJU','XBUL'].includes(String(segmentMic).toUpperCase())?'stockanalysis-bit':'yahoo-chart'),providerSymbol:x.providerSymbol||null};
+});
 const seenIsin=new Set(),seenMicTicker=new Set(),instruments=[];let duplicateIsin=0,duplicateMicTicker=0;
 for(const item of rawInstruments){
   const isin=String(item.isin||'').trim().toUpperCase(),ticker=String(item.ticker||'').trim().toUpperCase(),segmentMic=String(item.mic||m.mic).trim().toUpperCase();
@@ -58,7 +65,7 @@ for(const item of instruments){
 }
 let complete=0,failed=[];
 const historyConcurrency=mic==='XETR'?10:(mic==='XBUL'?2:1);
-for(let ci=0;ci<candidates.length;ci+=historyConcurrency){await Promise.all(candidates.slice(ci,ci+historyConcurrency).map(async item=>{try{const {provider,result}=await registry.fetchDaily(item,{startDate:'1990-01-01',endDate:today},item.provider||'yahoo-chart');if(!result.bars.length)throw new Error('geen historie');for(const [period,bars] of partitionBars(result.bars))await client.putPartition(item.isin,period,{bars,provider:provider.id});await client.completeHistory(item.isin,{provider:provider.id});complete++;}catch(e){failed.push({isin:item.isin,symbol:item.symbol,mic:item.mic,error:e.message})}}));}
+for(let ci=0;ci<candidates.length;ci+=historyConcurrency){await Promise.all(candidates.slice(ci,ci+historyConcurrency).map(async item=>{try{const {provider,result}=await registry.fetchDaily({...item,isin:item.officialIsin||item.isin},{startDate:'1990-01-01',endDate:today},item.provider||'yahoo-chart');if(!result.bars.length)throw new Error('geen historie');for(const [period,bars] of partitionBars(result.bars))await client.putPartition(item.isin,period,{bars,provider:provider.id});await client.completeHistory(item.isin,{provider:provider.id});complete++;}catch(e){failed.push({isin:item.isin,symbol:item.symbol,mic:item.mic,error:e.message})}}));}
 const attemptedIsins=candidates.map(x=>x.isin);
 let prior={};try{prior=JSON.parse(await fs.readFile('research/output/world-fill-batch.json','utf8'));}catch{}
 const priorAttempts=prior.market===mic?(prior.attemptedIsins||[]):[];

@@ -21,3 +21,13 @@ export function storageIdentityResolver(rows, defaultMic) {
     return exact&&normalized(exact.mic||defaultMic)===normalized(mic)?share.isin:null;
   };
 }
+
+// New listing keys are exchange-scoped even when another exchange has the same ISIN.
+// Never upsert a globally shared ISIN and silently move its existing D1 row.
+export function newListingStorageKey(share, defaultMic) {
+  const mic=normalized(share.mic||defaultMic),isin=normalized(share.isin);
+  if(!mic||!isin)throw Error('LISTING_IDENTITY_REQUIRED');
+  const key=isin.startsWith(mic+':')?isin:`${mic}:${isin}`;
+  if(!/^[A-Z0-9][A-Z0-9:-]{2,31}$/.test(key))throw Error('INVALID_LISTING_STORAGE_KEY '+key);
+  return key;
+}
