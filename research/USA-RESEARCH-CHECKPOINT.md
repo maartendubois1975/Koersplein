@@ -26,3 +26,9 @@ Verify TXSE CI artifact and inspect quarantine. SEC/ISIN/effective-date crosswal
 - Added ISO 6166 alphanumeric expansion plus Luhn verification to the existing NYSE eligibility gate; invalid or malformed ISINs are quarantined as ISIN_NOT_VERIFIED before any provider call.
 - Updated the synthetic positive fixture to checksum-valid `US0000000002` (test-only; not a real issuer identity claim). Added regression for valid US/GB ISINs, invalid checksum, bad format, and runner refusal to request prices for an invalid ISIN.
 - Earlier CI run 39001144208 at commit abfffd1e was green and produced NYSE/Nasdaq/TXSE artifacts; it did not cover this checksum bug. Verify the new commit's CI separately. No live US OHLC canary, catalog approval, backfill, merge or production changes.
+
+## 2026-10-17 07:00 Europe/Amsterdam — independent US dated open/close research probe
+- Added a research-only Yahoo chart daily-bar probe modeled on the European date/open/close approach, but with explicit US provider tickers, New York session dates, provider exchange/currency/instrument identity checks and OHLCV validation.
+- Samples large/small/recent/share-class tickers for XNYS and XNAS, and TXSE-listed-flag candidates separately. TXSE Yahoo bars must prove the TXSE provider market itself; an XNAS bar for a dual-listed symbol is rejected.
+- Official current candidate snapshot is required before requesting each ticker. Catalog SEC/issuer/share-class/ISIN and active-trading proof remains incomplete; Yahoo rights and adjustment policy remain NOT APPROVED.
+- Added offline regression tests and CI artifact for per-MIC research-only status. The script never imports or publishes prices. Verify CI and real provider responses after this commit; no COMPLETE or historical backfill.

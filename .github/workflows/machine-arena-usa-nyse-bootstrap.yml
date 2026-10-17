@@ -25,12 +25,22 @@ jobs:
         run: node scripts/research/test-usa-txse.mjs
       - name: Offline NYSE history eligibility and import guards
         run: node scripts/research/test-usa-history-import-guards.mjs
+      - name: Offline USA dated open-close canary regressions
+        run: node scripts/research/test-usa-daily-canary.mjs
       - name: Fetch official NYSE directory and verify counts
         run: node scripts/research/usa-nyse-universe.mjs
       - name: Fetch official Nasdaq directory and verify counts
         run: node scripts/research/usa-nasdaq-universe.mjs
       - name: Fetch official TXSE listed flags and crosscheck
         run: node scripts/research/usa-txse-universe.mjs
+      - name: Probe USA last completed session open and close (research only)
+        run: node scripts/research/usa-daily-canary.mjs
+      - name: Upload dated US canary evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: machine-arena-usa-daily-canary
+          path: research/output/usa/daily-canary-*.json
+          retention-days: 90
       - name: Upload NYSE candidate register and coverage report
         uses: actions/upload-artifact@v4
         with:
