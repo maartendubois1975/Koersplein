@@ -21,10 +21,14 @@ jobs:
         run: node scripts/research/test-usa-nasdaq.mjs
       - name: Offline NYSE historical OHLCV integrity regressions
         run: node scripts/research/test-usa-ohlcv-validation.mjs
+      - name: Offline TXSE directory regressions
+        run: node scripts/research/test-usa-txse.mjs
       - name: Fetch official NYSE directory and verify counts
         run: node scripts/research/usa-nyse-universe.mjs
       - name: Fetch official Nasdaq directory and verify counts
         run: node scripts/research/usa-nasdaq-universe.mjs
+      - name: Fetch official TXSE listed flags and crosscheck
+        run: node scripts/research/usa-txse-universe.mjs
       - name: Upload NYSE candidate register and coverage report
         uses: actions/upload-artifact@v4
         with:
@@ -36,4 +40,10 @@ jobs:
         with:
           name: machine-arena-usa-nasdaq-universe
           path: research/output/usa/XNAS/
+          retention-days: 90
+      - name: Upload TXSE research-only catalog and coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: machine-arena-usa-txse-candidates
+          path: research/output/usa/TXSE/
           retention-days: 90
