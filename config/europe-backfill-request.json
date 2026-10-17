@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-17T12:40:00Z",
+  "requestedAt": "2026-10-17T17:15:00Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "FULL_APPEND_ONLY_BACKFILL_AND_DAILY_TAIL",
-  "reason": "Europe-only final missing history and stale daily repair after factory catalog 401 auth fix PR #160; preserve all existing D1/R2 historical records; do not run USA."
+  "reason": "Europe-only final backfill after bounded Zagreb official archive PR #163 and incremental recovery PR #162; preserve existing D1/R2 history; exclude USA."
 }
