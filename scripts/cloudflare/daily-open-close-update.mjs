@@ -19,6 +19,15 @@ try { await client.catalog(); } catch(error) {
 const manifestResponse=await fetch(client.baseUrl+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
 if(!manifestResponse.ok)throw Error('Public manifest HTTP '+manifestResponse.status);
 const manifest=(await manifestResponse.json()).instruments||{};
+function failureCategory(message){
+ const m=String(message||'');
+ if(/429|rate.limit|too many requests/i.test(m))return 'RATE_LIMIT';
+ if(/timeout|timed out|AbortError|fetch failed|ECONN|ETIMEDOUT/i.test(m))return 'NETWORK_TIMEOUT';
+ if(/401|403|unauthorized|forbidden/i.test(m))return 'AUTH_OR_ACCESS';
+ if(/404|not found|no data|no bars|empty/i.test(m))return 'SOURCE_NO_HISTORY';
+ if(/422|invalid symbol|invalid ticker|symbol not/i.test(m))return 'SYMBOL_MAPPING';
+ return 'PROVIDER_OTHER';
+}
 const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
 for(const market of targetMarkets){
  const source=sourceRegistry.markets?.[market.mic];if(!source||source.status!=='APPROVED')throw Error(`${market.mic}: COMPLETE zonder APPROVED bronroute`);
@@ -37,10 +46,11 @@ for(const market of targetMarkets){
    if(bars.length)await client.completeHistory(s.isin,{provider:provider.id});
    const afterDate=bars.at(-1)?.date||beforeDate;
    if(!afterDate)missing++;else if(!beforeDate||afterDate>beforeDate)advanced++;else current++;
-  }catch(e){failed.push({isin:s.isin,symbol:s.symbol||s.ticker,error:e.message})}
+  }catch(e){failed.push({isin:s.isin,symbol:s.symbol||s.ticker,category:failureCategory(e.message),error:e.message})}
  }
  results.push({mic:market.mic,catalog:shares.length,advanced,current,missing,skippedDataUnavailable:skipped,failed});
  await checkpoint();
- console.log('EUROPE_MARKET_DONE',JSON.stringify({mic:market.mic,advanced,current,missing,skipped,failed:failed.length}));
+ const failureCategories=failed.reduce((counts,item)=>(counts[item.category]=(counts[item.category]||0)+1,counts),{});
+ console.log('EUROPE_MARKET_DONE',JSON.stringify({mic:market.mic,advanced,current,missing,skipped,failed:failed.length,failureCategories,examples:failed.slice(0,3)}));
 }
 await checkpoint();console.log(JSON.stringify(results.map(x=>({...x,failed:x.failed.length})),null,2));if(results.some(x=>x.failed.length||x.missing))process.exitCode=2;
