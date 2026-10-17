@@ -50,3 +50,5 @@ assert.equal(coverage.markets[0].withHistory,0);
 assert.equal(coverage.markets[1].withHistory,1);
 const legacyCoverage=manifestCoverage([{mic:'XICE',shares:[{isin:'XICE:ALVO',symbol:'ALVO'}]}],{instruments:{OLD:{mic:'XICE',symbol:'ALVO',recordCount:10,lastDate:'2026-01-01'}}});
 assert.equal(legacyCoverage.totals.withHistory,1);
+
+await import('./test-zse-cancellation.mjs');
