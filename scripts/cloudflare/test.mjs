@@ -1,3 +1,5 @@
+import './test-client-retries.mjs';
+import './test-europe-run-policy.mjs';
 import './test-storage-identity.mjs';
 import assert from 'node:assert/strict';
 import { cloudflareCatalog } from './catalog.mjs';

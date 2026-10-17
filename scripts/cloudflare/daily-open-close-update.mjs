@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import {FactoryApiClient} from './client.mjs';
 import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
 import {storageIdentityResolver,newListingStorageKey} from './storage-identity.mjs';
+import {latestClosedWeekday,validBars,mapConcurrent} from './europe-run-policy.mjs';
 import {partitionBars} from './history-format.mjs';
 const client=new FactoryApiClient(),providers=createDefaultProviderRegistry();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8')),sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
@@ -11,7 +12,7 @@ if(!Number.isInteger(shardCount)||shardCount<1||!Number.isInteger(shardIndex)||s
 const targetMarkets=plan.markets.filter(x=>x.state==='COMPLETE').filter((_,index)=>index%shardCount===shardIndex);
 const reportPath=`research/output/daily-open-close-update-${shardIndex}.json`;
 await fs.mkdir('research/output',{recursive:true});
-async function checkpoint(){await fs.writeFile(reportPath,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,mode:'APPEND_ONLY_STALE_AND_MISSING_COMPLETE_MARKETS',markets:results},null,2));}
+async function checkpoint(){await fs.writeFile(reportPath,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,mode:process.env.EUROPE_FULL_BACKFILL==='1'?'FULL_APPEND_ONLY_HISTORY_AND_DAILY_TAIL':'APPEND_ONLY_DAILY_AND_BOUNDED_MISSING',markets:results},null,2));}
 // Verify factory credentials once before processing thousands of instruments.
 let factoryCatalog;
 try { factoryCatalog=await client.catalog(); } catch(error) {
@@ -31,7 +32,9 @@ function failureCategory(message){
  if(/422|invalid symbol|invalid ticker|symbol not/i.test(m))return 'SYMBOL_MAPPING';
  return 'PROVIDER_OTHER';
 }
-const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
+const freshnessCutoff=latestClosedWeekday();
+const fullBackfill=process.env.EUROPE_FULL_BACKFILL==='1';
+const concurrency=Math.max(1,Math.min(4,Number(process.env.EUROPE_INSTRUMENT_CONCURRENCY||2)));
 const missingLimit=Math.max(1,Math.min(80,Number(process.env.EUROPE_MISSING_BACKFILL_LIMIT||35)));
 const missingPool=[];
 const resolveExisting=storageIdentityResolver(factoryCatalog.instruments||[]);
@@ -44,8 +47,8 @@ for(const market of targetMarkets){
 }
 const selectedMissing=new Set();
 const rotation=missingPool.length?(Math.floor(Date.now()/86400000)*missingLimit)%missingPool.length:0;
-for(let i=0;i<Math.min(missingLimit,missingPool.length);i++)selectedMissing.add(missingPool[(rotation+i)%missingPool.length]);
-console.log('EUROPE_BACKFILL_SELECTION',JSON.stringify({shardIndex,missingPool:missingPool.length,selected:selectedMissing.size,rotation,firstDate:'1990-01-01'}));
+for(let i=0;i<(fullBackfill?missingPool.length:Math.min(missingLimit,missingPool.length));i++)selectedMissing.add(missingPool[(rotation+i)%missingPool.length]);
+console.log('EUROPE_BACKFILL_SELECTION',JSON.stringify({shardIndex,missingPool:missingPool.length,selected:selectedMissing.size,rotation,firstDate:'1990-01-01',fullBackfill,freshnessCutoff}));
 
 for(const market of targetMarkets){
  const source=sourceRegistry.markets?.[market.mic];if(!source||source.status!=='APPROVED')throw Error(`${market.mic}: COMPLETE zonder APPROVED bronroute`);
@@ -54,37 +57,57 @@ for(const market of targetMarkets){
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),shares=catalog.shares||catalog.instruments||[];
  // Preserve existing D1 identities, including Reykjavik legacy keys.
  const resolveStored=storageIdentityResolver(factoryCatalog.instruments||[],market.mic);
- const eligibleForSeed=shares.filter(share=>share.isin&&!resolveStored(share));
+ const unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));
+ const eligibleForSeed=shares.filter(share=>share.isin&&!unavailable.has(share.isin)&&!resolveStored(share));
  for(let i=0;i<eligibleForSeed.length;i+=25){
   const batch=eligibleForSeed.slice(i,i+25).map(share=>({isin:newListingStorageKey(share,market.mic),mic:share.mic||market.mic,ticker:share.symbol||share.ticker,company:share.company||share.name||share.symbol||share.ticker,countryCode:market.country,currency:share.currency||market.currency}));
-  await client.seedCatalog({markets:[],instruments:batch});
+  await client.seedCatalog({markets:[],instruments:batch,createOnly:true});
  }
  if(eligibleForSeed.length){
   console.log('EUROPE_CATALOG_SEEDED',JSON.stringify({mic:market.mic,count:eligibleForSeed.length}));
   factoryCatalog=await client.catalog();
  }
  const resolveActual=storageIdentityResolver(factoryCatalog.instruments||[],market.mic);
- const unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));let advanced=0,current=0,skipped=0,missing=0,deferredMissing=0,failed=[];
- for(const s of shares){
-  if(unavailable.has(s.isin)){skipped++;continue}
+ let advanced=0,current=0,skipped=0,missing=0,deferredMissing=0,stale=0,processed=0,failed=[];
+ await mapConcurrent(shares,concurrency,async s=>{
+  if(unavailable.has(s.isin)){skipped++;return;}
   try{
    const storageIsin=resolveActual(s);
    if(!storageIsin)throw Error('CATALOG_INSTRUMENT_MISSING '+s.isin);
    const beforeDate=manifest[storageIsin]?.lastDate||null;
-   if(!beforeDate&&!selectedMissing.has(s.isin)){deferredMissing++;continue;}
-   if(beforeDate && beforeDate>=freshnessCutoff){current++;continue;}
+   if(!beforeDate&&!selectedMissing.has(s.isin)){deferredMissing++;return;}
+   if(!fullBackfill&&beforeDate && beforeDate>=freshnessCutoff){current++;return;}
    const instrument={...s,ticker:s.ticker||s.symbol,symbol:s.symbol||s.ticker,mic:s.mic||market.mic,market:s.mic||market.mic,currency:s.currency||market.currency,countryCode:market.country};
-   const {provider,result}=await providers.fetchDaily(instrument,{startDate:beforeDate||'1990-01-01',endDate:today},primary,{strictPreferred:false,timeoutMs:15000});
-   const bars=(result.bars||[]).filter(b=>b.date&&Number(b.open)>0&&Number(b.close)>0&&(!beforeDate||b.date>beforeDate));
-   for(const [period,part] of partitionBars(bars))await client.putPartition(storageIsin,period,{bars:part,provider:provider.id});
+   const range={startDate:fullBackfill||!beforeDate?'1990-01-01':new Date(new Date(beforeDate+'T00:00:00Z').getTime()+86400000).toISOString().slice(0,10),endDate:today};
+   const {provider,result}=await providers.fetchDaily(instrument,range,primary,{strictPreferred:false,timeoutMs:fullBackfill?60000:20000,acceptResult:r=>{
+    const bars=validBars(r,range);
+    return bars.length>0&&(fullBackfill||bars.at(-1).date>beforeDate);
+   }});
+   const bars=validBars(result,range);
+   for(const [period,part] of partitionBars(bars))await client.putPartition(storageIsin,period,{bars:part,provider:provider.id,appendOnly:true});
    if(bars.length)await client.completeHistory(storageIsin,{provider:provider.id});
-   const afterDate=bars.at(-1)?.date||beforeDate;
-   if(!afterDate)missing++;else if(!beforeDate||afterDate>beforeDate)advanced++;else current++;
+   let afterDate=[beforeDate,bars.at(-1)?.date].filter(Boolean).sort().at(-1);
+   // A historical response may stop early. Preserve it, then try all usable
+   // providers for the remaining daily tail instead of declaring it current.
+   if(fullBackfill&&afterDate&&afterDate<freshnessCutoff){
+    const tailRange={startDate:new Date(new Date(afterDate+'T00:00:00Z').getTime()+86400000).toISOString().slice(0,10),endDate:today};
+    try{
+     const tail=await providers.fetchDaily(instrument,tailRange,primary,{timeoutMs:20000,acceptResult:r=>validBars(r,tailRange).length>0});
+     const tailBars=validBars(tail.result,tailRange);
+     for(const [period,part] of partitionBars(tailBars))await client.putPartition(storageIsin,period,{bars:part,provider:tail.provider.id,appendOnly:true});
+     if(tailBars.length){await client.completeHistory(storageIsin,{provider:tail.provider.id});afterDate=tailBars.at(-1).date;}
+    }catch(e){failed.push({isin:s.isin,symbol:s.symbol||s.ticker,category:failureCategory(e.message),error:e.message});}
+   }
+   if(!afterDate)missing++;
+   else if(afterDate<freshnessCutoff)stale++;
+   else if(!beforeDate||afterDate>beforeDate)advanced++;
+   else current++;
   }catch(e){failed.push({isin:s.isin,symbol:s.symbol||s.ticker,category:failureCategory(e.message),error:e.message})}
- }
- results.push({mic:market.mic,catalog:shares.length,advanced,current,missing,deferredMissing,skippedDataUnavailable:skipped,failed});
+  finally {processed++;if(processed%25===0)console.log('EUROPE_MARKET_PROGRESS',JSON.stringify({mic:market.mic,processed,total:shares.length,advanced,current,stale,missing,failed:failed.length}));}
+ });
+ results.push({mic:market.mic,catalog:shares.length,advanced,current,stale,missing,deferredMissing,skippedDataUnavailable:skipped,failed});
  await checkpoint();
  const failureCategories=failed.reduce((counts,item)=>(counts[item.category]=(counts[item.category]||0)+1,counts),{});
- console.log('EUROPE_MARKET_DONE',JSON.stringify({mic:market.mic,advanced,current,missing,deferredMissing,skipped,failed:failed.length,failureCategories,examples:failed.slice(0,3)}));
+ console.log('EUROPE_MARKET_DONE',JSON.stringify({mic:market.mic,advanced,current,stale,missing,deferredMissing,skipped,failed:failed.length,failureCategories,examples:failed.slice(0,3)}));
 }
-await checkpoint();console.log(JSON.stringify(results.map(x=>({...x,failed:x.failed.length})),null,2));if(results.some(x=>x.failed.length||x.missing))process.exitCode=2;
+await checkpoint();console.log(JSON.stringify(results.map(x=>({...x,failed:x.failed.length})),null,2));if(results.some(x=>x.failed.length||x.missing||x.stale||x.deferredMissing))process.exitCode=2;

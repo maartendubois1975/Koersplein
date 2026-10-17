@@ -3,10 +3,10 @@ import {YahooChartProvider} from './yahoo-chart.mjs';
 const SEARCH='https://query2.finance.yahoo.com/v1/finance/search';
 export class YahooIsinProvider {
  id='yahoo-isin-resolver'; name='Yahoo Finance ISIN resolver + chart'; requiresApiKey=false;
- supports(i){return Boolean(i?.isin);}
+ supports(i){return /^[A-Z]{2}[A-Z0-9]{10}$/.test(i?.officialIsin||i?.isin||'');}
  async fetchDaily(instrument,opts={}){
-  const url=new URL(SEARCH);url.searchParams.set('q',instrument.isin);url.searchParams.set('quotesCount','10');url.searchParams.set('newsCount','0');
-  const r=await fetch(url,{headers:{Accept:'application/json','User-Agent':'Koersplein-history/1.0'}});
+  const url=new URL(SEARCH);url.searchParams.set('q',instrument.officialIsin||instrument.isin);url.searchParams.set('quotesCount','10');url.searchParams.set('newsCount','0');
+  const r=await fetch(url,{signal:opts.signal,headers:{Accept:'application/json','User-Agent':'Koersplein-history/1.0'}});
   if(!r.ok)throw Error(`Yahoo search HTTP ${r.status} voor ${instrument.isin}`);
   const p=await r.json(), suffix={XMIL:'.MI',MTAA:'.MI',EXGM:'.MI',XCSE:'.CO',XHEL:'.HE',XICE:'.IC',XATH:'.AT',XLON:'.L'}[String(instrument.mic||'').toUpperCase()];
   const quotes=(p?.quotes||[]).filter(q=>q?.symbol&&(!suffix||String(q.symbol).toUpperCase().endsWith(suffix)));

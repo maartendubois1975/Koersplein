@@ -1,23 +1,33 @@
 name: Dagelijkse Open Close Update
 on:
+  push:
+    branches: [main]
+    paths: ['config/europe-backfill-request.json']
   schedule:
     - cron: '45 18 * * 1-5'
   workflow_dispatch:
+    inputs:
+      full_backfill:
+        description: Process every listing from 1990 without the daily missing-history limit
+        type: boolean
+        default: false
 permissions:
   contents: read
   id-token: write
 concurrency:
   group: koersplein-daily-open-close-v4
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'push' }}
 jobs:
   update-and-verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 330
     strategy:
       fail-fast: false
       matrix:
         shard: [0, 1, 2, 3, 4, 5, 6, 7]
     env:
+      EUROPE_FULL_BACKFILL: ${{ (github.event_name == 'push' || inputs.full_backfill) && '1' || '0' }}
+      EUROPE_INSTRUMENT_CONCURRENCY: '2'
       EUROPE_SHARD_COUNT: '8'
       EUROPE_SHARD_INDEX: ${{ matrix.shard }}
       KOERSPLEIN_AUTH_MODE: github-oidc
@@ -30,35 +40,23 @@ jobs:
         with: { node-version: '22' }
       - name: Test production identity verification
         run: node scripts/cloudflare/test-github-oidc.mjs
-      - name: Verify factory credentials before long-running update
+      - name: Verify production Worker and credentials
         run: |
           node --input-type=module <<'JS'
           import {FactoryApiClient} from './scripts/cloudflare/client.mjs';
-          import {verifyGithubIdentity} from './cloudflare/github-oidc.mjs';
-          import fs from 'node:fs/promises';
-          const client = new FactoryApiClient();
-          const token = await client.credentials();
-          const claims = JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString());
-          console.log('OIDC_SCOPE_CHECK', JSON.stringify({
-            repository: claims.repository === 'maartendubois1975/Koersplein',
-            repositoryId: claims.repository_id === '1369316270',
-            ownerId: claims.repository_owner_id === '305800938',
-            main: claims.ref === 'refs/heads/main',
-            workflow: claims.workflow_ref === 'maartendubois1975/Koersplein/.github/workflows/daily-open-close.yml@refs/heads/main',
-            reusable: claims.job_workflow_ref !== undefined,
-            hosted: claims.runner_environment === 'github-hosted',
-            lifetime: claims.exp - claims.iat,
-            verified: await verifyGithubIdentity(token)
-          }));
-          const runtime = JSON.parse(await fs.readFile('data/runtime-config.json','utf8')).apiBaseUrl;
-          for (const base of new Set([client.baseUrl,runtime])) {
-            const response = await fetch(base+'/health');
-            console.log('WORKER_HEALTH', base === runtime ? 'runtime-config' : 'actions-config', response.status, await response.text());
-            const factory = await fetch(base+'/api/factory/catalog', {headers:{authorization:'Bearer '+token}});
-            console.log('WORKER_AUTH', base === runtime ? 'runtime-config' : 'actions-config', factory.status);
+          const client=new FactoryApiClient();
+          let ready=false;
+          for(let attempt=0;attempt<12;attempt++){
+            const r=await fetch(client.baseUrl+'/health',{signal:AbortSignal.timeout(15000)});
+            const health=await r.json();
+            if(r.ok&&health.historyWritePolicy==='preserve-existing-listing-v1'){ready=true;break;}
+            console.log('Waiting for append-only Worker deployment',attempt+1);
+            await new Promise(resolve=>setTimeout(resolve,5000));
           }
+          if(!ready)throw Error('Worker append-only listing protection not deployed; no production writes attempted');
+          await client.catalog();
+          console.log('FACTORY_AUTH_AND_PRESERVATION_POLICY_OK');
           JS
-          node --input-type=module -e "import {FactoryApiClient} from './scripts/cloudflare/client.mjs'; try { await new FactoryApiClient().catalog(); console.log('FACTORY_AUTH_OK'); } catch(e) { console.error('FACTORY_AUTH_FAILED: '+e.message); process.exit(1); }"
       - name: Voeg nieuwste volledige open en slot toe aan geselecteerde beurzen
         run: node scripts/cloudflare/daily-open-close-update.mjs
       - name: Verifieer open en slot van geselecteerde beurzen
@@ -73,4 +71,28 @@ jobs:
             research/output/daily-open-close-audit-*.json
           retention-days: 90
 
-# Only scheduled/manual invocations write production history; code merges do not enqueue redundant jobs.
+# Routine code merges do not enqueue production writes. Only an explicit backfill request-file change starts a full run and replaces an obsolete run.
+  summary:
+    needs: update-and-verify
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: daily-open-close-shard-*
+          path: research/output
+          merge-multiple: true
+      - name: Collect definitive Europe run result
+        run: node scripts/cloudflare/summarize-europe-run.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: europe-run-summary
+          path: research/output/europe-run-summary.json
+          retention-days: 90

@@ -39,6 +39,7 @@ export async function verifyGithubIdentity(token, { fetchKeys = fetch, clock = D
 export function allowsDailyRequest(request) {
   const path = new URL(request.url).pathname;
   return (request.method === 'GET' && path === '/api/factory/catalog') ||
+    (request.method === 'PUT' && path === '/api/factory/catalog' && request.headers.get('x-koersplein-create-only')==='1') ||
     (request.method === 'GET' && /^\/api\/factory\/history\/[A-Z0-9][A-Z0-9:-]{2,31}\/(?:partitions|partition\/\d{4})$/.test(path)) ||
     (request.method === 'PUT' && /^\/api\/factory\/history\/[A-Z0-9][A-Z0-9:-]{2,31}\/\d{4}$/.test(path)) ||
     (request.method === 'POST' && /^\/api\/factory\/history\/[A-Z0-9][A-Z0-9:-]{2,31}\/complete$/.test(path));

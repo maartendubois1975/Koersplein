@@ -34,17 +34,19 @@ export class FactoryApiClient {
       try{
         const response = await fetch(`${this.baseUrl}${path}`, {
           ...options,
+          signal: options.signal ? AbortSignal.any([options.signal,AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000),
           headers: { authorization: `Bearer ${await this.credentials()}`, 'content-type': 'application/json', ...(options.headers || {}) }
         });
-        if(response.ok) return response.status === 204 ? null : response.json();
+        if(response.ok) return response.status === 204 ? null : await response.json();
         const body=await response.text();
         const cpuLimit=/Worker exceeded resource limits|error 1102/i.test(body);
         const retryable=!cpuLimit&&(response.status===429||response.status===502||response.status===503||response.status===504);
         lastError=new Error(`${method} ${path}: HTTP ${response.status} ${body}`);
+        lastError.retryable=retryable;
         if(!retryable||attempt===maxAttempts) throw lastError;
       }catch(error){
         lastError=error;
-        if(attempt===maxAttempts) throw error;
+        if(error.retryable===false||options.signal?.aborted||attempt===maxAttempts) throw error;
       }
       const delay=Math.min(30000,1000*(2**(attempt-1)));
       await sleep(delay);
@@ -53,7 +55,7 @@ export class FactoryApiClient {
   }
   catalog() { return this.request('/api/factory/catalog'); }
   historyManifest() { return this.request('/api/history/manifest.json'); }
-  seedCatalog(payload) { return this.request('/api/factory/catalog', { method: 'PUT', body: JSON.stringify(payload) }); }
+  seedCatalog(payload) { return this.request('/api/factory/catalog', { method: 'PUT', headers:payload.createOnly?{'x-koersplein-create-only':'1'}:{}, body: JSON.stringify(payload) }); }
   job(id) { return this.request(`/api/factory/jobs/${encodeURIComponent(id)}`); }
   claim(id, limit) { return this.request(`/api/factory/jobs/${encodeURIComponent(id)}/claim`, { method: 'POST', body: JSON.stringify({ limit }) }); }
   finishItem(jobId, isin, body) { return this.request(`/api/factory/jobs/${encodeURIComponent(jobId)}/items/${isin}`, { method: 'PATCH', body: JSON.stringify(body) }); }
