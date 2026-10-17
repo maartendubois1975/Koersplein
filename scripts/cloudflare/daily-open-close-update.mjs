@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import {FactoryApiClient} from './client.mjs';
 import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
-import {storageIdentityResolver} from './storage-identity.mjs';
+import {storageIdentityResolver,newListingStorageKey} from './storage-identity.mjs';
 import {partitionBars} from './history-format.mjs';
 const client=new FactoryApiClient(),providers=createDefaultProviderRegistry();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8')),sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
@@ -39,7 +39,7 @@ for(const market of targetMarkets){
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
  const unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));
  for(const share of (catalog.shares||catalog.instruments||[])){
-  if(share.isin&&!unavailable.has(share.isin)&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})||share.isin]?.lastDate)missingPool.push(share.isin);
+  if(share.isin&&!unavailable.has(share.isin)&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate)missingPool.push(share.isin);
  }
 }
 const selectedMissing=new Set();
@@ -56,7 +56,7 @@ for(const market of targetMarkets){
  const resolveStored=storageIdentityResolver(factoryCatalog.instruments||[],market.mic);
  const eligibleForSeed=shares.filter(share=>share.isin&&!resolveStored(share));
  for(let i=0;i<eligibleForSeed.length;i+=25){
-  const batch=eligibleForSeed.slice(i,i+25).map(share=>({isin:share.isin,mic:share.mic||market.mic,ticker:share.symbol||share.ticker,company:share.company||share.name||share.symbol||share.ticker,countryCode:market.country,currency:share.currency||market.currency}));
+  const batch=eligibleForSeed.slice(i,i+25).map(share=>({isin:newListingStorageKey(share,market.mic),mic:share.mic||market.mic,ticker:share.symbol||share.ticker,company:share.company||share.name||share.symbol||share.ticker,countryCode:market.country,currency:share.currency||market.currency}));
   await client.seedCatalog({markets:[],instruments:batch});
  }
  if(eligibleForSeed.length){
@@ -70,7 +70,7 @@ for(const market of targetMarkets){
   try{
    const storageIsin=resolveActual(s);
    if(!storageIsin)throw Error('CATALOG_INSTRUMENT_MISSING '+s.isin);
-   const beforeDate=manifest[storageIsin]?.lastDate||manifest[s.isin]?.lastDate||null;
+   const beforeDate=manifest[storageIsin]?.lastDate||null;
    if(!beforeDate&&!selectedMissing.has(s.isin)){deferredMissing++;continue;}
    if(beforeDate && beforeDate>=freshnessCutoff){current++;continue;}
    const instrument={...s,ticker:s.ticker||s.symbol,symbol:s.symbol||s.ticker,mic:s.mic||market.mic,market:s.mic||market.mic,currency:s.currency||market.currency,countryCode:market.country};

@@ -1,7 +1,7 @@
 import './test-storage-identity.mjs';
 import assert from 'node:assert/strict';
 import { cloudflareCatalog } from './catalog.mjs';
-import { compareCloudflareCoverage } from './audit-live.mjs';
+import { compareCloudflareCoverage, manifestCoverage } from './audit-live.mjs';
 import { planCatalogSync } from './sync-plan.mjs';
 import { mergeBars, partitionBars, encodePartition, decodePartition, objectKey, STORAGE_FORMAT } from './history-format.mjs';
 
@@ -40,3 +40,10 @@ assert.equal(planCatalogSync({markets:[],instruments:[{isin:'NL1',mic:'XPAR'}],u
 const verifiedMarkets = compareCloudflareCoverage({markets:[{mic:'XAMS'},{mic:'XWAR'}],instruments:[],unresolved:[]},{instruments:[],markets:[{mic:'XAMS'}]},{instruments:{}});
 assert.deepEqual(verifiedMarkets.missingMarkets,['XWAR']);
 assert.equal(verifiedMarkets.totals.registeredMarkets,1);
+
+const coverage=manifestCoverage([{mic:'XAMS',shares:[{isin:'NL1',symbol:'ABC'}]},{mic:'XMIL',shares:[{isin:'NL1',symbol:'ABC'}]}],{instruments:{NL1:{mic:'XMIL',symbol:'ABC',recordCount:10,lastDate:'2026-01-01'}}});
+assert.equal(coverage.totals.expected,2);
+assert.equal(coverage.markets[0].withHistory,0);
+assert.equal(coverage.markets[1].withHistory,1);
+const legacyCoverage=manifestCoverage([{mic:'XICE',shares:[{isin:'XICE:ALVO',symbol:'ALVO'}]}],{instruments:{OLD:{mic:'XICE',symbol:'ALVO',recordCount:10,lastDate:'2026-01-01'}}});
+assert.equal(legacyCoverage.totals.withHistory,1);

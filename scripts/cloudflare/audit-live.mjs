@@ -1,3 +1,5 @@
+import {readFile} from 'node:fs/promises';
+import {storageIdentityResolver} from './storage-identity.mjs';
 import { cloudflareCatalog } from './catalog.mjs';
 import { FactoryApiClient } from './client.mjs';
 
@@ -36,20 +38,36 @@ export function compareCloudflareCoverage(expected, liveCatalog, manifest) {
     markets };
 }
 
-if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href) {
-  const expected = await cloudflareCatalog();
-  const api = String(process.env.KOERSPLEIN_API_URL || 'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/, '');
-  const response = await fetch(api + '/api/history/manifest.json', {signal:AbortSignal.timeout(30000)});
-  if (!response.ok) throw Error(`Public history manifest: HTTP ${response.status}`);
-  const manifest = await response.json();
-  if (!manifest?.instruments || typeof manifest.instruments !== 'object') throw Error('Invalid public history manifest');
-  const observed = manifest.instruments;
-  const markets = expected.markets.map(m => {
-    const instruments = expected.instruments.filter(i=>i.mic===m.mic);
-    const found = instruments.filter(i=>observed[i.isin]?.mic===m.mic);
-    const stale = found.filter(i=>!observed[i.isin].lastDate || observed[i.isin].lastDate < new Date(Date.now()-7*86400000).toISOString().slice(0,10));
-    return {mic:m.mic,name:m.name,expected:instruments.length,withHistory:found.length,recent:found.length-stale.length,stale:stale.length,missing:instruments.length-found.length};
+export function manifestCoverage(markets, manifest) {
+  const rows=Object.entries(manifest.instruments).map(([isin,row])=>({...row,isin}));
+  const resolve=storageIdentityResolver(rows);
+  const cutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
+  const reports=markets.map(m=>{
+    let withHistory=0,recent=0;
+    for(const share of m.shares){
+      const key=resolve({...share,mic:share.mic||m.mic});
+      const row=key&&manifest.instruments[key];
+      if(!row||!(Number(row.recordCount||row.records)>0)||!row.lastDate)continue;
+      withHistory++;
+      if(row.lastDate>=cutoff)recent++;
+    }
+    return {mic:m.mic,name:m.name,expected:m.shares.length,withHistory,recent,missing:m.shares.length-withHistory,stale:withHistory-recent};
   });
-  const totals={markets:markets.length,expected:markets.reduce((n,m)=>n+m.expected,0),withHistory:markets.reduce((n,m)=>n+m.withHistory,0),recent:markets.reduce((n,m)=>n+m.recent,0),missing:markets.reduce((n,m)=>n+m.missing,0),stale:markets.reduce((n,m)=>n+m.stale,0)};
-  console.log(JSON.stringify({schemaVersion:2,generatedAt:new Date().toISOString(),evidence:'PUBLIC_LIVE_MANIFEST_READ_ONLY',warning:'Manifest metadata does not prove individual OHLC bars; independent daily bar audit remains required.',totals,markets},null,2));
+  const totals=Object.fromEntries(['expected','withHistory','recent','missing','stale'].map(k=>[k,reports.reduce((n,m)=>n+m[k],0)]));
+  return {schemaVersion:3,generatedAt:new Date().toISOString(),evidence:'PUBLIC_LIVE_MANIFEST_READ_ONLY',warning:'Counts cover listings, including cross-listings, using MIC and ticker. Manifest metadata does not prove individual OHLC bars or complete history since 1990.',totals:{markets:reports.length,...totals},markets:reports};
+}
+
+if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href) {
+  const plan=JSON.parse(await readFile(new URL('../../data/world-fill-plan.json',import.meta.url),'utf8'));
+  const markets=[];
+  for(const m of plan.markets.filter(m=>m.state==='COMPLETE')){
+    const c=JSON.parse(await readFile(new URL(`../../data/euronext-${m.code}.json`,import.meta.url),'utf8'));
+    markets.push({...m,shares:c.shares||c.instruments||[]});
+  }
+  const api=String(process.env.KOERSPLEIN_API_URL||'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/,'');
+  const response=await fetch(api+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
+  if(!response.ok)throw Error('Public history manifest: HTTP '+response.status);
+  const manifest=await response.json();
+  if(!manifest?.instruments||typeof manifest.instruments!=='object')throw Error('Invalid public history manifest');
+  console.log(JSON.stringify(manifestCoverage(markets,manifest),null,2));
 }
