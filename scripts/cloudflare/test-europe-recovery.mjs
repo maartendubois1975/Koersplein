@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {recoverEuropeRun,europeRecoveryDecision} from './recover-europe-run.mjs';
+const policy={runId:12,repository:'owner/repo',workflowPath:'.github/workflows/daily-open-close.yml',branch:'main',maxAttempts:3};
+const run={id:12,repository:{full_name:'owner/repo'},path:policy.workflowPath,head_branch:'main',status:'completed',conclusion:'failure',run_attempt:1};
+assert.equal(europeRecoveryDecision(policy,run,run),'RETRY_FAILED_JOBS');
+assert.equal(europeRecoveryDecision(policy,{...run,status:'in_progress'},run),'RUN_STILL_ACTIVE');
+assert.equal(europeRecoveryDecision(policy,{...run,conclusion:'cancelled'},run),'NO_FAILED_RUN_TO_RETRY');
+assert.equal(europeRecoveryDecision(policy,{...run,conclusion:'success'},run),'NO_FAILED_RUN_TO_RETRY');
+assert.equal(europeRecoveryDecision(policy,run,{id:13}),'NEWER_RUN_EXISTS');
+assert.equal(europeRecoveryDecision(policy,{...run,run_attempt:3},run),'ATTEMPT_LIMIT_REACHED');
+assert.equal(europeRecoveryDecision(policy,{...run,head_branch:'other'},run),'OUTSIDE_APPROVED_RUN');
+const event={workflow_run:{id:12},repository:{full_name:'owner/repo'}};
+const calls=[];
+const request=async(path,method='GET')=>{calls.push({path,method});if(method==='POST')return {};if(path.includes('/workflows/'))return {workflow_runs:[run]};if(path.includes('/jobs?'))return {jobs:[{id:1,name:'group 6',status:'completed',conclusion:'failure'},{id:2,name:'group 0',status:'completed',conclusion:'success'}]};return run;};
+const result=await recoverEuropeRun(policy,event,request);assert.equal(result.requestedAttempt,2);assert.equal(result.failedJobs.length,1);assert.equal(calls.filter(x=>x.method==='POST').length,1);assert.ok(calls.at(-1).path.endsWith('/12/rerun-failed-jobs'));
+let writes=0;await recoverEuropeRun(policy,event,async(path,method)=>{if(method==='POST')writes++;if(path.includes('/workflows/'))return {workflow_runs:[run]};return {...run,status:'in_progress'};});assert.equal(writes,0);
+console.log('Europe recovery: same failed run only, current-state reread, no active/success/cancelled/newer run retries and bounded attempts OK');
