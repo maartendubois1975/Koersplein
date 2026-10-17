@@ -1,3 +1,4 @@
+import {BseSofiaProvider} from './providers/bse-sofia.mjs';
 import { YahooChartProvider } from './providers/yahoo-chart.mjs';
 import { EuronextLiveProvider } from './providers/euronext-live.mjs';
 import { YahooIsinProvider } from './providers/yahoo-isin.mjs';
@@ -68,4 +69,4 @@ export class ProviderRegistry {
   }
 }
 
-export const createDefaultProviderRegistry = () => new ProviderRegistry([new ZsePriceListProvider(), new NasdaqBalticProvider(), new YahooChartProvider(), new EuronextLiveProvider(), new YahooIsinProvider(), new StockAnalysisBitProvider()]);
+export const createDefaultProviderRegistry = () => new ProviderRegistry([new BseSofiaProvider(), new ZsePriceListProvider(), new NasdaqBalticProvider(), new YahooChartProvider(), new EuronextLiveProvider(), new YahooIsinProvider(), new StockAnalysisBitProvider()]);

@@ -1,3 +1,4 @@
+import {BseSofiaProvider} from './providers/bse-sofia.mjs';
 import {euronextDailySnapshot} from './providers/euronext-live.mjs';
 import {zseDailySnapshot} from './providers/zse-price-list.mjs';
 const cache=new Map();
@@ -37,6 +38,11 @@ export function zseRowStatus(row,date){
 async function cached(key,fn){if(!cache.has(key))cache.set(key,fn().catch(e=>{cache.delete(key);throw e;}));return cache.get(key);}
 export async function officialDailyStatus(instrument,date){
  const mic=instrument.mic||instrument.market,isin=instrument.officialIsin||instrument.isin;
+ if(mic==='XBUL'){
+  const r=await cached(`bse:${isin}:${date}`,()=>new BseSofiaProvider().fetchDaily({...instrument,mic,isin},{startDate:date,endDate:date,signal:AbortSignal.timeout(20000)}));
+  const bar=r.bars.find(x=>x.date===date);
+  return bar?{status:'TRADED',date,mic,isin,lastTradeDate:date,bar,provider:'bse-sofia-official',sourceUrl:r.requestUrl,retrievedAt:new Date().toISOString()}:null;
+ }
  if(mic==='XZAG'){
   const s=await cached('zse:'+date,()=>zseDailySnapshot(date,AbortSignal.timeout(20000)));
   const status=zseRowStatus(s.rows.find(x=>x.isin===isin),date);
@@ -48,7 +54,7 @@ export async function officialDailyStatus(instrument,date){
   const status=rows.get(isin);
   return status&&status.mic===mic?{...status,sourceUrl,retrievedAt:new Date().toISOString()}:null;
  }
- if(['XAMS','XBRU','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL','XDUB'].includes(mic)){
+ if(['XAMS','XBRU','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL','XDUB','XMSM','XESM','XATL'].includes(mic)){
   const snapshot=await cached(`euronext:${mic}:${isin}:${date}`,()=>euronextDailySnapshot({...instrument,mic,isin},date,AbortSignal.timeout(20000)));
   const row=snapshot.rows.find(x=>x.date===date);
   if(!row)return null;
