@@ -40,7 +40,8 @@ export class FactoryApiClient {
         if(response.ok) return response.status === 204 ? null : await response.json();
         const body=await response.text();
         const cpuLimit=/Worker exceeded resource limits|error 1102/i.test(body);
-        const retryable=!cpuLimit&&(response.status===429||response.status===502||response.status===503||response.status===504);
+        const transientD1=response.status===500&&/D1_ERROR:\s*Network connection lost/i.test(body);
+        const retryable=!cpuLimit&&(transientD1||response.status===429||response.status===502||response.status===503||response.status===504);
         lastError=new Error(`${method} ${path}: HTTP ${response.status} ${body}`);
         lastError.retryable=retryable;
         if(!retryable||attempt===maxAttempts) throw lastError;
