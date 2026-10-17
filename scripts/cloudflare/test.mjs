@@ -1,3 +1,4 @@
+import './test-storage-identity.mjs';
 import assert from 'node:assert/strict';
 import { cloudflareCatalog } from './catalog.mjs';
 import { compareCloudflareCoverage } from './audit-live.mjs';

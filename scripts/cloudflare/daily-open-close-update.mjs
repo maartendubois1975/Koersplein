@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import {FactoryApiClient} from './client.mjs';
 import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
+import {storageIdentityResolver} from './storage-identity.mjs';
 import {partitionBars} from './history-format.mjs';
 const client=new FactoryApiClient(),providers=createDefaultProviderRegistry();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8')),sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
@@ -12,7 +13,8 @@ const reportPath=`research/output/daily-open-close-update-${shardIndex}.json`;
 await fs.mkdir('research/output',{recursive:true});
 async function checkpoint(){await fs.writeFile(reportPath,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,mode:'APPEND_ONLY_STALE_AND_MISSING_COMPLETE_MARKETS',markets:results},null,2));}
 // Verify factory credentials once before processing thousands of instruments.
-try { await client.catalog(); } catch(error) {
+let factoryCatalog;
+try { factoryCatalog=await client.catalog(); } catch(error) {
  console.error('FACTORY_AUTH_PREFLIGHT_FAILED: productie-updates vereisen geldige Cloudflare factory-autorisatie: '+error.message);
  process.exit(3);
 }
@@ -32,11 +34,12 @@ function failureCategory(message){
 const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
 const missingLimit=Math.max(1,Math.min(80,Number(process.env.EUROPE_MISSING_BACKFILL_LIMIT||35)));
 const missingPool=[];
+const resolveExisting=storageIdentityResolver(factoryCatalog.instruments||[]);
 for(const market of targetMarkets){
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
  const unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));
  for(const share of (catalog.shares||catalog.instruments||[])){
-  if(share.isin&&!unavailable.has(share.isin)&&!manifest[share.isin]?.lastDate)missingPool.push(share.isin);
+  if(share.isin&&!unavailable.has(share.isin)&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})||share.isin]?.lastDate)missingPool.push(share.isin);
  }
 }
 const selectedMissing=new Set();
@@ -49,42 +52,23 @@ for(const market of targetMarkets){
  const primary=source.historySources?.find(x=>x.role==='PRIMARY')?.provider;if(!primary)throw Error(`${market.mic}: geen PRIMARY bronroute`);
  if(!providers.get(primary))throw Error(`${market.mic}: onbekende PRIMARY provider ${primary}; bronregister corrigeren`);
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),shares=catalog.shares||catalog.instruments||[];
- // Reykjavik uses stable XICE:TICKER identity. Ensure D1 has these keys before R2 history writes.
- // The Worker migrates an older temporary key in place while retaining its history relations.
- if(market.mic==='XICE'){
-  const existing=await client.request('/api/factory/catalog?mic=XICE');
-  const byTicker=new Map((existing.instruments||[]).map(x=>[String(x.ticker||'').toUpperCase(),x.isin]));
-  const needsSeed=shares.filter(s=>s.isin&&s.symbol&&byTicker.get(String(s.symbol).toUpperCase())!==s.isin);
-  if(needsSeed.length){
-   await client.seedCatalog({markets:[],instruments:needsSeed.map(s=>({isin:s.isin,mic:'XICE',ticker:s.symbol,company:s.company||s.name||s.symbol,countryCode:market.country,currency:s.currency||market.currency}))});
-   console.log('XICE_CATALOG_SEEDED',JSON.stringify({count:needsSeed.length}));
-  }
-  const verified=await client.request('/api/factory/catalog?mic=XICE');
-  const verifiedKeys=new Set((verified.instruments||[]).map(x=>x.isin));
-  const unresolved=shares.filter(s=>!verifiedKeys.has(s.isin));
-  if(unresolved.length)throw Error('XICE_CATALOG_IDENTITY_UNRESOLVED '+unresolved.map(x=>x.isin).join(','));
- }
- // Resolve historical storage identity from D1 by MIC+ticker: older catalog imports
- // may use a different stable key than the official/local catalog. Never create a
- // second instrument for the same listing or replace its historical partitions.
- const storedCatalog=await client.request('/api/factory/catalog?mic='+encodeURIComponent(market.mic));
- const byTicker=new Map((storedCatalog.instruments||[]).map(row=>[String(row.ticker||'').trim().toUpperCase(),row.isin]));
- const storedKeys=new Set((storedCatalog.instruments||[]).map(row=>row.isin));
- const eligibleForSeed=shares.filter(share=>share.isin&&!storedKeys.has(share.isin)&&!byTicker.has(String(share.symbol||share.ticker||'').trim().toUpperCase()));
- // Seed only genuinely missing D1 catalog rows, in small batches. Existing identities
- // (even legacy keys) are never renamed by this generic update path.
+ // Preserve existing D1 identities, including Reykjavik legacy keys.
+ const resolveStored=storageIdentityResolver(factoryCatalog.instruments||[],market.mic);
+ const eligibleForSeed=shares.filter(share=>share.isin&&!resolveStored(share));
  for(let i=0;i<eligibleForSeed.length;i+=25){
-  const batch=eligibleForSeed.slice(i,i+25).map(share=>({isin:share.isin,mic:market.mic,ticker:share.symbol||share.ticker,company:share.company||share.name||share.symbol||share.ticker,countryCode:market.country,currency:share.currency||market.currency}));
+  const batch=eligibleForSeed.slice(i,i+25).map(share=>({isin:share.isin,mic:share.mic||market.mic,ticker:share.symbol||share.ticker,company:share.company||share.name||share.symbol||share.ticker,countryCode:market.country,currency:share.currency||market.currency}));
   await client.seedCatalog({markets:[],instruments:batch});
  }
- if(eligibleForSeed.length)console.log('EUROPE_CATALOG_SEEDED',JSON.stringify({mic:market.mic,count:eligibleForSeed.length}));
- const verifiedCatalog=eligibleForSeed.length?await client.request('/api/factory/catalog?mic='+encodeURIComponent(market.mic)):storedCatalog;
- const actualByTicker=new Map((verifiedCatalog.instruments||[]).map(row=>[String(row.ticker||'').trim().toUpperCase(),row.isin]));
+ if(eligibleForSeed.length){
+  console.log('EUROPE_CATALOG_SEEDED',JSON.stringify({mic:market.mic,count:eligibleForSeed.length}));
+  factoryCatalog=await client.catalog();
+ }
+ const resolveActual=storageIdentityResolver(factoryCatalog.instruments||[],market.mic);
  const unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));let advanced=0,current=0,skipped=0,missing=0,deferredMissing=0,failed=[];
  for(const s of shares){
   if(unavailable.has(s.isin)){skipped++;continue}
   try{
-   const storageIsin=actualByTicker.get(String(s.symbol||s.ticker||'').trim().toUpperCase());
+   const storageIsin=resolveActual(s);
    if(!storageIsin)throw Error('CATALOG_INSTRUMENT_MISSING '+s.isin);
    const beforeDate=manifest[storageIsin]?.lastDate||manifest[s.isin]?.lastDate||null;
    if(!beforeDate&&!selectedMissing.has(s.isin)){deferredMissing++;continue;}
