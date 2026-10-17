@@ -54,7 +54,7 @@ export async function officialDailyStatus(instrument,date){
   const status=rows.get(isin);
   return status&&status.mic===mic?{...status,sourceUrl,retrievedAt:new Date().toISOString()}:null;
  }
- if(['XAMS','XBRU','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL','XDUB'].includes(mic)){
+ if(['XAMS','XBRU','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL','XDUB','XMSM','XESM','XATL'].includes(mic)){
   const snapshot=await cached(`euronext:${mic}:${isin}:${date}`,()=>euronextDailySnapshot({...instrument,mic,isin},date,AbortSignal.timeout(20000)));
   const row=snapshot.rows.find(x=>x.date===date);
   if(!row)return null;

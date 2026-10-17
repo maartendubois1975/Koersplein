@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {createHash,createCipheriv} from 'node:crypto';
 import {parseBalticStatistics,zseRowStatus} from '../history/official-daily-status.mjs';
-import {decodeEuronextBody,parseEuronextHistoryRows} from '../history/providers/euronext-live.mjs';
+import {decodeEuronextBody,parseEuronextHistoryRows,euronextProviderMic,EuronextLiveProvider} from '../history/providers/euronext-live.mjs';
 const html='<input name="end" data-value="2026-10-16"><table><tr><th>Last price date</th><th>Open price</th></tr><tr><td><a href="/statistics/en/instrument/LT0000128860/trading">Company</a></td><td>VLN</td><td>+1</td><td>5.3</td><td>16.10.2026</td><td>5.2</td><td>5.3<br>5.2<br></td><td>4</td><td>241</td><td>1,277</td></tr><tr><td><a href="/statistics/en/instrument/LT0000132953/trading">Other</a></td><td>VLN</td><td>-</td><td>2.94</td><td>14.10.2026</td><td>2.94</td><td>-<br>-</td><td>0</td><td>0</td><td>0</td></tr></table>';
 const rows=parseBalticStatistics(html,'2026-10-16');
 assert.equal(rows.get('LT0000128860').bar.close,5.3);
@@ -19,3 +19,7 @@ assert.equal(decodeEuronextBody(payload),table);
 const bar=parseEuronextHistoryRows(decodeEuronextBody(payload))[0];assert.equal(bar.open,null);assert.equal(bar.volume,0);
 assert.equal(decodeEuronextBody(table),table);
 console.log('Official status: traded prices, explicit no-trade days, stale snapshot rejection and Euronext public transport OK');
+
+assert.equal(euronextProviderMic('XDUB'),'XMSM');
+assert.equal(euronextProviderMic('XESM'),'XESM');
+assert.equal(new EuronextLiveProvider().supports({mic:'XESM',isin:'IE00038O9UC4'}),true);
