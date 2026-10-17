@@ -30,15 +30,26 @@ export class FactoryApiClient {
     const method=options.method||'GET';
     const maxAttempts=Math.max(1,Math.min(3,Number(process.env.FACTORY_API_MAX_ATTEMPTS||3)));
     let lastError;
+    let useLegacyToken=false;
     for(let attempt=1;attempt<=maxAttempts;attempt++){
       try{
         const response = await fetch(`${this.baseUrl}${path}`, {
           ...options,
           signal: options.signal ? AbortSignal.any([options.signal,AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000),
-          headers: { authorization: `Bearer ${await this.credentials()}`, 'content-type': 'application/json', ...(options.headers || {}) }
+          headers: { authorization: `Bearer ${useLegacyToken ? this.token : await this.credentials()}`, 'content-type': 'application/json', ...(options.headers || {}) }
         });
         if(response.ok) return response.status === 204 ? null : await response.json();
         const body=await response.text();
+        // Production may still run an older Worker accepting the dedicated factory
+        // token for mutations but not OIDC PUT. Never fall back for other errors,
+        // and never retry using an absent token.
+        if(response.status===401 && !useLegacyToken &&
+           process.env.KOERSPLEIN_AUTH_MODE==='github-oidc' &&
+           this.token && attempt<maxAttempts){
+          useLegacyToken=true;
+          console.warn('FACTORY_OIDC_WRITE_REJECTED: retrying once with configured factory credential');
+          continue;
+        }
         const cpuLimit=/Worker exceeded resource limits|error 1102/i.test(body);
         const transientD1=response.status===500&&/D1_ERROR:\s*Network connection lost/i.test(body);
         const retryable=!cpuLimit&&(transientD1||response.status===429||response.status===502||response.status===503||response.status===504);
