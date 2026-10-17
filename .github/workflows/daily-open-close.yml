@@ -3,12 +3,6 @@ on:
   schedule:
     - cron: '45 18 * * 1-5'
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/daily-open-close.yml'
-      - 'scripts/cloudflare/daily-open-close-update.mjs'
-      - 'scripts/cloudflare/audit-daily-open-close.mjs'
-      - 'scripts/history/**'
 permissions:
   contents: read
   id-token: write
@@ -19,7 +13,13 @@ jobs:
   update-and-verify:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
     env:
+      EUROPE_SHARD_COUNT: '8'
+      EUROPE_SHARD_INDEX: ${{ matrix.shard }}
       KOERSPLEIN_AUTH_MODE: github-oidc
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
@@ -59,29 +59,18 @@ jobs:
           }
           JS
           node --input-type=module -e "import {FactoryApiClient} from './scripts/cloudflare/client.mjs'; try { await new FactoryApiClient().catalog(); console.log('FACTORY_AUTH_OK'); } catch(e) { console.error('FACTORY_AUTH_FAILED: '+e.message); process.exit(1); }"
-      - name: Voeg nieuwste volledige open en slot toe aan COMPLETE beurzen
-        run: |
-          for attempt in 1 2 3; do
-            node scripts/cloudflare/daily-open-close-update.mjs && break
-            test "$attempt" -eq 3 && exit 1
-            sleep $((attempt * 30))
-          done
-      - name: Verifieer open en slot
-        if: success()
-        run: |
-          for attempt in 1 2 3; do
-            node scripts/cloudflare/audit-daily-open-close.mjs && break
-            test "$attempt" -eq 3 && exit 1
-            sleep $((attempt * 30))
-          done
+      - name: Voeg nieuwste volledige open en slot toe aan geselecteerde beurzen
+        run: node scripts/cloudflare/daily-open-close-update.mjs
+      - name: Verifieer open en slot van geselecteerde beurzen
+        if: always()
+        run: node scripts/cloudflare/audit-daily-open-close.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: daily-open-close
+          name: daily-open-close-shard-${{ matrix.shard }}
           path: |
-            research/output/daily-open-close-update.json
-            research/output/daily-open-close-audit.json
+            research/output/daily-open-close-update-*.json
+            research/output/daily-open-close-audit-*.json
           retention-days: 90
 
-# manual-trigger-safe: touching this workflow intentionally triggers the existing daily update path.
-# queue-reset 2026-10-05T19:41Z
+# Only scheduled or manually dispatched runs write production OHLC; PR checks do not write live history.
