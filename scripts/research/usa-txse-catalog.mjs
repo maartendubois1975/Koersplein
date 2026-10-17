@@ -1,6 +1,16 @@
 import {classifyUSListing} from './usa-security-type.mjs';
 
 const HEADER='SymbolRoot|SymbolSuffix|SymbolID|StreamID|LotSize|IsTest|ETF|TXSEListed';
+// Named, effective-dated secondary-listing evidence. TXSEListed=N neither
+// proves listing nor disproves a separately announced dual listing.
+const SECONDARY_LISTING_EVIDENCE=Object.freeze({
+  'SCHW|':Object.freeze({
+    issuer:'The Charles Schwab Corporation',cik:'0000316709',
+    primaryMic:'XNYS',effectiveDate:'2026-10-07',securityClass:'Common Stock',
+    txseNotice:'https://www.txse.com/alerts/b73ae818-f4d2-4437-8cc9-8370719ecbe2',
+    secForm8A:'https://www.sec.gov/Archives/edgar/data/316709/000119312526415008/d42491d8a12b.htm'
+  })
+});
 export function parseTXSESymbols(raw) {
   if(typeof raw!=='string'||!raw.trim()) throw Error('TXSE_EMPTY_SOURCE');
   const lines=raw.trimEnd().replace(/\r/g,'').split('\n');
@@ -32,20 +42,32 @@ export function buildTXSECatalog(rows,otherlisted,meta) {
     if(bySymbol.has(key)) throw Error('TXSE_DUPLICATE_CROSSCHECK_SYMBOL:'+key);
     bySymbol.set(key,r);
   }
+  const snapshotDate=/^\d{4}-\d{2}-\d{2}T/.test(meta?.observedAt||'')?meta.observedAt.slice(0,10):null;
+  const evidenceFor=r=>r.symbolSuffix===''&&snapshotDate&&SECONDARY_LISTING_EVIDENCE[r.symbolKey]?.effectiveDate<=snapshotDate
+    ?SECONDARY_LISTING_EVIDENCE[r.symbolKey]:null;
   const listed=rows.filter(r=>r.txseListed==='Y');
-  const securities=listed.map(r=>{
+  const evidencedSecondary=rows.filter(r=>r.txseListed==='N'&&evidenceFor(r));
+  const securities=[...listed,...evidencedSecondary].map(r=>{
     const match=r.symbolSuffix===''?bySymbol.get(r.symbolRoot):null;
     const type=match?classifyUSListing({symbol:match['ACT Symbol'],name:match['Security Name'],etf:match.ETF,testIssue:match['Test Issue']}):null;
+    const secondary=evidenceFor(r);
+    const issuerMatches=!secondary||/\bCharles Schwab Corporation\b/i.test(match?.['Security Name']||'');
     let status='QUARANTINE_NO_MATCHING_OFFICIAL_NAME';
     if(r.isTest==='Y')status='EXCLUDED_TEST';
     else if(r.etf==='Y')status='EXCLUDED_ETF';
     else if(r.symbolSuffix)status='QUARANTINE_SUFFIX_SHARE_CLASS';
     else if(!match)status='QUARANTINE_NO_MATCHING_OFFICIAL_NAME';
-    else if(match.Exchange!=='F')status='QUARANTINE_PRIMARY_EXCHANGE_CONFLICT';
+    else if(!issuerMatches)status='QUARANTINE_ISSUER_IDENTITY_MISMATCH';
+    else if(match.Exchange!=='F'&&!(secondary&&match.Exchange==='N'))status='QUARANTINE_PRIMARY_EXCHANGE_CONFLICT';
     else if(match.ETF!=='N'||match['Test Issue']!=='N')status='QUARANTINE_DIRECTORY_FLAGS';
     else if(type.type!=='COMMON_CANDIDATE')status='QUARANTINE_SECURITY_TYPE';
     else status='COMMON_CANDIDATE_NOT_VERIFIED';
-    return {symbol:r.symbolRoot,symbolSuffix:r.symbolSuffix,symbolKey:r.symbolKey,mic:'TXSE',txseListed:true,txseTradableInSnapshot:true,
+    return {symbol:r.symbolRoot,symbolSuffix:r.symbolSuffix,symbolKey:r.symbolKey,mic:'TXSE',
+      txseListed:r.txseListed==='Y',txseTradableInSnapshot:true,
+      listingEvidence:secondary?'TXSE_SECONDARY_NOTICE_AND_SEC_8A':'TXSE_LISTED_FLAG',
+      listingEffectiveDate:secondary?.effectiveDate||null,primaryMic:secondary?.primaryMic||null,
+      issuerCIK:secondary?.cik||null,listingSourceUrls:secondary?[secondary.txseNotice,secondary.secForm8A]:[],
+      listingStatus:secondary?'SECONDARY_LISTING_ANNOUNCED_ACTIVE_NOT_VERIFIED':'LISTED_FLAG_ACTIVE_NOT_VERIFIED',
       name:match?.['Security Name']||null,primaryDirectoryExchange:match?.Exchange||null,
       securityType:type?.type||null,securityTypeReason:type?.reason||null,status,
       isin:null,isinStatus:'UNVERIFIED',activeTradingStatus:'UNVERIFIED',
@@ -56,8 +78,10 @@ export function buildTXSECatalog(rows,otherlisted,meta) {
     sourceSha256:meta.sourceSha256,observedAt:meta.observedAt,otherlistedSource:meta.otherlistedSource,
     otherlistedTimestamp:meta.otherlistedTimestamp,otherlistedSha256:meta.otherlistedSha256,
     tradableSymbolCount:rows.length,txseListedFlagCount:listed.length,
+    independentlyEvidencedSecondaryCount:evidencedSecondary.length,
+    listingEvidenceCandidateCount:securities.length,
     tradedOnlyNotTXSEListed:rows.length-listed.length,classificationCounts:counts,
     verifiedCommonStocks:0,verifiedISINs:0,verifiedActiveTrading:0,
     historicalBarsFetched:0,distributionRightsApproved:false,
-    note:'TXSEListed=Y is a listing flag, not proof of common shares, active trading, ISIN or history. TXSEListed=N can include dual listings; investigate separately. No production approval.'}};
+    note:'TXSEListed=Y is a listing flag, not proof of common shares, active trading, ISIN or history. A named official TXSE+SEC dual-listing notice can add a research-only candidate despite TXSEListed=N; no general N-to-listed promotion or production approval.'}};
 }
