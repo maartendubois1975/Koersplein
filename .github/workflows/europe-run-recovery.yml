@@ -10,7 +10,7 @@ concurrency:
   group: koersplein-europe-run-recovery
   cancel-in-progress: false
 jobs:
-  recover-failed-groups:
+  repair-europe-groups:
     if: ${{ github.event.workflow_run.id == 39017384957 && github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.run_attempt < 2 && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.repository.full_name == github.repository }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -19,7 +19,7 @@ jobs:
         with: { ref: main }
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
-      - name: Hervat alleen mislukte groepen van de goedgekeurde Europese run
+      - name: Herstel alle groepen binnen dezelfde goedgekeurde Europese run
         env:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/cloudflare/recover-europe-run.mjs

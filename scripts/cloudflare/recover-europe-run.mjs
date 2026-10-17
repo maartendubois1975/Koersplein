@@ -6,7 +6,7 @@ export function europeRecoveryDecision(policy,run,latest){
  if(run.status!=='completed')return 'RUN_STILL_ACTIVE';
  if(run.conclusion!=='failure')return 'NO_FAILED_RUN_TO_RETRY';
  if(!Number.isInteger(run.run_attempt)||run.run_attempt>=policy.maxAttempts)return 'ATTEMPT_LIMIT_REACHED';
- return 'RETRY_FAILED_JOBS';
+ return 'REPAIR_ALL_GROUPS';
 }
 export async function recoverEuropeRun(policy,event,request){
  if(event.workflow_run?.id!==policy.runId||event.repository?.full_name!==policy.repository)return {decision:'OUTSIDE_APPROVED_EVENT'};
@@ -16,12 +16,12 @@ export async function recoverEuropeRun(policy,event,request){
  const run=await request(base+'/actions/runs/'+policy.runId);
  const collection=await request(base+'/actions/workflows/'+encodeURIComponent(policy.workflowPath.split('/').at(-1))+'/runs?branch='+encodeURIComponent(policy.branch)+'&per_page=1');
  const decision=europeRecoveryDecision(policy,run,collection.workflow_runs?.[0]||{});
- if(decision!=='RETRY_FAILED_JOBS')return {decision,runId:run.id,attempt:run.run_attempt};
+ if(decision!=='REPAIR_ALL_GROUPS')return {decision,runId:run.id,attempt:run.run_attempt};
  const jobs=await request(base+'/actions/runs/'+policy.runId+'/jobs?filter=latest&per_page=100');
  if(jobs.jobs?.some(j=>j.status!=='completed'))return {decision:'JOBS_STILL_ACTIVE'};
  if(!jobs.jobs?.some(j=>j.conclusion==='failure'))return {decision:'NO_FAILED_JOBS'};
- await request(base+'/actions/runs/'+policy.runId+'/rerun-failed-jobs','POST');
- return {decision,runId:run.id,previousAttempt:run.run_attempt,requestedAttempt:run.run_attempt+1,failedJobs:jobs.jobs.filter(j=>j.conclusion==='failure').map(j=>({id:j.id,name:j.name}))};
+ await request(base+'/actions/runs/'+policy.runId+'/rerun','POST');
+ return {decision,runId:run.id,previousAttempt:run.run_attempt,requestedAttempt:run.run_attempt+1,previouslyFailedJobs:jobs.jobs.filter(j=>j.conclusion==='failure').map(j=>({id:j.id,name:j.name})),reason:'Recheck all groups: older successful audits may have skipped DATA_UNAVAILABLE listings; current imports use repair mode'};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  const policy=JSON.parse(await fs.readFile('config/europe-recovery-request.json','utf8'));
