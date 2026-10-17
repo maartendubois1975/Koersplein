@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {latestClosedWeekday,mapConcurrent} from './europe-run-policy.mjs';
 import {storageIdentityResolver} from './storage-identity.mjs';
 import { FactoryApiClient } from './client.mjs';
@@ -16,7 +17,7 @@ for(const market of complete){
   const shares=file.shares||file.instruments||[];
   const resolveStorage=storageIdentityResolver(storedCatalog.instruments||[],market.mic);
   const unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));
-  let ok=0,missing=[],skipped=0;
+  let ok=0,missing=[],skipped=0,noTrades=[];
   await mapConcurrent(shares,3,async s=>{
     if(unavailable.has(s.isin)){ skipped++; return; }
     try{
@@ -30,15 +31,19 @@ for(const market of complete){
       const bars=h?.bars||h?.history||[];
       const b=bars.at?.(-1);
       if(!b||!Number.isFinite(Number(b.open))||Number(b.open)<=0||!Number.isFinite(Number(b.close))||Number(b.close)<=0||!/^\d{4}-\d{2}-\d{2}$/.test(b.date||'')||b.date<cutoff||b.date>new Date().toISOString().slice(0,10)){
+        const status=await officialDailyStatus({...s,mic:s.mic||market.mic},cutoff);
+        if(b&&/^\d{4}-\d{2}-\d{2}$/.test(b.date||'')&&b.date<=cutoff&&Number.isFinite(Number(b.open))&&Number.isFinite(Number(b.close))&&Number(b.open)>0&&Number(b.close)>0&&status?.status==='NO_TRADES'&&(!status.lastTradeDate||b.date===status.lastTradeDate)){
+          noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,lastStoredDate:b.date,...status});return;
+        }
         missing.push({isin:s.isin,symbol:s.symbol||s.ticker,lastDate:b?.date||null,reason:'MISSING_INVALID_OR_STALE_OHLC'});
         return;
       }
       ok++;
     }catch(e){missing.push({isin:s.isin,symbol:s.symbol||s.ticker,error:e.message})}
   });
-  out.push({mic:market.mic,name:market.name,catalog:shares.length,openCloseOk:ok,skippedDataUnavailable:skipped,missingOpenClose:missing.length,missing});
+  out.push({mic:market.mic,name:market.name,catalog:shares.length,openCloseOk:ok,verifiedNoTrades:noTrades.length,noTrades,skippedDataUnavailable:skipped,missingOpenClose:missing.length,missing});
 }
 await fs.mkdir('research/output',{recursive:true});
-await fs.writeFile(`research/output/daily-open-close-audit-${shardIndex}.json`,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,freshnessCutoff:cutoff,markets:out},null,2));
-console.log(JSON.stringify(out.map(x=>({mic:x.mic,catalog:x.catalog,openCloseOk:x.openCloseOk,skippedDataUnavailable:x.skippedDataUnavailable,missingOpenClose:x.missingOpenClose})),null,2));
+await fs.writeFile(`research/output/daily-open-close-audit-${shardIndex}${process.env.GITHUB_RUN_ATTEMPT?'-attempt-'+process.env.GITHUB_RUN_ATTEMPT:''}.json`,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,freshnessCutoff:cutoff,markets:out},null,2));
+console.log(JSON.stringify(out.map(x=>({mic:x.mic,catalog:x.catalog,openCloseOk:x.openCloseOk,verifiedNoTrades:x.verifiedNoTrades,skippedDataUnavailable:x.skippedDataUnavailable,missingOpenClose:x.missingOpenClose})),null,2));
 if(out.some(x=>x.missingOpenClose)) process.exitCode=2;

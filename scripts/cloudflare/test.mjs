@@ -52,3 +52,5 @@ const legacyCoverage=manifestCoverage([{mic:'XICE',shares:[{isin:'XICE:ALVO',sym
 assert.equal(legacyCoverage.totals.withHistory,1);
 
 await import('./test-zse-cancellation.mjs');
+
+await import('./test-official-daily-status.mjs');

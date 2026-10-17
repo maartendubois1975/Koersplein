@@ -69,6 +69,7 @@ jobs:
           path: |
             research/output/daily-open-close-update-*.json
             research/output/daily-open-close-audit-*.json
+            research/output/daily-official-status-*.json
           retention-days: 90
 
 # Routine code merges do not enqueue production writes. Only an explicit backfill request-file change starts a full run and replaces an obsolete run.
