@@ -1,3 +1,4 @@
+import './test-worker-append.mjs';
 import './test-client-retries.mjs';
 import './test-europe-run-policy.mjs';
 import './test-storage-identity.mjs';

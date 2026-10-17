@@ -226,10 +226,13 @@ async function route(request, env) {
     if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401);
     const target = await instrument(env, partitionPut[1]); if (!target) return json({ error: 'Instrument ontbreekt' }, 404);
     const body = await request.json(), period = partitionPut[2], key = `history/v1/mic=${target.mic}/isin=${target.isin}/year=${period}/prices.ndjson.gz`;
-    const previousPartition=await env.DB.prepare('SELECT object_key FROM history_partitions WHERE instrument_id=? AND period=?').bind(target.id,period).first();
+    const previousPartition=await env.DB.prepare('SELECT object_key,checksum FROM history_partitions WHERE instrument_id=? AND period=?').bind(target.id,period).first();
     const existing = await gunzip(await env.HISTORY.get(previousPartition?.object_key||key));
     const bars = mergeHistoryPartition(existing,body.bars||[],body.appendOnly===true).filter((bar) => bar.date.startsWith(period));
     if (!bars.length) return json({ error: 'Lege partitie' }, 400);
+    // Append-only replays cannot change an existing value. Avoid compression,
+    // R2 writes and D1 updates when every supplied date is already present.
+    if(body.appendOnly===true&&previousPartition&&bars.length===existing.length&&bars.every((bar,index)=>bar.date===existing[index].date))return json({period,records:bars.length,firstDate:bars[0].date,lastDate:bars.at(-1).date,checksum:previousPartition.checksum,unchanged:true});
     const bytes = await gzip(bars.map((bar) => JSON.stringify(bar)).join('\n') + '\n'), hash = await sha256(bytes);
     await env.HISTORY.put(key, bytes, { httpMetadata: { contentType: 'application/x-ndjson', contentEncoding: 'gzip' }, customMetadata: { isin: target.isin, mic: target.mic, period, provider: body.provider || 'unknown', checksum: hash } });
     await env.DB.prepare(`INSERT INTO history_partitions(instrument_id,period,object_key,record_count,first_date,last_date,provider,checksum,updated_at) VALUES(?,?,?,?,?,?,?,?,?) ON CONFLICT(instrument_id,period) DO UPDATE SET object_key=excluded.object_key,record_count=excluded.record_count,first_date=excluded.first_date,last_date=excluded.last_date,provider=excluded.provider,checksum=excluded.checksum,updated_at=excluded.updated_at`).bind(target.id, period, key, bars.length, bars[0].date, bars.at(-1).date, body.provider || 'unknown', hash, now()).run();
