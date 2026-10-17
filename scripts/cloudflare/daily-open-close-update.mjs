@@ -32,6 +32,7 @@ const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
 for(const market of targetMarkets){
  const source=sourceRegistry.markets?.[market.mic];if(!source||source.status!=='APPROVED')throw Error(`${market.mic}: COMPLETE zonder APPROVED bronroute`);
  const primary=source.historySources?.find(x=>x.role==='PRIMARY')?.provider;if(!primary)throw Error(`${market.mic}: geen PRIMARY bronroute`);
+ if(!providers.get(primary))throw Error(`${market.mic}: onbekende PRIMARY provider ${primary}; bronregister corrigeren`);
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),shares=catalog.shares||catalog.instruments||[];
  const unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));let advanced=0,current=0,skipped=0,missing=0,failed=[];
  for(const s of shares){
