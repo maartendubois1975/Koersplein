@@ -16,10 +16,8 @@ for(const market of complete){
   const file=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
   const shares=file.shares||file.instruments||[];
   const resolveStorage=storageIdentityResolver(storedCatalog.instruments||[],market.mic);
-  const unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));
   let ok=0,missing=[],skipped=0,noTrades=[];
   await mapConcurrent(shares,3,async s=>{
-    if(unavailable.has(s.isin)){ skipped++; return; }
     try{
       // /coverage contains metadata only; inspect the actual history for the latest bar.
       const storageIsin=resolveStorage(s);

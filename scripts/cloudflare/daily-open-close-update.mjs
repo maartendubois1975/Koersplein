@@ -35,22 +35,21 @@ function failureCategory(message){
 }
 const freshnessCutoff=latestClosedWeekday();
 const fullRequested=process.env.EUROPE_FULL_BACKFILL==='1';
-const fullBackfill=fullRequested&&Number(process.env.GITHUB_RUN_ATTEMPT||1)===1;
+const firstFullAttempt=fullRequested&&Number(process.env.GITHUB_RUN_ATTEMPT||1)===1;
 const concurrency=Math.max(1,Math.min(4,Number(process.env.EUROPE_INSTRUMENT_CONCURRENCY||2)));
 const missingLimit=Math.max(1,Math.min(80,Number(process.env.EUROPE_MISSING_BACKFILL_LIMIT||35)));
 const missingPool=[];
 const resolveExisting=storageIdentityResolver(factoryCatalog.instruments||[]);
 for(const market of targetMarkets){
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
- const unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));
  for(const share of (catalog.shares||catalog.instruments||[])){
-  if(share.isin&&!unavailable.has(share.isin)&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate)missingPool.push(share.isin);
+  if(share.isin&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate)missingPool.push(share.isin);
  }
 }
 const selectedMissing=new Set();
 const rotation=missingPool.length?(Math.floor(Date.now()/86400000)*missingLimit)%missingPool.length:0;
 for(let i=0;i<(fullRequested?missingPool.length:Math.min(missingLimit,missingPool.length));i++)selectedMissing.add(missingPool[(rotation+i)%missingPool.length]);
-console.log('EUROPE_BACKFILL_SELECTION',JSON.stringify({shardIndex,missingPool:missingPool.length,selected:selectedMissing.size,rotation,firstDate:'1990-01-01',fullBackfill,freshnessCutoff}));
+console.log('EUROPE_BACKFILL_SELECTION',JSON.stringify({shardIndex,missingPool:missingPool.length,selected:selectedMissing.size,rotation,firstDate:'1990-01-01',fullBackfill:firstFullAttempt,freshnessCutoff}));
 
 for(const market of targetMarkets){
  const source=sourceRegistry.markets?.[market.mic];if(!source||source.status!=='APPROVED')throw Error(`${market.mic}: COMPLETE zonder APPROVED bronroute`);
@@ -59,8 +58,7 @@ for(const market of targetMarkets){
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),shares=catalog.shares||catalog.instruments||[];
  // Preserve existing D1 identities, including Reykjavik legacy keys.
  const resolveStored=storageIdentityResolver(factoryCatalog.instruments||[],market.mic);
- const unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));
- const eligibleForSeed=shares.filter(share=>share.isin&&!unavailable.has(share.isin)&&!resolveStored(share));
+ const eligibleForSeed=shares.filter(share=>share.isin&&!resolveStored(share));
  for(let i=0;i<eligibleForSeed.length;i+=25){
   const batch=eligibleForSeed.slice(i,i+25).map(share=>({isin:newListingStorageKey(share,market.mic),mic:share.mic||market.mic,ticker:share.symbol||share.ticker,company:share.company||share.name||share.symbol||share.ticker,countryCode:market.country,currency:share.currency||market.currency}));
   await client.seedCatalog({markets:[],instruments:batch,createOnly:true});
@@ -71,8 +69,9 @@ for(const market of targetMarkets){
  }
  const resolveActual=storageIdentityResolver(factoryCatalog.instruments||[],market.mic);
  let advanced=0,current=0,skipped=0,missing=0,deferredMissing=0,stale=0,processed=0,noTrades=[],failed=[];
+ const previouslyUnavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));
  await mapConcurrent(shares,concurrency,async s=>{
-  if(unavailable.has(s.isin)){skipped++;return;}
+  const fullBackfill=firstFullAttempt||(fullRequested&&previouslyUnavailable.has(s.isin));
   try{
    const storageIsin=resolveActual(s);
    if(!storageIsin)throw Error('CATALOG_INSTRUMENT_MISSING '+s.isin);

@@ -8,9 +8,8 @@ const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const shardCount=Number(process.env.EUROPE_SHARD_COUNT||1),shardIndex=Number(process.env.EUROPE_SHARD_INDEX||0),date=latestClosedWeekday();
 const resolve=storageIdentityResolver(catalog.instruments||[]),results=[];
 for(const market of plan.markets.filter(x=>x.state==='COMPLETE').filter((_,i)=>i%shardCount===shardIndex)){
- const c=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));
+ const c=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
  await mapConcurrent(c.shares||c.instruments||[],2,async s=>{
-  if(unavailable.has(s.isin))return;
   const instrument={...s,mic:s.mic||market.mic},key=resolve(instrument);
   if(!key||manifest.instruments?.[key]?.lastDate>=date)return;
   try{

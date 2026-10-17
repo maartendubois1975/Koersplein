@@ -754,13 +754,18 @@
       "catalogSource": "BSE Main Market scope + Bulgarian Central Depository real ISIN identity + StockAnalysis BUL daily-history provider",
       "historySources": [
         {
+          "provider": "bse-sofia-official",
+          "role": "PRIMARY",
+          "note": "Official BSE chart OHLC endpoint; exact symbol and ISIN verified against official Market Information before fetching. Prior zero-coverage Yahoo route retained only as fallback."
+        },
+        {
           "provider": "yahoo-isin-resolver",
           "role": "DISCOVERY_FALLBACK",
           "note": "ISIN-first resolver used when direct symbol and official history route fail."
         },
         {
           "provider": "yahoo-chart",
-          "role": "PRIMARY",
+          "role": "FALLBACK",
           "note": "Full-catalog preflight: 0/158 instruments."
         },
         {
@@ -771,14 +776,13 @@
       ],
       "dailyUpdate": {
         "enabled": true,
-        "identity": "symbol",
-        "provider": "stockanalysis-bit",
-        "venue": "bul",
+        "identity": "official BSE symbol + ISIN",
+        "provider": "bse-sofia-official",
         "requiredFields": [
           "open",
           "close"
         ],
-        "policy": "Reuse proven BUL history route daily; no rediscovery."
+        "policy": "Import real traded OHLC from official BSE; preserve existing storage values and never manufacture open from previous close."
       },
       "catalogFingerprint": "8d30f3706bad5373a9e0f4f1ea4138504b34fe3d0829bea810a0ceb7a7f1536e",
       "discovery": {
@@ -793,10 +797,9 @@
       "approvedAt": "2026-10-07T14:35:36.320Z",
       "dailyCloseAudit": {
         "asOf": "2026-10-16",
-        "status": "NOT_VERIFIED",
-        "candidateOfficialSource": "https://download.bse-sofia.bg/QuarterlyBulletin/",
-        "validationRequired": "Match exact MIC+ISIN and last complete trading day; require positive official open and close, provenance, coverage, rights and repeatable fetch before APPROVED_FOR_DAILY_OHLC.",
-        "note": "Up to 10 representative Yahoo symbols returned HTTP 404 in latest live audit; official source requires parser and proof."
+        "status": "OFFICIAL_ADAPTER_VALIDATED_ON_REPRESENTATIVE_LISTINGS",
+        "source": "https://www.bse-sofia.bg/en/get/charts/history",
+        "note": "Live Sopharma response contains 6325 daily bars through 16 October; Speedy exact ISIN verified. Full-catalog production verification remains pending."
       }
     },
     "XDUB": {

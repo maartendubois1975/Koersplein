@@ -54,3 +54,5 @@ assert.equal(legacyCoverage.totals.withHistory,1);
 await import('./test-zse-cancellation.mjs');
 
 await import('./test-official-daily-status.mjs');
+await import('./test-bse-sofia.mjs');
+await import('./test-europe-summary.mjs');
