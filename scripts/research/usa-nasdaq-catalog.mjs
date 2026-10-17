@@ -14,12 +14,14 @@ export function pltrMICAt(date){
   return date<'2020-09-30'?null:date<='2024-11-25'?'XNYS':'XNAS';
 }
 // Current Nasdaq directory is NOT a historical point-in-time universe or proof of common equity.
+const NASDAQ_FINANCIAL_STATUSES=new Set(['N','D','E','Q','G','H','J','K']);
 export function buildNasdaqCatalog(rows, meta) {
   if (!Array.isArray(rows) || rows.length < 1000) throw Error('UNEXPECTEDLY_SMALL_NASDAQ_DIRECTORY');
   const symbols=new Set();
   for (const r of rows) {
     if (!['Q','G','S'].includes(r['Market Category'])) throw Error('INVALID_NASDAQ_MARKET_CATEGORY:'+r.Symbol);
     if (!['Y','N'].includes(r.NextShares)) throw Error('INVALID_NASDAQ_NEXTSHARES_FLAG:'+r.Symbol);
+    if (!NASDAQ_FINANCIAL_STATUSES.has(r['Financial Status'])) throw Error('INVALID_NASDAQ_FINANCIAL_STATUS:'+r.Symbol);
     if (!/^[1-9]\d*$/.test(r['Round Lot Size'])) throw Error('INVALID_NASDAQ_ROUND_LOT:'+r.Symbol);
     if (symbols.has(r.Symbol)) throw Error('DUPLICATE_NASDAQ_SYMBOL:'+r.Symbol);
     symbols.add(r.Symbol);
@@ -29,6 +31,8 @@ export function buildNasdaqCatalog(rows, meta) {
   const excludedNextShares=live.filter(r=>r.ETF==='N'&&r.NextShares==='Y').length;
   const securities=live.filter(r=>r.ETF==='N'&&r.NextShares==='N').map(r=>{
     const c=classifyUSListing({symbol:r.Symbol,name:r['Security Name'],etf:r.ETF,testIssue:r['Test Issue']});
+    const financialStatusReviewRequired=r['Financial Status']!=='N';
+    const catalogStatus=financialStatusReviewRequired?'QUARANTINE_FINANCIAL_STATUS':c.type==='COMMON_CANDIDATE'?'COMMON_CANDIDATE_NOT_VERIFIED':'QUARANTINE_SECURITY_TYPE';
     const isPLTR=r.Symbol==='PLTR';
     if(isPLTR){
       if(r['Security Name']!=='Palantir Technologies Inc. - Class A Common Stock'||c.type!=='COMMON_CANDIDATE')
@@ -39,7 +43,9 @@ export function buildNasdaqCatalog(rows, meta) {
     }
     return {symbol:r.Symbol,name:r['Security Name'],exchange:'XNAS',listingKey:'XNAS:'+r.Symbol,
       marketCategory:r['Market Category'],financialStatus:r['Financial Status'],
-      financialStatusReviewRequired:r['Financial Status']!=='N',roundLotSize:Number(r['Round Lot Size']),
+      financialStatusReviewRequired,catalogStatus,
+      quarantineReason:financialStatusReviewRequired?'FINANCIAL_STATUS_REVIEW':c.type==='COMMON_CANDIDATE'?null:'SECURITY_TYPE_NOT_VERIFIED',
+      roundLotSize:Number(r['Round Lot Size']),
       isin:null,isinStatus:'NOT_IN_OFFICIAL_DIRECTORY',securityType:c.type,securityTypeReason:c.reason,
       ...(isPLTR?{issuerCIK:PLTR_TRANSFER.issuerCIK,shareClass:PLTR_TRANSFER.shareClass,
         historicalListingEvidence:{periods:PLTR_TRANSFER.periods,
@@ -56,6 +62,8 @@ export function buildNasdaqCatalog(rows, meta) {
     excludedETFs,excludedNextShares,nonETFCandidates:securities.length,
     classificationHints:classifySummary(securities),
     flaggedFinancialStatus:securities.filter(r=>r.financialStatusReviewRequired).length,
+    quarantinedFinancialStatus:securities.filter(r=>r.catalogStatus==='QUARANTINE_FINANCIAL_STATUS').length,
+    quarantinedSecurityType:securities.filter(r=>r.catalogStatus==='QUARANTINE_SECURITY_TYPE').length,
     verifiedCommonStocks:0,verifiedISINs:0,historicalBarsFetched:0,usableForTraining:0,
     historicalDelistedCoverageVerified:false,corporateActionsVerified:false,distributionRightsApproved:false,
     status:'UNIVERSE_ONLY_NOT_HISTORICALLY_VALIDATED',

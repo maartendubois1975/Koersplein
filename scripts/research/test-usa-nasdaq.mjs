@@ -28,6 +28,25 @@ assert.equal(summary.excludedETFs,1);
 assert.equal(summary.excludedNextShares,1);
 assert.equal(summary.nonETFCandidates,1005);
 assert.equal(summary.flaggedFinancialStatus,1);
+assert.equal(summary.quarantinedFinancialStatus,1);
+assert.equal(summary.quarantinedSecurityType,4);
+assert.equal(securities.find(r=>r.symbol==='AAPL').catalogStatus,'COMMON_CANDIDATE_NOT_VERIFIED');
+assert.equal(securities.find(r=>r.symbol==='AAPL').quarantineReason,null);
+assert.equal(securities.find(r=>r.symbol==='AACIU').catalogStatus,'QUARANTINE_SECURITY_TYPE');
+assert.equal(securities.find(r=>r.symbol==='AACG').catalogStatus,'QUARANTINE_FINANCIAL_STATUS');
+assert.equal(securities.find(r=>r.symbol==='AACG').quarantineReason,'FINANCIAL_STATUS_REVIEW');
+for(const code of ['D','E','Q','G','H','J','K']){
+ const distressed={...synthetic[0],Symbol:'FIN'+code,'Financial Status':code};
+ const checked=buildNasdaqCatalog([...input,distressed],meta);
+ const record=checked.securities.find(r=>r.symbol==='FIN'+code);
+ assert.equal(record.catalogStatus,'QUARANTINE_FINANCIAL_STATUS');
+ assert.equal(record.quarantineReason,'FINANCIAL_STATUS_REVIEW');
+ assert.equal(record.financialStatus,code);
+ assert.equal(record.verifiedCommonStock,false);
+ assert.equal(record.eligibleForTraining,false);
+ assert.equal(checked.summary.quarantinedFinancialStatus,2);
+}
+assert.throws(()=>buildNasdaqCatalog(input.map((r,i)=>i?r:{...r,'Financial Status':'?'}),meta),/INVALID_NASDAQ_FINANCIAL_STATUS/);
 for(const [symbol,type] of [['AAPL','COMMON_CANDIDATE'],['AACIU','UNIT'],['AACIW','WARRANT'],['AACG','ADR'],['AGNCP','PREFERRED']])
  assert.equal(securities.find(r=>r.symbol===symbol).securityType,type);
 assert.equal(securities.find(r=>r.symbol==='AAPL').isin,null);
