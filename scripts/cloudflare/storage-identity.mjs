@@ -17,6 +17,12 @@ export function storageIdentityResolver(rows, defaultMic) {
     const mic=share.mic||defaultMic,ticker=share.symbol||share.ticker;
     const listed=ticker&&byListing.get(listingKey(mic,ticker));
     if(listed)return listed;
+    // A corrected catalog ISIN must never fall back to the unrelated legacy
+    // row which happened to own that erroneous identifier.
+    if(share.legacyStorageIsin){
+      const legacy=byIdentity.get(share.legacyStorageIsin);
+      return legacy&&normalized(legacy.mic||defaultMic)===normalized(mic)&&normalized(legacy.ticker||legacy.symbol)===normalized(ticker)?share.legacyStorageIsin:null;
+    }
     const exact=byIdentity.get(share.isin);
     return exact&&normalized(exact.mic||defaultMic)===normalized(mic)?share.isin:null;
   };

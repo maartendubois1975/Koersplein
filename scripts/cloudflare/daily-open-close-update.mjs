@@ -68,10 +68,10 @@ for(const market of targetMarkets){
   factoryCatalog=await client.catalog();
  }
  const resolveActual=storageIdentityResolver(factoryCatalog.instruments||[],market.mic);
- let advanced=0,current=0,skipped=0,missing=0,deferredMissing=0,stale=0,processed=0,noTrades=[],failed=[];
+ let advanced=0,current=0,skipped=0,missing=0,deferredMissing=0,stale=0,processed=0,noTrades=[],failed=[],historicalBackfillFailures=[];
  const previouslyUnavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));
  await mapConcurrent(shares,concurrency,async s=>{
-  const fullBackfill=firstFullAttempt||(fullRequested&&previouslyUnavailable.has(s.isin));
+  const fullBackfill=firstFullAttempt||(fullRequested&&(previouslyUnavailable.has(s.isin)||Boolean(s.legacyStorageIsin)));
   try{
    const storageIsin=resolveActual(s);
    if(!storageIsin)throw Error('CATALOG_INSTRUMENT_MISSING '+s.isin);
@@ -124,6 +124,7 @@ for(const market of targetMarkets){
    else if(!beforeDate||afterDate>beforeDate)advanced++;
    else current++;
   }catch(e){
+   if(fullBackfill)historicalBackfillFailures.push({isin:s.isin,symbol:s.symbol||s.ticker,error:e.message});
    let status=null;try{status=await officialDailyStatus({...s,mic:s.mic||market.mic},freshnessCutoff);}catch{}
    const key=resolveActual(s),last=manifest[key]?.lastDate;
    if(last&&status?.status==='NO_TRADES'&&(!status.lastTradeDate||status.lastTradeDate===last))noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,...status});
@@ -131,7 +132,7 @@ for(const market of targetMarkets){
   }
   finally {processed++;if(processed%25===0)console.log('EUROPE_MARKET_PROGRESS',JSON.stringify({mic:market.mic,processed,total:shares.length,advanced,current,stale,missing,failed:failed.length}));}
  });
- results.push({mic:market.mic,catalog:shares.length,advanced,current,stale,missing,deferredMissing,skippedDataUnavailable:skipped,verifiedNoTrades:noTrades.length,noTrades,failed});
+ results.push({mic:market.mic,catalog:shares.length,advanced,current,stale,missing,deferredMissing,skippedDataUnavailable:skipped,verifiedNoTrades:noTrades.length,noTrades,failed,historicalBackfillFailures});
  await checkpoint();
  const failureCategories=failed.reduce((counts,item)=>(counts[item.category]=(counts[item.category]||0)+1,counts),{});
  console.log('EUROPE_MARKET_DONE',JSON.stringify({mic:market.mic,advanced,current,stale,missing,deferredMissing,skipped,failed:failed.length,failureCategories,examples:failed.slice(0,3)}));

@@ -46,6 +46,10 @@ function normalize(bar) {
   if (result.high !== null && result.low !== null && result.high < result.low) throw new Error(`High lager dan low op ${result.date}`);
   if (result.volume !== null && (!Number.isFinite(result.volume) || result.volume < 0)) result.volume = null;
   if (result.adjustedClose !== null && (!Number.isFinite(result.adjustedClose) || result.adjustedClose < 0)) result.adjustedClose = null;
+  if(bar.currency!==undefined&&bar.currency!==null){
+    if(!/^[A-Za-z]{3}$/.test(String(bar.currency)))throw new Error('Ongeldige koersvaluta');
+    result.currency=String(bar.currency);
+  }
   return result;
 }
 const merge = (...sets) => [...new Map(sets.flat().map(normalize).map((bar) => [bar.date, bar])).values()].sort((a, b) => a.date.localeCompare(b.date));

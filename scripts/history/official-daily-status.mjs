@@ -1,4 +1,4 @@
-import {BseSofiaProvider} from './providers/bse-sofia.mjs';
+import {BseSofiaProvider,bseSessionSnapshot} from './providers/bse-sofia.mjs';
 import {euronextDailySnapshot} from './providers/euronext-live.mjs';
 import {zseDailySnapshot} from './providers/zse-price-list.mjs';
 const cache=new Map();
@@ -39,9 +39,14 @@ async function cached(key,fn){if(!cache.has(key))cache.set(key,fn().catch(e=>{ca
 export async function officialDailyStatus(instrument,date){
  const mic=instrument.mic||instrument.market,isin=instrument.officialIsin||instrument.isin;
  if(mic==='XBUL'){
-  const r=await cached(`bse:${isin}:${date}`,()=>new BseSofiaProvider().fetchDaily({...instrument,mic,isin},{startDate:date,endDate:date,signal:AbortSignal.timeout(20000)}));
+  const r=await cached(`bse:${isin}:${date}`,()=>new BseSofiaProvider().fetchDaily({...instrument,mic,isin},{startDate:'1990-01-01',endDate:date,signal:AbortSignal.timeout(20000)}));
   const bar=r.bars.find(x=>x.date===date);
-  return bar?{status:'TRADED',date,mic,isin,lastTradeDate:date,bar,provider:'bse-sofia-official',sourceUrl:r.requestUrl,retrievedAt:new Date().toISOString()}:null;
+  const common={date,mic,isin,provider:'bse-sofia-official',sourceUrl:r.requestUrl,retrievedAt:new Date().toISOString()};
+  if(bar)return {...common,status:'TRADED',lastTradeDate:date,bar};
+  const session=await cached('bse-session:'+date,()=>bseSessionSnapshot(date,AbortSignal.timeout(20000)));
+  const symbol=String(instrument.symbol||instrument.ticker||'').toUpperCase(),last=r.bars.at(-1)?.date;
+  if(last&&last<date&&session.markets.has(r.providerMeta.market)&&!session.symbols.has(symbol))return {...common,status:'NO_TRADES',lastTradeDate:last,volume:0,trades:0,sessionSourceUrl:session.sourceUrl,verification:'NO_TRADES_IN_COMPLETE_OFFICIAL_SESSION_RESULTS'};
+  return null;
  }
  if(mic==='XZAG'){
   const s=await cached('zse:'+date,()=>zseDailySnapshot(date,AbortSignal.timeout(20000)));

@@ -26,7 +26,7 @@ const rawInstruments=source.map(x=>{
  const identityInput={...x,mic:segmentMic};
  const fallback=officialIsin||`${segmentMic}-${String(ticker||'').trim().toUpperCase().replace(/[^A-Z0-9]+/g,'-')}`;
  const historyKey=resolveStorage(identityInput)||newListingStorageKey({...identityInput,isin:fallback},segmentMic);
- return {isin:historyKey,officialIsin,name:x.name||x.company,company:x.name||x.company,symbol:ticker,ticker,mic:segmentMic,market:segmentMic,currency:m.currency,countryCode:m.country,provider:String(segmentMic).toUpperCase()==='XZAG'?'zse-price-list':(['XTAL','XRIS','XLIT','XLJU','XBUL'].includes(String(segmentMic).toUpperCase())?'stockanalysis-bit':'yahoo-chart'),providerSymbol:x.providerSymbol||null};
+ return {isin:historyKey,officialIsin,name:x.name||x.company,company:x.name||x.company,symbol:ticker,ticker,mic:segmentMic,market:segmentMic,currency:m.currency,countryCode:m.country,provider:sourcePlan.historySources.find(x=>x.role==='PRIMARY').provider,providerSymbol:x.providerSymbol||null};
 });
 const seenIsin=new Set(),seenMicTicker=new Set(),instruments=[];let duplicateIsin=0,duplicateMicTicker=0;
 for(const item of rawInstruments){
@@ -44,9 +44,13 @@ const marketMics=[...new Set(instruments.map(x=>x.mic).filter(Boolean))];
 const markets=marketMics.map(segmentMic=>({mic:segmentMic,code:segmentMic===m.mic?m.code:`${m.code}-${segmentMic.toLowerCase()}`,name:segmentMic===m.mic?m.name:`${m.name} (${segmentMic})`,exchangeGroup:'world',countryCode:m.country,currency:m.currency,timezone:m.timezone}));
 const seedCatalog=process.env.SEED_CATALOG!=='0';
 if(seedCatalog){
-  await client.seedCatalog({markets,instruments:[]});
-  const cb=Math.max(1,Math.min(25,Number(process.env.CATALOG_BATCH_SIZE||25)));
-  for(let i=0;i<instruments.length;i+=cb){let batch=instruments.slice(i,i+cb);const missing=[];for(const item of batch){try{await client.historyCoverage(item.isin)}catch{missing.push(item)}}batch=missing;if(batch.length){try{await client.seedCatalog({markets:[],instruments:batch});}catch(error){if(!/UNIQUE constraint failed: instruments\.mic, instruments\.ticker/.test(error.message))throw error;for(const item of batch){try{await client.seedCatalog({markets:[],instruments:[item]});}catch(e){if(!/UNIQUE constraint failed: instruments\.mic, instruments\.ticker/.test(e.message))throw e;console.log(`LEGACY_TICKER_COLLISION ${mic} ${item.ticker}`)}}}}}
+  const existingMarkets=new Set((storedCatalog.markets||[]).map(x=>x.mic));
+  const newMarkets=markets.filter(x=>!existingMarkets.has(x.mic));
+  if(newMarkets.length)await client.seedCatalog({markets:newMarkets,instruments:[]});
+  const existingKeys=new Set((storedCatalog.instruments||[]).map(x=>x.isin));
+  const missing=instruments.filter(x=>!existingKeys.has(x.isin));
+  const batchSize=Math.max(1,Math.min(25,Number(process.env.CATALOG_BATCH_SIZE||25)));
+  for(let i=0;i<missing.length;i+=batchSize)await client.seedCatalog({markets:[],instruments:missing.slice(i,i+batchSize),createOnly:true});
 }
 const hb=Math.max(1,Math.min(100,Number(process.env.HISTORY_BATCH_SIZE||10))),today=new Date().toISOString().slice(0,10);
 const freshnessCutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
@@ -65,7 +69,7 @@ for(const item of instruments){
 }
 let complete=0,failed=[];
 const historyConcurrency=mic==='XETR'?10:(mic==='XBUL'?2:1);
-for(let ci=0;ci<candidates.length;ci+=historyConcurrency){await Promise.all(candidates.slice(ci,ci+historyConcurrency).map(async item=>{try{const {provider,result}=await registry.fetchDaily({...item,isin:item.officialIsin||item.isin},{startDate:'1990-01-01',endDate:today},item.provider||'yahoo-chart',{timeoutMs:60000});if(!result.bars.length)throw new Error('geen historie');for(const [period,bars] of partitionBars(result.bars))await client.putPartition(item.isin,period,{bars,provider:provider.id});await client.completeHistory(item.isin,{provider:provider.id});complete++;}catch(e){failed.push({isin:item.isin,symbol:item.symbol,mic:item.mic,error:e.message})}}));}
+for(let ci=0;ci<candidates.length;ci+=historyConcurrency){await Promise.all(candidates.slice(ci,ci+historyConcurrency).map(async item=>{try{const {provider,result}=await registry.fetchDaily({...item,isin:item.officialIsin||item.isin},{startDate:'1990-01-01',endDate:today},item.provider||'yahoo-chart',{timeoutMs:60000});if(!result.bars.length)throw new Error('geen historie');for(const [period,bars] of partitionBars(result.bars))await client.putPartition(item.isin,period,{bars,provider:provider.id,appendOnly:true});await client.completeHistory(item.isin,{provider:provider.id});complete++;}catch(e){failed.push({isin:item.isin,symbol:item.symbol,mic:item.mic,error:e.message})}}));}
 const attemptedIsins=candidates.map(x=>x.isin);
 let prior={};try{prior=JSON.parse(await fs.readFile('research/output/world-fill-batch.json','utf8'));}catch{}
 const priorAttempts=prior.market===mic?(prior.attemptedIsins||[]):[];
