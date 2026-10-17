@@ -9,7 +9,10 @@ async function loadDate(date,signal){
  const pending=(async()=>{
   const u=ROOT+'price-list/XZAG/'+date+'/csv?language=EN';
   const r=await fetch(u,{signal,headers:{'user-agent':'Mozilla/5.0 Koersplein/1.0',accept:'text/csv,*/*'}});
-  if(r.status===404)return [];
+  // The official ZSE API returns HTTP 400 (as well as 404) for dates with no
+  // published price list, including early archival dates. A missing trading
+  // day is not a failure for the instrument's entire multi-year history.
+  if(r.status===400||r.status===404)return [];
   if(!r.ok)throw Error('ZSE HTTP '+r.status+' for '+date);
   const t=await r.text(),ls=t.trim().split(/\r?\n/);
   if(ls.length<2)return [];
