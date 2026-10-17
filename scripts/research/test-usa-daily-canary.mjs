@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {lastFullSession,previousSession,standardNYSEHoliday,newYorkDate,inspectYahooChart,SAMPLES} from './usa-daily-canary-core.mjs';
+import {lastFullSession,previousSession,standardNYSEHoliday,newYorkDate,inspectYahooChart,SAMPLES,assertCurrentCanaryEvidence} from './usa-daily-canary-core.mjs';
 assert.equal(lastFullSession(new Date('2026-10-17T05:00:00Z')),'2026-10-16');
 assert.equal(lastFullSession(new Date('2026-10-16T19:59:00Z')),'2026-10-15');
 assert.equal(lastFullSession(new Date('2026-10-16T21:01:00Z')),'2026-10-16');
@@ -24,3 +24,13 @@ assert.equal(inspectYahooChart({...good,chart:{...good.chart,result:[{...good.ch
 assert.equal(inspectYahooChart({...good,chart:{...good.chart,result:[{...good.chart.result[0],timestamp:[Date.parse('2026-10-10T20:00:00Z')/1000]}]}},p).status,'NO_DATED_BAR');
 assert.equal(inspectYahooChart({...good,chart:{...good.chart,result:[{...good.chart.result[0],timestamp:[ts,ts]}]}},p).status,'DUPLICATE_SESSION_BAR');
 console.log('USA dated daily canary regressions passed: 19');
+
+const c={session:'2026-10-16'},r=(mic,date=c.session,status='DATED_OHLC_RESEARCH_ONLY')=>({mic,date,status,open:100,close:101});
+assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[]}),/XNYS,XNAS,TXSE/);
+assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS')]}),/XNAS,TXSE/);
+assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE','2026-10-15')]}),/TXSE/);
+assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE',c.session,'PREVIOUS_SESSION_ONLY')]}),/TXSE/);
+assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),{...r('TXSE'),open:0}]}),/TXSE/);
+assert.throws(()=>assertCurrentCanaryEvidence({coverage:{session:'bad'},results:[]}),/MALFORMED/);
+assert.equal(assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE')]}),true);
+console.log('USA current-session fail-closed canary evidence regressions passed: 7');

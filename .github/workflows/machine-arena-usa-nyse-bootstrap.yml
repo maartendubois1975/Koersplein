@@ -36,24 +36,28 @@ jobs:
       - name: Probe USA last completed session open and close (research only)
         run: node scripts/research/usa-daily-canary.mjs
       - name: Upload dated US canary evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: machine-arena-usa-daily-canary
           path: research/output/usa/daily-canary-*.json
           retention-days: 90
       - name: Upload NYSE candidate register and coverage report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: machine-arena-usa-nyse-universe
           path: research/output/usa/XNYS/
           retention-days: 90
       - name: Upload Nasdaq candidate register and coverage report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: machine-arena-usa-nasdaq-universe
           path: research/output/usa/XNAS/
           retention-days: 90
       - name: Upload TXSE research-only catalog and coverage report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: machine-arena-usa-txse-candidates

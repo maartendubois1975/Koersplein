@@ -1,7 +1,7 @@
 // One-time read-only live research probe, invoked after official candidate snapshots.
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import {SAMPLES,lastFullSession,previousSession,inspectYahooChart} from './usa-daily-canary-core.mjs';
+import {SAMPLES,lastFullSession,previousSession,inspectYahooChart,assertCurrentCanaryEvidence} from './usa-daily-canary-core.mjs';
 const session=lastFullSession(),previous=previousSession(session),root='research/output/usa';
 const cache=new Map(),results=[];
 for(const sample of SAMPLES){
@@ -36,3 +36,5 @@ const output={coverage,results};
 await fs.mkdir(root,{recursive:true});
 await fs.writeFile(path.join(root,'daily-canary-'+session+'.json'),JSON.stringify(output,null,2));
 console.log(JSON.stringify(coverage));
+// Preserve JSON evidence before failing on a missing current-session canary.
+assertCurrentCanaryEvidence(output);

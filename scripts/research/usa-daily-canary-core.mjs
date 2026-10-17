@@ -59,3 +59,15 @@ export function inspectYahooChart(body,{mic,providerTicker,session,previous}){
  try{validateDailyOHLCV([bar],{start:previous,end:session});}catch(e){return {...fail('INVALID_OHLCV'),validationError:String(e.message).slice(0,100)};}
  return {status:bar.date===session?'DATED_OHLC_RESEARCH_ONLY':'PREVIOUS_SESSION_ONLY',...details,date:bar.date,open:bar.open,high:bar.high,low:bar.low,close:bar.close,volume:bar.volume};
 }
+
+// Fail-closed CI evidence only: a research bar does NOT approve the provider, listing, or rights.
+export function assertCurrentCanaryEvidence(output,requiredMics=['XNYS','XNAS','TXSE']){
+ const session=output?.coverage?.session;
+ if(typeof session!=='string'||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(session)||!Array.isArray(output?.results))throw Error('USA_CANARY_EVIDENCE_MALFORMED');
+ const missing=requiredMics.filter(mic=>!output.results.some(row=>
+  row.mic===mic&&row.status==='DATED_OHLC_RESEARCH_ONLY'&&row.date===session&&
+  Number.isFinite(row.open)&&row.open>0&&Number.isFinite(row.close)&&row.close>0
+ ));
+ if(missing.length)throw Error('USA_CURRENT_DATED_CANARY_MISSING:'+missing.join(','));
+ return true;
+}
