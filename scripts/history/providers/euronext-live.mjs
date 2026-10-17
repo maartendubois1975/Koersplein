@@ -1,8 +1,9 @@
+import {createHash,createDecipheriv} from 'node:crypto';
 const PROVIDER_ID='euronext-live';
 const ROOT='https://live.euronext.com/en/ajax/getHistoricalPricePopup/';
 const clean=s=>String(s??'').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').trim();
 const iso=s=>{const m=clean(s).match(/(\d{2})\/(\d{2})\/(\d{4})/);return m?`${m[3]}-${m[2]}-${m[1]}`:null};
-const num=s=>{const n=Number(clean(s).replace(/\s/g,'').replace(/,/g,''));return Number.isFinite(n)?n:null};
+const num=s=>{const text=clean(s);if(!text||text==='-')return null;const n=Number(text.replace(/\s/g,'').replace(/,/g,''));return Number.isFinite(n)?n:null};
 const addDays=(isoDate,days)=>{const d=new Date(isoDate+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+days);return d.toISOString().slice(0,10)};
 const chunks=(start,end)=>{
  const out=[];let s=start;
@@ -12,13 +13,35 @@ const chunks=(start,end)=>{
  while(s<=end){const eCandidate=addDays(s,700);const e=eCandidate<end?eCandidate:end;out.push([s,e]);if(e===end)break;s=addDays(e,1)}
  return out;
 };
-const parseTable=html=>{
+export const parseEuronextHistoryRows=html=>{
  const rows=[...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].map(x=>[...x[1].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map(y=>clean(y[1])));
  const header=rows.findIndex(row=>row.some(v=>/^date$/i.test(v)));if(header<0)return[];
  const h=rows[header].map(x=>x.toLowerCase()),idx=n=>h.findIndex(x=>x.includes(n));
  const di=idx('date'),oi=idx('open'),hi=idx('high'),li=idx('low'),ci=idx('close'),vi=idx('number of shares');
  return rows.slice(header+1).map(row=>({date:iso(row[di]),open:num(row[oi]),high:num(row[hi]),low:num(row[li]),close:num(row[ci]),adjustedClose:num(row[ci]),volume:vi>=0?num(row[vi]):null})).filter(x=>x.date&&x.close!==null&&x.close>0);
 };
+// Euronext's public AJAX client uses this published transport format and
+// default passphrase (ajax_secure/js/ajax-secure.js); this is not an account credential.
+export function decodeEuronextBody(text){
+ if(!/^[\s]*[\[{\"]/.test(text))return text;
+ let payload;try{payload=JSON.parse(text);}catch{return text;}
+ if(payload?.ct&&payload.iv&&payload.s){
+  const password=Buffer.from('24ayqVo7yJma'),salt=Buffer.from(payload.s,'hex');
+  let previous=Buffer.alloc(0),derived=Buffer.alloc(0);
+  while(derived.length<48){previous=createHash('md5').update(Buffer.concat([previous,password,salt])).digest();derived=Buffer.concat([derived,previous]);}
+  const decipher=createDecipheriv('aes-256-cbc',derived.subarray(0,32),Buffer.from(payload.iv,'hex'));
+  payload=JSON.parse(Buffer.concat([decipher.update(Buffer.from(payload.ct,'base64')),decipher.final()]).toString('utf8'));
+ }
+ const html=[];const collect=x=>{if(typeof x==='string'&&x.includes('<'))html.push(x);else if(x&&typeof x==='object')for(const v of Object.values(x))collect(v);};collect(payload);
+ if(!html.length)throw Error('EURONEXT_TRANSPORT_NO_HTML');
+ return html.join('\n');
+}
+export async function euronextDailySnapshot(i,date,signal){
+ const key=`${i.isin}-${i.mic}`,sourceUrl=ROOT+encodeURIComponent(key);
+ const r=await fetch(sourceUrl,{method:'POST',signal,headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},body:new URLSearchParams({adjusted:'Y',startdate:date,enddate:date,nbSession:'100000'})});
+ if(!r.ok)throw Error('Euronext HTTP '+r.status);
+ return {sourceUrl,rows:parseEuronextHistoryRows(decodeEuronextBody(await r.text()))};
+}
 export class EuronextLiveProvider{
  id=PROVIDER_ID;name='Euronext Live historical prices';requiresApiKey=false;
  supports(i){return ['XAMS','XBRU','XDUB','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin)}
@@ -28,10 +51,11 @@ export class EuronextLiveProvider{
    const body=new URLSearchParams({adjusted:'Y',startdate:start,enddate:end,nbSession:'100000'});
    const r=await fetch(ROOT+encodeURIComponent(key),{method:'POST',signal,headers:{Accept:'*/*','Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest','User-Agent':'Koersplein-history/1.0'},body});
    if(!r.ok)throw Error(`Euronext HTTP ${r.status} voor ${key} (${start}..${end})`);
-   all.push(...parseTable(await r.text()));
+   all.push(...parseEuronextHistoryRows(decodeEuronextBody(await r.text())));
   }
   const dedup=[...new Map(all.map(x=>[x.date,x])).values()].sort((a,b)=>a.date.localeCompare(b.date));
-  if(!dedup.length)throw Error(`Geen Euronext koershistorie voor ${key}`);
-  return{bars:dedup,requestUrl:ROOT+key,providerMeta:{mic,isin:i.isin,source:'Euronext Live',windowPolicy:'<=700d chunks'}};
+  const traded=dedup.filter(b=>Number(b.open)>0&&Number(b.close)>0);
+  if(!traded.length)throw Error(`Geen verhandelde Euronext koershistorie voor ${key}`);
+  return{bars:traded,requestUrl:ROOT+key,providerMeta:{mic,isin:i.isin,source:'Euronext Live',windowPolicy:'<=700d chunks'}};
  }
 }

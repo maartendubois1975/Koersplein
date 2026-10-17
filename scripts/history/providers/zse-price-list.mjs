@@ -28,3 +28,5 @@ export class ZsePriceListProvider{
   const unique=[...new Map(bars.map(x=>[x.date,x])).values()].sort((a,b)=>a.date.localeCompare(b.date));if(!unique.length)throw new Error('Geen officiële ZSE-historie voor '+i.isin);return {bars:unique,meta:{source:'Zagreb Stock Exchange official daily price lists',root:ROOT}}
  }
 }
+
+export async function zseDailySnapshot(date,signal){return {sourceUrl:ROOT+'price-list/XZAG/'+date+'/csv?language=EN',rows:await loadDate(date,signal)};}
