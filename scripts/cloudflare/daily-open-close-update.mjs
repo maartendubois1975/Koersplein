@@ -41,7 +41,7 @@ for(const market of targetMarkets){
    const beforeDate=manifest[s.isin]?.lastDate||null;
    if(beforeDate && beforeDate>=freshnessCutoff){current++;continue;}
    const instrument={...s,ticker:s.ticker||s.symbol,symbol:s.symbol||s.ticker,mic:s.mic||market.mic,market:s.mic||market.mic,currency:s.currency||market.currency,countryCode:market.country};
-   const {provider,result}=await providers.fetchDaily(instrument,{startDate:beforeDate||new Date(Date.now()-365*86400000).toISOString().slice(0,10),endDate:today},primary,{strictPreferred:false});
+   const {provider,result}=await providers.fetchDaily(instrument,{startDate:beforeDate||new Date(Date.now()-365*86400000).toISOString().slice(0,10),endDate:today},primary,{strictPreferred:false,timeoutMs:15000});
    const bars=(result.bars||[]).filter(b=>b.date&&Number(b.open)>0&&Number(b.close)>0&&(!beforeDate||b.date>beforeDate));
    for(const [period,part] of partitionBars(bars))await client.putPartition(s.isin,period,{bars:part,provider:provider.id});
    if(bars.length)await client.completeHistory(s.isin,{provider:provider.id});
