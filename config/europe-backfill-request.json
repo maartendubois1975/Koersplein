@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-17T08:20:59Z",
+  "requestedAt": "2026-10-17T12:40:00Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "FULL_APPEND_ONLY_BACKFILL_AND_DAILY_TAIL",
-  "reason": "User requested completion in one run; preserve existing D1 identities and R2 bars."
+  "reason": "Europe-only final missing history and stale daily repair after factory catalog 401 auth fix PR #160; preserve all existing D1/R2 historical records; do not run USA."
 }
