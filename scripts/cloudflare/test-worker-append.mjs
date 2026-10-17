@@ -14,6 +14,8 @@ const env={FACTORY_TOKEN:'test-token',DB:{prepare(sql){return {bind(){return thi
 const request=bars=>new Request('https://test.invalid/api/factory/history/XICE:TEST/2026',{method:'PUT',headers:{authorization:'Bearer test-token','content-type':'application/json'},body:JSON.stringify({appendOnly:true,provider:'test',bars})});
 let response=await route(request([{...existing[0],close:999}]),env);
 assert.equal(response.status,200);assert.equal((await response.json()).unchanged,true);assert.equal(writes,0);assert.equal(updates,0);
-response=await route(request([{...existing[0],close:999},{date:'2026-10-16',open:11,close:12}]),env);
+response=await route(request([{...existing[0],close:999},{date:'2026-10-16',open:11,close:12,currency:'EUR'}]),env);
 assert.equal(response.status,200);assert.equal(writes,1);assert.equal(updates,1);assert.equal(written.length,2);assert.equal(written[0].close,11);assert.equal(written[1].close,12);
 console.log('Worker append: existing dates require no writes; new date preserves original prices and legacy object contents OK');
+
+assert.equal(written[1].currency,'EUR');

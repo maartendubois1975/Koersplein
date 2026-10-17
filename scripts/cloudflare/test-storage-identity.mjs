@@ -20,3 +20,7 @@ console.log('Storage identity: legacy keys, exchange isolation, segments, exact 
 assert.equal(newListingStorageKey({isin:'NL0000852564'},'XAMS'),'XAMS:NL0000852564');
 assert.equal(newListingStorageKey({isin:'NL0000852564'},'XMIL'),'XMIL:NL0000852564');
 assert.equal(newListingStorageKey({isin:'XICE:ALVO'},'XICE'),'XICE:ALVO');
+const corrected=storageIdentityResolver([{isin:'OLD-TCH',mic:'XBUL',ticker:'TCH'},{isin:'NEW-TCH',mic:'XBUL',ticker:'FAVH'}],'XBUL');
+assert.equal(corrected({isin:'NEW-TCH',symbol:'TCH',legacyStorageIsin:'OLD-TCH'}),'OLD-TCH');
+const absent=storageIdentityResolver([{isin:'NEW-TCH',mic:'XBUL',ticker:'FAVH'}],'XBUL');
+assert.equal(absent({isin:'NEW-TCH',symbol:'TCH',legacyStorageIsin:'OLD-TCH'}),null);

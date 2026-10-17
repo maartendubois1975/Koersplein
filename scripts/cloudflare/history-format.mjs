@@ -20,6 +20,10 @@ export function normalizeBar(bar) {
   if (result.high !== null && result.low !== null && result.high < result.low) throw new Error(`High lager dan low op ${result.date}`);
   if (Number.isNaN(result.volume) || (result.volume !== null && result.volume < 0)) result.volume = null;
   if (Number.isNaN(result.adjustedClose) || (result.adjustedClose !== null && result.adjustedClose < 0)) result.adjustedClose = null;
+  if(bar.currency!==undefined&&bar.currency!==null){
+    if(!/^[A-Za-z]{3}$/.test(String(bar.currency)))throw new Error('Ongeldige koersvaluta');
+    result.currency=String(bar.currency);
+  }
   return result;
 }
 

@@ -751,7 +751,7 @@
     },
     "XBUL": {
       "status": "APPROVED",
-      "catalogSource": "BSE Main Market scope + Bulgarian Central Depository real ISIN identity + StockAnalysis BUL daily-history provider",
+      "catalogSource": "BSE official Market Information exact symbol+ISIN verification and official OHLC",
       "historySources": [
         {
           "provider": "bse-sofia-official",
@@ -784,7 +784,7 @@
         ],
         "policy": "Import real traded OHLC from official BSE; preserve existing storage values and never manufacture open from previous close."
       },
-      "catalogFingerprint": "8d30f3706bad5373a9e0f4f1ea4138504b34fe3d0829bea810a0ceb7a7f1536e",
+      "catalogFingerprint": "c3837c6f8627f3dfcf55e14ff20d5ab0cd4566505090c32bbdfa221fb94562a7",
       "discovery": {
         "testedDifficultSymbols": 20,
         "testedFullCatalog": 158,
@@ -792,7 +792,7 @@
         "crossCheckedSymbols": 0,
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
-        "note": "Official BSE catalog fully source-gated; canonical Sofia completion persisted with 158/158 instruments classified as current-history covered or evidence-backed DATA_UNAVAILABLE."
+        "note": "Exact BSE identity validation replaces fuzzy issuer matching; production full-history and daily completeness remain separately verified."
       },
       "approvedAt": "2026-10-07T14:35:36.320Z",
       "dailyCloseAudit": {
