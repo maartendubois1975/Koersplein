@@ -4,13 +4,22 @@ import os from 'node:os';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
-import {selectVerifiedNYSEHistoryUniverse} from './usa-history-eligibility.mjs';
+import {isValidISIN,selectVerifiedNYSEHistoryUniverse} from './usa-history-eligibility.mjs';
 const script=fileURLToPath(new URL('./usa-nyse-history.mjs',import.meta.url));
 const stock={symbol:'TEST',exchange:'XNYS',securityType:'COMMON_CANDIDATE',
  verifiedCommonStock:true,officialListingVerified:true,officialListingStatus:'ACTIVE',
  activeTradingVerified:true,officialTradingStatus:'ACTIVE',issuerIdentityVerified:true,
- shareClassVerified:true,shareClass:'COMMON',isinVerified:true,isin:'US0000000000',
+ shareClassVerified:true,shareClass:'COMMON',isinVerified:true,isin:'US0000000002',
  listingEvidenceUrl:'https://example.org/listing',tradingEvidenceUrl:'https://example.org/trading'};
+assert.equal(isValidISIN('US00846U1016'),true);
+assert.equal(isValidISIN('GB0002634946'),true);
+assert.equal(isValidISIN('US00846U1017'),false);
+assert.equal(isValidISIN('US0000000000'),false);
+assert.equal(isValidISIN('us00846u1016'),false);
+assert.equal(isValidISIN('US00846U101'),false);
+assert.equal(isValidISIN(null),false);
+assert.equal(selectVerifiedNYSEHistoryUniverse([{...stock,isin:'US00846U1017'}]).approved.length,0);
+assert.ok(selectVerifiedNYSEHistoryUniverse([{...stock,isin:'US00846U1017'}]).quarantined[0].reasons.includes('ISIN_NOT_VERIFIED'));
 assert.equal(selectVerifiedNYSEHistoryUniverse([{...stock,securityType:'FUND_REVIEW'}]).approved.length,0);
 assert.equal(selectVerifiedNYSEHistoryUniverse([{...stock,exchange:'XNAS'}]).approved.length,0);
 assert.equal(selectVerifiedNYSEHistoryUniverse([{...stock,activeTradingVerified:false}]).approved.length,0);
@@ -18,6 +27,7 @@ const bar={t:'2026-10-16T04:00:00Z',o:10,h:12,l:9,c:11,v:100,n:2};
 const cases=[
  {name:'unverified',securities:[{...stock,verifiedCommonStock:false}],rights:true,creds:true,expected:'NO_VERIFIED_NYSE_HISTORY_UNIVERSE',approved:0},
  {name:'fund',securities:[{...stock,securityType:'FUND_REVIEW'}],rights:true,creds:true,expected:'NO_VERIFIED_NYSE_HISTORY_UNIVERSE',approved:0},
+ {name:'invalid isin checksum',securities:[{...stock,isin:'US00846U1017'}],rights:true,creds:true,expected:'NO_VERIFIED_NYSE_HISTORY_UNIVERSE',approved:0},
  {name:'rights',securities:[stock],rights:false,creds:true,expected:'USA_HISTORY_SIP_RIGHTS_NOT_APPROVED',approved:1},
  {name:'credentials',securities:[stock],rights:true,creds:false,expected:'ALPACA_CREDENTIALS_MISSING',approved:1},
  {name:'zero open',securities:[stock],rights:true,creds:true,bars:[{...bar,o:0}],expected:'INVALID_PRICE',approved:1},

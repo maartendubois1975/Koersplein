@@ -1,5 +1,18 @@
 // Fail-closed filter: non-ETF catalog entries are not automatically active ordinary shares.
 const ISIN=/^[A-Z]{2}[A-Z0-9]{9}[0-9]$/;
+// ISO 6166: expand A..Z to 10..35, then verify the complete digit sequence with Luhn.
+export function isValidISIN(value) {
+  if(typeof value!=='string'||!ISIN.test(value))return false;
+  const digits=[...value].map(c=>c>='A'&&c<='Z'?String(c.charCodeAt(0)-55):c).join('');
+  let sum=0,alternate=false;
+  for(let i=digits.length-1;i>=0;i--) {
+    let n=Number(digits[i]);
+    if(alternate){n*=2;if(n>9)n-=9;}
+    sum+=n;
+    alternate=!alternate;
+  }
+  return sum%10===0;
+}
 const COMMON=new Set(['COMMON_CANDIDATE','COMMON_VERIFIED']);
 const HTTPS=/^https:\/\/[^\s]+$/i;
 export function selectVerifiedNYSEHistoryUniverse(securities) {
@@ -15,7 +28,7 @@ export function selectVerifiedNYSEHistoryUniverse(securities) {
     if(item?.officialListingVerified!==true||item?.officialListingStatus!=='ACTIVE')reasons.push('LISTING_NOT_VERIFIED');
     if(item?.activeTradingVerified!==true||item?.officialTradingStatus!=='ACTIVE')reasons.push('TRADING_NOT_VERIFIED');
     if(item?.issuerIdentityVerified!==true||item?.shareClassVerified!==true||!item?.shareClass)reasons.push('ISSUER_OR_CLASS_NOT_VERIFIED');
-    if(item?.isinVerified!==true||!ISIN.test(item?.isin||''))reasons.push('ISIN_NOT_VERIFIED');
+    if(item?.isinVerified!==true||!isValidISIN(item?.isin))reasons.push('ISIN_NOT_VERIFIED');
     if(!HTTPS.test(item?.listingEvidenceUrl||'')||!HTTPS.test(item?.tradingEvidenceUrl||''))reasons.push('EVIDENCE_MISSING');
     if(reasons.length)quarantined.push({symbol:symbol||null,reasons});else approved.push(item);
   }

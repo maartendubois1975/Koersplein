@@ -20,3 +20,9 @@ Verify TXSE CI artifact and inspect quarantine. SEC/ISIN/effective-date crosswal
 - Daily bars must pass existing strict date/OHLCV/volume validation before writing; synthetic regression cases cover funds, unverified shares, licensing, credentials, zero open, duplicate dates. Test fixtures are NOT actual market prices or evidence of source rights.
 - Existing official NYSE/Nasdaq/TXSE candidate registers are NOT verified common-share catalogs; zero US markets COMPLETE. No backfill, merge, Europe/main write or production publication authorized.
 - Verify resulting CI run and artifacts independently. NYSE historical workflow remains blocked until independent official listing/issuer/share-class/ISIN/active-trading proofs and data rights are approved; do not treat successful catalog CI as a source gate.
+
+## 2026-10-17 06:35 Europe/Amsterdam — ISIN check-digit fail-closed fix
+- Reproduced: previous NYSE history eligibility checked only ISIN syntax and accepted `US00846U1017` despite its invalid ISO 6166 check digit. Existing synthetic fixture `US0000000000` also had an invalid check digit.
+- Added ISO 6166 alphanumeric expansion plus Luhn verification to the existing NYSE eligibility gate; invalid or malformed ISINs are quarantined as ISIN_NOT_VERIFIED before any provider call.
+- Updated the synthetic positive fixture to checksum-valid `US0000000002` (test-only; not a real issuer identity claim). Added regression for valid US/GB ISINs, invalid checksum, bad format, and runner refusal to request prices for an invalid ISIN.
+- Earlier CI run 39001144208 at commit abfffd1e was green and produced NYSE/Nasdaq/TXSE artifacts; it did not cover this checksum bug. Verify the new commit's CI separately. No live US OHLC canary, catalog approval, backfill, merge or production changes.
