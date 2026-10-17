@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {parseUSDirectory} from './usa-directory-parse.mjs';
-import {buildNasdaqCatalog} from './usa-nasdaq-catalog.mjs';
+import {buildNasdaqCatalog,pltrMICAt} from './usa-nasdaq-catalog.mjs';
 const fields=['Symbol','Security Name','Market Category','Test Issue','Financial Status','Round Lot Size','ETF','NextShares'];
 const samples=[
  ['AAPL','Apple Inc. - Common Stock','Q','N','N','40','N','N'],
@@ -38,4 +38,19 @@ assert.throws(()=>buildNasdaqCatalog([...input,input[0]],meta),/DUPLICATE_NASDAQ
 assert.throws(()=>buildNasdaqCatalog(input.map((r,i)=>i?r:{...r,'Market Category':'N'}),meta),/INVALID_NASDAQ_MARKET_CATEGORY/);
 assert.throws(()=>buildNasdaqCatalog(input.map((r,i)=>i?r:{...r,NextShares:'?'}),meta),/INVALID_NASDAQ_NEXTSHARES_FLAG/);
 assert.throws(()=>buildNasdaqCatalog(input.map((r,i)=>i?r:{...r,'Round Lot Size':'0'}),meta),/INVALID_NASDAQ_ROUND_LOT/);
-console.log('Nasdaq official directory offline regressions passed');
+
+const pltr={...synthetic[0],Symbol:'PLTR','Security Name':'Palantir Technologies Inc. - Class A Common Stock'};
+const pltrRecord=buildNasdaqCatalog([...input,pltr],meta).securities.find(r=>r.symbol==='PLTR');
+assert.equal(pltrRecord.issuerCIK,'0001321655');
+assert.equal(pltrRecord.shareClass,'Class A Common Stock');
+assert.equal(pltrRecord.historicalListingEvidence.evidenceAvailableAt,'2025-02-18');
+assert.equal(pltrRecord.historicalListingEvidence.status,'SEC_REPORTED_NOT_PIT_CERTIFIED');
+assert.equal(pltrRecord.verifiedCommonStock,false);
+assert.equal(pltrRecord.eligibleForTraining,false);
+assert.equal(pltrRecord.isin,null);
+assert.equal(pltrRecord.activeTradingStatus,'UNVERIFIED');
+for(const [d,mic] of [['2020-09-29',null],['2020-09-30','XNYS'],['2024-11-25','XNYS'],['2024-11-26','XNAS'],['2026-10-16','XNAS'],['2024-02-31',null],['invalid',null]])
+  assert.equal(pltrMICAt(d),mic);
+assert.throws(()=>buildNasdaqCatalog([...input,{...pltr,'Security Name':'Palantir Technologies Inc. - Class B Common Stock'}],meta),/PLTR_SEC_ISSUER_OR_SHARE_CLASS_CONFLICT/);
+assert.throws(()=>buildNasdaqCatalog([...input,pltr],{...meta,sourceTimestamp:'1125202421:31'}),/PLTR_NASDAQ_DIRECTORY_PREDATES_TRANSFER/);
+console.log('Nasdaq official directory and PLTR effective-date regressions passed');
