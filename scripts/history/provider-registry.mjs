@@ -27,7 +27,7 @@ export class ProviderRegistry {
     return this.#providers.filter((provider) => provider.supports?.(instrument) !== false);
   }
 
-  async fetchDaily(instrument, range, preferredProvider = null, { strictPreferred = false } = {}) {
+  async fetchDaily(instrument, range, preferredProvider = null, { strictPreferred = false, timeoutMs = 0 } = {}) {
     const preferred = preferredProvider ? this.get(preferredProvider) : null;
     if (preferredProvider && !preferred) throw new Error(`Onbekende voorkeursprovider: ${preferredProvider}`);
     const ordered = preferredProvider
@@ -37,7 +37,21 @@ export class ProviderRegistry {
     const failures = [];
     for (const provider of ordered) {
       try {
-        return { provider, result: await provider.fetchDaily(instrument, range) };
+        if (!(timeoutMs > 0)) return { provider, result: await provider.fetchDaily(instrument, range) };
+        const controller = new AbortController();
+        let timer;
+        try {
+          const timeout = new Promise((_, reject) => {
+            timer = setTimeout(() => {
+              controller.abort();
+              reject(new Error('Provider timeout after '+timeoutMs+'ms'));
+            }, timeoutMs);
+          });
+          const result = await Promise.race([provider.fetchDaily(instrument, {...range, signal: controller.signal}), timeout]);
+          return { provider, result };
+        } finally {
+          clearTimeout(timer);
+        }
       } catch (error) {
         failures.push(`${provider.id}: ${error.message}`);
       }
