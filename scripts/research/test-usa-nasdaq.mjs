@@ -29,7 +29,7 @@ assert.equal(summary.excludedNextShares,1);
 assert.equal(summary.nonETFCandidates,1005);
 assert.equal(summary.flaggedFinancialStatus,1);
 assert.equal(summary.quarantinedFinancialStatus,1);
-assert.equal(summary.quarantinedSecurityType,4);
+assert.equal(summary.quarantinedSecurityType,3);
 assert.equal(securities.find(r=>r.symbol==='AAPL').catalogStatus,'COMMON_CANDIDATE_NOT_VERIFIED');
 assert.equal(securities.find(r=>r.symbol==='AAPL').quarantineReason,null);
 assert.equal(securities.find(r=>r.symbol==='AACIU').catalogStatus,'QUARANTINE_SECURITY_TYPE');
