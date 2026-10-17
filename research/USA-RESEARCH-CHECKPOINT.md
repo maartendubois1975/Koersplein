@@ -32,3 +32,8 @@ Verify TXSE CI artifact and inspect quarantine. SEC/ISIN/effective-date crosswal
 - Samples large/small/recent/share-class tickers for XNYS and XNAS, and TXSE-listed-flag candidates separately. TXSE Yahoo bars must prove the TXSE provider market itself; an XNAS bar for a dual-listed symbol is rejected.
 - Official current candidate snapshot is required before requesting each ticker. Catalog SEC/issuer/share-class/ISIN and active-trading proof remains incomplete; Yahoo rights and adjustment policy remain NOT APPROVED.
 - Added offline regression tests and CI artifact for per-MIC research-only status. The script never imports or publishes prices. Verify CI and real provider responses after this commit; no COMPLETE or historical backfill.
+
+## 2026-10-17 07:05 Europe/Amsterdam — TXSE provider route confirmed as research hint
+- Live GitHub Action 39004861822 (commit 82bf6c48) passed offline tests and fetched 2026-10-16 dated OHLC from Yahoo for 4/4 XNYS and 3/4 XNAS canaries; GOOG was conservatively skipped because the current classifier marks `Class C Capital Stock` REVIEW.
+- TXSE official listing-flag candidates TCBI and DDS returned Yahoo metadata `exchangeName=TEX`, `fullExchangeName=TXSE`, currency USD, instrumentType EQUITY, New York timezone. The first probe correctly rejected unrecognized TEX and preserved no bar. Add a strict TXSE-specific `(TEX,TXSE)` pair rather than guessing a NYSE/Nasdaq route.
+- This is provider self-description, not independent MIC/issuer/ISIN/rights approval. Re-run CI and inspect dated TXSE bars before claiming TXSE probe success. No COMPLETE, no historical import, no main/Europe changes.

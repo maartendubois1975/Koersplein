@@ -14,9 +14,13 @@ const good={chart:{result:[{meta:{symbol:'MMM',exchangeName:'NYQ',currency:'USD'
 const p={mic:'XNYS',providerTicker:'MMM',session:'2026-10-16',previous:'2026-10-15'};
 assert.equal(inspectYahooChart(good,p).status,'DATED_OHLC_RESEARCH_ONLY');
 assert.equal(inspectYahooChart(good,{...p,mic:'TXSE'}).status,'PROVIDER_MARKET_MISMATCH');
+const txse={...good,chart:{...good.chart,result:[{...good.chart.result[0],meta:{...good.chart.result[0].meta,exchangeName:'TEX',fullExchangeName:'TXSE',symbol:'TCBI'}}]}};
+assert.equal(inspectYahooChart(txse,{...p,mic:'TXSE',providerTicker:'TCBI'}).status,'DATED_OHLC_RESEARCH_ONLY');
+assert.equal(inspectYahooChart(txse,{...p,mic:'XNYS',providerTicker:'TCBI'}).status,'PROVIDER_MARKET_MISMATCH');
+assert.equal(inspectYahooChart({...txse,chart:{...txse.chart,result:[{...txse.chart.result[0],meta:{...txse.chart.result[0].meta,fullExchangeName:'NYSE'}}]}},{...p,mic:'TXSE',providerTicker:'TCBI'}).status,'PROVIDER_MARKET_MISMATCH');
 assert.equal(inspectYahooChart(good,{...p,providerTicker:'AAPL'}).status,'PROVIDER_SYMBOL_MISMATCH');
 assert.equal(inspectYahooChart({...good,chart:{...good.chart,result:[{...good.chart.result[0],meta:{...good.chart.result[0].meta,currency:'EUR'}}]}},p).status,'PROVIDER_IDENTITY_MISMATCH');
 assert.equal(inspectYahooChart({...good,chart:{...good.chart,result:[{...good.chart.result[0],indicators:{quote:[{open:[0],high:[103],low:[99],close:[101],volume:[1000]}]}}]}},p).status,'INVALID_OHLCV');
 assert.equal(inspectYahooChart({...good,chart:{...good.chart,result:[{...good.chart.result[0],timestamp:[Date.parse('2026-10-10T20:00:00Z')/1000]}]}},p).status,'NO_DATED_BAR');
 assert.equal(inspectYahooChart({...good,chart:{...good.chart,result:[{...good.chart.result[0],timestamp:[ts,ts]}]}},p).status,'DUPLICATE_SESSION_BAR');
-console.log('USA dated daily canary regressions passed: 16');
+console.log('USA dated daily canary regressions passed: 19');

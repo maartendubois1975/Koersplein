@@ -35,14 +35,14 @@ export function lastFullSession(now=new Date()){
  for(let i=0;i<15;i++,day=shift(day,-1))if(weekday(day)!==0&&weekday(day)!==6&&!standardNYSEHoliday(day))return day;
  throw Error('NO_COMPLETED_SESSION');
 }
-const expectedExchange={XNYS:['NYQ'],XNAS:['NMS','NGM','NCM'],TXSE:['TXSE']};
+const expectedExchange={XNYS:['NYQ'],XNAS:['NMS','NGM','NCM'],TXSE:['TEX']};
 export function inspectYahooChart(body,{mic,providerTicker,session,previous}){
  const result=body?.chart?.result?.[0],meta=result?.meta||{};
  const details={providerExchange:meta.exchangeName||null,providerFullExchange:meta.fullExchangeName||null,providerSymbol:meta.symbol||null,providerCurrency:meta.currency||null,providerType:meta.instrumentType||null,providerTimezone:meta.exchangeTimezoneName||null};
  const fail=status=>({status,...details,date:null,open:null,close:null});
  if(body?.chart?.error||!result)return fail('NO_PROVIDER_RESULT');
  if(meta.symbol!==providerTicker)return fail('PROVIDER_SYMBOL_MISMATCH');
- if(!expectedExchange[mic]?.includes(meta.exchangeName))return fail('PROVIDER_MARKET_MISMATCH');
+ if(!expectedExchange[mic]?.includes(meta.exchangeName)||(mic==='TXSE'&&meta.fullExchangeName!=='TXSE'))return fail('PROVIDER_MARKET_MISMATCH');
  if(meta.currency!=='USD'||meta.instrumentType!=='EQUITY'||meta.exchangeTimezoneName!=='America/New_York')return fail('PROVIDER_IDENTITY_MISMATCH');
  const times=result.timestamp||[],q=result.indicators?.quote?.[0];
  if(!Array.isArray(times)||!q)return fail('NO_PROVIDER_QUOTE');
