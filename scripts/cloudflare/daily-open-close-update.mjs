@@ -24,6 +24,7 @@ function failureCategory(message){
  if(/429|rate.limit|too many requests/i.test(m))return 'RATE_LIMIT';
  if(/timeout|timed out|AbortError|fetch failed|ECONN|ETIMEDOUT/i.test(m))return 'NETWORK_TIMEOUT';
  if(/401|403|unauthorized|forbidden/i.test(m))return 'AUTH_OR_ACCESS';
+ if(/CATALOG_INSTRUMENT_MISSING|(?:PUT|POST) \/api\/factory\/history\/.*HTTP 404.*Instrument ontbreekt/i.test(m))return 'CATALOG_INSTRUMENT_MISSING';
  if(/404|not found|no data|no bars|empty/i.test(m))return 'SOURCE_NO_HISTORY';
  if(/422|invalid symbol|invalid ticker|symbol not/i.test(m))return 'SYMBOL_MAPPING';
  return 'PROVIDER_OTHER';
@@ -63,18 +64,36 @@ for(const market of targetMarkets){
   const unresolved=shares.filter(s=>!verifiedKeys.has(s.isin));
   if(unresolved.length)throw Error('XICE_CATALOG_IDENTITY_UNRESOLVED '+unresolved.map(x=>x.isin).join(','));
  }
+ // Resolve historical storage identity from D1 by MIC+ticker: older catalog imports
+ // may use a different stable key than the official/local catalog. Never create a
+ // second instrument for the same listing or replace its historical partitions.
+ const storedCatalog=await client.request('/api/factory/catalog?mic='+encodeURIComponent(market.mic));
+ const byTicker=new Map((storedCatalog.instruments||[]).map(row=>[String(row.ticker||'').trim().toUpperCase(),row.isin]));
+ const storedKeys=new Set((storedCatalog.instruments||[]).map(row=>row.isin));
+ const eligibleForSeed=shares.filter(share=>share.isin&&!storedKeys.has(share.isin)&&!byTicker.has(String(share.symbol||share.ticker||'').trim().toUpperCase()));
+ // Seed only genuinely missing D1 catalog rows, in small batches. Existing identities
+ // (even legacy keys) are never renamed by this generic update path.
+ for(let i=0;i<eligibleForSeed.length;i+=25){
+  const batch=eligibleForSeed.slice(i,i+25).map(share=>({isin:share.isin,mic:market.mic,ticker:share.symbol||share.ticker,company:share.company||share.name||share.symbol||share.ticker,countryCode:market.country,currency:share.currency||market.currency}));
+  await client.seedCatalog({markets:[],instruments:batch});
+ }
+ if(eligibleForSeed.length)console.log('EUROPE_CATALOG_SEEDED',JSON.stringify({mic:market.mic,count:eligibleForSeed.length}));
+ const verifiedCatalog=eligibleForSeed.length?await client.request('/api/factory/catalog?mic='+encodeURIComponent(market.mic)):storedCatalog;
+ const actualByTicker=new Map((verifiedCatalog.instruments||[]).map(row=>[String(row.ticker||'').trim().toUpperCase(),row.isin]));
  const unavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));let advanced=0,current=0,skipped=0,missing=0,deferredMissing=0,failed=[];
  for(const s of shares){
   if(unavailable.has(s.isin)){skipped++;continue}
   try{
-   const beforeDate=manifest[s.isin]?.lastDate||null;
+   const storageIsin=actualByTicker.get(String(s.symbol||s.ticker||'').trim().toUpperCase());
+   if(!storageIsin)throw Error('CATALOG_INSTRUMENT_MISSING '+s.isin);
+   const beforeDate=manifest[storageIsin]?.lastDate||manifest[s.isin]?.lastDate||null;
    if(!beforeDate&&!selectedMissing.has(s.isin)){deferredMissing++;continue;}
    if(beforeDate && beforeDate>=freshnessCutoff){current++;continue;}
    const instrument={...s,ticker:s.ticker||s.symbol,symbol:s.symbol||s.ticker,mic:s.mic||market.mic,market:s.mic||market.mic,currency:s.currency||market.currency,countryCode:market.country};
    const {provider,result}=await providers.fetchDaily(instrument,{startDate:beforeDate||'1990-01-01',endDate:today},primary,{strictPreferred:false,timeoutMs:15000});
    const bars=(result.bars||[]).filter(b=>b.date&&Number(b.open)>0&&Number(b.close)>0&&(!beforeDate||b.date>beforeDate));
-   for(const [period,part] of partitionBars(bars))await client.putPartition(s.isin,period,{bars:part,provider:provider.id});
-   if(bars.length)await client.completeHistory(s.isin,{provider:provider.id});
+   for(const [period,part] of partitionBars(bars))await client.putPartition(storageIsin,period,{bars:part,provider:provider.id});
+   if(bars.length)await client.completeHistory(storageIsin,{provider:provider.id});
    const afterDate=bars.at(-1)?.date||beforeDate;
    if(!afterDate)missing++;else if(!beforeDate||afterDate>beforeDate)advanced++;else current++;
   }catch(e){failed.push({isin:s.isin,symbol:s.symbol||s.ticker,category:failureCategory(e.message),error:e.message})}
