@@ -1,0 +1,48 @@
+name: Release explicit European recovery run
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/europe-recovery-release.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: koersplein-europe-recovery-release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Release the obsolete run blocking the requested complete recovery
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node --input-type=module <<'JS'
+          const root='https://api.github.com/repos/maartendubois1975/Koersplein';
+          async function api(path,method='GET',body){
+            const r=await fetch(root+path,{method,headers:{authorization:'Bearer '+process.env.GH_TOKEN,accept:'application/vnd.github+json','content-type':'application/json'},body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(15000)});
+            if(!r.ok)throw Error(method+' '+path+' HTTP '+r.status);
+            const text=await r.text();return text?JSON.parse(text):null;
+          }
+          // Stop only the observed obsolete run blocking the requested recovery.
+          // Never cancel unrelated workflows or newer user-started runs.
+          for(const id of [39006795154]){
+            let run=await api('/actions/runs/'+id);
+            if(run.path!=='.github/workflows/daily-open-close.yml')throw Error('Unexpected workflow on '+id);
+            if(run.status==='completed'){console.log('Already finished',id,run.conclusion);continue;}
+            console.log('Cancel obsolete daily run',id,run.status);
+            await api('/actions/runs/'+id+'/cancel','POST');
+            for(let attempt=0;attempt<18;attempt++){
+              run=await api('/actions/runs/'+id);
+              if(run.status==='completed')break;
+              await new Promise(resolve=>setTimeout(resolve,5000));
+            }
+            if(run.status!=='completed')throw Error('Obsolete run has not stopped; refusing overlapping history writers');
+          }
+          const recovery=await api('/actions/runs/39017384957');
+          if(recovery.path!=='.github/workflows/daily-open-close.yml')throw Error('Unexpected recovery workflow');
+          if(recovery.status==='completed'&&recovery.conclusion!=='success')throw Error('Recovery already ended: '+recovery.conclusion);
+          console.log('Requested full European recovery released',recovery.id,recovery.status);
+          JS
