@@ -37,7 +37,11 @@ export class ProviderRegistry {
     const failures = [];
     for (const provider of ordered) {
       try {
-        if (!(timeoutMs > 0)) return { provider, result: await provider.fetchDaily(instrument, range) };
+        if (!(timeoutMs > 0)) {
+          const result=await provider.fetchDaily(instrument,range);
+          if(!Array.isArray(result?.bars)||!result.bars.length)throw Error('Provider returned no daily bars');
+          return {provider,result};
+        }
         const controller = new AbortController();
         let timer;
         try {
@@ -48,6 +52,7 @@ export class ProviderRegistry {
             }, timeoutMs);
           });
           const result = await Promise.race([provider.fetchDaily(instrument, {...range, signal: controller.signal}), timeout]);
+          if(!Array.isArray(result?.bars)||!result.bars.length)throw Error('Provider returned no daily bars');
           return { provider, result };
         } finally {
           clearTimeout(timer);
