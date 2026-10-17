@@ -11,11 +11,14 @@ jobs:
       ALPACA_API_KEY_ID: ${{ secrets.ALPACA_API_KEY_ID }}
       ALPACA_API_SECRET_KEY: ${{ secrets.ALPACA_API_SECRET_KEY }}
       NYSE_HISTORY_BATCH_SIZE: '20'
+      USA_HISTORY_SIP_RIGHTS_APPROVED: ${{ vars.USA_HISTORY_SIP_RIGHTS_APPROVED }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Offline NYSE history eligibility and import guards
+        run: node scripts/research/test-usa-history-import-guards.mjs
       - name: Validate official NYSE symbol universe
         run: node scripts/research/usa-nyse-universe.mjs
       - name: Validate historical NYSE OHLCV via SIP
@@ -25,5 +28,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: machine-arena-usa-nyse-history-validation
-          path: research/output/usa/XNYS/history-coverage.json
+          path: |
+            research/output/usa/XNYS/history-eligibility.json
+            research/output/usa/XNYS/history-coverage.json
           retention-days: 30

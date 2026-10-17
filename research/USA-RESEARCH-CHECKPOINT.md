@@ -14,3 +14,9 @@ Scope: draft PR #75 / feature/arena-usa-nyse-bootstrap-20261011 only. No product
 
 ## Next independent tasks
 Verify TXSE CI artifact and inspect quarantine. SEC/ISIN/effective-date crosswalk, current trading status and dual listings. Only after full catalog gate: reuse European OHLC route, prove actual dated open+close for each US exchange and broader canary. No backfill until source-first gate.
+
+## 2026-10-17 06:00 Europe/Amsterdam — NYSE history fail-closed integration
+- Target branch only; NYSE historical import now filters verified ordinary active shares before any provider request, emits eligibility/quarantine reasons, and requires an explicit SIP rights flag before Alpaca credentials are used.
+- Daily bars must pass existing strict date/OHLCV/volume validation before writing; synthetic regression cases cover funds, unverified shares, licensing, credentials, zero open, duplicate dates. Test fixtures are NOT actual market prices or evidence of source rights.
+- Existing official NYSE/Nasdaq/TXSE candidate registers are NOT verified common-share catalogs; zero US markets COMPLETE. No backfill, merge, Europe/main write or production publication authorized.
+- Verify resulting CI run and artifacts independently. NYSE historical workflow remains blocked until independent official listing/issuer/share-class/ISIN/active-trading proofs and data rights are approved; do not treat successful catalog CI as a source gate.

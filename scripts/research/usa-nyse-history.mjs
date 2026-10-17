@@ -2,15 +2,28 @@
 // No public redistribution; stores research artifacts for validation only.
 import fs from 'node:fs/promises';
 import path from 'node:path';
-const key=process.env.ALPACA_API_KEY_ID,secret=process.env.ALPACA_API_SECRET_KEY;
-if(!key||!secret)throw Error('ALPACA_CREDENTIALS_MISSING: configure repository secrets before historical import');
+import {selectVerifiedNYSEHistoryUniverse} from './usa-history-eligibility.mjs';
+import {validateDailyOHLCV} from './usa-ohlcv-validation.mjs';
 const dir='research/output/usa/XNYS';
 const universe=JSON.parse(await fs.readFile(path.join(dir,'universe.json'),'utf8')).securities;
+const {approved,quarantined}=selectVerifiedNYSEHistoryUniverse(universe);
+const quarantineReasons={};
+for(const row of quarantined)for(const reason of row.reasons)quarantineReasons[reason]=(quarantineReasons[reason]||0)+1;
+await fs.writeFile(path.join(dir,'history-eligibility.json'),JSON.stringify({
+ generatedAt:new Date().toISOString(),mic:'XNYS',total:universe.length,
+ approved:approved.length,quarantined:quarantined.length,quarantineReasons,
+ rightsFlagSet:process.env.USA_HISTORY_SIP_RIGHTS_APPROVED==='true',
+ backfillApproved:false,publicationApproved:false
+},null,2));
+if(!approved.length)throw Error('NO_VERIFIED_NYSE_HISTORY_UNIVERSE');
+if(process.env.USA_HISTORY_SIP_RIGHTS_APPROVED!=='true')throw Error('USA_HISTORY_SIP_RIGHTS_NOT_APPROVED');
+const key=process.env.ALPACA_API_KEY_ID,secret=process.env.ALPACA_API_SECRET_KEY;
+if(!key||!secret)throw Error('ALPACA_CREDENTIALS_MISSING: configure repository secrets before historical import');
 const max=Number(process.env.NYSE_HISTORY_BATCH_SIZE||20);
 if(!Number.isInteger(max)||max<1||max>250)throw Error('Invalid NYSE_HISTORY_BATCH_SIZE (1..250)');
 const offset=Number(process.env.NYSE_HISTORY_OFFSET||0);
 if(!Number.isInteger(offset)||offset<0)throw Error('Invalid NYSE_HISTORY_OFFSET');
-const symbols=universe.slice(offset,offset+max);
+const symbols=approved.slice(offset,offset+max);
 const start=process.env.NYSE_HISTORY_START||'2016-01-01';
 const end=process.env.NYSE_HISTORY_END||new Date(Date.now()-86400000).toISOString().slice(0,10);
 const manifest=[];
@@ -29,8 +42,7 @@ for(const item of symbols){
    token=data.next_page_token;pages++;
    if(pages>20)throw Error('ALPACA_PAGE_LIMIT');
   }while(token);
-  if(bars.some(b=>!b.date||![b.open,b.high,b.low,b.close,b.volume].every(Number.isFinite)))throw Error('INVALID_OHLCV_VALUES');
-  if(new Set(bars.map(b=>b.date)).size!==bars.length)throw Error('DUPLICATE_TRADING_DATES');
+  validateDailyOHLCV(bars,{start,end});
   await fs.mkdir(path.join(dir,'history'),{recursive:true});
   await fs.writeFile(path.join(dir,'history',encodeURIComponent(item.symbol)+'.json'),JSON.stringify({symbol:item.symbol,exchange:'XNYS',feed:'SIP',adjustment:'raw',source:'Alpaca',start,end,bars}));
  }catch(e){error=String(e.message||e)}

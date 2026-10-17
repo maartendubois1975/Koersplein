@@ -23,6 +23,8 @@ jobs:
         run: node scripts/research/test-usa-ohlcv-validation.mjs
       - name: Offline TXSE directory regressions
         run: node scripts/research/test-usa-txse.mjs
+      - name: Offline NYSE history eligibility and import guards
+        run: node scripts/research/test-usa-history-import-guards.mjs
       - name: Fetch official NYSE directory and verify counts
         run: node scripts/research/usa-nyse-universe.mjs
       - name: Fetch official Nasdaq directory and verify counts
