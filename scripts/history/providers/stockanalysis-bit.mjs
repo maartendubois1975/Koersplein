@@ -3,20 +3,27 @@ const SUPPORTED_MICS=new Map([['XMIL','bit'],['MTAA','bit'],['EXGM','bit'],['XPR
 export class StockAnalysisBitProvider {
   id='stockanalysis-bit';
   supports(instrument){return SUPPORTED_MICS.has(String(instrument?.mic||'').toUpperCase())&&Boolean(instrument?.symbol||instrument?.ticker)}
-  async fetchDaily(instrument,{startDate='1990-01-01',endDate=new Date().toISOString().slice(0,10)}={}){
+  async fetchDaily(instrument,{startDate='1990-01-01',endDate=new Date().toISOString().slice(0,10),signal}={}){
     const symbol=encodeURIComponent(String(instrument.symbol||instrument.ticker).trim().toUpperCase());
     const venue=SUPPORTED_MICS.get(String(instrument?.mic||'').toUpperCase());
     const bars=[];
     for(let page=1;page<=20;page++){
+      signal?.throwIfAborted();
       const url=`https://stockanalysis.com/quote/${venue}/${symbol}/history/?p=${page}`;
       let r=null;
       for(let attempt=1;attempt<=5;attempt++){
-        r=await fetch(url,{headers:{'user-agent':'Mozilla/5.0 (compatible; Koersplein/1.0)','accept':'text/html'}});
+        signal?.throwIfAborted();
+        r=await fetch(url,{signal,headers:{'user-agent':'Mozilla/5.0 (compatible; Koersplein/1.0)','accept':'text/html'}});
         if(r.status!==429)break;
         const retryAfter=Number(r.headers.get('retry-after')||0);
         const waitMs=Math.max(retryAfter*1000,attempt*5000);
         console.log(`STOCKANALYSIS_RATE_LIMIT ${venue}/${symbol} page=${page} attempt=${attempt} waitMs=${waitMs}`);
-        await new Promise(resolve=>setTimeout(resolve,waitMs));
+        await new Promise((resolve,reject)=>{
+          if(signal?.aborted)return reject(signal.reason);
+          const timer=setTimeout(()=>{signal?.removeEventListener('abort',onAbort);resolve()},waitMs);
+          const onAbort=()=>{clearTimeout(timer);reject(signal.reason)};
+          signal?.addEventListener('abort',onAbort,{once:true});
+        });
       }
       if(!r?.ok){if(page>1&&bars.length)break;throw new Error(`StockAnalysis HTTP ${r?.status||'NO_RESPONSE'} voor ${symbol}`);}
       const html=await r.text();
