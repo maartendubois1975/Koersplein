@@ -55,7 +55,9 @@ jobs:
           }
           if(!ready)throw Error('Worker append-only listing protection not deployed; no production writes attempted');
           await client.catalog();
-          console.log('FACTORY_AUTH_AND_PRESERVATION_POLICY_OK');
+          // Empty create-only batch proves mutation authorization without touching D1.
+          await client.seedCatalog({markets:[],instruments:[],createOnly:true});
+          console.log('FACTORY_CATALOG_WRITE_AUTH_AND_PRESERVATION_POLICY_OK');
           JS
       - name: Voeg nieuwste volledige open en slot toe aan geselecteerde beurzen
         run: node scripts/cloudflare/daily-open-close-update.mjs
