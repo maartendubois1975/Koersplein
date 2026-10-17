@@ -102,7 +102,7 @@ function adminPage() {
 async function route(request, env) {
   const url = new URL(request.url), path = url.pathname;
   if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: { ...cors(request, env), 'access-control-allow-methods': 'GET,POST,PATCH,PUT,OPTIONS', 'access-control-allow-headers': 'content-type,authorization' } });
-  if (path === '/health') return json({ ok: true, authentication: 'github-oidc-v1', storage: { metadata: 'D1', history: 'R2' } });
+  if (path === '/health') return json({ ok: true, authentication: 'github-oidc-v1', historyWritePolicy:'preserve-existing-listing-v1', storage: { metadata: 'D1', history: 'R2' } });
   if (path === '/beheer' || path === '/beheer/') return isAdmin(request, env) ? adminPage() : json({ error: 'Beheer vereist Cloudflare Access' }, 401);
   if (path === '/api/history/manifest.json') {
     const rows = await env.DB.prepare(`SELECT i.isin,i.ticker symbol,i.mic,h.first_date firstDate,h.last_date lastDate,h.record_count recordCount,h.provider FROM instruments i JOIN history_status h ON h.instrument_id=i.id WHERE h.record_count>0`).all();
@@ -158,11 +158,23 @@ async function route(request, env) {
   if (path === '/api/factory/catalog' && request.method === 'PUT') {
     if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401);
     const body = await request.json();
+    const legacyAdmin=env.FACTORY_TOKEN&&safeEqual(request.headers.get('authorization'),`Bearer ${env.FACTORY_TOKEN}`);
+    if(!legacyAdmin&&(!body.createOnly||(body.markets||[]).length))return json({error:'Daily identity may only create missing listings'},403);
+    if(body.createOnly&&((body.markets||[]).length||(body.instruments||[]).some(i=>!i.isin?.startsWith(i.mic+':'))))return json({error:'Create-only import requires exchange-scoped listing keys and no market changes'},400);
+
     for (const market of body.markets || []) await env.DB.prepare(`INSERT INTO markets(mic,code,name,exchange_group,country_code,currency,timezone) VALUES(?,?,?,?,?,?,?) ON CONFLICT(mic) DO UPDATE SET code=excluded.code,name=excluded.name,exchange_group=excluded.exchange_group,country_code=COALESCE(excluded.country_code,markets.country_code),currency=excluded.currency,timezone=COALESCE(excluded.timezone,markets.timezone),updated_at=CURRENT_TIMESTAMP WHERE markets.code IS NOT excluded.code OR markets.name IS NOT excluded.name OR markets.exchange_group IS NOT excluded.exchange_group OR (excluded.country_code IS NOT NULL AND markets.country_code IS NOT excluded.country_code) OR markets.currency IS NOT excluded.currency OR (excluded.timezone IS NOT NULL AND markets.timezone IS NOT excluded.timezone)`).bind(market.mic, market.code, market.name, market.exchangeGroup || null, market.countryCode || null, market.currency || null, market.timezone || null).run();
     for (const item of body.instruments || []) {
+      const existingIdentity = await env.DB.prepare('SELECT mic,ticker FROM instruments WHERE isin=?').bind(item.isin).first();
+      if(existingIdentity && existingIdentity.mic !== item.mic) return json({error:'ISIN is already registered on another exchange; use a listing-specific storage key',isin:item.isin,mic:existingIdentity.mic},409);
       // Canonical identity repair: early Sofia imports used temporary XBUL-* identifiers; preserve relational history.
       // Preserve the existing instrument id/history relations while replacing only that temporary ISIN.
       const collision = await env.DB.prepare('SELECT id,isin FROM instruments WHERE mic=? AND ticker=?').bind(item.mic,item.ticker).first();
+      if(body.createOnly){
+        if(existingIdentity||collision)continue;
+        await env.DB.prepare('INSERT INTO instruments(isin,mic,ticker,company,country_code,currency) VALUES(?,?,?,?,?,?) ON CONFLICT DO NOTHING').bind(item.isin,item.mic,item.ticker,item.company,item.countryCode||null,item.currency||null).run();
+        await env.DB.prepare('INSERT INTO history_status(instrument_id) SELECT id FROM instruments WHERE isin=? ON CONFLICT(instrument_id) DO NOTHING').bind(item.isin).run();
+        continue;
+      }
       if (collision && collision.isin !== item.isin) {
         const canonical = await env.DB.prepare('SELECT id FROM instruments WHERE isin=?').bind(item.isin).first();
         const temporary = /^(?:XBUL-|XICE:|XATH-|XWAR-)/.test(String(collision.isin));
@@ -214,7 +226,9 @@ async function route(request, env) {
     if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401);
     const target = await instrument(env, partitionPut[1]); if (!target) return json({ error: 'Instrument ontbreekt' }, 404);
     const body = await request.json(), period = partitionPut[2], key = `history/v1/mic=${target.mic}/isin=${target.isin}/year=${period}/prices.ndjson.gz`;
-    const existing = await gunzip(await env.HISTORY.get(key)); const bars = merge(existing, body.bars || []).filter((bar) => bar.date.startsWith(period));
+    const previousPartition=await env.DB.prepare('SELECT object_key FROM history_partitions WHERE instrument_id=? AND period=?').bind(target.id,period).first();
+    const existing = await gunzip(await env.HISTORY.get(previousPartition?.object_key||key));
+    const bars = mergeHistoryPartition(existing,body.bars||[],body.appendOnly===true).filter((bar) => bar.date.startsWith(period));
     if (!bars.length) return json({ error: 'Lege partitie' }, 400);
     const bytes = await gzip(bars.map((bar) => JSON.stringify(bar)).join('\n') + '\n'), hash = await sha256(bytes);
     await env.HISTORY.put(key, bytes, { httpMetadata: { contentType: 'application/x-ndjson', contentEncoding: 'gzip' }, customMetadata: { isin: target.isin, mic: target.mic, period, provider: body.provider || 'unknown', checksum: hash } });
@@ -248,4 +262,5 @@ export default {
   scheduled(event, env, ctx) { ctx.waitUntil(scheduled(env)); }
 };
 
+export function mergeHistoryPartition(existing,incoming,appendOnly=false){return appendOnly?merge(incoming,existing):merge(existing,incoming);}
 export { merge, normalize, route };

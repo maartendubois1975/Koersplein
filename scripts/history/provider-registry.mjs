@@ -27,7 +27,7 @@ export class ProviderRegistry {
     return this.#providers.filter((provider) => provider.supports?.(instrument) !== false);
   }
 
-  async fetchDaily(instrument, range, preferredProvider = null, { strictPreferred = false, timeoutMs = 0 } = {}) {
+  async fetchDaily(instrument, range, preferredProvider = null, { strictPreferred = false, timeoutMs = 0, acceptResult = null } = {}) {
     const preferred = preferredProvider ? this.get(preferredProvider) : null;
     if (preferredProvider && !preferred) throw new Error(`Onbekende voorkeursprovider: ${preferredProvider}`);
     const ordered = preferredProvider
@@ -40,6 +40,7 @@ export class ProviderRegistry {
         if (!(timeoutMs > 0)) {
           const result=await provider.fetchDaily(instrument,range);
           if(!Array.isArray(result?.bars)||!result.bars.length)throw Error('Provider returned no daily bars');
+          if(acceptResult&&!acceptResult(result))throw Error('Provider returned no usable bars in requested range');
           return {provider,result};
         }
         const controller = new AbortController();
@@ -53,9 +54,11 @@ export class ProviderRegistry {
           });
           const result = await Promise.race([provider.fetchDaily(instrument, {...range, signal: controller.signal}), timeout]);
           if(!Array.isArray(result?.bars)||!result.bars.length)throw Error('Provider returned no daily bars');
+          if(acceptResult&&!acceptResult(result))throw Error('Provider returned no usable bars in requested range');
           return { provider, result };
         } finally {
           clearTimeout(timer);
+          controller.abort();
         }
       } catch (error) {
         failures.push(`${provider.id}: ${error.message}`);
