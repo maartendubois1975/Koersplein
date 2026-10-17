@@ -1,0 +1,8 @@
+{
+  "runId": 39017384957,
+  "repository": "maartendubois1975/Koersplein",
+  "workflowPath": ".github/workflows/daily-open-close.yml",
+  "branch": "main",
+  "maxAttempts": 2,
+  "policy": "Repair all groups of this explicitly selected completed failed run, because older successful groups may have skipped unverified listings; never cancel, restart a newer run, or retry a user-cancelled run."
+}
