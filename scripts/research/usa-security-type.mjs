@@ -17,6 +17,12 @@ export function classifyUSListing({symbol='',name='',etf='N',testIssue='N'}={}) 
   if(/\bcommon (?:stock|shares?)\b|\bordinary shares?\b|\bclass [A-Z] shares?\b|\bshares? of common\b/i.test(n)) return {type:'COMMON_CANDIDATE',reason:'EQUITY_DESCRIPTOR_NOT_INDEPENDENTLY_VERIFIED'};
   return {type:'REVIEW',reason:'NO_UNAMBIGUOUS_EQUITY_DESCRIPTOR'};
 }
+// Explicitly quarantine non-common NYSE candidate types; descriptive hints never approve a share.
+export function triageUSCatalogCandidate(classification) {
+  const common=classification?.type==='COMMON_CANDIDATE';
+  return {catalogStatus:common?'COMMON_CANDIDATE_NOT_VERIFIED':'QUARANTINE_SECURITY_TYPE',
+    quarantineReason:common?null:'SECURITY_TYPE_NOT_VERIFIED'};
+}
 export function classifySummary(rows) {
   const counts={};
   for(const row of rows) counts[row.securityType]=(counts[row.securityType]||0)+1;

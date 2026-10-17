@@ -2,7 +2,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {parseUSDirectory} from './usa-directory-parse.mjs';
-import {classifyUSListing, classifySummary} from './usa-security-type.mjs';
+import {classifyUSListing, classifySummary, triageUSCatalogCandidate} from './usa-security-type.mjs';
 const SOURCE='https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt';
 const response=await fetch(SOURCE,{headers:{'User-Agent':'Koersplein-NYSE-universe/1.0'}});
 if(!response.ok)throw Error('NYSE_DIRECTORY_HTTP_'+response.status);
@@ -16,6 +16,7 @@ const eligible=nyse.filter(x=>x.ETF==='N').map(x=>{
  return {symbol:x['ACT Symbol'],name:x['Security Name'],exchange:'XNYS',
   isin:null,isinStatus:'NOT_IN_OFFICIAL_DIRECTORY',
   securityType:classification.type,securityTypeReason:classification.reason,
+  ...triageUSCatalogCandidate(classification),
   cqsSymbol:x['CQS Symbol'],nasdaqSymbol:x['NASDAQ Symbol'],
   source:SOURCE,sourceTimestamp,priceHistoryStatus:'NOT_FETCHED',
   verifiedCommonStock:false,eligibleForTraining:false};
@@ -30,7 +31,9 @@ await fs.writeFile(path.join(out,'universe.json'),JSON.stringify({
 await fs.writeFile(path.join(out,'coverage.json'),JSON.stringify({
  generatedAt,exchange:'XNYS',source:SOURCE,sourceTimestamp,sourceSha256:sha256,
  totalNYSEListings:nyse.length,excludedETFs:excluded.length,nonETFCandidates:eligible.length,
- classificationHints:classifySummary(eligible),verifiedCommonStocks:0,verifiedISINs:0,
+ classificationHints:classifySummary(eligible),
+ quarantinedSecurityType:eligible.filter(x=>x.catalogStatus==='QUARANTINE_SECURITY_TYPE').length,
+ verifiedCommonStocks:0,verifiedISINs:0,
  historicalBarsFetched:0,usableForTraining:0,historicalDelistedCoverageVerified:false,
  corporateActionsVerified:false,distributionRightsApproved:false,
  status:'UNIVERSE_ONLY_NOT_HISTORICALLY_VALIDATED',

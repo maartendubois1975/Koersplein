@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {classifyUSListing, classifySummary} from './usa-security-type.mjs';
+import {classifyUSListing, classifySummary, triageUSCatalogCandidate} from './usa-security-type.mjs';
 import {parseUSDirectory} from './usa-directory-parse.mjs';
 
 const cases = [
@@ -15,8 +15,14 @@ const cases = [
   ['AB', 'AllianceBernstein Holding L.P. Units', 'UNIT'],
   ['ACP', 'abrdn Income Credit Strategies Fund Common Shares', 'FUND_REVIEW'],
 ];
-for (const [symbol, name, type] of cases)
-  assert.equal(classifyUSListing({symbol, name}).type, type, symbol);
+for (const [symbol, name, type] of cases) {
+  const classification=classifyUSListing({symbol,name});
+  assert.equal(classification.type,type,symbol);
+  const triage=triageUSCatalogCandidate(classification);
+  assert.equal(triage.catalogStatus,type==='COMMON_CANDIDATE'?'COMMON_CANDIDATE_NOT_VERIFIED':'QUARANTINE_SECURITY_TYPE',symbol);
+  assert.equal(triage.quarantineReason,type==='COMMON_CANDIDATE'?null:'SECURITY_TYPE_NOT_VERIFIED',symbol);
+}
+assert.equal(triageUSCatalogCandidate(null).catalogStatus,'QUARANTINE_SECURITY_TYPE');
 assert.equal(classifyUSListing({symbol:'A',name:'Common Stock',etf:'Y'}).type,'ETF');
 assert.equal(classifyUSListing({symbol:'A',name:'Common Stock',testIssue:'Y'}).type,'TEST');
 assert.equal(classifyUSListing({symbol:'A',name:'Common Stock',etf:'?'}).type,'REVIEW');
