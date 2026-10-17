@@ -3,7 +3,9 @@ import { FactoryApiClient } from './client.mjs';
 
 const client=new FactoryApiClient();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
-const complete=plan.markets.filter(x=>x.state==='COMPLETE');
+const shardCount=Number(process.env.EUROPE_SHARD_COUNT||1),shardIndex=Number(process.env.EUROPE_SHARD_INDEX||0);
+if(!Number.isInteger(shardCount)||shardCount<1||!Number.isInteger(shardIndex)||shardIndex<0||shardIndex>=shardCount)throw Error('Invalid Europe shard configuration');
+const complete=plan.markets.filter(x=>x.state==='COMPLETE').filter((_,index)=>index%shardCount===shardIndex);
 const out=[];
 const MAX_STALE_CALENDAR_DAYS=7;
 const cutoff=new Date(Date.now()-MAX_STALE_CALENDAR_DAYS*86400000).toISOString().slice(0,10);
@@ -29,6 +31,6 @@ for(const market of complete){
   out.push({mic:market.mic,name:market.name,catalog:shares.length,openCloseOk:ok,skippedDataUnavailable:skipped,missingOpenClose:missing.length,missing});
 }
 await fs.mkdir('research/output',{recursive:true});
-await fs.writeFile('research/output/daily-open-close-audit.json',JSON.stringify({generatedAt:new Date().toISOString(),freshnessCutoff:cutoff,markets:out},null,2));
+await fs.writeFile(`research/output/daily-open-close-audit-${shardIndex}.json`,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,freshnessCutoff:cutoff,markets:out},null,2));
 console.log(JSON.stringify(out.map(x=>({mic:x.mic,catalog:x.catalog,openCloseOk:x.openCloseOk,skippedDataUnavailable:x.skippedDataUnavailable,missingOpenClose:x.missingOpenClose})),null,2));
 if(out.some(x=>x.missingOpenClose)) process.exitCode=2;
