@@ -3,6 +3,12 @@ on:
   schedule:
     - cron: '45 18 * * 1-5'
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/daily-open-close.yml'
+      - 'scripts/cloudflare/daily-open-close-update.mjs'
+      - 'scripts/cloudflare/audit-daily-open-close.mjs'
 permissions:
   contents: read
   id-token: write
@@ -73,4 +79,4 @@ jobs:
             research/output/daily-open-close-audit-*.json
           retention-days: 90
 
-# Only scheduled or manually dispatched runs write production OHLC; PR checks do not write live history.
+# Production main-only changes and manual/scheduled events may write append-only history; PR branches do not.
