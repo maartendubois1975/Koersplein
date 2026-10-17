@@ -69,13 +69,16 @@ for(const market of targetMarkets){
  }
  const resolveActual=storageIdentityResolver(factoryCatalog.instruments||[],market.mic);
  let advanced=0,current=0,skipped=0,missing=0,deferredMissing=0,stale=0,processed=0,noTrades=[],failed=[],historicalBackfillFailures=[];
- const previouslyUnavailable=new Set((market.dataUnavailable||[]).map(x=>x.isin));
  await mapConcurrent(shares,concurrency,async s=>{
-  const fullBackfill=firstFullAttempt||(fullRequested&&(previouslyUnavailable.has(s.isin)||Boolean(s.legacyStorageIsin)));
+  let fullBackfill=firstFullAttempt;
   try{
    const storageIsin=resolveActual(s);
    if(!storageIsin)throw Error('CATALOG_INSTRUMENT_MISSING '+s.isin);
    const beforeDate=manifest[storageIsin]?.lastDate||null;
+   // On recovery attempts, preserve and extend stored listings instead of
+   // re-fetching decades of already recorded bars. Missing listings still
+   // receive the full archive from 1990.
+   fullBackfill=firstFullAttempt||(fullRequested&&!beforeDate);
    if(!beforeDate&&!selectedMissing.has(s.isin)){deferredMissing++;return;}
    if(!fullBackfill&&beforeDate && beforeDate>=freshnessCutoff){current++;return;}
    const instrument={...s,ticker:s.ticker||s.symbol,symbol:s.symbol||s.ticker,mic:s.mic||market.mic,market:s.mic||market.mic,currency:s.currency||market.currency,countryCode:market.country};
