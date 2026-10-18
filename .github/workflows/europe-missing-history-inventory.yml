@@ -1,0 +1,30 @@
+name: Europe missing-history research inventory
+on:
+  push:
+    branches: [main]
+    paths: ['scripts/cloudflare/europe-missing-history-inventory.mjs']
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      KOERSPLEIN_AUTH_MODE: github-oidc
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Collect exact missing listings without writing production data
+        run: node scripts/cloudflare/europe-missing-history-inventory.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: europe-missing-history-research
+          path: |
+            research/output/europe-missing-history-inventory.json
+            research/output/europe-missing-history-inventory.csv
+          retention-days: 90
