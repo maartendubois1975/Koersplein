@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {crosscheckSecIssuer} from './usa-sec-crosscheck-core.mjs';
+import {crosscheckSecIssuer,secUnavailableEvidence} from './usa-sec-crosscheck-core.mjs';
 const common=(symbol,overrides={})=>({symbol,catalogStatus:'COMMON_CANDIDATE_NOT_VERIFIED',securityType:'COMMON_CANDIDATE',...overrides});
 const sec={fields:['cik','name','ticker','exchange'],data:[
   [320193,'Apple Inc.','AAPL','Nasdaq'],
@@ -29,4 +29,15 @@ assert.throws(()=>crosscheckSecIssuer({...catalog,securities:[common('AAPL'),com
 assert.throws(()=>crosscheckSecIssuer({...catalog,securities:[common('PLTR',{issuerCIK:'0000000001'})]},sec,'XNAS'),/SEC_EXISTING_CIK_CONFLICT/);
 const nyse=crosscheckSecIssuer({exchange:'XNYS',securities:[common('SCHW')]},sec,'XNYS');
 assert.equal(nyse.records[0].secIssuerCIKCandidate,'0000316709');
-console.log('USA SEC research-only crosscheck offline regressions passed');
+
+const blocked=secUnavailableEvidence({exchange:'XNYS',sourceSha256:'test-fingerprint',securities:[common('A')]},'XNYS',403);
+assert.equal(blocked.status,'SEC_OFFICIAL_SOURCE_UNAVAILABLE');
+assert.equal(blocked.blockedReason,'SEC_HTTP_403_GITHUB_RUNNER');
+assert.equal(blocked.candidateCount,1);
+assert.equal(blocked.catalogSourceSha256,'test-fingerprint');
+assert.equal(blocked.verifiedCommonStocks,0);
+assert.equal(blocked.usableForTraining,0);
+assert.equal(blocked.verifiedISINs,0);
+assert.throws(()=>secUnavailableEvidence({exchange:'XNYS',securities:[common('A')]},'XNAS',403),/SEC_INVALID_CATALOG/);
+assert.throws(()=>secUnavailableEvidence({exchange:'XNYS',securities:[common('A')]},'XNYS',500),/SEC_UNEXPECTED_BLOCK_REASON/);
+console.log('USA SEC research-only crosscheck offline regressions passed, including HTTP 403 isolation');

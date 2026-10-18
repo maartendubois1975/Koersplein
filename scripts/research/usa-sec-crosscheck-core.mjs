@@ -41,3 +41,15 @@ export function crosscheckSecIssuer(catalog, sec, mic, provenance={}) {
     verifiedCommonStocks:0,verifiedISINs:0,verifiedActiveTrading:0,usableForTraining:0,
     note:'SEC exchange-ticker dataset is issuer/CIK crosscheck, not authoritative share-class/ISIN/active-trading or TXSE dual-listing evidence. Exact ticker+exchange yields a research candidate only; unmatched, mismatched and ambiguous entries remain unverified.'};
 }
+
+ // A blocked official SEC endpoint is explicit missing evidence, never an issuer match.
+export function secUnavailableEvidence(catalog,mic,httpStatus){
+  if(!SEC_EXCHANGE[mic]||catalog?.exchange!==mic||!Array.isArray(catalog.securities)||!catalog.securities.length)
+    throw Error('SEC_INVALID_CATALOG');
+  if(httpStatus!==403)throw Error('SEC_UNEXPECTED_BLOCK_REASON');
+  return {mic,source:'https://www.sec.gov/files/company_tickers_exchange.json',
+    status:'SEC_OFFICIAL_SOURCE_UNAVAILABLE',blockedReason:'SEC_HTTP_403_GITHUB_RUNNER',httpStatus,
+    catalogSourceSha256:catalog.sourceSha256??null,candidateCount:catalog.securities.length,
+    verifiedCommonStocks:0,verifiedISINs:0,verifiedActiveTrading:0,usableForTraining:0,
+    note:'SEC denied this GitHub Actions runner. No SEC issuer/CIK comparison was performed. All catalog candidates remain unverified; no source gate or approval.'};
+}
