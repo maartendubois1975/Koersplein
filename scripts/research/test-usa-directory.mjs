@@ -9,6 +9,8 @@ const cases = [
   ['AIIA.R', 'AI Infrastructure Acquisition Corp. Rights', 'RIGHT'],
   ['ABR$D', 'Arbor Realty Trust 6.375% Series D Cumulative Redeemable Preferred Stock', 'PREFERRED'],
   ['ABEV', 'Ambev S.A. American Depositary Shares (Each representing 1 Common Share)', 'ADR'],
+  ['AGMB', 'AgomAb Therapeutics N.V. - ADRs', 'ADR'],
+  ['ADSS', 'Issuer - ADSs', 'ADR'],
   ['ABXL', 'Abacus Global Management, Inc. 9.875% Fixed Rate Senior Notes due 2028', 'DEBT'],
   ['A', 'Agilent Technologies, Inc. Common Stock', 'COMMON_CANDIDATE'],
   ['AAP', 'Advance Auto Parts Inc.', 'REVIEW'],
@@ -46,4 +48,4 @@ assert.throws(()=>parseUSDirectory(valid.replace('File Creation Time:','Wrong Fo
 assert.throws(()=>parseUSDirectory(valid.replace('N|N|N','N|?|N'),fields),/INVALID_DIRECTORY_FLAG/);
 assert.throws(()=>parseUSDirectory(valid.replace('N|N|N','N|N'),fields),/MALFORMED_DIRECTORY_ROW/);
 assert.throws(()=>parseUSDirectory(valid.replace('ETF|Test Issue','ETF|ETF'),fields),/DUPLICATE_DIRECTORY_HEADER/);
-console.log('US directory/classification regressions passed: 29');
+console.log('US directory/classification regressions passed: 31');

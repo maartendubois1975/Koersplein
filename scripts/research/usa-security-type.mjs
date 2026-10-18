@@ -11,7 +11,7 @@ export function classifyUSListing({symbol='',name='',etf='N',testIssue='N'}={}) 
   if(/\bpreferred\b|\bpreference shares?\b|\bpreference stock\b/i.test(n)||/\$[A-Z0-9]+$/.test(s)) return {type:'PREFERRED',reason:'PREFERRED_DESCRIPTOR_OR_SUFFIX'};
   if(/\bwarrants?\b/i.test(n)||/\.(?:W|WS)(?:[0-9]+)?$/.test(s)) return {type:'WARRANT',reason:'WARRANT_DESCRIPTOR_OR_SUFFIX'};
   if(/\brights?\b/i.test(n)||/\.R$/.test(s)) return {type:'RIGHT',reason:'RIGHT_DESCRIPTOR_OR_SUFFIX'};
-  if(/\bamerican depositary\b|\bamerican depository\b|\bADR\b|\bADS\b|\bglobal depositary\b/i.test(n)) return {type:'ADR',reason:'DEPOSITARY_DESCRIPTOR'};
+  if(/\bamerican depositary\b|\bamerican depository\b|\bADRs?\b|\bADSs?\b|\bglobal depositary\b/i.test(n)) return {type:'ADR',reason:'DEPOSITARY_DESCRIPTOR'};
   if(/\b(?:senior|subordinated|convertible) notes?\b|\bdebentures?\b|\bbonds?\b|\bETNs?\b|\bnotes? due \d{4}\b/i.test(n)) return {type:'DEBT',reason:'DEBT_DESCRIPTOR'};
   if(/\b(?:closed[ -]?end|mutual|investment|income|opportunities) fund\b|\bfund\b|\binvestment trust\b/i.test(n)) return {type:'FUND_REVIEW',reason:'FUND_DESCRIPTOR'};
   // Trust/REIT beneficial-interest shares need independent share-class verification.
