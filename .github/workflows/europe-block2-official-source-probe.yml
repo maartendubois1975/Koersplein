@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/cloudflare/europe-block2-official-source-evidence.mjs'
       - 'scripts/cloudflare/europe-block2-popout-transport.mjs'
+      - 'scripts/cloudflare/europe-download-format-matrix.mjs'
       - '.github/workflows/europe-block2-official-source-probe.yml'
   workflow_dispatch:
 permissions:
@@ -22,6 +23,9 @@ jobs:
       - name: Inspect alternative Euronext historical download interface
         if: always()
         run: node scripts/cloudflare/europe-block2-popout-transport.mjs
+      - name: Test Euronext download format parameters
+        if: always()
+        run: node scripts/cloudflare/europe-download-format-matrix.mjs
       - if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -29,4 +33,5 @@ jobs:
           path: |
             research/output/europe-block2-official-source-evidence.json
             research/output/europe-block2-popout-transport.json
+            research/output/europe-download-format-matrix.json
           retention-days: 90
