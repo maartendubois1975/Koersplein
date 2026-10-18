@@ -17,6 +17,13 @@ const cases = [
   ['CRT', 'Cross Timbers Royalty Trust Common Stock', 'TRUST_COMMON_REVIEW'],
   ['ABR', 'Arbor Realty Trust Common Stock', 'TRUST_COMMON_REVIEW'],
   ['GUT', 'Gabelli Utility Trust (The) Common Stock', 'TRUST_COMMON_REVIEW'],
+  ['GAB', 'Gabelli Equity Trust, Inc. (The) Common Stock', 'FUND_REVIEW'],
+  ['GGT', 'Gabelli Multi-Media Trust, Inc. (The) Common Stock', 'FUND_REVIEW'],
+  ['IGI', 'Western Asset Investment Grade Opportunity Trust Inc. Common Stock', 'FUND_REVIEW'],
+  ['NXP', 'Nuveen Select Tax Free Income Portfolio Common Stock', 'FUND_REVIEW'],
+  ['RGT', 'Royce Global Trust, Inc. Common Stock', 'FUND_REVIEW'],
+  ['RMT', 'Royce Micro-Cap Trust, Inc. Common Stock', 'FUND_REVIEW'],
+  ['RVT', 'Royce Small-Cap Trust, Inc. Common Stock', 'FUND_REVIEW'],
   ['AAT', 'American Assets Trust, Inc. Common Stock', 'COMMON_CANDIDATE'],
   ['A', 'Agilent Technologies, Inc. Common Stock', 'COMMON_CANDIDATE'],
   ['AAP', 'Advance Auto Parts Inc.', 'REVIEW'],
@@ -38,6 +45,9 @@ for (const [symbol, name, type] of cases) {
   assert.equal(triage.catalogStatus,type==='COMMON_CANDIDATE'?'COMMON_CANDIDATE_NOT_VERIFIED':'QUARANTINE_SECURITY_TYPE',symbol);
   assert.equal(triage.quarantineReason,type==='COMMON_CANDIDATE'?null:'SECURITY_TYPE_NOT_VERIFIED',symbol);
 }
+assert.equal(classifyUSListing({symbol:'GAB$A',name:'Gabelli Equity Trust Preferred Stock'}).type,'PREFERRED');
+assert.equal(classifyUSListing({symbol:'NXP.U',name:'Nuveen Portfolio Common Stock Units'}).type,'UNIT');
+assert.equal(classifyUSListing({symbol:'NXP',name:'Nuveen Portfolio Common Stock',etf:'Y'}).type,'ETF');
 assert.equal(triageUSCatalogCandidate(null).catalogStatus,'QUARANTINE_SECURITY_TYPE');
 assert.equal(classifyUSListing({symbol:'A',name:'Common Stock',etf:'Y'}).type,'ETF');
 assert.equal(classifyUSListing({symbol:'A',name:'Common Stock',testIssue:'Y'}).type,'TEST');
@@ -54,4 +64,4 @@ assert.throws(()=>parseUSDirectory(valid.replace('File Creation Time:','Wrong Fo
 assert.throws(()=>parseUSDirectory(valid.replace('N|N|N','N|?|N'),fields),/INVALID_DIRECTORY_FLAG/);
 assert.throws(()=>parseUSDirectory(valid.replace('N|N|N','N|N'),fields),/MALFORMED_DIRECTORY_ROW/);
 assert.throws(()=>parseUSDirectory(valid.replace('ETF|Test Issue','ETF|ETF'),fields),/DUPLICATE_DIRECTORY_HEADER/);
-console.log('US directory/classification regressions passed: 37');
+console.log('US directory/classification regressions passed: 54');

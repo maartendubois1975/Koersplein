@@ -14,6 +14,8 @@ export function classifyUSListing({symbol='',name='',etf='N',testIssue='N'}={}) 
   if(/\bamerican depositary\b|\bamerican depository\b|\bADRs?\b|\bADSs?\b|\bglobal depositary\b/i.test(n)) return {type:'ADR',reason:'DEPOSITARY_DESCRIPTOR'};
   if(/\b(?:senior|subordinated|convertible) notes?\b|\bdebentures?\b|\bbonds?\b|\bETNs?\b|\bnotes? due \d{4}\b/i.test(n)) return {type:'DEBT',reason:'DEBT_DESCRIPTOR'};
   if(/\b(?:closed[ -]?end|mutual|investment|income|opportunities) fund\b|\bfund\b|\binvestment trust\b/i.test(n)) return {type:'FUND_REVIEW',reason:'FUND_DESCRIPTOR'};
+  // Closed-end investment portfolios and strategy trusts may issue common stock; common wording alone does not make them operating-company equity.
+  if(/\\b(?:equity|multi-media|global|micro-cap|small-cap|opportunity)\\s+trust\\b|\\bportfolio\\s+common\\s+(?:stock|shares?)\\b/i.test(n)) return {type:'FUND_REVIEW',reason:'INVESTMENT_PORTFOLIO_OR_TRUST_CLASS_NOT_VERIFIED'};
   // Trust/REIT beneficial-interest shares need independent share-class verification.
   if(/\bbeneficial\s+interest\b/i.test(n)) return {type:'BENEFICIAL_INTEREST_REVIEW',reason:'BENEFICIAL_INTEREST_CLASS_NOT_VERIFIED'};
   // Trust Common Stock can be a fund, royalty trust or REIT; require independent share-class evidence.
