@@ -14,6 +14,14 @@ const cases = [
   ['AAP', 'Advance Auto Parts Inc.', 'REVIEW'],
   ['AB', 'AllianceBernstein Holding L.P. Units', 'UNIT'],
   ['ACP', 'abrdn Income Credit Strategies Fund Common Shares', 'FUND_REVIEW'],
+  ['AMH', 'American Homes 4 Rent Common Shares of Beneficial Interest', 'BENEFICIAL_INTEREST_REVIEW'],
+  ['BCAT', 'BlackRock Capital Allocation Term Trust Common Shares of Beneficial Interest', 'BENEFICIAL_INTEREST_REVIEW'],
+  ['BCX', 'BlackRock Resources Common Shares of Beneficial Interest', 'BENEFICIAL_INTEREST_REVIEW'],
+  ['BIT', 'BlackRock Multi-Sector Income Trust Common Shares of Beneficial Interest', 'BENEFICIAL_INTEREST_REVIEW'],
+  ['DHC', 'Diversified Healthcare Trust - Common Shares of Beneficial Interest', 'BENEFICIAL_INTEREST_REVIEW'],
+  ['ILPT', 'Industrial Logistics Properties Trust - Common Shares of Beneficial Interest', 'BENEFICIAL_INTEREST_REVIEW'],
+  ['OPI', 'Office Properties Income Trust - Common shares of beneficial interest', 'BENEFICIAL_INTEREST_REVIEW'],
+  ['SVC', 'Service Properties Trust - Common Shares of Beneficial Interest', 'BENEFICIAL_INTEREST_REVIEW'],
 ];
 for (const [symbol, name, type] of cases) {
   const classification=classifyUSListing({symbol,name});
@@ -38,4 +46,4 @@ assert.throws(()=>parseUSDirectory(valid.replace('File Creation Time:','Wrong Fo
 assert.throws(()=>parseUSDirectory(valid.replace('N|N|N','N|?|N'),fields),/INVALID_DIRECTORY_FLAG/);
 assert.throws(()=>parseUSDirectory(valid.replace('N|N|N','N|N'),fields),/MALFORMED_DIRECTORY_ROW/);
 assert.throws(()=>parseUSDirectory(valid.replace('ETF|Test Issue','ETF|ETF'),fields),/DUPLICATE_DIRECTORY_HEADER/);
-console.log('US directory/classification regressions passed: 21');
+console.log('US directory/classification regressions passed: 29');
