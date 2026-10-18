@@ -4,7 +4,24 @@ export const euronextProviderMic=mic=>String(mic||'').toUpperCase()==='XDUB'?'XM
 const ROOT='https://live.euronext.com/en/ajax/getHistoricalPricePopup/';
 const clean=s=>String(s??'').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').trim();
 const iso=s=>{const m=clean(s).match(/(\d{2})\/(\d{2})\/(\d{4})/);return m?`${m[3]}-${m[2]}-${m[1]}`:null};
-const num=s=>{const text=clean(s);if(!text||text==='-')return null;const n=Number(text.replace(/\s/g,'').replace(/,/g,''));return Number.isFinite(n)?n:null};
+// The public table may format decimal prices as 12,34 or 12.34, and group thousands
+// as 1,234.56 or 1.234,56. Never turn a decimal comma into a 100x price.
+export const parseEuronextNumber=s=>{
+ const text=clean(s).replace(/[\u00a0\u202f\s]/g,'');
+ if(!text||text==='-')return null;
+ let value=text;
+ const comma=value.lastIndexOf(','),dot=value.lastIndexOf('.');
+ if(comma>=0&&dot>=0){
+  value=comma>dot?value.replace(/\./g,'').replace(',','.'):value.replace(/,/g,'');
+ }else if(comma>=0){
+  value=/^-?\d{1,3}(?:,\d{3})+$/.test(value)?value.replace(/,/g,''):value.replace(',','.');
+ }else if(dot>=0&&/^-?\d{1,3}(?:\.\d{3})+$/.test(value)){
+  value=value.replace(/\./g,'');
+ }
+ if(!/^-?\d+(?:\.\d+)?$/.test(value))return null;
+ const n=Number(value);return Number.isFinite(n)?n:null;
+};
+const num=parseEuronextNumber;
 const addDays=(isoDate,days)=>{const d=new Date(isoDate+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+days);return d.toISOString().slice(0,10)};
 const chunks=(start,end)=>{
  const out=[];let s=start;
