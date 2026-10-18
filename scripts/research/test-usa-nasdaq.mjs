@@ -72,4 +72,31 @@ for(const [d,mic] of [['2020-09-29',null],['2020-09-30','XNYS'],['2024-11-25','X
   assert.equal(pltrMICAt(d),mic);
 assert.throws(()=>buildNasdaqCatalog([...input,{...pltr,'Security Name':'Palantir Technologies Inc. - Class B Common Stock'}],meta),/PLTR_SEC_ISSUER_OR_SHARE_CLASS_CONFLICT/);
 assert.throws(()=>buildNasdaqCatalog([...input,pltr],{...meta,sourceTimestamp:'1125202421:31'}),/PLTR_NASDAQ_DIRECTORY_PREDATES_TRANSFER/);
+// Official 2026-10-16 Nasdaq snapshot contains these Class C Capital Stock shares.
+// Descriptor recognition is research-only; it must never approve identity, ISIN or trading.
+const classCFixtures=[
+  {...synthetic[0],Symbol:'GOOG','Security Name':'Alphabet Inc. - Class C Capital Stock'},
+  {...synthetic[0],Symbol:'Z','Security Name':'Zillow Group, Inc. - Class C Capital Stock'},
+  {...synthetic[0],Symbol:'CCPREF','Security Name':'Issuer - Class C Capital Stock Preferred Stock'},
+  {...synthetic[0],Symbol:'CCDEP','Security Name':'Issuer - Class C Capital Stock Depositary Shares'}
+];
+const classCCatalog=buildNasdaqCatalog([...input,...classCFixtures],meta);
+for(const symbol of ['GOOG','Z']){
+  const record=classCCatalog.securities.find(r=>r.symbol===symbol);
+  assert.equal(record.securityType,'COMMON_CANDIDATE');
+  assert.equal(record.catalogStatus,'COMMON_CANDIDATE_NOT_VERIFIED');
+  assert.equal(record.isin,null);
+  assert.equal(record.verifiedCommonStock,false);
+  assert.equal(record.eligibleForTraining,false);
+}
+for(const symbol of ['CCPREF','CCDEP']){
+  const record=classCCatalog.securities.find(r=>r.symbol===symbol);
+  assert.equal(record.catalogStatus,'QUARANTINE_SECURITY_TYPE');
+  assert.equal(record.verifiedCommonStock,false);
+  assert.equal(record.eligibleForTraining,false);
+}
+assert.equal(classCCatalog.summary.verifiedCommonStocks,0);
+assert.equal(classCCatalog.summary.verifiedISINs,0);
+assert.equal(classCCatalog.summary.usableForTraining,0);
+
 console.log('Nasdaq official directory and PLTR effective-date regressions passed');
