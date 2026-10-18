@@ -1,8 +1,5 @@
 name: Europe 102 missing source research
 on:
-  push:
-    branches: [main]
-    paths: ['scripts/cloudflare/europe-priority-source-probe.mjs']
   workflow_dispatch:
 permissions:
   contents: read

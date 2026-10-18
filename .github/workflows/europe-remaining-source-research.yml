@@ -1,8 +1,5 @@
 name: Europe remaining 18 missing source research
 on:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/europe-remaining-source-research.yml']
   workflow_dispatch:
 permissions:
   contents: read
