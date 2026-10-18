@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-17T17:15:00Z",
+  "requestedAt": "2026-10-18T04:35:00Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "FULL_APPEND_ONLY_BACKFILL_AND_DAILY_TAIL",
-  "reason": "Europe-only final backfill after bounded Zagreb official archive PR #163 and incremental recovery PR #162; preserve existing D1/R2 history; exclude USA."
+  "reason": "Europe-only retry after D1 transient closed-connection handling and guarded recovery workflow fix PR #164. Preserve existing history; do not run USA."
 }
