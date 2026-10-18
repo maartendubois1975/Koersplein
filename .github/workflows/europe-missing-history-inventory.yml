@@ -6,15 +6,12 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
-  id-token: write
 jobs:
   inventory:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      KOERSPLEIN_AUTH_MODE: github-oidc
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
-      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
