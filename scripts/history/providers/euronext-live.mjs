@@ -15,8 +15,6 @@ export const parseEuronextNumber=s=>{
   value=comma>dot?value.replace(/\./g,'').replace(',','.'):value.replace(/,/g,'');
  }else if(comma>=0){
   value=/^-?\d{1,3}(?:,\d{3})+$/.test(value)?value.replace(/,/g,''):value.replace(',','.');
- }else if(dot>=0&&/^-?\d{1,3}(?:\.\d{3})+$/.test(value)){
-  value=value.replace(/\./g,'');
  }
  if(!/^-?\d+(?:\.\d+)?$/.test(value))return null;
  const n=Number(value);return Number.isFinite(n)?n:null;
