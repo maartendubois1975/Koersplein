@@ -27,10 +27,14 @@ jobs:
         run: node scripts/research/test-usa-history-import-guards.mjs
       - name: Offline USA dated open-close canary regressions
         run: node scripts/research/test-usa-daily-canary.mjs
+      - name: Offline SEC issuer and CIK crosscheck regressions
+        run: node scripts/research/test-usa-sec-crosscheck.mjs
       - name: Fetch official NYSE directory and verify counts
         run: node scripts/research/usa-nyse-universe.mjs
       - name: Fetch official Nasdaq directory and verify counts
         run: node scripts/research/usa-nasdaq-universe.mjs
+      - name: SEC issuer and CIK crosscheck (research only; not identity approval)
+        run: node scripts/research/usa-sec-crosscheck.mjs
       - name: Fetch official TXSE listed flags and crosscheck
         run: node scripts/research/usa-txse-universe.mjs
       - name: Probe USA last completed session open and close (research only)
