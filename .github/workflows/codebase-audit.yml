@@ -41,6 +41,8 @@ jobs:
         with: { node-version: 22 }
       - name: Run main validation and regression tests
         run: npm test
+      - name: Test free Euronext historical OHLC number formats
+        run: node scripts/cloudflare/test-euronext-number-format.mjs
       - name: Test historical +30 percent chain scanner
         run: node scripts/research/test-plus30-chain-scanner.mjs
       - name: Controleer JavaScript JSON workflows en architectuur
