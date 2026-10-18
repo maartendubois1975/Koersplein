@@ -26,6 +26,8 @@ assert.equal(inspectYahooChart({...good,chart:{...good.chart,result:[{...good.ch
 console.log('USA dated daily canary regressions passed: 19');
 
 const c={session:'2026-10-16'},r=(mic,date=c.session,status='DATED_OHLC_RESEARCH_ONLY')=>({
+ symbol:mic==='XNYS'?'MMM':mic==='XNAS'?'AAPL':'TCBI',
+ category:mic==='TXSE'?'txse_listed_flag':'large',
  mic,date,status,open:100,high:103,low:99,close:101,volume:1000,
  catalogStatus:'COMMON_CANDIDATE_NOT_VERIFIED',catalogSecurityType:'COMMON_CANDIDATE',
  providerTicker:mic==='XNYS'?'MMM':mic==='XNAS'?'AAPL':'TCBI',
@@ -34,13 +36,14 @@ const c={session:'2026-10-16'},r=(mic,date=c.session,status='DATED_OHLC_RESEARCH
  providerFullExchange:mic==='TXSE'?'TXSE':null,
  providerCurrency:'USD',providerType:'EQUITY',providerTimezone:'America/New_York'
 });
-assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[]}),/XNYS,XNAS,TXSE/);
-assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS')]}),/XNAS,TXSE/);
-assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE','2026-10-15')]}),/TXSE/);
-assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE',c.session,'PREVIOUS_SESSION_ONLY')]}),/TXSE/);
-assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),{...r('TXSE'),open:0}]}),/TXSE/);
-assert.throws(()=>assertCurrentCanaryEvidence({coverage:{session:'bad'},results:[]}),/MALFORMED/);
-assert.equal(assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE')]}),true);
+const assertMicEvidence=output=>assertCurrentCanaryEvidence(output,SAMPLES.filter(s=>['MMM','AAPL','TCBI'].includes(s.symbol)));
+assert.throws(()=>assertMicEvidence({coverage:c,results:[]}),/XNYS:MMM,XNAS:AAPL,TXSE:TCBI/);
+assert.throws(()=>assertMicEvidence({coverage:c,results:[r('XNYS')]}),/XNAS,TXSE/);
+assert.throws(()=>assertMicEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE','2026-10-15')]}),/TXSE/);
+assert.throws(()=>assertMicEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE',c.session,'PREVIOUS_SESSION_ONLY')]}),/TXSE/);
+assert.throws(()=>assertMicEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),{...r('TXSE'),open:0}]}),/TXSE/);
+assert.throws(()=>assertMicEvidence({coverage:{session:'bad'},results:[]}),/MALFORMED/);
+assert.equal(assertMicEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE')]}),true);
 // Financial-status and security-type quarantine must never satisfy a current-session gate.
 for(const mic of ['XNYS','XNAS','TXSE']){
  const base={securityType:'COMMON_CANDIDATE',catalogStatus:'COMMON_CANDIDATE_NOT_VERIFIED',status:'COMMON_CANDIDATE_NOT_VERIFIED'};
@@ -49,9 +52,9 @@ for(const mic of ['XNYS','XNAS','TXSE']){
  assert.equal(canProbeCatalogCandidate({...base,[mic==='TXSE'?'status':'catalogStatus']:'QUARANTINE_FINANCIAL_STATUS'},mic),false);
  assert.equal(canProbeCatalogCandidate({...base,[mic==='TXSE'?'status':'catalogStatus']:undefined},mic),false);
 }
-assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),{...r('XNAS'),catalogStatus:'QUARANTINE_FINANCIAL_STATUS'},r('TXSE')]}),/XNAS/);
-assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[{...r('XNYS'),catalogSecurityType:'ADR'},r('XNAS'),r('TXSE')]}),/XNYS/);
-assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),{...r('TXSE'),catalogStatus:undefined}]}),/TXSE/);
+assert.throws(()=>assertMicEvidence({coverage:c,results:[r('XNYS'),{...r('XNAS'),catalogStatus:'QUARANTINE_FINANCIAL_STATUS'},r('TXSE')]}),/XNAS/);
+assert.throws(()=>assertMicEvidence({coverage:c,results:[{...r('XNYS'),catalogSecurityType:'ADR'},r('XNAS'),r('TXSE')]}),/XNYS/);
+assert.throws(()=>assertMicEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),{...r('TXSE'),catalogStatus:undefined}]}),/TXSE/);
 console.log('USA current-session fail-closed canary evidence regressions passed');
 
 // A research-only bar must never make CI green without complete OHLCV and provider identity.
@@ -65,9 +68,27 @@ for(const mic of ['XNYS','XNAS','TXSE']){
  ];
  for(const patch of invalid){
   const rows=valid.map(row=>row.mic===mic?{...row,...patch}:row);
-  assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:rows}),new RegExp(mic));
+  assert.throws(()=>assertMicEvidence({coverage:c,results:rows}),new RegExp(mic));
  }
 }
-assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),{...r('TXSE'),providerFullExchange:'NYSE'}]}),/TXSE/);
+assert.throws(()=>assertMicEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),{...r('TXSE'),providerFullExchange:'NYSE'}]}),/TXSE/);
 console.log('USA OHLCV and provider-identity fail-closed regressions passed');
 
+
+// CI must fail if even one configured difficult sample is missing, stale, malformed or duplicated.
+const fullRows=SAMPLES.map(sample=>({...r(sample.mic),...sample,providerSymbol:sample.providerTicker}));
+assert.equal(assertCurrentCanaryEvidence({coverage:c,results:fullRows}),true);
+assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE')]}),/XNYS:AMC/);
+assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:fullRows},[]),/EXPECTATIONS_INVALID/);
+for(const sample of SAMPLES){
+ const key=sample.mic+':'+sample.symbol;
+ const row=fullRows.find(x=>x.mic===sample.mic&&x.symbol===sample.symbol);
+ const remaining=fullRows.filter(x=>x!==row);
+ assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:remaining}),e=>e.message.includes(key));
+ assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[...fullRows,row]}),e=>e.message.includes(key));
+ for(const patch of [{volume:undefined},{catalogStatus:'QUARANTINE_SECURITY_TYPE'},{providerTicker:'OTHER'},{category:'OTHER'},{date:'2026-10-15'}]){
+  const altered=fullRows.map(x=>x===row?{...x,...patch}:x);
+  assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:altered}),e=>e.message.includes(key));
+ }
+}
+console.log('USA all configured per-symbol difficult canary evidence regressions passed');

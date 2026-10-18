@@ -74,18 +74,24 @@ function validCurrentCanaryBar(row,session){
 }
 
 // Fail-closed CI evidence only: a research bar does NOT approve the provider, listing, or rights.
-export function assertCurrentCanaryEvidence(output,requiredMics=['XNYS','XNAS','TXSE']){
+export function assertCurrentCanaryEvidence(output,requiredSamples=SAMPLES){
  const session=output?.coverage?.session;
  if(typeof session!=='string'||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(session)||!Array.isArray(output?.results))throw Error('USA_CANARY_EVIDENCE_MALFORMED');
- const missing=requiredMics.filter(mic=>!output.results.some(row=>
-  row.mic===mic&&row.catalogStatus==='COMMON_CANDIDATE_NOT_VERIFIED'&&row.catalogSecurityType==='COMMON_CANDIDATE'&&
-  row.status==='DATED_OHLC_RESEARCH_ONLY'&&row.date===session&&
-  row.providerSymbol===row.providerTicker&&typeof row.providerTicker==='string'&&row.providerTicker.length>0&&
-  expectedExchange[mic]?.includes(row.providerExchange)&&
-  (mic!=='TXSE'||row.providerFullExchange==='TXSE')&&
-  row.providerCurrency==='USD'&&row.providerType==='EQUITY'&&row.providerTimezone==='America/New_York'&&
-  validCurrentCanaryBar(row,session)
- ));
+ if(!Array.isArray(requiredSamples)||requiredSamples.length===0||requiredSamples.some(s=>!s?.mic||!s?.symbol||!s?.providerTicker||!s?.category))throw Error('USA_CANARY_EXPECTATIONS_INVALID');
+ // Require EVERY configured representative (including difficult listings), not just one easy ticker per MIC.
+ const missing=requiredSamples.filter(sample=>{
+  const rows=output.results.filter(row=>row.mic===sample.mic&&row.symbol===sample.symbol);
+  return rows.length!==1||!rows.some(row=>
+   row.category===sample.category&&row.providerTicker===sample.providerTicker&&
+   row.catalogStatus==='COMMON_CANDIDATE_NOT_VERIFIED'&&row.catalogSecurityType==='COMMON_CANDIDATE'&&
+   row.status==='DATED_OHLC_RESEARCH_ONLY'&&row.date===session&&
+   row.providerSymbol===row.providerTicker&&
+   expectedExchange[sample.mic]?.includes(row.providerExchange)&&
+   (sample.mic!=='TXSE'||row.providerFullExchange==='TXSE')&&
+   row.providerCurrency==='USD'&&row.providerType==='EQUITY'&&row.providerTimezone==='America/New_York'&&
+   validCurrentCanaryBar(row,session)
+  );
+ }).map(s=>s.mic+':'+s.symbol);
  if(missing.length)throw Error('USA_CURRENT_DATED_CANARY_MISSING:'+missing.join(','));
  return true;
 }
