@@ -11,6 +11,14 @@ if(rows.length!==102)throw Error('Expected exactly 102 priority listings, got '+
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const registry=createDefaultProviderRegistry();
 const results=[];
+const classify=error=>{
+ const s=String(error||'');
+ if(/Providerbeurs wijkt af/i.test(s))return 'WRONG_EXCHANGE_MATCH';
+ if(/Geen verhandelde Euronext koershistorie/i.test(s))return 'NO_OFFICIAL_PUBLIC_TRADES';
+ if(/HTTP 404|no daily bars|no usable bars|Geen Yahoo ISIN-resolutie/i.test(s))return 'NO_PUBLIC_PROVIDER_BARS';
+ if(/timeout|timed out|fetch failed/i.test(s))return 'SOURCE_TIMEOUT';
+ return 'SOURCE_UNRESOLVED';
+};
 await mapConcurrent(rows,3,async row=>{
  const market=plan.markets.find(m=>m.mic===row.mic);
  const instrument={isin:row.isin,symbol:row.symbol,ticker:row.symbol,mic:row.mic,name:row.company,currency:market?.currency,countryCode:market?.country};
@@ -20,11 +28,12 @@ await mapConcurrent(rows,3,async row=>{
   const {provider,result:daily}=await registry.fetchDaily(instrument,range,null,{timeoutMs:12000});
   const bars=daily.bars.filter(b=>/^\d{4}-\d{2}-\d{2}$/.test(b.date||'')&&Number(b.open)>0&&Number(b.close)>0);
   result={...row,status:bars.length?'CANDIDATE_FOUND_NEEDS_VALIDATION':'NO_VALID_OHLC',provider:provider.id,bars:bars.length,firstDate:bars[0]?.date||null,lastDate:bars.at(-1)?.date||null,publicationApproved:false};
- }catch(e){result={...row,status:'NO_PROVIDER_RESULT',error:String(e.message).slice(0,1400),publicationApproved:false};}
+ }catch(e){result={...row,status:'NO_PROVIDER_RESULT',diagnostic:classify(e.message),nextAction:row.mic==='XPAR'||row.mic==='XAMS'||row.mic==='XBRU'?'VERIFY_EURONEXT_EOD_LICENSED_ISIN_MIC':row.mic==='XLON'?'VERIFY_LSE_OFFICIAL_EOD_ARCHIVE':'VERIFY_CYPRUS_EXCHANGE_OFFICIAL_ARCHIVE',error:String(e.message).slice(0,1400),publicationApproved:false};}
  results.push(result);
  console.log('EUROPE_SOURCE_PROBE',JSON.stringify(result));
 });
 results.sort((a,b)=>a.mic.localeCompare(b.mic)||a.isin.localeCompare(b.isin));
 await fs.mkdir('research/output',{recursive:true});
 await fs.writeFile('research/output/europe-priority-102-source-probe.json',JSON.stringify({generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_UPLOAD',total:results.length,found:results.filter(x=>x.status==='CANDIDATE_FOUND_NEEDS_VALIDATION').length,results},null,2)+'\n');
-console.log('EUROPE_SOURCE_PROBE_SUMMARY',JSON.stringify({total:results.length,found:results.filter(x=>x.status==='CANDIDATE_FOUND_NEEDS_VALIDATION').length}));
+const byDiagnostic=Object.fromEntries([...new Set(results.map(x=>x.diagnostic||x.status))].map(k=>[k,results.filter(x=>(x.diagnostic||x.status)===k).length]));
+console.log('EUROPE_SOURCE_PROBE_SUMMARY',JSON.stringify({total:results.length,found:results.filter(x=>x.status==='CANDIDATE_FOUND_NEEDS_VALIDATION').length,byDiagnostic}));
