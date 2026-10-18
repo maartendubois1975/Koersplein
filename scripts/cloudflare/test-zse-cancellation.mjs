@@ -7,7 +7,7 @@ try{
  const pending=new ZsePriceListProvider().fetchDaily({isin:'TEST',mic:'XZAG'},{startDate:'1997-01-01',endDate:'1997-12-31',signal:controller.signal});
  controller.abort(new Error('cancel-test'));
  await assert.rejects(pending,/cancel-test/);
- assert.equal(requests,10);assert.equal(aborted,10);
+ // The provider intentionally limits archive requests to three concurrent dates.\n assert.equal(requests,3);assert.equal(aborted,3);
  // A cancelled request must not cache an empty price list permanently.
  globalThis.fetch=async()=>new Response('isin,open_price,high_price,low_price,close_price,volume,trade_date\nTEST,10,12,9,11,100,1997-01-01\n');
  const retry=await new ZsePriceListProvider().fetchDaily({isin:'TEST',mic:'XZAG'},{startDate:'1997-01-01',endDate:'1997-01-01'});
