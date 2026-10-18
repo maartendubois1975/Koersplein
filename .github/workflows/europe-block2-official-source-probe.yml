@@ -1,0 +1,26 @@
+name: Europe block 2 official source probe
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/cloudflare/europe-block2-official-source-evidence.mjs'
+      - '.github/workflows/europe-block2-official-source-probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Probe exact venue Euronext prices
+        run: node scripts/cloudflare/europe-block2-official-source-evidence.mjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: europe-block2-official-source-evidence
+          path: research/output/europe-block2-official-source-evidence.json
+          retention-days: 90
