@@ -1,26 +1,27 @@
 import fs from 'node:fs/promises';
-import {FactoryApiClient} from './client.mjs';
-import {storageIdentityResolver} from './storage-identity.mjs';
-
-const client=new FactoryApiClient();
+const baseUrl=String(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
+if(!baseUrl)throw Error('KOERSPLEIN_API_URL missing');
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
-const catalog=await client.catalog();
-const manifest=(await client.historyManifest()).instruments||{};
+const response=await fetch(baseUrl+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
+if(!response.ok)throw Error('Public manifest HTTP '+response.status);
+const manifest=(await response.json()).instruments||{};
+const keys=Object.keys(manifest);
 const rows=[];
 for(const market of plan.markets.filter(m=>m.state==='COMPLETE')){
   const data=JSON.parse(await fs.readFile('data/euronext-'+market.code+'.json','utf8'));
-  const resolve=storageIdentityResolver(catalog.instruments||[],market.mic);
+
   for(const share of data.shares||data.instruments||[]){
     if(!share.isin)continue;
-    const storedKey=resolve({...share,mic:share.mic||market.mic});
-    const entry=manifest[storedKey];
-    if(entry?.lastDate)continue;
+    const matchingKeys=keys.filter(k=>k===share.isin||k===market.mic+':'+share.isin||k.endsWith(':'+share.isin));
+    const known=matchingKeys.filter(k=>manifest[k]?.lastDate);
+    if(known.length)continue;
+    const storedKey=matchingKeys.length===1?matchingKeys[0]:null;
     rows.push({
       mic:market.mic,market:market.name,isin:share.isin,
       symbol:share.symbol||share.ticker||null,
       company:share.company||share.name||null,
       storageKey:storedKey||null,
-      reason:storedKey?'NO_STORED_HISTORY':'NOT_IN_FACTORY_CATALOG',
+      reason:storedKey?'NO_STORED_HISTORY':'NO_MATCHING_PUBLIC_MANIFEST_IDENTITY',
       researchStatus:'PENDING_MANUAL_SOURCE_VERIFICATION',
       verifiedSource:null,verifiedBars:0,
       publicationApproved:false
