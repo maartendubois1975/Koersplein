@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/cloudflare/europe-block2-official-source-evidence.mjs'
+      - 'scripts/cloudflare/europe-block2-popout-transport.mjs'
       - '.github/workflows/europe-block2-official-source-probe.yml'
   workflow_dispatch:
 permissions:
