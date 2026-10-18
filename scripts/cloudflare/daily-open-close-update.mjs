@@ -43,7 +43,7 @@ const resolveExisting=storageIdentityResolver(factoryCatalog.instruments||[]);
 for(const market of targetMarkets){
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
  for(const share of (catalog.shares||catalog.instruments||[])){
-  if(share.isin&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate)missingPool.push(share.isin);
+  if(share.isin&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate)missingPool.push((share.mic||market.mic)+'|'+(share.symbol||share.ticker||share.isin)+'|'+share.isin);
  }
 }
 const selectedMissing=new Set();
@@ -79,7 +79,7 @@ for(const market of targetMarkets){
    // re-fetching decades of already recorded bars. Missing listings still
    // receive the full archive from 1990.
    fullBackfill=firstFullAttempt||(fullRequested&&!beforeDate);
-   if(!beforeDate&&!selectedMissing.has(s.isin)){deferredMissing++;return;}
+   if(!beforeDate&&!selectedMissing.has((s.mic||market.mic)+'|'+(s.symbol||s.ticker||s.isin)+'|'+s.isin)){deferredMissing++;return;}
    if(!fullBackfill&&beforeDate && beforeDate>=freshnessCutoff){current++;return;}
    const instrument={...s,ticker:s.ticker||s.symbol,symbol:s.symbol||s.ticker,mic:s.mic||market.mic,market:s.mic||market.mic,currency:s.currency||market.currency,countryCode:market.country};
    if(!fullBackfill&&beforeDate){
