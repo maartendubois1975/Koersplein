@@ -38,7 +38,7 @@ const c={session:'2026-10-16'},r=(mic,date=c.session,status='DATED_OHLC_RESEARCH
 });
 const assertMicEvidence=output=>assertCurrentCanaryEvidence(output,SAMPLES.filter(s=>['MMM','AAPL','TCBI'].includes(s.symbol)));
 assert.throws(()=>assertMicEvidence({coverage:c,results:[]}),/XNYS:MMM,XNAS:AAPL,TXSE:TCBI/);
-assert.throws(()=>assertMicEvidence({coverage:c,results:[r('XNYS')]}),/XNAS,TXSE/);
+assert.throws(()=>assertMicEvidence({coverage:c,results:[r('XNYS')]}),/XNAS:AAPL,TXSE:TCBI/);
 assert.throws(()=>assertMicEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE','2026-10-15')]}),/TXSE/);
 assert.throws(()=>assertMicEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE',c.session,'PREVIOUS_SESSION_ONLY')]}),/TXSE/);
 assert.throws(()=>assertMicEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),{...r('TXSE'),open:0}]}),/TXSE/);
