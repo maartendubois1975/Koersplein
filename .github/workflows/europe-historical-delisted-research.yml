@@ -1,0 +1,23 @@
+name: Europe 120 historical delisted research
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/europe-historical-delisted-research.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  historical-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - run: node scripts/cloudflare/europe-historical-delisted-probe.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: europe-120-pre-2025-historical-evidence
+          path: research/output/europe-120-historical-delisted-probe.json
+          retention-days: 90
