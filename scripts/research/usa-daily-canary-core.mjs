@@ -66,6 +66,13 @@ export function canProbeCatalogCandidate(item,mic){
  return status==='COMMON_CANDIDATE_NOT_VERIFIED'&&item?.securityType==='COMMON_CANDIDATE';
 }
 
+function validCurrentCanaryBar(row,session){
+ try {
+  validateDailyOHLCV([{date:session,open:row.open,high:row.high,low:row.low,close:row.close,volume:row.volume}],{start:session,end:session});
+  return true;
+ } catch { return false; }
+}
+
 // Fail-closed CI evidence only: a research bar does NOT approve the provider, listing, or rights.
 export function assertCurrentCanaryEvidence(output,requiredMics=['XNYS','XNAS','TXSE']){
  const session=output?.coverage?.session;
@@ -73,7 +80,11 @@ export function assertCurrentCanaryEvidence(output,requiredMics=['XNYS','XNAS','
  const missing=requiredMics.filter(mic=>!output.results.some(row=>
   row.mic===mic&&row.catalogStatus==='COMMON_CANDIDATE_NOT_VERIFIED'&&row.catalogSecurityType==='COMMON_CANDIDATE'&&
   row.status==='DATED_OHLC_RESEARCH_ONLY'&&row.date===session&&
-  Number.isFinite(row.open)&&row.open>0&&Number.isFinite(row.close)&&row.close>0
+  row.providerSymbol===row.providerTicker&&typeof row.providerTicker==='string'&&row.providerTicker.length>0&&
+  expectedExchange[mic]?.includes(row.providerExchange)&&
+  (mic!=='TXSE'||row.providerFullExchange==='TXSE')&&
+  row.providerCurrency==='USD'&&row.providerType==='EQUITY'&&row.providerTimezone==='America/New_York'&&
+  validCurrentCanaryBar(row,session)
  ));
  if(missing.length)throw Error('USA_CURRENT_DATED_CANARY_MISSING:'+missing.join(','));
  return true;

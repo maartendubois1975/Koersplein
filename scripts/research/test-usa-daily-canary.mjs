@@ -25,7 +25,15 @@ assert.equal(inspectYahooChart({...good,chart:{...good.chart,result:[{...good.ch
 assert.equal(inspectYahooChart({...good,chart:{...good.chart,result:[{...good.chart.result[0],timestamp:[ts,ts]}]}},p).status,'DUPLICATE_SESSION_BAR');
 console.log('USA dated daily canary regressions passed: 19');
 
-const c={session:'2026-10-16'},r=(mic,date=c.session,status='DATED_OHLC_RESEARCH_ONLY')=>({mic,date,status,open:100,close:101,catalogStatus:'COMMON_CANDIDATE_NOT_VERIFIED',catalogSecurityType:'COMMON_CANDIDATE'});
+const c={session:'2026-10-16'},r=(mic,date=c.session,status='DATED_OHLC_RESEARCH_ONLY')=>({
+ mic,date,status,open:100,high:103,low:99,close:101,volume:1000,
+ catalogStatus:'COMMON_CANDIDATE_NOT_VERIFIED',catalogSecurityType:'COMMON_CANDIDATE',
+ providerTicker:mic==='XNYS'?'MMM':mic==='XNAS'?'AAPL':'TCBI',
+ providerSymbol:mic==='XNYS'?'MMM':mic==='XNAS'?'AAPL':'TCBI',
+ providerExchange:mic==='XNYS'?'NYQ':mic==='XNAS'?'NMS':'TEX',
+ providerFullExchange:mic==='TXSE'?'TXSE':null,
+ providerCurrency:'USD',providerType:'EQUITY',providerTimezone:'America/New_York'
+});
 assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[]}),/XNYS,XNAS,TXSE/);
 assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS')]}),/XNAS,TXSE/);
 assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE','2026-10-15')]}),/TXSE/);
@@ -44,4 +52,22 @@ for(const mic of ['XNYS','XNAS','TXSE']){
 assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),{...r('XNAS'),catalogStatus:'QUARANTINE_FINANCIAL_STATUS'},r('TXSE')]}),/XNAS/);
 assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[{...r('XNYS'),catalogSecurityType:'ADR'},r('XNAS'),r('TXSE')]}),/XNYS/);
 assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),{...r('TXSE'),catalogStatus:undefined}]}),/TXSE/);
-console.log('USA current-session fail-closed canary evidence regressions passed: 22');
+console.log('USA current-session fail-closed canary evidence regressions passed');
+
+// A research-only bar must never make CI green without complete OHLCV and provider identity.
+for(const mic of ['XNYS','XNAS','TXSE']){
+ const valid=['XNYS','XNAS','TXSE'].map(rmic=>r(rmic));
+ const invalid=[
+  {high:undefined},{low:undefined},{volume:undefined},{high:100},{low:102},
+  {volume:-1},{providerTicker:undefined},{providerSymbol:'OTHER'},
+  {providerExchange:'WRONG'},{providerCurrency:'EUR'},{providerType:'ETF'},
+  {providerTimezone:'UTC'},{date:'2026-10-15'}
+ ];
+ for(const patch of invalid){
+  const rows=valid.map(row=>row.mic===mic?{...row,...patch}:row);
+  assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:rows}),new RegExp(mic));
+ }
+}
+assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),{...r('TXSE'),providerFullExchange:'NYSE'}]}),/TXSE/);
+console.log('USA OHLCV and provider-identity fail-closed regressions passed');
+
