@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {lastFullSession,previousSession,standardNYSEHoliday,newYorkDate,inspectYahooChart,SAMPLES,assertCurrentCanaryEvidence} from './usa-daily-canary-core.mjs';
+import {lastFullSession,previousSession,standardNYSEHoliday,newYorkDate,inspectYahooChart,SAMPLES,assertCurrentCanaryEvidence,canProbeCatalogCandidate} from './usa-daily-canary-core.mjs';
 assert.equal(lastFullSession(new Date('2026-10-17T05:00:00Z')),'2026-10-16');
 assert.equal(lastFullSession(new Date('2026-10-16T19:59:00Z')),'2026-10-15');
 assert.equal(lastFullSession(new Date('2026-10-16T21:01:00Z')),'2026-10-16');
@@ -25,7 +25,7 @@ assert.equal(inspectYahooChart({...good,chart:{...good.chart,result:[{...good.ch
 assert.equal(inspectYahooChart({...good,chart:{...good.chart,result:[{...good.chart.result[0],timestamp:[ts,ts]}]}},p).status,'DUPLICATE_SESSION_BAR');
 console.log('USA dated daily canary regressions passed: 19');
 
-const c={session:'2026-10-16'},r=(mic,date=c.session,status='DATED_OHLC_RESEARCH_ONLY')=>({mic,date,status,open:100,close:101});
+const c={session:'2026-10-16'},r=(mic,date=c.session,status='DATED_OHLC_RESEARCH_ONLY')=>({mic,date,status,open:100,close:101,catalogStatus:'COMMON_CANDIDATE_NOT_VERIFIED',catalogSecurityType:'COMMON_CANDIDATE'});
 assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[]}),/XNYS,XNAS,TXSE/);
 assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS')]}),/XNAS,TXSE/);
 assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE','2026-10-15')]}),/TXSE/);
@@ -33,4 +33,15 @@ assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('
 assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),{...r('TXSE'),open:0}]}),/TXSE/);
 assert.throws(()=>assertCurrentCanaryEvidence({coverage:{session:'bad'},results:[]}),/MALFORMED/);
 assert.equal(assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),r('TXSE')]}),true);
-console.log('USA current-session fail-closed canary evidence regressions passed: 7');
+// Financial-status and security-type quarantine must never satisfy a current-session gate.
+for(const mic of ['XNYS','XNAS','TXSE']){
+ const base={securityType:'COMMON_CANDIDATE',catalogStatus:'COMMON_CANDIDATE_NOT_VERIFIED',status:'COMMON_CANDIDATE_NOT_VERIFIED'};
+ assert.equal(canProbeCatalogCandidate(base,mic),true);
+ assert.equal(canProbeCatalogCandidate({...base,securityType:'ADR'},mic),false);
+ assert.equal(canProbeCatalogCandidate({...base,[mic==='TXSE'?'status':'catalogStatus']:'QUARANTINE_FINANCIAL_STATUS'},mic),false);
+ assert.equal(canProbeCatalogCandidate({...base,[mic==='TXSE'?'status':'catalogStatus']:undefined},mic),false);
+}
+assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),{...r('XNAS'),catalogStatus:'QUARANTINE_FINANCIAL_STATUS'},r('TXSE')]}),/XNAS/);
+assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[{...r('XNYS'),catalogSecurityType:'ADR'},r('XNAS'),r('TXSE')]}),/XNYS/);
+assert.throws(()=>assertCurrentCanaryEvidence({coverage:c,results:[r('XNYS'),r('XNAS'),{...r('TXSE'),catalogStatus:undefined}]}),/TXSE/);
+console.log('USA current-session fail-closed canary evidence regressions passed: 22');

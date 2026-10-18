@@ -1,7 +1,7 @@
 // One-time read-only live research probe, invoked after official candidate snapshots.
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import {SAMPLES,lastFullSession,previousSession,inspectYahooChart,assertCurrentCanaryEvidence} from './usa-daily-canary-core.mjs';
+import {SAMPLES,lastFullSession,previousSession,inspectYahooChart,assertCurrentCanaryEvidence,canProbeCatalogCandidate} from './usa-daily-canary-core.mjs';
 const session=lastFullSession(),previous=previousSession(session),root='research/output/usa';
 const cache=new Map(),results=[];
 for(const sample of SAMPLES){
@@ -17,8 +17,10 @@ for(const sample of SAMPLES){
   row.catalogSecurityType=item.securityType||null;
   row.catalogISIN=item.isin||null;
   row.catalogVerifiedCommon=item.verifiedCommonStock===true;
-  if(mic==='TXSE'&&item.status!=='COMMON_CANDIDATE_NOT_VERIFIED'){row.status='TXSE_NOT_COMMON_CANDIDATE';results.push(row);continue;}
-  if(mic!=='TXSE'&&!['COMMON_CANDIDATE','COMMON_VERIFIED'].includes(item.securityType)){row.status='NOT_COMMON_CANDIDATE';results.push(row);continue;}
+  row.catalogStatus=(mic==='TXSE'?item.status:item.catalogStatus)||null;
+  if(!canProbeCatalogCandidate(item,mic)){
+   row.status=mic==='TXSE'?'TXSE_NOT_COMMON_CANDIDATE':'NOT_COMMON_CANDIDATE';results.push(row);continue;
+  }
   const start=Math.floor((Date.parse(session+'T00:00:00Z')-14*86400000)/1000);
   const end=Math.floor((Date.parse(session+'T00:00:00Z')+2*86400000)/1000);
   const url='https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(providerTicker)+'?period1='+start+'&period2='+end+'&interval=1d&includePrePost=false';
