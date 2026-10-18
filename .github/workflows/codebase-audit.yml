@@ -41,6 +41,8 @@ jobs:
         with: { node-version: 22 }
       - name: Run main validation and regression tests
         run: npm test
+      - name: Classify all 120 missing European listing identities
+        run: node scripts/cloudflare/europe-120-identity-triage.mjs
       - name: Test free Euronext historical OHLC number formats
         run: node scripts/cloudflare/test-euronext-number-format.mjs
       - name: Test historical +30 percent chain scanner
@@ -54,4 +56,5 @@ jobs:
           path: |
             research/output/audit/codebase-audit.json
             research/output/audit/dependency-inventory.json
+            research/output/europe-120-identity-triage.json
           retention-days: 90
