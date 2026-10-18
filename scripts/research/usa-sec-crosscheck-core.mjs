@@ -2,6 +2,12 @@
 // ISIN, active trade or historical listing. Never promote catalog eligibility here.
 const SEC_EXCHANGE={XNYS:'NYSE',XNAS:'Nasdaq'};
 const CIK=/^[1-9]\d{0,9}$/;
+// A real, operator-controlled contact must be supplied via the Actions secret.
+// This is a syntax preflight, not proof that an address is owned or SEC access approved.
+export function hasDeclaredSecContact(userAgent) {
+  return typeof userAgent==='string' && userAgent.length<=250 &&
+    /^Koersplein-USA-Research\/1\.0\s+\([^\s()@]+@[^\s()@]+\.[A-Za-z]{2,}\)$/.test(userAgent.trim());
+}
 export function crosscheckSecIssuer(catalog, sec, mic, provenance={}) {
   if(!SEC_EXCHANGE[mic])throw Error('SEC_UNSUPPORTED_MIC');
   if(catalog?.exchange!==mic||!Array.isArray(catalog.securities)||!catalog.securities.length)
@@ -43,13 +49,16 @@ export function crosscheckSecIssuer(catalog, sec, mic, provenance={}) {
 }
 
  // A blocked official SEC endpoint is explicit missing evidence, never an issuer match.
-export function secUnavailableEvidence(catalog,mic,httpStatus){
+export function secUnavailableEvidence(catalog,mic,reason){
   if(!SEC_EXCHANGE[mic]||catalog?.exchange!==mic||!Array.isArray(catalog.securities)||!catalog.securities.length)
     throw Error('SEC_INVALID_CATALOG');
-  if(httpStatus!==403)throw Error('SEC_UNEXPECTED_BLOCK_REASON');
+  if(reason!==403&&reason!=='CONTACT_NOT_CONFIGURED')throw Error('SEC_UNEXPECTED_BLOCK_REASON');
+  const undeclared=reason==='CONTACT_NOT_CONFIGURED';
   return {mic,source:'https://www.sec.gov/files/company_tickers_exchange.json',
-    status:'SEC_OFFICIAL_SOURCE_UNAVAILABLE',blockedReason:'SEC_HTTP_403_GITHUB_RUNNER',httpStatus,
+    status:'SEC_OFFICIAL_SOURCE_UNAVAILABLE',
+    blockedReason:undeclared?'SEC_USER_AGENT_CONTACT_NOT_CONFIGURED':'SEC_HTTP_403_GITHUB_RUNNER',
+    httpStatus:undeclared?null:403,
     catalogSourceSha256:catalog.sourceSha256??null,candidateCount:catalog.securities.length,
     verifiedCommonStocks:0,verifiedISINs:0,verifiedActiveTrading:0,usableForTraining:0,
-    note:'SEC denied this GitHub Actions runner. No SEC issuer/CIK comparison was performed. All catalog candidates remain unverified; no source gate or approval.'};
+    note:undeclared?'No SEC request attempted: an operator-controlled contact must be configured before automated access. No issuer/CIK comparison or approval.':'SEC denied this GitHub Actions runner. No SEC issuer/CIK comparison was performed. All catalog candidates remain unverified; no source gate or approval.'};
 }

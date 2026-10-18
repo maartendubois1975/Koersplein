@@ -1,5 +1,9 @@
 import assert from 'node:assert/strict';
-import {crosscheckSecIssuer,secUnavailableEvidence} from './usa-sec-crosscheck-core.mjs';
+import {crosscheckSecIssuer,secUnavailableEvidence,hasDeclaredSecContact} from './usa-sec-crosscheck-core.mjs';
+import {mkdtemp,mkdir,writeFile,readFile,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {spawnSync} from 'node:child_process';
 const common=(symbol,overrides={})=>({symbol,catalogStatus:'COMMON_CANDIDATE_NOT_VERIFIED',securityType:'COMMON_CANDIDATE',...overrides});
 const sec={fields:['cik','name','ticker','exchange'],data:[
   [320193,'Apple Inc.','AAPL','Nasdaq'],
@@ -41,3 +45,30 @@ assert.equal(blocked.verifiedISINs,0);
 assert.throws(()=>secUnavailableEvidence({exchange:'XNYS',securities:[common('A')]},'XNAS',403),/SEC_INVALID_CATALOG/);
 assert.throws(()=>secUnavailableEvidence({exchange:'XNYS',securities:[common('A')]},'XNYS',500),/SEC_UNEXPECTED_BLOCK_REASON/);
 console.log('USA SEC research-only crosscheck offline regressions passed, including HTTP 403 isolation');
+
+const declared='Koersplein-USA-Research/1.0 (operator@example.com)'; // syntax fixture only
+assert.equal(hasDeclaredSecContact(declared),true);
+for(const bad of [undefined,'','curl/8','Koersplein-USA-Research/1.0 (github.com/maartendubois1975/Koersplein)','Koersplein-USA-Research/1.0 (bad@@example.com)','Koersplein-USA-Research/1.0 (operator@example.com)\\nInjected: true']){
+  assert.equal(hasDeclaredSecContact(bad),false,String(bad));
+}
+const noContact=secUnavailableEvidence({exchange:'XNYS',sourceSha256:'fixture',securities:[common('A')]},'XNYS','CONTACT_NOT_CONFIGURED');
+assert.equal(noContact.blockedReason,'SEC_USER_AGENT_CONTACT_NOT_CONFIGURED');
+assert.equal(noContact.httpStatus,null);
+assert.equal(noContact.verifiedCommonStocks,0);
+const temp=await mkdtemp(join(tmpdir(),'usa-sec-preflight-'));
+try {
+  for(const mic of ['XNYS','XNAS']){
+    const dir=join(temp,'research/output/usa',mic);
+    await mkdir(dir,{recursive:true});
+    await writeFile(join(dir,'universe.json'),JSON.stringify({exchange:mic,sourceSha256:'fixture',securities:[common('A')]}));
+  }
+  const child=spawnSync(process.execPath,[new URL('./usa-sec-crosscheck.mjs',import.meta.url).pathname],{cwd:temp,env:{PATH:process.env.PATH},encoding:'utf8'});
+  assert.equal(child.status,0,child.stderr);
+  assert.match(child.stderr,/SEC_CONTACT_NOT_CONFIGURED/);
+  for(const mic of ['XNYS','XNAS']){
+    const evidence=JSON.parse(await readFile(join(temp,'research/output/usa',mic,'sec-crosscheck.json'),'utf8'));
+    assert.equal(evidence.blockedReason,'SEC_USER_AGENT_CONTACT_NOT_CONFIGURED');
+    assert.equal(evidence.verifiedCommonStocks,0);
+  }
+} finally { await rm(temp,{recursive:true,force:true}); }
+console.log('USA SEC declared-contact preflight and no-network fail-closed regressions passed');

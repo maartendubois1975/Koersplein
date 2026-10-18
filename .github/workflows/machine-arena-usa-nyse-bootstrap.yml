@@ -34,6 +34,8 @@ jobs:
       - name: Fetch official Nasdaq directory and verify counts
         run: node scripts/research/usa-nasdaq-universe.mjs
       - name: SEC issuer and CIK crosscheck (research only; not identity approval)
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
         run: node scripts/research/usa-sec-crosscheck.mjs
       - name: Fetch official TXSE listed flags and crosscheck
         run: node scripts/research/usa-txse-universe.mjs
