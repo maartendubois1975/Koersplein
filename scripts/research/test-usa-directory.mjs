@@ -64,4 +64,4 @@ assert.throws(()=>parseUSDirectory(valid.replace('File Creation Time:','Wrong Fo
 assert.throws(()=>parseUSDirectory(valid.replace('N|N|N','N|?|N'),fields),/INVALID_DIRECTORY_FLAG/);
 assert.throws(()=>parseUSDirectory(valid.replace('N|N|N','N|N'),fields),/MALFORMED_DIRECTORY_ROW/);
 assert.throws(()=>parseUSDirectory(valid.replace('ETF|Test Issue','ETF|ETF'),fields),/DUPLICATE_DIRECTORY_HEADER/);
-console.log('US directory/classification regressions passed: 54');
+console.log('US directory/classification regressions passed');
