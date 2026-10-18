@@ -16,6 +16,8 @@ export function classifyUSListing({symbol='',name='',etf='N',testIssue='N'}={}) 
   if(/\b(?:closed[ -]?end|mutual|investment|income|opportunities) fund\b|\bfund\b|\binvestment trust\b/i.test(n)) return {type:'FUND_REVIEW',reason:'FUND_DESCRIPTOR'};
   // Trust/REIT beneficial-interest shares need independent share-class verification.
   if(/\bbeneficial\s+interest\b/i.test(n)) return {type:'BENEFICIAL_INTEREST_REVIEW',reason:'BENEFICIAL_INTEREST_CLASS_NOT_VERIFIED'};
+  // Trust Common Stock can be a fund, royalty trust or REIT; require independent share-class evidence.
+  if(/\btrust\b(?:\s*\([^)]*\))?\s+common\s+(?:stock|shares?)\b/i.test(n)) return {type:'TRUST_COMMON_REVIEW',reason:'TRUST_COMMON_CLASS_NOT_VERIFIED'};
   if(/\bclass [A-Z] capital stock\s*$/i.test(n)||/\bcommon (?:stock|shares?)\b|\bordinary shares?\b|\bclass [A-Z] shares?\b|\bshares? of common\b/i.test(n)) return {type:'COMMON_CANDIDATE',reason:'EQUITY_DESCRIPTOR_NOT_INDEPENDENTLY_VERIFIED'};
   return {type:'REVIEW',reason:'NO_UNAMBIGUOUS_EQUITY_DESCRIPTOR'};
 }

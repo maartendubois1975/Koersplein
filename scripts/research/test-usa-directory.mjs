@@ -12,6 +12,12 @@ const cases = [
   ['AGMB', 'AgomAb Therapeutics N.V. - ADRs', 'ADR'],
   ['ADSS', 'Issuer - ADSs', 'ADR'],
   ['ABXL', 'Abacus Global Management, Inc. 9.875% Fixed Rate Senior Notes due 2028', 'DEBT'],
+  ['EVN', 'Eaton Vance Municipal Income Trust Common Stock', 'TRUST_COMMON_REVIEW'],
+  ['IIM', 'Invesco Value Municipal Income Trust Common Stock', 'TRUST_COMMON_REVIEW'],
+  ['CRT', 'Cross Timbers Royalty Trust Common Stock', 'TRUST_COMMON_REVIEW'],
+  ['ABR', 'Arbor Realty Trust Common Stock', 'TRUST_COMMON_REVIEW'],
+  ['GUT', 'Gabelli Utility Trust (The) Common Stock', 'TRUST_COMMON_REVIEW'],
+  ['AAT', 'American Assets Trust, Inc. Common Stock', 'COMMON_CANDIDATE'],
   ['A', 'Agilent Technologies, Inc. Common Stock', 'COMMON_CANDIDATE'],
   ['AAP', 'Advance Auto Parts Inc.', 'REVIEW'],
   ['AB', 'AllianceBernstein Holding L.P. Units', 'UNIT'],
@@ -48,4 +54,4 @@ assert.throws(()=>parseUSDirectory(valid.replace('File Creation Time:','Wrong Fo
 assert.throws(()=>parseUSDirectory(valid.replace('N|N|N','N|?|N'),fields),/INVALID_DIRECTORY_FLAG/);
 assert.throws(()=>parseUSDirectory(valid.replace('N|N|N','N|N'),fields),/MALFORMED_DIRECTORY_ROW/);
 assert.throws(()=>parseUSDirectory(valid.replace('ETF|Test Issue','ETF|ETF'),fields),/DUPLICATE_DIRECTORY_HEADER/);
-console.log('US directory/classification regressions passed: 31');
+console.log('US directory/classification regressions passed: 37');
