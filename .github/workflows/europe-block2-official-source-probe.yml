@@ -18,9 +18,14 @@ jobs:
         with: { node-version: 22 }
       - name: Probe exact venue Euronext prices
         run: node scripts/cloudflare/europe-block2-official-source-evidence.mjs
+      - name: Inspect alternative Euronext historical download interface
+        if: always()
+        run: node scripts/cloudflare/europe-block2-popout-transport.mjs
       - if: always()
         uses: actions/upload-artifact@v4
         with:
           name: europe-block2-official-source-evidence
-          path: research/output/europe-block2-official-source-evidence.json
+          path: |
+            research/output/europe-block2-official-source-evidence.json
+            research/output/europe-block2-popout-transport.json
           retention-days: 90
