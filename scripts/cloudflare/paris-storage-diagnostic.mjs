@@ -22,7 +22,19 @@ for(const share of official){
     try{
       const response=await client.historyPartitions(catalogKey);
       record.partitions=response;
-      record.classification=manifestKey?'CATALOG_PRESENT_MANIFEST_NO_HISTORY':'CATALOG_PRESENT_MANIFEST_IDENTITY_MISSING';
+      // Do not equate a successful HTTP response with stored history.
+      // Keep the raw response for audit and classify only recognized shapes.
+      const partitionList=Array.isArray(response)?response:
+        Array.isArray(response?.partitions)?response.partitions:
+        Array.isArray(response?.data?.partitions)?response.data.partitions:null;
+      if(partitionList===null){
+        record.classification='PARTITION_RESPONSE_UNRECOGNIZED';
+      }else if(partitionList.length===0){
+        record.classification='NO_STORED_PARTITIONS';
+      }else{
+        record.partitionCount=partitionList.length;
+        record.classification=manifestKey?'STORED_PARTITIONS_MANIFEST_NO_HISTORY':'STORED_PARTITIONS_MANIFEST_IDENTITY_MISSING';
+      }
     }catch(error){
       record.partitionError=String(error.message||error).slice(0,350);
       record.classification='PARTITIONS_QUERY_FAILED';
