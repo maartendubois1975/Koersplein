@@ -65,7 +65,7 @@ export async function officialDailyStatus(instrument,date){
   if(!row)return null;
   const common={date,mic,isin,provider:'euronext-live',sourceUrl:snapshot.sourceUrl,retrievedAt:new Date().toISOString(),lastTradeDate:null};
   if(row.volume===0&&row.open===null&&row.close>0)return {...common,status:'NO_TRADES',trades:0,volume:0};
-  if(row.open>0&&row.close>0)return {...common,status:'TRADED',lastTradeDate:date,bar:row};
+  // Euronext can publish a reference price without an executed trade.\n  // Require positive reported volume before asserting TRADED.\n  if(row.open>0&&row.close>0&&Number(row.volume)>0)return {...common,status:'TRADED',lastTradeDate:date,bar:row};
  }
  return null;
 }
