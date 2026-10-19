@@ -40,12 +40,30 @@ jobs:
           name: machine-arena-readiness
           path: research/output/machine-arena/
           retention-days: 90
-  historical:
+  market-matrix:
     needs: readiness
+    runs-on: ubuntu-latest
+    outputs:
+      markets: ${{ steps.markets.outputs.markets }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - id: markets
+        name: Selecteer alle COMPLETE Europese markten uit canonical plan
+        run: |
+          node --input-type=module <<'NODE' >> "$GITHUB_OUTPUT"
+          import fs from 'node:fs';
+          const plan=JSON.parse(fs.readFileSync('data/world-fill-plan.json','utf8'));
+          const markets=plan.markets.filter(m=>m.state==='COMPLETE').map(m=>m.mic);
+          if(markets.length!==31||new Set(markets).size!==31)throw Error('Expected 31 unique COMPLETE Europe markets');
+          console.log('markets='+JSON.stringify(markets));
+          NODE
+  historical:
+    needs: market-matrix
     strategy:
       fail-fast: false
       matrix:
-        mic: [XBRU,XAMS,XPAR,XMIL,XOSL,XDUB,XLIS,XLON,XETR,XSWX,XMAD,XSTO,XCSE,XHEL,XICE,XATH,XWAR,XWBO,XPRA,XBUD,XBSE,XBUL,XZAG,XLJU,XBRA,XLUX,XMAL,XCYS,XTAL,XRIS,XLIT]
+        mic: ${{ fromJSON(needs.market-matrix.outputs.markets) }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
