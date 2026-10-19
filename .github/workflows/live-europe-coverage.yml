@@ -37,9 +37,18 @@ jobs:
           mkdir -p research/output/audit
           node scripts/cloudflare/audit-live.mjs > research/output/audit/live-europe-coverage.json
           node --input-type=module -e "import fs from 'node:fs'; const r=JSON.parse(fs.readFileSync('research/output/audit/live-europe-coverage.json','utf8')); console.log(JSON.stringify(r.totals)); fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, 'Live Europese koersdekking: '+JSON.stringify(r.totals)+'\\n');"
+      - name: Inventariseer ontbrekende Europese koershistorie per beurs
+        if: steps.config.outputs.available == 'true'
+        run: |
+          node scripts/cloudflare/europe-missing-history-inventory.mjs > research/output/audit/missing-history-log.txt
+          node --input-type=module -e "import fs from 'node:fs';const r=JSON.parse(fs.readFileSync('research/output/europe-missing-history-inventory.json','utf8'));console.log('Ontbrekende historie:',r.count,JSON.stringify(r.byMarket));fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Ontbrekende Europese historie: '+r.count+' instrumenten\\n');"
       - uses: actions/upload-artifact@v4
         if: steps.config.outputs.available == 'true'
         with:
           name: live-europe-coverage
-          path: research/output/audit/live-europe-coverage.json
+          path: |
+            research/output/audit/live-europe-coverage.json
+            research/output/europe-missing-history-inventory.json
+            research/output/europe-missing-history-inventory.csv
+            research/output/audit/missing-history-log.txt
           retention-days: 30
