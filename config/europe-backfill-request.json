@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-18T06:15:00Z",
+  "requestedAt": "2026-10-19T11:16:00Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "FULL_APPEND_ONLY_BACKFILL_AND_DAILY_TAIL",
-  "reason": "Europe-only retry of full append-only history with corrected public Euronext price parsing; preserve existing bars and exclude America."
+  "reason": "Retry Europe daily OIDC-backed append-only processing after Paris identity-resolution improvement; retain verified market sources and preserve existing bars."
 }
