@@ -18,6 +18,9 @@ for(const name of allowedWorkflows){
  if(!files.some(f=>path.relative(root,f).replaceAll('\\\\','/')==='.github/workflows/'+name))
   issues.push({severity:'ERROR',type:'REQUIRED_WORKFLOW_MISSING',file:'.github/workflows/'+name});
 }
+// Guard the canonical 31-market Machine Arena selection.
+const arenaWorkflow=await fs.readFile(path.join(root,'.github/workflows/machine-arena-europe.yml'),'utf8');
+if(!arenaWorkflow.includes('fromJSON(needs.market-matrix.outputs.markets)')||!arenaWorkflow.includes('data/world-fill-plan.json'))issues.push({severity:'ERROR',type:'ARENA_MARKET_MATRIX_DRIFT',file:'.github/workflows/machine-arena-europe.yml'});
 // Prevent removed archive and retired workflow triggers from being reintroduced.
 const retiredAuditTriggerPaths=['scripts/archive/**','data/atlas-archive/**','.github/workflows/paris-*.yml','.github/workflows/world-fill-controller.yml','.github/workflows/market-handoff-controller.yml'];
 for(const f of files.filter(x=>path.relative(root,x).replaceAll('\\\\','/').startsWith('.github/workflows/')&&/\\.ya?ml$/.test(x))){
