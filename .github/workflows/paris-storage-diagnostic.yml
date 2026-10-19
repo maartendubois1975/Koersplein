@@ -5,10 +5,13 @@ on:
     paths:
       - '.github/workflows/paris-storage-diagnostic.yml'
       - 'scripts/cloudflare/paris-storage-diagnostic.mjs'
+  schedule:
+    - cron: '17 6 * * *'
   workflow_dispatch:
 permissions:
   contents: read
   id-token: write
+  issues: write
 jobs:
   inspect:
     runs-on: ubuntu-latest
@@ -30,3 +33,23 @@ jobs:
           name: paris-storage-diagnostic
           path: research/output/paris-53-storage-diagnostic.json
           retention-days: 30
+
+      - name: Publish concise diagnostic result to issue 205
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node --input-type=module <<'JS' > /tmp/paris-issue-comment.md
+          import fs from 'node:fs';
+          const p='research/output/paris-53-storage-diagnostic.json';
+          console.log('### Paris read-only diagnosis');
+          console.log('Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}');
+          if(!fs.existsSync(p)){console.log('Diagnostic failed before report generation. Inspect workflow logs.');process.exit(0)}
+          const d=JSON.parse(fs.readFileSync(p,'utf8'));
+          console.log('Generated:',d.generatedAt);
+          console.log('Official listings:',d.officialParisCount,'; missing:',d.missingParisCount);
+          console.log('\\n| Classification | Count |\\n|---|---:|');
+          for(const [k,v] of Object.entries(d.counts||{}))console.log('| '+k+' | '+v+' |');
+          console.log('\\nFull read-only JSON is attached to the workflow run.');
+          JS
+          gh issue comment 205 --repo "${{ github.repository }}" --body-file /tmp/paris-issue-comment.md
