@@ -1,6 +1,6 @@
 {
   "marketMic": "XPAR",
   "purpose": "Recover missing and stale Paris price history",
-  "message": "Run official source/catalog gate and approved append-only historical backfill for Paris; preserve existing prices and report remaining unavailable instruments. Do not bypass gates.",
-  "requestedAt": "2026-10-19"
+  "message": "Retry Paris official market-segment MIC inference after PR #201; preserve source coverage gate and append-only history.",
+  "requestedAt": "2026-10-19-retry-after-pr201"
 }
