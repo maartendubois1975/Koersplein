@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/live-europe-coverage.yml'
       - 'scripts/cloudflare/**'
+      - 'config/europe-backfill-request.json'
       - 'data/markets.json'
       - 'data/euronext-*.json'
 permissions:
