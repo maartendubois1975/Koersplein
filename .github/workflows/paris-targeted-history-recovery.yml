@@ -1,0 +1,31 @@
+name: Paris targeted historical recovery
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/paris-targeted-history-recovery.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: koersplein-paris-targeted-history
+  cancel-in-progress: false
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+      MARKET_MIC: XPAR
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - name: Recover only existing Paris listings with approved primary source
+        run: node scripts/cloudflare/paris-targeted-history-recovery.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: paris-targeted-history-recovery
+          path: research/output/paris-targeted-history-recovery.json
+          retention-days: 30
