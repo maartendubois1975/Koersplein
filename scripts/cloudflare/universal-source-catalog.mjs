@@ -413,6 +413,12 @@ for(const line of lines.slice(1)){const r=parse(line),name=pick(r,['name','instr
    else if(/Access/i.test(market))provenMic='ENXL';
    else if(/Lisbon/i.test(market))provenMic='XLIS';
  }
+ if(!provenMic&&mic==='XPAR'){
+   // Require explicit Paris segment evidence from the official market label.
+   if(/(?:Euronext\\s+)?Growth\\s+Paris|Paris\\s+Growth/i.test(market))provenMic='ALXP';
+   else if(/(?:Euronext\\s+)?Access\\s+Paris|Paris\\s+Access/i.test(market))provenMic='XMLI';
+   else if(/(?:Euronext\\s+)?Paris(?:\\s+regulated)?(?:\\s+market)?$/i.test(market.trim()))provenMic='XPAR';
+ }
  if(!provenMic&&mic==='XMIL'){
    // Euronext Milan's official CSV currently leaves the MIC column empty.
    // Infer only from the official market/segment label, never from the requested market.
