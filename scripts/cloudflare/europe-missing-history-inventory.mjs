@@ -8,6 +8,8 @@ if(!response.ok)throw Error('Public manifest HTTP '+response.status);
 const manifest=(await response.json()).instruments||{};
 const resolve=storageIdentityResolver(Object.entries(manifest).map(([isin,row])=>({...row,isin})));
 let expected=0;
+const cutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
+const staleRows=[];
 const rows=[];
 for(const market of plan.markets.filter(m=>m.state==='COMPLETE')){
   const data=JSON.parse(await fs.readFile('data/euronext-'+market.code+'.json','utf8'));
@@ -17,7 +19,10 @@ for(const market of plan.markets.filter(m=>m.state==='COMPLETE')){
     if(!share.isin)continue;
     const storedKey=resolve({...share,mic:share.mic||market.mic});
     const entry=storedKey&&manifest[storedKey];
-    if(entry?.lastDate&&Number(entry.recordCount||entry.records||0)>0)continue;
+    if(entry?.lastDate&&Number(entry.recordCount||entry.records||0)>0){
+      if(entry.lastDate<cutoff)staleRows.push({mic:market.mic,market:market.name,isin:share.isin,symbol:share.symbol||share.ticker||null,storageKey:storedKey,lastDate:entry.lastDate,cutoff});
+      continue;
+    }
     rows.push({
       mic:market.mic,market:market.name,isin:share.isin,
       symbol:share.symbol||share.ticker||null,
@@ -32,10 +37,13 @@ for(const market of plan.markets.filter(m=>m.state==='COMPLETE')){
 }
 rows.sort((a,b)=>a.mic.localeCompare(b.mic)||a.isin.localeCompare(b.isin));
 const byMarket=Object.fromEntries([...new Set(rows.map(r=>r.mic))].map(mic=>[mic,rows.filter(r=>r.mic===mic).length]));
-const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_FACTORY_MUTATIONS',expected,count:rows.length,byMarket,rows};
+const staleByMarket=Object.fromEntries([...new Set(staleRows.map(r=>r.mic))].map(mic=>[mic,staleRows.filter(r=>r.mic===mic).length]));
+const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_FACTORY_MUTATIONS',expected,count:rows.length,byMarket,rows,stale:{cutoff,count:staleRows.length,byMarket:staleByMarket,rows:staleRows}};
 await fs.mkdir('research/output',{recursive:true});
 await fs.writeFile('research/output/europe-missing-history-inventory.json',JSON.stringify(report,null,2)+'\n');
 await fs.writeFile('research/output/europe-missing-history-inventory.csv',
   ['mic,market,isin,symbol,company,storageKey,reason,researchStatus,verifiedSource,verifiedBars,publicationApproved',...rows.map(r=>[r.mic,r.market,r.isin,r.symbol,r.company,r.storageKey,r.reason,r.researchStatus,r.verifiedSource,r.verifiedBars,r.publicationApproved].map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(','))].join('\n')+'\n');
+await fs.writeFile('research/output/europe-stale-history-inventory.json',JSON.stringify(report.stale,null,2)+'\n');
+console.log('EUROPE_STALE_INVENTORY',JSON.stringify({count:staleRows.length,byMarket:staleByMarket}));
 console.log('EUROPE_MISSING_INVENTORY',JSON.stringify({count:rows.length,byMarket}));
 for(const row of rows)console.log('EUROPE_MISSING_ITEM',JSON.stringify(row));
