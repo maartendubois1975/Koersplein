@@ -8,10 +8,15 @@ for(const f of files.filter(x=>path.relative(root,x).replaceAll('\\','/').starts
 try{const p=JSON.parse(await fs.readFile(path.join(root,'data/world-fill-plan.json'),'utf8'));for(const m of p.markets||[]){if(m.state==='BLOCKED'&&!m.blockedReason)issues.push({severity:'ERROR',type:'BLOCKED_WITHOUT_REASON',file:'data/world-fill-plan.json',detail:m.mic});}}catch{}
 try{const p=JSON.parse(await fs.readFile(path.join(root,'data/world-fill-plan.json'),'utf8')),r=JSON.parse(await fs.readFile(path.join(root,'data/market-source-registry.json'),'utf8'));for(const m of p.markets||[]){const s=r.markets?.[m.mic];if(m.state==='COMPLETE'&&s?.catalogFingerprint){try{const cat=JSON.parse(await fs.readFile(path.join(root,`data/euronext-${m.code}.json`),'utf8'));if(cat.fingerprint&&cat.fingerprint!==s.catalogFingerprint)issues.push({severity:'ERROR',type:'COMPLETE_FINGERPRINT_DRIFT',file:'data/world-fill-plan.json',detail:m.mic});}catch{}}if(s?.status==='APPROVED'&&Number(s.discovery?.sourceCountTested||0)<2&&['XMIL','XOSL'].includes(m.mic))issues.push({severity:'WARN',type:'SOURCE_DIVERSITY_LEGACY_EVIDENCE',file:'data/market-source-registry.json',detail:m.mic});}}catch(e){issues.push({severity:'ERROR',type:'CANONICAL_STATE_AUDIT_FAILED',file:'data/world-fill-plan.json',detail:e.message});}
 // Canonical active workflow allowlist. Retired one-off probes and importers must not return.
-const allowedWorkflows=new Set(['codebase-audit.yml','daily-open-close.yml','europe-run-recovery.yml','daily-opportunity-ledger.yml','universal-source-first.yml','complete-market-analysis.yml','machine-arena-europe.yml','live-europe-coverage.yml','offline-europe-coverage.yml','isin-source-recovery.yml','machine-arena-usa-nyse-bootstrap.yml','machine-arena-usa-nyse-history.yml']);
+const allowedWorkflows=new Set(['codebase-audit.yml','daily-open-close.yml','europe-run-recovery.yml','daily-opportunity-ledger.yml','universal-source-first.yml','complete-market-analysis.yml','machine-arena-europe.yml','live-europe-coverage.yml','offline-europe-coverage.yml','isin-source-recovery.yml']);
 for(const f of files.filter(x=>path.relative(root,x).replaceAll('\\','/').startsWith('.github/workflows/')&&/\.ya?ml$/.test(x))){
   const rel=path.relative(root,f).replaceAll('\\','/'),name=path.basename(rel);
   if(!allowedWorkflows.has(name)) issues.push({severity:'ERROR',type:'UNAPPROVED_WORKFLOW_PRESENT',file:rel});
+}
+// Reject accidental removal of any production, recovery, research or audit workflow.
+for(const name of allowedWorkflows){
+ if(!files.some(f=>path.relative(root,f).replaceAll('\\\\','/')==='.github/workflows/'+name))
+  issues.push({severity:'ERROR',type:'REQUIRED_WORKFLOW_MISSING',file:'.github/workflows/'+name});
 }
 // Prevent removed archive and retired workflow triggers from being reintroduced.
 const retiredAuditTriggerPaths=['scripts/archive/**','data/atlas-archive/**','.github/workflows/paris-*.yml','.github/workflows/world-fill-controller.yml','.github/workflows/market-handoff-controller.yml'];
