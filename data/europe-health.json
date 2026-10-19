@@ -376,7 +376,7 @@
       "reason": null,
       "catalog": {
         "present": true,
-        "count": 400,
+        "count": 394,
         "fingerprint": "279fd6167f5d130ae440a285e9b0ad6148c1a8332bacc471cf4e2e3c5100a45a",
         "retrievedAt": "2026-10-03T10:01:44.254Z",
         "source": "GPW regulated Main Market equities; current Polish quote-table identities; direct .WA history proof"
@@ -487,9 +487,9 @@
       "catalog": {
         "present": true,
         "count": 158,
-        "fingerprint": "8d30f3706bad5373a9e0f4f1ea4138504b34fe3d0829bea810a0ceb7a7f1536e",
+        "fingerprint": "c3837c6f8627f3dfcf55e14ff20d5ab0cd4566505090c32bbdfa221fb94562a7",
         "retrievedAt": "2026-10-07T11:59:36.502Z",
-        "source": "BSE Main Market scope + Bulgarian Central Depository real ISIN identity + StockAnalysis BUL daily-history provider"
+        "source": "BSE official Market Information exact symbol+ISIN verification and official OHLC"
       },
       "sources": {
         "status": "APPROVED",
@@ -699,5 +699,5 @@
       "completedAt": "2026-10-05T14:02:29.552Z"
     }
   ],
-  "generatedAt": "2026-10-07T12:12:53.184Z"
+  "generatedAt": "2026-10-19T09:40:40.163Z"
 }
