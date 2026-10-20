@@ -70,7 +70,9 @@ export class EuronextLiveProvider{
    all.push(...parseEuronextHistoryRows(decodeEuronextBody(await r.text())));
   }
   const dedup=[...new Map(all.map(x=>[x.date,x])).values()].sort((a,b)=>a.date.localeCompare(b.date));
-  const traded=dedup.filter(b=>Number(b.open)>0&&Number(b.close)>0);
+  // A reference/indicative price is not proof of an executed trade.
+  // The official table's Number of Shares must confirm positive volume.
+  const traded=dedup.filter(b=>Number(b.open)>0&&Number(b.close)>0&&Number(b.volume)>0);
   if(!traded.length)throw Error(`Geen verhandelde Euronext koershistorie voor ${key}`);
   return{bars:traded,requestUrl:ROOT+key,providerMeta:{mic,isin:i.isin,source:'Euronext Live',windowPolicy:'<=700d chunks'}};
  }
