@@ -143,5 +143,5 @@ for(const market of targetMarkets){
  console.log('EUROPE_MARKET_DONE',JSON.stringify({mic:market.mic,advanced,current,stale,missing,deferredMissing,skipped,failed:failed.length,failureCategories,examples:failed.slice(0,3)}));
 }
 await checkpoint();
-await import('./reconcile-official-daily.mjs');
+if(!parisRepair)await import('./reconcile-official-daily.mjs');
 console.log(JSON.stringify(results.map(x=>({...x,failed:x.failed.length})),null,2));if(results.some(x=>x.failed.length||x.missing||x.stale||x.deferredMissing))process.exitCode=2;
