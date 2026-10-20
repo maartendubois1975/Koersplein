@@ -1,8 +1,6 @@
 {
-  "scope": "XPAR missing history only",
-  "mode": "append-only",
   "requestedAt": "2026-10-20",
-  "retry": 2,
-  "verifyWith": "production history manifest",
-  "note": "Requeue targeted recovery; preserve existing histories"
+  "revision": 4,
+  "purpose": "Paris targeted recovery with partial official Euronext history windows preserved",
+  "appendOnly": true
 }
