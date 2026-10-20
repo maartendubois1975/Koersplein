@@ -65,17 +65,23 @@ export class EuronextLiveProvider{
  supports(i){return ['XAMS','XBRU','XDUB','XMSM','XESM','XATL','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin)}
  async fetchDaily(i,{startDate,endDate,signal}={}){
   const mic=euronextProviderMic(i.mic||i.market),key=`${i.isin}-${mic}`,all=[];
+  const failedWindows=[];
   for(const [start,end] of chunks(startDate,endDate)){
-   const body=new URLSearchParams({adjusted:'Y',startdate:start,enddate:end,nbSession:'100000'});
-   const r=await fetch(ROOT+encodeURIComponent(key),{method:'POST',signal,headers:{Accept:'*/*','Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest','User-Agent':'Koersplein-history/1.0'},body});
-   if(!r.ok)throw Error(`Euronext HTTP ${r.status} voor ${key} (${start}..${end})`);
-   all.push(...parseEuronextHistoryRows(decodeEuronextBody(await r.text())));
+   try{
+    const body=new URLSearchParams({adjusted:'Y',startdate:start,enddate:end,nbSession:'100000'});
+    const r=await fetch(ROOT+encodeURIComponent(key),{method:'POST',signal,headers:{Accept:'*/*','Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest','User-Agent':'Koersplein-history/1.0'},body});
+    if(!r.ok)throw Error(`Euronext HTTP ${r.status}`);
+    all.push(...parseEuronextHistoryRows(decodeEuronextBody(await r.text())));
+   }catch(error){
+    if(signal?.aborted)throw error;
+    failedWindows.push({start,end,error:error.message});
+   }
   }
   const dedup=[...new Map(all.map(x=>[x.date,x])).values()].sort((a,b)=>a.date.localeCompare(b.date));
   // A reference/indicative price is not proof of an executed trade.
   // The official table's Number of Shares must confirm positive volume.
   const traded=dedup.filter(b=>Number(b.open)>0&&Number(b.close)>0&&Number(b.volume)>0);
-  if(!traded.length)throw Error(`Geen verhandelde Euronext koershistorie voor ${key}`);
-  return{bars:traded,requestUrl:ROOT+key,providerMeta:{mic,isin:i.isin,source:'Euronext Live',windowPolicy:'<=700d chunks'}};
+  if(!traded.length)throw Error(`Geen verhandelde Euronext koershistorie voor ${key}; mislukte vensters: ${failedWindows.length}`);
+  return{bars:traded,requestUrl:ROOT+key,providerMeta:{mic,isin:i.isin,source:'Euronext Live',windowPolicy:'<=700d chunks',partialHistory:failedWindows.length>0,failedWindows}};
  }
 }
