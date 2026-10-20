@@ -33,7 +33,9 @@ export const parseEuronextHistoryRows=html=>{
  const rows=[...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].map(x=>[...x[1].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map(y=>clean(y[1])));
  const header=rows.findIndex(row=>row.some(v=>/^date$/i.test(v)));if(header<0)return[];
  const h=rows[header].map(x=>x.toLowerCase()),idx=n=>h.findIndex(x=>x.includes(n));
- const di=idx('date'),oi=idx('open'),hi=idx('high'),li=idx('low'),ci=idx('close'),vi=idx('number of shares');
+ const di=idx('date'),oi=idx('open'),hi=idx('high'),li=idx('low'),ci=idx('close');
+ const vi=h.findIndex(x=>x.includes('number of shares')||x==='volume'||x.includes('traded volume')||x.includes('quantity traded'));
+ if(di<0||oi<0||ci<0)return[];
  return rows.slice(header+1).map(row=>({date:iso(row[di]),open:num(row[oi]),high:num(row[hi]),low:num(row[li]),close:num(row[ci]),adjustedClose:num(row[ci]),volume:vi>=0?num(row[vi]):null})).filter(x=>x.date&&x.close!==null&&x.close>0);
 };
 // Euronext's public AJAX client uses this published transport format and
