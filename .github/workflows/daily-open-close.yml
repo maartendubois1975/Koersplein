@@ -2,7 +2,7 @@ name: Dagelijkse Open Close Update
 on:
   push:
     branches: [main]
-    paths: ['config/europe-backfill-request.json', 'config/paris-diagnostic-request.json']
+    paths: ['config/europe-backfill-request.json', 'config/paris-diagnostic-request.json', 'config/paris-repair-request.json']
   schedule:
     - cron: '45 18 * * 1-5'
   workflow_dispatch:
@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'push' }}
 jobs:
   update-and-verify:
-    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[paris-diagnostic-only]')
+    if: github.event_name != 'push' || (!contains(github.event.head_commit.message, '[paris-diagnostic-only]') && !contains(github.event.head_commit.message, '[paris-repair-only]'))
     runs-on: ubuntu-latest
     timeout-minutes: 330
     strategy:
@@ -139,3 +139,58 @@ jobs:
           for(const [k,v] of Object.entries(d.counts||{}))console.log('| '+k+' | '+v+' |');
           JS
           gh issue comment 205 --repo "${{ github.repository }}" --body-file /tmp/paris-report.md
+
+  paris-targeted-repair:
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, '[paris-repair-only]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      KOERSPLEIN_AUTH_MODE: github-oidc
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+      PARIS_REPAIR_ONLY: '1'
+      EUROPE_SHARD_COUNT: '1'
+      EUROPE_SHARD_INDEX: '0'
+      EUROPE_INSTRUMENT_CONCURRENCY: '2'
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Verify protected append-only production Worker
+        run: |
+          node --input-type=module <<'JS'
+          import {FactoryApiClient} from './scripts/cloudflare/client.mjs';
+          const client=new FactoryApiClient();
+          const r=await fetch(client.baseUrl+'/health',{signal:AbortSignal.timeout(15000)});
+          const h=await r.json();
+          if(!r.ok||h.historyWritePolicy!=='preserve-existing-listing-v1')throw Error('Production append-only protection unavailable');
+          await client.catalog();
+          console.log('PARIS_REPAIR_PREFLIGHT_OK');
+          JS
+      - name: Recover only Paris listings missing stored history
+        run: node scripts/cloudflare/daily-open-close-update.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: paris-targeted-repair-report
+          path: research/output/daily-open-close-update-*.json
+          retention-days: 90
+      - name: Publish targeted repair result to issue 205
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node --input-type=module <<'JS' > /tmp/paris-repair.md
+          import fs from 'node:fs';
+          console.log('### Paris targeted append-only repair');
+          console.log('Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}');
+          const p='research/output/daily-open-close-update-0-attempt-'+(process.env.GITHUB_RUN_ATTEMPT||'1')+'.json';
+          if(!fs.existsSync(p)){console.log('Repair failed before report creation; inspect run logs.');process.exit(0)}
+          const d=JSON.parse(fs.readFileSync(p,'utf8'));
+          for(const m of d.markets||[]){
+            console.log('Market:',m.mic,'Selected:',m.catalog,'Advanced:',m.advanced,'Failed:',m.failed?.length||0,'No-trade:',m.verifiedNoTrades);
+            console.log('Failure categories:',JSON.stringify((m.failed||[]).reduce((a,x)=>(a[x.category]=(a[x.category]||0)+1,a),{})));
+          }
+          JS
+          gh issue comment 205 --repo "${{ github.repository }}" --body-file /tmp/paris-repair.md
