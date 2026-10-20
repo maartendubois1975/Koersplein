@@ -2,5 +2,7 @@
   "scope": "XPAR missing history only",
   "mode": "append-only",
   "requestedAt": "2026-10-20",
-  "verifyWith": "production history manifest"
+  "retry": 2,
+  "verifyWith": "production history manifest",
+  "note": "Requeue targeted recovery; preserve existing histories"
 }
