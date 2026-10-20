@@ -10,7 +10,8 @@ const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8')),sou
 const today=new Date().toISOString().slice(0,10),results=[];
 const shardCount=Number(process.env.EUROPE_SHARD_COUNT||1),shardIndex=Number(process.env.EUROPE_SHARD_INDEX||0);
 if(!Number.isInteger(shardCount)||shardCount<1||!Number.isInteger(shardIndex)||shardIndex<0||shardIndex>=shardCount)throw Error('Invalid Europe shard configuration');
-const targetMarkets=plan.markets.filter(x=>x.state==='COMPLETE').filter((_,index)=>index%shardCount===shardIndex);
+const parisRepair=process.env.PARIS_REPAIR_ONLY==='1';
+const targetMarkets=plan.markets.filter(x=>x.state==='COMPLETE').filter(x=>!parisRepair||x.mic==='XPAR').filter((_,index)=>index%shardCount===shardIndex);
 const reportPath=`research/output/daily-open-close-update-${shardIndex}${process.env.GITHUB_RUN_ATTEMPT?'-attempt-'+process.env.GITHUB_RUN_ATTEMPT:''}.json`;
 await fs.mkdir('research/output',{recursive:true});
 async function checkpoint(){await fs.writeFile(reportPath,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,mode:process.env.EUROPE_FULL_BACKFILL==='1'?(Number(process.env.GITHUB_RUN_ATTEMPT||1)>1?'REPAIR_REMAINING_LISTINGS':'FULL_APPEND_ONLY_HISTORY_AND_DAILY_TAIL'):'APPEND_ONLY_DAILY_AND_BOUNDED_MISSING',markets:results},null,2));}
@@ -34,7 +35,7 @@ function failureCategory(message){
  return 'PROVIDER_OTHER';
 }
 const freshnessCutoff=latestClosedWeekday();
-const fullRequested=process.env.EUROPE_FULL_BACKFILL==='1';
+const fullRequested=process.env.EUROPE_FULL_BACKFILL==='1'||parisRepair;
 const firstFullAttempt=fullRequested&&Number(process.env.GITHUB_RUN_ATTEMPT||1)===1;
 const concurrency=Math.max(1,Math.min(4,Number(process.env.EUROPE_INSTRUMENT_CONCURRENCY||2)));
 const missingLimit=Math.max(1,Math.min(80,Number(process.env.EUROPE_MISSING_BACKFILL_LIMIT||35)));
@@ -55,7 +56,8 @@ for(const market of targetMarkets){
  const source=sourceRegistry.markets?.[market.mic];if(!source||source.status!=='APPROVED')throw Error(`${market.mic}: COMPLETE zonder APPROVED bronroute`);
  const primary=source.historySources?.find(x=>x.role==='PRIMARY')?.provider;if(!primary)throw Error(`${market.mic}: geen PRIMARY bronroute`);
  if(!providers.get(primary))throw Error(`${market.mic}: onbekende PRIMARY provider ${primary}; bronregister corrigeren`);
- const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),shares=catalog.shares||catalog.instruments||[];
+ const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),allShares=catalog.shares||catalog.instruments||[];
+ const shares=parisRepair?allShares.filter(share=>!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate):allShares;
  // Preserve existing D1 identities, including Reykjavik legacy keys.
  const resolveStored=storageIdentityResolver(factoryCatalog.instruments||[],market.mic);
  const eligibleForSeed=shares.filter(share=>share.isin&&!resolveStored(share));
