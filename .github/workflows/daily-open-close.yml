@@ -2,7 +2,7 @@ name: Dagelijkse Open Close Update
 on:
   push:
     branches: [main]
-    paths: ['config/europe-backfill-request.json']
+    paths: ['config/europe-backfill-request.json', 'config/paris-diagnostic-request.json']
   schedule:
     - cron: '45 18 * * 1-5'
   workflow_dispatch:
@@ -14,11 +14,13 @@ on:
 permissions:
   contents: read
   id-token: write
+  issues: write
 concurrency:
   group: koersplein-daily-open-close-v4
   cancel-in-progress: ${{ github.event_name == 'push' }}
 jobs:
   update-and-verify:
+    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[paris-diagnostic-only]')
     runs-on: ubuntu-latest
     timeout-minutes: 330
     strategy:
@@ -99,3 +101,41 @@ jobs:
           name: europe-run-summary
           path: research/output/europe-run-summary.json
           retention-days: 90
+
+  paris-readonly-diagnostic:
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, '[paris-diagnostic-only]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      KOERSPLEIN_AUTH_MODE: github-oidc
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Diagnose Paris storage with authorized daily workflow identity
+        run: node scripts/cloudflare/paris-storage-diagnostic.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: paris-storage-diagnostic
+          path: research/output/paris-53-storage-diagnostic.json
+          retention-days: 30
+      - name: Publish read-only diagnostic summary to issue 205
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node --input-type=module <<'JS' > /tmp/paris-report.md
+          import fs from 'node:fs';
+          const p='research/output/paris-53-storage-diagnostic.json';
+          console.log('### Paris diagnostic from authorized daily workflow');
+          console.log('Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}');
+          if(!fs.existsSync(p)){console.log('Diagnostic failed; see logs.');process.exit(0)}
+          const d=JSON.parse(fs.readFileSync(p,'utf8'));
+          console.log('Official:',d.officialParisCount,'Missing:',d.missingParisCount,'Factory access:',d.factoryCatalogAvailable);
+          console.log('\\n| Classification | Count |\\n|---|---:|');
+          for(const [k,v] of Object.entries(d.counts||{}))console.log('| '+k+' | '+v+' |');
+          JS
+          gh issue comment 205 --repo "${{ github.repository }}" --body-file /tmp/paris-report.md
