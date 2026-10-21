@@ -21,6 +21,7 @@ if(!manifest?.instruments||typeof manifest.instruments!=='object')throw Error('U
 const catalogResolve=catalogRows?storageIdentityResolver(catalogRows):()=>null;
 const manifestResolve=storageIdentityResolver(Object.entries(manifest.instruments).map(([isin,row])=>({...row,isin})));
 const rows=[];
+// A missing historical partition is not a tradable-price series; keep its identity in the catalog.
 for(const share of official){
   const lookup={...share,mic:share.mic||'XPAR'};
   const manifestKey=manifestResolve(lookup);
