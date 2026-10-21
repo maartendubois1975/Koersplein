@@ -1,0 +1,50 @@
+name: Paris active universe verification
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/cloudflare/paris-active-universe.mjs'
+      - 'config/paris-follow-policy.json'
+      - '.github/workflows/paris-active-universe.yml'
+  schedule:
+    - cron: '20 5 * * 1-5'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      KOERSPLEIN_API_URL: ${{ vars.KOERSPLEIN_API_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate selector syntax
+        run: node --check scripts/cloudflare/paris-active-universe.mjs
+      - name: Build eligible and inactive Paris lists from live manifest
+        if: env.KOERSPLEIN_API_URL != ''
+        run: node scripts/cloudflare/paris-active-universe.mjs
+      - name: Verify coverage partition
+        if: env.KOERSPLEIN_API_URL != ''
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const data=JSON.parse(fs.readFileSync('research/output/paris-active-universe.json'));
+          if(data.eligibleCount+data.inactiveCount!==770)throw Error('Unexpected Paris coverage total; inspect current official catalog');
+          const seen=new Set();
+          for(const row of [...data.eligible,...data.inactive]){
+            const key=row.mic+':'+row.isin;
+            if(seen.has(key))throw Error('Duplicate '+key);
+            seen.add(key);
+          }
+          console.log('PARIS_POLICY_VERIFIED',data.eligibleCount,data.inactiveCount);
+          JS
+      - name: Upload classification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paris-active-universe
+          path: research/output/paris-active-universe.json
+          if-no-files-found: ignore
