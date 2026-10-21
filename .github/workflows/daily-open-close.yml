@@ -116,11 +116,15 @@ jobs:
         with: { node-version: '22' }
       - name: Diagnose Paris storage with authorized daily workflow identity
         run: node scripts/cloudflare/paris-storage-diagnostic.mjs
+      - name: Probe actual Euronext history source for each missing Paris listing
+        run: node scripts/cloudflare/paris-source-probe.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: paris-storage-diagnostic
-          path: research/output/paris-53-storage-diagnostic.json
+          path: |
+            research/output/paris-53-storage-diagnostic.json
+            research/output/paris-source-probe.json
           retention-days: 30
       - name: Publish read-only diagnostic summary to issue 205
         if: always()
@@ -137,6 +141,13 @@ jobs:
           console.log('Official:',d.officialParisCount,'Missing:',d.missingParisCount,'Factory access:',d.factoryCatalogAvailable);
           console.log('\\n| Classification | Count |\\n|---|---:|');
           for(const [k,v] of Object.entries(d.counts||{}))console.log('| '+k+' | '+v+' |');
+          const q='research/output/paris-source-probe.json';
+          if(fs.existsSync(q)){
+            const p=JSON.parse(fs.readFileSync(q,'utf8'));
+            console.log('\\n### Per-listing Euronext source probe ('+p.start+' through '+p.today+')');
+            for(const [k,v] of Object.entries(p.counts))console.log('- '+k+': '+v);
+            console.log('Instrument-level results in artifact paris-source-probe.json');
+          }
           JS
           gh issue comment 205 --repo "${{ github.repository }}" --body-file /tmp/paris-report.md
 
