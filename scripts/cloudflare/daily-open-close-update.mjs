@@ -11,6 +11,9 @@ const today=new Date().toISOString().slice(0,10),results=[];
 const shardCount=Number(process.env.EUROPE_SHARD_COUNT||1),shardIndex=Number(process.env.EUROPE_SHARD_INDEX||0);
 if(!Number.isInteger(shardCount)||shardCount<1||!Number.isInteger(shardIndex)||shardIndex<0||shardIndex>=shardCount)throw Error('Invalid Europe shard configuration');
 const parisRepair=process.env.PARIS_REPAIR_ONLY==='1';
+const parisPolicy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
+const parisHistoryOnly=parisPolicy.mode==='existing-history-only'&&!parisRepair;
+const parisMics=new Set(parisPolicy.mics);
 const targetMarkets=plan.markets.filter(x=>x.state==='COMPLETE').filter(x=>!parisRepair||x.mic==='XPAR').filter((_,index)=>index%shardCount===shardIndex);
 const reportPath=`research/output/daily-open-close-update-${shardIndex}${process.env.GITHUB_RUN_ATTEMPT?'-attempt-'+process.env.GITHUB_RUN_ATTEMPT:''}.json`;
 await fs.mkdir('research/output',{recursive:true});
@@ -40,11 +43,12 @@ const firstFullAttempt=fullRequested&&Number(process.env.GITHUB_RUN_ATTEMPT||1)=
 const concurrency=Math.max(1,Math.min(4,Number(process.env.EUROPE_INSTRUMENT_CONCURRENCY||2)));
 const missingLimit=Math.max(1,Math.min(80,Number(process.env.EUROPE_MISSING_BACKFILL_LIMIT||35)));
 const missingPool=[];
+const isInactiveParis=(share,marketMic)=>parisHistoryOnly&&parisMics.has(share.mic||marketMic)&&!manifest[resolveExisting({...share,mic:share.mic||marketMic})]?.lastDate;
 const resolveExisting=storageIdentityResolver(factoryCatalog.instruments||[]);
 for(const market of targetMarkets){
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
  for(const share of (catalog.shares||catalog.instruments||[])){
-  if(share.isin&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate)missingPool.push((share.mic||market.mic)+'|'+(share.symbol||share.ticker||share.isin)+'|'+share.isin);
+  if(share.isin&&!isInactiveParis(share,market.mic)&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate)missingPool.push((share.mic||market.mic)+'|'+(share.symbol||share.ticker||share.isin)+'|'+share.isin);
  }
 }
 const selectedMissing=new Set();
@@ -57,7 +61,8 @@ for(const market of targetMarkets){
  const primary=source.historySources?.find(x=>x.role==='PRIMARY')?.provider;if(!primary)throw Error(`${market.mic}: geen PRIMARY bronroute`);
  if(!providers.get(primary))throw Error(`${market.mic}: onbekende PRIMARY provider ${primary}; bronregister corrigeren`);
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),allShares=catalog.shares||catalog.instruments||[];
- const shares=parisRepair?allShares.filter(share=>!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate):allShares;
+ const shares=parisRepair?allShares.filter(share=>!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate):allShares.filter(share=>!isInactiveParis(share,market.mic));
+ if(shares.length!==allShares.length)console.log('PARIS_INACTIVE_EXCLUDED_FROM_DAILY',JSON.stringify({mic:market.mic,retained:shares.length,inactive:allShares.length-shares.length}));
  // Preserve existing D1 identities, including Reykjavik legacy keys.
  const resolveStored=storageIdentityResolver(factoryCatalog.instruments||[],market.mic);
  const eligibleForSeed=shares.filter(share=>share.isin&&!resolveStored(share));
