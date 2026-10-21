@@ -60,3 +60,4 @@ await fs.mkdir('research/output',{recursive:true});
 await fs.writeFile('research/output/paris-53-storage-diagnostic.json',JSON.stringify(output,null,2)+'\n');
 console.log('PARIS_STORAGE_DIAGNOSTIC',JSON.stringify({officialParisCount:official.length,missingParisCount:rows.length,counts}));
 if(rows.length!==53)console.warn('Paris missing count differs from the previous 53; live state may have changed');
+if(!catalogRows)console.warn('FACTORY_AUTH_UNAVAILABLE: missing count is derived from public manifest only; do not present as confirmed storage audit');
