@@ -13,7 +13,7 @@ for(const row of diagnostic.rows){
   if(!response.ok)throw Error('HTTP '+response.status);
   const html=decodeEuronextBody(await response.text());
   const parsed=parseEuronextHistoryRows(html);
-  const tableRows=[...html.matchAll(/<tr[^>]*>([\\s\\S]*?)<\\/tr>/gi)].slice(0,6).map(x=>[...x[1].matchAll(/<t[dh][^>]*>([\\s\\S]*?)<\\/t[dh]>/gi)].map(y=>y[1].replace(/<[^>]*>/g,' ').replace(/\\s+/g,' ').trim()));
+  const tableRows=[...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].slice(0,6).map(x=>[...x[1].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map(y=>y[1].replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim()));
   const header=tableRows.find(r=>r.some(c=>/^date$/i.test(c)))||[];
   const recent=parsed.filter(b=>b.date>=start&&b.date<=today);
   const traded=recent.filter(b=>Number(b.open)>0&&Number(b.close)>0&&Number(b.volume)>0);
