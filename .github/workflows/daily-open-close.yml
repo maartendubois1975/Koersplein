@@ -2,7 +2,7 @@ name: Dagelijkse Open Close Update
 on:
   push:
     branches: [main]
-    paths: ['config/europe-backfill-request.json', 'config/paris-diagnostic-request.json', 'config/paris-repair-request.json']
+    paths: ['config/europe-backfill-request.json', 'config/paris-diagnostic-request.json', 'config/paris-repair-request.json', 'config/paris-follow-policy.json']
   schedule:
     - cron: '45 18 * * 1-5'
   workflow_dispatch:
