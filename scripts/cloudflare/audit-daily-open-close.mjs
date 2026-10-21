@@ -11,11 +11,18 @@ if(!Number.isInteger(shardCount)||shardCount<1||!Number.isInteger(shardIndex)||s
 const complete=plan.markets.filter(x=>x.state==='COMPLETE').filter((_,index)=>index%shardCount===shardIndex);
 const out=[];
 const storedCatalog=await client.catalog();
+const parisPolicy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
+const parisMics=new Set(parisPolicy.mics);
+const manifestResponse=await fetch(client.baseUrl+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
+if(!manifestResponse.ok)throw Error('Public manifest HTTP '+manifestResponse.status);
+const manifest=(await manifestResponse.json()).instruments||{};
 const cutoff=latestClosedWeekday();
 for(const market of complete){
   const file=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
-  const shares=file.shares||file.instruments||[];
+  const allShares=file.shares||file.instruments||[];
   const resolveStorage=storageIdentityResolver(storedCatalog.instruments||[],market.mic);
+  const shares=parisPolicy.mode==='existing-history-only'?allShares.filter(s=>!parisMics.has(s.mic||market.mic)||Boolean(manifest[resolveStorage(s)]?.lastDate)):allShares;
+  const inactiveParis=allShares.length-shares.length;
   let ok=0,missing=[],skipped=0,noTrades=[];
   await mapConcurrent(shares,3,async s=>{
     try{
@@ -39,7 +46,7 @@ for(const market of complete){
       ok++;
     }catch(e){missing.push({isin:s.isin,symbol:s.symbol||s.ticker,error:e.message})}
   });
-  out.push({mic:market.mic,name:market.name,catalog:shares.length,openCloseOk:ok,verifiedNoTrades:noTrades.length,noTrades,skippedDataUnavailable:skipped,missingOpenClose:missing.length,missing});
+  out.push({mic:market.mic,name:market.name,catalog:shares.length,inactiveParis,openCloseOk:ok,verifiedNoTrades:noTrades.length,noTrades,skippedDataUnavailable:skipped,missingOpenClose:missing.length,missing});
 }
 await fs.mkdir('research/output',{recursive:true});
 await fs.writeFile(`research/output/daily-open-close-audit-${shardIndex}${process.env.GITHUB_RUN_ATTEMPT?'-attempt-'+process.env.GITHUB_RUN_ATTEMPT:''}.json`,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,freshnessCutoff:cutoff,markets:out},null,2));
