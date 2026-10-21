@@ -79,7 +79,7 @@ jobs:
 # Routine code merges do not enqueue production writes. Only an explicit backfill request-file change starts a full run and replaces an obsolete run.
   summary:
     needs: update-and-verify
-    if: always()
+    if: always() && needs.update-and-verify.result != 'skipped'
     runs-on: ubuntu-latest
     permissions:
       contents: read
