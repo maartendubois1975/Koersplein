@@ -1,6 +1,6 @@
 {
   "requestedAt": "2026-10-21",
-  "revision": 5,
-  "purpose": "Read-only classify all missing Paris listings against official Euronext historical endpoint; verify Factory storage and source response separately",
+  "revision": 6,
+  "purpose": "Inspect actual Euronext HTML table headers and row samples for 53 missing Paris instruments; read-only",
   "writesAllowed": false
 }
