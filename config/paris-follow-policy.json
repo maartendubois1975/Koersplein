@@ -2,7 +2,11 @@
   "market": "Euronext Paris",
   "decisionDate": "2026-10-21",
   "mode": "existing-history-only",
-  "mics": ["XPAR", "ALXP", "XMLI"],
+  "mics": [
+    "XPAR",
+    "ALXP",
+    "XMLI"
+  ],
   "reference": {
     "officialListings": 770,
     "withStoredHistory": 717,
@@ -12,5 +16,6 @@
   "activeRule": "A Paris listing is eligible for daily updates only when the public history manifest reports a lastDate and a positive recordCount or records.",
   "inactiveRule": "Preserve catalog identity and existing history; do not request daily updates for Paris listings without stored history.",
   "otherMarketsUnchanged": true,
-  "status": "approved-policy-pending-daily-workflow-integration"
+  "status": "integrated-with-production-daily-workflow-awaiting-successful-run",
+  "verificationRequestedAt": "2026-10-21"
 }
