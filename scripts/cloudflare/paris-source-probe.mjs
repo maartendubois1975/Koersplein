@@ -22,6 +22,8 @@ for(const row of diagnostic.rows){
  finally{clearTimeout(timer);}
 }
 const counts=rows.reduce((a,r)=>(a[r.classification]=(a[r.classification]||0)+1,a),{});
+const summary=rows.map(r=>({isin:r.isin,symbol:r.symbol,mic:r.mic,classification:r.classification,verifiedTrades:r.verifiedTrades||0,headers:r.headers||[],parsedSample:r.parsedSample||[],error:r.error||null}));
+console.log('PARIS_SOURCE_INSTRUMENT_DETAIL',JSON.stringify(summary));
 const output={generatedAt:new Date().toISOString(),start,today,mode:'READ_ONLY_SOURCE_PROBE',counts,rows};
 await fs.writeFile('research/output/paris-source-probe.json',JSON.stringify(output,null,2)+'\n');
 console.log('PARIS_SOURCE_PROBE',JSON.stringify(counts));
