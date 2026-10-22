@@ -28,7 +28,7 @@ jobs:
       matrix:
         shard: [0, 1, 2, 3, 4, 5, 6, 7]
     env:
-      EUROPE_FULL_BACKFILL: ${{ (github.event_name == 'push' || inputs.full_backfill) && '1' || '0' }}
+      EUROPE_FULL_BACKFILL: ${{ ((github.event_name == 'push' && contains(github.event.head_commit.message, '[europe-full-backfill]')) || (github.event_name == 'workflow_dispatch' && inputs.full_backfill)) && '1' || '0' }}
       EUROPE_INSTRUMENT_CONCURRENCY: '2'
       EUROPE_SHARD_COUNT: '8'
       EUROPE_SHARD_INDEX: ${{ matrix.shard }}
