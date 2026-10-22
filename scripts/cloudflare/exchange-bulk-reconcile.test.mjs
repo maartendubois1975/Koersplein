@@ -26,4 +26,11 @@ const malformed=normalizeBulkBars([
 ],{date});
 assert.equal(malformed.bars.length,0);
 assert.equal(malformed.errors.filter(x=>x.reason==='DUPLICATE_SYMBOL_DAY').length,2);
+const sameIsin=reconcileBulkWithCatalog({
+ catalog:[{isin:'FR0000000001',mic:'XPAR'},{isin:'FR0000000001',mic:'ALXP'}],
+ providerListings:[{Code:'ABC',Isin:'FR0000000001'}],
+ bulkBars:result.bars
+});
+assert.equal(sameIsin.matched.length,0);
+assert.equal(sameIsin.ambiguous.length,2);
 console.log('EXCHANGE_BULK_RECONCILE_TESTS_OK');
