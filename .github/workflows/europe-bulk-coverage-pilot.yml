@@ -1,0 +1,30 @@
+name: European bulk source coverage pilot
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify EODHD access and measure exchange coverage (read only)
+        env:
+          EODHD_API_TOKEN: ${{ secrets.EODHD_API_TOKEN }}
+        run: |
+          if [ -z "$EODHD_API_TOKEN" ]; then
+            echo "::error::Missing EODHD_API_TOKEN secret; no paid API calls were made."
+            exit 3
+          fi
+          node scripts/cloudflare/eodhd-bulk-coverage-pilot.mjs
+      - name: Upload independent coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: europe-bulk-coverage-pilot
+          path: research/output/eodhd-bulk-pilot.json
+          if-no-files-found: ignore
