@@ -83,6 +83,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      issues: write
     steps:
       - uses: actions/checkout@v4
         with: { ref: main }
@@ -95,6 +96,25 @@ jobs:
           merge-multiple: true
       - name: Collect definitive Europe run result
         run: node scripts/cloudflare/summarize-europe-run.mjs
+      - name: Publish run outcome to issue 205
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "### Europe daily run" > /tmp/europe-run-report.md
+          echo "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> /tmp/europe-run-report.md
+          echo "Event: ${{ github.event_name }}" >> /tmp/europe-run-report.md
+          echo "Update jobs: ${{ needs.update-and-verify.result }}" >> /tmp/europe-run-report.md
+          if [ -f research/output/europe-run-summary.json ]; then
+            echo 'Summary JSON:' >> /tmp/europe-run-report.md
+            echo '\`\`\`json' >> /tmp/europe-run-report.md
+            head -c 12000 research/output/europe-run-summary.json >> /tmp/europe-run-report.md
+            echo '' >> /tmp/europe-run-report.md
+            echo '\`\`\`' >> /tmp/europe-run-report.md
+          else
+            echo 'Summary file missing; inspect run jobs.' >> /tmp/europe-run-report.md
+          fi
+          gh issue comment 205 --repo "${{ github.repository }}" --body-file /tmp/europe-run-report.md
       - uses: actions/upload-artifact@v4
         if: always()
         with:
