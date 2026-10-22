@@ -18,4 +18,12 @@ assert.equal(joined.matched.length,1);
 assert.equal(joined.matched[0].close,11);
 assert.equal(joined.missing.length,1);
 assert.equal(joined.missing[0].reason,'NO_ISIN_MATCH');
+const malformed=normalizeBulkBars([
+ {code:'NULL',date,open:null,high:12,low:9,close:11,volume:500},
+ {code:'DUP',date,open:10,high:12,low:9,close:11,volume:500},
+ {code:'DUP',date,open:10,high:12,low:9,close:11,volume:500},
+ {code:'DUP',date,open:10,high:12,low:9,close:11,volume:500}
+],{date});
+assert.equal(malformed.bars.length,0);
+assert.equal(malformed.errors.filter(x=>x.reason==='DUPLICATE_SYMBOL_DAY').length,2);
 console.log('EXCHANGE_BULK_RECONCILE_TESTS_OK');
