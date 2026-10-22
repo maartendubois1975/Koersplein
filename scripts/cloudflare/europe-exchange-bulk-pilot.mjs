@@ -11,6 +11,7 @@ async function get(path){
  const url=new URL('https://eodhd.com/api/'+path);
  url.searchParams.set('api_token',token);
  url.searchParams.set('fmt','json');
+ if(path.startsWith('eod-bulk-last-day/'))url.searchParams.set('type','eod');
  if(path.startsWith('eod-bulk-last-day/'))url.searchParams.set('date',date);
  const response=await fetch(url,{signal:AbortSignal.timeout(90000)});
  if(!response.ok)throw Error(path+' HTTP '+response.status);
