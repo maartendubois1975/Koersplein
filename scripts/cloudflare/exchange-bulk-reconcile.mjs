@@ -7,7 +7,7 @@ export function normalizeBulkBars(rows,{date}={}){
   const day=String(row.date||row.Date||'').slice(0,10);
   const nums=['open','high','low','close'].map(k=>Number(row[k]??row[k[0].toUpperCase()+k.slice(1)]));
   const volume=Number(row.volume??row.Volume);
-  if(!symbol||!/^\\d{4}-\\d{2}-\\d{2}$/.test(day)||nums.some(n=>!Number.isFinite(n)||n<=0)||nums[1]<Math.max(nums[0],nums[3],nums[2])||nums[2]>Math.min(nums[0],nums[3],nums[1])||!Number.isFinite(volume)||volume<0){
+  if(!symbol||!/^\d{4}-\d{2}-\d{2}$/.test(day)||nums.some(n=>!Number.isFinite(n)||n<=0)||nums[1]<Math.max(nums[0],nums[3],nums[2])||nums[2]>Math.min(nums[0],nums[3],nums[1])||!Number.isFinite(volume)||volume<0){
    errors.push({index,symbol,reason:'INVALID_OHLCV'});continue;
   }
   if(date&&day!==date){errors.push({index,symbol,reason:'WRONG_TRADING_DATE',day});continue;}
