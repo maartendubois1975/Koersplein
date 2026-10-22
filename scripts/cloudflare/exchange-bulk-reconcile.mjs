@@ -35,9 +35,12 @@ export function reconcileBulkWithCatalog({catalog,providerListings,bulkBars}){
   else byIsin.set(isin,code);
  }
  const bars=new Map(bulkBars.map(b=>[b.symbol,b]));
+ const catalogIsinCounts=new Map();
+ for(const item of catalog){const isin=String(item.isin||'').toUpperCase();catalogIsinCounts.set(isin,(catalogIsinCounts.get(isin)||0)+1);}
  const matched=[],missing=[],ambiguous=[];
  for(const item of catalog){
   const isin=String(item.isin||'').toUpperCase();
+  if(catalogIsinCounts.get(isin)>1){ambiguous.push({isin,mic:item.mic,reason:'MULTIPLE_CATALOG_LISTINGS_SAME_ISIN'});continue;}
   if(ambiguousIsins.has(isin)){ambiguous.push({isin,reason:'MULTIPLE_PROVIDER_CODES'});continue;}
   const code=byIsin.get(isin);
   if(!code){missing.push({isin,reason:'NO_ISIN_MATCH'});continue;}
