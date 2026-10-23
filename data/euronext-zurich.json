@@ -721,7 +721,14 @@
       "isin": "CH1216478797",
       "market": "SIX Swiss Exchange",
       "mic": "XSWX",
-      "currency": "CHF"
+      "currency": "CHF",
+      "providerSymbol": "DSFIR.SW",
+      "providerSymbolEvidence": {
+        "officialSix": "https://www.six-group.com/en/market-data/shares/share-explorer/share-details.CH1216478797CHF4.html",
+        "yahooSwiss": "https://finance.yahoo.com/quote/DSFIR.SW/",
+        "verifiedAt": "2026-10-23",
+        "identity": "Same ISIN on SIX official page, matching SIX ticker and Yahoo Swiss CHF quote; retain catalog valor identifier unchanged."
+      }
     },
     {
       "name": "Registered Share",
