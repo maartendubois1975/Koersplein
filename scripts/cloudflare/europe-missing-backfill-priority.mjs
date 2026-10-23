@@ -5,7 +5,8 @@ export function verifiedSwissPriorityKey(share,marketMic){
  const evidence=share?.providerSymbolEvidence;
  if(mic!=='XSWX'||!isin||!share.currency||!providerSymbol||!evidence?.officialSix||!evidence?.yahooSwiss)return null;
  if(!/^https:\/\/www\.six-group\.com\//.test(evidence.officialSix)||!/^https:\/\/finance\.yahoo\.com\/quote\//.test(evidence.yahooSwiss))return null;
- if(!/^[A-Z0-9][A-Z0-9.\-]{0,19}\.SW$/i.test(providerSymbol))return null;
+ if(!/^[A-Z0-9][A-Z0-9.\-]{0,19}\.SW$/i.test(providerSymbol)||/^\d{4,}\.SW$/i.test(providerSymbol))return null;
+ if(!evidence.yahooSwiss.includes('/quote/'+providerSymbol+'/'))return null;
  return mic+'|'+(share.symbol||share.ticker||isin)+'|'+isin;
 }
 export function selectEuropeMissingBackfill(pool,{limit=35,dayIndex=0,fullRequested=false,priorityKeys=[]}={}){
