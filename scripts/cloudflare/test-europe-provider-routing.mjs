@@ -45,3 +45,11 @@ assert.deepEqual(approvedFor('XLON').slice(0,2),['yahoo-chart','yahoo-isin-resol
 assert.deepEqual(approvedFor('XBUL').slice(0,3),['bse-sofia-official','yahoo-isin-resolver','yahoo-chart']);
 assert.match(updateScript,/\['DISCOVERY_FALLBACK','FALLBACK'\]\.includes\(x\.role\)/);
 console.log('Registered approved fallback routes for Paris, Switzerland, London and Sofia PASS');
+
+const yahooChart=await fs.readFile('scripts/history/providers/yahoo-chart.mjs','utf8');
+const yahooIsin=await fs.readFile('scripts/history/providers/yahoo-isin.mjs','utf8');
+assert.match(yahooChart,/XSWX: \{ suffix: '\.SW'/);
+assert.match(yahooChart,/XLON: \{ suffix: '\.L'/);
+assert.match(yahooIsin,/XSWX:'\.SW'/);
+assert.match(yahooIsin,/XLON:'\.L'/);
+console.log('London and Swiss chart/ISIN market suffix agreement PASS');
