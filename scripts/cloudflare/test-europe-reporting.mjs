@@ -21,7 +21,7 @@ const rendered=renderEuropeReport(report,'https://github.com/test/repo/actions/r
 assert.match(rendered,/Missing open\/close \| 747/);
 assert.match(rendered,/MISSING_MARKET X0/);
 assert.match(rendered,/\| XLON \| 246 \| 247 \|/);
-assert.match(rendered,/MISSING_HIGH \\| 110/);
+assert.match(rendered,/MISSING_HIGH \| 110/);
 assert.match(rendered,/Append-only storage preserves existing records/);
 assert.ok(rendered.length<4000);
 assert.match(renderEuropeReport(null),/Summary unavailable/);
