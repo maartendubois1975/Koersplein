@@ -201,7 +201,7 @@ jobs:
           await client.catalog();
           console.log('PARIS_REPAIR_PREFLIGHT_OK');
           JS
-      - name: Recover only Paris listings missing stored history
+      - name: Refresh only Paris listings with existing stored history
         run: node scripts/cloudflare/daily-open-close-update.mjs
       - uses: actions/upload-artifact@v4
         if: always()
