@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-23T08:00:00Z",
+  "requestedAt": "2026-10-23T09:08:00Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Eight-shard verification after complete OHLC integrity guard, evidence-based no-trade validation, actionable audit reason categories, and read-only OpenFIGI reference research. No historical rewrite or full backfill; preserve Paris existing-history-only."
+  "reason": "Verify 31 markets after official SIX and Yahoo cross-checked BMAG.SW / SQL.SW provider overrides and immediate priority missing-history selection; retain 35 rotating daily missing slots, append-only production Worker, Paris existing-history-only and full OHLC guards. Do not run a full historical rewrite."
 }
