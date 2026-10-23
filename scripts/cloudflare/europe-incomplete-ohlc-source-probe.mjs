@@ -4,7 +4,7 @@
 import fs from 'node:fs/promises';
 import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
 import {mapConcurrent} from './europe-run-policy.mjs';
-import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,classifyOhlcDifferenceMagnitude,summarizeOhlcProbeCoverage} from './europe-ohlc-source-evidence.mjs';
+import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,classifyOhlcDifferenceMagnitude,summarizeOhlcProbeCoverage,summarizeOhlcSourceBarDiagnostics} from './europe-ohlc-source-evidence.mjs';
 import {summarizeStoredOhlcSeverity} from './europe-stored-ohlc-severity.mjs';
 const path='research/output/europe-recovery-queue.json';
 const output='research/output/europe-incomplete-ohlc-source-probe.json';
@@ -52,6 +52,7 @@ for(const row of results){
  }
 }
 const probeCoverage=summarizeOhlcProbeCoverage(results);
-const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_PRODUCTION_WRITES',status:'COMPLETED',sourceQueueGeneratedAt:queue.generatedAt||null,rotation,requested:items.length,counts,scopeCounts,marketCounts,sourceVsStoredMagnitude,probeCoverage,storedOhlcViolationSeverity,results};
+const sourceBarDiagnostics=summarizeOhlcSourceBarDiagnostics(results);
+const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_PRODUCTION_WRITES',status:'COMPLETED',sourceQueueGeneratedAt:queue.generatedAt||null,rotation,requested:items.length,counts,scopeCounts,marketCounts,sourceVsStoredMagnitude,probeCoverage,sourceBarDiagnostics,storedOhlcViolationSeverity,results};
 await fs.writeFile(output,JSON.stringify(report,null,2)+'\n');
-console.log('EUROPE_OHLC_SOURCE_PROBE',JSON.stringify({requested:items.length,uniqueInstruments:probeCoverage.uniqueInstruments,repeatedInstrumentDates:probeCoverage.repeatedInstrumentDates,counts,storedSeverityComplete:storedOhlcViolationSeverity.complete,storedSeverityExamined:storedOhlcViolationSeverity.examined}));
+console.log('EUROPE_OHLC_SOURCE_PROBE',JSON.stringify({requested:items.length,uniqueInstruments:probeCoverage.uniqueInstruments,repeatedInstrumentDates:probeCoverage.repeatedInstrumentDates,counts,invalidSourceBars:sourceBarDiagnostics.invalidSourceBars,sourceObservations:sourceBarDiagnostics.observations,storedSeverityComplete:storedOhlcViolationSeverity.complete,storedSeverityExamined:storedOhlcViolationSeverity.examined}));
