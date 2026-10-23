@@ -17,18 +17,42 @@ export function approvedCatalogListingMic(parentMic,listingMic){
 }
 // Only investigate incomplete candles already identified by the authorized
 // read-only audit. No symbol guessing, no automatic identity promotion.
+function isRealIsoDay(day){
+ if(typeof day!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(day))return false;
+ const date=new Date(day+'T00:00:00Z');
+ return Number.isFinite(date.getTime())&&date.toISOString().slice(0,10)===day;
+}
 export function selectIncompleteOhlcCandidates(queue,{limit=30,perMarket=18,rotation=0}={}){
  if(!Number.isInteger(limit)||limit<1||limit>100||!Number.isInteger(perMarket)||perMarket<1||perMarket>100||!Number.isSafeInteger(rotation)||rotation<0)throw Error('Invalid OHLC probe limits');
  const buckets=[];
  for(const market of queue?.markets||[]){
-  const seen=new Set(),all=[];
-  // Include both invalid latest bars and older defective stored dates. Dedupe
-  // the overlap so a single defective day never consumes two probe slots.
-  for(const item of [...(market.instruments||[]),...(market.recentOhlcDebt||[])]){
-   if(item.auditReason!=='INCOMPLETE_OR_INVALID_OHLC'||item.mic!==market.mic||!/^\d{4}-\d{2}-\d{2}$/.test(item.lastStoredDate||''))continue;
-   const key=item.mic+'|'+item.isin+'|'+item.lastStoredDate;
-   if(seen.has(key))continue;
-   seen.add(key);all.push(item);
+  const byKey=new Map(),latest=[],historical=[];
+  // A defective latest candle can also appear in the 30-day history audit.
+  // Merge its immutable stored snapshot rather than discarding that evidence.
+  for(const [scope,entries] of [['LATEST_AUDIT_BAR',market.instruments||[]],['RECENT_STORED_HISTORY',market.recentOhlcDebt||[]]]){
+   for(const item of entries){
+    if(item.auditReason!=='INCOMPLETE_OR_INVALID_OHLC'||item.mic!==market.mic||!isRealIsoDay(item.lastStoredDate))continue;
+    const key=item.mic+'|'+item.isin+'|'+item.lastStoredDate;
+    const existing=byKey.get(key);
+    if(existing){
+     if(existing.storedOhlc&&item.storedOhlc){
+      const fields=['open','high','low','close'];
+      if(fields.some(k=>String(existing.storedOhlc[k]??'')!==String(item.storedOhlc[k]??'')))existing.storedEvidenceConflict=true;
+     }else if(!existing.storedOhlc&&item.storedOhlc)existing.storedOhlc=item.storedOhlc;
+     existing.ohlcDefects=[...new Set([...(existing.ohlcDefects||[]),...(item.ohlcDefects||[])])];
+     continue;
+    }
+    const row={...item,evidenceScope:item.evidenceScope||scope};
+    byKey.set(key,row);
+    (scope==='RECENT_STORED_HISTORY'?historical:latest).push(row);
+   }
+  }
+  // Interleave scopes so a large latest-gap backlog cannot starve historical
+  // repair diagnosis (or vice versa) for many successive runs.
+  const all=[];
+  for(let i=0;i<Math.max(latest.length,historical.length);i++){
+   if(i<latest.length)all.push(latest[i]);
+   if(i<historical.length)all.push(historical[i]);
   }
   if(!all.length)continue;
   const start=((rotation%all.length)*perMarket)%all.length;
@@ -94,7 +118,8 @@ export function classifyOhlcDifferenceMagnitude(comparison){
 }
 export async function probeIncompleteOhlcCandidate(item,{registry,sources,market,listings,timeoutMs=12000}){
  const base={mic:item.mic,isin:item.isin,symbol:item.symbol||null,date:item.lastStoredDate,ohlcDefects:item.ohlcDefects||[],evidenceScope:item.evidenceScope||'LATEST_AUDIT_BAR',storedOhlc:item.storedOhlc||null,readOnly:true};
- if(item.auditReason!=='INCOMPLETE_OR_INVALID_OHLC'||!/^\d{4}-\d{2}-\d{2}$/.test(item.lastStoredDate||''))return {...base,status:'NOT_AN_INCOMPLETE_STORED_CANDLE'};
+ if(item.auditReason!=='INCOMPLETE_OR_INVALID_OHLC'||!isRealIsoDay(item.lastStoredDate))return {...base,status:'NOT_AN_INCOMPLETE_STORED_CANDLE'};
+ if(item.storedEvidenceConflict)return {...base,status:'CONFLICTING_STORED_OHLC_EVIDENCE'};
  if(!market||market.mic!==item.mic||sources?.status!=='APPROVED')return {...base,status:'NO_APPROVED_MARKET_ROUTE'};
  // The market's own catalogue is already scoped to the parent exchange.
  // Preserve the listing's actual MIC (Growth/Access boards differ from XPAR).
