@@ -13,7 +13,7 @@ for(const name of files){
  if(!old||report.generatedAt>old.generatedAt)latest.set(report.shardIndex,report);
 }
 const updates=[...latestUpdates.values()],audits=[...latestAudits.values()];
-const totals={catalog:0,currentOpenClose:0,verifiedNoTrades:0,missingOpenClose:0,skippedDataUnavailable:0,failedImports:0,deferredMissing:0,historicalBackfillFailures:0};
+const totals={catalog:0,currentOpenClose:0,verifiedNoTrades:0,missingOpenClose:0,skippedDataUnavailable:0,failedImports:0,deferredMissing:0,historicalBackfillFailures:0,recentInvalidOhlcDays:0,recentInvalidOhlcInstruments:0};
 const markets=audits.flatMap(x=>x.markets);
 const missingByReason={};
 const invalidOhlcByDefect={};
@@ -22,6 +22,8 @@ for(const m of markets){
  for(const [reason,count] of Object.entries(m.missingReasons||{}))missingByReason[reason]=(missingByReason[reason]||0)+count;
  for(const [defect,count] of Object.entries(m.invalidOhlcByDefect||{}))invalidOhlcByDefect[defect]=(invalidOhlcByDefect[defect]||0)+count;
  if(m.knownDataUnavailableAmongMissing)knownDataUnavailableByMarket[m.mic]=m.knownDataUnavailableAmongMissing;
+ totals.recentInvalidOhlcDays+=m.recentInvalidOhlcDays||0;
+ totals.recentInvalidOhlcInstruments+=m.recentInvalidOhlcInstruments||0;
  totals.catalog+=m.catalog;totals.currentOpenClose+=m.openCloseOk;totals.verifiedNoTrades+=m.verifiedNoTrades||0;totals.missingOpenClose+=m.missingOpenClose;totals.skippedDataUnavailable+=m.skippedDataUnavailable;}
 for(const m of updates.flatMap(x=>x.markets)){totals.failedImports+=m.failed.length;totals.historicalBackfillFailures+=(m.historicalBackfillFailures||[]).length;totals.deferredMissing+=m.deferredMissing;}
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
