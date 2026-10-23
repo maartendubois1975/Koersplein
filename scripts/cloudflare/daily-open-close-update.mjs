@@ -12,7 +12,7 @@ const shardCount=Number(process.env.EUROPE_SHARD_COUNT||1),shardIndex=Number(pro
 if(!Number.isInteger(shardCount)||shardCount<1||!Number.isInteger(shardIndex)||shardIndex<0||shardIndex>=shardCount)throw Error('Invalid Europe shard configuration');
 const parisRepair=process.env.PARIS_REPAIR_ONLY==='1';
 const parisPolicy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
-const parisHistoryOnly=parisPolicy.mode==='existing-history-only'&&!parisRepair;
+const parisHistoryOnly=parisPolicy.mode==='existing-history-only';
 const parisMics=new Set(parisPolicy.mics);
 const targetMarkets=plan.markets.filter(x=>x.state==='COMPLETE').filter(x=>!parisRepair||x.mic==='XPAR').filter((_,index)=>index%shardCount===shardIndex);
 const reportPath=`research/output/daily-open-close-update-${shardIndex}${process.env.GITHUB_RUN_ATTEMPT?'-attempt-'+process.env.GITHUB_RUN_ATTEMPT:''}.json`;
