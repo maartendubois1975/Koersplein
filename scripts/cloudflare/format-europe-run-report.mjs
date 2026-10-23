@@ -9,6 +9,12 @@ export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
   const t=report.totals||{};
   lines.push(`Status: **${report.status||'UNKNOWN'}**`);
   lines.push(`History: **${report.historyCompleteness||'NOT_VERIFIED'}**`);
+  if(report.freshnessCutoff&&report.sessionConsistency?.complete){
+    lines.push(`Completed trading-session cutoff (UTC): **${report.freshnessCutoff}**. Compare daily missing counts only against audits with the same cutoff; a newer trading day can turn yesterday's valid bars into stale bars without deleting stored history.`);
+  }else if(report.sessionConsistency){
+    lines.push('**SESSION DATE UNVERIFIED:** update/audit shards disagree on the completed-session cutoff or omit it; do not compare these totals with a previous run.');
+    for(const issue of (report.sessionConsistency.anomalies||[]).slice(0,4))lines.push(`- Session anomaly: ${issue.kind||'all'} shard ${issue.shard??'?'} ${issue.issue}`);
+  }
   lines.push(`All expected markets accounted for: **${report.marketCoverage?(report.marketCoverage.complete?'yes':'no'):'not independently checked'}**`);
   if(report.marketCoverage?.complete===false){
     const auditMissing=(report.marketCoverage.anomalies||[]).some(a=>a.kind==='audit'||a.issue==='DUPLICATE_PLAN_MARKET');
@@ -36,6 +42,12 @@ export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
   if(missingReasons.length)lines.push('','### Why current prices are missing',...missingReasons.map(([reason,count])=>`- ${reason}: ${count}`));
   lines.push('','### Largest remaining gaps','| MIC | Missing | Import failures |','|---|---:|---:|');
   for(const m of (report.recoveryPriority||[]).slice(0,12))lines.push(`| ${m.mic} | ${m.missingOpenClose??'?'} | ${m.importFailures??'?'} |`);
+  const reasons=(report.recoveryPriority||[]).filter(m=>m.missingReasons&&Object.keys(m.missingReasons).length).slice(0,8);
+  if(reasons.length){
+    lines.push('','### Current missing causes by exchange','| MIC | Stale last trade | Invalid OHLC | No stored history |','|---|---:|---:|---:|');
+    for(const m of reasons)lines.push(`| ${m.mic} | ${m.missingReasons.STALE_LAST_TRADE||0} | ${m.missingReasons.INCOMPLETE_OR_INVALID_OHLC||0} | ${m.missingReasons.NO_HISTORY_PARTITIONS||0} |`);
+    lines.push('These are cutoff-specific audit categories, not evidence that stored history was deleted.');
+  }
   const blockers=(report.recoveryPriority||[]).slice(0,5).map(m=>{
     const x=report.sourceFailureByMarket?.[m.mic];
     if(!x?.failed)return null;
