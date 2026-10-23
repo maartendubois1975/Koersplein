@@ -11,7 +11,9 @@ try{
  await fs.mkdir(path.join(dir,'scripts/cloudflare'),{recursive:true});
  const official=JSON.parse(await fs.readFile('data/euronext-paris.json','utf8'));
  await fs.writeFile(path.join(dir,'data/euronext-paris.json'),JSON.stringify(official));
- const first=official.shares.find(x=>['XPAR','ALXP','XMLI'].includes(x.mic));
+ const counts=new Map();
+ for(const x of official.shares)counts.set(x.isin,(counts.get(x.isin)||0)+1);
+ const first=official.shares.find(x=>['XPAR','ALXP','XMLI'].includes(x.mic)&&counts.get(x.isin)===1);
  assert.ok(first?.isin);
  const source=`globalThis.fetch=async url=>{
  const u=new URL(url);
