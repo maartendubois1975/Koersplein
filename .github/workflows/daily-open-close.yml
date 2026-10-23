@@ -57,6 +57,7 @@ jobs:
           node scripts/cloudflare/test-europe-ohlc-source-evidence.mjs
           node scripts/cloudflare/test-london-yahoo-currency.mjs
           node scripts/cloudflare/test-mse-official-no-trade.mjs
+          node scripts/cloudflare/test-europe-workflow-revision.mjs
       - name: Ensure official MSE PDF reader for Malta shard only
         if: matrix.shard == 2
         run: command -v pdftotext || (sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils)
