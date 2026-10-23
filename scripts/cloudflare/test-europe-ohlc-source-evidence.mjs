@@ -188,3 +188,6 @@ assert.equal(mixed.filter(x=>x.evidenceScope==='LATEST_AUDIT_BAR').length,16);
 assert.equal(selectIncompleteOhlcCandidates({markets:[{mic:'XLON',instruments:[{...item,lastStoredDate:'2026-02-30'}],recentOhlcDebt:[]}]},{limit:2}).length,0,'Impossible calendar dates cannot enter source probe');
 assert.equal((await probeIncompleteOhlcCandidate({...item,lastStoredDate:'2026-02-30'},{registry,sources,market,listings})).status,'NOT_AN_INCOMPLETE_STORED_CANDLE');
 console.log('Latest/history fair sampling, merged immutable OHLC evidence, conflicting snapshots and real dates PASS');
+
+// CI exercises intrinsic stored-candle severity separately from source-vs-stored differences.
+await import('./test-europe-stored-ohlc-severity.mjs');
