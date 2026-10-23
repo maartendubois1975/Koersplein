@@ -5,6 +5,7 @@ import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
 import {storageIdentityResolver,newListingStorageKey} from './storage-identity.mjs';
 import {latestClosedWeekday,validBars,mapConcurrent} from './europe-run-policy.mjs';
 import {partitionBars} from './history-format.mjs';
+import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 const client=new FactoryApiClient(),providers=createDefaultProviderRegistry();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8')),sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
 const today=new Date().toISOString().slice(0,10),results=[];
@@ -12,8 +13,6 @@ const shardCount=Number(process.env.EUROPE_SHARD_COUNT||1),shardIndex=Number(pro
 if(!Number.isInteger(shardCount)||shardCount<1||!Number.isInteger(shardIndex)||shardIndex<0||shardIndex>=shardCount)throw Error('Invalid Europe shard configuration');
 const parisRepair=process.env.PARIS_REPAIR_ONLY==='1';
 const parisPolicy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
-const parisHistoryOnly=parisPolicy.mode==='existing-history-only';
-const parisMics=new Set(parisPolicy.mics);
 const targetMarkets=plan.markets.filter(x=>x.state==='COMPLETE').filter(x=>!parisRepair||x.mic==='XPAR').filter((_,index)=>index%shardCount===shardIndex);
 const reportPath=`research/output/daily-open-close-update-${shardIndex}${process.env.GITHUB_RUN_ATTEMPT?'-attempt-'+process.env.GITHUB_RUN_ATTEMPT:''}.json`;
 await fs.mkdir('research/output',{recursive:true});
@@ -46,7 +45,7 @@ const firstFullAttempt=fullRequested&&Number(process.env.GITHUB_RUN_ATTEMPT||1)=
 const concurrency=Math.max(1,Math.min(4,Number(process.env.EUROPE_INSTRUMENT_CONCURRENCY||2)));
 const missingLimit=Math.max(1,Math.min(80,Number(process.env.EUROPE_MISSING_BACKFILL_LIMIT||35)));
 const missingPool=[];
-const isInactiveParis=(share,marketMic)=>parisHistoryOnly&&parisMics.has(share.mic||marketMic)&&!manifest[resolveExisting({...share,mic:share.mic||marketMic})]?.lastDate;
+const isInactiveParis=(share,marketMic)=>!parisHistoryEligible(share,marketMic,parisPolicy,manifest,resolveExisting);
 const resolveExisting=storageIdentityResolver(factoryCatalog.instruments||[]);
 for(const market of targetMarkets){
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
