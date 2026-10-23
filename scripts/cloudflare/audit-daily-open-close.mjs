@@ -24,6 +24,9 @@ for(const market of complete){
   const shares=parisPolicy.mode==='existing-history-only'?allShares.filter(s=>!parisMics.has(s.mic||market.mic)||Boolean(manifest[resolveStorage(s)]?.lastDate)):allShares;
   const inactiveParis=allShares.length-shares.length;
   let ok=0,missing=[],skipped=0,noTrades=[];
+  const knownUnavailable=new Map((market.dataUnavailable||[]).filter(x=>x.status==='DATA_UNAVAILABLE').map(x=>[x.isin,x]));
+  const missingReasons={};
+  const pushMissing=item=>{missing.push(item);const reason=item.reason||item.error?.split(' ')[0]||'UNCLASSIFIED';missingReasons[reason]=(missingReasons[reason]||0)+1;};
   await mapConcurrent(shares,3,async s=>{
     try{
       // /coverage contains metadata only; inspect the actual history for the latest bar.
@@ -40,13 +43,13 @@ for(const market of complete){
         if(b&&/^\d{4}-\d{2}-\d{2}$/.test(b.date||'')&&b.date<=cutoff&&Number.isFinite(Number(b.open))&&Number.isFinite(Number(b.close))&&Number(b.open)>0&&Number(b.close)>0&&status?.status==='NO_TRADES'&&(!status.lastTradeDate||b.date===status.lastTradeDate)){
           noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,lastStoredDate:b.date,...status});return;
         }
-        missing.push({isin:s.isin,symbol:s.symbol||s.ticker,lastDate:b?.date||null,reason:'MISSING_INVALID_OR_STALE_OHLC'});
+        pushMissing({isin:s.isin,symbol:s.symbol||s.ticker,lastDate:b?.date||null,reason:'MISSING_INVALID_OR_STALE_OHLC',knownDataUnavailable:knownUnavailable.get(s.isin)?.reason||null});
         return;
       }
       ok++;
-    }catch(e){missing.push({isin:s.isin,symbol:s.symbol||s.ticker,error:e.message})}
+    }catch(e){pushMissing({isin:s.isin,symbol:s.symbol||s.ticker,error:e.message,reason:/NO_HISTORY_PARTITIONS/.test(e.message)?'NO_HISTORY_PARTITIONS':/CATALOG_INSTRUMENT_MISSING/.test(e.message)?'CATALOG_INSTRUMENT_MISSING':'AUDIT_FETCH_ERROR',knownDataUnavailable:knownUnavailable.get(s.isin)?.reason||null})}
   });
-  out.push({mic:market.mic,name:market.name,catalog:shares.length,inactiveParis,openCloseOk:ok,verifiedNoTrades:noTrades.length,noTrades,skippedDataUnavailable:skipped,missingOpenClose:missing.length,missing});
+  out.push({mic:market.mic,name:market.name,catalog:shares.length,inactiveParis,openCloseOk:ok,verifiedNoTrades:noTrades.length,noTrades,skippedDataUnavailable:skipped,missingOpenClose:missing.length,missingReasons,knownDataUnavailableAmongMissing:missing.filter(x=>x.knownDataUnavailable).length,missing});
 }
 await fs.mkdir('research/output',{recursive:true});
 await fs.writeFile(`research/output/daily-open-close-audit-${shardIndex}${process.env.GITHUB_RUN_ATTEMPT?'-attempt-'+process.env.GITHUB_RUN_ATTEMPT:''}.json`,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,freshnessCutoff:cutoff,markets:out},null,2));
