@@ -16,7 +16,8 @@ catch(error){
  console.log('EUROPE_OHLC_SOURCE_PROBE',JSON.stringify({status:report.status}));
  process.exit(0);
 }
-const items=selectIncompleteOhlcCandidates(queue,{limit:30,perMarket:18});
+const rotation=Number(process.env.GITHUB_RUN_NUMBER||Math.floor(Date.now()/86400000));
+const items=selectIncompleteOhlcCandidates(queue,{limit:30,perMarket:18,rotation});
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
 const markets=new Map(plan.markets.filter(x=>x.state==='COMPLETE').map(x=>[x.mic,x]));
@@ -38,6 +39,6 @@ await mapConcurrent(items,2,async(item,index)=>{
 });
 const counts={};
 for(const row of results)counts[row.status]=(counts[row.status]||0)+1;
-const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_PRODUCTION_WRITES',status:'COMPLETED',sourceQueueGeneratedAt:queue.generatedAt||null,requested:items.length,counts,results};
+const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_PRODUCTION_WRITES',status:'COMPLETED',sourceQueueGeneratedAt:queue.generatedAt||null,rotation,requested:items.length,counts,results};
 await fs.writeFile(output,JSON.stringify(report,null,2)+'\n');
 console.log('EUROPE_OHLC_SOURCE_PROBE',JSON.stringify({requested:items.length,counts}));
