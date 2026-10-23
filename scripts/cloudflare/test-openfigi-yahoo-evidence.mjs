@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
-import {normalizeQuoteCurrency,selectOpenFigiYahooCandidates,findOpenFigiSymbolCollisions,evaluateYahooReference,fetchYahooReferenceChart} from './openfigi-yahoo-evidence.mjs';
+import {normalizeQuoteCurrency,selectOpenFigiYahooCandidates,findOpenFigiSymbolCollisions,evaluateYahooReference,fetchYahooReferenceChart,classifyYahooReferenceError} from './openfigi-yahoo-evidence.mjs';
 
 const swiss={mic:'XSWX',isin:'AT0000KTMI02',catalogSymbol:'41860974',currency:'CHF',classification:'REFERENCE_CANDIDATE_REQUIRES_INDEPENDENT_VERIFICATION',candidates:[{ticker:'BMAG',providerSymbol:'BMAG.SW'}]};
 const london={mic:'XLON',isin:'GB0004170089',catalogSymbol:'HEAD',currency:'GBX',classification:'REFERENCE_CANDIDATE_REQUIRES_INDEPENDENT_VERIFICATION',candidates:[{ticker:'HEAD',providerSymbol:'HEAD.L'}]};
@@ -55,6 +55,11 @@ try{
  await assert.rejects(()=>fetchYahooReferenceChart('BAD/../SYM.SW',{startDate:'2026-10-01',endDate:'2026-10-22'}),/Unsafe/);
  assert.equal(urls.length,1,'Unsafe symbol must not be fetched');
 }finally{globalThis.fetch=originalFetch;}
+assert.equal(classifyYahooReferenceError(Error('Yahoo read-only HTTP 404')),'YAHOO_SYMBOL_NOT_FOUND');
+assert.equal(classifyYahooReferenceError(Error('Yahoo read-only HTTP 429')),'YAHOO_RATE_LIMIT');
+assert.equal(classifyYahooReferenceError(Error('Yahoo read-only HTTP 403')),'YAHOO_ACCESS_DENIED');
+assert.equal(classifyYahooReferenceError(Error('fetch failed')),'YAHOO_TRANSIENT_NETWORK_ERROR');
+assert.equal(classifyYahooReferenceError(Error('ISIN FR0000120404 no bars')),'YAHOO_READ_ONLY_REQUEST_FAILED');
 const runner=await fs.readFile('scripts/cloudflare/openfigi-yahoo-verification-probe.mjs','utf8');
 for(const unsafe of ['FactoryApiClient','seedCatalog(','putPartition(','completeHistory(','update_file('])assert.ok(!runner.includes(unsafe),'Read-only probe must not contain '+unsafe);
 assert.match(runner,/CROSS_ISIN_SYMBOL_COLLISION/);
