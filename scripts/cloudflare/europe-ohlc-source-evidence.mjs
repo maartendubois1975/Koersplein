@@ -143,7 +143,7 @@ export function describeExactDateSourceBars(bars,date){
  if(!exact.length)add('NO_EXACT_DATE_BAR');
  // Two individually valid candles can still disagree on the same date.
  // Such source evidence is ambiguous and must not become a correction candidate.
- return {exactDateBars:exact.length,completeBars,invalidBars:exact.length-completeBars,conflictingCompleteBars:completeSignatures.size>1,defects,readOnly:true};
+ return {exactDateBars:exact.length,completeBars,invalidBars:exact.length-completeBars,conflictingCompleteBars:completeSignatures.size>1,mixedCompleteInvalidBars:completeBars>0&&exact.length>completeBars,defects,readOnly:true};
 }
 // Yahoo's direct chart adapter and its ISIN search adapter ultimately read
 // the SAME Yahoo chart backend. Their agreement is not independent evidence.
@@ -153,19 +153,23 @@ export function sourceFeedFamily(providerId){
  return typeof providerId==='string'&&/^[a-z0-9-]+$/.test(providerId)?providerId:'UNATTRIBUTED';
 }
 export function summarizeOhlcSourceBarDiagnostics(rows){
- const byMarket={},byProvider={},bySourceFamily={};let observations=0,invalidSourceBars=0,probesWithInvalidBars=0,correlatedProviderAttempts=0,conflictingSourceObservations=0,distinctFeedObservations=0,feedLevelInvalidBarsLowerBound=0;
+ const byMarket={},byProvider={},bySourceFamily={};let observations=0,invalidSourceBars=0,probesWithInvalidBars=0,correlatedProviderAttempts=0,conflictingSourceObservations=0,mixedSourceObservations=0,missingExactDateObservations=0,probesWithMissingExactDate=0,distinctFeedNoExactDateObservations=0,discordantExactDateFeedObservations=0,distinctFeedObservations=0,feedLevelInvalidBarsLowerBound=0;
  for(const row of rows||[]){
   if(!row||typeof row.mic!=='string')continue;
   const samples=Array.isArray(row.sourceBarObservations)?row.sourceBarObservations:[];
   if(!byMarket[row.mic])byMarket[row.mic]={probesWithInvalidBars:0,sourceObservations:0,invalidSourceBars:0,defects:{}};
   const m=byMarket[row.mic];let hasInvalid=false;
-  const familiesInProbe=new Set(),maxInvalidPerFeed=new Map();
+  const familiesInProbe=new Set(),maxInvalidPerFeed=new Map(),exactDateByFeed=new Map();let hasMissingExactDate=false;
   for(const sample of samples){
    if(!sample?.readOnly||!Number.isSafeInteger(sample.invalidBars)||sample.invalidBars<0)continue;
    observations++;m.sourceObservations++;
    if(sample.conflictingCompleteBars===true){
     conflictingSourceObservations++;
     m.conflictingSourceObservations=(m.conflictingSourceObservations||0)+1;
+   }
+   if(sample.mixedCompleteInvalidBars===true){
+    mixedSourceObservations++;
+    m.mixedSourceObservations=(m.mixedSourceObservations||0)+1;
    }
    invalidSourceBars+=sample.invalidBars;m.invalidSourceBars+=sample.invalidBars;
    // Provider-level evidence identifies which approved feed supplied an
@@ -174,6 +178,17 @@ export function summarizeOhlcSourceBarDiagnostics(rows){
    const family=sourceFeedFamily(providerId);
    if(familiesInProbe.has(family))correlatedProviderAttempts++;
    else familiesInProbe.add(family);
+   // An absent exact-date bar is NOT an invalid candle or evidence of no
+   // trading. Count raw attempts, but only call a feed/date absent when all
+   // observed adapters for that feed agree; mixed coverage is discordant.
+   if(Number.isSafeInteger(sample.exactDateBars)&&sample.exactDateBars>=0){
+    const state=exactDateByFeed.get(family)||{absent:0,present:0};
+    if(sample.exactDateBars===0){
+     state.absent++;hasMissingExactDate=true;missingExactDateObservations++;
+     m.missingExactDateObservations=(m.missingExactDateObservations||0)+1;
+    }else state.present++;
+    exactDateByFeed.set(family,state);
+   }
    maxInvalidPerFeed.set(family,Math.max(maxInvalidPerFeed.get(family)||0,sample.invalidBars));
    if(!bySourceFamily[family])bySourceFamily[family]={sourceObservations:0,invalidSourceBars:0,defects:{}};
    if(!m.bySourceFamily)m.bySourceFamily={};
@@ -204,8 +219,13 @@ export function summarizeOhlcSourceBarDiagnostics(rows){
    m.feedLevelInvalidBarsLowerBound=(m.feedLevelInvalidBarsLowerBound||0)+maximum;
   }
   if(hasInvalid){probesWithInvalidBars++;m.probesWithInvalidBars++;}
+  if(hasMissingExactDate){probesWithMissingExactDate++;m.probesWithMissingExactDate=(m.probesWithMissingExactDate||0)+1;}
+  for(const state of exactDateByFeed.values()){
+   if(state.absent>0&&state.present===0){distinctFeedNoExactDateObservations++;m.distinctFeedNoExactDateObservations=(m.distinctFeedNoExactDateObservations||0)+1;}
+   if(state.absent>0&&state.present>0){discordantExactDateFeedObservations++;m.discordantExactDateFeedObservations=(m.discordantExactDateFeedObservations||0)+1;}
+  }
  }
- return {readOnly:true,observations,invalidSourceBars,probesWithInvalidBars,correlatedProviderAttempts,distinctFeedObservations,feedLevelInvalidBarsLowerBound,conflictingSourceObservations,byMarket,byProvider,bySourceFamily};
+ return {readOnly:true,observations,invalidSourceBars,probesWithInvalidBars,correlatedProviderAttempts,distinctFeedObservations,feedLevelInvalidBarsLowerBound,conflictingSourceObservations,mixedSourceObservations,missingExactDateObservations,probesWithMissingExactDate,distinctFeedNoExactDateObservations,discordantExactDateFeedObservations,byMarket,byProvider,bySourceFamily};
 }
 // Evidence-only difference against the exact stored candle. Never substitute
 // a provider value for an existing stored field or infer missing prices.
@@ -259,6 +279,7 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
     if(sourceBarObservations.length<6)sourceBarObservations.push({...observation,providerId:attemptedProvider?.id||null,sourceFeedFamily:sourceFeedFamily(attemptedProvider?.id)});
     if(!observation.exactDateBars)throw Error('Source has no exact-date daily bar');
     if(observation.conflictingCompleteBars)throw Error('Source exact-date OHLC has conflicting complete duplicate bars');
+    if(observation.mixedCompleteInvalidBars)throw Error('Source exact-date OHLC mixes complete and invalid duplicate bars');
     if(!observation.completeBars)throw Error('Source exact-date OHLC incomplete or inconsistent');
     return true;
    }});
