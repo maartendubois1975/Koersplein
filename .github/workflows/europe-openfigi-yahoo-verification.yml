@@ -51,7 +51,8 @@ jobs:
           mkdir -p research/output/swiss-base
           gh run download "$SOURCE_RUN_ID" --repo "${{ github.repository }}" --name openfigi-yahoo-independent-evidence --dir research/output/swiss-base
           test -s research/output/swiss-base/openfigi-yahoo-verification.json
-      - name: Compare Swiss candidate identities with official SIX admissions (no writes)
+      - name: Optional official SIX admission check (unavailable source never approves identities)
+        continue-on-error: true
         run: node scripts/cloudflare/six-sponsored-identity-probe.mjs
       - uses: actions/upload-artifact@v4
         if: always()
