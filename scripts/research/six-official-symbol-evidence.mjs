@@ -65,29 +65,53 @@ export async function fetchOfficialSixHtml(url,fetchFn=fetch){
  if(html.length>2000000)throw Error('OFFICIAL_HTML_TOO_LARGE');
  return html;
 }
-export async function verifyYahooCandidate(instrument,symbol,fetchYahoo){
+// Yahoo corroborates trading venue, currency and recent OHLC only; it does
+// not independently prove that the SIX title belongs to the catalog ISIN.
+export async function verifyYahooCandidate(instrument,symbol,fetchYahoo,{asOfDate=new Date().toISOString().slice(0,10)}={}){
  if(!fetchYahoo||!/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(String(symbol||'')))return null;
+ const asOf=new Date(asOfDate+'T00:00:00Z');
+ if(!Number.isFinite(asOf.getTime())||asOf.toISOString().slice(0,10)!==asOfDate)throw Error('INVALID_YAHOO_EVIDENCE_AS_OF');
  const providerSymbol=symbol+'.SW';
  try{
   const response=await fetchYahoo({...instrument,providerSymbol});
   const meta=response?.providerMeta||{};
   const venue=[meta.exchangeName,meta.fullExchangeName].join(' ').toLowerCase();
   const venueValid=/(?:ebs|swx|six swiss|swiss exchange|zurich)/.test(venue);
-  const identityValid=String(meta.symbol||'').toUpperCase()===providerSymbol.toUpperCase()&&String(meta.currency||'').toUpperCase()===instrument.currency&&venueValid;
-  const valid=(response?.bars||[]).filter(b=>{
-   const n=['open','high','low','close'].map(k=>Number(b[k]));
-   return /^\d{4}-\d{2}-\d{2}$/.test(String(b.date||''))&&n.every(x=>Number.isFinite(x)&&x>0)&&n[1]>=Math.max(n[0],n[3])&&n[2]<=Math.min(n[0],n[3]);
+  const typeValid=!meta.instrumentType||String(meta.instrumentType).toUpperCase()==='EQUITY';
+  const identityValid=String(meta.symbol||'').toUpperCase()===providerSymbol.toUpperCase()&&String(meta.currency||'').toUpperCase()===instrument.currency&&venueValid&&typeValid;
+  const dated=(Array.isArray(response?.bars)?response.bars:[]).filter(b=>{
+   const d=String(b?.date||''),parsed=new Date(d+'T00:00:00Z');
+   return /^\d{4}-\d{2}-\d{2}$/.test(d)&&Number.isFinite(parsed.getTime())&&parsed.toISOString().slice(0,10)===d;
   });
-  return {status:identityValid&&valid.length?'YAHOO_VENUE_CURRENCY_OHLC_MATCH_ISIN_UNPROVEN':'YAHOO_IDENTITY_OR_OHLC_NOT_PROVEN',validDays:valid.length,lastValidDate:valid.at(-1)?.date||null,readOnly:true};
+  const complete=b=>{
+   const n=['open','high','low','close'].map(k=>b[k]);
+   return n.every(x=>typeof x==='number'&&Number.isFinite(x)&&x>0)&&n[1]>=Math.max(n[0],n[3])&&n[2]<=Math.min(n[0],n[3]);
+  };
+  const valid=dated.filter(complete).sort((a,b)=>a.date.localeCompare(b.date));
+  const latestSourceDate=dated.map(b=>b.date).sort().at(-1)||null;
+  const latestBars=dated.filter(b=>b.date===latestSourceDate);
+  const latestComplete=latestBars.length>0&&latestBars.every(complete);
+  const latestSignatures=new Set(latestBars.filter(complete).map(b=>JSON.stringify(['open','high','low','close'].map(k=>b[k]))));
+  const sourceConflict=latestSignatures.size>1;
+  const ageDays=latestSourceDate?(asOf.getTime()-new Date(latestSourceDate+'T00:00:00Z').getTime())/86400000:null;
+  // Seven calendar days tolerate weekends and short exchange holidays while
+  // preventing a years-old quote from being labeled current.
+  const fresh=ageDays!==null&&ageDays>=0&&ageDays<=7;
+  const status=!identityValid?'YAHOO_IDENTITY_OR_OHLC_NOT_PROVEN'
+   :!fresh?'YAHOO_STALE_FUTURE_OR_ABSENT_OHLC'
+   :sourceConflict?'YAHOO_CONFLICTING_LATEST_OHLC'
+   :!latestComplete?'YAHOO_INCOMPLETE_LATEST_OHLC'
+   :'YAHOO_VENUE_CURRENCY_OHLC_MATCH_ISIN_UNPROVEN';
+  return {status,validDays:valid.length,lastValidDate:valid.at(-1)?.date||null,latestSourceDate,latestSourceAgeDays:ageDays,sourceConflict,readOnly:true};
  }catch(error){return {status:'YAHOO_PROBE_FAILED',error:String(error.message).slice(0,140),readOnly:true};}
 }
-export async function probeSwissReference(shares,{limit=12,rotation=0,fetchHtml=fetchOfficialSixHtml,fetchYahoo=null}={}){
+export async function probeSwissReference(shares,{limit=12,rotation=0,fetchHtml=fetchOfficialSixHtml,fetchYahoo=null,asOfDate=new Date().toISOString().slice(0,10)}={}){
  const selected=selectSwissCandidates(shares,{limit,rotation}),results=[];
  for(const i of selected){
   const url=officialSixUrl(i);
   try{
    const evidence=evaluateSixPage(i,await fetchHtml(url),url);
-   const yahooEvidence=evidence.symbol?await verifyYahooCandidate(i,evidence.symbol,fetchYahoo):null;
+   const yahooEvidence=evidence.symbol?await verifyYahooCandidate(i,evidence.symbol,fetchYahoo,{asOfDate}):null;
    results.push({isin:i.isin,valor:i.symbol,currency:i.currency,mic:'XSWX',officialUrl:url,...evidence,yahooEvidence,readOnly:true,approvedForProduction:false});
   }catch(e){results.push({isin:i.isin,valor:i.symbol,currency:i.currency,mic:'XSWX',officialUrl:url,status:'OFFICIAL_FETCH_FAILED',error:String(e.message).slice(0,160),readOnly:true,approvedForProduction:false});}
  }
