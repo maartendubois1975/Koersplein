@@ -78,3 +78,15 @@ assert.match(invalidSourceReport,/London invalid source bars by approved provide
 assert.match(invalidSourceReport,/not additional stored-history defects/);
 assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...invalidSourceProbe,generatedAt:'2026-10-22T10:50:03.000Z'}),/London exact-date source quality/);
 console.log('Source bar field-level defect reporting remains read-only and freshness-gated PASS');
+
+const sharedYahooProbe={...invalidSourceProbe,sourceBarDiagnostics:{
+ ...invalidSourceProbe.sourceBarDiagnostics,
+ byMarket:{...invalidSourceProbe.sourceBarDiagnostics.byMarket,
+  XLON:{...invalidSourceProbe.sourceBarDiagnostics.byMarket.XLON,
+   bySourceFamily:{'yahoo-chart-feed':{sourceObservations:29,invalidSourceBars:25}}}}
+}};
+const sharedYahooReport=renderEuropeReport(sourceReport,'',sharedYahooProbe);
+assert.match(sharedYahooReport,/London invalid source bars by underlying feed: yahoo-chart-feed 25/);
+assert.match(sharedYahooReport,/correlated routes, not independent price sources/);
+assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...sharedYahooProbe,generatedAt:'2026-10-22T10:50:03.000Z'}),/underlying feed/);
+console.log('London Yahoo resolver/chart upstream correlation shown only for fresh evidence PASS');
