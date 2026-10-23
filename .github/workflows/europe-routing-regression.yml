@@ -20,6 +20,8 @@ on:
       - 'scripts/cloudflare/test-public-history-manifest.mjs'
       - 'scripts/cloudflare/test-europe-run-policy.mjs'
       - 'scripts/cloudflare/test-europe-summary.mjs'
+      - 'scripts/cloudflare/compare-europe-session-deltas.mjs'
+      - 'scripts/cloudflare/test-europe-session-deltas.mjs'
       - 'scripts/cloudflare/europe-ohlc-defects.mjs'
       - 'scripts/cloudflare/test-europe-ohlc-defects.mjs'
       - 'scripts/cloudflare/europe-ohlc-source-evidence.mjs'
@@ -95,6 +97,8 @@ jobs:
           node --check scripts/cloudflare/test-europe-ohlc-integrity.mjs
           node --check scripts/cloudflare/test-europe-run-policy.mjs
           node --check scripts/cloudflare/test-europe-summary.mjs
+          node --check scripts/cloudflare/compare-europe-session-deltas.mjs
+          node --check scripts/cloudflare/test-europe-session-deltas.mjs
           node --check scripts/cloudflare/europe-ohlc-defects.mjs
           node --check scripts/cloudflare/test-europe-ohlc-defects.mjs
           node --check scripts/cloudflare/europe-ohlc-source-evidence.mjs
@@ -143,6 +147,7 @@ jobs:
           node scripts/cloudflare/test-public-history-manifest.mjs
           node scripts/cloudflare/test-europe-run-policy.mjs
           node scripts/cloudflare/test-europe-summary.mjs
+          node scripts/cloudflare/test-europe-session-deltas.mjs
           node scripts/cloudflare/test-europe-summary-integration.mjs
           node scripts/cloudflare/test-europe-ohlc-defects.mjs
           node scripts/cloudflare/test-europe-ohlc-source-evidence.mjs
