@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
-import {isCompleteOhlcBar,isVerifiedNoTradeGap,previousClosedWeekday,validBars} from './europe-run-policy.mjs';
+import {auditBarIssue,isCompleteOhlcBar,isVerifiedNoTradeGap,previousClosedWeekday,validBars} from './europe-run-policy.mjs';
 
 const good={date:'2026-10-22',open:100,high:105,low:95,close:102,volume:20};
 assert.equal(isCompleteOhlcBar(good),true);
@@ -13,6 +13,11 @@ for(const invalid of [
 const mixed=[{...good,close:101},{...good,high:null},{...good,date:'2026-10-23'},good,{...good,date:'2026-10-21',low:null}];
 assert.deepEqual(validBars({bars:mixed},{startDate:'2026-10-22',endDate:'2026-10-22'}),[good],'Keep valid duplicate and exclude partial/out-of-range bars');
 
+assert.equal(auditBarIssue(good,'2026-10-22','2026-10-23'),null);
+assert.equal(auditBarIssue({...good,high:null},'2026-10-22','2026-10-23'),'INCOMPLETE_OR_INVALID_OHLC');
+assert.equal(auditBarIssue({...good,date:'2026-10-21'},'2026-10-22','2026-10-23'),'STALE_LAST_TRADE');
+assert.equal(auditBarIssue({...good,date:'2026-10-24'},'2026-10-22','2026-10-23'),'FUTURE_LAST_TRADE');
+assert.equal(auditBarIssue(null,'2026-10-22','2026-10-23'),'NO_VALID_BAR');
 assert.equal(previousClosedWeekday('2026-10-26'),'2026-10-23','Monday looks back to Friday');
 assert.equal(previousClosedWeekday('2026-10-23'),'2026-10-22');
 assert.throws(()=>previousClosedWeekday('2026-02-30'),/Invalid session date/);
@@ -31,4 +36,7 @@ for(const [name,content] of [['audit',audit],['daily',daily],['official',officia
 assert.match(audit,/isVerifiedNoTradeGap/);
 assert.match(daily,/isVerifiedNoTradeGap/);
 assert.match(official,/OFFICIAL_PARTIAL_OR_INVALID_OHLC/);
+const queue=await fs.readFile('scripts/cloudflare/europe-recovery-queue.mjs','utf8');
+assert.match(queue,/REPAIR_INCOMPLETE_OHLC/);
+assert.match(queue,/officialNoTradeReported/);
 console.log('Europe strict OHLC, no-trade evidence and production consumers PASS');
