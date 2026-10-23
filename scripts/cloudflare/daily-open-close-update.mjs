@@ -38,7 +38,7 @@ function failureCategory(message){
  return 'PROVIDER_OTHER';
 }
 const freshnessCutoff=latestClosedWeekday();
-const fullRequested=process.env.EUROPE_FULL_BACKFILL==='1'||parisRepair;
+const fullRequested=process.env.EUROPE_FULL_BACKFILL==='1';
 const firstFullAttempt=fullRequested&&Number(process.env.GITHUB_RUN_ATTEMPT||1)===1;
 const concurrency=Math.max(1,Math.min(4,Number(process.env.EUROPE_INSTRUMENT_CONCURRENCY||2)));
 const missingLimit=Math.max(1,Math.min(80,Number(process.env.EUROPE_MISSING_BACKFILL_LIMIT||35)));
