@@ -40,7 +40,13 @@ export function reconcileBulkWithCatalog({catalog,providerListings,bulkBars}){
   if(byIsin.has(isin))ambiguousIsins.add(isin);
   else byIsin.set(isin,code);
  }
- const bars=new Map(bulkBars.map(b=>[b.symbol,b]));
+ const bars=new Map(),duplicateBarSymbols=new Set();
+ for(const bar of bulkBars){
+  const symbol=String(bar.symbol||'').trim().toUpperCase();
+  if(!symbol)continue;
+  if(bars.has(symbol)||duplicateBarSymbols.has(symbol)){bars.delete(symbol);duplicateBarSymbols.add(symbol);}
+  else bars.set(symbol,bar);
+ }
  const catalogIsinCounts=new Map();
  for(const item of catalog){const isin=String(item.isin||'').toUpperCase();catalogIsinCounts.set(isin,(catalogIsinCounts.get(isin)||0)+1);}
  const matched=[],missing=[],ambiguous=[];
@@ -50,6 +56,7 @@ export function reconcileBulkWithCatalog({catalog,providerListings,bulkBars}){
   if(ambiguousIsins.has(isin)){ambiguous.push({isin,reason:'MULTIPLE_PROVIDER_CODES'});continue;}
   const code=byIsin.get(isin);
   if(!code){missing.push({isin,reason:'NO_ISIN_MATCH'});continue;}
+  if(duplicateBarSymbols.has(code)){ambiguous.push({isin,code,reason:'MULTIPLE_BULK_BARS_FOR_CODE'});continue;}
   const bar=bars.get(code);
   if(!bar){missing.push({isin,code,reason:'NO_BULK_BAR'});continue;}
   matched.push({isin,mic:item.mic,code,...bar});
