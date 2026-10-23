@@ -261,8 +261,8 @@ assert.equal(describeExactDateSourceBars([{...invalidExact,high:null}],'2026-10-
 assert.equal(describeExactDateSourceBars([{...invalidExact,low:'90'}],'2026-10-22').defects.INVALID_OR_MISSING_LOW,1);
 assert.equal(describeExactDateSourceBars([{...invalidExact,high:110,low:90}],'2026-10-22').completeBars,1);
 const diagnosticRegistry={...registry,async fetchDaily(i,range,primary,opts){
- assert.throws(()=>opts.acceptResult({bars:[invalidExact]}),/Source exact-date OHLC incomplete or inconsistent/);
- assert.throws(()=>opts.acceptResult({bars:[{...invalidExact,date:'2026-10-21'}]}),/Source has no exact-date daily bar/);
+ assert.throws(()=>opts.acceptResult({bars:[invalidExact]},{id:'yahoo-chart'}),/Source exact-date OHLC incomplete or inconsistent/);
+ assert.throws(()=>opts.acceptResult({bars:[{...invalidExact,date:'2026-10-21'}]},{id:'euronext-live'}),/Source has no exact-date daily bar/);
  throw Error('Alle providers faalden voor GB0000000001: yahoo-chart: Source exact-date OHLC incomplete or inconsistent');
 }};
 const invalidEvidence=await probeIncompleteOhlcCandidate(item,{registry:diagnosticRegistry,sources,market,listings});
@@ -276,5 +276,14 @@ assert.equal(qualitySummary.observations,2);
 assert.equal(qualitySummary.byMarket.XLON.defects.HIGH_BELOW_CLOSE,1);
 assert.equal(qualitySummary.byMarket.XLON.defects.NO_EXACT_DATE_BAR,1);
 assert.equal(qualitySummary.byMarket.XSWX.invalidSourceBars,0);
+assert.equal(qualitySummary.byProvider['yahoo-chart'].invalidSourceBars,1);
+assert.equal(qualitySummary.byProvider['yahoo-chart'].sourceObservations,1);
+assert.equal(qualitySummary.byProvider['euronext-live'].invalidSourceBars,0);
+assert.equal(qualitySummary.byMarket.XLON.byProvider['yahoo-chart'].defects.HIGH_BELOW_CLOSE,1);
+assert.equal(qualitySummary.byMarket.XLON.byProvider['euronext-live'].defects.NO_EXACT_DATE_BAR,1);
+assert.equal(invalidEvidence.sourceBarObservations[0].providerId,'yahoo-chart');
+assert.equal(invalidEvidence.sourceBarObservations[1].providerId,'euronext-live');
+const unattributed=summarizeOhlcSourceBarDiagnostics([{mic:'XLON',sourceBarObservations:[{readOnly:true,invalidBars:1,defects:{INVALID_OR_MISSING_HIGH:1}}]}]);
+assert.equal(unattributed.byProvider.UNATTRIBUTED.invalidSourceBars,1,'Missing provider identity must not be guessed');
 console.log('Exact-date source OHLC defect attribution, absent date and bounded read-only market diagnostics PASS');
 
