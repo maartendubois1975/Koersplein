@@ -42,6 +42,9 @@ const MARKET_RULES = {
 const isoDate = (unixSeconds) => new Date(unixSeconds * 1000).toISOString().slice(0, 10);
 const finiteOrNull = (value) => Number.isFinite(value) ? value : null;
 const normalize = (value) => String(value || '').trim().toLowerCase();
+// Yahoo labels UK pence as GBp; the LSE catalog uses GBX for the same unit.
+// Never confuse either with GBP pounds (100x difference).
+const priceCurrency = value => {const raw=String(value||'').trim();return raw==='GBp'||raw.toUpperCase()==='GBX'?'GBX':raw.toUpperCase();};
 export class YahooChartProvider {
  id=PROVIDER_ID; name='Yahoo Finance chart feed'; requiresApiKey=false;
  marketRule(instrument){return MARKET_RULES[String(instrument.mic||instrument.market||'').toUpperCase()]||null;}
@@ -59,8 +62,9 @@ export class YahooChartProvider {
   const expectedSymbol=String(instrument.providerSymbol||'').toUpperCase();
   if(meta.symbol?.toUpperCase()!==expectedSymbol)throw new Error(`Providersymbool wijkt af voor ${instrument.isin}: verwacht ${expectedSymbol}, ontvangen ${meta.symbol||'onbekend'}`);
   const mic=String(instrument.mic||instrument.market||'').toUpperCase();
-  // A Swiss ISIN may have several currency lines; never mix their histories.
-  if(mic==='XSWX'&&instrument.currency&&String(instrument.currency).toUpperCase()!==String(meta.currency||'').toUpperCase())
+  // Swiss securities and London listings can have several currency lines.
+  // In London, GBX/GBp are pence while GBP means pounds; never mix units.
+  if(['XSWX','XLON'].includes(mic)&&instrument.currency&&priceCurrency(instrument.currency)!==priceCurrency(meta.currency))
    throw new Error(`Providervaluta wijkt af voor ${instrument.isin}: verwacht ${instrument.currency}, ontvangen ${meta.currency||'onbekend'}`);
   if(instrument.allowProviderExchangeMismatch)return;
   const rule=this.marketRule(instrument);
