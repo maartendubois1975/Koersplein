@@ -103,6 +103,10 @@ assert.throws(()=>compareEuropeSessionDeltas(invalid,b),/unverified cutoff/);
 // but never mislabel them as verified ISIN identities.
 const iceBefore=summary(),iceAfter=summary({missing:['GB0000000002']});
 iceBefore.markets[0].mic='XICE';iceAfter.markets[0].mic='XICE';
+iceBefore.sourceFailureByMarket.XICE=iceBefore.sourceFailureByMarket.XLON;
+iceAfter.sourceFailureByMarket.XICE=iceAfter.sourceFailureByMarket.XLON;
+delete iceBefore.sourceFailureByMarket.XLON;
+delete iceAfter.sourceFailureByMarket.XLON;
 iceBefore.markets[0].missing[0].isin='XICE:BRIM';
 iceBefore.importFailures[0].mic='XICE';
 iceBefore.importFailures[0].isin='XICE:BRIM';
