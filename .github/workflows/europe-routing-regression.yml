@@ -17,6 +17,7 @@ on:
       - 'scripts/history/providers/yahoo-chart.mjs'
       - 'config/paris-follow-policy.json'
       - 'data/euronext-zurich.json'
+      - 'data/market-source-registry.json'
       - 'scripts/cloudflare/test-europe-provider-routing.mjs'
       - '.github/workflows/europe-routing-regression.yml'
   workflow_dispatch:
