@@ -32,6 +32,13 @@ export function buildEuropeRecoveryQueue(updates,audits) {
  const markets=[];
  for(const audit of audits||[])for(const market of audit.markets||[]){
   const instruments=[];
+  // Latest-bar audit gaps and historical OHLC debt are distinct. A newer valid
+  // candle must not hide a defective stored candle from the read-only queue.
+  const recentOhlcDebt=(market.recentOhlcDebtCandidates||[]).filter(row=>/^\d{4}-\d{2}-\d{2}$/.test(row.date||'')).map(row=>({
+   mic:market.mic,isin:row.isin,symbol:row.symbol||null,lastStoredDate:row.date,
+   auditReason:'INCOMPLETE_OR_INVALID_OHLC',ohlcDefects:row.defects||[],
+   evidenceScope:'RECENT_STORED_HISTORY',repairPolicy:'READ_ONLY_VERIFICATION_REQUIRED_APPEND_ONLY_PRESERVES_EXISTING_BAR'
+  }));
   for(const missing of market.missing||[]){
    const failure=failures.get(market.mic+'|'+missing.isin);
    const category=failure?classifyEuropeFailure(failure.error):'AUDIT_GAP_WITHOUT_SOURCE_FAILURE';
@@ -57,9 +64,9 @@ export function buildEuropeRecoveryQueue(updates,audits) {
   instruments.sort((a,b)=>b.priority-a.priority||a.isin.localeCompare(b.isin));
   const workstreams={};
   for(const item of instruments)workstreams[item.workstream]=(workstreams[item.workstream]||0)+1;
-  markets.push({mic:market.mic,missing:instruments.length,knownDataUnavailable:instruments.filter(x=>x.knownDataUnavailable).length,numericSwissValor:instruments.filter(x=>x.numericSwissValor).length,workstreams,instruments});
+  markets.push({mic:market.mic,missing:instruments.length,knownDataUnavailable:instruments.filter(x=>x.knownDataUnavailable).length,numericSwissValor:instruments.filter(x=>x.numericSwissValor).length,recentOhlcDebtCount:recentOhlcDebt.length,recentOhlcDebt,workstreams,instruments});
  }
  markets.sort((a,b)=>b.missing-a.missing);
- const totals={missing:markets.reduce((n,m)=>n+m.missing,0),numericSwissValor:markets.reduce((n,m)=>n+m.numericSwissValor,0),knownDataUnavailable:markets.reduce((n,m)=>n+m.knownDataUnavailable,0)};
+ const totals={missing:markets.reduce((n,m)=>n+m.missing,0),numericSwissValor:markets.reduce((n,m)=>n+m.numericSwissValor,0),knownDataUnavailable:markets.reduce((n,m)=>n+m.knownDataUnavailable,0),recentOhlcDebtDates:markets.reduce((n,m)=>n+m.recentOhlcDebtCount,0)};
  return {generatedAt:new Date().toISOString(),mode:'READ_ONLY_RECOVERY_QUEUE',warning:'Known DATA_UNAVAILABLE evidence does not prove no trading today. A failed provider does not prove a delisting. Verify ISIN, MIC and actual last trade before price writes.',totals,markets};
 }
