@@ -21,3 +21,21 @@ assert.equal((await probeIncompleteOhlcCandidate(item,{registry,sources,market,l
 const failed=await probeIncompleteOhlcCandidate(item,{registry:{...registry,async fetchDaily(){throw Error('Yahoo HTTP 404')}},sources,market,listings});
 assert.equal(failed.status,'NO_COMPLETE_APPROVED_SOURCE_BAR');
 console.log('Read-only incomplete OHLC provider evidence, exact identity, and approved allowlist PASS');
+
+const rotatingQueue={markets:[{mic:'XLON',instruments:Array.from({length:5},(_,index)=>({...item,isin:'GB000000000'+index}))}]};
+const first=selectIncompleteOhlcCandidates(rotatingQueue,{limit:2,perMarket:2,rotation:0});
+const second=selectIncompleteOhlcCandidates(rotatingQueue,{limit:2,perMarket:2,rotation:1});
+assert.equal(first.length,2);
+assert.equal(second.length,2);
+assert.ok(first.every(x=>!second.some(y=>y.isin===x.isin)),'Rotated probe must advance beyond first fixed batch');
+assert.deepEqual(selectIncompleteOhlcCandidates(rotatingQueue,{limit:2,perMarket:2,rotation:1}),second,'Same run rotation must be reproducible');
+assert.throws(()=>selectIncompleteOhlcCandidates(rotatingQueue,{rotation:-1}),/Invalid OHLC probe limits/);
+assert.deepEqual(res.candidateBar,{date:'2026-10-22',open:100,high:110,low:90,close:105,volume:null});
+assert.equal(res.currencyVerified,true);
+const gbpence={...registry,async fetchDaily(){return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:100,high:110,low:90,close:105}],providerMeta:{currency:'GBp'}}};}};
+assert.equal((await probeIncompleteOhlcCandidate(item,{registry:gbpence,sources,market,listings})).status,'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW','GBp and GBX are both pence');
+const wrongCurrency={...registry,async fetchDaily(){return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:100,high:110,low:90,close:105}],providerMeta:{currency:'GBP'}}};}};
+assert.equal((await probeIncompleteOhlcCandidate(item,{registry:wrongCurrency,sources,market,listings})).status,'SOURCE_CURRENCY_MISMATCH_REQUIRES_REVIEW','GBP pounds must never be treated as GBX pence');
+const missingCurrency={...registry,async fetchDaily(){return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:100,high:110,low:90,close:105}],providerMeta:{}}};}};
+assert.equal((await probeIncompleteOhlcCandidate(item,{registry:missingCurrency,sources,market,listings})).status,'SOURCE_CURRENCY_UNVERIFIED');
+console.log('Rotating OHLC read-only coverage and exact source candle/currency evidence PASS');
