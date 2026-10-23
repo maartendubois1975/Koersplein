@@ -162,7 +162,12 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
  const instrument={...share,mic:listingMic,market:listingMic,symbol:share.symbol||share.ticker,ticker:share.ticker||share.symbol,currency:share.currency||market.currency};
  const range={startDate:item.lastStoredDate,endDate:item.lastStoredDate};
  try{
-  const {provider,result}=await registry.fetchDaily(instrument,range,primary,{allowedProviderIds:allowed,timeoutMs,acceptResult:r=>validBars(r,range).some(b=>b.date===item.lastStoredDate&&isCompleteOhlcSourceBar(b))});
+  const {provider,result}=await registry.fetchDaily(instrument,range,primary,{allowedProviderIds:allowed,timeoutMs,acceptResult:r=>{
+    const exact=(r?.bars||[]).filter(b=>b?.date===item.lastStoredDate);
+    if(!exact.length)throw Error('Source has no exact-date daily bar');
+    if(!exact.some(isCompleteOhlcSourceBar))throw Error('Source exact-date OHLC incomplete or inconsistent');
+    return true;
+   }});
   const bar=validBars(result,range).find(b=>b.date===item.lastStoredDate&&isCompleteOhlcSourceBar(b));
   if(!bar)throw Error('Approved provider returned no complete internally consistent OHLC source bar');
   const normalizeCurrency=value=>String(value||'').trim()==='GBp'?'GBX':String(value||'').trim().toUpperCase();
