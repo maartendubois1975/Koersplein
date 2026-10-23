@@ -5,17 +5,33 @@ import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
 // read-only audit. No symbol guessing, no automatic identity promotion.
 export function selectIncompleteOhlcCandidates(queue,{limit=30,perMarket=18,rotation=0}={}){
  if(!Number.isInteger(limit)||limit<1||limit>100||!Number.isInteger(perMarket)||perMarket<1||perMarket>100||!Number.isSafeInteger(rotation)||rotation<0)throw Error('Invalid OHLC probe limits');
- const out=[];
+ const buckets=[];
  for(const market of queue?.markets||[]){
-  const all=(market.instruments||[]).filter(x=>x.auditReason==='INCOMPLETE_OR_INVALID_OHLC'&&/^\d{4}-\d{2}-\d{2}$/.test(x.lastStoredDate||''));
+  const seen=new Set(),all=[];
+  // Include both invalid latest bars and older defective stored dates. Dedupe
+  // the overlap so a single defective day never consumes two probe slots.
+  for(const item of [...(market.instruments||[]),...(market.recentOhlcDebt||[])]){
+   if(item.auditReason!=='INCOMPLETE_OR_INVALID_OHLC'||item.mic!==market.mic||!/^\\d{4}-\\d{2}-\\d{2}$/.test(item.lastStoredDate||''))continue;
+   const key=item.mic+'|'+item.isin+'|'+item.lastStoredDate;
+   if(seen.has(key))continue;
+   seen.add(key);all.push(item);
+  }
   if(!all.length)continue;
-  // Rotate the bounded read-only sample; otherwise every run probes the same first 30.
   const start=((rotation%all.length)*perMarket)%all.length;
   const count=Math.min(perMarket,all.length);
-  for(let i=0;i<count;i++)out.push(all[(start+i)%all.length]);
-  if(out.length>=limit)break;
+  buckets.push(Array.from({length:count},(_,i)=>all[(start+i)%all.length]));
  }
- return out.slice(0,limit);
+ if(!buckets.length)return [];
+ // Fair round-robin: the former market-by-market scan used the entire 30-item
+ // budget on London/Switzerland and never examined the remaining exchanges.
+ const out=[],offset=rotation%buckets.length;
+ for(let pass=0;pass<perMarket&&out.length<limit;pass++){
+  for(let i=0;i<buckets.length&&out.length<limit;i++){
+   const bucket=buckets[(offset+i)%buckets.length];
+   if(pass<bucket.length)out.push(bucket[pass]);
+  }
+ }
+ return out;
 }
 export async function probeIncompleteOhlcCandidate(item,{registry,sources,market,listings,timeoutMs=12000}){
  const base={mic:item.mic,isin:item.isin,symbol:item.symbol||null,date:item.lastStoredDate,readOnly:true};
