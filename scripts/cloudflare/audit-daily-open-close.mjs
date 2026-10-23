@@ -1,7 +1,7 @@
 import {fetchPublicHistoryManifest} from './public-history-manifest.mjs';
 import fs from 'node:fs/promises';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
-import {latestClosedWeekday,isCompleteOhlcBar,isVerifiedNoTradeGap,auditBarIssue,mapConcurrent} from './europe-run-policy.mjs';
+import {latestClosedWeekday,isCompleteOhlcBar,isVerifiedNoTradeGap,auditBarIssue,latestAuditBar,mapConcurrent} from './europe-run-policy.mjs';
 import {storageIdentityResolver} from './storage-identity.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 import {describeOhlcDefects,countOhlcDefects,recentOhlcDebt} from './europe-ohlc-defects.mjs';
@@ -51,10 +51,10 @@ for(const market of complete){
       }
       // Partition responses are not guaranteed sorted. Audit the maximum dated bar,
       // rather than assuming the last array element is the latest trade.
-      const dated=bars.filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x?.date||''));
-      const latestAny=dated.reduce((latest,x)=>!latest||x.date>latest.date?x:latest,null);
-      // A still-open session cannot replace the last completed daily candle.
-      const b=dated.filter(x=>x.date<=cutoff).reduce((latest,x)=>!latest||x.date>latest.date?x:latest,null);
+      const latestAny=latestAuditBar(bars);
+      // A still-open session cannot replace the last completed daily candle;
+      // a complete duplicate on the same date outranks an incomplete row.
+      const b=latestAuditBar(bars,cutoff);
       const barIssue=auditBarIssue(b||latestAny,cutoff,new Date().toISOString().slice(0,10));
       if(barIssue){
         const status=await officialDailyStatus({...s,mic:s.mic||market.mic},cutoff);
@@ -67,6 +67,7 @@ for(const market of complete){
       ok++;
     }catch(e){pushMissing({isin:s.isin,symbol:s.symbol||s.ticker,error:e.message,reason:/NO_HISTORY_PARTITIONS/.test(e.message)?'NO_HISTORY_PARTITIONS':/CATALOG_INSTRUMENT_MISSING/.test(e.message)?'CATALOG_INSTRUMENT_MISSING':'AUDIT_FETCH_ERROR',knownDataUnavailable:knownUnavailable.get(s.isin)?.reason||null})}
   });
+  recentOhlcDebtCandidates.sort((a,b)=>a.isin.localeCompare(b.isin)||a.date.localeCompare(b.date));
   out.push({mic:market.mic,name:market.name,catalog:shares.length,inactiveParis,openCloseOk:ok,verifiedNoTrades:noTrades.length,noTrades,skippedDataUnavailable:skipped,missingOpenClose:missing.length,missingReasons,invalidOhlcByDefect:countOhlcDefects(missing),recentInvalidOhlcDays,recentInvalidOhlcInstruments,recentOhlcDebtExamples,recentOhlcDebtCandidates,knownDataUnavailableAmongMissing:missing.filter(x=>x.knownDataUnavailable).length,missing});
 }
 await fs.mkdir('research/output',{recursive:true});
