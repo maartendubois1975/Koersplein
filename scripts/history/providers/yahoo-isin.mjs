@@ -19,7 +19,16 @@ export class YahooIsinProvider {
   const r=await fetch(url,{signal:opts.signal,headers:{Accept:'application/json','User-Agent':'Koersplein-history/1.0'}});
   if(!r.ok)throw Error(`Yahoo search HTTP ${r.status} voor ${isin}`);
   const p=await r.json();
-  const quotes=(p?.quotes||[]).filter(q=>q?.symbol&&String(q.symbol).toUpperCase().endsWith(suffix.toUpperCase()));
+  // Search ranking is not identity evidence: when Yahoo supplies an ISIN or
+  // instrument type, a contradictory match must never reach the chart route.
+  // Some valid Yahoo equity quotes omit ISIN/type, so absent metadata is not
+  // treated as an independently verified match (MIC/symbol/currency still gate).
+  const quotes=(Array.isArray(p?.quotes)?p.quotes:[]).filter(q=>{
+   if(!q?.symbol||!String(q.symbol).toUpperCase().endsWith(suffix.toUpperCase()))return false;
+   if(q.isin&&String(q.isin).toUpperCase()!==isin.toUpperCase())return false;
+   if(q.quoteType&&String(q.quoteType).toUpperCase()!=='EQUITY')return false;
+   return true;
+  });
   if(!quotes.length)throw Error(`Geen Yahoo ISIN-resolutie voor ${isin} op ${mic}`);
   let last;
   for(const q of quotes){
