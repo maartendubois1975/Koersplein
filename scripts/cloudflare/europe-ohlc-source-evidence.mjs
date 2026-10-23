@@ -213,7 +213,10 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
  const allowed=[primary,...(sources.historySources||[]).filter(x=>['DISCOVERY_FALLBACK','FALLBACK'].includes(x.role)).map(x=>x.provider)].filter((id,index,array)=>id&&array.indexOf(id)===index&&registry.get(id));
  if(!primary||!registry.get(primary)||!allowed.length)return {...base,status:'NO_APPROVED_INSTALLED_PROVIDER'};
  const instrument={...share,mic:listingMic,market:listingMic,symbol:share.symbol||share.ticker,ticker:share.ticker||share.symbol,currency:share.currency||market.currency};
- const range={startDate:item.lastStoredDate,endDate:item.lastStoredDate};
+ // Opt-in only for the immutable read-only audit: a missing Yahoo OPEN or
+ // CLOSE must be diagnosed, never silently discarded by the chart adapter.
+ // validBars below still excludes any incomplete or inconsistent source bar.
+ const range={startDate:item.lastStoredDate,endDate:item.lastStoredDate,includeIncompleteBars:true};
  const sourceBarObservations=[];
  try{
   const {provider,result}=await registry.fetchDaily(instrument,range,primary,{allowedProviderIds:allowed,timeoutMs,acceptResult:(r,attemptedProvider)=>{
