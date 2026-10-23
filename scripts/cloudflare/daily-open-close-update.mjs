@@ -4,7 +4,7 @@ import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {FactoryApiClient} from './client.mjs';
 import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
 import {storageIdentityResolver,newListingStorageKey} from './storage-identity.mjs';
-import {latestClosedWeekday,previousClosedWeekday,isVerifiedNoTradeGap,isCompleteOhlcBar,validBars,mapConcurrent} from './europe-run-policy.mjs';
+import {latestClosedWeekday,previousClosedWeekday,isVerifiedNoTradeGap,isCompleteOhlcBar,validBars,inspectDailyBarIntegrity,mapConcurrent} from './europe-run-policy.mjs';
 import {partitionBars} from './history-format.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
@@ -93,9 +93,20 @@ for(const market of targetMarkets){
     }
    }
 
+   // Log source ambiguity without logging price values. A contradictory date
+   // is quarantined by the shared policy, never appended or overwritten.
+   const checkedSourceBars=(response,attemptedProvider,window)=>{
+    const check=inspectDailyBarIntegrity(response,window);
+    if(check.conflicts.length){
+     console.log('EUROPE_SOURCE_OHLC_QUARANTINE',JSON.stringify({mic:market.mic,isin:s.isin,provider:attemptedProvider?.id||null,
+      conflictDates:check.conflicts.length,examples:check.conflicts.slice(0,3)}));
+     if(!check.bars.length)throw Error('Source duplicate-date OHLC conflict');
+    }
+    return check.bars;
+   };
    const range={startDate:fullBackfill||!beforeDate?'1990-01-01':new Date(new Date(beforeDate+'T00:00:00Z').getTime()+86400000).toISOString().slice(0,10),endDate:today};
-   const {provider,result}=await providers.fetchDaily(instrument,range,primary,{strictPreferred:false,timeoutMs:fullBackfill?60000:20000,allowedProviderIds,acceptResult:r=>{
-    const bars=validBars(r,range);
+   const {provider,result}=await providers.fetchDaily(instrument,range,primary,{strictPreferred:false,timeoutMs:fullBackfill?60000:20000,allowedProviderIds,acceptResult:(r,attemptedProvider)=>{
+    const bars=checkedSourceBars(r,attemptedProvider,range);
     return bars.length>0&&(fullBackfill||bars.at(-1).date>beforeDate);
    }});
    const bars=validBars(result,range);
@@ -107,7 +118,7 @@ for(const market of targetMarkets){
    if(fullBackfill&&afterDate&&afterDate<freshnessCutoff){
     const tailRange={startDate:new Date(new Date(afterDate+'T00:00:00Z').getTime()+86400000).toISOString().slice(0,10),endDate:today};
     try{
-     const tail=await providers.fetchDaily(instrument,tailRange,primary,{timeoutMs:20000,allowedProviderIds,acceptResult:r=>validBars(r,tailRange).length>0});
+     const tail=await providers.fetchDaily(instrument,tailRange,primary,{timeoutMs:20000,allowedProviderIds,acceptResult:(r,attemptedProvider)=>checkedSourceBars(r,attemptedProvider,tailRange).length>0});
      const tailBars=validBars(tail.result,tailRange);
      for(const [period,part] of partitionBars(tailBars))await client.putPartition(storageIsin,period,{bars:part,provider:tail.provider.id,appendOnly:true});
      if(tailBars.length){await client.completeHistory(storageIsin,{provider:tail.provider.id});afterDate=tailBars.at(-1).date;}
