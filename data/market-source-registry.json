@@ -978,6 +978,14 @@
     "XMAL": {
       "status": "APPROVED",
       "catalogSource": "Malta Stock Exchange Official List PDF",
+      "officialNoTradeEvidence": {
+        "provider": "mse-official-price-list",
+        "status": "APPROVED_READ_ONLY_NO_TRADE",
+        "sourceUrl": "https://cdn.borzamalta.com.mt/download/statistics/Price_List/Price%20List.pdf",
+        "scope": "EXACT_REPORT_DATE_AND_ISIN_SYMBOL_LAST_TRADE_DATE_ONLY",
+        "prohibitions": ["NO_OPEN_PRICE_IN_SOURCE", "NO_SYNTHETIC_OHLC", "NO_HISTORY_WRITES", "NO_LAST_TRADE_DATE_INFERENCE"],
+        "note": "MSE board-issued price list reports exact ISIN, ticker and last traded date. Only a complete current-session PDF with strict matching may verify no trade; daily OHLC approval remains NOT_VERIFIED."
+      },
       "historySources": [
         {
           "provider": "stockanalysis-bit",
