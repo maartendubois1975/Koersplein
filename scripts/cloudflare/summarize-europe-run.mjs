@@ -36,9 +36,9 @@ for(const m of updates.flatMap(x=>x.markets)){
  sourceFailureByMarket[m.mic]={failed:(m.failed||[]).length,categories};
 }
 const recoveryPriority=markets.map(m=>({mic:m.mic,catalog:m.catalog,missingOpenClose:m.missingOpenClose,knownDataUnavailableAmongMissing:m.knownDataUnavailableAmongMissing||0,importFailures:sourceFailureByMarket[m.mic]?.failed||0})).sort((a,b)=>b.missingOpenClose-a.missingOpenClose);
-const historicalOhlcDebt={readOnly:true,datesInRecoveryQueue:recoveryQueue.totals.recentOhlcDebtDates,byMarket:markets.map(m=>({mic:m.mic,defectiveDates:m.recentInvalidOhlcDays||0,affectedInstruments:m.recentInvalidOhlcInstruments||0})).filter(m=>m.defectiveDates).sort((a,b)=>b.defectiveDates-a.defectiveDates)};
 const diagnosis=diagnoseEuropeReports(updates,audits);
 const recoveryQueue=buildEuropeRecoveryQueue(updates,audits);
+const historicalOhlcDebt={readOnly:true,datesInRecoveryQueue:recoveryQueue.totals.recentOhlcDebtDates,byMarket:markets.map(m=>({mic:m.mic,defectiveDates:m.recentInvalidOhlcDays||0,affectedInstruments:m.recentInvalidOhlcInstruments||0})).filter(m=>m.defectiveDates).sort((a,b)=>b.defectiveDates-a.defectiveDates)};
 await fs.writeFile(`${dir}/europe-recovery-queue.json`,JSON.stringify(recoveryQueue,null,2));
 await fs.writeFile(`${dir}/europe-failure-diagnosis.json`,JSON.stringify(diagnosis,null,2));
 const failureDiagnosis=diagnosis.markets.slice(0,12).map(({mic,failed,missingOpenClose,numericSymbolFailures,categories,primaryCause,nextAction})=>({mic,failed,missingOpenClose,numericSymbolFailures,categories,primaryCause,nextAction}));
