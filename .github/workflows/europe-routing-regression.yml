@@ -26,6 +26,7 @@ on:
       - 'scripts/cloudflare/format-europe-run-report.mjs'
       - 'scripts/cloudflare/test-europe-reporting.mjs'
       - 'scripts/cloudflare/test-swiss-yahoo-identity.mjs'
+      - 'scripts/cloudflare/test-london-yahoo-currency.mjs'
       - 'scripts/cloudflare/test-europe-recovery-queue.mjs'
       - 'scripts/history/providers/yahoo-chart.mjs'
       - 'scripts/history/providers/yahoo-isin.mjs'
@@ -74,6 +75,7 @@ jobs:
           node --check scripts/cloudflare/format-europe-run-report.mjs
           node --check scripts/cloudflare/test-europe-reporting.mjs
           node --check scripts/cloudflare/test-swiss-yahoo-identity.mjs
+          node --check scripts/cloudflare/test-london-yahoo-currency.mjs
       - name: Test approved provider routing
         run: |
           node scripts/cloudflare/test-europe-provider-routing.mjs
@@ -86,3 +88,4 @@ jobs:
           node scripts/cloudflare/test-europe-recovery-queue.mjs
           node scripts/cloudflare/test-europe-reporting.mjs
           node scripts/cloudflare/test-swiss-yahoo-identity.mjs
+          node scripts/cloudflare/test-london-yahoo-currency.mjs
