@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic,isCompleteOhlcSourceBar,compareStoredAndSourceOhlc,classifyOhlcDifferenceMagnitude,summarizeOhlcProbeCoverage,describeExactDateSourceBars,summarizeOhlcSourceBarDiagnostics} from './europe-ohlc-source-evidence.mjs';
+import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic,isCompleteOhlcSourceBar,compareStoredAndSourceOhlc,classifyOhlcDifferenceMagnitude,summarizeOhlcProbeCoverage,describeExactDateSourceBars,summarizeOhlcSourceBarDiagnostics,sourceFeedFamily} from './europe-ohlc-source-evidence.mjs';
 const item={mic:'XLON',isin:'GB0000000001',symbol:'TEST',lastStoredDate:'2026-10-22',auditReason:'INCOMPLETE_OR_INVALID_OHLC'};
 const queue={markets:[{mic:'XLON',instruments:[item,{...item,isin:'GB0000000002',auditReason:'STALE_LAST_TRADE'}]},{mic:'XPAR',instruments:[{...item,mic:'XPAR',isin:'FR0000000001'}]}]};
 assert.equal(selectIncompleteOhlcCandidates(queue).length,2);
@@ -287,3 +287,27 @@ const unattributed=summarizeOhlcSourceBarDiagnostics([{mic:'XLON',sourceBarObser
 assert.equal(unattributed.byProvider.UNATTRIBUTED.invalidSourceBars,1,'Missing provider identity must not be guessed');
 console.log('Exact-date source OHLC defect attribution, absent date and bounded read-only market diagnostics PASS');
 
+
+
+// Two Yahoo adapters share one upstream chart feed. Counting them as
+// independent validation would overstate the evidence for London/Switzerland.
+assert.equal(sourceFeedFamily('yahoo-chart'),'yahoo-chart-feed');
+assert.equal(sourceFeedFamily('yahoo-isin-resolver'),'yahoo-chart-feed');
+assert.equal(sourceFeedFamily('nasdaq-baltic-official'),'nasdaq-baltic-official');
+assert.equal(sourceFeedFamily(null),'UNATTRIBUTED');
+const correlated=summarizeOhlcSourceBarDiagnostics([{
+ mic:'XLON',sourceBarObservations:[
+  {readOnly:true,providerId:'yahoo-chart',invalidBars:1,defects:{HIGH_BELOW_CLOSE:1}},
+  {readOnly:true,providerId:'yahoo-isin-resolver',invalidBars:1,defects:{HIGH_BELOW_CLOSE:1}},
+  {readOnly:true,providerId:'independent-official',invalidBars:0,defects:{}}
+ ]
+}]);
+assert.equal(correlated.observations,3);
+assert.equal(correlated.invalidSourceBars,2);
+assert.equal(correlated.correlatedProviderAttempts,1,'Two Yahoo attempts on one date are correlated, not two independent sources');
+assert.equal(correlated.bySourceFamily['yahoo-chart-feed'].sourceObservations,2);
+assert.equal(correlated.bySourceFamily['yahoo-chart-feed'].invalidSourceBars,2);
+assert.equal(correlated.byMarket.XLON.bySourceFamily['yahoo-chart-feed'].defects.HIGH_BELOW_CLOSE,2);
+assert.equal(correlated.bySourceFamily['independent-official'].sourceObservations,1);
+assert.equal(calls[0].range.includeIncompleteBars,true,'Only read-only OHLC probe requests missing-field evidence');
+console.log('Yahoo shared-source correlation and read-only missing-field range guards PASS');
