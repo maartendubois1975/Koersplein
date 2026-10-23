@@ -1,3 +1,4 @@
+import {fetchPublicHistoryManifest} from './public-history-manifest.mjs';
 import fs from 'node:fs/promises';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {latestClosedWeekday,isCompleteOhlcBar,isVerifiedNoTradeGap,auditBarIssue,mapConcurrent} from './europe-run-policy.mjs';
@@ -14,9 +15,7 @@ const complete=plan.markets.filter(x=>x.state==='COMPLETE').filter((_,index)=>in
 const out=[];
 const storedCatalog=await client.catalog();
 const parisPolicy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
-const manifestResponse=await fetch(client.baseUrl+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
-if(!manifestResponse.ok)throw Error('Public manifest HTTP '+manifestResponse.status);
-const manifest=(await manifestResponse.json()).instruments||{};
+const manifest=await fetchPublicHistoryManifest(client.baseUrl,{shardIndex});
 const cutoff=latestClosedWeekday();
 for(const market of complete){
   const file=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
