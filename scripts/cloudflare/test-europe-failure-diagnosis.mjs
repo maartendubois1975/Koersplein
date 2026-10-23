@@ -48,3 +48,7 @@ console.log('Source exact-date missing versus invalid OHLC error classification 
 assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0000000001: yahoo-chart: Source exact-date OHLC mixes complete and invalid duplicate bars'),'SOURCE_EXACT_DATE_MIXED_BARS');
 assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0000000001: yahoo-chart: Source exact-date OHLC mixes complete and invalid duplicate bars; yahoo-isin-resolver: Source has no exact-date daily bar'),'SOURCE_EXACT_DATE_MIXED_BARS');
 console.log('Mixed-validity duplicate OHLC evidence is separately classified PASS');
+
+assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0000000001: yahoo-chart: Source duplicate-date OHLC conflict'),'SOURCE_DUPLICATE_DATE_OHLC_CONFLICT');
+assert.equal(classifyEuropeFailure('Alle providers faalden voor CH0000000001: yahoo-chart: Source duplicate-date OHLC conflict; yahoo-isin-resolver: Provider returned no daily bars'),'SOURCE_DUPLICATE_DATE_OHLC_CONFLICT');
+console.log('Conflicting same-day production source OHLC is quarantined and classified PASS');
