@@ -10,6 +10,16 @@ assert.equal(classifyEuropeFailure(stale),'NO_NEW_BARS_IN_RANGE');
 assert.equal(classifyEuropeFailure('yahoo-chart: Yahoo HTTP 404 voor BAD.SW'),'DIRECT_SYMBOL_NOT_FOUND');
 assert.equal(classifyEuropeFailure('HTTP 429 rate limit'),'RATE_LIMIT');
 assert.equal(classifyEuropeFailure('Providerbeurs wijkt af'),'SYMBOL_IDENTITY_MISMATCH');
+
+// Regression from production 2026-10-23: 403/401 in ISINs were wrongly
+// classified as authorization errors despite the provider returning 404/empty.
+assert.equal(classifyEuropeFailure('Alle providers faalden voor NL0011794037: yahoo-chart: Yahoo HTTP 404 voor AD.BR'),'DIRECT_SYMBOL_NOT_FOUND');
+assert.equal(classifyEuropeFailure('Alle providers faalden voor FR001401AU31: yahoo-chart: Provider returned no usable bars in requested range; euronext-live: Geen verhandelde Euronext koershistorie voor FR001401AU31-ALXP'),'NO_NEW_BARS_IN_RANGE');
+assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0042900001: yahoo-chart: Provider returned no daily bars'),'PROVIDER_RETURNED_NO_BARS');
+assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0040300001: yahoo-chart: Yahoo HTTP 403 voor TEST.L'),'AUTH_OR_ACCESS');
+assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0042900001: yahoo-chart: Yahoo HTTP 429 voor TEST.L'),'RATE_LIMIT');
+assert.equal(classifyEuropeFailure('Alle providers faalden voor SI0031103805: yahoo-isin-resolver: Geen Yahoo-beursregel voor XLJU'),'NO_SUPPORTED_PROVIDER_FOR_MARKET');
+
 assert.deepEqual(providerAttempts(swiss).map(x=>x.provider),['yahoo-chart','yahoo-isin-resolver']);
 const updates=[{markets:[
  {mic:'XSWX',failed:[{isin:'AT0000KTMI02',symbol:'41860974',error:swiss},{isin:'CH0006326851',symbol:'CCAP',error:stale}]},
