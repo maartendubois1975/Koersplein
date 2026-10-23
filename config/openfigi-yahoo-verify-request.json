@@ -1,5 +1,5 @@
 {
-  "requestedAt": "2026-10-23T09:13:00Z",
+  "requestedAt": "2026-10-23T09:19:00Z",
   "mode": "READ_ONLY_REFERENCE_VALIDATION",
   "sourceRunId": 39923000352,
   "scope": [
@@ -8,6 +8,6 @@
   ],
   "offset": 260,
   "limit": 40,
-  "reason": "Complete final 17 of 277 unique Swiss/London OpenFIGI Yahoo candidates (pages 0-79, 80-159, 160-259 already reported). Fetch first-page Swiss evidence from run 39929012949 for independent official SIX sponsored cross-check. Read-only only; no price/catalog writes and no automatic promotion.",
+  "reason": "Recheck final 17 read-only Yahoo candidates with completed Swiss source provenance. Optional official SIX sponsored HTML is dynamically rendered and currently exposes zero server-side rows; record SOURCE_UNAVAILABLE without failing independent Yahoo research or approving any identities.",
   "swissYahooRunId": 39929012949
 }
