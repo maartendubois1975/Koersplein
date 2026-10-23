@@ -10,11 +10,17 @@ export function renderEuropeReport(report,runUrl='') {
   lines.push(`Status: **${report.status||'UNKNOWN'}**`);
   lines.push(`History: **${report.historyCompleteness||'NOT_VERIFIED'}**`);
   lines.push(`All expected markets accounted for: **${report.marketCoverage?(report.marketCoverage.complete?'yes':'no'):'not independently checked'}**`);
+  if(report.marketCoverage?.complete===false)lines.push('**PARTIAL AUDIT: the totals below exclude missing markets and must not be compared with complete 31-market baselines.**');
   lines.push('','| Metric | Count |','|---|---:|');
   for(const [label,key] of [['Catalog','catalog'],['Current open/close','currentOpenClose'],['Official no-trade','verifiedNoTrades'],['Missing open/close','missingOpenClose'],['Failed imports','failedImports'],['Deferred missing','deferredMissing'],['Historical backfill failures','historicalBackfillFailures']])
     lines.push(`| ${label} | ${t[key]??'unknown'} |`);
   if(Number.isInteger(t.recentInvalidOhlcDays))lines.push(`| Incomplete OHLC dates in last 30 calendar days | ${t.recentInvalidOhlcDays} |`);
   if(Number.isInteger(t.recentInvalidOhlcInstruments))lines.push(`| Instruments with recent incomplete OHLC | ${t.recentInvalidOhlcInstruments} |`);
+  if(report.historicalOhlcDebt?.readOnly){
+    lines.push(`Historical incomplete OHLC dates queued for read-only source review: **${report.historicalOhlcDebt.datesInRecoveryQueue??'unknown'}** (not repaired).`);
+    const debt=report.historicalOhlcDebt.byMarket||[];
+    if(debt.length)lines.push('Largest historical OHLC debt: '+debt.slice(0,5).map(m=>`${m.mic} ${m.defectiveDates}`).join(', ')+'.');
+  }
   const anomalies=report.marketCoverage?.anomalies||[];
   if(anomalies.length)lines.push('',`**Market coverage anomalies:** ${anomalies.length}`, ...anomalies.slice(0,6).map(x=>`- ${x.kind||'plan'} shard ${x.shard??'?'}: ${x.issue} ${x.mic||''}`));
   const defects=Object.entries(report.invalidOhlcByDefect||{}).sort((a,b)=>b[1]-a[1]).slice(0,6);
