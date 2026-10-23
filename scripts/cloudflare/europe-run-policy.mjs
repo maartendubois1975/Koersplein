@@ -40,6 +40,7 @@ export function auditBarIssue(bar,cutoff,today) {
  if(!bar)return 'NO_VALID_BAR';
  if(!isCompleteOhlcBar(bar))return 'INCOMPLETE_OR_INVALID_OHLC';
  if(bar.date>today)return 'FUTURE_LAST_TRADE';
+ if(bar.date>cutoff)return 'SESSION_NOT_YET_CLOSED';
  if(bar.date<cutoff)return 'STALE_LAST_TRADE';
  return null;
 }
