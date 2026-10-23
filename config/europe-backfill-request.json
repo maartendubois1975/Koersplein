@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-23T14:35:00.000Z",
+  "requestedAt": "2026-10-23T14:52:00.000Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Verify bounded official Malta later-snapshot no-trade proof after the 2026-10-23 PDF replaced the 2026-10-22 report. 8 update shards, 8 audits, 31 COMPLETE MICs; no full backfill, no historical overwrite, approved-only source identities and Paris existing-history-only."
+  "reason": "Verify Malta and Nasdaq Baltic bounded later official no-trade snapshots on immutable commit, with 8/8 update and audit shards and 31/31 COMPLETE markets. Evidence-only, approved sources, no full backfill, no existing OHLC overwrite, Paris existing-history-only."
 }
