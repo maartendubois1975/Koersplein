@@ -29,5 +29,14 @@ try{
  const daily=await provider.fetchDaily(instrument,{startDate:'2026-10-22',endDate:'2026-10-22'});
  assert.equal(daily.bars.length,1);
  assert.match(requested[0],/\/trading\?date=2026-10-22$/,'Daily append uses official trading session');
+
+ requested.length=0;
+ globalThis.fetch=async url=>{
+  requested.push(String(url));
+  return {ok:true,async text(){return '<html>No trading data</html>';}};
+ };
+ await assert.rejects(()=>provider.fetchDaily(instrument,{startDate:'2026-10-22',endDate:'2026-10-22'}),/Geen Nasdaq Baltic koershistorie/);
+ assert.equal(requested.filter(u=>u.includes('/trading?')).length,1,'A single-day request must not probe 45 previous sessions');
+ assert.equal(requested.filter(u=>u.endsWith('/historical')).length,1,'Historical fallback is attempted once, without inventing trades');
 }finally{globalThis.fetch=originalFetch;}
 console.log('Nasdaq Baltic: official ISIN routing, real OHLC, no fabricated prices, long-range history PASS');
