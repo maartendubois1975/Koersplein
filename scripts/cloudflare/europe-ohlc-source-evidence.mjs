@@ -139,13 +139,21 @@ export function describeExactDateSourceBars(bars,date){
  if(!exact.length)add('NO_EXACT_DATE_BAR');
  return {exactDateBars:exact.length,completeBars,invalidBars:exact.length-completeBars,defects,readOnly:true};
 }
+// Yahoo's direct chart adapter and its ISIN search adapter ultimately read
+// the SAME Yahoo chart backend. Their agreement is not independent evidence.
+// Unknown or unattributed sources must never be promoted to verified identity.
+export function sourceFeedFamily(providerId){
+ if(providerId==='yahoo-chart'||providerId==='yahoo-isin-resolver')return 'yahoo-chart-feed';
+ return typeof providerId==='string'&&/^[a-z0-9-]+$/.test(providerId)?providerId:'UNATTRIBUTED';
+}
 export function summarizeOhlcSourceBarDiagnostics(rows){
- const byMarket={},byProvider={};let observations=0,invalidSourceBars=0,probesWithInvalidBars=0;
+ const byMarket={},byProvider={},bySourceFamily={};let observations=0,invalidSourceBars=0,probesWithInvalidBars=0,correlatedProviderAttempts=0;
  for(const row of rows||[]){
   if(!row||typeof row.mic!=='string')continue;
   const samples=Array.isArray(row.sourceBarObservations)?row.sourceBarObservations:[];
   if(!byMarket[row.mic])byMarket[row.mic]={probesWithInvalidBars:0,sourceObservations:0,invalidSourceBars:0,defects:{}};
   const m=byMarket[row.mic];let hasInvalid=false;
+  const familiesInProbe=new Set();
   for(const sample of samples){
    if(!sample?.readOnly||!Number.isSafeInteger(sample.invalidBars)||sample.invalidBars<0)continue;
    observations++;m.sourceObservations++;
@@ -153,10 +161,16 @@ export function summarizeOhlcSourceBarDiagnostics(rows){
    // Provider-level evidence identifies which approved feed supplied an
    // inconsistent bar. Missing identity remains explicitly unattributed.
    const providerId=typeof sample.providerId==='string'&&/^[a-z0-9-]+$/.test(sample.providerId)?sample.providerId:'UNATTRIBUTED';
+   const family=sourceFeedFamily(providerId);
+   if(familiesInProbe.has(family))correlatedProviderAttempts++;
+   else familiesInProbe.add(family);
+   if(!bySourceFamily[family])bySourceFamily[family]={sourceObservations:0,invalidSourceBars:0,defects:{}};
+   if(!m.bySourceFamily)m.bySourceFamily={};
+   if(!m.bySourceFamily[family])m.bySourceFamily[family]={sourceObservations:0,invalidSourceBars:0,defects:{}};
    if(!byProvider[providerId])byProvider[providerId]={sourceObservations:0,invalidSourceBars:0,defects:{}};
    if(!m.byProvider)m.byProvider={};
    if(!m.byProvider[providerId])m.byProvider[providerId]={sourceObservations:0,invalidSourceBars:0,defects:{}};
-   for(const bucket of [byProvider[providerId],m.byProvider[providerId]]){
+   for(const bucket of [byProvider[providerId],m.byProvider[providerId],bySourceFamily[family],m.bySourceFamily[family]]){
     bucket.sourceObservations++;
     bucket.invalidSourceBars+=sample.invalidBars;
    }
@@ -166,11 +180,13 @@ export function summarizeOhlcSourceBarDiagnostics(rows){
     m.defects[key]=(m.defects[key]||0)+value;
     byProvider[providerId].defects[key]=(byProvider[providerId].defects[key]||0)+value;
     m.byProvider[providerId].defects[key]=(m.byProvider[providerId].defects[key]||0)+value;
+    bySourceFamily[family].defects[key]=(bySourceFamily[family].defects[key]||0)+value;
+    m.bySourceFamily[family].defects[key]=(m.bySourceFamily[family].defects[key]||0)+value;
    }
   }
   if(hasInvalid){probesWithInvalidBars++;m.probesWithInvalidBars++;}
  }
- return {readOnly:true,observations,invalidSourceBars,probesWithInvalidBars,byMarket,byProvider};
+ return {readOnly:true,observations,invalidSourceBars,probesWithInvalidBars,correlatedProviderAttempts,byMarket,byProvider,bySourceFamily};
 }
 // Evidence-only difference against the exact stored candle. Never substitute
 // a provider value for an existing stored field or infer missing prices.
@@ -221,7 +237,7 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
  try{
   const {provider,result}=await registry.fetchDaily(instrument,range,primary,{allowedProviderIds:allowed,timeoutMs,acceptResult:(r,attemptedProvider)=>{
     const observation=describeExactDateSourceBars(r?.bars,item.lastStoredDate);
-    if(sourceBarObservations.length<6)sourceBarObservations.push({...observation,providerId:attemptedProvider?.id||null});
+    if(sourceBarObservations.length<6)sourceBarObservations.push({...observation,providerId:attemptedProvider?.id||null,sourceFeedFamily:sourceFeedFamily(attemptedProvider?.id)});
     if(!observation.exactDateBars)throw Error('Source has no exact-date daily bar');
     if(!observation.completeBars)throw Error('Source exact-date OHLC incomplete or inconsistent');
     return true;
@@ -233,7 +249,7 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
   const sourceCurrency=result.providerMeta?.currency||null;
   const actualCurrency=normalizeCurrency(sourceCurrency);
   const candidateBar={date:bar.date,open:bar.open,high:bar.high,low:bar.low,close:bar.close,volume:bar.volume??null};
-  const evidence={...identity,sourceVsStored:compareStoredAndSourceOhlc(item.storedOhlc,candidateBar),provider:provider.id,sourceCurrency,expectedCurrency:instrument.currency||null,candidateBar,sourceSymbol:result.providerMeta?.symbol||null,sourceExchange:result.providerMeta?.fullExchangeName||result.providerMeta?.exchangeName||null,sourceBarObservations,storagePolicy:'APPEND_ONLY_EXISTING_BAR_UNCHANGED'};
+  const evidence={...identity,sourceVsStored:compareStoredAndSourceOhlc(item.storedOhlc,candidateBar),provider:provider.id,sourceFeedFamily:sourceFeedFamily(provider.id),sourceCurrency,expectedCurrency:instrument.currency||null,candidateBar,sourceSymbol:result.providerMeta?.symbol||null,sourceExchange:result.providerMeta?.fullExchangeName||result.providerMeta?.exchangeName||null,sourceBarObservations,storagePolicy:'APPEND_ONLY_EXISTING_BAR_UNCHANGED'};
   if(!expectedCurrency||!actualCurrency)return {...evidence,status:'SOURCE_CURRENCY_UNVERIFIED'};
   if(expectedCurrency!==actualCurrency)return {...evidence,status:'SOURCE_CURRENCY_MISMATCH_REQUIRES_REVIEW'};
   return {...evidence,status:'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW',currencyVerified:true,barDate:bar.date};
