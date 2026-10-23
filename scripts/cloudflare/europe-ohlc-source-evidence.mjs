@@ -119,6 +119,47 @@ export function isCompleteOhlcSourceBar(bar){
  const [open,high,low,close]=values;
  return high>=Math.max(open,close)&&low<=Math.min(open,close)&&high>=low;
 }
+// Read-only diagnosis of provider bars for the exact requested date. Counts
+// explain whether London failures come from absent dates, missing fields or
+// contradictory price ranges; never infer replacement prices or trade status.
+export function describeExactDateSourceBars(bars,date){
+ const exact=(Array.isArray(bars)?bars:[]).filter(bar=>bar?.date===date);
+ const defects={};let completeBars=0;
+ const add=key=>{defects[key]=(defects[key]||0)+1;};
+ for(const bar of exact){
+  if(isCompleteOhlcSourceBar(bar)){completeBars++;continue;}
+  const good=key=>typeof bar[key]==='number'&&Number.isFinite(bar[key])&&bar[key]>0;
+  for(const key of ['open','high','low','close'])if(!good(key))add('INVALID_OR_MISSING_'+key.toUpperCase());
+  if(good('high')&&good('open')&&bar.high<bar.open)add('HIGH_BELOW_OPEN');
+  if(good('high')&&good('close')&&bar.high<bar.close)add('HIGH_BELOW_CLOSE');
+  if(good('low')&&good('open')&&bar.low>bar.open)add('LOW_ABOVE_OPEN');
+  if(good('low')&&good('close')&&bar.low>bar.close)add('LOW_ABOVE_CLOSE');
+  if(good('high')&&good('low')&&bar.high<bar.low)add('HIGH_BELOW_LOW');
+ }
+ if(!exact.length)add('NO_EXACT_DATE_BAR');
+ return {exactDateBars:exact.length,completeBars,invalidBars:exact.length-completeBars,defects,readOnly:true};
+}
+export function summarizeOhlcSourceBarDiagnostics(rows){
+ const byMarket={};let observations=0,invalidSourceBars=0,probesWithInvalidBars=0;
+ for(const row of rows||[]){
+  if(!row||typeof row.mic!=='string')continue;
+  const samples=Array.isArray(row.sourceBarObservations)?row.sourceBarObservations:[];
+  if(!byMarket[row.mic])byMarket[row.mic]={probesWithInvalidBars:0,sourceObservations:0,invalidSourceBars:0,defects:{}};
+  const m=byMarket[row.mic];let hasInvalid=false;
+  for(const sample of samples){
+   if(!sample?.readOnly||!Number.isSafeInteger(sample.invalidBars)||sample.invalidBars<0)continue;
+   observations++;m.sourceObservations++;
+   invalidSourceBars+=sample.invalidBars;m.invalidSourceBars+=sample.invalidBars;
+   if(sample.invalidBars)hasInvalid=true;
+   for(const [key,value] of Object.entries(sample.defects||{})){
+    if(!/^[A-Z_]+$/.test(key)||!Number.isSafeInteger(value)||value<0)continue;
+    m.defects[key]=(m.defects[key]||0)+value;
+   }
+  }
+  if(hasInvalid){probesWithInvalidBars++;m.probesWithInvalidBars++;}
+ }
+ return {readOnly:true,observations,invalidSourceBars,probesWithInvalidBars,byMarket};
+}
 // Evidence-only difference against the exact stored candle. Never substitute
 // a provider value for an existing stored field or infer missing prices.
 export function compareStoredAndSourceOhlc(stored,source){
@@ -161,11 +202,13 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
  if(!primary||!registry.get(primary)||!allowed.length)return {...base,status:'NO_APPROVED_INSTALLED_PROVIDER'};
  const instrument={...share,mic:listingMic,market:listingMic,symbol:share.symbol||share.ticker,ticker:share.ticker||share.symbol,currency:share.currency||market.currency};
  const range={startDate:item.lastStoredDate,endDate:item.lastStoredDate};
+ const sourceBarObservations=[];
  try{
   const {provider,result}=await registry.fetchDaily(instrument,range,primary,{allowedProviderIds:allowed,timeoutMs,acceptResult:r=>{
-    const exact=(r?.bars||[]).filter(b=>b?.date===item.lastStoredDate);
-    if(!exact.length)throw Error('Source has no exact-date daily bar');
-    if(!exact.some(isCompleteOhlcSourceBar))throw Error('Source exact-date OHLC incomplete or inconsistent');
+    const observation=describeExactDateSourceBars(r?.bars,item.lastStoredDate);
+    if(sourceBarObservations.length<6)sourceBarObservations.push(observation);
+    if(!observation.exactDateBars)throw Error('Source has no exact-date daily bar');
+    if(!observation.completeBars)throw Error('Source exact-date OHLC incomplete or inconsistent');
     return true;
    }});
   const bar=validBars(result,range).find(b=>b.date===item.lastStoredDate&&isCompleteOhlcSourceBar(b));
@@ -175,12 +218,12 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
   const sourceCurrency=result.providerMeta?.currency||null;
   const actualCurrency=normalizeCurrency(sourceCurrency);
   const candidateBar={date:bar.date,open:bar.open,high:bar.high,low:bar.low,close:bar.close,volume:bar.volume??null};
-  const evidence={...identity,sourceVsStored:compareStoredAndSourceOhlc(item.storedOhlc,candidateBar),provider:provider.id,sourceCurrency,expectedCurrency:instrument.currency||null,candidateBar,sourceSymbol:result.providerMeta?.symbol||null,sourceExchange:result.providerMeta?.fullExchangeName||result.providerMeta?.exchangeName||null,storagePolicy:'APPEND_ONLY_EXISTING_BAR_UNCHANGED'};
+  const evidence={...identity,sourceVsStored:compareStoredAndSourceOhlc(item.storedOhlc,candidateBar),provider:provider.id,sourceCurrency,expectedCurrency:instrument.currency||null,candidateBar,sourceSymbol:result.providerMeta?.symbol||null,sourceExchange:result.providerMeta?.fullExchangeName||result.providerMeta?.exchangeName||null,sourceBarObservations,storagePolicy:'APPEND_ONLY_EXISTING_BAR_UNCHANGED'};
   if(!expectedCurrency||!actualCurrency)return {...evidence,status:'SOURCE_CURRENCY_UNVERIFIED'};
   if(expectedCurrency!==actualCurrency)return {...evidence,status:'SOURCE_CURRENCY_MISMATCH_REQUIRES_REVIEW'};
   return {...evidence,status:'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW',currencyVerified:true,barDate:bar.date};
  }catch(error){
-  return {...identity,status:'NO_COMPLETE_APPROVED_SOURCE_BAR',failureCategory:classifyEuropeFailure(error.message),error:String(error.message).slice(0,400)};
+  return {...identity,status:'NO_COMPLETE_APPROVED_SOURCE_BAR',failureCategory:classifyEuropeFailure(error.message),sourceBarObservations,error:String(error.message).slice(0,400)};
  }
 }
 
