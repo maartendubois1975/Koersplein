@@ -14,7 +14,7 @@ function day(year,month,date){
 // only when its last-traded date is independently checked against stored history.
 // Bound this look-ahead to avoid relying on arbitrarily old audit sessions.
 function boundedLaterSnapshot(snapshotDate,targetDate){
- if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(String(targetDate||'')))return false;
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(String(targetDate||'')))return false;
  const lag=(Date.parse(snapshotDate+'T00:00:00Z')-Date.parse(targetDate+'T00:00:00Z'))/86400000;
  return Number.isInteger(lag)&&lag>=0&&lag<=7;
 }
