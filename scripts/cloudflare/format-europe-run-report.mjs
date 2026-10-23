@@ -10,7 +10,10 @@ export function renderEuropeReport(report,runUrl='') {
   lines.push(`Status: **${report.status||'UNKNOWN'}**`);
   lines.push(`History: **${report.historyCompleteness||'NOT_VERIFIED'}**`);
   lines.push(`All expected markets accounted for: **${report.marketCoverage?(report.marketCoverage.complete?'yes':'no'):'not independently checked'}**`);
-  if(report.marketCoverage?.complete===false)lines.push('**PARTIAL AUDIT: the totals below exclude missing markets and must not be compared with complete 31-market baselines.**');
+  if(report.marketCoverage?.complete===false){
+    const auditMissing=(report.marketCoverage.anomalies||[]).some(a=>a.kind==='audit'||a.issue==='DUPLICATE_PLAN_MARKET');
+    lines.push(auditMissing?'**PARTIAL AUDIT: audited markets are missing or invalid; totals must not be compared with complete 31-market baselines.**':'**PARTIAL RUN: audit market coverage is complete, but update reports are missing or invalid; import totals are unknown and the run is not verified.**');
+  }
   lines.push('','| Metric | Count |','|---|---:|');
   for(const [label,key] of [['Catalog','catalog'],['Current open/close','currentOpenClose'],['Official no-trade','verifiedNoTrades'],['Missing open/close','missingOpenClose'],['Failed imports','failedImports'],['Deferred missing','deferredMissing'],['Historical backfill failures','historicalBackfillFailures']])
     lines.push(`| ${label} | ${t[key]??'unknown'} |`);
