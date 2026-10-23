@@ -406,3 +406,24 @@ assert.equal(absenceStats.invalidSourceBars,0,'An absent date is not an invalid 
 assert.equal(absenceStats.byMarket.XLON.distinctFeedNoExactDateObservations,1);
 assert.equal(absenceStats.byMarket.XSWX.discordantExactDateFeedObservations,1);
 console.log('Missing exact-date observations are correlated-feed-aware and never infer no-trade PASS');
+
+
+// Real provider-registry behavior: an empty exact-date response previously
+// threw before the source observer, concealing NO_EXACT_DATE_BAR evidence.
+const {ProviderRegistry}=await import('../history/provider-registry.mjs');
+const actualEmptyRegistry=new ProviderRegistry([
+ {id:'good',supports:()=>true,async fetchDaily(){return {bars:[]};}},
+ {id:'backup',supports:()=>true,async fetchDaily(){return {bars:[mixedValid],providerMeta:{currency:'GBX'}};}}
+]);
+const actualEmptyProbe=await probeIncompleteOhlcCandidate(item,{registry:actualEmptyRegistry,sources,market,listings,timeoutMs:1000});
+assert.equal(actualEmptyProbe.status,'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW');
+assert.equal(actualEmptyProbe.provider,'backup');
+assert.equal(actualEmptyProbe.sourceBarObservations[0].providerId,'good');
+assert.equal(actualEmptyProbe.sourceBarObservations[0].exactDateBars,0);
+assert.equal(actualEmptyProbe.sourceBarObservations[0].defects.NO_EXACT_DATE_BAR,1);
+assert.equal(actualEmptyProbe.sourceBarObservations[1].providerId,'backup');
+const actualEmptySummary=summarizeOhlcSourceBarDiagnostics([actualEmptyProbe]);
+assert.equal(actualEmptySummary.missingExactDateObservations,1);
+assert.equal(actualEmptySummary.distinctFeedNoExactDateObservations,1);
+assert.equal(actualEmptySummary.invalidSourceBars,0);
+console.log('Production registry opt-in surfaces empty exact-date source evidence while approved fallback remains review-only PASS');
