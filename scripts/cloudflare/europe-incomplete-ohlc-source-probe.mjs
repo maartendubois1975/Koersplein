@@ -37,8 +37,12 @@ await mapConcurrent(items,2,async(item,index)=>{
  }
  results[index]=await probeIncompleteOhlcCandidate(item,{registry,sources:sourceRegistry.markets?.[item.mic],market,listings});
 });
-const counts={};
-for(const row of results)counts[row.status]=(counts[row.status]||0)+1;
-const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_PRODUCTION_WRITES',status:'COMPLETED',sourceQueueGeneratedAt:queue.generatedAt||null,rotation,requested:items.length,counts,results};
+const counts={},scopeCounts={},marketCounts={};
+for(const row of results){
+ counts[row.status]=(counts[row.status]||0)+1;
+ scopeCounts[row.evidenceScope||'LATEST_AUDIT_BAR']=(scopeCounts[row.evidenceScope||'LATEST_AUDIT_BAR']||0)+1;
+ marketCounts[row.mic]=(marketCounts[row.mic]||0)+1;
+}
+const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_PRODUCTION_WRITES',status:'COMPLETED',sourceQueueGeneratedAt:queue.generatedAt||null,rotation,requested:items.length,counts,scopeCounts,marketCounts,results};
 await fs.writeFile(output,JSON.stringify(report,null,2)+'\n');
 console.log('EUROPE_OHLC_SOURCE_PROBE',JSON.stringify({requested:items.length,counts}));
