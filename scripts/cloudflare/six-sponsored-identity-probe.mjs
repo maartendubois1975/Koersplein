@@ -5,7 +5,9 @@ import {SIX_SPONSORED_SOURCE,parseSixSponsoredAdmissions,compareSixSponsoredWith
 const input=process.env.SIX_YAHOO_EVIDENCE_PATH||'research/output/swiss-base/openfigi-yahoo-verification.json';
 const output='research/output/six-sponsored-identity-evidence.json';
 const yahoo=JSON.parse(await fs.readFile(input,'utf8'));
-if(yahoo.mode!=='READ_ONLY_NO_CATALOG_OR_HISTORY_WRITES'||!Array.isArray(yahoo.results))throw Error('Expected verified read-only Yahoo evidence');
+const request=JSON.parse(await fs.readFile('config/openfigi-yahoo-verify-request.json','utf8'));
+if(request.mode!=='READ_ONLY_REFERENCE_VALIDATION'||!Number.isSafeInteger(request.sourceRunId)||!Number.isSafeInteger(request.swissYahooRunId)||request.swissYahooRunId<1)throw Error('Invalid read-only SIX evidence source configuration');
+if(yahoo.mode!=='READ_ONLY_NO_CATALOG_OR_HISTORY_WRITES'||!Array.isArray(yahoo.results)||yahoo.sourceRunId!==request.sourceRunId||yahoo.offset!==0||!yahoo.results.some(x=>x?.mic==='XSWX'))throw Error('SIX source evidence is not the matching first-page Swiss Yahoo validation artifact');
 let status='SOURCE_UNAVAILABLE',error=null,officialRows=[],results=[];
 try{
  const r=await fetch(SIX_SPONSORED_SOURCE,{signal:AbortSignal.timeout(25000),headers:{Accept:'text/html','User-Agent':'Koersplein-official-identity-research/1.0'}});
