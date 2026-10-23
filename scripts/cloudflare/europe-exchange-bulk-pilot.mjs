@@ -20,14 +20,20 @@ async function get(path){
 }
 const reports=[];
 for(const {exchange,mic} of exchanges){
+ try{
  const [listings,raw]=await Promise.all([get('exchange-symbol-list/'+exchange),get('eod-bulk-last-day/'+exchange)]);
  const normalized=normalizeBulkBars(raw,{date});
  const catalog=exchange==='PA'?officialParis.filter(x=>['XPAR','ALXP','XMLI'].includes(x.mic)):[];
  const coverageComparable=exchange==='PA';
  const comparison=reconcileBulkWithCatalog({catalog,providerListings:listings,bulkBars:normalized.bars});
- const report={exchange,mic,date,providerListings:listings.length,rawBars:raw.length,validBars:normalized.bars.length,invalidRows:normalized.errors.slice(0,50),invalidRowCount:normalized.errors.length,officialCatalogSize:coverageComparable?catalog.length:null,coverageComparable,matched:coverageComparable?comparison.matched.length:null,missing:coverageComparable?comparison.missing.length:null,ambiguous:coverageComparable?comparison.ambiguous.length:null,missingExamples:comparison.missing.slice(0,30)};
+ const report={exchange,mic,date,status:'READ_ONLY_OBSERVED',providerListings:listings.length,rawBars:raw.length,validBars:normalized.bars.length,invalidRows:normalized.errors.slice(0,50),invalidRowCount:normalized.errors.length,officialCatalogSize:coverageComparable?catalog.length:null,coverageComparable,matched:coverageComparable?comparison.matched.length:null,missing:coverageComparable?comparison.missing.length:null,ambiguous:coverageComparable?comparison.ambiguous.length:null,missingExamples:comparison.missing.slice(0,30)};
  reports.push(report);
  console.log('EXCHANGE_BULK_PILOT',JSON.stringify({...report,invalidRows:undefined,missingExamples:undefined}));
+ }catch(error){
+  const report={exchange,mic,date,status:'SOURCE_ERROR',error:String(error.message||error),coverageComparable:false,matched:null,missing:null};
+  reports.push(report);
+  console.error('EXCHANGE_BULK_PILOT_SOURCE_ERROR',JSON.stringify(report));
+ }
 }
 await fs.mkdir('research/output',{recursive:true});
 await fs.writeFile('research/output/europe-exchange-bulk-pilot.json',JSON.stringify({generatedAt:new Date().toISOString(),readOnly:true,date,reports},null,2)+'\n');
