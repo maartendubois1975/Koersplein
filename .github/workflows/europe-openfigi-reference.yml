@@ -75,6 +75,8 @@ jobs:
           const report=JSON.parse(fs.readFileSync(path,'utf8'));
           console.log('Audited queue:',report.queueGeneratedAt,'ISINs queried:',report.itemsRequested,'Batch errors:',report.errors.length);
           for(const [k,v] of Object.entries(report.counts))console.log('- '+k+': '+v);
+          for(const [mic,counts] of Object.entries(report.byMarket||{}))console.log('- '+mic+': '+JSON.stringify(counts));
+          for(const error of report.errors.slice(0,3))console.log('Batch error: '+JSON.stringify(error));
           for(const mic of ['XSWX','XLON']){
            const examples=report.items.filter(x=>x.mic===mic&&x.classification==='REFERENCE_CANDIDATE_REQUIRES_INDEPENDENT_VERIFICATION').slice(0,5);
            console.log('\\n'+mic+' candidate examples (NOT production-approved):');
