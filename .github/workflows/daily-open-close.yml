@@ -49,6 +49,7 @@ jobs:
           node scripts/cloudflare/test-nasdaq-baltic-provider.mjs
           node scripts/cloudflare/test-europe-recovery-queue.mjs
           node scripts/cloudflare/test-europe-reporting.mjs
+          node scripts/cloudflare/test-swiss-yahoo-identity.mjs
       - name: Test production identity verification
         run: node scripts/cloudflare/test-github-oidc.mjs
       - name: Verify production Worker and credentials
