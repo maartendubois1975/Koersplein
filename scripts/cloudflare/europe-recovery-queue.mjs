@@ -3,7 +3,7 @@ import {classifyEuropeFailure,providerAttempts} from './europe-failure-diagnosis
 // Correlate audit gaps with source failures. Evidence only: no inferred
 // delistings, no synthetic no-trade days, no catalog or history mutations.
 const IDENTITY=new Set(['UNRESOLVED_MARKET_SYMBOL','DIRECT_SYMBOL_NOT_FOUND','ISIN_SEARCH_UNRESOLVED','SYMBOL_IDENTITY_MISMATCH']);
-const SESSION=new Set(['NO_NEW_BARS_IN_RANGE','PROVIDER_RETURNED_NO_BARS']);
+const SESSION=new Set(['NO_NEW_BARS_IN_RANGE','PROVIDER_RETURNED_NO_BARS','OFFICIAL_SOURCE_NO_USABLE_BARS']);
 const ACCESS=new Set(['AUTH_OR_ACCESS','RATE_LIMIT','NETWORK_TIMEOUT']);
 const SOURCE=new Set(['NO_SUPPORTED_PROVIDER_FOR_MARKET','SOURCE_HTTP_404','SYMBOL_MAPPING_REJECTED']);
 
