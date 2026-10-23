@@ -7,9 +7,9 @@ on:
         required: true
         type: string
       exchanges:
-        description: 'Comma-separated: PA,XETRA,BR'
+        description: 'Comma-separated: PA,XETRA,BR,SW'
         required: false
-        default: 'PA,XETRA,BR'
+        default: 'PA,XETRA,BR,SW'
         type: string
 permissions:
   contents: read
