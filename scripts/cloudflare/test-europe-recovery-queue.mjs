@@ -29,3 +29,16 @@ assert.equal(london.knownDataUnavailable,'SOURCE_PREFLIGHT_GATE');
 assert.equal(queue.markets[0].instruments.find(x=>x.isin==='GB0000000001').workstream,'REPAIR_STORAGE_IDENTITY_OR_ARCHIVE');
 assert.ok(queue.warning.includes('does not prove no trading'));
 console.log('Europe recovery queue: audited gaps, provider attempts, SIX valor and historic DATA_UNAVAILABLE evidence PASS');
+
+const debtAudit=[{markets:[{mic:'XLON',missing:[],recentOhlcDebtCandidates:[
+ {isin:'GB0000000001',symbol:'A',date:'2026-10-20',defects:['MISSING_HIGH']},
+ {isin:'GB0000000001',symbol:'A',date:'2026-10-21',defects:['LOW_ABOVE_CLOSE']}
+]}]}];
+const historical=buildEuropeRecoveryQueue([],debtAudit);
+assert.equal(historical.totals.missing,0,'A valid latest candle must remain current');
+assert.equal(historical.totals.recentOhlcDebtDates,2,'Older incomplete candles remain repair debt');
+assert.equal(historical.markets[0].recentOhlcDebt.length,2);
+assert.equal(historical.markets[0].recentOhlcDebt[0].evidenceScope,'RECENT_STORED_HISTORY');
+assert.equal(historical.markets[0].recentOhlcDebt[1].lastStoredDate,'2026-10-21');
+assert.equal(historical.markets[0].recentOhlcDebt[0].repairPolicy,'READ_ONLY_VERIFICATION_REQUIRED_APPEND_ONLY_PRESERVES_EXISTING_BAR');
+console.log('Historical OHLC repair debt retained independently from current daily status PASS');
