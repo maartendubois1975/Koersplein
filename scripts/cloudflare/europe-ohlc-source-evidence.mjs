@@ -33,17 +33,28 @@ export function selectIncompleteOhlcCandidates(queue,{limit=30,perMarket=18,rota
   if(!all.length)continue;
   const start=((rotation%all.length)*perMarket)%all.length;
   const count=Math.min(perMarket,all.length);
-  buckets.push(Array.from({length:count},(_,i)=>all[(start+i)%all.length]));
+  buckets.push({mic:market.mic,total:all.length,items:Array.from({length:count},(_,i)=>all[(start+i)%all.length]),used:0});
  }
  if(!buckets.length)return [];
- // Fair round-robin: the former market-by-market scan used the entire 30-item
- // budget on London/Switzerland and never examined the remaining exchanges.
+ // First give every affected market one rotating slot, so small exchanges
+ // remain visible. Allocate remaining slots by outstanding historical debt:
+ // London's thousands of defective dates should not receive only two probes
+ // when a run has dozens of available read-only source requests.
  const out=[],offset=rotation%buckets.length;
- for(let pass=0;pass<perMarket&&out.length<limit;pass++){
-  for(let i=0;i<buckets.length&&out.length<limit;i++){
-   const bucket=buckets[(offset+i)%buckets.length];
-   if(pass<bucket.length)out.push(bucket[pass]);
+ const ordered=Array.from({length:buckets.length},(_,i)=>buckets[(offset+i)%buckets.length]);
+ for(const bucket of ordered){
+  if(out.length>=limit)break;
+  out.push(bucket.items[bucket.used++]);
+ }
+ while(out.length<limit){
+  let best=null,bestScore=-1;
+  for(const bucket of ordered){
+   if(bucket.used>=bucket.items.length)continue;
+   const score=bucket.total/(bucket.used+1);
+   if(score>bestScore){best=bucket;bestScore=score;}
   }
+  if(!best)break;
+  out.push(best.items[best.used++]);
  }
  return out;
 }
