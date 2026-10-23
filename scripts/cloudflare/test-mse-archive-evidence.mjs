@@ -31,6 +31,10 @@ try{
  await assert.rejects(()=>probeMseArchive('2026-10-22',{archiveBytes:Buffer.from('not zip')}),/bounded ZIP/);
  await assert.rejects(()=>probeMseArchive('2026-10-22',{fetchFn:async()=>({ok:true,url:'https://example.com/evil.zip',arrayBuffer:async()=>bytes})}),/outside approved source/);
  const response={ok:true,url:MSE_ARCHIVE_URL,arrayBuffer:async()=>bytes};
- assert.equal((await probeMseArchive('2026-10-22',{fetchFn:async()=>response,extractPdf:read})).equities,29);
+ assert.equal((await probeMseArchive('2026-10-22',{fetchFn:async(url,options)=>{
+  assert.equal(url,MSE_ARCHIVE_URL);
+  assert.equal(options.headers.Accept,'*/*','Official ZIP endpoint can return application/x-zip-compressed (406 on application/zip-only Accept)');
+  return response;
+ },extractPdf:read})).equities,29);
  console.log('MSE archive evidence: exact-date only, approved URL, bounded ZIP, no price writes PASS');
 }finally{await fs.rm(dir,{recursive:true,force:true});}
