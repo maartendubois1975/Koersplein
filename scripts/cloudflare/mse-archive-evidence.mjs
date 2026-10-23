@@ -35,7 +35,7 @@ export async function probeMseArchive(targetDate,{fetchFn=fetch,extractPdf=null,
  const result={targetDate,sourceUrl:MSE_ARCHIVE_URL,readOnly:true,priceWrites:0,ohlcAvailable:false,status:'UNAVAILABLE',pdfEntries:0,inspected:0,errors:[]};
  let bytes=archiveBytes;
  if(!bytes){
-  const response=await fetchFn(MSE_ARCHIVE_URL,{signal:AbortSignal.timeout(45000),headers:{Accept:'application/zip','User-Agent':'Koersplein-official-archive-evidence/1.0'}});
+  const response=await fetchFn(MSE_ARCHIVE_URL,{signal:AbortSignal.timeout(45000),headers:{Accept:'*/*','User-Agent':'Koersplein-official-archive-evidence/1.0'}});
   if(!response.ok)throw Error('MSE archive HTTP '+response.status);
   const url=new URL(response.url||MSE_ARCHIVE_URL);
   if(url.protocol!=='https:'||url.hostname!=='cdn.borzamalta.com.mt'||url.pathname!=='/download/archives/pricelists/Pricelists2026.zip')throw Error('MSE archive redirected outside approved source');
