@@ -9,15 +9,17 @@ const SOURCE=new Set(['NO_SUPPORTED_PROVIDER_FOR_MARKET','SOURCE_HTTP_404','SYMB
 
 function workstream(category,auditReason,numericSwissValor) {
  if(numericSwissValor)return 'VERIFY_SIX_VALOR_TO_CURRENT_TICKER';
+ if(auditReason==='INCOMPLETE_OR_INVALID_OHLC')return 'REPAIR_INCOMPLETE_OHLC';
+ if(auditReason==='FUTURE_LAST_TRADE')return 'INVESTIGATE_FUTURE_DATED_BAR';
  if(IDENTITY.has(category))return 'VERIFY_OFFICIAL_ISIN_MIC_TICKER';
  if(SESSION.has(category))return 'VERIFY_LAST_OFFICIAL_TRADE';
  if(ACCESS.has(category))return 'PROVIDER_ACCESS_OR_RETRY';
  if(SOURCE.has(category))return 'APPROVE_COMPATIBLE_MARKET_SOURCE';
- if(auditReason==='NO_HISTORY_PARTITIONS'||auditReason==='CATALOG_INSTRUMENT_MISSING')return 'REPAIR_STORAGE_IDENTITY_OR_ARCHIVE';
+ if(['NO_HISTORY_PARTITIONS','NO_VALID_BAR','CATALOG_INSTRUMENT_MISSING'].includes(auditReason))return 'REPAIR_STORAGE_IDENTITY_OR_ARCHIVE';
  return 'INSPECT_PROVIDER_AND_AUDIT_EVIDENCE';
 }
 function priority(item) {
- const weights={VERIFY_SIX_VALOR_TO_CURRENT_TICKER:100,VERIFY_OFFICIAL_ISIN_MIC_TICKER:85,REPAIR_STORAGE_IDENTITY_OR_ARCHIVE:80,APPROVE_COMPATIBLE_MARKET_SOURCE:75,PROVIDER_ACCESS_OR_RETRY:65,VERIFY_LAST_OFFICIAL_TRADE:55,INSPECT_PROVIDER_AND_AUDIT_EVIDENCE:45};
+ const weights={VERIFY_SIX_VALOR_TO_CURRENT_TICKER:100,INVESTIGATE_FUTURE_DATED_BAR:98,REPAIR_INCOMPLETE_OHLC:95,VERIFY_OFFICIAL_ISIN_MIC_TICKER:85,REPAIR_STORAGE_IDENTITY_OR_ARCHIVE:80,APPROVE_COMPATIBLE_MARKET_SOURCE:75,PROVIDER_ACCESS_OR_RETRY:65,VERIFY_LAST_OFFICIAL_TRADE:55,INSPECT_PROVIDER_AND_AUDIT_EVIDENCE:45};
  return Math.max(0,(weights[item.workstream]||40)-(item.knownDataUnavailable?10:0));
 }
 
@@ -36,6 +38,8 @@ export function buildEuropeRecoveryQueue(updates,audits) {
    const item={
     mic:market.mic,isin:missing.isin,symbol:missing.symbol||failure?.symbol||null,
     lastStoredDate:missing.lastDate||null,auditReason:missing.reason||null,
+    officialNoTradeReported:missing.officialNoTradeReported===true,
+    officialLastTradeDate:missing.officialLastTradeDate||null,
     knownDataUnavailable:missing.knownDataUnavailable||null,
     sourceFailureCategory:category,
     attempts:failure?providerAttempts(failure.error):[],
