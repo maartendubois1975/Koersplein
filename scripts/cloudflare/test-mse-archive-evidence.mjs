@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {execFileSync} from 'node:child_process';
+import {probeMseArchive,safeArchivePdfNames,MSE_ARCHIVE_URL} from './mse-archive-evidence.mjs';
+const rows=Array.from({length:29},(_,i)=>`MT${String(1000000000+i)} 10,000 TEST${i} Test ${i} 1.000 1.000 (20-10-26) 1.000 1.000`).join('\n');
+const report=date=>`Malta Stock Exchange plc Price List\n${date} Issued By Authority of the Board\nEquities\n${rows}\nCorporate Bonds\n`;
+const dir=await fs.mkdtemp(path.join(os.tmpdir(),'mse-archive-test-'));
+try{
+ const pdf=path.join(dir,'random-name.pdf');
+ await fs.writeFile(pdf,'%PDF-1.7\n'+'.'.repeat(120));
+ const zip=path.join(dir,'official.zip');
+ execFileSync('zip',['-q','-j',zip,pdf]);
+ const bytes=await fs.readFile(zip);
+ const read=()=>report('Thursday, October 22, 2026');
+ const found=await probeMseArchive('2026-10-22',{archiveBytes:bytes,extractPdf:read});
+ assert.equal(found.status,'EXACT_DATE_OFFICIAL_SNAPSHOT_REVIEW_REQUIRED');
+ assert.equal(found.equities,29);
+ assert.equal(found.priceWrites,0);
+ assert.equal(found.ohlcAvailable,false);
+ assert.equal(found.rows[0].lastTradeDate,'2026-10-20');
+ const missing=await probeMseArchive('2026-10-22',{archiveBytes:bytes,extractPdf:()=>report('Friday, October 23, 2026')});
+ assert.equal(missing.status,'NO_EXACT_DATE_OFFICIAL_SNAPSHOT');
+ assert.equal(missing.rows,undefined,'Never accept later snapshots as exact-date evidence');
+ assert.deepEqual(safeArchivePdfNames('folder/test.pdf\nother.txt\n'),['folder/test.pdf']);
+ assert.throws(()=>safeArchivePdfNames('../escape.pdf\n'),/UNSAFE_ENTRY/);
+ assert.throws(()=>safeArchivePdfNames(Array(301).fill('x.pdf').join('\n')),/TOO_MANY_ENTRIES/);
+ await assert.rejects(()=>probeMseArchive('2026-02-30',{archiveBytes:bytes}),/INVALID/);
+ await assert.rejects(()=>probeMseArchive('2025-10-22',{archiveBytes:bytes}),/INVALID/);
+ await assert.rejects(()=>probeMseArchive('2026-10-22',{archiveBytes:Buffer.from('not zip')}),/bounded ZIP/);
+ await assert.rejects(()=>probeMseArchive('2026-10-22',{fetchFn:async()=>({ok:true,url:'https://example.com/evil.zip',arrayBuffer:async()=>bytes})}),/outside approved source/);
+ const response={ok:true,url:MSE_ARCHIVE_URL,arrayBuffer:async()=>bytes};
+ assert.equal((await probeMseArchive('2026-10-22',{fetchFn:async()=>response,extractPdf:read})).equities,29);
+ console.log('MSE archive evidence: exact-date only, approved URL, bounded ZIP, no price writes PASS');
+}finally{await fs.rm(dir,{recursive:true,force:true});}
