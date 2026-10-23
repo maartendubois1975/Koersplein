@@ -40,8 +40,10 @@ jobs:
         with: { ref: main }
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
-      - name: Verify approved Europe provider routing
-        run: node scripts/cloudflare/test-europe-provider-routing.mjs
+      - name: Verify approved Europe provider routing and Paris history safety
+        run: |
+          node scripts/cloudflare/test-europe-provider-routing.mjs
+          node scripts/cloudflare/test-paris-history-eligibility.mjs
       - name: Test production identity verification
         run: node scripts/cloudflare/test-github-oidc.mjs
       - name: Verify production Worker and credentials
