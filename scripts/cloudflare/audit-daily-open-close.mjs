@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
-import {latestClosedWeekday,isCompleteOhlcBar,isVerifiedNoTradeGap,mapConcurrent} from './europe-run-policy.mjs';
+import {latestClosedWeekday,isCompleteOhlcBar,isVerifiedNoTradeGap,auditBarIssue,mapConcurrent} from './europe-run-policy.mjs';
 import {storageIdentityResolver} from './storage-identity.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 import { FactoryApiClient } from './client.mjs';
@@ -40,12 +40,13 @@ for(const market of complete){
       // Partition responses are not guaranteed sorted. Audit the maximum dated bar,
       // rather than assuming the last array element is the latest trade.
       const b=bars.filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x?.date||'')).reduce((latest,x)=>!latest||x.date>latest.date?x:latest,null);
-      if(!isCompleteOhlcBar(b)||b.date<cutoff||b.date>new Date().toISOString().slice(0,10)){
+      const barIssue=auditBarIssue(b,cutoff,new Date().toISOString().slice(0,10));
+      if(barIssue){
         const status=await officialDailyStatus({...s,mic:s.mic||market.mic},cutoff);
         if(isCompleteOhlcBar(b)&&b.date<cutoff&&isVerifiedNoTradeGap(status,b.date,cutoff)){
           noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,lastStoredDate:b.date,...status});return;
         }
-        pushMissing({isin:s.isin,symbol:s.symbol||s.ticker,lastDate:b?.date||null,reason:'MISSING_INVALID_OR_STALE_OHLC',knownDataUnavailable:knownUnavailable.get(s.isin)?.reason||null});
+        pushMissing({isin:s.isin,symbol:s.symbol||s.ticker,lastDate:b?.date||null,reason:barIssue,officialNoTradeReported:status?.status==='NO_TRADES',officialLastTradeDate:status?.lastTradeDate||null,knownDataUnavailable:knownUnavailable.get(s.isin)?.reason||null});
         return;
       }
       ok++;
