@@ -40,4 +40,11 @@ const conflicting=reconcileBulkWithCatalog({
 });
 assert.equal(conflicting.matched.length,0);
 assert.equal(conflicting.ambiguous.length,2);
+const duplicateBars=reconcileBulkWithCatalog({
+ catalog:[{isin:'FR0000000001',mic:'XPAR'}],
+ providerListings:[{Code:'ABC',Isin:'FR0000000001'}],
+ bulkBars:[result.bars[0],{...result.bars[0],close:10}]
+});
+assert.equal(duplicateBars.matched.length,0);
+assert.equal(duplicateBars.ambiguous[0].reason,'MULTIPLE_BULK_BARS_FOR_CODE');
 console.log('EXCHANGE_BULK_RECONCILE_TESTS_OK');
