@@ -31,6 +31,9 @@ jobs:
           SOURCE_RUN_ID=$(node -p "JSON.parse(require('fs').readFileSync('config/openfigi-probe-request.json','utf8')).sourceRunId")
           test "$SOURCE_RUN_ID" -gt 0
           gh run download "$SOURCE_RUN_ID" --repo "${{ github.repository }}" --name europe-run-summary --dir research/output
+          QUEUE_FILE=$(find research/output -type f -name 'europe-recovery-queue.json' -print -quit)
+          test -n "$QUEUE_FILE" || { echo 'Recovery queue missing from downloaded artifact'; find research/output -maxdepth 5 -type f; exit 1; }
+          if [ "$QUEUE_FILE" != 'research/output/europe-recovery-queue.json' ]; then cp "$QUEUE_FILE" research/output/europe-recovery-queue.json; fi
           test -s research/output/europe-recovery-queue.json
       - name: Map Swiss and London missing ISINs (reference evidence only)
         run: node scripts/cloudflare/openfigi-reference-probe.mjs
