@@ -22,6 +22,8 @@ await fs.mkdir('research/output',{recursive:true});
 async function checkpoint(){
  result.generatedAt=new Date().toISOString();
  result.counts=result.items.reduce((a,x)=>(a[x.classification]=(a[x.classification]||0)+1,a),{});
+ result.byMarket={};
+ for(const item of result.items){const counts=result.byMarket[item.mic]??={};counts[item.classification]=(counts[item.classification]||0)+1;}
  await fs.writeFile(output,JSON.stringify(result,null,2));
 }
 for(let start=0;start<items.length;start+=10){
@@ -29,20 +31,29 @@ for(let start=0;start<items.length;start+=10){
  const headers={'Content-Type':'application/json','Accept':'application/json','User-Agent':'Koersplein-reference-research/1.0'};
  if(process.env.OPENFIGI_API_KEY)headers['X-OPENFIGI-APIKEY']=process.env.OPENFIGI_API_KEY;
  try{
-  let response;
-  for(let attempt=0;attempt<2;attempt++){
-   response=await fetch(sourceUrl,{method:'POST',headers,body:JSON.stringify(batch.map(figiJob)),signal:AbortSignal.timeout(30000)});
-   if(response.status!==429||attempt===1)break;
-   const retry=Math.min(65000,Math.max(3000,Number(response.headers.get('retry-after')||60)*1000));
-   await sleep(retry);
+  let response,lastRequestError;
+  for(let attempt=0;attempt<3;attempt++){
+   try{
+    response=await fetch(sourceUrl,{method:'POST',headers,body:JSON.stringify(batch.map(figiJob)),signal:AbortSignal.timeout(30000)});
+    if(response.ok)break;
+    lastRequestError=Error('OpenFIGI HTTP '+response.status);
+    if(![429,500,502,503,504].includes(response.status)||attempt===2)throw lastRequestError;
+    const retry=response.status===429?Number(response.headers.get('retry-after')||60)*1000:5000*(attempt+1);
+    await sleep(Math.min(65000,Math.max(3000,retry)));
+   }catch(error){
+    lastRequestError=error;
+    if(attempt===2||!/(?:fetch failed|timeout|AbortError|ETIMEDOUT)/i.test(String(error.message)))throw error;
+    await sleep(5000*(attempt+1));
+   }
   }
-  if(!response.ok)throw Error('OpenFIGI HTTP '+response.status);
+  if(!response?.ok)throw lastRequestError||Error('OpenFIGI unavailable');
   const data=await response.json();
   if(!Array.isArray(data)||data.length!==batch.length)throw Error('OpenFIGI result count does not match requested ISINs');
   for(let i=0;i<batch.length;i++)result.items.push(classifyFigiEvidence(batch[i],data[i]));
  }catch(e){
   const error=String(e?.message||e).slice(0,250);
   result.errors.push({batchStart:start,count:batch.length,error});
+  console.error('OPENFIGI_BATCH_FAILED',JSON.stringify({batchStart:start,count:batch.length,error}));
   for(const item of batch)result.items.push({mic:item.mic,isin:item.isin,catalogSymbol:item.symbol,currency:item.currency,classification:'REQUEST_FAILED',candidates:[],sourceError:error});
  }
  await checkpoint();
@@ -50,5 +61,5 @@ for(let start=0;start<items.length;start+=10){
  // Three seconds per request stays below 20 requests/minute.
  if(start+10<items.length)await sleep(3000);
 }
-console.log('OPENFIGI_READ_ONLY_REFERENCE',JSON.stringify({itemsRequested:result.itemsRequested,counts:result.counts,batchErrors:result.errors.length,output}));
+console.log('OPENFIGI_READ_ONLY_REFERENCE',JSON.stringify({itemsRequested:result.itemsRequested,counts:result.counts,byMarket:result.byMarket,batchErrors:result.errors.length,output}));
 if(result.errors.length)process.exitCode=2;
