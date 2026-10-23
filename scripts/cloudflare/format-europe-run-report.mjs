@@ -64,6 +64,12 @@ export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
       if(londonQuality){
         const causes=Object.entries(londonQuality.defects||{}).filter(([,count])=>Number.isSafeInteger(count)&&count>0).sort((a,b)=>b[1]-a[1]).slice(0,5);
         lines.push(`London exact-date source quality: ${londonQuality.invalidSourceBars} invalid bars; ${causes.map(([key,count])=>key+' '+count).join(', ')||'no field-level defects observed'}.`);
+        // A source observation is a provider attempt, not a distinct stored
+        // candle. Provider attribution makes London source triage actionable.
+        const providers=Object.entries(londonQuality.byProvider||{})
+          .filter(([id,counts])=>/^[a-z0-9-]+$/.test(id)&&Number.isSafeInteger(counts?.invalidSourceBars)&&counts.invalidSourceBars>0)
+          .sort((a,b)=>b[1].invalidSourceBars-a[1].invalidSourceBars).slice(0,5);
+        if(providers.length)lines.push('London invalid source bars by approved provider attempt: '+providers.map(([id,counts])=>id+' '+counts.invalidSourceBars).join(', ')+'.');
       }
       lines.push('These are provider-source defects, not additional stored-history defects or verified replacement prices.');
     }
