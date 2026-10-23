@@ -1,3 +1,4 @@
+import {fetchPublicHistoryManifest} from './public-history-manifest.mjs';
 import fs from 'node:fs/promises';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {FactoryApiClient} from './client.mjs';
@@ -25,9 +26,7 @@ try { factoryCatalog=await client.catalog(); } catch(error) {
  console.error('FACTORY_AUTH_PREFLIGHT_FAILED: productie-updates vereisen geldige Cloudflare factory-autorisatie: '+error.message);
  process.exit(3);
 }
-const manifestResponse=await fetch(client.baseUrl+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
-if(!manifestResponse.ok)throw Error('Public manifest HTTP '+manifestResponse.status);
-const manifest=(await manifestResponse.json()).instruments||{};
+const manifest=await fetchPublicHistoryManifest(client.baseUrl,{shardIndex});
 const failureCategory=classifyEuropeFailure;
 const freshnessCutoff=latestClosedWeekday();
 const fullRequested=process.env.EUROPE_FULL_BACKFILL==='1';
