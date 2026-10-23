@@ -115,8 +115,14 @@ export async function probeSwissReference(shares,{limit=12,rotation=0,fetchHtml=
    results.push({isin:i.isin,valor:i.symbol,currency:i.currency,mic:'XSWX',officialUrl:url,...evidence,yahooEvidence,readOnly:true,approvedForProduction:false});
   }catch(e){results.push({isin:i.isin,valor:i.symbol,currency:i.currency,mic:'XSWX',officialUrl:url,status:'OFFICIAL_FETCH_FAILED',error:String(e.message).slice(0,160),readOnly:true,approvedForProduction:false});}
  }
- const statuses={};for(const row of results)statuses[row.status]=(statuses[row.status]||0)+1;
- return {mode:'READ_ONLY_SIX_REFERENCE_EVIDENCE',generatedAt:new Date().toISOString(),rotation,requested:results.length,statuses,policy:'NO_PROVIDER_MAPPING_NO_PRICE_WRITES_NO_AUTO_APPROVAL',results};
+ const statuses={},yahooStatuses={};
+ for(const row of results){
+  statuses[row.status]=(statuses[row.status]||0)+1;
+  if(row.yahooEvidence?.status)yahooStatuses[row.yahooEvidence.status]=(yahooStatuses[row.yahooEvidence.status]||0)+1;
+ }
+ const yahooMatchesIsinUnproven=results.filter(row=>row.status!=='OFFICIAL_ISIN_SYMBOL_EVIDENCE'&&row.yahooEvidence?.status==='YAHOO_VENUE_CURRENCY_OHLC_MATCH_ISIN_UNPROVEN').length;
+ const officialIsinEvidence=results.filter(row=>row.status==='OFFICIAL_ISIN_SYMBOL_EVIDENCE').length;
+ return {mode:'READ_ONLY_SIX_REFERENCE_EVIDENCE',generatedAt:new Date().toISOString(),rotation,requested:results.length,statuses,yahooStatuses,yahooMatchesIsinUnproven,officialIsinEvidence,productionMappingsCreated:0,policy:'NO_PROVIDER_MAPPING_NO_PRICE_WRITES_NO_AUTO_APPROVAL',results};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  const catalog=JSON.parse(await fs.readFile('data/euronext-zurich.json','utf8'));
@@ -127,5 +133,5 @@ if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  const report=await probeSwissReference(catalog.shares||[],{rotation:Number(process.env.GITHUB_RUN_NUMBER||0),fetchYahoo:i=>yahoo.fetchDaily(i,{startDate,endDate,signal:AbortSignal.timeout(12000)})});
  await fs.mkdir('research/output',{recursive:true});
  await fs.writeFile('research/output/six-official-symbol-evidence.json',JSON.stringify(report,null,2)+'\n');
- console.log('SIX_REFERENCE_READ_ONLY',JSON.stringify({requested:report.requested,statuses:report.statuses,productionMappingsCreated:0}));
+ console.log('SIX_REFERENCE_READ_ONLY',JSON.stringify({requested:report.requested,statuses:report.statuses,yahooStatuses:report.yahooStatuses,yahooMatchesIsinUnproven:report.yahooMatchesIsinUnproven,officialIsinEvidence:report.officialIsinEvidence,productionMappingsCreated:0}));
 }
