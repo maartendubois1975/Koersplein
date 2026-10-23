@@ -27,6 +27,9 @@ const mismatch=await probeSixIpoCurrent(shares,{ipoHtml:historical,fetchHtml:asy
 assert.equal(mismatch.counts.IPO_SYMBOL_NOT_CURRENT_TITLE_MATCH,2);
 const ambiguous=await probeSixIpoCurrent(shares,{ipoHtml:historical+pair('CH0311864901','OTHER'),fetchHtml:page,limit:2});
 assert.equal(ambiguous.counts.AMBIGUOUS_HISTORICAL_IPO_SYMBOL,1);
+const reused=await probeSixIpoCurrent(shares,{ipoHtml:historical+pair('CH99999999990','VACN'),fetchHtml:page,limit:2});
+assert.equal(reused.counts.AMBIGUOUS_HISTORICAL_IPO_TICKER_REUSE,1);
+assert.equal(reused.productionMappingsCreated,0);
 await assert.rejects(probeSixIpoCurrent(shares,{ipoHtml:'bad'}),/OFFICIAL_IPO_LIST_TOO_SMALL/);
 await assert.rejects(fetchSixIpoHtml(async()=>({ok:true,url:'https://other.example',headers:{get:()=> 'text/html'},text:async()=>historical})),/SOURCE_NOT_VERIFIED/);
 await assert.rejects(fetchSixIpoHtml(async()=>({ok:true,url:IPO_URL,headers:{get:k=>k==='content-type'?'text/html':'3000001'},text:async()=>historical})),/TOO_LARGE/);
