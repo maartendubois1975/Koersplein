@@ -9,7 +9,7 @@ export class YahooIsinProvider {
   const r=await fetch(url,{signal:opts.signal,headers:{Accept:'application/json','User-Agent':'Koersplein-history/1.0'}});
   if(!r.ok)throw Error(`Yahoo search HTTP ${r.status} voor ${instrument.isin}`);
   const p=await r.json(), suffix={XAMS:'.AS',XBRU:'.BR',XPAR:'.PA',ALXP:'.PA',XMLI:'.PA',XLIS:'.LS',ALXL:'.LS',ENXL:'.LS',XMIL:'.MI',MTAA:'.MI',EXGM:'.MI',XCSE:'.CO',XHEL:'.HE',XICE:'.IC',XATH:'.AT',XLON:'.L',XETR:'.DE',XSWX:'.SW',XOSL:'.OL',XOAS:'.OL',MERK:'.OL',XDUB:'.IR',XMSM:'.IR',XESM:'.IR',XATL:'.IR',XMAD:'.MC',XSTO:'.ST',XWAR:'.WA',XWBO:'.VI',XPRA:'.PR',XBUD:'.BD',XBSE:'.RO',XBUL:'.SO',FNSE:'.ST',SSME:'.ST'}[String(instrument.mic||'').toUpperCase()];
-  const quotes=(p?.quotes||[]).filter(q=>q?.symbol&&(!suffix||String(q.symbol).toUpperCase().endsWith(suffix)));
+  const quotes=(p?.quotes||[]).filter(q=>q?.symbol&&suffix&&String(q.symbol).toUpperCase().endsWith(suffix));
   if(!quotes.length)throw Error(`Geen Yahoo ISIN-resolutie voor ${instrument.isin}`);
   let last;
   for(const q of quotes){
