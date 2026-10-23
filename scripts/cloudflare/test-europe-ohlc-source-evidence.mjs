@@ -78,3 +78,18 @@ assert.equal((await probeIncompleteOhlcCandidate(parisItem,{registry:euroRegistr
 assert.equal((await probeIncompleteOhlcCandidate(parisItem,{registry:euroRegistry,sources,market:parisMarket,listings:[parisListing,{...parisListing,mic:'XMLI'}]})).status,'AMBIGUOUS_CATALOG_ISIN_MIC','Two child-board listings for one ISIN cannot be guessed');
 assert.equal((await probeIncompleteOhlcCandidate(parisItem,{registry:euroRegistry,sources,market:parisMarket,listings:[{...parisListing,isin:'FR9999999999'}]})).status,'NO_EXACT_CATALOG_ISIN_MIC');
 console.log('Approved parent/child market identity, Paris Growth OHLC evidence and cross-market rejection PASS');
+
+const weightedQueue={markets:[
+ {mic:'XLON',instruments:Array.from({length:200},(_,i)=>({...item,mic:'XLON',isin:'GB'+String(i).padStart(10,'0')}))},
+ {mic:'XSWX',instruments:Array.from({length:8},(_,i)=>({...item,mic:'XSWX',isin:'CH'+String(i).padStart(10,'0')}))},
+ {mic:'XLIS',instruments:Array.from({length:2},(_,i)=>({...item,mic:'XLIS',isin:'PT'+String(i).padStart(10,'0')}))},
+ {mic:'XPAR',instruments:[{...item,mic:'XPAR',isin:'FR0000000001'}]}
+]};
+const weighted=selectIncompleteOhlcCandidates(weightedQueue,{limit:24,perMarket:20,rotation:0});
+assert.equal(weighted.length,24);
+assert.equal(new Set(weighted.map(x=>x.mic)).size,4,'Even a tiny market gets a first-pass probe');
+assert.ok(weighted.filter(x=>x.mic==='XLON').length>=15,'Largest historical debt must get substantial follow-up slots');
+assert.equal(new Set(weighted.map(x=>x.mic+'|'+x.isin+'|'+x.lastStoredDate)).size,weighted.length,'No duplicated read-only probe');
+assert.deepEqual(selectIncompleteOhlcCandidates(weightedQueue,{limit:24,perMarket:20,rotation:0}),weighted);
+assert.notEqual(selectIncompleteOhlcCandidates(weightedQueue,{limit:1,perMarket:20,rotation:1})[0].mic,'XLON','Market fairness rotates across runs');
+console.log('Debt-weighted source probe allocates substantial London coverage without starving small markets PASS');
