@@ -39,3 +39,21 @@ assert.equal((await probeIncompleteOhlcCandidate(item,{registry:wrongCurrency,so
 const missingCurrency={...registry,async fetchDaily(){return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:100,high:110,low:90,close:105}],providerMeta:{}}};}};
 assert.equal((await probeIncompleteOhlcCandidate(item,{registry:missingCurrency,sources,market,listings})).status,'SOURCE_CURRENCY_UNVERIFIED');
 console.log('Rotating OHLC read-only coverage and exact source candle/currency evidence PASS');
+
+const historicalOnly={...item,isin:'GB0000000099',lastStoredDate:'2026-10-17',ohlcDefects:['MISSING_HIGH'],evidenceScope:'RECENT_STORED_HISTORY'};
+const historicalQueue={markets:[
+ {mic:'XLON',instruments:[item],recentOhlcDebt:[historicalOnly,{...item,evidenceScope:'RECENT_STORED_HISTORY'}]},
+ {mic:'XSWX',instruments:[],recentOhlcDebt:[{...historicalOnly,mic:'XSWX',isin:'CH0000000001'}]}
+]};
+const selected=selectIncompleteOhlcCandidates(historicalQueue,{limit:10,perMarket:10,rotation:0});
+assert.equal(selected.length,3,'Latest bar and identical historical date must not be probed twice');
+assert.equal(selected.filter(x=>x.evidenceScope==='RECENT_STORED_HISTORY').length,2);
+assert.equal(selected[0].mic,'XLON');
+assert.equal(selected[1].mic,'XSWX','Round robin must include Switzerland before consuming another London slot');
+assert.equal((await probeIncompleteOhlcCandidate(historicalOnly,{registry,sources,market,listings})).evidenceScope,'RECENT_STORED_HISTORY');
+const manyMarkets={markets:['XLON','XSWX','XPAR','XMAL'].map(mic=>({mic,instruments:Array.from({length:5},(_,i)=>({...item,mic,isin:mic+i}))}))};
+const diverse=selectIncompleteOhlcCandidates(manyMarkets,{limit:4,perMarket:3,rotation:0});
+assert.equal(new Set(diverse.map(x=>x.mic)).size,4,'A 30-slot budget must not starve smaller European exchanges');
+assert.deepEqual(selectIncompleteOhlcCandidates(manyMarkets,{limit:4,perMarket:3,rotation:0}),diverse);
+assert.notEqual(selectIncompleteOhlcCandidates(manyMarkets,{limit:1,perMarket:3,rotation:1})[0].mic,diverse[0].mic,'Market rotation must move the starting exchange');
+console.log('Historical OHLC debt, latest-date deduplication and fair European market sampling PASS');
