@@ -7,6 +7,8 @@ on:
       - 'scripts/cloudflare/audit-daily-open-close.mjs'
       - 'scripts/cloudflare/europe-run-policy.mjs'
       - 'scripts/cloudflare/test-europe-ohlc-integrity.mjs'
+      - 'scripts/cloudflare/public-history-manifest.mjs'
+      - 'scripts/cloudflare/test-public-history-manifest.mjs'
       - 'scripts/cloudflare/test-europe-run-policy.mjs'
       - 'scripts/cloudflare/test-europe-summary.mjs'
       - 'scripts/cloudflare/europe-ohlc-defects.mjs'
@@ -69,6 +71,8 @@ jobs:
           node --check scripts/cloudflare/daily-open-close-update.mjs
           node --check scripts/cloudflare/test-europe-provider-routing.mjs
           node --check scripts/cloudflare/audit-daily-open-close.mjs
+          node --check scripts/cloudflare/public-history-manifest.mjs
+          node --check scripts/cloudflare/test-public-history-manifest.mjs
           node --check scripts/cloudflare/europe-run-policy.mjs
           node --check scripts/cloudflare/test-europe-ohlc-integrity.mjs
           node --check scripts/cloudflare/test-europe-run-policy.mjs
@@ -114,6 +118,7 @@ jobs:
         run: |
           node scripts/cloudflare/test-europe-provider-routing.mjs
           node scripts/cloudflare/test-europe-ohlc-integrity.mjs
+          node scripts/cloudflare/test-public-history-manifest.mjs
           node scripts/cloudflare/test-europe-run-policy.mjs
           node scripts/cloudflare/test-europe-summary.mjs
           node scripts/cloudflare/test-europe-ohlc-defects.mjs
