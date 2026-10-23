@@ -60,7 +60,7 @@ for(const market of targetMarkets){
  const source=sourceRegistry.markets?.[market.mic];if(!source||source.status!=='APPROVED')throw Error(`${market.mic}: COMPLETE zonder APPROVED bronroute`);
  const primary=source.historySources?.find(x=>x.role==='PRIMARY')?.provider;if(!primary)throw Error(`${market.mic}: geen PRIMARY bronroute`);
  if(!providers.get(primary))throw Error(`${market.mic}: onbekende PRIMARY provider ${primary}; bronregister corrigeren`);
- const allowedProviderIds=[primary,...(source.historySources||[]).filter(x=>x.role==='DISCOVERY_FALLBACK'&&x.provider!==primary&&providers.get(x.provider)).map(x=>x.provider)];
+ const allowedProviderIds=[primary,...(source.historySources||[]).filter(x=>['DISCOVERY_FALLBACK','FALLBACK'].includes(x.role)&&x.provider!==primary&&providers.get(x.provider)).map(x=>x.provider)];
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),allShares=catalog.shares||catalog.instruments||[];
  const shares=allShares.filter(share=>!isInactiveParis(share,market.mic));
  if(shares.length!==allShares.length)console.log('PARIS_INACTIVE_EXCLUDED_FROM_DAILY',JSON.stringify({mic:market.mic,retained:shares.length,inactive:allShares.length-shares.length}));
