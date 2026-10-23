@@ -31,7 +31,7 @@ await mapConcurrent(items,2,async(item,index)=>{
    const catalog=await catalogs.get(item.mic);
    listings=catalog.shares||catalog.instruments||[];
   }catch(error){
-   results[index]={mic:item.mic,isin:item.isin,date:item.lastStoredDate,status:'CATALOG_READ_ERROR',error:String(error.message).slice(0,250),readOnly:true};
+   results[index]={mic:item.mic,isin:item.isin,date:item.lastStoredDate,evidenceScope:item.evidenceScope||'LATEST_AUDIT_BAR',status:'CATALOG_READ_ERROR',error:String(error.message).slice(0,250),readOnly:true};
    return;
   }
  }
