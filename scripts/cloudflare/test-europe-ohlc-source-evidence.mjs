@@ -357,3 +357,52 @@ assert.equal(correlated.byMarket.XLON.bySourceFamily['yahoo-chart-feed'].defects
 assert.equal(correlated.bySourceFamily['independent-official'].sourceObservations,1);
 assert.equal(calls[0].range.includeIncompleteBars,true,'Only read-only OHLC probe requests missing-field evidence');
 console.log('Yahoo shared-source correlation and read-only missing-field range guards PASS');
+
+
+// A provider may return a valid bar and an invalid bar for the same date.
+// Selecting the valid duplicate silently hides contradictory raw evidence.
+const mixedValid={date:'2026-10-22',open:100,high:110,low:90,close:105};
+const mixedInvalid={...mixedValid,high:99};
+const mixedObservation=describeExactDateSourceBars([mixedValid,mixedInvalid],'2026-10-22');
+assert.equal(mixedObservation.completeBars,1);
+assert.equal(mixedObservation.invalidBars,1);
+assert.equal(mixedObservation.mixedCompleteInvalidBars,true);
+assert.equal(describeExactDateSourceBars([mixedValid,{...mixedValid}],'2026-10-22').mixedCompleteInvalidBars,false);
+const mixedRegistry={...registry,async fetchDaily(i,range,primary,opts){
+ assert.throws(()=>opts.acceptResult({bars:[mixedValid,mixedInvalid]},{id:'good'}),/mixes complete and invalid duplicate bars/);
+ throw Error('Alle providers faalden: good: Source exact-date OHLC mixes complete and invalid duplicate bars');
+}};
+const mixedRejected=await probeIncompleteOhlcCandidate(item,{registry:mixedRegistry,sources,market,listings});
+assert.equal(mixedRejected.status,'NO_COMPLETE_APPROVED_SOURCE_BAR');
+assert.equal(mixedRejected.candidateBar,undefined);
+assert.equal(mixedRejected.failureCategory,'SOURCE_EXACT_DATE_MIXED_BARS');
+assert.equal(mixedRejected.sourceBarObservations[0].mixedCompleteInvalidBars,true);
+const mixedStats=summarizeOhlcSourceBarDiagnostics([mixedRejected]);
+assert.equal(mixedStats.mixedSourceObservations,1);
+assert.equal(mixedStats.byMarket.XLON.mixedSourceObservations,1);
+console.log('Mixed valid/invalid same-date source duplicates are rejected, classified and counted PASS');
+
+// Missing source dates are not malformed OHLC or evidence of no trading.
+// Two correlated Yahoo adapters must not be counted as independent feeds;
+// a disagreement between adapters is explicitly discordant, not no-trade.
+const absenceStats=summarizeOhlcSourceBarDiagnostics([
+ {mic:'XLON',sourceBarObservations:[
+  {...describeExactDateSourceBars([],'2026-10-22'),providerId:'yahoo-chart'},
+  {...describeExactDateSourceBars([],'2026-10-22'),providerId:'yahoo-isin-resolver'}
+ ]},
+ {mic:'XSWX',sourceBarObservations:[
+  {...describeExactDateSourceBars([],'2026-10-22'),providerId:'yahoo-chart'},
+  {...describeExactDateSourceBars([mixedValid],'2026-10-22'),providerId:'yahoo-isin-resolver'}
+ ]},
+ {mic:'XCYS',sourceBarObservations:[
+  {...describeExactDateSourceBars([mixedValid],'2026-10-22'),providerId:'independent-official'}
+ ]}
+]);
+assert.equal(absenceStats.missingExactDateObservations,3);
+assert.equal(absenceStats.probesWithMissingExactDate,2);
+assert.equal(absenceStats.distinctFeedNoExactDateObservations,1);
+assert.equal(absenceStats.discordantExactDateFeedObservations,1);
+assert.equal(absenceStats.invalidSourceBars,0,'An absent date is not an invalid price bar');
+assert.equal(absenceStats.byMarket.XLON.distinctFeedNoExactDateObservations,1);
+assert.equal(absenceStats.byMarket.XSWX.discordantExactDateFeedObservations,1);
+console.log('Missing exact-date observations are correlated-feed-aware and never infer no-trade PASS');
