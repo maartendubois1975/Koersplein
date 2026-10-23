@@ -145,3 +145,28 @@ for(const timeoutMs of [0,1000]){
  assert.deepEqual(observed,['first','second']);
 }
 console.log('Provider callback attribution and approved fallback work with and without timeout PASS');
+
+
+// Empty provider responses must reach the callback ONLY for explicit read-only
+// evidence collection. Production must reject empty bars before callbacks.
+for(const timeoutMs of [0,1000]){
+ const empty=new ProviderRegistry([make('empty',{bars:[]}),make('valid',{bars:[good]})]);
+ const normal=[];
+ const normalResult=await empty.fetchDaily(instrument,range,'empty',{
+  timeoutMs,allowedProviderIds:['empty','valid'],acceptResult:(r,p)=>{normal.push(p.id);return true;}
+ });
+ assert.equal(normalResult.provider.id,'valid');
+ assert.deepEqual(normal,['valid'],'Production callback must not receive empty bars');
+ const evidence=[];
+ const evidenceResult=await empty.fetchDaily(instrument,range,'empty',{
+  timeoutMs,allowedProviderIds:['empty','valid'],inspectEmptyResult:true,
+  acceptResult:(r,p)=>{evidence.push([p.id,r.bars.length]);if(!r.bars.length)throw Error('Source has no exact-date daily bar');return true;}
+ });
+ assert.equal(evidenceResult.provider.id,'valid');
+ assert.deepEqual(evidence,[['empty',0],['valid',1]]);
+ await assert.rejects(()=>empty.fetchDaily(instrument,range,'empty',{
+  timeoutMs,strictPreferred:true,allowedProviderIds:['empty'],inspectEmptyResult:true,
+  acceptResult:()=>true
+ }),/Provider returned no daily bars/,'Opt-in cannot approve empty provider results');
+}
+console.log('Read-only empty source observation is opt-in; production never accepts empty bars PASS');
