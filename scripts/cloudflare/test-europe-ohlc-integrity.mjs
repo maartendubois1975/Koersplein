@@ -11,7 +11,8 @@ for(const invalid of [
  {...good,date:'2026-02-30'}
 ])assert.equal(isCompleteOhlcBar(invalid),false,'Incomplete or impossible candle must fail '+JSON.stringify(invalid));
 const mixed=[{...good,close:101},{...good,high:null},{...good,date:'2026-10-23'},good,{...good,date:'2026-10-21',low:null}];
-assert.deepEqual(validBars({bars:mixed},{startDate:'2026-10-22',endDate:'2026-10-22'}),[good],'Keep valid duplicate and exclude partial/out-of-range bars');
+assert.deepEqual(validBars({bars:mixed},{startDate:'2026-10-22',endDate:'2026-10-22'}),[],'Contradictory complete and incomplete same-date OHLC must be quarantined');
+assert.deepEqual(validBars({bars:[good,{...good}]},{startDate:'2026-10-22',endDate:'2026-10-22'}),[good],'Identical complete source duplicates remain safe');
 
 assert.equal(auditBarIssue(good,'2026-10-22','2026-10-23'),null);
 assert.equal(auditBarIssue({...good,high:null},'2026-10-22','2026-10-23'),'INCOMPLETE_OR_INVALID_OHLC');
