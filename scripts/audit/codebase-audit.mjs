@@ -8,13 +8,21 @@ for(const f of files.filter(x=>path.relative(root,x).replaceAll('\\','/').starts
 try{const p=JSON.parse(await fs.readFile(path.join(root,'data/world-fill-plan.json'),'utf8'));for(const m of p.markets||[]){if(m.state==='BLOCKED'&&!m.blockedReason)issues.push({severity:'ERROR',type:'BLOCKED_WITHOUT_REASON',file:'data/world-fill-plan.json',detail:m.mic});}}catch{}
 try{const p=JSON.parse(await fs.readFile(path.join(root,'data/world-fill-plan.json'),'utf8')),r=JSON.parse(await fs.readFile(path.join(root,'data/market-source-registry.json'),'utf8'));for(const m of p.markets||[]){const s=r.markets?.[m.mic];if(m.state==='COMPLETE'&&s?.catalogFingerprint){try{const cat=JSON.parse(await fs.readFile(path.join(root,`data/euronext-${m.code}.json`),'utf8'));if(cat.fingerprint&&cat.fingerprint!==s.catalogFingerprint)issues.push({severity:'ERROR',type:'COMPLETE_FINGERPRINT_DRIFT',file:'data/world-fill-plan.json',detail:m.mic});}catch{}}if(s?.status==='APPROVED'&&Number(s.discovery?.sourceCountTested||0)<2&&['XMIL','XOSL'].includes(m.mic))issues.push({severity:'WARN',type:'SOURCE_DIVERSITY_LEGACY_EVIDENCE',file:'data/market-source-registry.json',detail:m.mic});}}catch(e){issues.push({severity:'ERROR',type:'CANONICAL_STATE_AUDIT_FAILED',file:'data/world-fill-plan.json',detail:e.message});}
 // Canonical active workflow allowlist. Retired one-off probes and importers must not return.
-const allowedWorkflows=new Set(['codebase-audit.yml','daily-open-close.yml','europe-run-recovery.yml','daily-opportunity-ledger.yml','universal-source-first.yml','complete-market-analysis.yml','machine-arena-europe.yml','live-europe-coverage.yml','offline-europe-coverage.yml','isin-source-recovery.yml']);
+const requiredWorkflows=new Set(['codebase-audit.yml','daily-open-close.yml','europe-run-recovery.yml','daily-opportunity-ledger.yml','universal-source-first.yml','complete-market-analysis.yml','machine-arena-europe.yml','live-europe-coverage.yml','offline-europe-coverage.yml','isin-source-recovery.yml']);
+// Explicitly reviewed optional research, diagnostics and test workflows.
+// Optional workflows can be retired without breaking the core architecture.
+const approvedOptionalWorkflows=new Set(['europe-bulk-coverage-pilot.yml','europe-bulk-engine-tests.yml','europe-openfigi-reference.yml','europe-routing-regression.yml','paris-official-inventory-snapshot.yml','paris-storage-diagnostic.yml','paris-targeted-history-recovery.yml']);
+const allowedWorkflows=new Set([...requiredWorkflows,...approvedOptionalWorkflows]);
 for(const f of files.filter(x=>path.relative(root,x).replaceAll('\\','/').startsWith('.github/workflows/')&&/\.ya?ml$/.test(x))){
   const rel=path.relative(root,f).replaceAll('\\','/'),name=path.basename(rel);
   if(!allowedWorkflows.has(name)) issues.push({severity:'ERROR',type:'UNAPPROVED_WORKFLOW_PRESENT',file:rel});
+  if(name==='paris-targeted-history-recovery.yml'){
+    const body=await fs.readFile(f,'utf8');
+    if(/^  (?:push|schedule):/m.test(body)||!/^  workflow_dispatch:/m.test(body))issues.push({severity:'ERROR',type:'PARIS_RECOVERY_MUST_BE_MANUAL_ONLY',file:rel});
+  }
 }
 // Reject accidental removal of any production, recovery, research or audit workflow.
-for(const name of allowedWorkflows){
+for(const name of requiredWorkflows){
  if(!files.some(f=>path.relative(root,f).replaceAll('\\\\','/')==='.github/workflows/'+name))
   issues.push({severity:'ERROR',type:'REQUIRED_WORKFLOW_MISSING',file:'.github/workflows/'+name});
 }
