@@ -170,3 +170,52 @@ for(const timeoutMs of [0,1000]){
  }),/Provider returned no daily bars/,'Opt-in cannot approve empty provider results');
 }
 console.log('Read-only empty source observation is opt-in; production never accepts empty bars PASS');
+
+
+// Async source-identity/OHLC validation must be awaited before accepting bars.
+// A Promise is truthy; without await, a rejected/false validation silently
+// approves the first provider and can create unhandled rejections.
+for(const timeoutMs of [0,1000]){
+ const attempts=[];
+ const asynchronous=new ProviderRegistry([
+  {id:'unverified',supports:()=>true,async fetchDaily(){attempts.push('unverified');return {bars:[good]};}},
+  {id:'verified',supports:()=>true,async fetchDaily(){attempts.push('verified');return {bars:[good]};}},
+  {id:'forbidden',supports:()=>true,async fetchDaily(){throw Error('Unapproved source called');}}
+ ]);
+ const selected=await asynchronous.fetchDaily(instrument,range,'unverified',{
+  timeoutMs,allowedProviderIds:['unverified','verified'],
+  acceptResult:async (_result,provider)=>{await Promise.resolve();return provider.id==='verified';}
+ });
+ assert.equal(selected.provider.id,'verified','Async false must reject the unverified first provider');
+ assert.deepEqual(attempts,['unverified','verified'],'No unapproved source can be attempted');
+ const rejected=await asynchronous.fetchDaily(instrument,range,'unverified',{
+  timeoutMs,allowedProviderIds:['unverified','verified'],
+  acceptResult:async (_result,provider)=>{
+   await Promise.resolve();
+   if(provider.id==='unverified')throw Error('Async source identity mismatch');
+   return true;
+  }
+ });
+ assert.equal(rejected.provider.id,'verified','Async validator rejection must permit only approved fallback');
+ await assert.rejects(()=>asynchronous.fetchDaily(instrument,range,'unverified',{
+  timeoutMs,strictPreferred:true,allowedProviderIds:['unverified'],
+  acceptResult:async()=>{await Promise.resolve();return false;}
+ }),/Provider returned no usable bars/,'Async false must fail closed with no approved fallback');
+ const emptyObserved=[];
+ const emptyFirst=new ProviderRegistry([
+  {id:'empty',supports:()=>true,async fetchDaily(){return {bars:[]};}},
+  {id:'verified',supports:()=>true,async fetchDaily(){return {bars:[good]};}}
+ ]);
+ const afterEmpty=await emptyFirst.fetchDaily(instrument,range,'empty',{
+  timeoutMs,inspectEmptyResult:true,allowedProviderIds:['empty','verified'],
+  acceptResult:async (result,provider)=>{
+   await Promise.resolve();
+   emptyObserved.push(provider.id);
+   if(!result.bars.length)throw Error('Async no exact-date source bar');
+   return true;
+  }
+ });
+ assert.equal(afterEmpty.provider.id,'verified');
+ assert.deepEqual(emptyObserved,['empty','verified'],'Read-only async empty-bar evidence must finish before fallback');
+}
+console.log('Async source validators fail closed in normal and timeout registry paths PASS');
