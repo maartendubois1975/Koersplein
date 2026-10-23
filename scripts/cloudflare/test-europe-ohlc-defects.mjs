@@ -18,8 +18,11 @@ const queue=await fs.readFile('scripts/cloudflare/europe-recovery-queue.mjs','ut
 const summary=await fs.readFile('scripts/cloudflare/summarize-europe-run.mjs','utf8');
 assert.match(audit,/describeOhlcDefects/);
 assert.match(audit,/invalidOhlcByDefect:countOhlcDefects/);
+assert.match(audit,/recentOhlcDebt\(bars,cutoff,30\)/);
+assert.match(audit,/recentInvalidOhlcDays/);
 assert.match(queue,/READ_ONLY_VERIFICATION_REQUIRED_APPEND_ONLY_PRESERVES_EXISTING_BAR/);
 assert.match(summary,/invalidOhlcByDefect/);
+assert.match(summary,/recentInvalidOhlcDays/);
 
 const recent=recentOhlcDebt([{...valid,date:'2026-10-01',high:null},{...valid,date:'2026-10-20',low:null},{...valid,date:'2026-10-20'},{...valid,date:'2026-10-21',high:null},{...valid,date:'2026-10-22'}],'2026-10-22',10);
 assert.deepEqual(recent.invalidDates,[{date:'2026-10-21',defects:['MISSING_HIGH']}]);
