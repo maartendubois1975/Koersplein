@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-23T13:37:57.853Z",
+  "requestedAt": "2026-10-23T14:10:00.000Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Verify MSE official last-traded date read-only NO_TRADES route, strict exact-date ISIN+symbol PDF identity, unchanged 31-market 8-shard append-only daily processing and Paris existing-history-only. No full backfill and no historical price overwrite."
+  "reason": "Verify 31-market/8-shard append-only daily status after exact-date London source OHLC field diagnostics and strict Yahoo ISIN/quoteType mismatch rejection. Read-only historical source evidence only; preserve existing bars, no full backfill, Paris existing-history-only."
 }
