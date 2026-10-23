@@ -11,11 +11,16 @@ try{const p=JSON.parse(await fs.readFile(path.join(root,'data/world-fill-plan.js
 const requiredWorkflows=new Set(['codebase-audit.yml','daily-open-close.yml','europe-run-recovery.yml','daily-opportunity-ledger.yml','universal-source-first.yml','complete-market-analysis.yml','machine-arena-europe.yml','live-europe-coverage.yml','offline-europe-coverage.yml','isin-source-recovery.yml']);
 // Explicitly reviewed optional research, diagnostics and test workflows.
 // Optional workflows can be retired without breaking the core architecture.
-const approvedOptionalWorkflows=new Set(['europe-bulk-coverage-pilot.yml','europe-bulk-engine-tests.yml','europe-openfigi-reference.yml','europe-openfigi-yahoo-verification.yml','europe-routing-regression.yml','paris-official-inventory-snapshot.yml','paris-storage-diagnostic.yml','paris-targeted-history-recovery.yml']);
+const approvedOptionalWorkflows=new Set(['europe-bulk-coverage-pilot.yml','europe-bulk-engine-tests.yml','europe-openfigi-reference.yml','europe-openfigi-yahoo-verification.yml','europe-routing-regression.yml','paris-official-inventory-snapshot.yml','paris-storage-diagnostic.yml','paris-targeted-history-recovery.yml','six-official-reference-evidence.yml']);
 const allowedWorkflows=new Set([...requiredWorkflows,...approvedOptionalWorkflows]);
 for(const f of files.filter(x=>path.relative(root,x).replaceAll('\\','/').startsWith('.github/workflows/')&&/\.ya?ml$/.test(x))){
   const rel=path.relative(root,f).replaceAll('\\','/'),name=path.basename(rel);
   if(!allowedWorkflows.has(name)) issues.push({severity:'ERROR',type:'UNAPPROVED_WORKFLOW_PRESENT',file:rel});
+  if(name==='six-official-reference-evidence.yml'){
+    const body=await fs.readFile(f,'utf8');
+    if(!body.includes('permissions:\n  contents: read')||!body.includes('ref: ${{ github.sha }}')||/\bsecrets\.|contents:\s*write|actions:\s*write|^  schedule:/m.test(body)||!body.includes('scripts/research/test-six-official-symbol-evidence.mjs'))
+      issues.push({severity:'ERROR',type:'SIX_REFERENCE_EVIDENCE_MUST_BE_READ_ONLY',file:rel});
+  }
   if(name==='paris-targeted-history-recovery.yml'){
     const body=await fs.readFile(f,'utf8');
     if(/^  (?:push|schedule):/m.test(body)||!/^  workflow_dispatch:/m.test(body))issues.push({severity:'ERROR',type:'PARIS_RECOVERY_MUST_BE_MANUAL_ONLY',file:rel});
