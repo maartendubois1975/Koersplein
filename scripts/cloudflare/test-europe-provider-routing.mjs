@@ -32,3 +32,16 @@ assert.match(updateScript,/const parisHistoryOnly=parisPolicy\.mode==='existing-
 assert.match(updateScript,/const shares=allShares\.filter\(share=>!isInactiveParis\(share,market\.mic\)\)/);
 assert.match(updateScript,/const fullRequested=process\.env\.EUROPE_FULL_BACKFILL==='1';/);
 console.log('Paris existing-history-only and explicit full-backfill guard PASS');
+
+const sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
+const approvedFor=mic=>{
+ const sources=sourceRegistry.markets[mic].historySources;
+ const primary=sources.find(x=>x.role==='PRIMARY')?.provider;
+ return [primary,...sources.filter(x=>['DISCOVERY_FALLBACK','FALLBACK'].includes(x.role)&&x.provider!==primary).map(x=>x.provider)];
+};
+assert.deepEqual(approvedFor('XPAR').slice(0,2),['yahoo-chart','euronext-live']);
+assert.deepEqual(approvedFor('XSWX').slice(0,2),['yahoo-chart','yahoo-isin-resolver']);
+assert.deepEqual(approvedFor('XLON').slice(0,2),['yahoo-chart','yahoo-isin-resolver']);
+assert.deepEqual(approvedFor('XBUL').slice(0,3),['bse-sofia-official','yahoo-isin-resolver','yahoo-chart']);
+assert.match(updateScript,/\['DISCOVERY_FALLBACK','FALLBACK'\]\.includes\(x\.role\)/);
+console.log('Registered approved fallback routes for Paris, Switzerland, London and Sofia PASS');
