@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-23T11:08:00Z",
+  "requestedAt": "2026-10-23T12:00:00Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Protected 31-market, eight-shard verification of read-only historical OHLC source evidence: approved Paris child-board identity, debt-weighted 48-date sampling and richer missing-price reporting. Preserve existing history, no full backfill, no unverified identity promotion, Paris existing-history-only."
+  "reason": "Protected 31-market verification after fair mixed latest/historical OHLC source sampling, exact calendar-date validation, preservation of duplicate stored snapshots and conflict quarantine. Daily append-only only; no historical overwrite, no full backfill, Paris existing-history-only."
 }
