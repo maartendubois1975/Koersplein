@@ -66,6 +66,26 @@ assert.equal(isinResolver.supports({mic:'XSWX',isin:'CH0000000001'}),true);
 for(const mic of ['XLUX','XLJU','XLIT','XTAL','XZAG','XBRA'])assert.equal(isinResolver.supports({mic,isin:'LU0056569402'}),false,'No arbitrary cross-exchange ISIN match for '+mic);
 await assert.rejects(()=>isinResolver.fetchDaily({mic:'XLUX',isin:'LU0056569402'},{startDate:'2026-10-22',endDate:'2026-10-22'}),/Geen gevalideerde Yahoo-beursregel/);
 console.log('Yahoo ISIN resolution requires canonical chart MIC suffix; Luxembourg cross-exchange bypass closed PASS');
+
+const originalYahooFetch=globalThis.fetch,requestedYahoo=[];
+try{
+ globalThis.fetch=async url=>{
+  requestedYahoo.push(String(url));
+  if(String(url).includes('/v1/finance/search'))return {ok:true,async json(){return {quotes:[{symbol:'WRONG.PA'},{symbol:'VALID.L'}]};}};
+  return {ok:true,async json(){return {chart:{result:[{
+   meta:{symbol:'VALID.L',exchangeName:'LSE',fullExchangeName:'London Stock Exchange',currency:'GBP'},
+   timestamp:[Math.floor(Date.parse('2026-10-22T12:00:00Z')/1000)],
+   indicators:{quote:[{open:[10],high:[11],low:[9],close:[10.5],volume:[100]}]}
+  }]}};}};
+ };
+ const found=await isinResolver.fetchDaily({mic:'XLON',isin:'GB0000000001'},{startDate:'2026-10-22',endDate:'2026-10-22'});
+ assert.equal(found.providerMeta.symbol,'VALID.L');
+ assert.equal(found.bars[0].close,10.5);
+ assert.equal(requestedYahoo.length,2);
+ assert.ok(!requestedYahoo.some(u=>u.includes('WRONG.PA')),'Do not fetch a matching ISIN on another exchange');
+}finally{globalThis.fetch=originalYahooFetch;}
+console.log('Yahoo ISIN cross-exchange quote rejected; London validated .L quote accepted PASS');
+
 console.log('London and Swiss chart/ISIN market suffix agreement PASS');
 
 const yahoo=new YahooChartProvider();
