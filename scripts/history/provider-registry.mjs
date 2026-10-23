@@ -28,7 +28,7 @@ export class ProviderRegistry {
     return this.#providers.filter((provider) => provider.supports?.(instrument) !== false);
   }
 
-  async fetchDaily(instrument, range, preferredProvider = null, { strictPreferred = false, timeoutMs = 0, acceptResult = null, allowedProviderIds = null } = {}) {
+  async fetchDaily(instrument, range, preferredProvider = null, { strictPreferred = false, timeoutMs = 0, acceptResult = null, allowedProviderIds = null, inspectEmptyResult = false } = {}) {
     const preferred = preferredProvider ? this.get(preferredProvider) : null;
     if (preferredProvider && !preferred) throw new Error(`Onbekende voorkeursprovider: ${preferredProvider}`);
     const ordered = preferredProvider
@@ -42,7 +42,13 @@ export class ProviderRegistry {
       try {
         if (!(timeoutMs > 0)) {
           const result=await provider.fetchDaily(instrument,range);
-          if(!Array.isArray(result?.bars)||!result.bars.length)throw Error('Provider returned no daily bars');
+          if(!Array.isArray(result?.bars)||!result.bars.length){
+            // Only an explicit evidence-only caller may inspect empty source
+            // responses. Default production routing still rejects them before
+            // the acceptResult callback; no synthetic/no-trade bar is created.
+            if(inspectEmptyResult&&acceptResult)acceptResult(result,provider);
+            throw Error('Provider returned no daily bars');
+          }
           if(acceptResult&&!acceptResult(result,provider))throw Error('Provider returned no usable bars in requested range');
           return {provider,result};
         }
@@ -56,7 +62,13 @@ export class ProviderRegistry {
             }, timeoutMs);
           });
           const result = await Promise.race([provider.fetchDaily(instrument, {...range, signal: controller.signal}), timeout]);
-          if(!Array.isArray(result?.bars)||!result.bars.length)throw Error('Provider returned no daily bars');
+          if(!Array.isArray(result?.bars)||!result.bars.length){
+            // Only an explicit evidence-only caller may inspect empty source
+            // responses. Default production routing still rejects them before
+            // the acceptResult callback; no synthetic/no-trade bar is created.
+            if(inspectEmptyResult&&acceptResult)acceptResult(result,provider);
+            throw Error('Provider returned no daily bars');
+          }
           if(acceptResult&&!acceptResult(result,provider))throw Error('Provider returned no usable bars in requested range');
           return { provider, result };
         } finally {
