@@ -153,13 +153,13 @@ export function sourceFeedFamily(providerId){
  return typeof providerId==='string'&&/^[a-z0-9-]+$/.test(providerId)?providerId:'UNATTRIBUTED';
 }
 export function summarizeOhlcSourceBarDiagnostics(rows){
- const byMarket={},byProvider={},bySourceFamily={};let observations=0,invalidSourceBars=0,probesWithInvalidBars=0,correlatedProviderAttempts=0,conflictingSourceObservations=0;
+ const byMarket={},byProvider={},bySourceFamily={};let observations=0,invalidSourceBars=0,probesWithInvalidBars=0,correlatedProviderAttempts=0,conflictingSourceObservations=0,distinctFeedObservations=0,feedLevelInvalidBarsLowerBound=0;
  for(const row of rows||[]){
   if(!row||typeof row.mic!=='string')continue;
   const samples=Array.isArray(row.sourceBarObservations)?row.sourceBarObservations:[];
   if(!byMarket[row.mic])byMarket[row.mic]={probesWithInvalidBars:0,sourceObservations:0,invalidSourceBars:0,defects:{}};
   const m=byMarket[row.mic];let hasInvalid=false;
-  const familiesInProbe=new Set();
+  const familiesInProbe=new Set(),maxInvalidPerFeed=new Map();
   for(const sample of samples){
    if(!sample?.readOnly||!Number.isSafeInteger(sample.invalidBars)||sample.invalidBars<0)continue;
    observations++;m.sourceObservations++;
@@ -174,6 +174,7 @@ export function summarizeOhlcSourceBarDiagnostics(rows){
    const family=sourceFeedFamily(providerId);
    if(familiesInProbe.has(family))correlatedProviderAttempts++;
    else familiesInProbe.add(family);
+   maxInvalidPerFeed.set(family,Math.max(maxInvalidPerFeed.get(family)||0,sample.invalidBars));
    if(!bySourceFamily[family])bySourceFamily[family]={sourceObservations:0,invalidSourceBars:0,defects:{}};
    if(!m.bySourceFamily)m.bySourceFamily={};
    if(!m.bySourceFamily[family])m.bySourceFamily[family]={sourceObservations:0,invalidSourceBars:0,defects:{}};
@@ -194,9 +195,17 @@ export function summarizeOhlcSourceBarDiagnostics(rows){
     m.bySourceFamily[family].defects[key]=(m.bySourceFamily[family].defects[key]||0)+value;
    }
   }
+  // A Yahoo chart attempt and Yahoo ISIN resolver attempt can be the SAME
+  // underlying feed. Preserve raw attempt counts, but publish a conservative
+  // per-probe/per-feed lower bound, never a fictitious independent source count.
+  for(const maximum of maxInvalidPerFeed.values()){
+   distinctFeedObservations++;m.distinctFeedObservations=(m.distinctFeedObservations||0)+1;
+   feedLevelInvalidBarsLowerBound+=maximum;
+   m.feedLevelInvalidBarsLowerBound=(m.feedLevelInvalidBarsLowerBound||0)+maximum;
+  }
   if(hasInvalid){probesWithInvalidBars++;m.probesWithInvalidBars++;}
  }
- return {readOnly:true,observations,invalidSourceBars,probesWithInvalidBars,correlatedProviderAttempts,conflictingSourceObservations,byMarket,byProvider,bySourceFamily};
+ return {readOnly:true,observations,invalidSourceBars,probesWithInvalidBars,correlatedProviderAttempts,distinctFeedObservations,feedLevelInvalidBarsLowerBound,conflictingSourceObservations,byMarket,byProvider,bySourceFamily};
 }
 // Evidence-only difference against the exact stored candle. Never substitute
 // a provider value for an existing stored field or infer missing prices.
