@@ -31,10 +31,30 @@ assert.equal(mseOfficialNoTradeStatus(snapshot,{mic:'XMAL',isin:'MT0000040106',s
 assert.throws(()=>parseMseOfficialPriceList(lines,{expectedDate:'2026-10-21'}),/date mismatch/);
 assert.throws(()=>parseMseOfficialPriceList(lines.replace('Corporate Bonds',lines.split('\n')[4]+'\nCorporate Bonds'),{expectedDate:'2026-10-22'}),/duplicate|incomplete/);
 assert.throws(()=>parseMseOfficialPriceList(lines.replace('(19-10-26)','(23-10-26)'),{expectedDate:'2026-10-22'}),/future\/invalid/);
+// The live PDF advances to the next trading day before the prior day's
+// append-only audit finishes. A newer official last-trade date can still
+// prove no trade on the target day, but only for the same ISIN/symbol and
+// when it equals the last stored date. An older or >7-day report cannot.
+const laterLines=lines.replace('Thursday, October 22, 2026','Friday, October 23, 2026');
+const laterSnapshot=parseMseOfficialPriceList(laterLines,{expectedDate:'2026-10-22',allowLaterSnapshot:true});
+assert.equal(laterSnapshot.snapshotDate,'2026-10-23');
+const laterStatus=mseOfficialNoTradeStatus(laterSnapshot,{mic:'XMAL',isin:'MT0000040106',symbol:'LOM'},'2026-10-22');
+assert.equal(laterStatus.snapshotDate,'2026-10-23');
+assert.equal(laterStatus.verification,'OFFICIAL_LATER_SNAPSHOT_PROVES_NO_TARGET_SESSION_TRADE');
+assert.equal(isVerifiedNoTradeGap(laterStatus,'2026-10-19','2026-10-22'),true);
+assert.equal(isVerifiedNoTradeGap(laterStatus,'2026-10-18','2026-10-22'),false);
+assert.equal(mseOfficialNoTradeStatus(laterSnapshot,{mic:'XMAL',isin:'MT0000020116',symbol:'BOV'},'2026-10-22'),null,'Trading on the target date must not be labelled no-trade');
+assert.equal(mseOfficialNoTradeStatus(laterSnapshot,{mic:'XMAL',isin:'MT0000040106',symbol:'LOM'},'2026-10-24'),null,'Older report must never prove a later target session');
+assert.equal(mseOfficialNoTradeStatus({...laterSnapshot,sourceUrl:'https://unapproved.example/'},{mic:'XMAL',isin:'MT0000040106',symbol:'LOM'},'2026-10-22'),null,'Only the approved official URL is evidence');
+assert.throws(()=>parseMseOfficialPriceList(laterLines,{expectedDate:'2026-10-22'}),/date mismatch/,'Exact snapshot parsing remains the default');
+assert.throws(()=>parseMseOfficialPriceList(laterLines.replace('Friday, October 23, 2026','Friday, October 30, 2026'),{expectedDate:'2026-10-22',allowLaterSnapshot:true}),/date mismatch/,'Look-ahead is strictly bounded');
+assert.throws(()=>parseMseOfficialPriceList(laterLines.replace('Friday, October 23, 2026','Wednesday, October 21, 2026'),{expectedDate:'2026-10-22',allowLaterSnapshot:true}),/date mismatch/,'Older snapshots cannot establish the target date');
 const pdf=Buffer.concat([Buffer.from('%PDF-1.7\n'),Buffer.alloc(110)]);
 const response={ok:true,status:200,url:MSE_PRICE_LIST_URL,async arrayBuffer(){return pdf;}};
 const fetched=await fetchMseOfficialPriceList('2026-10-22',{fetchFn:async()=>response,extractPdf:()=>lines});
 assert.equal(fetched.rows.size,29);
+const fetchedLater=await fetchMseOfficialPriceList('2026-10-22',{fetchFn:async()=>response,extractPdf:()=>laterLines});
+assert.equal(fetchedLater.snapshotDate,'2026-10-23','The approved reader accepts bounded newer official evidence');
 await assert.rejects(()=>fetchMseOfficialPriceList('2026-10-22',{fetchFn:async()=>({...response,url:'https://elsewhere.example/test.pdf'}),extractPdf:()=>lines}),/unapproved host/);
 await assert.rejects(()=>fetchMseOfficialPriceList('2026-10-22',{fetchFn:async()=>({...response,async arrayBuffer(){return Buffer.from('not a pdf');}}),extractPdf:()=>lines}),/not a bounded PDF/);
 console.log('MSE official price list: strict ISIN+symbol, exact snapshot date, no-trade only, no OHLC, source and PDF safety PASS');
