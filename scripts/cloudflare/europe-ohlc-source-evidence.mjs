@@ -58,6 +58,16 @@ export function selectIncompleteOhlcCandidates(queue,{limit=30,perMarket=18,rota
  }
  return out;
 }
+// A replacement candidate must be a complete, internally consistent OHLC candle.
+// validBars() only guarantees positive OPEN and CLOSE; it intentionally does
+// not certify HIGH/LOW. Never label a partial source bar as repair-ready.
+export function isCompleteOhlcSourceBar(bar){
+ if(!bar)return false;
+ const values=['open','high','low','close'].map(k=>bar[k]);
+ if(values.some(v=>typeof v!=='number'||!Number.isFinite(v)||v<=0))return false;
+ const [open,high,low,close]=values;
+ return high>=Math.max(open,close)&&low<=Math.min(open,close)&&high>=low;
+}
 export async function probeIncompleteOhlcCandidate(item,{registry,sources,market,listings,timeoutMs=12000}){
  const base={mic:item.mic,isin:item.isin,symbol:item.symbol||null,date:item.lastStoredDate,ohlcDefects:item.ohlcDefects||[],evidenceScope:item.evidenceScope||'LATEST_AUDIT_BAR',readOnly:true};
  if(item.auditReason!=='INCOMPLETE_OR_INVALID_OHLC'||!/^\d{4}-\d{2}-\d{2}$/.test(item.lastStoredDate||''))return {...base,status:'NOT_AN_INCOMPLETE_STORED_CANDLE'};
@@ -76,8 +86,9 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
  const instrument={...share,mic:listingMic,market:listingMic,symbol:share.symbol||share.ticker,ticker:share.ticker||share.symbol,currency:share.currency||market.currency};
  const range={startDate:item.lastStoredDate,endDate:item.lastStoredDate};
  try{
-  const {provider,result}=await registry.fetchDaily(instrument,range,primary,{allowedProviderIds:allowed,timeoutMs,acceptResult:r=>validBars(r,range).some(b=>b.date===item.lastStoredDate)});
-  const bar=validBars(result,range).find(b=>b.date===item.lastStoredDate);
+  const {provider,result}=await registry.fetchDaily(instrument,range,primary,{allowedProviderIds:allowed,timeoutMs,acceptResult:r=>validBars(r,range).some(b=>b.date===item.lastStoredDate&&isCompleteOhlcSourceBar(b))});
+  const bar=validBars(result,range).find(b=>b.date===item.lastStoredDate&&isCompleteOhlcSourceBar(b));
+  if(!bar)throw Error('Approved provider returned no complete internally consistent OHLC source bar');
   const normalizeCurrency=value=>String(value||'').trim()==='GBp'?'GBX':String(value||'').trim().toUpperCase();
   const expectedCurrency=normalizeCurrency(instrument.currency);
   const sourceCurrency=result.providerMeta?.currency||null;
