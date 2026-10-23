@@ -20,11 +20,14 @@ export function parseSixSponsoredAdmissions(html){
  return out;
 }
 export function compareSixSponsoredWithYahoo(yahooResults,officialRows){
- const index=new Map();
+ const index=new Map(),symbolOwners=new Map();
  for(const row of officialRows||[]){
   const key=row.isin+'|'+row.currency.toUpperCase();
   if(!index.has(key))index.set(key,[]);
   index.get(key).push(row);
+  const symbolKey=row.ticker.toUpperCase()+'|'+row.currency.toUpperCase();
+  if(!symbolOwners.has(symbolKey))symbolOwners.set(symbolKey,new Set());
+  symbolOwners.get(symbolKey).add(row.isin);
  }
  return (yahooResults||[]).filter(x=>x?.mic==='XSWX').map(x=>{
   const base={mic:'XSWX',isin:x.isin,providerSymbol:x.providerSymbol,readOnly:true};
@@ -34,6 +37,8 @@ export function compareSixSponsoredWithYahoo(yahooResults,officialRows){
   const ticker=String(x.providerSymbol||'').replace(/\.SW$/i,'').toUpperCase();
   const exact=candidates.filter(y=>y.ticker===ticker);
   if(exact.length!==1)return {...base,status:exact.length?'AMBIGUOUS_SIX_OFFICIAL_SYMBOL':'SIX_OFFICIAL_SYMBOL_DIFFERS',officialSymbols:[...new Set(candidates.map(y=>y.ticker))]};
+  const owners=symbolOwners.get(ticker+'|'+String(x.currency||'').toUpperCase());
+  if(owners?.size>1)return {...base,status:'SIX_OFFICIAL_TICKER_SHARED_BY_MULTIPLE_ISINS',ownerCount:owners.size};
   return {...base,status:'OFFICIAL_SIX_SPONSORED_ISIN_TICKER_CURRENCY_AND_YAHOO_MATCH',officialSource:SIX_SPONSORED_SOURCE,officialFirstTradingDate:exact[0].firstTradingDate,requiresLicenceReview:true};
  });
 }
