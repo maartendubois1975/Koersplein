@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-23T09:08:00Z",
+  "requestedAt": "2026-10-23T10:03:00Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Verify 31 markets after official SIX and Yahoo cross-checked BMAG.SW / SQL.SW provider overrides and immediate priority missing-history selection; retain 35 rotating daily missing slots, append-only production Worker, Paris existing-history-only and full OHLC guards. Do not run a full historical rewrite."
+  "reason": "Run all eight Europe shards after manifest retry hardening, complete-duplicate audit correction, 30-day stored OHLC debt export, and fair multi-market read-only source sampling. No full historical rewrite; preserve append-only Worker, verified identity, and Paris existing-history-only."
 }
