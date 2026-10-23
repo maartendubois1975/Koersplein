@@ -32,8 +32,26 @@ jobs:
           test "$SOURCE_RUN_ID" -gt 0
           gh run download "$SOURCE_RUN_ID" --repo "${{ github.repository }}" --name europe-run-summary --dir research/output
           QUEUE_FILE=$(find research/output -type f -name 'europe-recovery-queue.json' -print -quit)
-          test -n "$QUEUE_FILE" || { echo 'Recovery queue missing from downloaded artifact'; find research/output -maxdepth 5 -type f; exit 1; }
-          if [ "$QUEUE_FILE" != 'research/output/europe-recovery-queue.json' ]; then cp "$QUEUE_FILE" research/output/europe-recovery-queue.json; fi
+          if [ -n "$QUEUE_FILE" ]; then
+            if [ "$QUEUE_FILE" != 'research/output/europe-recovery-queue.json' ]; then cp "$QUEUE_FILE" research/output/europe-recovery-queue.json; fi
+          else
+            echo 'Older run artifact has no recovery queue; reconstructing read-only queue from full audited summary'
+            node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          import {buildEuropeRecoveryQueue} from './scripts/cloudflare/europe-recovery-queue.mjs';
+          const s=JSON.parse(fs.readFileSync('research/output/europe-run-summary.json','utf8'));
+          if(!s.marketCoverage?.complete||!Array.isArray(s.markets)||!Array.isArray(s.importFailures))throw Error('Source summary lacks complete market audit and import failures');
+          const byMarket=new Map();
+          for(const f of s.importFailures){
+            if(!byMarket.has(f.mic))byMarket.set(f.mic,{mic:f.mic,failed:[]});
+            byMarket.get(f.mic).failed.push(f);
+          }
+          const queue=buildEuropeRecoveryQueue([{markets:[...byMarket.values()]}],[{markets:s.markets}]);
+          if(queue.totals.missing!==s.totals.missingOpenClose)throw Error('Reconstructed queue missing count does not match audited summary');
+          fs.writeFileSync('research/output/europe-recovery-queue.json',JSON.stringify(queue,null,2));
+          console.log('RECONSTRUCTED_AUDITED_RECOVERY_QUEUE',queue.totals);
+          JS
+          fi
           test -s research/output/europe-recovery-queue.json
       - name: Map Swiss and London missing ISINs (reference evidence only)
         run: node scripts/cloudflare/openfigi-reference-probe.mjs
