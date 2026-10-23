@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
-import {auditBarIssue,isCompleteOhlcBar,isVerifiedNoTradeGap,previousClosedWeekday,validBars} from './europe-run-policy.mjs';
+import {auditBarIssue,isCompleteOhlcBar,isVerifiedNoTradeGap,previousClosedWeekday,validBars,latestAuditBar} from './europe-run-policy.mjs';
 
 const good={date:'2026-10-22',open:100,high:105,low:95,close:102,volume:20};
 assert.equal(isCompleteOhlcBar(good),true);
@@ -35,7 +35,9 @@ const daily=await fs.readFile('scripts/cloudflare/daily-open-close-update.mjs','
 const official=await fs.readFile('scripts/cloudflare/reconcile-official-daily.mjs','utf8');
 for(const [name,content] of [['audit',audit],['daily',daily],['official',official]])assert.match(content,/isCompleteOhlcBar/,'OHLC gate missing in '+name);
 assert.match(audit,/isVerifiedNoTradeGap/);
-assert.match(audit,/dated\.filter\(x=>x\.date<=cutoff\)/,'Audit must inspect latest completed session, not an intraday bar');
+assert.match(audit,/latestAuditBar\(bars,cutoff\)/,'Audit must inspect latest completed session, not an intraday bar');
+assert.deepEqual(latestAuditBar([{...good,date:'2026-10-23'},good,{...good,high:null}],'2026-10-22'),good,'Cutoff and complete duplicate take precedence');
+assert.deepEqual(latestAuditBar([{...good,high:null},good],'2026-10-22'),good,'Complete duplicate wins regardless of storage order');
 assert.match(daily,/isVerifiedNoTradeGap/);
 assert.match(official,/OFFICIAL_PARTIAL_OR_INVALID_OHLC/);
 const queue=await fs.readFile('scripts/cloudflare/europe-recovery-queue.mjs','utf8');
