@@ -6,7 +6,7 @@
     "XSWX",
     "XLON"
   ],
-  "offset": 0,
+  "offset": 80,
   "limit": 80,
-  "reason": "Validate first 80 unique OpenFIGI candidates from successful 475-ISIN read-only research against independent Yahoo symbol, venue, currency and complete recent OHLC. No production writes or mapping promotion; current official ISIN listing remains required."
+  "reason": "Continue with candidates 81-160 after successful first read-only run 39929012949: 61/80 Yahoo venue/currency/complete OHLC matches, 19 Yahoo HTTP 404 symbol gaps (18 Swiss, 1 London). Preserve official ISIN listing gate and no production writes."
 }
