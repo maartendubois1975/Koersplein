@@ -84,6 +84,14 @@ export function compareStoredAndSourceOhlc(stored,source){
  }
  return {readOnly:true,comparableFields:comparable,maxRelativeDiffBps:comparable?maxRelativeDiffBps:null,fields};
 }
+// Magnitude is evidence for triage, not permission to round or overwrite.
+export function classifyOhlcDifferenceMagnitude(comparison){
+ const bps=comparison?.maxRelativeDiffBps;
+ if(!Number.isFinite(bps)||comparison?.comparableFields!==4)return 'NOT_FULLY_COMPARABLE';
+ if(bps<1)return 'UNDER_1_BASIS_POINT';
+ if(bps<100)return 'FROM_1_TO_100_BASIS_POINTS';
+ return 'AT_LEAST_100_BASIS_POINTS';
+}
 export async function probeIncompleteOhlcCandidate(item,{registry,sources,market,listings,timeoutMs=12000}){
  const base={mic:item.mic,isin:item.isin,symbol:item.symbol||null,date:item.lastStoredDate,ohlcDefects:item.ohlcDefects||[],evidenceScope:item.evidenceScope||'LATEST_AUDIT_BAR',storedOhlc:item.storedOhlc||null,readOnly:true};
  if(item.auditReason!=='INCOMPLETE_OR_INVALID_OHLC'||!/^\d{4}-\d{2}-\d{2}$/.test(item.lastStoredDate||''))return {...base,status:'NOT_AN_INCOMPLETE_STORED_CANDLE'};
