@@ -44,6 +44,7 @@ jobs:
         run: |
           node scripts/cloudflare/test-europe-provider-routing.mjs
           node scripts/cloudflare/test-paris-history-eligibility.mjs
+          node scripts/cloudflare/test-europe-failure-diagnosis.mjs
       - name: Test production identity verification
         run: node scripts/cloudflare/test-github-oidc.mjs
       - name: Verify production Worker and credentials
@@ -123,7 +124,9 @@ jobs:
         if: always()
         with:
           name: europe-run-summary
-          path: research/output/europe-run-summary.json
+          path: |
+            research/output/europe-run-summary.json
+            research/output/europe-failure-diagnosis.json
           retention-days: 90
 
   paris-readonly-diagnostic:
