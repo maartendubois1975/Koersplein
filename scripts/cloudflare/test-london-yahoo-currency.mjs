@@ -40,5 +40,19 @@ try {
  assert.equal(describeExactDateSourceBars(diagnostic.bars,'2026-10-20').defects.INVALID_OR_MISSING_OPEN,1);
  assert.equal(describeExactDateSourceBars(diagnostic.bars,'2026-10-21').defects.INVALID_OR_MISSING_CLOSE,1);
  assert.equal(describeExactDateSourceBars(diagnostic.bars,'2026-10-22').defects.INVALID_OR_MISSING_HIGH,1);
+ // Inverted HIGH/LOW is distinct from a missing field. Preserve the raw
+ // contradiction only in the read-only route, never in production bars.
+ globalThis.fetch=async()=>({ok:true,async json(){return {chart:{result:[{
+  meta,timestamp:[Math.floor(Date.parse('2026-10-22T12:00:00Z')/1000)],
+  indicators:{quote:[{open:[100],high:[80],low:[90],close:[105],volume:[100]}]}
+ }]}};}});
+ const productionInverted=await yahoo.fetchDaily(base,{startDate:'2026-10-22',endDate:'2026-10-22'});
+ assert.equal(productionInverted.bars[0].high,null);
+ assert.equal(productionInverted.bars[0].low,null);
+ const readOnlyInverted=await yahoo.fetchDaily(base,{startDate:'2026-10-22',endDate:'2026-10-22',includeIncompleteBars:true});
+ assert.equal(readOnlyInverted.bars[0].high,80);
+ assert.equal(readOnlyInverted.bars[0].low,90);
+ assert.equal(describeExactDateSourceBars(readOnlyInverted.bars,'2026-10-22').defects.HIGH_BELOW_LOW,1);
+
 } finally {globalThis.fetch=originalFetch;}
 console.log('Yahoo incomplete OPEN/CLOSE preserved only for read-only source diagnostics PASS');
