@@ -15,6 +15,24 @@ const CATALOG_CHILD_MICS={
 export function approvedCatalogListingMic(parentMic,listingMic){
  return listingMic===parentMic||(CATALOG_CHILD_MICS[parentMic]||[]).includes(listingMic);
 }
+// Spread read-only probes across different instruments before revisiting
+// another defective date for the same ISIN. London has thousands of defective
+// dates but far fewer unique securities; date-sorted input otherwise repeatedly
+// probes a few illiquid symbols and starves the rest of the catalogue.
+function diversifyByIsin(items){
+ const groups=new Map();
+ for(const item of items){
+  const key=item.isin;
+  if(!groups.has(key))groups.set(key,[]);
+  groups.get(key).push(item);
+ }
+ const ordered=[],buckets=[...groups.values()];
+ for(let depth=0;ordered.length<items.length;depth++){
+  for(const group of buckets)if(depth<group.length)ordered.push(group[depth]);
+ }
+ return ordered;
+}
+
 // Only investigate incomplete candles already identified by the authorized
 // read-only audit. No symbol guessing, no automatic identity promotion.
 function isRealIsoDay(day){
@@ -55,9 +73,10 @@ export function selectIncompleteOhlcCandidates(queue,{limit=30,perMarket=18,rota
    if(i<historical.length)all.push(historical[i]);
   }
   if(!all.length)continue;
-  const start=((rotation%all.length)*perMarket)%all.length;
-  const count=Math.min(perMarket,all.length);
-  buckets.push({mic:market.mic,total:all.length,items:Array.from({length:count},(_,i)=>all[(start+i)%all.length]),used:0});
+  const diverse=diversifyByIsin(all);
+  const start=((rotation%diverse.length)*perMarket)%diverse.length;
+  const count=Math.min(perMarket,diverse.length);
+  buckets.push({mic:market.mic,total:diverse.length,items:Array.from({length:count},(_,i)=>diverse[(start+i)%diverse.length]),used:0});
  }
  if(!buckets.length)return [];
  // First give every affected market one rotating slot, so small exchanges
@@ -150,4 +169,26 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
  }catch(error){
   return {...identity,status:'NO_COMPLETE_APPROVED_SOURCE_BAR',failureCategory:classifyEuropeFailure(error.message),error:String(error.message).slice(0,400)};
  }
+}
+
+// Explain whether a batch covers many instruments or repeatedly samples the
+// same illiquid symbol on different dates. Evidence-only, no source promotion.
+export function summarizeOhlcProbeCoverage(rows){
+ const byMarket=new Map(),all=new Set();
+ for(const row of rows||[]){
+  if(!row||typeof row.mic!=='string'||typeof row.isin!=='string')continue;
+  if(!byMarket.has(row.mic))byMarket.set(row.mic,{probes:0,uniqueInstruments:0,repeatedInstrumentDates:0,failuresByCategory:{},_seen:new Set()});
+  const entry=byMarket.get(row.mic),key=row.mic+'|'+row.isin;
+  entry.probes++;
+  if(entry._seen.has(key))entry.repeatedInstrumentDates++;
+  else {entry._seen.add(key);entry.uniqueInstruments++;}
+  all.add(key);
+  if(row.status==='NO_COMPLETE_APPROVED_SOURCE_BAR'){
+   const category=row.failureCategory||'UNCLASSIFIED';
+   entry.failuresByCategory[category]=(entry.failuresByCategory[category]||0)+1;
+  }
+ }
+ const markets={};
+ for(const [mic,{_seen,...entry}] of [...byMarket.entries()].sort((a,b)=>a[0].localeCompare(b[0])))markets[mic]=entry;
+ return {readOnly:true,uniqueInstruments:all.size,probedDates:(rows||[]).length,repeatedInstrumentDates:Object.values(markets).reduce((n,x)=>n+x.repeatedInstrumentDates,0),byMarket:markets};
 }
