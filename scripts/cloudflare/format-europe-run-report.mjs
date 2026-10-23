@@ -68,6 +68,15 @@ export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
         const londonConflicts=sourceQuality.byMarket?.XLON?.conflictingSourceObservations||0;
         lines.push(`Conflicting complete same-date source observations: ${sourceQuality.conflictingSourceObservations} (London ${londonConflicts}). These were rejected as repair candidates; no source bar was selected.`);
       }
+      if(Number.isSafeInteger(sourceQuality.mixedSourceObservations)&&sourceQuality.mixedSourceObservations>0){
+        const londonMixed=sourceQuality.byMarket?.XLON?.mixedSourceObservations||0;
+        lines.push(`Mixed complete/invalid same-date source observations: ${sourceQuality.mixedSourceObservations} (London ${londonMixed}). Such provider attempts were rejected, not repaired.`);
+      }
+      if(Number.isSafeInteger(sourceQuality.missingExactDateObservations)&&Number.isSafeInteger(sourceQuality.distinctFeedNoExactDateObservations)&&Number.isSafeInteger(sourceQuality.discordantExactDateFeedObservations)&&
+         sourceQuality.missingExactDateObservations>=sourceQuality.distinctFeedNoExactDateObservations&&sourceQuality.missingExactDateObservations<=sourceQuality.observations){
+        const londonMissing=sourceQuality.byMarket?.XLON?.missingExactDateObservations||0;
+        lines.push(`Exact-date source absence: ${sourceQuality.missingExactDateObservations} provider attempts (London ${londonMissing}), ${sourceQuality.distinctFeedNoExactDateObservations} feed/date absences confirmed across observed adapters, ${sourceQuality.discordantExactDateFeedObservations} correlated feed/date disagreements. Missing source bars do NOT prove no trading or delisting.`);
+      }
       const londonQuality=sourceQuality.byMarket?.XLON;
       if(londonQuality){
         const causes=Object.entries(londonQuality.defects||{}).filter(([,count])=>Number.isSafeInteger(count)&&count>0).sort((a,b)=>b[1]-a[1]).slice(0,5);
