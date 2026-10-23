@@ -41,6 +41,8 @@ export function buildEuropeRecoveryQueue(updates,audits) {
     lastStoredDate:missing.lastDate||null,auditReason:missing.reason||null,
     officialNoTradeReported:missing.officialNoTradeReported===true,
     officialLastTradeDate:missing.officialLastTradeDate||null,
+    ohlcDefects:missing.reason==='INCOMPLETE_OR_INVALID_OHLC'?(missing.ohlcDefects||[]):[],
+    repairPolicy:missing.reason==='INCOMPLETE_OR_INVALID_OHLC'?'READ_ONLY_VERIFICATION_REQUIRED_APPEND_ONLY_PRESERVES_EXISTING_BAR':null,
     knownDataUnavailable:missing.knownDataUnavailable||null,
     sourceFailureCategory:category,
     attempts:failure?providerAttempts(failure.error):[],
