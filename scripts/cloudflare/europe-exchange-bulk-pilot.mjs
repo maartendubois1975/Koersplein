@@ -6,6 +6,9 @@ if(!token)throw Error('EODHD_API_TOKEN required; no production writes attempted'
 const date=process.env.BULK_PILOT_DATE;
 if(!/^\d{4}-\d{2}-\d{2}$/.test(date||''))throw Error('BULK_PILOT_DATE must be YYYY-MM-DD');
 const exchanges=[{exchange:'PA',mic:'XPAR'},{exchange:'XETRA',mic:'XETR'},{exchange:'BR',mic:'XBRU'}];
+const requestedExchanges=(process.env.BULK_PILOT_EXCHANGES||'PA,XETRA,BR').split(',').map(x=>x.trim().toUpperCase());
+const selected=exchanges.filter(x=>requestedExchanges.includes(x.exchange));
+if(!selected.length||requestedExchanges.some(x=>!exchanges.some(e=>e.exchange===x)))throw Error('Invalid BULK_PILOT_EXCHANGES');
 const officialParis=JSON.parse(await fs.readFile('data/euronext-paris.json','utf8')).shares;
 async function get(path){
  const url=new URL('https://eodhd.com/api/'+path);
@@ -19,16 +22,16 @@ async function get(path){
  return json;
 }
 const reports=[];
-for(const {exchange,mic} of exchanges){
+for(const {exchange,mic} of selected){
  try{
  const [listings,raw]=await Promise.all([get('exchange-symbol-list/'+exchange),get('eod-bulk-last-day/'+exchange)]);
  const normalized=normalizeBulkBars(raw,{date});
  const catalog=exchange==='PA'?officialParis.filter(x=>['XPAR','ALXP','XMLI'].includes(x.mic)):[];
  const coverageComparable=exchange==='PA';
- const comparison=reconcileBulkWithCatalog({catalog,providerListings:listings,bulkBars:normalized.bars});
- const report={exchange,mic,date,status:'READ_ONLY_OBSERVED',providerListings:listings.length,rawBars:raw.length,validBars:normalized.bars.length,invalidRows:normalized.errors.slice(0,50),invalidRowCount:normalized.errors.length,officialCatalogSize:coverageComparable?catalog.length:null,coverageComparable,matched:coverageComparable?comparison.matched.length:null,missing:coverageComparable?comparison.missing.length:null,ambiguous:coverageComparable?comparison.ambiguous.length:null,missingExamples:comparison.missing.slice(0,30)};
+ const comparison=coverageComparable?reconcileBulkWithCatalog({catalog,providerListings:listings,bulkBars:normalized.bars}):null;
+ const report={exchange,mic,date,status:'READ_ONLY_OBSERVED',providerListings:listings.length,rawBars:raw.length,validBars:normalized.bars.length,invalidRows:normalized.errors.slice(0,50),invalidRowCount:normalized.errors.length,officialCatalogSize:coverageComparable?catalog.length:null,coverageComparable,matched:coverageComparable?comparison?.matched.length:null,missing:coverageComparable?comparison?.missing.length:null,ambiguous:coverageComparable?comparison?.ambiguous.length:null,missingExamples:comparison?.missing.slice(0,30)||[],ambiguousExamples:comparison?.ambiguous.slice(0,30)||[]};
  reports.push(report);
- console.log('EXCHANGE_BULK_PILOT',JSON.stringify({...report,invalidRows:undefined,missingExamples:undefined}));
+ console.log('EXCHANGE_BULK_PILOT',JSON.stringify({...report,invalidRows:undefined,missingExamples:undefined,ambiguousExamples:undefined}));
  }catch(error){
   const report={exchange,mic,date,status:'SOURCE_ERROR',error:String(error.message||error),coverageComparable:false,matched:null,missing:null};
   reports.push(report);
@@ -36,4 +39,8 @@ for(const {exchange,mic} of exchanges){
  }
 }
 await fs.mkdir('research/output',{recursive:true});
-await fs.writeFile('research/output/europe-exchange-bulk-pilot.json',JSON.stringify({generatedAt:new Date().toISOString(),readOnly:true,date,reports},null,2)+'\n');
+
+const failures=reports.filter(x=>x.status==='SOURCE_ERROR');
+const summary={generatedAt:new Date().toISOString(),readOnly:true,date,complete:failures.length===0,failedExchanges:failures.map(x=>x.exchange),reports};
+await fs.writeFile('research/output/europe-exchange-bulk-pilot.json',JSON.stringify(summary,null,2)+'\n');
+if(failures.length)process.exitCode=2;
