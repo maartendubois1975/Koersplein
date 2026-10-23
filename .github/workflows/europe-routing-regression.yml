@@ -7,6 +7,7 @@ on:
       - 'scripts/cloudflare/audit-daily-open-close.mjs'
       - 'scripts/cloudflare/europe-run-policy.mjs'
       - 'scripts/cloudflare/test-europe-ohlc-integrity.mjs'
+      - 'scripts/cloudflare/test-europe-run-policy.mjs'
       - 'scripts/cloudflare/europe-ohlc-defects.mjs'
       - 'scripts/cloudflare/test-europe-ohlc-defects.mjs'
       - 'scripts/cloudflare/europe-ohlc-source-evidence.mjs'
@@ -58,6 +59,7 @@ jobs:
           node --check scripts/cloudflare/audit-daily-open-close.mjs
           node --check scripts/cloudflare/europe-run-policy.mjs
           node --check scripts/cloudflare/test-europe-ohlc-integrity.mjs
+          node --check scripts/cloudflare/test-europe-run-policy.mjs
           node --check scripts/cloudflare/europe-ohlc-defects.mjs
           node --check scripts/cloudflare/test-europe-ohlc-defects.mjs
           node --check scripts/cloudflare/europe-ohlc-source-evidence.mjs
@@ -90,6 +92,7 @@ jobs:
         run: |
           node scripts/cloudflare/test-europe-provider-routing.mjs
           node scripts/cloudflare/test-europe-ohlc-integrity.mjs
+          node scripts/cloudflare/test-europe-run-policy.mjs
           node scripts/cloudflare/test-europe-ohlc-defects.mjs
           node scripts/cloudflare/test-europe-ohlc-source-evidence.mjs
           node scripts/cloudflare/test-openfigi-reference-evidence.mjs
