@@ -15,8 +15,8 @@ try {
  await fs.writeFile(path.join(fixture,'data/world-fill-plan.json'),JSON.stringify({markets:[{mic:'XPAR',state:'COMPLETE'}]}));
  const reportDir=path.join(fixture,'research/output');
  for(let shard=0;shard<8;shard++){
-  const update={generatedAt:'2026-10-23T10:00:00Z',shardIndex:shard,shardCount:8,markets:shard===0?[{mic:'XPAR',failed:[],deferredMissing:0,historicalBackfillFailures:[]}]:[]};
-  const audit={generatedAt:'2026-10-23T10:00:00Z',shardIndex:shard,shardCount:8,markets:shard===0?[{mic:'XPAR',catalog:1,openCloseOk:1,verifiedNoTrades:0,missingOpenClose:0,skippedDataUnavailable:0,recentInvalidOhlcDays:1,recentInvalidOhlcInstruments:1,recentOhlcDebtCandidates:[{isin:'FR0000061418',symbol:'SACI',date:'2026-10-22',defects:['HIGH_BELOW_CLOSE']}],missing:[],missingReasons:{},invalidOhlcByDefect:{}}]:[]};
+  const update={generatedAt:'2026-10-23T10:00:00Z',shardIndex:shard,shardCount:8,freshnessCutoff:'2026-10-22',markets:shard===0?[{mic:'XPAR',failed:[],deferredMissing:0,historicalBackfillFailures:[]}]:[]};
+  const audit={generatedAt:'2026-10-23T10:00:00Z',shardIndex:shard,shardCount:8,freshnessCutoff:'2026-10-22',markets:shard===0?[{mic:'XPAR',catalog:1,openCloseOk:1,verifiedNoTrades:0,missingOpenClose:0,skippedDataUnavailable:0,recentInvalidOhlcDays:1,recentInvalidOhlcInstruments:1,recentOhlcDebtCandidates:[{isin:'FR0000061418',symbol:'SACI',date:'2026-10-22',defects:['HIGH_BELOW_CLOSE']}],missing:[],missingReasons:{},invalidOhlcByDefect:{}}]:[]};
   await fs.writeFile(path.join(reportDir,`daily-open-close-update-${shard}.json`),JSON.stringify(update));
   await fs.writeFile(path.join(reportDir,`daily-open-close-audit-${shard}.json`),JSON.stringify(audit));
  }
@@ -28,6 +28,31 @@ try {
  assert.equal(summary.totals.catalog,1);
  assert.equal(summary.historicalOhlcDebt.datesInRecoveryQueue,1);
  assert.equal(summary.status,'DAILY_STATUS_VERIFIED');
+ assert.equal(summary.freshnessCutoff,'2026-10-22');
+ assert.equal(summary.sessionConsistency.complete,true);
+ // A session rollover inside one 8-shard run must fail closed even when all
+ // markets are accounted for and every OHLC candle is otherwise valid.
+ const audit7Path=path.join(reportDir,'daily-open-close-audit-7.json');
+ const audit7=JSON.parse(await fs.readFile(audit7Path,'utf8'));
+ await fs.writeFile(audit7Path,JSON.stringify({...audit7,freshnessCutoff:'2026-10-23'}));
+ result=run();
+ assert.equal(result.status,2,'Mismatched update/audit session dates must fail closed');
+ summary=JSON.parse(await fs.readFile(path.join(reportDir,'europe-run-summary.json'),'utf8'));
+ assert.equal(summary.marketCoverage.complete,true);
+ assert.equal(summary.sessionConsistency.complete,false);
+ assert.equal(summary.freshnessCutoff,null);
+ assert.ok(summary.sessionConsistency.anomalies.some(x=>x.issue==='SESSION_CUTOFF_MISMATCH'));
+ await fs.writeFile(audit7Path,JSON.stringify(audit7));
+ // Missing metadata must never be silently inferred from generatedAt.
+ const update6Path=path.join(reportDir,'daily-open-close-update-6.json');
+ const update6=JSON.parse(await fs.readFile(update6Path,'utf8'));
+ const {freshnessCutoff:omitted,...noCutoff}=update6;
+ await fs.writeFile(update6Path,JSON.stringify(noCutoff));
+ result=run();
+ assert.equal(result.status,2,'Missing session metadata must fail closed');
+ summary=JSON.parse(await fs.readFile(path.join(reportDir,'europe-run-summary.json'),'utf8'));
+ assert.ok(summary.sessionConsistency.anomalies.some(x=>x.issue==='MISSING_OR_INVALID_SESSION_CUTOFF'));
+ await fs.writeFile(update6Path,JSON.stringify(update6));
  await fs.unlink(path.join(reportDir,'daily-open-close-audit-7.json'));
  result=run();
  assert.equal(result.status,2,`Missing audit shard must fail closed: ${result.stderr}`);
@@ -35,7 +60,7 @@ try {
  assert.equal(summary.marketCoverage.complete,false);
  assert.equal(summary.status,'INCOMPLETE');
  assert.ok(summary.marketCoverage.anomalies.some(x=>x.kind==='audit'&&x.shard===7&&x.issue==='REPORT_COUNT'));
- await fs.writeFile(path.join(reportDir,'daily-open-close-audit-7.json'),JSON.stringify({generatedAt:'2026-10-23T10:00:00Z',shardIndex:7,shardCount:8,markets:[]}));
+ await fs.writeFile(path.join(reportDir,'daily-open-close-audit-7.json'),JSON.stringify({generatedAt:'2026-10-23T10:00:00Z',shardIndex:7,shardCount:8,freshnessCutoff:'2026-10-22',markets:[]}));
  await fs.unlink(path.join(reportDir,'daily-open-close-update-7.json'));
  result=run();
  assert.equal(result.status,2,`Missing update shard must fail closed: ${result.stderr}`);
@@ -45,7 +70,7 @@ try {
  assert.equal(summary.totals.deferredMissing,null);
  assert.equal(summary.totals.historicalBackfillFailures,null);
  assert.ok(summary.marketCoverage.anomalies.some(x=>x.kind==='update'&&x.shard===7&&x.issue==='REPORT_COUNT'));
- console.log('Europe summary integration PASS: runtime, historical debt, 8/8 coverage and missing update/audit shard fail-closed');
+ console.log('Europe summary integration PASS: runtime, historical debt, session cutoff, 8/8 coverage and missing update/audit shard fail-closed');
 } finally {
  await fs.rm(fixture,{recursive:true,force:true});
 }
