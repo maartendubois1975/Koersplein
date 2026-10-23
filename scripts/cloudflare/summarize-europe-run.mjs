@@ -29,6 +29,10 @@ for(const m of updates.flatMap(x=>x.markets)){totals.failedImports+=m.failed.len
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const marketCoverage=evaluateEuropeShardCoverage(plan,updates,audits,8);
 const shardsComplete=marketCoverage.complete;
+const updateCoverageComplete=!marketCoverage.anomalies.some(a=>a.kind==='update'||a.issue==='DUPLICATE_PLAN_MARKET');
+// Missing update shards are unknown, not zero import failures. Preserve the
+// numerical counters for the verification decision, but publish honest totals.
+const reportedTotals={...totals,failedImports:updateCoverageComplete?totals.failedImports:null,deferredMissing:updateCoverageComplete?totals.deferredMissing:null,historicalBackfillFailures:updateCoverageComplete?totals.historicalBackfillFailures:null};
 const dailyVerified=shardsComplete&&!totals.missingOpenClose&&!totals.failedImports&&!totals.deferredMissing&&!totals.skippedDataUnavailable;
 const sourceFailureByMarket={};
 for(const m of updates.flatMap(x=>x.markets)){
@@ -42,9 +46,9 @@ const historicalOhlcDebt={readOnly:true,datesInRecoveryQueue:recoveryQueue.total
 await fs.writeFile(`${dir}/europe-recovery-queue.json`,JSON.stringify(recoveryQueue,null,2));
 await fs.writeFile(`${dir}/europe-failure-diagnosis.json`,JSON.stringify(diagnosis,null,2));
 const failureDiagnosis=diagnosis.markets.slice(0,12).map(({mic,failed,missingOpenClose,numericSymbolFailures,categories,primaryCause,nextAction})=>({mic,failed,missingOpenClose,numericSymbolFailures,categories,primaryCause,nextAction}));
-const report={generatedAt:new Date().toISOString(),status:dailyVerified?'DAILY_STATUS_VERIFIED':'INCOMPLETE',historyCompleteness:'NOT_PROVEN_BY_DAILY_AUDIT',shardsComplete,marketCoverage,totals,recoveryQueueOverview:recoveryQueue.markets.slice(0,8).map(({mic,missing,numericSwissValor,knownDataUnavailable,workstreams})=>({mic,missing,numericSwissValor,knownDataUnavailable,workstreams})),recoveryPriority,historicalOhlcDebt,failureDiagnosis,missingByReason,invalidOhlcByDefect,knownDataUnavailableByMarket,sourceFailureByMarket,markets,historicalBackfillFailures:updates.flatMap(x=>x.markets.flatMap(m=>(m.historicalBackfillFailures||[]).map(f=>({mic:m.mic,...f})))),importFailures:updates.flatMap(x=>x.markets.flatMap(m=>m.failed.map(f=>({mic:m.mic,...f}))))};
+const report={generatedAt:new Date().toISOString(),status:dailyVerified?'DAILY_STATUS_VERIFIED':'INCOMPLETE',historyCompleteness:'NOT_PROVEN_BY_DAILY_AUDIT',shardsComplete,marketCoverage,totals:reportedTotals,recoveryQueueOverview:recoveryQueue.markets.slice(0,8).map(({mic,missing,numericSwissValor,knownDataUnavailable,workstreams})=>({mic,missing,numericSwissValor,knownDataUnavailable,workstreams})),recoveryPriority,historicalOhlcDebt,failureDiagnosis,missingByReason,invalidOhlcByDefect,knownDataUnavailableByMarket,sourceFailureByMarket,markets,historicalBackfillFailures:updates.flatMap(x=>x.markets.flatMap(m=>(m.historicalBackfillFailures||[]).map(f=>({mic:m.mic,...f})))),importFailures:updates.flatMap(x=>x.markets.flatMap(m=>m.failed.map(f=>({mic:m.mic,...f}))))};
 await fs.writeFile(`${dir}/europe-run-summary.json`,JSON.stringify(report,null,2));
-const summary=`Europe run: ${report.status}\n\n${JSON.stringify(totals,null,2)}\n\nFull historical completeness is not established by the daily OHLC check.\n`;
+const summary=`Europe run: ${report.status}\n\n${JSON.stringify(reportedTotals,null,2)}\n\nFull historical completeness is not established by the daily OHLC check.\n`;
 console.log(summary);
 if(process.env.GITHUB_STEP_SUMMARY)await fs.appendFile(process.env.GITHUB_STEP_SUMMARY,summary);
 if(!dailyVerified)process.exitCode=2;
