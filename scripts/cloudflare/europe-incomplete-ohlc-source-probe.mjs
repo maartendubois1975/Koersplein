@@ -4,7 +4,7 @@
 import fs from 'node:fs/promises';
 import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
 import {mapConcurrent} from './europe-run-policy.mjs';
-import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate} from './europe-ohlc-source-evidence.mjs';
+import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,classifyOhlcDifferenceMagnitude} from './europe-ohlc-source-evidence.mjs';
 const path='research/output/europe-recovery-queue.json';
 const output='research/output/europe-incomplete-ohlc-source-probe.json';
 await fs.mkdir('research/output',{recursive:true});
@@ -39,12 +39,16 @@ await mapConcurrent(items,4,async(item,index)=>{
  }
  results[index]=await probeIncompleteOhlcCandidate(item,{registry,sources:sourceRegistry.markets?.[item.mic],market,listings});
 });
-const counts={},scopeCounts={},marketCounts={};
+const counts={},scopeCounts={},marketCounts={},sourceVsStoredMagnitude={};
 for(const row of results){
  counts[row.status]=(counts[row.status]||0)+1;
  scopeCounts[row.evidenceScope||'LATEST_AUDIT_BAR']=(scopeCounts[row.evidenceScope||'LATEST_AUDIT_BAR']||0)+1;
  marketCounts[row.mic]=(marketCounts[row.mic]||0)+1;
+ if(row.status==='COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW'){
+  const bucket=classifyOhlcDifferenceMagnitude(row.sourceVsStored);
+  sourceVsStoredMagnitude[bucket]=(sourceVsStoredMagnitude[bucket]||0)+1;
+ }
 }
-const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_PRODUCTION_WRITES',status:'COMPLETED',sourceQueueGeneratedAt:queue.generatedAt||null,rotation,requested:items.length,counts,scopeCounts,marketCounts,results};
+const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_PRODUCTION_WRITES',status:'COMPLETED',sourceQueueGeneratedAt:queue.generatedAt||null,rotation,requested:items.length,counts,scopeCounts,marketCounts,sourceVsStoredMagnitude,results};
 await fs.writeFile(output,JSON.stringify(report,null,2)+'\n');
 console.log('EUROPE_OHLC_SOURCE_PROBE',JSON.stringify({requested:items.length,counts}));
