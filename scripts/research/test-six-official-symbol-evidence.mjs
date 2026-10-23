@@ -56,4 +56,14 @@ await assert.rejects(()=>verifyYahooCandidate(item,'GOB',async()=>({}),{asOfDate
 const both=await probeSwissReference([item],{asOfDate:'2026-10-23',fetchHtml:async()=>html,fetchYahoo:async()=>({providerMeta:{symbol:'GOB.SW',currency:'CHF',exchangeName:'EBS'},bars:[{date:'2026-10-22',open:10,high:11,low:9,close:10.5}]})});
 assert.equal(both.results[0].yahooEvidence.status,'YAHOO_VENUE_CURRENCY_OHLC_MATCH_ISIN_UNPROVEN');
 assert.equal(both.results[0].approvedForProduction,false);
+assert.equal(both.officialIsinEvidence,1,'Only explicit visible official ISIN evidence counts');
+assert.equal(both.yahooStatuses.YAHOO_VENUE_CURRENCY_OHLC_MATCH_ISIN_UNPROVEN,1);
+assert.equal(both.yahooMatchesIsinUnproven,0,'Corroboration is not independent ISIN evidence');
+assert.equal(both.productionMappingsCreated,0);
+const titleOnly=await probeSwissReference([item],{asOfDate:'2026-10-23',fetchHtml:async()=>html.replace('ISIN FR0000125007','Reference FR0000125007'),fetchYahoo:async()=>({providerMeta:yahooMeta,bars:[yahooBar]})});
+assert.equal(titleOnly.statuses.TITLE_ONLY_ISIN_NOT_PROVEN,1);
+assert.equal(titleOnly.yahooMatchesIsinUnproven,1,'Fresh Yahoo quote does not independently bind the ISIN');
+assert.equal(titleOnly.officialIsinEvidence,0);
+assert.equal(titleOnly.productionMappingsCreated,0);
+assert.equal(titleOnly.results[0].approvedForProduction,false);
 console.log('SIX official read-only symbol evidence tests PASS');
