@@ -16,9 +16,11 @@ const updates=[...latestUpdates.values()],audits=[...latestAudits.values()];
 const totals={catalog:0,currentOpenClose:0,verifiedNoTrades:0,missingOpenClose:0,skippedDataUnavailable:0,failedImports:0,deferredMissing:0,historicalBackfillFailures:0};
 const markets=audits.flatMap(x=>x.markets);
 const missingByReason={};
+const invalidOhlcByDefect={};
 const knownDataUnavailableByMarket={};
 for(const m of markets){
  for(const [reason,count] of Object.entries(m.missingReasons||{}))missingByReason[reason]=(missingByReason[reason]||0)+count;
+ for(const [defect,count] of Object.entries(m.invalidOhlcByDefect||{}))invalidOhlcByDefect[defect]=(invalidOhlcByDefect[defect]||0)+count;
  if(m.knownDataUnavailableAmongMissing)knownDataUnavailableByMarket[m.mic]=m.knownDataUnavailableAmongMissing;
  totals.catalog+=m.catalog;totals.currentOpenClose+=m.openCloseOk;totals.verifiedNoTrades+=m.verifiedNoTrades||0;totals.missingOpenClose+=m.missingOpenClose;totals.skippedDataUnavailable+=m.skippedDataUnavailable;}
 for(const m of updates.flatMap(x=>x.markets)){totals.failedImports+=m.failed.length;totals.historicalBackfillFailures+=(m.historicalBackfillFailures||[]).length;totals.deferredMissing+=m.deferredMissing;}
@@ -37,7 +39,7 @@ const recoveryQueue=buildEuropeRecoveryQueue(updates,audits);
 await fs.writeFile(`${dir}/europe-recovery-queue.json`,JSON.stringify(recoveryQueue,null,2));
 await fs.writeFile(`${dir}/europe-failure-diagnosis.json`,JSON.stringify(diagnosis,null,2));
 const failureDiagnosis=diagnosis.markets.slice(0,12).map(({mic,failed,missingOpenClose,numericSymbolFailures,categories,primaryCause,nextAction})=>({mic,failed,missingOpenClose,numericSymbolFailures,categories,primaryCause,nextAction}));
-const report={generatedAt:new Date().toISOString(),status:dailyVerified?'DAILY_STATUS_VERIFIED':'INCOMPLETE',historyCompleteness:'NOT_PROVEN_BY_DAILY_AUDIT',shardsComplete,marketCoverage,totals,recoveryQueueOverview:recoveryQueue.markets.slice(0,8).map(({mic,missing,numericSwissValor,knownDataUnavailable,workstreams})=>({mic,missing,numericSwissValor,knownDataUnavailable,workstreams})),recoveryPriority,failureDiagnosis,missingByReason,knownDataUnavailableByMarket,sourceFailureByMarket,markets,historicalBackfillFailures:updates.flatMap(x=>x.markets.flatMap(m=>(m.historicalBackfillFailures||[]).map(f=>({mic:m.mic,...f})))),importFailures:updates.flatMap(x=>x.markets.flatMap(m=>m.failed.map(f=>({mic:m.mic,...f}))))};
+const report={generatedAt:new Date().toISOString(),status:dailyVerified?'DAILY_STATUS_VERIFIED':'INCOMPLETE',historyCompleteness:'NOT_PROVEN_BY_DAILY_AUDIT',shardsComplete,marketCoverage,totals,recoveryQueueOverview:recoveryQueue.markets.slice(0,8).map(({mic,missing,numericSwissValor,knownDataUnavailable,workstreams})=>({mic,missing,numericSwissValor,knownDataUnavailable,workstreams})),recoveryPriority,failureDiagnosis,missingByReason,invalidOhlcByDefect,knownDataUnavailableByMarket,sourceFailureByMarket,markets,historicalBackfillFailures:updates.flatMap(x=>x.markets.flatMap(m=>(m.historicalBackfillFailures||[]).map(f=>({mic:m.mic,...f})))),importFailures:updates.flatMap(x=>x.markets.flatMap(m=>m.failed.map(f=>({mic:m.mic,...f}))))};
 await fs.writeFile(`${dir}/europe-run-summary.json`,JSON.stringify(report,null,2));
 const summary=`Europe run: ${report.status}\n\n${JSON.stringify(totals,null,2)}\n\nFull historical completeness is not established by the daily OHLC check.\n`;
 console.log(summary);
