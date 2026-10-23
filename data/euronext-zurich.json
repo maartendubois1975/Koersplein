@@ -17,7 +17,15 @@
       "isin": "AT0000KTMI02",
       "market": "SIX Swiss Exchange",
       "mic": "XSWX",
-      "currency": "CHF"
+      "currency": "CHF",
+      "providerSymbol": "BMAG.SW",
+      "providerSymbolEvidence": {
+        "officialSix": "https://www.six-group.com/en/market-data/shares/share-explorer/share-details.AT0000KTMI02CHF4.html",
+        "yahooSwiss": "https://finance.yahoo.com/quote/BMAG.SW/",
+        "verifiedAt": "2026-10-23",
+        "yahooEvidenceRun": 39929012949,
+        "identity": "Official SIX current share page states ISIN AT0000KTMI02, symbol BMAG, CHF; independent Yahoo 2026-10-22 venue EBS, CHF, complete OHLC validated in run 39929012949. Preserve catalog SIX valor."
+      }
     },
     {
       "name": "Bearer Share",
@@ -121,7 +129,15 @@
       "isin": "CH0042797206",
       "market": "SIX Swiss Exchange",
       "mic": "XSWX",
-      "currency": "CHF"
+      "currency": "CHF",
+      "providerSymbol": "SQL.SW",
+      "providerSymbolEvidence": {
+        "officialSix": "https://www.six-group.com/de/market-data/shares/ipo-history/2026/sql.html",
+        "yahooSwiss": "https://finance.yahoo.com/quote/SQL.SW/",
+        "verifiedAt": "2026-10-23",
+        "yahooEvidenceRun": 39929012949,
+        "identity": "Official SIX 2026-06-15 listing states ISIN CH0042797206, ticker SQL, CHF, valor 4279720; independent Yahoo 2026-10-22 venue EBS, CHF, complete OHLC validated in run 39929012949. Preserve catalog SIX valor."
+      }
     },
     {
       "name": "Registered Share",
