@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-23T10:03:00Z",
+  "requestedAt": "2026-10-23T10:36:00Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Run all eight Europe shards after manifest retry hardening, complete-duplicate audit correction, 30-day stored OHLC debt export, and fair multi-market read-only source sampling. No full historical rewrite; preserve append-only Worker, verified identity, and Paris existing-history-only."
+  "reason": "Restart protected eight-shard Europe production verification after fixing stale strict-OHLC preflight regression, summary initialization crash and honest partial-run totals. Preserve approved providers, append-only history and Paris existing-history-only. No full backfill."
 }
