@@ -58,8 +58,14 @@ const yahooChart=await fs.readFile('scripts/history/providers/yahoo-chart.mjs','
 const yahooIsin=await fs.readFile('scripts/history/providers/yahoo-isin.mjs','utf8');
 assert.match(yahooChart,/XSWX: \{ suffix: '\.SW'/);
 assert.match(yahooChart,/XLON: \{ suffix: '\.L'/);
-assert.match(yahooIsin,/XSWX:'\.SW'/);
-assert.match(yahooIsin,/XLON:'\.L'/);
+assert.match(yahooIsin,/chart\.marketRule\(instrument\)\?\.suffix/);
+const {YahooIsinProvider}=await import('../history/providers/yahoo-isin.mjs');
+const isinResolver=new YahooIsinProvider();
+assert.equal(isinResolver.supports({mic:'XLON',isin:'GB0000000001'}),true);
+assert.equal(isinResolver.supports({mic:'XSWX',isin:'CH0000000001'}),true);
+for(const mic of ['XLUX','XLJU','XLIT','XTAL','XZAG','XBRA'])assert.equal(isinResolver.supports({mic,isin:'LU0056569402'}),false,'No arbitrary cross-exchange ISIN match for '+mic);
+await assert.rejects(()=>isinResolver.fetchDaily({mic:'XLUX',isin:'LU0056569402'},{startDate:'2026-10-22',endDate:'2026-10-22'}),/Geen gevalideerde Yahoo-beursregel/);
+console.log('Yahoo ISIN resolution requires canonical chart MIC suffix; Luxembourg cross-exchange bypass closed PASS');
 console.log('London and Swiss chart/ISIN market suffix agreement PASS');
 
 const yahoo=new YahooChartProvider();
