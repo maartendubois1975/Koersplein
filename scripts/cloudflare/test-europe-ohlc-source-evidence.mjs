@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic,isCompleteOhlcSourceBar,compareStoredAndSourceOhlc} from './europe-ohlc-source-evidence.mjs';
+import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic,isCompleteOhlcSourceBar,compareStoredAndSourceOhlc,classifyOhlcDifferenceMagnitude} from './europe-ohlc-source-evidence.mjs';
 const item={mic:'XLON',isin:'GB0000000001',symbol:'TEST',lastStoredDate:'2026-10-22',auditReason:'INCOMPLETE_OR_INVALID_OHLC'};
 const queue={markets:[{mic:'XLON',instruments:[item,{...item,isin:'GB0000000002',auditReason:'STALE_LAST_TRADE'}]},{mic:'XPAR',instruments:[{...item,mic:'XPAR',isin:'FR0000000001'}]}]};
 assert.equal(selectIncompleteOhlcCandidates(queue).length,2);
@@ -145,3 +145,14 @@ assert.deepEqual(compared.storedOhlc,storedSnapshot);
 assert.equal(compared.sourceVsStored.fields.high.absoluteDifference,6);
 assert.equal(compared.storagePolicy,'APPEND_ONLY_EXISTING_BAR_UNCHANGED');
 console.log('Read-only stored-versus-source OHLC magnitude evidence and null-safe comparisons PASS');
+
+assert.equal(classifyOhlcDifferenceMagnitude(null),'NOT_FULLY_COMPARABLE');
+assert.equal(classifyOhlcDifferenceMagnitude({maxRelativeDiffBps:0.5,comparableFields:4}),'UNDER_1_BASIS_POINT');
+assert.equal(classifyOhlcDifferenceMagnitude({maxRelativeDiffBps:1,comparableFields:4}),'FROM_1_TO_100_BASIS_POINTS');
+assert.equal(classifyOhlcDifferenceMagnitude({maxRelativeDiffBps:100,comparableFields:4}),'AT_LEAST_100_BASIS_POINTS');
+assert.equal(classifyOhlcDifferenceMagnitude(diff),'AT_LEAST_100_BASIS_POINTS');
+assert.equal(classifyOhlcDifferenceMagnitude(missingField),'NOT_FULLY_COMPARABLE');
+const sourceProbeScript=await (await import('node:fs/promises')).readFile('scripts/cloudflare/europe-incomplete-ohlc-source-probe.mjs','utf8');
+assert.match(sourceProbeScript,/sourceVsStoredMagnitude/);
+assert.match(sourceProbeScript,/classifyOhlcDifferenceMagnitude/);
+console.log('Read-only OHLC source-vs-stored difference buckets and probe reporting PASS');
