@@ -20,6 +20,8 @@ assert.match(audit,/describeOhlcDefects/);
 assert.match(audit,/invalidOhlcByDefect:countOhlcDefects/);
 assert.match(audit,/recentOhlcDebt\(bars,cutoff,30\)/);
 assert.match(audit,/recentInvalidOhlcDays/);
+assert.match(audit,/recentOhlcDebtCandidates/,'All recent stored defect dates must be exported, not only 12 examples');
+assert.match(queue,/recentOhlcDebtCount/,'Recovery queue must expose recent historical OHLC debt');
 assert.match(queue,/READ_ONLY_VERIFICATION_REQUIRED_APPEND_ONLY_PRESERVES_EXISTING_BAR/);
 assert.match(summary,/invalidOhlcByDefect/);
 assert.match(summary,/recentInvalidOhlcDays/);
