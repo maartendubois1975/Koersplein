@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-23T15:08:26.090Z",
+  "requestedAt": "2026-10-23T16:04:31.113Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Verify read-only per-provider exact-date London OHLC defect attribution on immutable code after successful routing CI; 8/8 shard and 31/31 MIC checks; approved source routes only, no full backfill, no historical overwrite, Paris existing-history-only."
+  "reason": "Europe A verify read-only null OPEN/CLOSE Yahoo source diagnostics and shared Yahoo chart/ISIN upstream-feed attribution after passing Europe routing regression 39983651508; protected 8-shard 31-MIC audit, approved provider allowlist only, no full backfill, no stored-date overwrite, Paris existing-history-only."
 }
