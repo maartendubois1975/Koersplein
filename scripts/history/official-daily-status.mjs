@@ -1,3 +1,5 @@
+import fs from 'node:fs/promises';
+import {fetchMseOfficialPriceList,mseOfficialNoTradeStatus,MSE_PRICE_LIST_URL} from './providers/mse-official-price-list.mjs';
 import {BseSofiaProvider,bseSessionSnapshot} from './providers/bse-sofia.mjs';
 import {euronextDailySnapshot} from './providers/euronext-live.mjs';
 import {zseDailySnapshot} from './providers/zse-price-list.mjs';
@@ -38,6 +40,21 @@ export function zseRowStatus(row,date){
 async function cached(key,fn){if(!cache.has(key))cache.set(key,fn().catch(e=>{cache.delete(key);throw e;}));return cache.get(key);}
 export async function officialDailyStatus(instrument,date){
  const mic=instrument.mic||instrument.market,isin=instrument.officialIsin||instrument.isin;
+ if(mic==='XMAL'){
+  // MSE price list has no opening price. Its approved scope is solely to
+  // confirm a last-traded date before the exact completed session.
+  const approved=await cached('mse-no-trade-approval',async()=>{
+   const registry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
+   const route=registry.markets?.XMAL?.officialNoTradeEvidence;
+   return route?.status==='APPROVED_READ_ONLY_NO_TRADE'&&route.provider==='mse-official-price-list'&&route.sourceUrl===MSE_PRICE_LIST_URL;
+  });
+  if(!approved)return null;
+  const snapshot=await cached('mse-official:'+date,async()=>{
+   try{return await fetchMseOfficialPriceList(date)}
+   catch(error){console.warn('MSE_OFFICIAL_NO_TRADE_EVIDENCE_UNAVAILABLE',String(error.message).slice(0,180));return null;}
+  });
+  return mseOfficialNoTradeStatus(snapshot,{...instrument,mic,isin},date);
+ }
  if(mic==='XBUL'){
   const r=await cached(`bse:${isin}:${date}`,()=>new BseSofiaProvider().fetchDaily({...instrument,mic,isin},{startDate:'1990-01-01',endDate:date,signal:AbortSignal.timeout(20000)}));
   const bar=r.bars.find(x=>x.date===date);
