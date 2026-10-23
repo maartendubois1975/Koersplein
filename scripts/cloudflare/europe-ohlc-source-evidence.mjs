@@ -11,7 +11,7 @@ export function selectIncompleteOhlcCandidates(queue,{limit=30,perMarket=18,rota
   // Include both invalid latest bars and older defective stored dates. Dedupe
   // the overlap so a single defective day never consumes two probe slots.
   for(const item of [...(market.instruments||[]),...(market.recentOhlcDebt||[])]){
-   if(item.auditReason!=='INCOMPLETE_OR_INVALID_OHLC'||item.mic!==market.mic||!/^\\d{4}-\\d{2}-\\d{2}$/.test(item.lastStoredDate||''))continue;
+   if(item.auditReason!=='INCOMPLETE_OR_INVALID_OHLC'||item.mic!==market.mic||!/^\d{4}-\d{2}-\d{2}$/.test(item.lastStoredDate||''))continue;
    const key=item.mic+'|'+item.isin+'|'+item.lastStoredDate;
    if(seen.has(key))continue;
    seen.add(key);all.push(item);
