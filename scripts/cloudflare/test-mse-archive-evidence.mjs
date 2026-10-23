@@ -23,6 +23,15 @@ try{
  const missing=await probeMseArchive('2026-10-22',{archiveBytes:bytes,extractPdf:()=>report('Friday, October 23, 2026')});
  assert.equal(missing.status,'NO_EXACT_DATE_OFFICIAL_SNAPSHOT');
  assert.equal(missing.rows,undefined,'Never accept later snapshots as exact-date evidence');
+ const xls=path.join(dir,'archive-2026.xls');
+ await fs.writeFile(xls,'read-only placeholder');
+ const xlsZip=path.join(dir,'spreadsheet.zip');
+ execFileSync('zip',['-q','-j',xlsZip,xls]);
+ const noPdf=await probeMseArchive('2026-10-22',{archiveBytes:await fs.readFile(xlsZip)});
+ assert.equal(noPdf.status,'ARCHIVE_NO_PDF_ENTRIES','A spreadsheet-only archive has not been inspected for trading data');
+ assert.equal(noPdf.archiveFormats.xls,1);
+ assert.equal(noPdf.pdfEntries,0);
+ assert.equal(noPdf.priceWrites,0);
  assert.deepEqual(safeArchivePdfNames('folder/test.pdf\nother.txt\n'),['folder/test.pdf']);
  assert.throws(()=>safeArchivePdfNames('../escape.pdf\n'),/UNSAFE_ENTRY/);
  assert.throws(()=>safeArchivePdfNames(Array(301).fill('x.pdf').join('\n')),/TOO_MANY_ENTRIES/);
