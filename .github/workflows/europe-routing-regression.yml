@@ -17,6 +17,8 @@ on:
       - 'scripts/cloudflare/openfigi-reference-evidence.mjs'
       - 'scripts/cloudflare/openfigi-reference-probe.mjs'
       - 'scripts/cloudflare/openfigi-yahoo-evidence.mjs'
+      - 'scripts/cloudflare/europe-missing-backfill-priority.mjs'
+      - 'scripts/cloudflare/test-europe-missing-backfill-priority.mjs'
       - 'scripts/cloudflare/openfigi-yahoo-verification-probe.mjs'
       - 'scripts/cloudflare/test-openfigi-yahoo-evidence.mjs'
       - '.github/workflows/europe-openfigi-yahoo-verification.yml'
@@ -76,6 +78,8 @@ jobs:
           node --check scripts/cloudflare/openfigi-reference-evidence.mjs
           node --check scripts/cloudflare/openfigi-reference-probe.mjs
           node --check scripts/cloudflare/openfigi-yahoo-evidence.mjs
+          node --check scripts/cloudflare/europe-missing-backfill-priority.mjs
+          node --check scripts/cloudflare/test-europe-missing-backfill-priority.mjs
           node --check scripts/cloudflare/openfigi-yahoo-verification-probe.mjs
           node --check scripts/cloudflare/test-openfigi-yahoo-evidence.mjs
           node --check scripts/cloudflare/test-openfigi-reference-evidence.mjs
@@ -110,6 +114,7 @@ jobs:
           node scripts/cloudflare/test-europe-ohlc-source-evidence.mjs
           node scripts/cloudflare/test-openfigi-reference-evidence.mjs
           node scripts/cloudflare/test-openfigi-yahoo-evidence.mjs
+          node scripts/cloudflare/test-europe-missing-backfill-priority.mjs
           node scripts/cloudflare/test-paris-history-eligibility.mjs
           node scripts/cloudflare/test-europe-failure-diagnosis.mjs
           node scripts/cloudflare/test-six-ipo-symbol-evidence.mjs
