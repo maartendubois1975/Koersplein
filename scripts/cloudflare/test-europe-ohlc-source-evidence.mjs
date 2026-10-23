@@ -340,6 +340,17 @@ const correlated=summarizeOhlcSourceBarDiagnostics([{
 assert.equal(correlated.observations,3);
 assert.equal(correlated.invalidSourceBars,2);
 assert.equal(correlated.correlatedProviderAttempts,1,'Two Yahoo attempts on one date are correlated, not two independent sources');
+assert.equal(correlated.distinctFeedObservations,2,'Two Yahoo routes share one underlying feed, plus one official feed');
+assert.equal(correlated.feedLevelInvalidBarsLowerBound,1,'Two identical Yahoo errors on one date are not two independently observed invalid bars');
+assert.equal(correlated.byMarket.XLON.distinctFeedObservations,2);
+assert.equal(correlated.byMarket.XLON.feedLevelInvalidBarsLowerBound,1);
+const multiDate=summarizeOhlcSourceBarDiagnostics([
+ {mic:'XLON',sourceBarObservations:[{readOnly:true,providerId:'yahoo-chart',invalidBars:2},{readOnly:true,providerId:'yahoo-isin-resolver',invalidBars:3}]},
+ {mic:'XLON',sourceBarObservations:[{readOnly:true,providerId:'yahoo-chart',invalidBars:1}]}
+]);
+assert.equal(multiDate.invalidSourceBars,6,'Raw attempts are retained');
+assert.equal(multiDate.distinctFeedObservations,2,'Feed observations are deduplicated only within one instrument/date probe');
+assert.equal(multiDate.feedLevelInvalidBarsLowerBound,4,'Per-feed maximum per probe is a lower bound, not exact deduplication');
 assert.equal(correlated.bySourceFamily['yahoo-chart-feed'].sourceObservations,2);
 assert.equal(correlated.bySourceFamily['yahoo-chart-feed'].invalidSourceBars,2);
 assert.equal(correlated.byMarket.XLON.bySourceFamily['yahoo-chart-feed'].defects.HIGH_BELOW_CLOSE,2);
