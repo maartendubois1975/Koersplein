@@ -29,12 +29,22 @@ export async function probeSixIpoCurrent(shares,{ipoHtml,fetchHtml=fetchOfficial
  const pairs=parseSixIpoPairs(ipoHtml);
  if(pairs.size<20)throw Error('OFFICIAL_IPO_LIST_TOO_SMALL');
  const {selected,totalEligible}=selectIpoIdentityCandidates(shares,pairs,{limit,rotation});
+ // Historical symbols can be reused across different ISINs. Never treat a
+ // reused ticker as an unambiguous independent identity reference.
+ const tickerOwners=new Map();
+ for(const [isin,symbols] of pairs)for(const symbol of symbols){
+  if(!tickerOwners.has(symbol))tickerOwners.set(symbol,new Set());
+  tickerOwners.get(symbol).add(isin);
+ }
  const results=[];
  for(const i of selected){
   const historicalSymbols=[...pairs.get(i.isin)].sort();
   const base={isin:i.isin,valor:i.symbol,mic:'XSWX',currency:i.currency,historicalSymbols,officialIpoUrl:IPO_URL,readOnly:true,approvedForProduction:false};
   if(historicalSymbols.length!==1||!/^[A-Z][A-Z0-9.-]{0,11}$/.test(historicalSymbols[0])){
    results.push({...base,status:'AMBIGUOUS_HISTORICAL_IPO_SYMBOL'});continue;
+  }
+  if(tickerOwners.get(historicalSymbols[0])?.size>1){
+   results.push({...base,status:'AMBIGUOUS_HISTORICAL_IPO_TICKER_REUSE'});continue;
   }
   const url=officialSixUrl(i);
   try{
