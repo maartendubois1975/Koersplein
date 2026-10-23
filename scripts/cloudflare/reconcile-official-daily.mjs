@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import {FactoryApiClient} from './client.mjs';
 import {storageIdentityResolver} from './storage-identity.mjs';
-import {latestClosedWeekday,mapConcurrent} from './europe-run-policy.mjs';
+import {latestClosedWeekday,isCompleteOhlcBar,mapConcurrent} from './europe-run-policy.mjs';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 const client=new FactoryApiClient(),catalog=await client.catalog(),manifest=await client.historyManifest();
@@ -18,6 +18,7 @@ for(const market of plan.markets.filter(x=>x.state==='COMPLETE').filter((_,i)=>i
    const status=await officialDailyStatus(instrument,date);
    if(!status)return;
    if(status.status==='TRADED'){
+    if(!isCompleteOhlcBar(status.bar))throw Error('OFFICIAL_PARTIAL_OR_INVALID_OHLC '+instrument.isin);
     await client.putPartition(key,date.slice(0,4),{bars:[status.bar],provider:status.provider,appendOnly:true});
     await client.completeHistory(key,{provider:status.provider});
    }
