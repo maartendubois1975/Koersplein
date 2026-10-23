@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate} from './europe-ohlc-source-evidence.mjs';
+import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic} from './europe-ohlc-source-evidence.mjs';
 const item={mic:'XLON',isin:'GB0000000001',symbol:'TEST',lastStoredDate:'2026-10-22',auditReason:'INCOMPLETE_OR_INVALID_OHLC'};
 const queue={markets:[{mic:'XLON',instruments:[item,{...item,isin:'GB0000000002',auditReason:'STALE_LAST_TRADE'}]},{mic:'XPAR',instruments:[{...item,mic:'XPAR',isin:'FR0000000001'}]}]};
 assert.equal(selectIncompleteOhlcCandidates(queue).length,2);
@@ -57,3 +57,24 @@ assert.equal(new Set(diverse.map(x=>x.mic)).size,4,'A 30-slot budget must not st
 assert.deepEqual(selectIncompleteOhlcCandidates(manyMarkets,{limit:4,perMarket:3,rotation:0}),diverse);
 assert.notEqual(selectIncompleteOhlcCandidates(manyMarkets,{limit:1,perMarket:3,rotation:1})[0].mic,diverse[0].mic,'Market rotation must move the starting exchange');
 console.log('Historical OHLC debt, latest-date deduplication and fair European market sampling PASS');
+
+const parisItem={...item,mic:'XPAR',isin:'FR0013341781',symbol:'AL2SI'};
+const parisMarket={mic:'XPAR',currency:'EUR'};
+const parisListing={mic:'ALXP',isin:parisItem.isin,symbol:parisItem.symbol,currency:'EUR'};
+const euroRegistry={...registry,async fetchDaily(i,range,primary,opts){
+ assert.equal(i.mic,'ALXP','The original Paris Growth board MIC must reach the provider');
+ assert.equal(i.market,'ALXP');
+ return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:10,high:12,low:9,close:11}],providerMeta:{currency:'EUR'}}};
+}};
+assert.equal(approvedCatalogListingMic('XPAR','ALXP'),true);
+assert.equal(approvedCatalogListingMic('XPAR','XMLI'),true);
+assert.equal(approvedCatalogListingMic('XPAR','XNYS'),false);
+assert.equal(approvedCatalogListingMic('XLON','ALXP'),false);
+const parisEvidence=await probeIncompleteOhlcCandidate(parisItem,{registry:euroRegistry,sources,market:parisMarket,listings:[parisListing]});
+assert.equal(parisEvidence.status,'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW');
+assert.equal(parisEvidence.mic,'XPAR','Audit parent MIC must remain stable');
+assert.equal(parisEvidence.listingMic,'ALXP','Evidence must disclose the true listing MIC');
+assert.equal((await probeIncompleteOhlcCandidate(parisItem,{registry:euroRegistry,sources,market:parisMarket,listings:[{...parisListing,mic:'XNYS'}]})).status,'UNAPPROVED_CATALOG_SUBMARKET','Cross-exchange catalogue injection must fail closed');
+assert.equal((await probeIncompleteOhlcCandidate(parisItem,{registry:euroRegistry,sources,market:parisMarket,listings:[parisListing,{...parisListing,mic:'XMLI'}]})).status,'AMBIGUOUS_CATALOG_ISIN_MIC','Two child-board listings for one ISIN cannot be guessed');
+assert.equal((await probeIncompleteOhlcCandidate(parisItem,{registry:euroRegistry,sources,market:parisMarket,listings:[{...parisListing,isin:'FR9999999999'}]})).status,'NO_EXACT_CATALOG_ISIN_MIC');
+console.log('Approved parent/child market identity, Paris Growth OHLC evidence and cross-market rejection PASS');
