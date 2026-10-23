@@ -156,3 +156,35 @@ const sourceProbeScript=await (await import('node:fs/promises')).readFile('scrip
 assert.match(sourceProbeScript,/sourceVsStoredMagnitude/);
 assert.match(sourceProbeScript,/classifyOhlcDifferenceMagnitude/);
 console.log('Read-only OHLC source-vs-stored difference buckets and probe reporting PASS');
+
+
+// Historical/last-bar overlap must preserve the stored OHLC snapshot, rather
+// than silently losing source-versus-storage comparison evidence.
+const duplicateLatest={...item,isin:'GB0000000301',lastStoredDate:'2026-10-22',ohlcDefects:[]};
+const duplicateHistory={...duplicateLatest,evidenceScope:'RECENT_STORED_HISTORY',ohlcDefects:['HIGH_BELOW_CLOSE'],storedOhlc:{open:100,high:103,low:90,close:105}};
+const overlap=selectIncompleteOhlcCandidates({markets:[{mic:'XLON',instruments:[duplicateLatest],recentOhlcDebt:[duplicateHistory]}]},{limit:4,perMarket:4});
+assert.equal(overlap.length,1,'A defective date may consume only one probe slot');
+assert.deepEqual(overlap[0].storedOhlc,duplicateHistory.storedOhlc,'Keep historical stored OHLC evidence for duplicate latest dates');
+assert.deepEqual(overlap[0].ohlcDefects,['HIGH_BELOW_CLOSE']);
+assert.equal(overlap[0].evidenceScope,'LATEST_AUDIT_BAR');
+assert.equal(duplicateLatest.storedOhlc,undefined,'Never mutate the input audit');
+const overlappingProbe=await probeIncompleteOhlcCandidate(overlap[0],{registry,sources,market,listings:[{...listings[0],isin:duplicateLatest.isin}]});
+assert.equal(overlappingProbe.status,'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW');
+assert.equal(overlappingProbe.sourceVsStored.comparableFields,4);
+
+// Contradictory snapshots for the same ISIN/MIC/day must not be silently chosen.
+const contradictory=selectIncompleteOhlcCandidates({markets:[{mic:'XLON',instruments:[{...duplicateLatest,storedOhlc:{open:100,high:102,low:90,close:105}}],recentOhlcDebt:[duplicateHistory]}]},{limit:2});
+assert.equal(contradictory[0].storedEvidenceConflict,true);
+const conflictingProbe=await probeIncompleteOhlcCandidate(contradictory[0],{registry,sources,market,listings:[{...listings[0],isin:duplicateLatest.isin}]});
+assert.equal(conflictingProbe.status,'CONFLICTING_STORED_OHLC_EVIDENCE');
+
+// Rotate through both historical debt and latest gaps even if the latter is huge.
+const mixedLatest=Array.from({length:70},(_,i)=>({...item,isin:'GB'+String(i).padStart(10,'0')}));
+const mixedHistory=Array.from({length:70},(_,i)=>({...item,isin:'GH'+String(i).padStart(10,'0'),evidenceScope:'RECENT_STORED_HISTORY',ohlcDefects:['INVALID_HIGH']}));
+const mixed=selectIncompleteOhlcCandidates({markets:[{mic:'XLON',instruments:mixedLatest,recentOhlcDebt:mixedHistory}]},{limit:32,perMarket:32,rotation:0});
+assert.equal(mixed.length,32);
+assert.equal(mixed.filter(x=>x.evidenceScope==='RECENT_STORED_HISTORY').length,16,'Historic candles must be sampled in every batch');
+assert.equal(mixed.filter(x=>x.evidenceScope==='LATEST_AUDIT_BAR').length,16);
+assert.equal(selectIncompleteOhlcCandidates({markets:[{mic:'XLON',instruments:[{...item,lastStoredDate:'2026-02-30'}],recentOhlcDebt:[]}]},{limit:2}).length,0,'Impossible calendar dates cannot enter source probe');
+assert.equal((await probeIncompleteOhlcCandidate({...item,lastStoredDate:'2026-02-30'},{registry,sources,market,listings})).status,'NOT_AN_INCOMPLETE_STORED_CANDLE');
+console.log('Latest/history fair sampling, merged immutable OHLC evidence, conflicting snapshots and real dates PASS');
