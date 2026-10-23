@@ -1,0 +1,38 @@
+name: SIX official symbol evidence (read-only)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/research/six-official-symbol-evidence.mjs'
+      - 'scripts/research/test-six-official-symbol-evidence.mjs'
+      - '.github/workflows/six-official-reference-evidence.yml'
+permissions:
+  contents: read
+concurrency:
+  group: koersplein-six-reference-evidence
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify read-only SIX identity guard
+        run: |
+          node --check scripts/research/six-official-symbol-evidence.mjs
+          node scripts/research/test-six-official-symbol-evidence.mjs
+      - name: Probe bounded official SIX pages without provider or price writes
+        run: node scripts/research/six-official-symbol-evidence.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: six-official-symbol-evidence
+          path: research/output/six-official-symbol-evidence.json
+          if-no-files-found: warn
+          retention-days: 30
