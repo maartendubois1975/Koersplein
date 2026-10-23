@@ -15,7 +15,8 @@ export function classifyEuropeFailure(error) {
   const raw=String(error||'');
   const attempts=providerAttempts(raw);
   const m=attempts.length?attempts.map(x=>x.reason).join('; '):raw.replace(/^Alle providers faalden voor [^:]+:\s*/, '');
-  if(/Geen toegestane provider beschikbaar|Geen gecontroleerde Yahoo-koppeling|Geen Yahoo-beursregel/i.test(m))return 'NO_SUPPORTED_PROVIDER_FOR_MARKET';
+  const unsupported=/Geen gecontroleerde Yahoo-koppeling|Geen Yahoo-beursregel/i;
+  if(/Geen toegestane provider beschikbaar/i.test(m)||(attempts.length?attempts.every(x=>unsupported.test(x.reason)):unsupported.test(m)))return 'NO_SUPPORTED_PROVIDER_FOR_MARKET';
   if(/CATALOG_INSTRUMENT_MISSING|Instrument ontbreekt/i.test(m))return 'CATALOG_IDENTITY_MISSING';
   if(/\bHTTP\s*(?:401|403)\b|\b(?:status|code)\s*[:=]?\s*(?:401|403)\b|\bunauthori[sz]ed\b|\bforbidden\b|\bAUTH_OR_ACCESS\b/i.test(m))return 'AUTH_OR_ACCESS';
   if(/\bHTTP\s*429\b|\brate.limit\b|too many requests/i.test(m))return 'RATE_LIMIT';
@@ -30,6 +31,7 @@ export function classifyEuropeFailure(error) {
   if(noIsin)return 'ISIN_SEARCH_UNRESOLVED';
   if(noRange)return 'NO_NEW_BARS_IN_RANGE';
   if(noBars)return 'PROVIDER_RETURNED_NO_BARS';
+  if(/Geen Nasdaq Baltic koershistorie/i.test(m))return 'OFFICIAL_SOURCE_NO_USABLE_BARS';
   if(/\bHTTP\s*404\b|\bnot found\b/i.test(m))return 'SOURCE_HTTP_404';
   if(/\bHTTP\s*422\b/i.test(m))return 'SYMBOL_MAPPING_REJECTED';
   return 'PROVIDER_OTHER';
@@ -42,6 +44,7 @@ const actions={
   ISIN_SEARCH_UNRESOLVED:'Seek authorized official reference data or a verified alternative identifier.',
   NO_NEW_BARS_IN_RANGE:'Verify last actual trade and source freshness; do not invent a daily OHLC bar.',
   PROVIDER_RETURNED_NO_BARS:'Check listing status and source coverage; distinguish inactive from unsupported.',
+  OFFICIAL_SOURCE_NO_USABLE_BARS:'Official endpoint returned no validated bars for this range; check last actual trade and archive coverage without inventing prices.',
   SYMBOL_IDENTITY_MISMATCH:'Quarantine mismatched provider identity until independently verified.',
   AUTH_OR_ACCESS:'Check authorization and provider access; do not bypass protection.',
   RATE_LIMIT:'Retry with bounded backoff and provider rate controls.',
