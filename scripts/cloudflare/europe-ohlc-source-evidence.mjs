@@ -65,18 +65,26 @@ export function selectIncompleteOhlcCandidates(queue,{limit=30,perMarket=18,rota
     (scope==='RECENT_STORED_HISTORY'?historical:latest).push(row);
    }
   }
-  // Interleave scopes so a large latest-gap backlog cannot starve historical
-  // repair diagnosis (or vice versa) for many successive runs.
-  const all=[];
-  for(let i=0;i<Math.max(latest.length,historical.length);i++){
-   if(i<latest.length)all.push(latest[i]);
-   if(i<historical.length)all.push(historical[i]);
+  // Rotate the two scopes independently BEFORE interleaving: rotating over
+  // the entire date-heavy historical queue can otherwise land beyond the
+  // small latest section and sample historical dates exclusively for months.
+  // Within each scope prefer a new ISIN before another date for that ISIN.
+  const both=latest.length>0&&historical.length>0;
+  const rotateScope=(entries,stride)=>{
+   const diverse=diversifyByIsin(entries);
+   if(!diverse.length)return [];
+   const start=((rotation%diverse.length)*stride)%diverse.length;
+   return Array.from({length:diverse.length},(_,i)=>diverse[(start+i)%diverse.length]);
+  };
+  const rotatedLatest=rotateScope(latest,both?Math.ceil(perMarket/2):perMarket);
+  const rotatedHistory=rotateScope(historical,both?Math.max(1,Math.floor(perMarket/2)):perMarket);
+  const all=[],scopes=rotation%2===0?[rotatedLatest,rotatedHistory]:[rotatedHistory,rotatedLatest];
+  for(let i=0;i<Math.max(rotatedLatest.length,rotatedHistory.length);i++){
+   for(const scope of scopes)if(i<scope.length)all.push(scope[i]);
   }
   if(!all.length)continue;
-  const diverse=diversifyByIsin(all);
-  const start=((rotation%diverse.length)*perMarket)%diverse.length;
-  const count=Math.min(perMarket,diverse.length);
-  buckets.push({mic:market.mic,total:diverse.length,items:Array.from({length:count},(_,i)=>diverse[(start+i)%diverse.length]),used:0});
+  const diverse=diversifyByIsin(all),count=Math.min(perMarket,diverse.length);
+  buckets.push({mic:market.mic,total:diverse.length,items:diverse.slice(0,count),used:0});
  }
  if(!buckets.length)return [];
  // First give every affected market one rotating slot, so small exchanges
