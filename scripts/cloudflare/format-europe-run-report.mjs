@@ -48,6 +48,18 @@ export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
      Date.parse(sourceProbe.generatedAt)-Date.parse(report.generatedAt)<20*60*1000){
     lines.push('','### Historical source check (read-only)',`Probed: ${sourceProbe.requested??0}; ${Object.entries(sourceProbe.counts||{}).map(([status,count])=>`${status} ${count}`).join(', ')}.`,
       'Complete source bars are correction candidates only. No stored OHLC has been overwritten.');
+    const severity=sourceProbe.storedOhlcViolationSeverity;
+    if(severity?.readOnly&&severity.complete&&severity.metric==='INTRINSIC_STORED_CANDLE_VIOLATION_NOT_SOURCE_COMPARISON'){
+      const buckets=severity.counts||{};
+      const severe=(buckets.FROM_100_TO_1000_BPS||0)+(buckets.AT_LEAST_1000_BPS||0);
+      const london=(severity.byMarket||[]).find(x=>x.mic==='XLON');
+      lines.push(`Stored-candle OHLC violations >=100 bps: **${severe}/${severity.examined}** across the last 30 days (not source-price differences).`);
+      if(london)lines.push(`London stored-candle violations >=100 bps: **${london.atLeast100Bps}/${london.examined}**.`);
+      lines.push('These are intrinsic stored-bar consistency defects, not verified replacement prices; no existing bars were modified.');
+    }else if(severity?.readOnly){
+      lines.push('Stored-candle severity evidence is partial or unverified; no completeness claim.');
+    }
+
   }
   lines.push('','Full instrument-level failures, audit results and source evidence are in the **europe-run-summary** artifact.');
   return lines.join('\n');
