@@ -19,7 +19,7 @@ const parisPolicy=JSON.parse(await fs.readFile('config/paris-follow-policy.json'
 const targetMarkets=plan.markets.filter(x=>x.state==='COMPLETE').filter(x=>!parisRepair||x.mic==='XPAR').filter((_,index)=>index%shardCount===shardIndex);
 const reportPath=`research/output/daily-open-close-update-${shardIndex}${process.env.GITHUB_RUN_ATTEMPT?'-attempt-'+process.env.GITHUB_RUN_ATTEMPT:''}.json`;
 await fs.mkdir('research/output',{recursive:true});
-async function checkpoint(){await fs.writeFile(reportPath,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,mode:process.env.EUROPE_FULL_BACKFILL==='1'?(Number(process.env.GITHUB_RUN_ATTEMPT||1)>1?'REPAIR_REMAINING_LISTINGS':'FULL_APPEND_ONLY_HISTORY_AND_DAILY_TAIL'):'APPEND_ONLY_DAILY_AND_BOUNDED_MISSING',markets:results},null,2));}
+async function checkpoint(){await fs.writeFile(reportPath,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,freshnessCutoff,mode:process.env.EUROPE_FULL_BACKFILL==='1'?(Number(process.env.GITHUB_RUN_ATTEMPT||1)>1?'REPAIR_REMAINING_LISTINGS':'FULL_APPEND_ONLY_HISTORY_AND_DAILY_TAIL'):'APPEND_ONLY_DAILY_AND_BOUNDED_MISSING',markets:results},null,2));}
 // Verify factory credentials once before processing thousands of instruments.
 let factoryCatalog;
 try { factoryCatalog=await client.catalog(); } catch(error) {
