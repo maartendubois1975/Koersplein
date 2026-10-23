@@ -140,7 +140,7 @@ export function describeExactDateSourceBars(bars,date){
  return {exactDateBars:exact.length,completeBars,invalidBars:exact.length-completeBars,defects,readOnly:true};
 }
 export function summarizeOhlcSourceBarDiagnostics(rows){
- const byMarket={};let observations=0,invalidSourceBars=0,probesWithInvalidBars=0;
+ const byMarket={},byProvider={};let observations=0,invalidSourceBars=0,probesWithInvalidBars=0;
  for(const row of rows||[]){
   if(!row||typeof row.mic!=='string')continue;
   const samples=Array.isArray(row.sourceBarObservations)?row.sourceBarObservations:[];
@@ -150,15 +150,27 @@ export function summarizeOhlcSourceBarDiagnostics(rows){
    if(!sample?.readOnly||!Number.isSafeInteger(sample.invalidBars)||sample.invalidBars<0)continue;
    observations++;m.sourceObservations++;
    invalidSourceBars+=sample.invalidBars;m.invalidSourceBars+=sample.invalidBars;
+   // Provider-level evidence identifies which approved feed supplied an
+   // inconsistent bar. Missing identity remains explicitly unattributed.
+   const providerId=typeof sample.providerId==='string'&&/^[a-z0-9-]+$/.test(sample.providerId)?sample.providerId:'UNATTRIBUTED';
+   if(!byProvider[providerId])byProvider[providerId]={sourceObservations:0,invalidSourceBars:0,defects:{}};
+   if(!m.byProvider)m.byProvider={};
+   if(!m.byProvider[providerId])m.byProvider[providerId]={sourceObservations:0,invalidSourceBars:0,defects:{}};
+   for(const bucket of [byProvider[providerId],m.byProvider[providerId]]){
+    bucket.sourceObservations++;
+    bucket.invalidSourceBars+=sample.invalidBars;
+   }
    if(sample.invalidBars)hasInvalid=true;
    for(const [key,value] of Object.entries(sample.defects||{})){
     if(!/^[A-Z_]+$/.test(key)||!Number.isSafeInteger(value)||value<0)continue;
     m.defects[key]=(m.defects[key]||0)+value;
+    byProvider[providerId].defects[key]=(byProvider[providerId].defects[key]||0)+value;
+    m.byProvider[providerId].defects[key]=(m.byProvider[providerId].defects[key]||0)+value;
    }
   }
   if(hasInvalid){probesWithInvalidBars++;m.probesWithInvalidBars++;}
  }
- return {readOnly:true,observations,invalidSourceBars,probesWithInvalidBars,byMarket};
+ return {readOnly:true,observations,invalidSourceBars,probesWithInvalidBars,byMarket,byProvider};
 }
 // Evidence-only difference against the exact stored candle. Never substitute
 // a provider value for an existing stored field or infer missing prices.
@@ -204,9 +216,9 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
  const range={startDate:item.lastStoredDate,endDate:item.lastStoredDate};
  const sourceBarObservations=[];
  try{
-  const {provider,result}=await registry.fetchDaily(instrument,range,primary,{allowedProviderIds:allowed,timeoutMs,acceptResult:r=>{
+  const {provider,result}=await registry.fetchDaily(instrument,range,primary,{allowedProviderIds:allowed,timeoutMs,acceptResult:(r,attemptedProvider)=>{
     const observation=describeExactDateSourceBars(r?.bars,item.lastStoredDate);
-    if(sourceBarObservations.length<6)sourceBarObservations.push(observation);
+    if(sourceBarObservations.length<6)sourceBarObservations.push({...observation,providerId:attemptedProvider?.id||null});
     if(!observation.exactDateBars)throw Error('Source has no exact-date daily bar');
     if(!observation.completeBars)throw Error('Source exact-date OHLC incomplete or inconsistent');
     return true;
