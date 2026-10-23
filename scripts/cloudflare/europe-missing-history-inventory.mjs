@@ -1,11 +1,11 @@
 import fs from 'node:fs/promises';
 import {storageIdentityResolver} from './storage-identity.mjs';
+import {fetchPublicHistoryManifest} from './public-history-manifest.mjs';
 const baseUrl=String(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
 if(!baseUrl)throw Error('KOERSPLEIN_API_URL missing');
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
-const response=await fetch(baseUrl+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
-if(!response.ok)throw Error('Public manifest HTTP '+response.status);
-const manifest=(await response.json()).instruments||{};
+// Use the same bounded, fail-closed public manifest reader as the daily shards.
+const manifest=await fetchPublicHistoryManifest(baseUrl);
 const resolve=storageIdentityResolver(Object.entries(manifest).map(([isin,row])=>({...row,isin})));
 let expected=0;
 const cutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
