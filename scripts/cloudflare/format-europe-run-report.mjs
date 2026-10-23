@@ -70,6 +70,14 @@ export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
           .filter(([id,counts])=>/^[a-z0-9-]+$/.test(id)&&Number.isSafeInteger(counts?.invalidSourceBars)&&counts.invalidSourceBars>0)
           .sort((a,b)=>b[1].invalidSourceBars-a[1].invalidSourceBars).slice(0,5);
         if(providers.length)lines.push('London invalid source bars by approved provider attempt: '+providers.map(([id,counts])=>id+' '+counts.invalidSourceBars).join(', ')+'.');
+        // Two Yahoo adapters ultimately query the same Yahoo chart feed.
+        // Report source families separately; route counts are not independent
+        // source corroboration and must never authorize a history correction.
+        const families=Object.entries(londonQuality.bySourceFamily||{})
+          .filter(([id,counts])=>/^[a-z0-9-]+$/.test(id)&&Number.isSafeInteger(counts?.invalidSourceBars)&&counts.invalidSourceBars>0)
+          .sort((a,b)=>b[1].invalidSourceBars-a[1].invalidSourceBars).slice(0,5);
+        if(families.length)lines.push('London invalid source bars by underlying feed: '+families.map(([id,counts])=>id+' '+counts.invalidSourceBars).join(', ')+'. Yahoo chart and Yahoo ISIN resolver are correlated routes, not independent price sources.');
+
       }
       lines.push('These are provider-source defects, not additional stored-history defects or verified replacement prices.');
     }
