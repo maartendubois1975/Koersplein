@@ -276,6 +276,20 @@ assert.equal(conflictingEvidence.sourceBarObservations[0].conflictingCompleteBar
 const conflictSummary=summarizeOhlcSourceBarDiagnostics([conflictingEvidence]);
 assert.equal(conflictSummary.conflictingSourceObservations,1);
 assert.equal(conflictSummary.byMarket.XLON.conflictingSourceObservations,1);
+
+const fallbackAfterConflict={...registry,async fetchDaily(i,range,primary,opts){
+ assert.deepEqual(opts.allowedProviderIds,['good','backup']);
+ assert.throws(()=>opts.acceptResult({bars:[sameDayA,sameDayB]},{id:'good'}),/conflicting complete duplicate bars/);
+ assert.equal(opts.acceptResult({bars:[sameDayA]},{id:'backup'}),true,'An approved independent fallback may supply one complete date');
+ return {provider:{id:'backup'},result:{bars:[sameDayA],providerMeta:{currency:'GBX'}}};
+}};
+const fallbackEvidence=await probeIncompleteOhlcCandidate(item,{registry:fallbackAfterConflict,sources,market,listings});
+assert.equal(fallbackEvidence.status,'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW');
+assert.equal(fallbackEvidence.provider,'backup');
+assert.equal(fallbackEvidence.sourceBarObservations[0].conflictingCompleteBars,true);
+assert.equal(fallbackEvidence.sourceBarObservations[1].conflictingCompleteBars,false);
+assert.equal(fallbackEvidence.storagePolicy,'APPEND_ONLY_EXISTING_BAR_UNCHANGED');
+
 console.log('Conflicting complete same-date source bars rejected, identical duplicates allowed, evidence remains read-only PASS');
 
 assert.equal(describeExactDateSourceBars([{...invalidExact,high:null}],'2026-10-22').defects.INVALID_OR_MISSING_HIGH,1);
