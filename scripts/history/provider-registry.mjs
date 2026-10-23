@@ -28,15 +28,16 @@ export class ProviderRegistry {
     return this.#providers.filter((provider) => provider.supports?.(instrument) !== false);
   }
 
-  async fetchDaily(instrument, range, preferredProvider = null, { strictPreferred = false, timeoutMs = 0, acceptResult = null } = {}) {
+  async fetchDaily(instrument, range, preferredProvider = null, { strictPreferred = false, timeoutMs = 0, acceptResult = null, allowedProviderIds = null } = {}) {
     const preferred = preferredProvider ? this.get(preferredProvider) : null;
     if (preferredProvider && !preferred) throw new Error(`Onbekende voorkeursprovider: ${preferredProvider}`);
     const ordered = preferredProvider
       ? (strictPreferred ? [preferred] : [preferred, ...this.candidates(instrument).filter((provider) => provider.id !== preferredProvider)]).filter(Boolean)
       : this.candidates(instrument);
-    if (!ordered.length) throw new Error(`Geen provider beschikbaar voor ${instrument.isin}`);
+    const eligible = allowedProviderIds ? ordered.filter(provider => allowedProviderIds.includes(provider.id)) : ordered;
+    if (!eligible.length) throw new Error(`Geen toegestane provider beschikbaar voor ${instrument.isin}`);
     const failures = [];
-    for (const provider of ordered) {
+    for (const provider of eligible) {
       try {
         if (!(timeoutMs > 0)) {
           const result=await provider.fetchDaily(instrument,range);
