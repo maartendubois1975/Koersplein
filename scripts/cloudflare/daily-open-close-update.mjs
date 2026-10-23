@@ -6,6 +6,7 @@ import {storageIdentityResolver,newListingStorageKey} from './storage-identity.m
 import {latestClosedWeekday,validBars,mapConcurrent} from './europe-run-policy.mjs';
 import {partitionBars} from './history-format.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
+import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
 const client=new FactoryApiClient(),providers=createDefaultProviderRegistry();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8')),sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
 const today=new Date().toISOString().slice(0,10),results=[];
@@ -26,19 +27,7 @@ try { factoryCatalog=await client.catalog(); } catch(error) {
 const manifestResponse=await fetch(client.baseUrl+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
 if(!manifestResponse.ok)throw Error('Public manifest HTTP '+manifestResponse.status);
 const manifest=(await manifestResponse.json()).instruments||{};
-function failureCategory(message){
- const m=String(message||'');
- if(/429|rate.limit|too many requests/i.test(m))return 'RATE_LIMIT';
- if(/timeout|timed out|AbortError|fetch failed|ECONN|ETIMEDOUT/i.test(m))return 'NETWORK_TIMEOUT';
- if(/401|403|unauthorized|forbidden/i.test(m))return 'AUTH_OR_ACCESS';
- if(/CATALOG_INSTRUMENT_MISSING|(?:PUT|POST) \/api\/factory\/history\/.*HTTP 404.*Instrument ontbreekt/i.test(m))return 'CATALOG_INSTRUMENT_MISSING';
- if(/(?:^|; )[^:]+: (?:Yahoo HTTP 404|[^;]*\bnot found\b)/i.test(m)&&!/(?:Provider returned no usable bars|Provider returned no daily bars|Geen Yahoo ISIN-resolutie)/i.test(m))return 'SOURCE_NO_HISTORY';
- if(/Provider returned no usable bars in requested range/i.test(m))return 'SOURCE_NO_NEW_BARS_IN_RANGE';
- if(/Provider returned no daily bars|Geen Yahoo ISIN-resolutie/i.test(m))return 'SOURCE_EMPTY_OR_UNRESOLVED';
- if(/404|not found|no data|no bars|empty/i.test(m))return 'SOURCE_NO_HISTORY';
- if(/422|invalid symbol|invalid ticker|symbol not/i.test(m))return 'SYMBOL_MAPPING';
- return 'PROVIDER_OTHER';
-}
+const failureCategory=classifyEuropeFailure;
 const freshnessCutoff=latestClosedWeekday();
 const fullRequested=process.env.EUROPE_FULL_BACKFILL==='1';
 const firstFullAttempt=fullRequested&&Number(process.env.GITHUB_RUN_ATTEMPT||1)===1;
