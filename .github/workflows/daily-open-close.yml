@@ -37,7 +37,8 @@ jobs:
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-        with: { ref: main }
+        with:
+          ref: ${{ github.sha }}
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
       - name: Verify approved Europe provider routing and Paris history safety
@@ -105,7 +106,8 @@ jobs:
       issues: write
     steps:
       - uses: actions/checkout@v4
-        with: { ref: main }
+        with:
+          ref: ${{ github.sha }}
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
       - uses: actions/download-artifact@v4
@@ -210,7 +212,8 @@ jobs:
       EUROPE_INSTRUMENT_CONCURRENCY: '2'
     steps:
       - uses: actions/checkout@v4
-        with: { ref: main }
+        with:
+          ref: ${{ github.sha }}
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
       - name: Verify protected append-only production Worker
