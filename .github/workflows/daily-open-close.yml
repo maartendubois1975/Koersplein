@@ -48,6 +48,7 @@ jobs:
           node scripts/cloudflare/test-six-ipo-symbol-evidence.mjs
           node scripts/cloudflare/test-nasdaq-baltic-provider.mjs
           node scripts/cloudflare/test-europe-recovery-queue.mjs
+          node scripts/cloudflare/test-europe-reporting.mjs
       - name: Test production identity verification
         run: node scripts/cloudflare/test-github-oidc.mjs
       - name: Verify production Worker and credentials
@@ -112,19 +113,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo "### Europe daily run" > /tmp/europe-run-report.md
-          echo "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> /tmp/europe-run-report.md
+          node scripts/cloudflare/format-europe-run-report.mjs > /tmp/europe-run-report.md
+          echo "" >> /tmp/europe-run-report.md
           echo "Event: ${{ github.event_name }}" >> /tmp/europe-run-report.md
           echo "Update jobs: ${{ needs.update-and-verify.result }}" >> /tmp/europe-run-report.md
-          if [ -f research/output/europe-run-summary.json ]; then
-            echo 'Summary JSON:' >> /tmp/europe-run-report.md
-            echo '\`\`\`json' >> /tmp/europe-run-report.md
-            head -c 12000 research/output/europe-run-summary.json >> /tmp/europe-run-report.md
-            echo '' >> /tmp/europe-run-report.md
-            echo '\`\`\`' >> /tmp/europe-run-report.md
-          else
-            echo 'Summary file missing; inspect run jobs.' >> /tmp/europe-run-report.md
-          fi
           gh issue comment 205 --repo "${{ github.repository }}" --body-file /tmp/europe-run-report.md
       - uses: actions/upload-artifact@v4
         if: always()
