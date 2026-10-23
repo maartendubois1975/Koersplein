@@ -66,3 +66,10 @@ assert.equal(resolved.provider.id,'resolver');
 assert.deepEqual(calls,['resolver']);
 await assert.rejects(()=>skipUnsupported.fetchDaily(instrument,range,'not-supported',{strictPreferred:true,allowedProviderIds:['not-supported']}),/Geen toegestane provider/);
 console.log('SIX valor guard and unsupported preferred-provider skip PASS');
+
+const swissCatalog=JSON.parse(await fs.readFile('data/euronext-zurich.json','utf8'));
+const dsfir=swissCatalog.shares.find(s=>s.isin==='CH1216478797');
+assert.equal(dsfir.symbol,'121647879','Preserve SIX catalog identity/valor');
+assert.equal(dsfir.providerSymbol,'DSFIR.SW','Verified Swiss Yahoo provider symbol');
+assert.equal(yahoo.supports(dsfir),true);
+console.log('Verified Swiss provider-symbol override without catalog identity mutation PASS');
