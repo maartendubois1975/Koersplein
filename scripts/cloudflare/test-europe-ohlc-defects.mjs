@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {describeOhlcDefects,countOhlcDefects} from './europe-ohlc-defects.mjs';
+import {describeOhlcDefects,countOhlcDefects,recentOhlcDebt} from './europe-ohlc-defects.mjs';
 const valid={date:'2026-10-22',open:10,high:12,low:9,close:11};
 assert.deepEqual(describeOhlcDefects(valid),[]);
 assert.deepEqual(describeOhlcDefects({...valid,high:null}),['MISSING_HIGH']);
@@ -21,4 +21,9 @@ assert.match(audit,/invalidOhlcByDefect:countOhlcDefects/);
 assert.match(queue,/READ_ONLY_VERIFICATION_REQUIRED_APPEND_ONLY_PRESERVES_EXISTING_BAR/);
 assert.match(summary,/invalidOhlcByDefect/);
 
+const recent=recentOhlcDebt([{...valid,date:'2026-10-01',high:null},{...valid,date:'2026-10-20',low:null},{...valid,date:'2026-10-20'},{...valid,date:'2026-10-21',high:null},{...valid,date:'2026-10-22'}],'2026-10-22',10);
+assert.deepEqual(recent.invalidDates,[{date:'2026-10-21',defects:['MISSING_HIGH']}]);
+assert.equal(recent.windowStart,'2026-10-13');
+assert.deepEqual(recentOhlcDebt([{...valid,date:'2026-10-23',high:null}],'2026-10-22').invalidDates,[],'Do not count intraday bars as closed-session debt');
+assert.throws(()=>recentOhlcDebt([], '2026-02-30'),/Invalid closed-session/);
 console.log('Stored OHLC defect classification and aggregation PASS');
