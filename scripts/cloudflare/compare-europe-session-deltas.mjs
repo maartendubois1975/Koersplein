@@ -35,7 +35,75 @@ function validate(run,label){
     totals.verifiedNoTrades+=m.verifiedNoTrades;totals.missingOpenClose+=m.missingOpenClose;
     for(const [items,target,kind] of [[m.missing,missing,'missing'],[m.noTrades,noTrade,'no-trade']]){
       for(const item of items){
-        check(typeof item.isin==='string'&&/^[A-Z]{2}[A-Z0-9]{10}$/.test(item.isin),label+'/'+m.mic+': invalid ISIN');
+        // Existing Iceland catalog uses explicit MIC:symbol placeholders for eight
+        // instruments without an ISIN. They are NOT verified ISIN mappings.
+        const isIsin=typeof item.isin==='string'&&/^[A-Z]{2}[A-Z0-9]{10}$/.test(item.isin);
+        const isCatalogPlaceholder=typeof item.isin==='string'&&
+          new RegExp('^'+m.mic+':[A-Z0-9._-]{1,32}
+        check(!target.has(k),label+'/'+m.mic+': duplicate '+kind+' ISIN');
+        target.set(k,{mic:m.mic,isin:item.isin,identifierType:isIsin?'ISIN':'NON_ISIN_CATALOG_KEY',symbol:item.symbol??null,
+          ...(kind==='missing'?{reason:item.reason??null,lastDate:item.lastDate??null}:{})});
+      }
+    }
+  }
+  for(const k of missing.keys())check(!noTrade.has(k),label+': missing and no-trade overlap');
+  for(const [k,v] of Object.entries(totals))check(run.totals?.[k]===v,label+': inconsistent '+k);
+  return {totals,markets,missing,noTrade};
+}
+export function compareEuropeSessionDeltas(before,after){
+  const a=validate(before,'before'),b=validate(after,'after');
+  check(before.freshnessCutoff===after.freshnessCutoff,'different trading-session cutoffs');
+  check(a.totals.catalog===b.totals.catalog,'catalog changed');
+  for(const [mic,m] of a.markets)
+    check(b.markets.has(mic)&&b.markets.get(mic).catalog===m.catalog,mic+': catalog/market membership changed');
+  // A changed ticker for the same MIC/ISIN can invalidate a longitudinal comparison.
+  // Current-OHLC rows are not listed in the summary, so their identity is never inferred.
+  for(const [k,oldItem] of a.missing){
+    const next=b.missing.get(k)??b.noTrade.get(k);
+    if(next)check(oldItem.symbol===next.symbol,'ticker changed for '+oldItem.mic+'/'+oldItem.isin);
+  }
+  for(const [k,oldItem] of a.noTrade){
+    const next=b.missing.get(k)??b.noTrade.get(k);
+    if(next)check(oldItem.symbol===next.symbol,'ticker changed for '+oldItem.mic+'/'+oldItem.isin);
+  }
+  const removed=[...a.missing].filter(([k])=>!b.missing.has(k)).map(([k,v])=>({
+    ...v,after:b.noTrade.has(k)?'OFFICIAL_NO_TRADE':'NO_LONGER_MISSING_UNVERIFIED_PER_INSTRUMENT'}));
+  const added=[...b.missing].filter(([k])=>!a.missing.has(k)).map(([,v])=>v);
+  const reasonChanges=[...b.missing].filter(([k,v])=>a.missing.has(k)&&a.missing.get(k).reason!==v.reason)
+    .map(([k,v])=>({mic:v.mic,isin:v.isin,before:a.missing.get(k).reason,after:v.reason}));
+  const sort=(x,y)=>x.mic.localeCompare(y.mic)||x.isin.localeCompare(y.isin);
+  removed.sort(sort);added.sort(sort);reasonChanges.sort(sort);
+  check(a.missing.size-removed.length+added.length===b.missing.size,'identity arithmetic mismatch');
+  const byMarket=[...a.markets.keys()].sort().map(mic=>{
+    const x=a.markets.get(mic),y=b.markets.get(mic);
+    return {mic,catalog:x.catalog,currentOhlcDelta:y.openCloseOk-x.openCloseOk,
+      noTradeDelta:y.verifiedNoTrades-x.verifiedNoTrades,
+      missingDelta:y.missingOpenClose-x.missingOpenClose,
+      missingRemoved:removed.filter(v=>v.mic===mic).length,
+      missingAdded:added.filter(v=>v.mic===mic).length};
+  });
+  check(byMarket.every(v=>v.missingDelta===v.missingAdded-v.missingRemoved&&
+    v.currentOhlcDelta+v.noTradeDelta+v.missingDelta===0),'market transition arithmetic mismatch');
+  return {mode:'READ_ONLY_SAME_CUTOFF_INSTRUMENT_DELTA',status:'COMPLETE_COMPARISON',
+    freshnessCutoff:before.freshnessCutoff,
+    before:{currentOhlc:a.totals.currentOpenClose,noTrade:a.totals.verifiedNoTrades,missing:a.missing.size},
+    after:{currentOhlc:b.totals.currentOpenClose,noTrade:b.totals.verifiedNoTrades,missing:b.missing.size},
+    removed,added,reasonChanges,
+    byMarket:byMarket.filter(v=>v.currentOhlcDelta||v.noTradeDelta||v.missingDelta),
+    productionWrites:0,mappingsApproved:0,catalogMembershipVerified:false,
+    nonIsinCatalogKeys:{before:[...a.missing.values(),...a.noTrade.values()].filter(v=>v.identifierType==='NON_ISIN_CATALOG_KEY').length,
+      after:[...b.missing.values(),...b.noTrade.values()].filter(v=>v.identifierType==='NON_ISIN_CATALOG_KEY').length},
+    warning:'NO_LONGER_MISSING is not independent proof of a new appended bar, approved source, or OHLC correctness. Check immutable shard artifacts and stored history before claiming a price repair.'};
+}
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
+  if(process.argv.length!==4){console.error('Usage: node compare-europe-session-deltas.mjs <before-summary.json> <after-summary.json>');process.exitCode=2;}
+  else try{
+    const [a,b]=await Promise.all(process.argv.slice(2).map(async p=>JSON.parse(await readFile(p,'utf8'))));
+    console.log(JSON.stringify(compareEuropeSessionDeltas(a,b),null,2));
+  }catch(e){console.error(String(e));process.exitCode=2;}
+}
+).test(item.isin);
+        check(isIsin||isCatalogPlaceholder,label+'/'+m.mic+': unrecognized catalog identifier');
         const k=id(m.mic,item.isin);
         check(!target.has(k),label+'/'+m.mic+': duplicate '+kind+' ISIN');
         target.set(k,{mic:m.mic,isin:item.isin,symbol:item.symbol??null,
