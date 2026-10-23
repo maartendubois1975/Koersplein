@@ -44,6 +44,13 @@ assert.deepEqual(approvedFor('XPAR').slice(0,2),['yahoo-chart','euronext-live'])
 assert.deepEqual(approvedFor('XSWX').slice(0,2),['yahoo-chart','yahoo-isin-resolver']);
 assert.deepEqual(approvedFor('XLON').slice(0,2),['yahoo-chart','yahoo-isin-resolver']);
 assert.deepEqual(approvedFor('XBUL').slice(0,3),['bse-sofia-official','yahoo-isin-resolver','yahoo-chart']);
+assert.deepEqual(approvedFor('XTAL').slice(0,3),['nasdaq-baltic-official','yahoo-isin-resolver','yahoo-chart']);
+assert.deepEqual(approvedFor('XLIT').slice(0,3),['nasdaq-baltic-official','yahoo-isin-resolver','yahoo-chart']);
+const {NasdaqBalticProvider}=await import('../history/providers/nasdaq-baltic.mjs');
+const baltic=new NasdaqBalticProvider();
+for(const mic of ['XTAL','XLIT','XRIS'])assert.equal(baltic.supports({mic,isin:'EE3100008996'}),true, 'Official Nasdaq Baltic provider must support '+mic);
+assert.equal(baltic.supports({mic:'XLON',isin:'EE3100008996'}),false);
+
 assert.match(updateScript,/\['DISCOVERY_FALLBACK','FALLBACK'\]\.includes\(x\.role\)/);
 console.log('Registered approved fallback routes for Paris, Switzerland, London and Sofia PASS');
 
