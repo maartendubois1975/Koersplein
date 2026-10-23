@@ -13,6 +13,8 @@ export function renderEuropeReport(report,runUrl='') {
   lines.push('','| Metric | Count |','|---|---:|');
   for(const [label,key] of [['Catalog','catalog'],['Current open/close','currentOpenClose'],['Official no-trade','verifiedNoTrades'],['Missing open/close','missingOpenClose'],['Failed imports','failedImports'],['Deferred missing','deferredMissing'],['Historical backfill failures','historicalBackfillFailures']])
     lines.push(`| ${label} | ${t[key]??'unknown'} |`);
+  if(Number.isInteger(t.recentInvalidOhlcDays))lines.push(`| Incomplete OHLC dates in last 30 calendar days | ${t.recentInvalidOhlcDays} |`);
+  if(Number.isInteger(t.recentInvalidOhlcInstruments))lines.push(`| Instruments with recent incomplete OHLC | ${t.recentInvalidOhlcInstruments} |`);
   const anomalies=report.marketCoverage?.anomalies||[];
   if(anomalies.length)lines.push('',`**Market coverage anomalies:** ${anomalies.length}`, ...anomalies.slice(0,6).map(x=>`- ${x.kind||'plan'} shard ${x.shard??'?'}: ${x.issue} ${x.mic||''}`));
   const defects=Object.entries(report.invalidOhlcByDefect||{}).sort((a,b)=>b[1]-a[1]).slice(0,6);
