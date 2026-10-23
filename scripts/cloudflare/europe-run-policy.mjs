@@ -44,6 +44,21 @@ export function auditBarIssue(bar,cutoff,today) {
  if(bar.date<cutoff)return 'STALE_LAST_TRADE';
  return null;
 }
+// Partition order is not authoritative. Prefer a complete OHLC row when two
+// stored rows share the latest date, matching recentOhlcDebt's duplicate policy.
+// Read-only audit helper; does not modify or merge stored prices.
+export function latestAuditBar(bars,maxDate=null) {
+ let latest=null;
+ for(const bar of bars||[]){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(String(bar?.date||'')))continue;
+  const date=new Date(bar.date+'T00:00:00Z');
+  if(Number.isNaN(date.getTime())||date.toISOString().slice(0,10)!==bar.date)continue;
+  if(maxDate&&bar.date>maxDate)continue;
+  if(!latest||bar.date>latest.date||(bar.date===latest.date&&isCompleteOhlcBar(bar)&&!isCompleteOhlcBar(latest)))latest=bar;
+ }
+ return latest;
+}
+
 export function validBars(result,{startDate,endDate}) {
  const byDate=new Map();
  for(const b of result?.bars||[]){
