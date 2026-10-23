@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 
 // Keep issue #205 readable. Full instrument-level evidence remains in artifacts.
-export function renderEuropeReport(report,runUrl='') {
+export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
   const lines=['### Europe daily run'];
   if(runUrl)lines.push(`Run: ${runUrl}`);
   if(!report)return [...lines,'**Summary unavailable.** Inspect workflow jobs and artifacts.'].join('\n');
@@ -32,8 +32,23 @@ export function renderEuropeReport(report,runUrl='') {
     for(const [defect,count] of defects)lines.push(`| ${defect} | ${count} |`);
     lines.push('A candle can have multiple defects. Append-only storage preserves existing records; this is read-only repair evidence, not a claim that records were corrected.');
   }
+  const missingReasons=Object.entries(report.missingByReason||{}).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  if(missingReasons.length)lines.push('','### Why current prices are missing',...missingReasons.map(([reason,count])=>`- ${reason}: ${count}`));
   lines.push('','### Largest remaining gaps','| MIC | Missing | Import failures |','|---|---:|---:|');
   for(const m of (report.recoveryPriority||[]).slice(0,12))lines.push(`| ${m.mic} | ${m.missingOpenClose??'?'} | ${m.importFailures??'?'} |`);
+  const blockers=(report.recoveryPriority||[]).slice(0,5).map(m=>{
+    const x=report.sourceFailureByMarket?.[m.mic];
+    if(!x?.failed)return null;
+    const top=Object.entries(x.categories||{}).sort((a,b)=>b[1]-a[1]).slice(0,2);
+    return `- ${m.mic}: ${top.map(([category,count])=>`${category} ${count}`).join(', ')}`;
+  }).filter(Boolean);
+  if(blockers.length)lines.push('','### Top import failure categories',...blockers);
+  if(sourceProbe?.status==='COMPLETED'&&Number.isFinite(Date.parse(sourceProbe.generatedAt))&&
+     Date.parse(sourceProbe.generatedAt)>=Date.parse(report.generatedAt)&&
+     Date.parse(sourceProbe.generatedAt)-Date.parse(report.generatedAt)<20*60*1000){
+    lines.push('','### Historical source check (read-only)',`Probed: ${sourceProbe.requested??0}; ${Object.entries(sourceProbe.counts||{}).map(([status,count])=>`${status} ${count}`).join(', ')}.`,
+      'Complete source bars are correction candidates only. No stored OHLC has been overwritten.');
+  }
   lines.push('','Full instrument-level failures, audit results and source evidence are in the **europe-run-summary** artifact.');
   return lines.join('\n');
 }
@@ -43,5 +58,7 @@ if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
   let report=null;
   try{report=JSON.parse(await fs.readFile(path,'utf8'));}catch(e){console.error('EUROPE_SUMMARY_READ_FAILED '+e.message);}
   const url=process.env.GITHUB_RUN_ID?`${process.env.GITHUB_SERVER_URL||'https://github.com'}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`:'';
-  console.log(renderEuropeReport(report,url));
+  let sourceProbe=null;
+  try{sourceProbe=JSON.parse(await fs.readFile('research/output/europe-incomplete-ohlc-source-probe.json','utf8'));}catch{}
+  console.log(renderEuropeReport(report,url,sourceProbe));
 }
