@@ -257,6 +257,27 @@ assert.equal(sourceQuality.defects.LOW_ABOVE_OPEN,1);
 assert.equal(sourceQuality.defects.LOW_ABOVE_CLOSE,1);
 assert.equal(sourceQuality.defects.HIGH_BELOW_LOW,1);
 assert.deepEqual(describeExactDateSourceBars([],'2026-10-22').defects,{NO_EXACT_DATE_BAR:1});
+
+const sameDayA={date:'2026-10-22',open:100,high:110,low:90,close:105};
+const sameDayB={...sameDayA,close:106};
+const conflict=describeExactDateSourceBars([sameDayA,sameDayB],'2026-10-22');
+assert.equal(conflict.completeBars,2,'Both source bars can be individually valid');
+assert.equal(conflict.invalidBars,0,'A conflicting pair is not an invalid individual candle');
+assert.equal(conflict.conflictingCompleteBars,true,'Two complete but contradictory same-day bars must be disclosed');
+assert.equal(describeExactDateSourceBars([sameDayA,{...sameDayA}],'2026-10-22').conflictingCompleteBars,false,'Identical duplicate bars are not contradictory');
+const conflictRegistry={...registry,async fetchDaily(i,range,primary,opts){
+ assert.throws(()=>opts.acceptResult({bars:[sameDayA,sameDayB]},{id:'yahoo-chart'}),/conflicting complete duplicate bars/);
+ throw Error('Alle providers faalden: yahoo-chart: Source exact-date OHLC has conflicting complete duplicate bars');
+}};
+const conflictingEvidence=await probeIncompleteOhlcCandidate(item,{registry:conflictRegistry,sources,market,listings});
+assert.equal(conflictingEvidence.status,'NO_COMPLETE_APPROVED_SOURCE_BAR','Contradictory source candles cannot be promoted');
+assert.equal(conflictingEvidence.candidateBar,undefined);
+assert.equal(conflictingEvidence.sourceBarObservations[0].conflictingCompleteBars,true);
+const conflictSummary=summarizeOhlcSourceBarDiagnostics([conflictingEvidence]);
+assert.equal(conflictSummary.conflictingSourceObservations,1);
+assert.equal(conflictSummary.byMarket.XLON.conflictingSourceObservations,1);
+console.log('Conflicting complete same-date source bars rejected, identical duplicates allowed, evidence remains read-only PASS');
+
 assert.equal(describeExactDateSourceBars([{...invalidExact,high:null}],'2026-10-22').defects.INVALID_OR_MISSING_HIGH,1);
 assert.equal(describeExactDateSourceBars([{...invalidExact,low:'90'}],'2026-10-22').defects.INVALID_OR_MISSING_LOW,1);
 assert.equal(describeExactDateSourceBars([{...invalidExact,high:110,low:90}],'2026-10-22').completeBars,1);
