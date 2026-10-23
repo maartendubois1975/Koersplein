@@ -113,7 +113,7 @@ for(const partial of [
 ]){
  assert.equal(isCompleteOhlcSourceBar(partial),false,'Invalid or missing OHLC must not be repair-ready');
  const partialRegistry={...registry,async fetchDaily(i,range,primary,opts){
-  assert.equal(opts.acceptResult({bars:[partial]}),false,'Provider acceptance must reject incomplete HIGH/LOW');
+  assert.throws(()=>opts.acceptResult({bars:[partial]}),/Source exact-date OHLC incomplete or inconsistent/,'Provider acceptance must distinguish invalid exact-date HIGH/LOW');
   return {provider:{id:'good'},result:{bars:[partial],providerMeta:{currency:'GBX'}}};
  }};
  const probe=await probeIncompleteOhlcCandidate(item,{registry:partialRegistry,sources,market,listings});
@@ -232,3 +232,15 @@ for(const rotation of [0,1,2,10,20,57,100]){
  assert.equal(new Set(batch.map(x=>x.isin)).size,32,'Different ISIN before repeat dates, rotation '+rotation);
 }
 console.log('Independent scope rotation prevents historical/latest starvation while preserving ISIN diversity PASS');
+
+
+// Missing exact date and inconsistent exact-date source candles are different
+// root causes, and both must let the registry try the next approved provider.
+const exactDatePredicateRegistry={...registry,async fetchDaily(i,range,primary,opts){
+ assert.throws(()=>opts.acceptResult({bars:[{...goodCandle,date:'2026-10-21'}]}),/Source has no exact-date daily bar/);
+ assert.throws(()=>opts.acceptResult({bars:[{...goodCandle,high:90}]}),/Source exact-date OHLC incomplete or inconsistent/);
+ assert.equal(opts.acceptResult({bars:[goodCandle]}),true);
+ return {provider:{id:'good'},result:{bars:[goodCandle],providerMeta:{currency:'GBX'}}};
+}};
+assert.equal((await probeIncompleteOhlcCandidate(item,{registry:exactDatePredicateRegistry,sources,market,listings})).status,'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW');
+console.log('Exact-date source absence and inconsistent source OHLC are separate fail-closed provider diagnoses PASS');
