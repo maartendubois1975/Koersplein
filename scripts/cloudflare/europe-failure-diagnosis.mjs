@@ -10,10 +10,15 @@ export function providerAttempts(error) {
 }
 
 export function classifyEuropeFailure(error) {
-  const m=String(error||'');
+  // Never scan the instrument ISIN in "Alle providers faalden voor ...":
+  // valid ISINs routinely contain 401/403/404/429, which are not HTTP codes.
+  const raw=String(error||'');
+  const attempts=providerAttempts(raw);
+  const m=attempts.length?attempts.map(x=>x.reason).join('; '):raw.replace(/^Alle providers faalden voor [^:]+:\s*/, '');
+  if(/Geen toegestane provider beschikbaar|Geen gecontroleerde Yahoo-koppeling|Geen Yahoo-beursregel/i.test(m))return 'NO_SUPPORTED_PROVIDER_FOR_MARKET';
   if(/CATALOG_INSTRUMENT_MISSING|Instrument ontbreekt/i.test(m))return 'CATALOG_IDENTITY_MISSING';
-  if(/401|403|unauthorized|forbidden|AUTH_OR_ACCESS/i.test(m))return 'AUTH_OR_ACCESS';
-  if(/429|rate.limit|too many requests/i.test(m))return 'RATE_LIMIT';
+  if(/\bHTTP\s*(?:401|403)\b|\b(?:status|code)\s*[:=]?\s*(?:401|403)\b|\bunauthori[sz]ed\b|\bforbidden\b|\bAUTH_OR_ACCESS\b/i.test(m))return 'AUTH_OR_ACCESS';
+  if(/\bHTTP\s*429\b|\brate.limit\b|too many requests/i.test(m))return 'RATE_LIMIT';
   if(/timeout|timed out|AbortError|fetch failed|ECONN|ETIMEDOUT/i.test(m))return 'NETWORK_TIMEOUT';
   if(/Providersymbool wijkt af|Providerbeurs wijkt af|invalid symbol|invalid ticker|symbol not/i.test(m))return 'SYMBOL_IDENTITY_MISMATCH';
   const noRange=/Provider returned no usable bars in requested range/i.test(m);
@@ -25,12 +30,13 @@ export function classifyEuropeFailure(error) {
   if(noIsin)return 'ISIN_SEARCH_UNRESOLVED';
   if(noRange)return 'NO_NEW_BARS_IN_RANGE';
   if(noBars)return 'PROVIDER_RETURNED_NO_BARS';
-  if(/404|not found/i.test(m))return 'SOURCE_HTTP_404';
-  if(/422/i.test(m))return 'SYMBOL_MAPPING_REJECTED';
+  if(/\bHTTP\s*404\b|\bnot found\b/i.test(m))return 'SOURCE_HTTP_404';
+  if(/\bHTTP\s*422\b/i.test(m))return 'SYMBOL_MAPPING_REJECTED';
   return 'PROVIDER_OTHER';
 }
 
 const actions={
+  NO_SUPPORTED_PROVIDER_FOR_MARKET:'Market has no approved compatible history provider; route to official market data rather than retrying unsupported Yahoo symbols.',
   UNRESOLVED_MARKET_SYMBOL:'Verify the official ISIN-to-exchange ticker mapping; do not guess another listing.',
   DIRECT_SYMBOL_NOT_FOUND:'Verify ticker and market suffix against official reference data.',
   ISIN_SEARCH_UNRESOLVED:'Seek authorized official reference data or a verified alternative identifier.',
