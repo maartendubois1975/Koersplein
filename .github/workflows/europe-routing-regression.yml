@@ -3,6 +3,9 @@ on:
   push:
     paths:
       - 'scripts/history/provider-registry.mjs'
+      - 'scripts/history/providers/mse-official-price-list.mjs'
+      - 'scripts/history/official-daily-status.mjs'
+      - 'scripts/cloudflare/test-mse-official-no-trade.mjs'
       - 'scripts/cloudflare/daily-open-close-update.mjs'
       - 'scripts/cloudflare/audit-daily-open-close.mjs'
       - 'scripts/cloudflare/europe-run-policy.mjs'
@@ -69,6 +72,9 @@ jobs:
       - name: Check production script syntax
         run: |
           node --check scripts/history/provider-registry.mjs
+          node --check scripts/history/providers/mse-official-price-list.mjs
+          node --check scripts/history/official-daily-status.mjs
+          node --check scripts/cloudflare/test-mse-official-no-trade.mjs
           node --check scripts/cloudflare/daily-open-close-update.mjs
           node --check scripts/cloudflare/test-europe-provider-routing.mjs
           node --check scripts/cloudflare/audit-daily-open-close.mjs
@@ -119,6 +125,7 @@ jobs:
       - name: Test approved provider routing
         run: |
           node scripts/cloudflare/test-europe-provider-routing.mjs
+          node scripts/cloudflare/test-mse-official-no-trade.mjs
           node scripts/cloudflare/test-europe-ohlc-integrity.mjs
           node scripts/cloudflare/test-public-history-manifest.mjs
           node scripts/cloudflare/test-europe-run-policy.mjs
