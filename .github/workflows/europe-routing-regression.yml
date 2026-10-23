@@ -19,6 +19,8 @@ on:
       - 'scripts/cloudflare/test-openfigi-reference-evidence.mjs'
       - 'scripts/cloudflare/reconcile-official-daily.mjs'
       - 'scripts/cloudflare/paris-history-eligibility.mjs'
+      - 'scripts/cloudflare/paris-targeted-history-recovery.mjs'
+      - '.github/workflows/paris-targeted-history-recovery.yml'
       - 'scripts/cloudflare/test-paris-history-eligibility.mjs'
       - 'scripts/cloudflare/europe-failure-diagnosis.mjs'
       - 'scripts/cloudflare/test-europe-failure-diagnosis.mjs'
@@ -72,6 +74,7 @@ jobs:
           node --check scripts/cloudflare/test-openfigi-reference-evidence.mjs
           node --check scripts/cloudflare/reconcile-official-daily.mjs
           node --check scripts/cloudflare/paris-history-eligibility.mjs
+          node --check scripts/cloudflare/paris-targeted-history-recovery.mjs
           node --check scripts/cloudflare/test-paris-history-eligibility.mjs
           node --check scripts/cloudflare/europe-failure-diagnosis.mjs
           node --check scripts/cloudflare/test-europe-failure-diagnosis.mjs
