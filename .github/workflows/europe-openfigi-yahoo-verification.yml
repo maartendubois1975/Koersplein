@@ -25,6 +25,9 @@ jobs:
           node --check scripts/cloudflare/openfigi-yahoo-verification-probe.mjs
           node --check scripts/cloudflare/test-openfigi-yahoo-evidence.mjs
           node scripts/cloudflare/test-openfigi-yahoo-evidence.mjs
+          node --check scripts/cloudflare/six-sponsored-reference.mjs
+          node --check scripts/cloudflare/six-sponsored-identity-probe.mjs
+          node scripts/cloudflare/test-six-sponsored-reference.mjs
       - name: Retrieve successful OpenFIGI reference artifact
         env:
           GH_TOKEN: ${{ github.token }}
@@ -39,11 +42,24 @@ jobs:
           test -s research/output/openfigi-reference-probe.json
       - name: Validate selected Swiss/London candidates against Yahoo (no writes)
         run: node scripts/cloudflare/openfigi-yahoo-verification-probe.mjs
+      - name: Retrieve first-page Swiss Yahoo evidence for official SIX cross-check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SOURCE_RUN_ID=$(node -p "JSON.parse(require('fs').readFileSync('config/openfigi-yahoo-verify-request.json','utf8')).swissYahooRunId")
+          test "$SOURCE_RUN_ID" -gt 0
+          mkdir -p research/output/swiss-base
+          gh run download "$SOURCE_RUN_ID" --repo "${{ github.repository }}" --name openfigi-yahoo-independent-evidence --dir research/output/swiss-base
+          test -s research/output/swiss-base/openfigi-yahoo-verification.json
+      - name: Compare Swiss candidate identities with official SIX admissions (no writes)
+        run: node scripts/cloudflare/six-sponsored-identity-probe.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: openfigi-yahoo-independent-evidence
-          path: research/output/openfigi-yahoo-verification.json
+          path: |
+            research/output/openfigi-yahoo-verification.json
+            research/output/six-sponsored-identity-evidence.json
           retention-days: 90
       - name: Report candidate evidence and remaining official-listing gate
         if: always()
@@ -63,6 +79,13 @@ jobs:
           const confirmed=r.results.filter(x=>x?.status==='YAHOO_VENUE_CURRENCY_OHLC_MATCH_OFFICIAL_ISIN_STILL_REQUIRED').slice(0,8);
           console.log('\\nMarkt/valuta/OHLC plausibel (GEEN productie-goedkeuring):');
           for(const x of confirmed)console.log('- '+x.mic+' '+x.isin+' => '+x.providerSymbol+' ('+x.observedCurrency+', laatste volledige bar '+x.latestCompleteDate+')');
-          console.log('Geen catalogus-/historie-/prijswrites. Voor iedere promotie blijft een actuele officiële ISIN+MIC-noteringscontrole verplicht.');
+          const six='research/output/six-sponsored-identity-evidence.json';
+          if(fs.existsSync(six)){
+            const s=JSON.parse(fs.readFileSync(six,'utf8'));
+            console.log('\\nOfficiële SIX sponsored admissions:',s.status,'| Regels:',s.officialRows);
+            for(const [k,v] of Object.entries(s.counts||{}))console.log('- '+k+': '+v);
+            for(const x of s.results.filter(x=>x.status==='OFFICIAL_SIX_SPONSORED_ISIN_TICKER_CURRENCY_AND_YAHOO_MATCH').slice(0,8))console.log('- OFFICIAL '+x.isin+' => '+x.providerSymbol);
+          }
+          console.log('Geen catalogus-/historie-/prijswrites. Officiële SIX-admissies geven alleen referentie-identiteit; controleer datalicentie en alle productievoorwaarden vóór promotie.');
           JS
           gh issue comment 205 --repo "${{ github.repository }}" --body-file /tmp/openfigi-yahoo-report.md
