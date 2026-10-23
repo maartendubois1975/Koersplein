@@ -37,3 +37,26 @@ export function countOhlcDefects(missing){
  }
  return Object.fromEntries(Object.entries(counts).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])));
 }
+
+ 
+// Count historical OHLC debt in the most recent closed calendar window even
+// after a newer valid daily candle makes the instrument look current. If
+// duplicate rows exist for a date, a complete row prevents a false defect.
+export function recentOhlcDebt(bars,cutoff,windowDays=30){
+ if(!isValidDate(cutoff)||!Number.isInteger(windowDays)||windowDays<1||windowDays>366)throw Error('Invalid closed-session OHLC debt window');
+ const min=new Date(cutoff+'T00:00:00Z');
+ min.setUTCDate(min.getUTCDate()-windowDays+1);
+ const minDate=min.toISOString().slice(0,10);
+ const byDate=new Map();
+ for(const bar of bars||[]){
+  const day=bar?.date;
+  if(!isValidDate(day)||day<minDate||day>cutoff)continue;
+  const defects=describeOhlcDefects(bar);
+  const old=byDate.get(day);
+  if(defects.length===0){byDate.set(day,[]);continue;}
+  if(old?.length===0)continue;
+  byDate.set(day,[...new Set([...(old||[]),...defects])]);
+ }
+ const invalidDates=[...byDate].filter(([,defects])=>defects.length).sort(([a],[b])=>a.localeCompare(b)).map(([date,defects])=>({date,defects}));
+ return {windowStart:minDate,windowEnd:cutoff,invalidDates};
+}
