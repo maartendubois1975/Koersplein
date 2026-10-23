@@ -19,12 +19,15 @@ async function boundedBytes(response,limit){
  finally{reader.releaseLock();}
  return Buffer.concat(chunks,total);
 }
-export function safeArchivePdfNames(listing){
+export function safeArchiveEntryNames(listing){
  const entries=String(listing).split(/\r?\n/).filter(Boolean);
  if(entries.length>MAX_ENTRIES)throw Error('OFFICIAL_ARCHIVE_TOO_MANY_ENTRIES');
  // unzip -p never writes to disk, but reject ambiguous paths and archive names.
  if(entries.some(name=>name.startsWith('/')||name.includes('\\')||name.split('/').includes('..')||name.includes('\0')))throw Error('OFFICIAL_ARCHIVE_UNSAFE_ENTRY');
- return entries.filter(name=>/\.pdf$/i.test(name)&&name.length<=240);
+ return entries;
+}
+export function safeArchivePdfNames(listing){
+ return safeArchiveEntryNames(listing).filter(name=>/\.pdf$/i.test(name)&&name.length<=240);
 }
 function priority(name,target){
  const [y,m,d]=target.split('-');const low=name.toLowerCase();
@@ -46,8 +49,13 @@ export async function probeMseArchive(targetDate,{fetchFn=fetch,extractPdf=null,
  const dir=await fs.mkdtemp(path.join(os.tmpdir(),'koersplein-mse-archive-'));
  try{
   const file=path.join(dir,'official.zip');await fs.writeFile(file,bytes);
-  const names=safeArchivePdfNames(execFileSync('unzip',['-Z','-1',file],{timeout:15000,maxBuffer:512*1024}).toString('utf8'));
+  const entries=safeArchiveEntryNames(execFileSync('unzip',['-Z','-1',file],{timeout:15000,maxBuffer:512*1024}).toString('utf8'));
+  const names=entries.filter(name=>/\.pdf$/i.test(name)&&name.length<=240);
+  result.archiveEntries=entries.length;
+  result.archiveFormats=entries.reduce((counts,name)=>{const ext=name.split('.').pop().toLowerCase();const kind=['pdf','xls','xlsx','zip'].includes(ext)?ext:'other';counts[kind]=(counts[kind]||0)+1;return counts;},{});
+  result.entryNameSamples=entries.filter(name=>name.length<=240).slice(0,12);
   result.pdfEntries=names.length;
+  if(!names.length){result.status='ARCHIVE_NO_PDF_ENTRIES';return result;}
   const ordered=names.sort((a,b)=>priority(a,targetDate)-priority(b,targetDate)||a.localeCompare(b));
   for(const name of ordered){
    result.inspected++;
