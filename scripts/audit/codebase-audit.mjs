@@ -11,7 +11,7 @@ try{const p=JSON.parse(await fs.readFile(path.join(root,'data/world-fill-plan.js
 const requiredWorkflows=new Set(['codebase-audit.yml','daily-open-close.yml','europe-run-recovery.yml','daily-opportunity-ledger.yml','universal-source-first.yml','complete-market-analysis.yml','machine-arena-europe.yml','live-europe-coverage.yml','offline-europe-coverage.yml','isin-source-recovery.yml']);
 // Explicitly reviewed optional research, diagnostics and test workflows.
 // Optional workflows can be retired without breaking the core architecture.
-const approvedOptionalWorkflows=new Set(['europe-bulk-coverage-pilot.yml','europe-bulk-engine-tests.yml','europe-openfigi-reference.yml','europe-routing-regression.yml','paris-official-inventory-snapshot.yml','paris-storage-diagnostic.yml','paris-targeted-history-recovery.yml']);
+const approvedOptionalWorkflows=new Set(['europe-bulk-coverage-pilot.yml','europe-bulk-engine-tests.yml','europe-openfigi-reference.yml','europe-openfigi-yahoo-verification.yml','europe-routing-regression.yml','paris-official-inventory-snapshot.yml','paris-storage-diagnostic.yml','paris-targeted-history-recovery.yml']);
 const allowedWorkflows=new Set([...requiredWorkflows,...approvedOptionalWorkflows]);
 for(const f of files.filter(x=>path.relative(root,x).replaceAll('\\','/').startsWith('.github/workflows/')&&/\.ya?ml$/.test(x))){
   const rel=path.relative(root,f).replaceAll('\\','/'),name=path.basename(rel);
