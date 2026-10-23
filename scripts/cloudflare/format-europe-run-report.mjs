@@ -60,6 +60,10 @@ export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
     const sourceQuality=sourceProbe.sourceBarDiagnostics;
     if(sourceQuality?.readOnly&&Number.isSafeInteger(sourceQuality.observations)&&Number.isSafeInteger(sourceQuality.invalidSourceBars)){
       lines.push(`Exact-date source OHLC diagnostics (read-only): ${sourceQuality.invalidSourceBars} invalid source bars in ${sourceQuality.observations} provider-result observations; ${sourceQuality.probesWithInvalidBars||0} instrument/date probes affected.`);
+      if(Number.isSafeInteger(sourceQuality.distinctFeedObservations)&&Number.isSafeInteger(sourceQuality.feedLevelInvalidBarsLowerBound)&&sourceQuality.distinctFeedObservations<=sourceQuality.observations&&sourceQuality.feedLevelInvalidBarsLowerBound<=sourceQuality.invalidSourceBars){
+        lines.push('Underlying-feed accounting: '+sourceQuality.distinctFeedObservations+' feed/date observations versus '+sourceQuality.observations+' provider attempts; at least '+sourceQuality.feedLevelInvalidBarsLowerBound+' invalid bars at feed/date level (conservative lower bound, not exact deduplication).');
+        if(sourceQuality.correlatedProviderAttempts>0)lines.push('Correlated provider attempts: '+sourceQuality.correlatedProviderAttempts+'; Yahoo chart and Yahoo ISIN resolver are not independent source confirmations.');
+      }
       if(Number.isSafeInteger(sourceQuality.conflictingSourceObservations)&&sourceQuality.conflictingSourceObservations>0){
         const londonConflicts=sourceQuality.byMarket?.XLON?.conflictingSourceObservations||0;
         lines.push(`Conflicting complete same-date source observations: ${sourceQuality.conflictingSourceObservations} (London ${londonConflicts}). These were rejected as repair candidates; no source bar was selected.`);
