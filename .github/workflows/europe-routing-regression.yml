@@ -4,6 +4,11 @@ on:
     paths:
       - 'scripts/history/provider-registry.mjs'
       - 'scripts/cloudflare/daily-open-close-update.mjs'
+      - 'scripts/cloudflare/audit-daily-open-close.mjs'
+      - 'scripts/cloudflare/reconcile-official-daily.mjs'
+      - 'scripts/cloudflare/paris-history-eligibility.mjs'
+      - 'scripts/cloudflare/test-paris-history-eligibility.mjs'
+      - 'config/paris-follow-policy.json'
       - 'scripts/cloudflare/test-europe-provider-routing.mjs'
       - '.github/workflows/europe-routing-regression.yml'
   workflow_dispatch:
@@ -21,5 +26,11 @@ jobs:
           node --check scripts/history/provider-registry.mjs
           node --check scripts/cloudflare/daily-open-close-update.mjs
           node --check scripts/cloudflare/test-europe-provider-routing.mjs
+          node --check scripts/cloudflare/audit-daily-open-close.mjs
+          node --check scripts/cloudflare/reconcile-official-daily.mjs
+          node --check scripts/cloudflare/paris-history-eligibility.mjs
+          node --check scripts/cloudflare/test-paris-history-eligibility.mjs
       - name: Test approved provider routing
-        run: node scripts/cloudflare/test-europe-provider-routing.mjs
+        run: |
+          node scripts/cloudflare/test-europe-provider-routing.mjs
+          node scripts/cloudflare/test-paris-history-eligibility.mjs
