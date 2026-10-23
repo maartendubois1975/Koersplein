@@ -2,9 +2,23 @@
 import fs from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 const ISIN=/^[A-Z]{2}[A-Z0-9]{9}[0-9]$/,CCY=/^(CHF|EUR|USD)$/;
+// ISO 6166 check digit: reject mistyped catalog identities before any
+// external reference request. This does not establish an active listing.
+export function isValidIsin(value){
+ const isin=String(value||'').toUpperCase();
+ if(!ISIN.test(isin))return false;
+ const digits=[...isin].map(c=>/[A-Z]/.test(c)?String(c.charCodeAt(0)-55):c).join('');
+ let sum=0,double=false;
+ for(let p=digits.length-1;p>=0;p--){
+  let digit=digits.charCodeAt(p)-48;
+  if(double){digit*=2;if(digit>9)digit-=9;}
+  sum+=digit;double=!double;
+ }
+ return sum%10===0;
+}
 export function officialSixUrl(i){
  const isin=String(i?.isin||'').toUpperCase(),currency=String(i?.currency||'').toUpperCase();
- if(i?.mic!=='XSWX'||!ISIN.test(isin)||!CCY.test(currency))throw Error('INVALID_SIX_CATALOG_IDENTITY');
+ if(i?.mic!=='XSWX'||!isValidIsin(isin)||!CCY.test(currency))throw Error('INVALID_SIX_CATALOG_IDENTITY');
  return `https://www.six-group.com/en/market-data/shares/share-explorer/share-details.${isin}${currency}4.html`;
 }
 export function evaluateSixPage(i,html,actualUrl){
@@ -18,12 +32,24 @@ export function evaluateSixPage(i,html,actualUrl){
  if(!m)return {status:'NO_OFFICIAL_TRADING_SYMBOL',title:title.slice(0,130)};
  const symbol=m[1].toUpperCase();
  if(/^\d{4,}$/.test(symbol))return {status:'NUMERIC_VALOR_NOT_SYMBOL'};
- const isinEvidence=new RegExp(`(?:^|[^A-Z0-9])${i.isin}(?:$|[^A-Z0-9])`,'i').test(html);
+ // A bare ISIN anywhere in page HTML can come from unrelated scripts,
+ // navigation or recommendation cards. Require an explicit visible ISIN label.
+ // If multiple labeled securities appear, do not bind the title to any one.
+ const visible=html.replace(/<!--[\s\S]*?-->/g,' ')
+  .replace(/<(script|style|template)\b[^>]*>[\s\S]*?<\/\1>/gi,' ')
+  .replace(/<[^>]*>/g,' ').replace(/&nbsp;|&#160;/gi,' ').replace(/\s+/g,' ');
+ const labeled=[...visible.matchAll(/\bISIN\s*(?::|#|-)?\s*([A-Z]{2}[A-Z0-9]{9}[0-9])\b/gi)]
+  .map(x=>x[1].toUpperCase());
+ const identities=[...new Set(labeled)];
+ if(identities.length>1)return {status:'OFFICIAL_ISIN_AMBIGUOUS',isinEvidence:false,title:title.slice(0,130)};
+ if(identities.length===1&&identities[0]!==i.isin.toUpperCase())
+  return {status:'OFFICIAL_ISIN_MISMATCH',isinEvidence:false,title:title.slice(0,130)};
+ const isinEvidence=identities.length===1&&identities[0]===i.isin.toUpperCase();
  return {status:isinEvidence?'OFFICIAL_ISIN_SYMBOL_EVIDENCE':'TITLE_ONLY_ISIN_NOT_PROVEN',symbol,isinEvidence,title:title.slice(0,130)};
 }
 export function selectSwissCandidates(shares,{limit=12,rotation=0}={}){
  if(!Number.isInteger(limit)||limit<1||limit>24)throw Error('INVALID_PROBE_LIMIT');
- const eligible=shares.filter(x=>x.mic==='XSWX'&&/^\d{4,}$/.test(String(x.symbol))&&!x.providerSymbol&&ISIN.test(String(x.isin))&&CCY.test(String(x.currency)));
+ const eligible=shares.filter(x=>x.mic==='XSWX'&&/^\d{4,}$/.test(String(x.symbol))&&!x.providerSymbol&&isValidIsin(x.isin)&&CCY.test(String(x.currency)));
  const sorted=[...eligible].sort((a,b)=>a.isin.localeCompare(b.isin));
  const offset=sorted.length?(Math.abs(Math.trunc(rotation))*limit)%sorted.length:0;
  return [...sorted.slice(offset),...sorted.slice(0,offset)].slice(0,limit);
