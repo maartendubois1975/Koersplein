@@ -23,4 +23,13 @@ for(const key of ['XPAR-SHELL','XPAR-EMPTY','XPAR-UNKNOWN','XPAR-NOT-FOUND'])
 assert.equal(parisHistoryEligible({isin:'XPAR-SHELL'},'XLON',policy,manifest,resolver),true,'Non-Paris unaffected');
 assert.equal(parisHistoryEligible({isin:'XPAR-SHELL'},'XPAR',{...policy,mode:'unrestricted'},manifest,resolver),true);
 assert.equal(parisHistoryEligible({isin:'ANY',storageKey:'XPAR-EXISTING'},'XPAR',policy,manifest,resolver),true,'Existing storage key remains authoritative');
+const recovery=await (await import('node:fs/promises')).readFile('scripts/cloudflare/paris-targeted-history-recovery.mjs','utf8');
+assert.match(recovery,/PARIS_EXISTING_HISTORY_ONLY_POLICY_REQUIRED/);
+assert.match(recovery,/parisHistoryEligible/);
+assert.match(recovery,/hasRecordedHistory\(entry\)/);
+assert.match(recovery,/allowedProviderIds/);
+assert.match(recovery,/appendOnly:true/);
+assert.doesNotMatch(recovery,/seedCatalog\(/,'Manual Paris recovery must never seed empty histories');
+assert.doesNotMatch(recovery,/newListingStorageKey/,'Manual Paris recovery must not mint identities');
+
 console.log('Paris existing-history-only positive-record eligibility: PASS');
