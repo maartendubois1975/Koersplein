@@ -43,7 +43,7 @@ export class ProviderRegistry {
         if (!(timeoutMs > 0)) {
           const result=await provider.fetchDaily(instrument,range);
           if(!Array.isArray(result?.bars)||!result.bars.length)throw Error('Provider returned no daily bars');
-          if(acceptResult&&!acceptResult(result))throw Error('Provider returned no usable bars in requested range');
+          if(acceptResult&&!acceptResult(result,provider))throw Error('Provider returned no usable bars in requested range');
           return {provider,result};
         }
         const controller = new AbortController();
@@ -57,7 +57,7 @@ export class ProviderRegistry {
           });
           const result = await Promise.race([provider.fetchDaily(instrument, {...range, signal: controller.signal}), timeout]);
           if(!Array.isArray(result?.bars)||!result.bars.length)throw Error('Provider returned no daily bars');
-          if(acceptResult&&!acceptResult(result))throw Error('Provider returned no usable bars in requested range');
+          if(acceptResult&&!acceptResult(result,provider))throw Error('Provider returned no usable bars in requested range');
           return { provider, result };
         } finally {
           clearTimeout(timer);
