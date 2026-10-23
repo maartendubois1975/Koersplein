@@ -47,6 +47,7 @@ jobs:
           node scripts/cloudflare/test-europe-failure-diagnosis.mjs
           node scripts/cloudflare/test-six-ipo-symbol-evidence.mjs
           node scripts/cloudflare/test-nasdaq-baltic-provider.mjs
+          node scripts/cloudflare/test-europe-recovery-queue.mjs
       - name: Test production identity verification
         run: node scripts/cloudflare/test-github-oidc.mjs
       - name: Verify production Worker and credentials
@@ -132,6 +133,7 @@ jobs:
           path: |
             research/output/europe-run-summary.json
             research/output/europe-failure-diagnosis.json
+            research/output/europe-recovery-queue.json
             research/output/six-ipo-symbol-probe.json
           retention-days: 90
 
