@@ -90,3 +90,16 @@ assert.match(sharedYahooReport,/London invalid source bars by underlying feed: y
 assert.match(sharedYahooReport,/correlated routes, not independent price sources/);
 assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...sharedYahooProbe,generatedAt:'2026-10-22T10:50:03.000Z'}),/underlying feed/);
 console.log('London Yahoo resolver/chart upstream correlation shown only for fresh evidence PASS');
+
+const contradictorySourceProbe={...sharedYahooProbe,sourceBarDiagnostics:{
+ ...sharedYahooProbe.sourceBarDiagnostics,
+ conflictingSourceObservations:2,
+ byMarket:{...sharedYahooProbe.sourceBarDiagnostics.byMarket,
+  XLON:{...sharedYahooProbe.sourceBarDiagnostics.byMarket.XLON,conflictingSourceObservations:2}}
+}};
+const contradictorySourceReport=renderEuropeReport(sourceReport,'',contradictorySourceProbe);
+assert.match(contradictorySourceReport,/Conflicting complete same-date source observations: 2 \(London 2\)/);
+assert.match(contradictorySourceReport,/rejected as repair candidates/);
+assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...contradictorySourceProbe,generatedAt:'2026-10-22T10:50:03.000Z'}),/Conflicting complete same-date source observations/);
+console.log('Conflicting source-bar evidence is explicitly reported, separate from invalid individual bars PASS');
+
