@@ -35,7 +35,17 @@ try {
  assert.equal(summary.marketCoverage.complete,false);
  assert.equal(summary.status,'INCOMPLETE');
  assert.ok(summary.marketCoverage.anomalies.some(x=>x.kind==='audit'&&x.shard===7&&x.issue==='REPORT_COUNT'));
- console.log('Europe summary integration PASS: runtime, historical debt, 8/8 coverage and missing-shard fail-closed');
+ await fs.writeFile(path.join(reportDir,'daily-open-close-audit-7.json'),JSON.stringify({generatedAt:'2026-10-23T10:00:00Z',shardIndex:7,shardCount:8,markets:[]}));
+ await fs.unlink(path.join(reportDir,'daily-open-close-update-7.json'));
+ result=run();
+ assert.equal(result.status,2,`Missing update shard must fail closed: ${result.stderr}`);
+ summary=JSON.parse(await fs.readFile(path.join(reportDir,'europe-run-summary.json'),'utf8'));
+ assert.equal(summary.marketCoverage.complete,false);
+ assert.equal(summary.totals.failedImports,null,'Missing update report must not imply zero failed imports');
+ assert.equal(summary.totals.deferredMissing,null);
+ assert.equal(summary.totals.historicalBackfillFailures,null);
+ assert.ok(summary.marketCoverage.anomalies.some(x=>x.kind==='update'&&x.shard===7&&x.issue==='REPORT_COUNT'));
+ console.log('Europe summary integration PASS: runtime, historical debt, 8/8 coverage and missing update/audit shard fail-closed');
 } finally {
  await fs.rm(fixture,{recursive:true,force:true});
 }
