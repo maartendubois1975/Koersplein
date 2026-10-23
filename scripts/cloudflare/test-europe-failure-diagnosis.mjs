@@ -43,3 +43,8 @@ assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0000000001: ya
 assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0000000001: yahoo-chart: Source has no exact-date daily bar; yahoo-isin-resolver: Source exact-date OHLC incomplete or inconsistent'),'SOURCE_EXACT_DATE_OHLC_INVALID');
 assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0000000001: yahoo-chart: Source exact-date OHLC incomplete or inconsistent; yahoo-isin-resolver: Provider returned no daily bars'),'SOURCE_EXACT_DATE_OHLC_INVALID');
 console.log('Source exact-date missing versus invalid OHLC error classification PASS');
+
+
+assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0000000001: yahoo-chart: Source exact-date OHLC mixes complete and invalid duplicate bars'),'SOURCE_EXACT_DATE_MIXED_BARS');
+assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0000000001: yahoo-chart: Source exact-date OHLC mixes complete and invalid duplicate bars; yahoo-isin-resolver: Source has no exact-date daily bar'),'SOURCE_EXACT_DATE_MIXED_BARS');
+console.log('Mixed-validity duplicate OHLC evidence is separately classified PASS');
