@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic,isCompleteOhlcSourceBar,compareStoredAndSourceOhlc,classifyOhlcDifferenceMagnitude} from './europe-ohlc-source-evidence.mjs';
+import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic,isCompleteOhlcSourceBar,compareStoredAndSourceOhlc,classifyOhlcDifferenceMagnitude,summarizeOhlcProbeCoverage} from './europe-ohlc-source-evidence.mjs';
 const item={mic:'XLON',isin:'GB0000000001',symbol:'TEST',lastStoredDate:'2026-10-22',auditReason:'INCOMPLETE_OR_INVALID_OHLC'};
 const queue={markets:[{mic:'XLON',instruments:[item,{...item,isin:'GB0000000002',auditReason:'STALE_LAST_TRADE'}]},{mic:'XPAR',instruments:[{...item,mic:'XPAR',isin:'FR0000000001'}]}]};
 assert.equal(selectIncompleteOhlcCandidates(queue).length,2);
@@ -191,3 +191,28 @@ console.log('Latest/history fair sampling, merged immutable OHLC evidence, confl
 
 // CI exercises intrinsic stored-candle severity separately from source-vs-stored differences.
 await import('./test-europe-stored-ohlc-severity.mjs');
+
+
+// Real London debt is date-dense for some ISINs: select distinct securities
+// first instead of probing a single illiquid ticker on many adjacent dates.
+const clustered={markets:[{mic:'XLON',recentOhlcDebt:['GB0000000101','GB0000000102','GB0000000103','GB0000000104'].flatMap((isin,index)=>
+ Array.from({length:8},(_,day)=>({...item,isin,ohlcDefects:['HIGH_BELOW_CLOSE'],lastStoredDate:'2026-10-'+String(day+1).padStart(2,'0'),evidenceScope:'RECENT_STORED_HISTORY'})))}]};
+for(const rotation of [0,1,2,3]){
+ const batch=selectIncompleteOhlcCandidates(clustered,{limit:4,perMarket:4,rotation});
+ assert.equal(new Set(batch.map(row=>row.isin)).size,4,'One date per ISIN before another date from the same ISIN');
+ assert.equal(batch.length,4);
+}
+assert.equal(clustered.markets[0].recentOhlcDebt[0].evidenceScope,'RECENT_STORED_HISTORY','Selection never mutates the queue');
+const coverage=summarizeOhlcProbeCoverage([
+ {mic:'XLON',isin:'GB1',status:'NO_COMPLETE_APPROVED_SOURCE_BAR',failureCategory:'NO_NEW_BARS_IN_RANGE'},
+ {mic:'XLON',isin:'GB1',status:'NO_COMPLETE_APPROVED_SOURCE_BAR',failureCategory:'NO_NEW_BARS_IN_RANGE'},
+ {mic:'XLON',isin:'GB2',status:'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW'},
+ {mic:'XSWX',isin:'CH1',status:'NO_COMPLETE_APPROVED_SOURCE_BAR',failureCategory:'ISIN_SEARCH_UNRESOLVED'}
+]);
+assert.equal(coverage.readOnly,true);
+assert.equal(coverage.uniqueInstruments,3);
+assert.equal(coverage.probedDates,4);
+assert.equal(coverage.repeatedInstrumentDates,1);
+assert.deepEqual(coverage.byMarket.XLON,{probes:3,uniqueInstruments:2,repeatedInstrumentDates:1,failuresByCategory:{NO_NEW_BARS_IN_RANGE:2}});
+assert.equal(coverage.byMarket.XSWX.failuresByCategory.ISIN_SEARCH_UNRESOLVED,1);
+console.log('Historical probe distinct-ISIN coverage, market failure evidence and rotation PASS');
