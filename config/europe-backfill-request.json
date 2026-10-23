@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-23T19:08:19.565Z",
+  "requestedAt": "2026-10-23T20:02:40.940Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Europe A protected 8-shard 31-MIC verification after read-only exact-date source conflict/absence diagnostics, opt-in empty-result observation and regression tests at ba4291ba. No full backfill, no existing-bar overwrite, approved sources only, Paris existing-history-only; compare only if 8/8 update + 8/8 audit and all 31 markets present."
+  "reason": "Europe Bouw A protected 8-shard 31-MIC session-cutoff consistency verification after e218638; approved sources only, append-only, no full backfill, no existing-bar overwrite, Paris existing-history-only. Verify all update/audit freshnessCutoff fields agree and compare missing counts only for identical cutoff dates."
 }
