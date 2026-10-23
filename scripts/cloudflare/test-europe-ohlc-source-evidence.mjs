@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic,isCompleteOhlcSourceBar,compareStoredAndSourceOhlc,classifyOhlcDifferenceMagnitude,summarizeOhlcProbeCoverage} from './europe-ohlc-source-evidence.mjs';
+import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic,isCompleteOhlcSourceBar,compareStoredAndSourceOhlc,classifyOhlcDifferenceMagnitude,summarizeOhlcProbeCoverage,describeExactDateSourceBars,summarizeOhlcSourceBarDiagnostics} from './europe-ohlc-source-evidence.mjs';
 const item={mic:'XLON',isin:'GB0000000001',symbol:'TEST',lastStoredDate:'2026-10-22',auditReason:'INCOMPLETE_OR_INVALID_OHLC'};
 const queue={markets:[{mic:'XLON',instruments:[item,{...item,isin:'GB0000000002',auditReason:'STALE_LAST_TRADE'}]},{mic:'XPAR',instruments:[{...item,mic:'XPAR',isin:'FR0000000001'}]}]};
 assert.equal(selectIncompleteOhlcCandidates(queue).length,2);
@@ -244,3 +244,37 @@ const exactDatePredicateRegistry={...registry,async fetchDaily(i,range,primary,o
 }};
 assert.equal((await probeIncompleteOhlcCandidate(item,{registry:exactDatePredicateRegistry,sources,market,listings})).status,'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW');
 console.log('Exact-date source absence and inconsistent source OHLC are separate fail-closed provider diagnoses PASS');
+
+// Exact-date diagnostics must identify missing HIGH/LOW and price-range defects
+// without inventing OHLC or misclassifying absent dates as invalid source bars.
+const invalidExact={date:'2026-10-22',open:100,high:104,low:106,close:105};
+const sourceQuality=describeExactDateSourceBars([invalidExact,{...invalidExact,date:'2026-10-21'}],'2026-10-22');
+assert.equal(sourceQuality.exactDateBars,1);
+assert.equal(sourceQuality.completeBars,0);
+assert.equal(sourceQuality.invalidBars,1);
+assert.equal(sourceQuality.defects.HIGH_BELOW_CLOSE,1);
+assert.equal(sourceQuality.defects.LOW_ABOVE_OPEN,1);
+assert.equal(sourceQuality.defects.LOW_ABOVE_CLOSE,1);
+assert.equal(sourceQuality.defects.HIGH_BELOW_LOW,1);
+assert.deepEqual(describeExactDateSourceBars([],'2026-10-22').defects,{NO_EXACT_DATE_BAR:1});
+assert.equal(describeExactDateSourceBars([{...invalidExact,high:null}],'2026-10-22').defects.INVALID_OR_MISSING_HIGH,1);
+assert.equal(describeExactDateSourceBars([{...invalidExact,low:'90'}],'2026-10-22').defects.INVALID_OR_MISSING_LOW,1);
+assert.equal(describeExactDateSourceBars([{...invalidExact,high:110,low:90}],'2026-10-22').completeBars,1);
+const diagnosticRegistry={...registry,async fetchDaily(i,range,primary,opts){
+ assert.throws(()=>opts.acceptResult({bars:[invalidExact]}),/Source exact-date OHLC incomplete or inconsistent/);
+ assert.throws(()=>opts.acceptResult({bars:[{...invalidExact,date:'2026-10-21'}]}),/Source has no exact-date daily bar/);
+ throw Error('Alle providers faalden voor GB0000000001: yahoo-chart: Source exact-date OHLC incomplete or inconsistent');
+}};
+const invalidEvidence=await probeIncompleteOhlcCandidate(item,{registry:diagnosticRegistry,sources,market,listings});
+assert.equal(invalidEvidence.status,'NO_COMPLETE_APPROVED_SOURCE_BAR');
+assert.equal(invalidEvidence.candidateBar,undefined);
+assert.equal(invalidEvidence.sourceBarObservations.length,2);
+const qualitySummary=summarizeOhlcSourceBarDiagnostics([invalidEvidence,{...invalidEvidence,mic:'XSWX',sourceBarObservations:[]}]);
+assert.equal(qualitySummary.probesWithInvalidBars,1);
+assert.equal(qualitySummary.invalidSourceBars,1);
+assert.equal(qualitySummary.observations,2);
+assert.equal(qualitySummary.byMarket.XLON.defects.HIGH_BELOW_CLOSE,1);
+assert.equal(qualitySummary.byMarket.XLON.defects.NO_EXACT_DATE_BAR,1);
+assert.equal(qualitySummary.byMarket.XSWX.invalidSourceBars,0);
+console.log('Exact-date source OHLC defect attribution, absent date and bounded read-only market diagnostics PASS');
+
