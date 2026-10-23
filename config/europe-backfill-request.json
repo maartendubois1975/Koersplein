@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-23T16:28:24.500Z",
+  "requestedAt": "2026-10-23T19:08:19.565Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Europe B protected 8-shard 31-MIC production verification after bounded Worker /health connect-timeout retry fix f7e40a4; existing-history-only Paris, approved sources, append-only, no full backfill, no overwrite. Compare only if 8/8 update + 8/8 audit and all 31 markets pass."
+  "reason": "Europe A protected 8-shard 31-MIC verification after read-only exact-date source conflict/absence diagnostics, opt-in empty-result observation and regression tests at ba4291ba. No full backfill, no existing-bar overwrite, approved sources only, Paris existing-history-only; compare only if 8/8 update + 8/8 audit and all 31 markets present."
 }
