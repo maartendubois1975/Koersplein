@@ -39,14 +39,17 @@ for(const market of complete){
       const bars=h?.bars||h?.history||[];
       // Partition responses are not guaranteed sorted. Audit the maximum dated bar,
       // rather than assuming the last array element is the latest trade.
-      const b=bars.filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x?.date||'')).reduce((latest,x)=>!latest||x.date>latest.date?x:latest,null);
-      const barIssue=auditBarIssue(b,cutoff,new Date().toISOString().slice(0,10));
+      const dated=bars.filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x?.date||''));
+      const latestAny=dated.reduce((latest,x)=>!latest||x.date>latest.date?x:latest,null);
+      // A still-open session cannot replace the last completed daily candle.
+      const b=dated.filter(x=>x.date<=cutoff).reduce((latest,x)=>!latest||x.date>latest.date?x:latest,null);
+      const barIssue=auditBarIssue(b||latestAny,cutoff,new Date().toISOString().slice(0,10));
       if(barIssue){
         const status=await officialDailyStatus({...s,mic:s.mic||market.mic},cutoff);
         if(isCompleteOhlcBar(b)&&b.date<cutoff&&isVerifiedNoTradeGap(status,b.date,cutoff)){
           noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,lastStoredDate:b.date,...status});return;
         }
-        pushMissing({isin:s.isin,symbol:s.symbol||s.ticker,lastDate:b?.date||null,reason:barIssue,officialNoTradeReported:status?.status==='NO_TRADES',officialLastTradeDate:status?.lastTradeDate||null,knownDataUnavailable:knownUnavailable.get(s.isin)?.reason||null});
+        pushMissing({isin:s.isin,symbol:s.symbol||s.ticker,lastDate:b?.date||latestAny?.date||null,reason:barIssue,officialNoTradeReported:status?.status==='NO_TRADES',officialLastTradeDate:status?.lastTradeDate||null,knownDataUnavailable:knownUnavailable.get(s.isin)?.reason||null});
         return;
       }
       ok++;
