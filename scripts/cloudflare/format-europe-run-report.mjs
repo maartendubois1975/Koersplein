@@ -48,6 +48,15 @@ export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
      Date.parse(sourceProbe.generatedAt)-Date.parse(report.generatedAt)<20*60*1000){
     lines.push('','### Historical source check (read-only)',`Probed: ${sourceProbe.requested??0}; ${Object.entries(sourceProbe.counts||{}).map(([status,count])=>`${status} ${count}`).join(', ')}.`,
       'Complete source bars are correction candidates only. No stored OHLC has been overwritten.');
+    const coverage=sourceProbe.probeCoverage;
+    if(coverage?.readOnly&&Number.isSafeInteger(coverage.uniqueInstruments)&&coverage.probedDates===sourceProbe.requested){
+      lines.push(`Distinct instruments sampled: **${coverage.uniqueInstruments}/${coverage.probedDates}** date probes; repeat-date probes on the same MIC/ISIN: ${coverage.repeatedInstrumentDates}.`);
+      const london=coverage.byMarket?.XLON;
+      if(london){
+        const noRange=london.failuresByCategory?.NO_NEW_BARS_IN_RANGE||0;
+        lines.push(`London source sample: ${london.uniqueInstruments} distinct ISIN across ${london.probes} dates; ${noRange} NO_NEW_BARS_IN_RANGE (not proof of delisting).`);
+      }
+    }
     const severity=sourceProbe.storedOhlcViolationSeverity;
     if(severity?.readOnly&&severity.complete&&severity.metric==='INTRINSIC_STORED_CANDLE_VIOLATION_NOT_SOURCE_COMPARISON'){
       const buckets=severity.counts||{};
