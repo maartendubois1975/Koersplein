@@ -216,3 +216,19 @@ assert.equal(coverage.repeatedInstrumentDates,1);
 assert.deepEqual(coverage.byMarket.XLON,{probes:3,uniqueInstruments:2,repeatedInstrumentDates:1,failuresByCategory:{NO_NEW_BARS_IN_RANGE:2}});
 assert.equal(coverage.byMarket.XSWX.failuresByCategory.ISIN_SEARCH_UNRESOLVED,1);
 console.log('Historical probe distinct-ISIN coverage, market failure evidence and rotation PASS');
+
+
+// Rotation must not abandon the smaller latest-bar scope when thousands of
+// historical dates exist; distinct-ISIN sampling and scope balance coexist.
+const unbalanced={markets:[{mic:'XLON',
+ instruments:Array.from({length:45},(_,i)=>({...item,isin:'GB'+String(i).padStart(10,'0')})),
+ recentOhlcDebt:Array.from({length:600},(_,i)=>({...item,isin:'GH'+String(Math.floor(i/6)).padStart(10,'0'),lastStoredDate:'2026-10-'+String(i%6+1).padStart(2,'0'),evidenceScope:'RECENT_STORED_HISTORY'}))
+}]};
+for(const rotation of [0,1,2,10,20,57,100]){
+ const batch=selectIncompleteOhlcCandidates(unbalanced,{limit:32,perMarket:32,rotation});
+ const latestCount=batch.filter(x=>x.evidenceScope==='LATEST_AUDIT_BAR').length;
+ const historicalCount=batch.filter(x=>x.evidenceScope==='RECENT_STORED_HISTORY').length;
+ assert.ok(latestCount>=12&&historicalCount>=12,'Both scopes must be represented despite historical backlog, rotation '+rotation);
+ assert.equal(new Set(batch.map(x=>x.isin)).size,32,'Different ISIN before repeat dates, rotation '+rotation);
+}
+console.log('Independent scope rotation prevents historical/latest starvation while preserving ISIN diversity PASS');
