@@ -5,6 +5,7 @@ import fs from 'node:fs/promises';
 import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
 import {mapConcurrent} from './europe-run-policy.mjs';
 import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,classifyOhlcDifferenceMagnitude} from './europe-ohlc-source-evidence.mjs';
+import {summarizeStoredOhlcSeverity} from './europe-stored-ohlc-severity.mjs';
 const path='research/output/europe-recovery-queue.json';
 const output='research/output/europe-incomplete-ohlc-source-probe.json';
 await fs.mkdir('research/output',{recursive:true});
@@ -16,6 +17,7 @@ catch(error){
  console.log('EUROPE_OHLC_SOURCE_PROBE',JSON.stringify({status:report.status}));
  process.exit(0);
 }
+const storedOhlcViolationSeverity=summarizeStoredOhlcSeverity(queue);
 const rotation=Number(process.env.GITHUB_RUN_NUMBER||Math.floor(Date.now()/86400000));
 // Bounded 48-item evidence batch; fair market first pass, then debt-weighted.
 // Four workers keep the worst-case multi-provider probe within the 8m CI budget.
@@ -49,6 +51,6 @@ for(const row of results){
   sourceVsStoredMagnitude[bucket]=(sourceVsStoredMagnitude[bucket]||0)+1;
  }
 }
-const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_PRODUCTION_WRITES',status:'COMPLETED',sourceQueueGeneratedAt:queue.generatedAt||null,rotation,requested:items.length,counts,scopeCounts,marketCounts,sourceVsStoredMagnitude,results};
+const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_PRODUCTION_WRITES',status:'COMPLETED',sourceQueueGeneratedAt:queue.generatedAt||null,rotation,requested:items.length,counts,scopeCounts,marketCounts,sourceVsStoredMagnitude,storedOhlcViolationSeverity,results};
 await fs.writeFile(output,JSON.stringify(report,null,2)+'\n');
-console.log('EUROPE_OHLC_SOURCE_PROBE',JSON.stringify({requested:items.length,counts}));
+console.log('EUROPE_OHLC_SOURCE_PROBE',JSON.stringify({requested:items.length,counts,storedSeverityComplete:storedOhlcViolationSeverity.complete,storedSeverityExamined:storedOhlcViolationSeverity.examined}));
