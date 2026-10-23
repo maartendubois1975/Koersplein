@@ -7,9 +7,20 @@ const cache=new Map();
 const clean=s=>String(s||'').replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/g,' ').replace(/\s+/g,' ').trim();
 const number=s=>{const t=clean(s).replace(/,/g,'');return t&&t!=='-'&&Number.isFinite(Number(t))?Number(t):null;};
 const iso=s=>{const m=clean(s).match(/^(\d{2})\.(\d{2})\.(\d{4})$/);return m?`${m[3]}-${m[2]}-${m[1]}`:null;};
-export function parseBalticStatistics(html,date){
+// The live Baltic statistics page can roll forward before yesterday's audit.
+// A newer snapshot may prove NO_TRADES only when its last trade predates the
+// target session. It can never be used as a historical TRADED OHLC source.
+function boundedBalticSnapshot(snapshotDate,targetDate){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(String(targetDate||'')))return false;
+ const targetMs=Date.parse(targetDate+'T00:00:00Z');
+ if(!Number.isFinite(targetMs)||new Date(targetMs).toISOString().slice(0,10)!==targetDate)return false;
+ const lag=(Date.parse(snapshotDate+'T00:00:00Z')-targetMs)/86400000;
+ return Number.isInteger(lag)&&lag>=0&&lag<=7;
+}
+export function parseBalticStatistics(html,date,{allowLaterNoTrade=false}={}){
  const asOf=html.match(/name="end"[^>]*data-value="(\d{4}-\d{2}-\d{2})"/i)?.[1];
- if(asOf!==date)throw Error('Baltic official snapshot date mismatch: '+asOf+' != '+date);
+ const exact=asOf===date;
+ if(!exact&&!(allowLaterNoTrade&&boundedBalticSnapshot(asOf,date)))throw Error('Baltic official snapshot date mismatch: '+asOf+' != '+date);
  const result=new Map();
  for(const table of html.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)){
   if(!/Last price date/.test(table[1])||!/Open price/.test(table[1]))continue;
@@ -19,11 +30,11 @@ export function parseBalticStatistics(html,date){
    if(!isin||raw.length!==10)continue;
    const cells=raw.map(clean),lastTradeDate=iso(cells[4]),trades=number(cells[7]),volume=number(cells[8]);
    const mic={VLN:'XLIT',RIG:'XRIS',TLN:'XTAL',TAL:'XTAL'}[cells[1]];
-   if(!mic||!lastTradeDate||lastTradeDate>date)continue;
-   const common={date,mic,isin,lastTradeDate,trades,volume,provider:'nasdaq-baltic-official'};
-   if(trades===0&&volume===0){result.set(isin,{...common,status:'NO_TRADES'});continue;}
+   if(!mic||!lastTradeDate||lastTradeDate>asOf)continue;
+   const common={date,mic,isin,lastTradeDate,snapshotDate:asOf,trades,volume,provider:'nasdaq-baltic-official'};
+   if(trades===0&&volume===0&&lastTradeDate<date){result.set(isin,{...common,status:'NO_TRADES'});continue;}
    const close=number(cells[3]),open=number(cells[5]),hl=raw[6].split(/<br\s*\/?\s*>/i).map(number).filter(x=>x!==null);
-   if(lastTradeDate===date&&trades>0&&volume>0&&open>0&&close>0)result.set(isin,{...common,status:'TRADED',bar:{date,open,high:hl[0]??null,low:hl[1]??null,close,volume}});
+   if(exact&&lastTradeDate===date&&trades>0&&volume>0&&open>0&&close>0)result.set(isin,{...common,status:'TRADED',bar:{date,open,high:hl[0]??null,low:hl[1]??null,close,volume}});
   }
  }
  return result;
@@ -72,7 +83,7 @@ export async function officialDailyStatus(instrument,date){
  }
  if(['XTAL','XRIS','XLIT'].includes(mic)){
   const sourceUrl='https://nasdaqbaltic.com/statistics/en/statistics/stats_json';
-  const rows=await cached('baltic:'+date,async()=>{const r=await fetch(sourceUrl,{signal:AbortSignal.timeout(20000)});if(!r.ok)throw Error('Nasdaq Baltic statistics HTTP '+r.status);return parseBalticStatistics(await r.text(),date);});
+  const rows=await cached('baltic:'+date,async()=>{const r=await fetch(sourceUrl,{signal:AbortSignal.timeout(20000)});if(!r.ok)throw Error('Nasdaq Baltic statistics HTTP '+r.status);return parseBalticStatistics(await r.text(),date,{allowLaterNoTrade:true});});
   const status=rows.get(isin);
   return status&&status.mic===mic?{...status,sourceUrl,retrievedAt:new Date().toISOString()}:null;
  }
