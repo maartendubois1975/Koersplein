@@ -42,4 +42,9 @@ const reject=[
   [a,{...b,markets:b.markets.map((m,i)=>i===0?{...m,missing:[...m.missing,m.missing[0]]}:m)},'missing details incomplete']
 ];
 for(const [x,y,msg] of reject)assert.throws(()=>compareEuropeSessionDeltas(x,y),new RegExp(msg));
+const drift=summary();
+drift.markets[0].missing[0].symbol='OTHER';
+assert.throws(()=>compareEuropeSessionDeltas(a,drift),/ticker changed/);
+const invalid=summary({cutoff:'2026-02-31'});
+assert.throws(()=>compareEuropeSessionDeltas(invalid,b),/unverified cutoff/);
 console.log('Europe same-cutoff instrument delta PASS: identity, no-trade, reasons, fail-closed, immutable');
