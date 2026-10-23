@@ -4,7 +4,7 @@
 import fs from 'node:fs/promises';
 import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
 import {mapConcurrent} from './europe-run-policy.mjs';
-import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,classifyOhlcDifferenceMagnitude} from './europe-ohlc-source-evidence.mjs';
+import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,classifyOhlcDifferenceMagnitude,summarizeOhlcProbeCoverage} from './europe-ohlc-source-evidence.mjs';
 import {summarizeStoredOhlcSeverity} from './europe-stored-ohlc-severity.mjs';
 const path='research/output/europe-recovery-queue.json';
 const output='research/output/europe-incomplete-ohlc-source-probe.json';
@@ -51,6 +51,7 @@ for(const row of results){
   sourceVsStoredMagnitude[bucket]=(sourceVsStoredMagnitude[bucket]||0)+1;
  }
 }
-const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_PRODUCTION_WRITES',status:'COMPLETED',sourceQueueGeneratedAt:queue.generatedAt||null,rotation,requested:items.length,counts,scopeCounts,marketCounts,sourceVsStoredMagnitude,storedOhlcViolationSeverity,results};
+const probeCoverage=summarizeOhlcProbeCoverage(results);
+const report={generatedAt:new Date().toISOString(),mode:'READ_ONLY_NO_PRODUCTION_WRITES',status:'COMPLETED',sourceQueueGeneratedAt:queue.generatedAt||null,rotation,requested:items.length,counts,scopeCounts,marketCounts,sourceVsStoredMagnitude,probeCoverage,storedOhlcViolationSeverity,results};
 await fs.writeFile(output,JSON.stringify(report,null,2)+'\n');
-console.log('EUROPE_OHLC_SOURCE_PROBE',JSON.stringify({requested:items.length,counts,storedSeverityComplete:storedOhlcViolationSeverity.complete,storedSeverityExamined:storedOhlcViolationSeverity.examined}));
+console.log('EUROPE_OHLC_SOURCE_PROBE',JSON.stringify({requested:items.length,uniqueInstruments:probeCoverage.uniqueInstruments,repeatedInstrumentDates:probeCoverage.repeatedInstrumentDates,counts,storedSeverityComplete:storedOhlcViolationSeverity.complete,storedSeverityExamined:storedOhlcViolationSeverity.examined}));
