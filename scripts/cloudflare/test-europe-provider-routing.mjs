@@ -123,3 +123,25 @@ assert.equal(dsfir.symbol,'121647879','Preserve SIX catalog identity/valor');
 assert.equal(dsfir.providerSymbol,'DSFIR.SW','Verified Swiss Yahoo provider symbol');
 assert.equal(yahoo.supports(dsfir),true);
 console.log('Verified Swiss provider-symbol override without catalog identity mutation PASS');
+
+
+// A validator must know which approved feed produced each source bar.
+// Rejecting one feed must still allow the next approved fallback, in both
+// normal and bounded-timeout registry paths.
+for(const timeoutMs of [0,1000]){
+ const observed=[];
+ const candidates=new ProviderRegistry([
+  make('first',{bars:[good]}),
+  make('second',{bars:[good]})
+ ]);
+ const validated=await candidates.fetchDaily(instrument,range,'first',{
+  allowedProviderIds:['first','second'],timeoutMs,
+  acceptResult:(result,provider)=>{
+   observed.push(provider?.id);
+   return provider?.id==='second';
+  }
+ });
+ assert.equal(validated.provider.id,'second');
+ assert.deepEqual(observed,['first','second']);
+}
+console.log('Provider callback attribution and approved fallback work with and without timeout PASS');
