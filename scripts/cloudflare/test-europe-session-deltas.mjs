@@ -47,4 +47,15 @@ drift.markets[0].missing[0].symbol='OTHER';
 assert.throws(()=>compareEuropeSessionDeltas(a,drift),/ticker changed/);
 const invalid=summary({cutoff:'2026-02-31'});
 assert.throws(()=>compareEuropeSessionDeltas(invalid,b),/unverified cutoff/);
+// Production includes eight XICE:SYMBOL placeholders: compare exact catalog keys
+// but never mislabel them as verified ISIN identities.
+const iceBefore=summary(),iceAfter=summary({missing:['GB0000000002']});
+iceBefore.markets[0].mic='XICE';iceAfter.markets[0].mic='XICE';
+iceBefore.markets[0].missing[0].isin='XICE:BRIM';
+const iceDelta=compareEuropeSessionDeltas(iceBefore,iceAfter);
+assert.equal(iceDelta.removed[0].identifierType,'NON_ISIN_CATALOG_KEY');
+assert.equal(iceDelta.nonIsinCatalogKeys.before,1);
+assert.equal(iceDelta.nonIsinCatalogKeys.after,0);
+const bogus=summary();bogus.markets[0].missing[0].isin='XICE:BRIM';
+assert.throws(()=>compareEuropeSessionDeltas(bogus,b),/unrecognized catalog identifier/);
 console.log('Europe same-cutoff instrument delta PASS: identity, no-trade, reasons, fail-closed, immutable');
