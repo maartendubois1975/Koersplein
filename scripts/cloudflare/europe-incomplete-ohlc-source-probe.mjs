@@ -17,12 +17,14 @@ catch(error){
  process.exit(0);
 }
 const rotation=Number(process.env.GITHUB_RUN_NUMBER||Math.floor(Date.now()/86400000));
-const items=selectIncompleteOhlcCandidates(queue,{limit:30,perMarket:18,rotation});
+// Bounded 48-item evidence batch; fair market first pass, then debt-weighted.
+// Four workers keep the worst-case multi-provider probe within the 8m CI budget.
+const items=selectIncompleteOhlcCandidates(queue,{limit:48,perMarket:32,rotation});
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
 const markets=new Map(plan.markets.filter(x=>x.state==='COMPLETE').map(x=>[x.mic,x]));
 const registry=createDefaultProviderRegistry(),catalogs=new Map(),results=new Array(items.length);
-await mapConcurrent(items,2,async(item,index)=>{
+await mapConcurrent(items,4,async(item,index)=>{
  const market=markets.get(item.mic);
  let listings=[];
  if(market){
