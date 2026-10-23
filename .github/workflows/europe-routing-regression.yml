@@ -17,6 +17,9 @@ on:
       - 'scripts/history/providers/nasdaq-baltic.mjs'
       - 'scripts/cloudflare/test-nasdaq-baltic-provider.mjs'
       - 'scripts/cloudflare/europe-recovery-queue.mjs'
+      - 'scripts/cloudflare/europe-shard-coverage.mjs'
+      - 'scripts/cloudflare/format-europe-run-report.mjs'
+      - 'scripts/cloudflare/test-europe-reporting.mjs'
       - 'scripts/cloudflare/test-europe-recovery-queue.mjs'
       - 'scripts/history/providers/yahoo-chart.mjs'
       - 'config/paris-follow-policy.json'
@@ -54,6 +57,9 @@ jobs:
           node --check scripts/cloudflare/test-nasdaq-baltic-provider.mjs
           node --check scripts/cloudflare/europe-recovery-queue.mjs
           node --check scripts/cloudflare/test-europe-recovery-queue.mjs
+          node --check scripts/cloudflare/europe-shard-coverage.mjs
+          node --check scripts/cloudflare/format-europe-run-report.mjs
+          node --check scripts/cloudflare/test-europe-reporting.mjs
       - name: Test approved provider routing
         run: |
           node scripts/cloudflare/test-europe-provider-routing.mjs
@@ -62,3 +68,4 @@ jobs:
           node scripts/cloudflare/test-six-ipo-symbol-evidence.mjs
           node scripts/cloudflare/test-nasdaq-baltic-provider.mjs
           node scripts/cloudflare/test-europe-recovery-queue.mjs
+          node scripts/cloudflare/test-europe-reporting.mjs
