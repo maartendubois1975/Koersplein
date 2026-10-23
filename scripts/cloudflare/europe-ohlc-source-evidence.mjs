@@ -68,8 +68,24 @@ export function isCompleteOhlcSourceBar(bar){
  const [open,high,low,close]=values;
  return high>=Math.max(open,close)&&low<=Math.min(open,close)&&high>=low;
 }
+// Evidence-only difference against the exact stored candle. Never substitute
+// a provider value for an existing stored field or infer missing prices.
+export function compareStoredAndSourceOhlc(stored,source){
+ if(!stored||!isCompleteOhlcSourceBar(source))return null;
+ const fields={};let maxRelativeDiffBps=0,comparable=0;
+ for(const key of ['open','high','low','close']){
+  const raw=stored[key];
+  const value=raw===null||raw===undefined||raw===''?NaN:Number(raw);
+  if(!Number.isFinite(value)||value<=0){fields[key]={stored:raw??null,source:source[key],absoluteDifference:null,relativeDifferenceBps:null};continue;}
+  const absoluteDifference=Math.abs(value-source[key]);
+  const relativeDifferenceBps=absoluteDifference/source[key]*10000;
+  fields[key]={stored:value,source:source[key],absoluteDifference,relativeDifferenceBps};
+  maxRelativeDiffBps=Math.max(maxRelativeDiffBps,relativeDifferenceBps);comparable++;
+ }
+ return {readOnly:true,comparableFields:comparable,maxRelativeDiffBps:comparable?maxRelativeDiffBps:null,fields};
+}
 export async function probeIncompleteOhlcCandidate(item,{registry,sources,market,listings,timeoutMs=12000}){
- const base={mic:item.mic,isin:item.isin,symbol:item.symbol||null,date:item.lastStoredDate,ohlcDefects:item.ohlcDefects||[],evidenceScope:item.evidenceScope||'LATEST_AUDIT_BAR',readOnly:true};
+ const base={mic:item.mic,isin:item.isin,symbol:item.symbol||null,date:item.lastStoredDate,ohlcDefects:item.ohlcDefects||[],evidenceScope:item.evidenceScope||'LATEST_AUDIT_BAR',storedOhlc:item.storedOhlc||null,readOnly:true};
  if(item.auditReason!=='INCOMPLETE_OR_INVALID_OHLC'||!/^\d{4}-\d{2}-\d{2}$/.test(item.lastStoredDate||''))return {...base,status:'NOT_AN_INCOMPLETE_STORED_CANDLE'};
  if(!market||market.mic!==item.mic||sources?.status!=='APPROVED')return {...base,status:'NO_APPROVED_MARKET_ROUTE'};
  // The market's own catalogue is already scoped to the parent exchange.
@@ -94,7 +110,7 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
   const sourceCurrency=result.providerMeta?.currency||null;
   const actualCurrency=normalizeCurrency(sourceCurrency);
   const candidateBar={date:bar.date,open:bar.open,high:bar.high,low:bar.low,close:bar.close,volume:bar.volume??null};
-  const evidence={...identity,provider:provider.id,sourceCurrency,expectedCurrency:instrument.currency||null,candidateBar,sourceSymbol:result.providerMeta?.symbol||null,sourceExchange:result.providerMeta?.fullExchangeName||result.providerMeta?.exchangeName||null,storagePolicy:'APPEND_ONLY_EXISTING_BAR_UNCHANGED'};
+  const evidence={...identity,sourceVsStored:compareStoredAndSourceOhlc(item.storedOhlc,candidateBar),provider:provider.id,sourceCurrency,expectedCurrency:instrument.currency||null,candidateBar,sourceSymbol:result.providerMeta?.symbol||null,sourceExchange:result.providerMeta?.fullExchangeName||result.providerMeta?.exchangeName||null,storagePolicy:'APPEND_ONLY_EXISTING_BAR_UNCHANGED'};
   if(!expectedCurrency||!actualCurrency)return {...evidence,status:'SOURCE_CURRENCY_UNVERIFIED'};
   if(expectedCurrency!==actualCurrency)return {...evidence,status:'SOURCE_CURRENCY_MISMATCH_REQUIRES_REVIEW'};
   return {...evidence,status:'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW',currencyVerified:true,barDate:bar.date};
