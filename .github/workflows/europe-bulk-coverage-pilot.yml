@@ -1,6 +1,16 @@
 name: European bulk source coverage pilot
 on:
   workflow_dispatch:
+    inputs:
+      trading_date:
+        description: 'Closed trading date (YYYY-MM-DD) for read-only bulk bars'
+        required: true
+        type: string
+      exchanges:
+        description: 'Comma-separated: PA,XETRA,BR'
+        required: false
+        default: 'PA,XETRA,BR'
+        type: string
 permissions:
   contents: read
 jobs:
@@ -12,19 +22,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Run offline identity and OHLCV regression tests
+        run: node scripts/cloudflare/exchange-bulk-reconcile.test.mjs
       - name: Verify EODHD access and measure exchange coverage (read only)
         env:
           EODHD_API_TOKEN: ${{ secrets.EODHD_API_TOKEN }}
+          BULK_PILOT_DATE: ${{ inputs.trading_date }}
+          BULK_PILOT_EXCHANGES: ${{ inputs.exchanges }}
         run: |
           if [ -z "$EODHD_API_TOKEN" ]; then
             echo "::error::Missing EODHD_API_TOKEN secret; no paid API calls were made."
             exit 3
           fi
-          node scripts/cloudflare/eodhd-bulk-coverage-pilot.mjs
+          node scripts/cloudflare/europe-exchange-bulk-pilot.mjs
       - name: Upload independent coverage report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: europe-bulk-coverage-pilot
-          path: research/output/eodhd-bulk-pilot.json
+          path: research/output/europe-exchange-bulk-pilot.json
           if-no-files-found: ignore
