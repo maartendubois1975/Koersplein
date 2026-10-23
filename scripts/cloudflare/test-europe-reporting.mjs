@@ -43,3 +43,16 @@ assert.match(detailed,/COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW 17/);
 assert.match(detailed,/No stored OHLC has been overwritten/);
 assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...sourceProbe,generatedAt:'2026-10-22T10:50:03.000Z'}),/Historical source check \(read-only\)/,'Stale evidence must not be presented as current');
 console.log('Evidence-rich Europe issue reporting, source blockers and freshness guard PASS');
+
+const severityProbe={...sourceProbe,storedOhlcViolationSeverity:{
+ readOnly:true,complete:true,metric:'INTRINSIC_STORED_CANDLE_VIOLATION_NOT_SOURCE_COMPARISON',examined:3249,
+ counts:{FROM_100_TO_1000_BPS:2020,AT_LEAST_1000_BPS:204},
+ byMarket:[{mic:'XLON',examined:2889,atLeast100Bps:2084}]
+}};
+const severityReport=renderEuropeReport(sourceReport,'',severityProbe);
+assert.match(severityReport,/2224\/3249/);
+assert.match(severityReport,/2084\/2889/);
+assert.match(severityReport,/not verified replacement prices/);
+const partialSeverity=renderEuropeReport(sourceReport,'',{...severityProbe,storedOhlcViolationSeverity:{...severityProbe.storedOhlcViolationSeverity,complete:false}});
+assert.match(partialSeverity,/partial or unverified/);
+console.log('Europe stored-candle severity reporting is evidence-only and completeness-gated PASS');
