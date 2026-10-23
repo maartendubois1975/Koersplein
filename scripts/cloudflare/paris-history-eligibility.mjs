@@ -4,8 +4,7 @@
 export function hasRecordedHistory(row) {
   return Boolean(
     row && /^\d{4}-\d{2}-\d{2}$/.test(String(row.lastDate || '')) &&
-    Number.isFinite(Number(row.recordCount ?? row.records)) &&
-    Number(row.recordCount ?? row.records) > 0
+    [row.recordCount,row.records].some(value=>value!==null&&value!==undefined&&Number.isFinite(Number(value))&&Number(value)>0)
   );
 }
 
