@@ -12,11 +12,22 @@ for(const name of files){
 const updates=[...latestUpdates.values()],audits=[...latestAudits.values()];
 const totals={catalog:0,currentOpenClose:0,verifiedNoTrades:0,missingOpenClose:0,skippedDataUnavailable:0,failedImports:0,deferredMissing:0,historicalBackfillFailures:0};
 const markets=audits.flatMap(x=>x.markets);
-for(const m of markets){totals.catalog+=m.catalog;totals.currentOpenClose+=m.openCloseOk;totals.verifiedNoTrades+=m.verifiedNoTrades||0;totals.missingOpenClose+=m.missingOpenClose;totals.skippedDataUnavailable+=m.skippedDataUnavailable;}
+const missingByReason={};
+const knownDataUnavailableByMarket={};
+for(const m of markets){
+ for(const [reason,count] of Object.entries(m.missingReasons||{}))missingByReason[reason]=(missingByReason[reason]||0)+count;
+ if(m.knownDataUnavailableAmongMissing)knownDataUnavailableByMarket[m.mic]=m.knownDataUnavailableAmongMissing;
+ totals.catalog+=m.catalog;totals.currentOpenClose+=m.openCloseOk;totals.verifiedNoTrades+=m.verifiedNoTrades||0;totals.missingOpenClose+=m.missingOpenClose;totals.skippedDataUnavailable+=m.skippedDataUnavailable;}
 for(const m of updates.flatMap(x=>x.markets)){totals.failedImports+=m.failed.length;totals.historicalBackfillFailures+=(m.historicalBackfillFailures||[]).length;totals.deferredMissing+=m.deferredMissing;}
 const shardsComplete=updates.length===8&&audits.length===8&&new Set(updates.map(x=>x.shardIndex)).size===8&&new Set(audits.map(x=>x.shardIndex)).size===8;
 const dailyVerified=shardsComplete&&!totals.missingOpenClose&&!totals.failedImports&&!totals.deferredMissing&&!totals.skippedDataUnavailable;
-const report={generatedAt:new Date().toISOString(),status:dailyVerified?'DAILY_STATUS_VERIFIED':'INCOMPLETE',historyCompleteness:'NOT_PROVEN_BY_DAILY_AUDIT',shardsComplete,totals,markets,historicalBackfillFailures:updates.flatMap(x=>x.markets.flatMap(m=>(m.historicalBackfillFailures||[]).map(f=>({mic:m.mic,...f})))),importFailures:updates.flatMap(x=>x.markets.flatMap(m=>m.failed.map(f=>({mic:m.mic,...f}))))};
+const sourceFailureByMarket={};
+for(const m of updates.flatMap(x=>x.markets)){
+ const categories={};for(const f of m.failed||[])categories[f.category||'UNCLASSIFIED']=(categories[f.category||'UNCLASSIFIED']||0)+1;
+ sourceFailureByMarket[m.mic]={failed:(m.failed||[]).length,categories};
+}
+const recoveryPriority=markets.map(m=>({mic:m.mic,catalog:m.catalog,missingOpenClose:m.missingOpenClose,knownDataUnavailableAmongMissing:m.knownDataUnavailableAmongMissing||0,importFailures:sourceFailureByMarket[m.mic]?.failed||0})).sort((a,b)=>b.missingOpenClose-a.missingOpenClose);
+const report={missingByReason,knownDataUnavailableByMarket,sourceFailureByMarket,recoveryPriority,generatedAt:new Date().toISOString(),status:dailyVerified?'DAILY_STATUS_VERIFIED':'INCOMPLETE',historyCompleteness:'NOT_PROVEN_BY_DAILY_AUDIT',shardsComplete,totals,markets,historicalBackfillFailures:updates.flatMap(x=>x.markets.flatMap(m=>(m.historicalBackfillFailures||[]).map(f=>({mic:m.mic,...f})))),importFailures:updates.flatMap(x=>x.markets.flatMap(m=>m.failed.map(f=>({mic:m.mic,...f}))))};
 await fs.writeFile(`${dir}/europe-run-summary.json`,JSON.stringify(report,null,2));
 const summary=`Europe run: ${report.status}\n\n${JSON.stringify(totals,null,2)}\n\nFull historical completeness is not established by the daily OHLC check.\n`;
 console.log(summary);
