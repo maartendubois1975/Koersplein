@@ -81,6 +81,7 @@ console.log('Source bar field-level defect reporting remains read-only and fresh
 
 const sharedYahooProbe={...invalidSourceProbe,sourceBarDiagnostics:{
  ...invalidSourceProbe.sourceBarDiagnostics,
+ distinctFeedObservations:20,feedLevelInvalidBarsLowerBound:19,correlatedProviderAttempts:9,
  byMarket:{...invalidSourceProbe.sourceBarDiagnostics.byMarket,
   XLON:{...invalidSourceProbe.sourceBarDiagnostics.byMarket.XLON,
    bySourceFamily:{'yahoo-chart-feed':{sourceObservations:29,invalidSourceBars:25}}}}
@@ -88,6 +89,10 @@ const sharedYahooProbe={...invalidSourceProbe,sourceBarDiagnostics:{
 const sharedYahooReport=renderEuropeReport(sourceReport,'',sharedYahooProbe);
 assert.match(sharedYahooReport,/London invalid source bars by underlying feed: yahoo-chart-feed 25/);
 assert.match(sharedYahooReport,/correlated routes, not independent price sources/);
+assert.match(sharedYahooReport,/Underlying-feed accounting: 20 feed\/date observations versus 29 provider attempts/);
+assert.match(sharedYahooReport,/at least 19 invalid bars at feed\/date level/);
+assert.match(sharedYahooReport,/Correlated provider attempts: 9/);
+assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...sharedYahooProbe,generatedAt:'2026-10-22T10:50:03.000Z'}),/Underlying-feed accounting/);
 assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...sharedYahooProbe,generatedAt:'2026-10-22T10:50:03.000Z'}),/underlying feed/);
 console.log('London Yahoo resolver/chart upstream correlation shown only for fresh evidence PASS');
 
