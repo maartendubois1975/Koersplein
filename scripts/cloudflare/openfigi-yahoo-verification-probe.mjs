@@ -2,7 +2,7 @@
 // Yahoo symbol, venue, currency and complete recent OHLC. No production writes.
 import fs from 'node:fs/promises';
 import {latestClosedWeekday,mapConcurrent} from './europe-run-policy.mjs';
-import {selectOpenFigiYahooCandidates,findOpenFigiSymbolCollisions,evaluateYahooReference,fetchYahooReferenceChart} from './openfigi-yahoo-evidence.mjs';
+import {selectOpenFigiYahooCandidates,findOpenFigiSymbolCollisions,evaluateYahooReference,fetchYahooReferenceChart,classifyYahooReferenceError} from './openfigi-yahoo-evidence.mjs';
 
 const request=JSON.parse(await fs.readFile('config/openfigi-yahoo-verify-request.json','utf8'));
 if(request.mode!=='READ_ONLY_REFERENCE_VALIDATION'||!Number.isInteger(request.sourceRunId)||request.sourceRunId<1)throw Error('Unsafe or invalid verification request');
@@ -46,7 +46,7 @@ await mapConcurrent(selected.items,2,async(item,index)=>{
   const chart=await fetchYahooReferenceChart(base.providerSymbol,{startDate:from.toISOString().slice(0,10),endDate:asOf,timeoutMs:12000});
   report.results[index]=evaluateYahooReference(item,chart,{asOf,recentDays:45});
  }catch(e){
-  report.results[index]={...base,status:'YAHOO_READ_ONLY_REQUEST_FAILED',error:String(e.message||e).slice(0,220)};
+  report.results[index]={...base,status:classifyYahooReferenceError(e),error:String(e.message||e).slice(0,220)};
  }
  await new Promise(resolve=>setTimeout(resolve,350));
  if(index%10===0)console.log('OPENFIGI_YAHOO_PROGRESS',JSON.stringify({processed:report.results.filter(Boolean).length,total:report.selected}));
