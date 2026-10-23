@@ -33,4 +33,11 @@ const sameIsin=reconcileBulkWithCatalog({
 });
 assert.equal(sameIsin.matched.length,0);
 assert.equal(sameIsin.ambiguous.length,2);
+const conflicting=reconcileBulkWithCatalog({
+ catalog:[{isin:'FR0000000001',mic:'XPAR'},{isin:'FR0000000002',mic:'XPAR'}],
+ providerListings:[{Code:'ABC',Isin:'FR0000000001'},{Code:'ABC',Isin:'FR0000000002'}],
+ bulkBars:result.bars
+});
+assert.equal(conflicting.matched.length,0);
+assert.equal(conflicting.ambiguous.length,2);
 console.log('EXCHANGE_BULK_RECONCILE_TESTS_OK');
