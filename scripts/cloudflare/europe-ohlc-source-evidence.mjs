@@ -274,7 +274,7 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
  const range={startDate:item.lastStoredDate,endDate:item.lastStoredDate,includeIncompleteBars:true};
  const sourceBarObservations=[];
  try{
-  const {provider,result}=await registry.fetchDaily(instrument,range,primary,{allowedProviderIds:allowed,timeoutMs,acceptResult:(r,attemptedProvider)=>{
+  const {provider,result}=await registry.fetchDaily(instrument,range,primary,{allowedProviderIds:allowed,timeoutMs,inspectEmptyResult:true,acceptResult:(r,attemptedProvider)=>{
     const observation=describeExactDateSourceBars(r?.bars,item.lastStoredDate);
     if(sourceBarObservations.length<6)sourceBarObservations.push({...observation,providerId:attemptedProvider?.id||null,sourceFeedFamily:sourceFeedFamily(attemptedProvider?.id)});
     if(!observation.exactDateBars)throw Error('Source has no exact-date daily bar');
