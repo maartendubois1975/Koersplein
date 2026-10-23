@@ -46,6 +46,7 @@ jobs:
           node scripts/cloudflare/test-paris-history-eligibility.mjs
           node scripts/cloudflare/test-europe-failure-diagnosis.mjs
           node scripts/cloudflare/test-six-ipo-symbol-evidence.mjs
+          node scripts/cloudflare/test-nasdaq-baltic-provider.mjs
       - name: Test production identity verification
         run: node scripts/cloudflare/test-github-oidc.mjs
       - name: Verify production Worker and credentials
