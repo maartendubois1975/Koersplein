@@ -43,7 +43,7 @@ export function mseOfficialNoTradeStatus(snapshot,instrument,date){
  const isin=instrument.officialIsin||instrument.isin;
  const row=snapshot.rows.get(isin);
  const symbol=String(instrument.symbol||instrument.ticker||'').trim().toUpperCase();
- if(!row||!symbol||row.symbol!==symbol||row.lastTradeDate>=date)return null;
+ if(!row||!symbol||row.symbol!==symbol||row.lastTradeDate>=date||!Number.isFinite(row.lastClose)||row.lastClose<=0)return null;
  // The published last-traded date precedes the snapshot date. This does not
  // prove missing intermediate history is complete; callers must compare the
  // official lastTradeDate with the actual last stored bar.
