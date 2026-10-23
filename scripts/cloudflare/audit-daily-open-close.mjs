@@ -37,7 +37,9 @@ for(const market of complete){
       if(!last)throw Error('NO_HISTORY_PARTITIONS');
       const h=await client.historyPartition(storageIsin,last.period);
       const bars=h?.bars||h?.history||[];
-      const b=bars.at?.(-1);
+      // Partition responses are not guaranteed sorted. Audit the maximum dated bar,
+      // rather than assuming the last array element is the latest trade.
+      const b=bars.filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x?.date||'')).reduce((latest,x)=>!latest||x.date>latest.date?x:latest,null);
       if(!b||!Number.isFinite(Number(b.open))||Number(b.open)<=0||!Number.isFinite(Number(b.close))||Number(b.close)<=0||!/^\d{4}-\d{2}-\d{2}$/.test(b.date||'')||b.date<cutoff||b.date>new Date().toISOString().slice(0,10)){
         const status=await officialDailyStatus({...s,mic:s.mic||market.mic},cutoff);
         if(b&&/^\d{4}-\d{2}-\d{2}$/.test(b.date||'')&&b.date<=cutoff&&Number.isFinite(Number(b.open))&&Number.isFinite(Number(b.close))&&Number(b.open)>0&&Number(b.close)>0&&status?.status==='NO_TRADES'&&(!status.lastTradeDate||b.date===status.lastTradeDate)){
