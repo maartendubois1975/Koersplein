@@ -3,21 +3,32 @@ import {YahooChartProvider} from './yahoo-chart.mjs';
 const SEARCH='https://query2.finance.yahoo.com/v1/finance/search';
 export class YahooIsinProvider {
  id='yahoo-isin-resolver'; name='Yahoo Finance ISIN resolver + chart'; requiresApiKey=false;
- supports(i){return /^[A-Z]{2}[A-Z0-9]{10}$/.test(i?.officialIsin||i?.isin||'');}
+ supports(i){
+  const isin=i?.officialIsin||i?.isin||'';
+  // A Yahoo search match on ISIN does not establish the exchange. Never use
+  // an arbitrary quote when the target MIC has no verified Yahoo suffix.
+  return /^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)&&Boolean(new YahooChartProvider().marketRule(i));
+ }
  async fetchDaily(instrument,opts={}){
-  const url=new URL(SEARCH);url.searchParams.set('q',instrument.officialIsin||instrument.isin);url.searchParams.set('quotesCount','10');url.searchParams.set('newsCount','0');
+  const mic=String(instrument.mic||instrument.market||'').toUpperCase();
+  const chart=new YahooChartProvider(),suffix=chart.marketRule(instrument)?.suffix;
+  if(!suffix)throw Error('Geen gevalideerde Yahoo-beursregel voor '+mic);
+  const isin=instrument.officialIsin||instrument.isin;
+  if(!/^[A-Z]{2}[A-Z0-9]{10}$/.test(isin||''))throw Error('Geen geldig ISIN voor Yahoo-resolutie');
+  const url=new URL(SEARCH);url.searchParams.set('q',isin);url.searchParams.set('quotesCount','10');url.searchParams.set('newsCount','0');
   const r=await fetch(url,{signal:opts.signal,headers:{Accept:'application/json','User-Agent':'Koersplein-history/1.0'}});
-  if(!r.ok)throw Error(`Yahoo search HTTP ${r.status} voor ${instrument.isin}`);
-  const p=await r.json(), suffix={XAMS:'.AS',XBRU:'.BR',XPAR:'.PA',ALXP:'.PA',XMLI:'.PA',XLIS:'.LS',ALXL:'.LS',ENXL:'.LS',XMIL:'.MI',MTAA:'.MI',EXGM:'.MI',XCSE:'.CO',XHEL:'.HE',XICE:'.IC',XATH:'.AT',XLON:'.L',XETR:'.DE',XSWX:'.SW',XOSL:'.OL',XOAS:'.OL',MERK:'.OL',XDUB:'.IR',XMSM:'.IR',XESM:'.IR',XATL:'.IR',XMAD:'.MC',XSTO:'.ST',XWAR:'.WA',XWBO:'.VI',XPRA:'.PR',XBUD:'.BD',XBSE:'.RO',XBUL:'.SO',FNSE:'.ST',SSME:'.ST'}[String(instrument.mic||'').toUpperCase()];
-  const quotes=(p?.quotes||[]).filter(q=>q?.symbol&&(!suffix||String(q.symbol).toUpperCase().endsWith(suffix)));
-  if(!quotes.length)throw Error(`Geen Yahoo ISIN-resolutie voor ${instrument.isin}`);
+  if(!r.ok)throw Error(`Yahoo search HTTP ${r.status} voor ${isin}`);
+  const p=await r.json();
+  const quotes=(p?.quotes||[]).filter(q=>q?.symbol&&String(q.symbol).toUpperCase().endsWith(suffix.toUpperCase()));
+  if(!quotes.length)throw Error(`Geen Yahoo ISIN-resolutie voor ${isin} op ${mic}`);
   let last;
   for(const q of quotes){
    try{
-    const y=new YahooChartProvider();
-    return await y.fetchDaily({...instrument,providerSymbol:q.symbol,allowProviderExchangeMismatch:['XSWX','XLUX'].includes(String(instrument.mic||'').toUpperCase())},opts);
+    // Yahoo may label some SIX .SW listings with a generic metadata exchange.
+    // The validated .SW suffix remains mandatory. No such exception for XLUX.
+    return await chart.fetchDaily({...instrument,providerSymbol:q.symbol,allowProviderExchangeMismatch:mic==='XSWX'},opts);
    }catch(e){last=e}
   }
-  throw last||Error(`Geen gevalideerde Yahoo ISIN-route voor ${instrument.isin}`);
+  throw last||Error(`Geen gevalideerde Yahoo ISIN-route voor ${isin}`);
  }
 }
