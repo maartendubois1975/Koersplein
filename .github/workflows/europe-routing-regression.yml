@@ -7,6 +7,9 @@ on:
       - 'scripts/cloudflare/audit-daily-open-close.mjs'
       - 'scripts/cloudflare/europe-run-policy.mjs'
       - 'scripts/cloudflare/test-europe-ohlc-integrity.mjs'
+      - 'scripts/cloudflare/openfigi-reference-evidence.mjs'
+      - 'scripts/cloudflare/openfigi-reference-probe.mjs'
+      - 'scripts/cloudflare/test-openfigi-reference-evidence.mjs'
       - 'scripts/cloudflare/reconcile-official-daily.mjs'
       - 'scripts/cloudflare/paris-history-eligibility.mjs'
       - 'scripts/cloudflare/test-paris-history-eligibility.mjs'
@@ -49,6 +52,9 @@ jobs:
           node --check scripts/cloudflare/audit-daily-open-close.mjs
           node --check scripts/cloudflare/europe-run-policy.mjs
           node --check scripts/cloudflare/test-europe-ohlc-integrity.mjs
+          node --check scripts/cloudflare/openfigi-reference-evidence.mjs
+          node --check scripts/cloudflare/openfigi-reference-probe.mjs
+          node --check scripts/cloudflare/test-openfigi-reference-evidence.mjs
           node --check scripts/cloudflare/reconcile-official-daily.mjs
           node --check scripts/cloudflare/paris-history-eligibility.mjs
           node --check scripts/cloudflare/test-paris-history-eligibility.mjs
@@ -72,6 +78,7 @@ jobs:
         run: |
           node scripts/cloudflare/test-europe-provider-routing.mjs
           node scripts/cloudflare/test-europe-ohlc-integrity.mjs
+          node scripts/cloudflare/test-openfigi-reference-evidence.mjs
           node scripts/cloudflare/test-paris-history-eligibility.mjs
           node scripts/cloudflare/test-europe-failure-diagnosis.mjs
           node scripts/cloudflare/test-six-ipo-symbol-evidence.mjs
