@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-23T07:20:00Z",
+  "requestedAt": "2026-10-23T08:00:00Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Verify eight-shard Europe daily coverage after ISIN-safe HTTP failure triage and official Nasdaq Baltic routing for Tallinn/Vilnius, non-synthetic OHLC guards, bounded daily probes, CI and production preflight tests. Preserve Paris existing-history-only and all existing history; NO full backfill."
+  "reason": "Eight-shard verification after complete OHLC integrity guard, evidence-based no-trade validation, actionable audit reason categories, and read-only OpenFIGI reference research. No historical rewrite or full backfill; preserve Paris existing-history-only."
 }
