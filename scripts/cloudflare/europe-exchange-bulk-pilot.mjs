@@ -25,7 +25,10 @@ const reports=[];
 for(const {exchange,mic} of selected){
  try{
  const [listings,raw]=await Promise.all([get('exchange-symbol-list/'+exchange),get('eod-bulk-last-day/'+exchange)]);
+ if(!listings.length)throw Error('EMPTY_PROVIDER_LISTINGS');
+ if(!raw.length)throw Error('EMPTY_BULK_RESPONSE');
  const normalized=normalizeBulkBars(raw,{date});
+ if(!normalized.bars.length)throw Error('NO_VALID_OHLCV_BARS');
  const catalog=exchange==='PA'?officialParis.filter(x=>['XPAR','ALXP','XMLI'].includes(x.mic)):[];
  const coverageComparable=exchange==='PA';
  const comparison=coverageComparable?reconcileBulkWithCatalog({catalog,providerListings:listings,bulkBars:normalized.bars}):null;
