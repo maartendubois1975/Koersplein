@@ -252,6 +252,26 @@
         "crossCheckRatio": 0,
         "sourceCountTested": 4,
         "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
+      },
+      "symbolIdentityAudit": {
+        "checkedAt": "2026-10-23",
+        "catalog": 445,
+        "numericValorIdentifiers": 232,
+        "numericByCurrency": {
+          "CHF": 141,
+          "USD": 90,
+          "EUR": 1
+        },
+        "risk": "Numeric SIX valor identifiers are not verified Yahoo .SW trading symbols",
+        "policy": "Direct Yahoo ticker route skips numeric valor identifiers unless an independently verified providerSymbol exists; retain ISIN and catalog symbol unchanged.",
+        "verifiedOverrides": [
+          {
+            "isin": "CH1216478797",
+            "providerSymbol": "DSFIR.SW",
+            "proof": "Official SIX current share symbol and Yahoo Swiss CHF listing"
+          }
+        ],
+        "pending": "Use read-only SIX IPO probe and current listing checks for more verified mappings; do not equate historical IPO ticker with current ticker."
       }
     },
     "XMAD": {
