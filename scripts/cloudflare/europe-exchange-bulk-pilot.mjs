@@ -4,7 +4,7 @@ import {normalizeBulkBars,reconcileBulkWithCatalog} from './exchange-bulk-reconc
 const token=process.env.EODHD_API_TOKEN;
 if(!token)throw Error('EODHD_API_TOKEN required; no production writes attempted');
 const date=process.env.BULK_PILOT_DATE;
-if(!/^\d{4}-\d{2}-\d{2}$/.test(date||''))throw Error('BULK_PILOT_DATE must be YYYY-MM-DD');
+if(!/^\d{4}-\d{2}-\d{2}$/.test(date||'')||Number.isNaN(Date.parse(date))||new Date(date).toISOString().slice(0,10)!==date)throw Error('BULK_PILOT_DATE must be a real YYYY-MM-DD date');
 const exchanges=[{exchange:'PA',mic:'XPAR'},{exchange:'XETRA',mic:'XETR'},{exchange:'BR',mic:'XBRU'},{exchange:'SW',mic:'XSWX'}];
 const requestedExchanges=(process.env.BULK_PILOT_EXCHANGES||'PA,XETRA,BR,SW').split(',').map(x=>x.trim().toUpperCase());
 const selected=exchanges.filter(x=>requestedExchanges.includes(x.exchange));
@@ -32,7 +32,7 @@ for(const {exchange,mic} of selected){
  const catalog=exchange==='PA'?officialParis.filter(x=>['XPAR','ALXP','XMLI'].includes(x.mic)):[];
  const coverageComparable=exchange==='PA';
  const comparison=coverageComparable?reconcileBulkWithCatalog({catalog,providerListings:listings,bulkBars:normalized.bars}):null;
- const report={exchange,mic,date,status:'READ_ONLY_OBSERVED',providerListings:listings.length,rawBars:raw.length,validBars:normalized.bars.length,invalidRows:normalized.errors.slice(0,50),invalidRowCount:normalized.errors.length,officialCatalogSize:coverageComparable?catalog.length:null,coverageComparable,matched:coverageComparable?comparison?.matched.length:null,missing:coverageComparable?comparison?.missing.length:null,ambiguous:coverageComparable?comparison?.ambiguous.length:null,missingExamples:comparison?.missing.slice(0,30)||[],ambiguousExamples:comparison?.ambiguous.slice(0,30)||[]};
+ const report={exchange,mic,date,status:'READ_ONLY_OBSERVED',invalidReasonCounts:Object.fromEntries([...new Set(normalized.errors.map(x=>x.reason))].map(reason=>[reason,normalized.errors.filter(x=>x.reason===reason).length])),providerListings:listings.length,rawBars:raw.length,validBars:normalized.bars.length,invalidRows:normalized.errors.slice(0,50),invalidRowCount:normalized.errors.length,officialCatalogSize:coverageComparable?catalog.length:null,coverageComparable,matched:coverageComparable?comparison?.matched.length:null,missing:coverageComparable?comparison?.missing.length:null,ambiguous:coverageComparable?comparison?.ambiguous.length:null,missingExamples:comparison?.missing.slice(0,30)||[],ambiguousExamples:comparison?.ambiguous.slice(0,30)||[]};
  reports.push(report);
  console.log('EXCHANGE_BULK_PILOT',JSON.stringify({...report,invalidRows:undefined,missingExamples:undefined,ambiguousExamples:undefined}));
  }catch(error){
@@ -44,6 +44,8 @@ for(const {exchange,mic} of selected){
 await fs.mkdir('research/output',{recursive:true});
 
 const failures=reports.filter(x=>x.status==='SOURCE_ERROR');
-const summary={generatedAt:new Date().toISOString(),readOnly:true,date,complete:failures.length===0,failedExchanges:failures.map(x=>x.exchange),reports};
+const usableMarkets=reports.filter(x=>x.status==='READ_ONLY_OBSERVED'&&x.validBars>0);
+const reportTotals={marketsRequested:selected.length,marketsUsable:usableMarkets.length,sourceErrors:failures.length,validBars:usableMarkets.reduce((n,x)=>n+x.validBars,0),invalidBars:usableMarkets.reduce((n,x)=>n+x.invalidRowCount,0)};
+const summary={generatedAt:new Date().toISOString(),readOnly:true,date,complete:failures.length===0,failedExchanges:failures.map(x=>x.exchange),reportTotals,reports};
 await fs.writeFile('research/output/europe-exchange-bulk-pilot.json',JSON.stringify(summary,null,2)+'\n');
 if(failures.length)process.exitCode=2;
