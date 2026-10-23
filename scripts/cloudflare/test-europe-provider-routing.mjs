@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {ProviderRegistry} from '../history/provider-registry.mjs';
+import {YahooChartProvider} from '../history/providers/yahoo-chart.mjs';
 
 const calls=[];
 const make=(id,{supports=()=>true,bars=[],error=null}={})=>({
@@ -53,3 +54,15 @@ assert.match(yahooChart,/XLON: \{ suffix: '\.L'/);
 assert.match(yahooIsin,/XSWX:'\.SW'/);
 assert.match(yahooIsin,/XLON:'\.L'/);
 console.log('London and Swiss chart/ISIN market suffix agreement PASS');
+
+const yahoo=new YahooChartProvider();
+assert.equal(yahoo.supports({isin:'AT0000KTMI02',mic:'XSWX',ticker:'41860974'}),false,'SIX numeric valor is not a verified Yahoo ticker');
+assert.equal(yahoo.supports({isin:'AT0000KTMI02',mic:'XSWX',ticker:'41860974',providerSymbol:'BMAG.SW'}),true,'Explicit verified symbol remains supported');
+assert.equal(yahoo.supports({isin:'GB0000000001',mic:'XLON',ticker:'1234'}),true,'Non-Swiss markets remain unchanged');
+calls.length=0;
+const skipUnsupported=new ProviderRegistry([make('not-supported',{supports:()=>false,error:'should never be called'}),make('resolver',{bars:[good]})]);
+const resolved=await skipUnsupported.fetchDaily(instrument,range,'not-supported',{allowedProviderIds:['not-supported','resolver']});
+assert.equal(resolved.provider.id,'resolver');
+assert.deepEqual(calls,['resolver']);
+await assert.rejects(()=>skipUnsupported.fetchDaily(instrument,range,'not-supported',{strictPreferred:true,allowedProviderIds:['not-supported']}),/Geen toegestane provider/);
+console.log('SIX valor guard and unsupported preferred-provider skip PASS');
