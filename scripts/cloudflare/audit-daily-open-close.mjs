@@ -46,7 +46,13 @@ for(const market of complete){
       if(debt.invalidDates.length){
         recentInvalidOhlcInstruments++;
         recentInvalidOhlcDays+=debt.invalidDates.length;
-        for(const defect of debt.invalidDates)recentOhlcDebtCandidates.push({isin:s.isin,symbol:s.symbol||s.ticker,date:defect.date,defects:defect.defects});
+        for(const defect of debt.invalidDates){
+          // Read-only exact stored snapshot: quantify whether invalid OHLC is
+          // rounding noise or a material mismatch before any correction design.
+          const stored=bars.find(row=>row?.date===defect.date&&describeOhlcDefects(row).length>0);
+          const storedOhlc=stored?{open:stored.open??null,high:stored.high??null,low:stored.low??null,close:stored.close??null}:null;
+          recentOhlcDebtCandidates.push({isin:s.isin,symbol:s.symbol||s.ticker,date:defect.date,defects:defect.defects,storedOhlc});
+        }
         if(recentOhlcDebtExamples.length<12)recentOhlcDebtExamples.push({isin:s.isin,symbol:s.symbol||s.ticker,invalidDates:debt.invalidDates.slice(-5)});
       }
       // Partition responses are not guaranteed sorted. Audit the maximum dated bar,
@@ -61,7 +67,7 @@ for(const market of complete){
         if(isCompleteOhlcBar(b)&&b.date<cutoff&&isVerifiedNoTradeGap(status,b.date,cutoff)){
           noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,lastStoredDate:b.date,...status});return;
         }
-        pushMissing({isin:s.isin,symbol:s.symbol||s.ticker,lastDate:b?.date||latestAny?.date||null,reason:barIssue,ohlcDefects:barIssue==='INCOMPLETE_OR_INVALID_OHLC'?describeOhlcDefects(b||latestAny):[],officialNoTradeReported:status?.status==='NO_TRADES',officialLastTradeDate:status?.lastTradeDate||null,knownDataUnavailable:knownUnavailable.get(s.isin)?.reason||null});
+        pushMissing({isin:s.isin,symbol:s.symbol||s.ticker,lastDate:b?.date||latestAny?.date||null,reason:barIssue,ohlcDefects:barIssue==='INCOMPLETE_OR_INVALID_OHLC'?describeOhlcDefects(b||latestAny):[],storedOhlc:barIssue==='INCOMPLETE_OR_INVALID_OHLC'&& (b||latestAny)?{open:(b||latestAny).open??null,high:(b||latestAny).high??null,low:(b||latestAny).low??null,close:(b||latestAny).close??null}:null,officialNoTradeReported:status?.status==='NO_TRADES',officialLastTradeDate:status?.lastTradeDate||null,knownDataUnavailable:knownUnavailable.get(s.isin)?.reason||null});
         return;
       }
       ok++;
