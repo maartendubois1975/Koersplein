@@ -1,5 +1,5 @@
 {
-  "requestedAt": "2026-10-23T08:11:00Z",
+  "requestedAt": "2026-10-23T08:14:00Z",
   "sourceRunId": 39917468053,
   "scope": [
     "XSWX",
@@ -7,5 +7,5 @@
   ],
   "mode": "READ_ONLY_ISIN_MIC_REFERENCE_DISCOVERY",
   "maxInstruments": 500,
-  "reason": "Retry read-only OpenFIGI Swiss/London research with recovery queue reconstructed from verified full audit summary; no production price writes."
+  "reason": "Re-run audited Swiss/London OpenFIGI reference research with bounded retries and per-market evidence summary after 465/475 instruments returned structured results. Read-only; no price writes."
 }
