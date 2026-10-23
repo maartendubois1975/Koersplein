@@ -36,7 +36,7 @@ export function buildEuropeRecoveryQueue(updates,audits) {
   // candle must not hide a defective stored candle from the read-only queue.
   const recentOhlcDebt=(market.recentOhlcDebtCandidates||[]).filter(row=>/^\d{4}-\d{2}-\d{2}$/.test(row.date||'')).map(row=>({
    mic:market.mic,isin:row.isin,symbol:row.symbol||null,lastStoredDate:row.date,
-   auditReason:'INCOMPLETE_OR_INVALID_OHLC',ohlcDefects:row.defects||[],
+   auditReason:'INCOMPLETE_OR_INVALID_OHLC',ohlcDefects:row.defects||[],storedOhlc:row.storedOhlc||null,
    evidenceScope:'RECENT_STORED_HISTORY',repairPolicy:'READ_ONLY_VERIFICATION_REQUIRED_APPEND_ONLY_PRESERVES_EXISTING_BAR'
   }));
   for(const missing of market.missing||[]){
@@ -48,7 +48,7 @@ export function buildEuropeRecoveryQueue(updates,audits) {
     lastStoredDate:missing.lastDate||null,auditReason:missing.reason||null,
     officialNoTradeReported:missing.officialNoTradeReported===true,
     officialLastTradeDate:missing.officialLastTradeDate||null,
-    ohlcDefects:missing.reason==='INCOMPLETE_OR_INVALID_OHLC'?(missing.ohlcDefects||[]):[],
+    ohlcDefects:missing.reason==='INCOMPLETE_OR_INVALID_OHLC'?(missing.ohlcDefects||[]):[],storedOhlc:missing.reason==='INCOMPLETE_OR_INVALID_OHLC'?(missing.storedOhlc||null):null,
     repairPolicy:missing.reason==='INCOMPLETE_OR_INVALID_OHLC'?'READ_ONLY_VERIFICATION_REQUIRED_APPEND_ONLY_PRESERVES_EXISTING_BAR':null,
     knownDataUnavailable:missing.knownDataUnavailable||null,
     sourceFailureCategory:category,
