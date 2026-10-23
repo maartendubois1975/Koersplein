@@ -62,7 +62,7 @@ for(const market of targetMarkets){
  if(!providers.get(primary))throw Error(`${market.mic}: onbekende PRIMARY provider ${primary}; bronregister corrigeren`);
  const allowedProviderIds=[primary,...(source.historySources||[]).filter(x=>x.role==='DISCOVERY_FALLBACK'&&x.provider!==primary&&providers.get(x.provider)).map(x=>x.provider)];
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),allShares=catalog.shares||catalog.instruments||[];
- const shares=parisRepair?allShares.filter(share=>!isInactiveParis(share,market.mic)&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate):allShares.filter(share=>!isInactiveParis(share,market.mic));
+ const shares=allShares.filter(share=>!isInactiveParis(share,market.mic));
  if(shares.length!==allShares.length)console.log('PARIS_INACTIVE_EXCLUDED_FROM_DAILY',JSON.stringify({mic:market.mic,retained:shares.length,inactive:allShares.length-shares.length}));
  // Preserve existing D1 identities, including Reykjavik legacy keys.
  const resolveStored=storageIdentityResolver(factoryCatalog.instruments||[],market.mic);
