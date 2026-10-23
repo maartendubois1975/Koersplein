@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-23T16:04:31.113Z",
+  "requestedAt": "2026-10-23T16:28:24.500Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Europe A verify read-only null OPEN/CLOSE Yahoo source diagnostics and shared Yahoo chart/ISIN upstream-feed attribution after passing Europe routing regression 39983651508; protected 8-shard 31-MIC audit, approved provider allowlist only, no full backfill, no stored-date overwrite, Paris existing-history-only."
+  "reason": "Europe B protected 8-shard 31-MIC production verification after bounded Worker /health connect-timeout retry fix f7e40a4; existing-history-only Paris, approved sources, append-only, no full backfill, no overwrite. Compare only if 8/8 update + 8/8 audit and all 31 markets pass."
 }
