@@ -7,6 +7,7 @@ import {latestClosedWeekday,previousClosedWeekday,isVerifiedNoTradeGap,isComplet
 import {partitionBars} from './history-format.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
+import {verifiedSwissPriorityKey,selectEuropeMissingBackfill} from './europe-missing-backfill-priority.mjs';
 const client=new FactoryApiClient(),providers=createDefaultProviderRegistry();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8')),sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
 const today=new Date().toISOString().slice(0,10),results=[];
@@ -33,19 +34,21 @@ const fullRequested=process.env.EUROPE_FULL_BACKFILL==='1';
 const firstFullAttempt=fullRequested&&Number(process.env.GITHUB_RUN_ATTEMPT||1)===1;
 const concurrency=Math.max(1,Math.min(4,Number(process.env.EUROPE_INSTRUMENT_CONCURRENCY||2)));
 const missingLimit=Math.max(1,Math.min(80,Number(process.env.EUROPE_MISSING_BACKFILL_LIMIT||35)));
-const missingPool=[];
+const missingPool=[],priorityMissingPool=[];
 const isInactiveParis=(share,marketMic)=>!parisHistoryEligible(share,marketMic,parisPolicy,manifest,resolveExisting);
 const resolveExisting=storageIdentityResolver(factoryCatalog.instruments||[]);
 for(const market of targetMarkets){
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
  for(const share of (catalog.shares||catalog.instruments||[])){
-  if(share.isin&&!isInactiveParis(share,market.mic)&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate)missingPool.push((share.mic||market.mic)+'|'+(share.symbol||share.ticker||share.isin)+'|'+share.isin);
+  if(share.isin&&!isInactiveParis(share,market.mic)&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate){
+   const key=(share.mic||market.mic)+'|'+(share.symbol||share.ticker||share.isin)+'|'+share.isin;
+   missingPool.push(key);
+   if(verifiedSwissPriorityKey(share,market.mic)===key)priorityMissingPool.push(key);
+  }
  }
 }
-const selectedMissing=new Set();
-const rotation=missingPool.length?(Math.floor(Date.now()/86400000)*missingLimit)%missingPool.length:0;
-for(let i=0;i<(fullRequested?missingPool.length:Math.min(missingLimit,missingPool.length));i++)selectedMissing.add(missingPool[(rotation+i)%missingPool.length]);
-console.log('EUROPE_BACKFILL_SELECTION',JSON.stringify({shardIndex,missingPool:missingPool.length,selected:selectedMissing.size,rotation,firstDate:'1990-01-01',fullBackfill:firstFullAttempt,freshnessCutoff}));
+const {selected:selectedMissing,rotation,prioritySelected}=selectEuropeMissingBackfill(missingPool,{limit:missingLimit,dayIndex:Math.floor(Date.now()/86400000),fullRequested,priorityKeys:priorityMissingPool});
+console.log('EUROPE_BACKFILL_SELECTION',JSON.stringify({shardIndex,missingPool:missingPool.length,selected:selectedMissing.size,prioritySelected,rotation,firstDate:'1990-01-01',fullBackfill:firstFullAttempt,freshnessCutoff}));
 
 for(const market of targetMarkets){
  const source=sourceRegistry.markets?.[market.mic];if(!source||source.status!=='APPROVED')throw Error(`${market.mic}: COMPLETE zonder APPROVED bronroute`);
