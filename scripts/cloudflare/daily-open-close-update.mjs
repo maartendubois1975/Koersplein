@@ -3,7 +3,7 @@ import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {FactoryApiClient} from './client.mjs';
 import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
 import {storageIdentityResolver,newListingStorageKey} from './storage-identity.mjs';
-import {latestClosedWeekday,validBars,mapConcurrent} from './europe-run-policy.mjs';
+import {latestClosedWeekday,previousClosedWeekday,isVerifiedNoTradeGap,isCompleteOhlcBar,validBars,mapConcurrent} from './europe-run-policy.mjs';
 import {partitionBars} from './history-format.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
@@ -83,9 +83,9 @@ for(const market of targetMarkets){
    const instrument={...s,ticker:s.ticker||s.symbol,symbol:s.symbol||s.ticker,mic:s.mic||market.mic,market:s.mic||market.mic,currency:s.currency||market.currency,countryCode:market.country};
    if(!fullBackfill&&beforeDate){
     const status=await officialDailyStatus(instrument,freshnessCutoff);
-    const previous=latestClosedWeekday(new Date(freshnessCutoff+'T00:00:00Z'));
-    if(status?.status==='NO_TRADES'&&(status.lastTradeDate===beforeDate||(!status.lastTradeDate&&beforeDate===previous))){noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,...status});return;}
-    if(status?.status==='TRADED'&&beforeDate===previous){
+    const previous=previousClosedWeekday(freshnessCutoff);
+    if(isVerifiedNoTradeGap(status,beforeDate,freshnessCutoff)){noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,...status});return;}
+    if(status?.status==='TRADED'&&isCompleteOhlcBar(status.bar)&&beforeDate===previous){
      await client.putPartition(storageIsin,freshnessCutoff.slice(0,4),{bars:[status.bar],provider:status.provider,appendOnly:true});
      await client.completeHistory(storageIsin,{provider:status.provider});advanced++;return;
     }
@@ -113,11 +113,11 @@ for(const market of targetMarkets){
    }
    if(afterDate&&afterDate<freshnessCutoff){
     const status=await officialDailyStatus(instrument,freshnessCutoff);
-    if(status?.status==='TRADED'){
+    if(status?.status==='TRADED'&&isCompleteOhlcBar(status.bar)){
      await client.putPartition(storageIsin,freshnessCutoff.slice(0,4),{bars:[status.bar],provider:status.provider,appendOnly:true});
      await client.completeHistory(storageIsin,{provider:status.provider});afterDate=freshnessCutoff;
      failed=failed.filter(x=>x.isin!==s.isin);
-    }else if(status?.status==='NO_TRADES'&&(!status.lastTradeDate||status.lastTradeDate===afterDate)){
+    }else if(isVerifiedNoTradeGap(status,afterDate,freshnessCutoff)){
      noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,...status});failed=failed.filter(x=>x.isin!==s.isin);return;
     }
    }
@@ -129,7 +129,7 @@ for(const market of targetMarkets){
    if(fullBackfill)historicalBackfillFailures.push({isin:s.isin,symbol:s.symbol||s.ticker,error:e.message});
    let status=null;try{status=await officialDailyStatus({...s,mic:s.mic||market.mic},freshnessCutoff);}catch{}
    const key=resolveActual(s),last=manifest[key]?.lastDate;
-   if(last&&status?.status==='NO_TRADES'&&(!status.lastTradeDate||status.lastTradeDate===last))noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,...status});
+   if(isVerifiedNoTradeGap(status,last,freshnessCutoff))noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,...status});
    else failed.push({isin:s.isin,symbol:s.symbol||s.ticker,category:failureCategory(e.message),error:e.message});
   }
   finally {processed++;if(processed%25===0)console.log('EUROPE_MARKET_PROGRESS',JSON.stringify({mic:market.mic,processed,total:shares.length,advanced,current,stale,missing,failed:failed.length}));}
