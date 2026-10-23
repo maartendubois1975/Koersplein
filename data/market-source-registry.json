@@ -1063,13 +1063,18 @@
       },
       "historySources": [
         {
+          "provider": "nasdaq-baltic-official",
+          "role": "PRIMARY",
+          "note": "Official Nasdaq Baltic ISIN-specific historical/trading source, already implemented and used for Riga; market support includes XTAL and XLIT. Validate OHLC in production before claiming improved coverage."
+        },
+        {
           "provider": "yahoo-isin-resolver",
           "role": "DISCOVERY_FALLBACK",
           "note": "ISIN-first resolver used when direct symbol and official history route fail."
         },
         {
           "provider": "yahoo-chart",
-          "role": "PRIMARY",
+          "role": "FALLBACK",
           "note": "Full-catalog preflight: 0/25 instruments."
         },
         {
@@ -1077,7 +1082,12 @@
           "role": "INDEPENDENT_FALLBACK_VALIDATION",
           "note": "Independently tested on full catalog: 0/25; 0 additional instruments beyond primary."
         }
-      ]
+      ],
+      "officialHistoryRouting": {
+        "updatedAt": "2026-10-23",
+        "reason": "Existing Yahoo direct route has 0 preflight coverage for this market while NasdaqBalticProvider explicitly supports the MIC and the official daily status already reads Nasdaq Baltic.",
+        "safety": "ISIN-locked official source; append-only writes; no synthetic prices; pending production verification."
+      }
     },
     "XRIS": {
       "status": "APPROVED",
@@ -1124,13 +1134,18 @@
       },
       "historySources": [
         {
+          "provider": "nasdaq-baltic-official",
+          "role": "PRIMARY",
+          "note": "Official Nasdaq Baltic ISIN-specific historical/trading source, already implemented and used for Riga; market support includes XTAL and XLIT. Validate OHLC in production before claiming improved coverage."
+        },
+        {
           "provider": "yahoo-isin-resolver",
           "role": "DISCOVERY_FALLBACK",
           "note": "ISIN-first resolver used when direct symbol and official history route fail."
         },
         {
           "provider": "yahoo-chart",
-          "role": "PRIMARY",
+          "role": "FALLBACK",
           "note": "Full-catalog preflight: 0/30 instruments."
         },
         {
@@ -1138,7 +1153,12 @@
           "role": "INDEPENDENT_FALLBACK_VALIDATION",
           "note": "Independently tested on full catalog: 0/30; 0 additional instruments beyond primary."
         }
-      ]
+      ],
+      "officialHistoryRouting": {
+        "updatedAt": "2026-10-23",
+        "reason": "Existing Yahoo direct route has 0 preflight coverage for this market while NasdaqBalticProvider explicitly supports the MIC and the official daily status already reads Nasdaq Baltic.",
+        "safety": "ISIN-locked official source; append-only writes; no synthetic prices; pending production verification."
+      }
     },
     "XLJU": {
       "status": "APPROVED",
