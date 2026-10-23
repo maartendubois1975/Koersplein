@@ -35,3 +35,19 @@ const runner=await fs.readFile('scripts/cloudflare/six-sponsored-identity-probe.
 for(const unsafe of ['FactoryApiClient','seedCatalog(','putPartition(','completeHistory('])assert.ok(!runner.includes(unsafe));
 assert.match(runner,/officialRows.length<50/);
 console.log('Official SIX sponsored admissions ISIN/symbol/currency, duplicate currency lines, source credibility and no-write safeguards PASS');
+
+const sharedSymbolRows=[...rows,{isin:'CH0000000002',ticker:'ALM',currency:'CHF',country:'Switzerland',firstTradingDate:'02.07.2026'}];
+const collision=compareSixSponsoredWithYahoo([verified('CA0203987072','ALM')],sharedSymbolRows);
+assert.equal(collision[0].status,'SIX_OFFICIAL_TICKER_SHARED_BY_MULTIPLE_ISINS');
+assert.equal(collision[0].ownerCount,2,'Same SIX symbol and currency assigned to two ISINs must never be accepted as unique');
+const request=JSON.parse(await fs.readFile('config/openfigi-yahoo-verify-request.json','utf8'));
+assert.equal(request.mode,'READ_ONLY_REFERENCE_VALIDATION');
+assert.ok(Number.isSafeInteger(request.sourceRunId)&&request.sourceRunId>0);
+assert.ok(Number.isSafeInteger(request.swissYahooRunId)&&request.swissYahooRunId>0,'Swiss source evidence run ID must be configured');
+assert.ok(request.scope.includes('XSWX')&&request.scope.includes('XLON'));
+assert.match(runner,/yahoo\.sourceRunId!==request\.sourceRunId/);
+assert.match(runner,/yahoo\.offset!==0/);
+const workflow=await fs.readFile('.github/workflows/europe-openfigi-yahoo-verification.yml','utf8');
+assert.match(workflow,/swissYahooRunId/);
+assert.match(workflow,/six-sponsored-identity-probe\.mjs/);
+console.log('SIX provenance, missing-source prevention, shared-ticker ISIN collisions and read-only workflow guards PASS');
