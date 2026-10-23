@@ -15,7 +15,9 @@ function day(year,month,date){
 // Bound this look-ahead to avoid relying on arbitrarily old audit sessions.
 function boundedLaterSnapshot(snapshotDate,targetDate){
  if(!/^\d{4}-\d{2}-\d{2}$/.test(String(targetDate||'')))return false;
- const lag=(Date.parse(snapshotDate+'T00:00:00Z')-Date.parse(targetDate+'T00:00:00Z'))/86400000;
+ const targetMs=Date.parse(targetDate+'T00:00:00Z');
+ if(!Number.isFinite(targetMs)||new Date(targetMs).toISOString().slice(0,10)!==targetDate)return false;
+ const lag=(Date.parse(snapshotDate+'T00:00:00Z')-targetMs)/86400000;
  return Number.isInteger(lag)&&lag>=0&&lag<=7;
 }
 function parseTradeDate(value){
