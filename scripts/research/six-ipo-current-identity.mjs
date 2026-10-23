@@ -17,7 +17,7 @@ export async function fetchSixIpoHtml(fetchFn=fetch){
 }
 export function selectIpoIdentityCandidates(shares,ipoPairs,{limit=12,rotation=0}={}){
  if(!Number.isInteger(limit)||limit<1||limit>24||!Number.isSafeInteger(rotation)||rotation<0)throw Error('INVALID_IPO_PROBE_BOUNDS');
- const eligible=(shares||[]).filter(i=>i.mic==='XSWX'&&/^\\d{4,}$/.test(String(i.symbol||''))&&!i.providerSymbol&&isValidIsin(i.isin)&&CCY.has(i.currency)&&ipoPairs.has(i.isin));
+ const eligible=(shares||[]).filter(i=>i.mic==='XSWX'&&/^\d{4,}$/.test(String(i.symbol||''))&&!i.providerSymbol&&isValidIsin(i.isin)&&CCY.has(i.currency)&&ipoPairs.has(i.isin));
  const unique=new Map();
  for(const i of eligible){if(!unique.has(i.isin))unique.set(i.isin,i);else unique.set(i.isin,null);}
  const all=[...unique.values()].filter(Boolean).sort((a,b)=>a.isin.localeCompare(b.isin));
