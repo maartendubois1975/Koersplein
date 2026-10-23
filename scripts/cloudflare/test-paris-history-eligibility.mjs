@@ -14,6 +14,7 @@ assert.equal(hasRecordedHistory(manifest['XPAR-EXISTING']),true);
 assert.equal(hasRecordedHistory(manifest['ALXP-LEGACY']),true);
 for(const key of ['XPAR-SHELL','XPAR-EMPTY','XPAR-UNKNOWN'])assert.equal(hasRecordedHistory(manifest[key]),false,key);
 assert.equal(hasRecordedHistory({lastDate:'2026-10-22',records:'0'}),false);
+assert.equal(hasRecordedHistory({lastDate:'2026-10-22',recordCount:0,records:10}),true,'Either positive manifest count field proves stored records');
 assert.equal(hasRecordedHistory({lastDate:'invalid',records:50}),false);
 assert.equal(parisHistoryEligible({isin:'XPAR-EXISTING'},'XPAR',policy,manifest,resolver),true);
 assert.equal(parisHistoryEligible({isin:'ALXP-LEGACY',mic:'ALXP'},'XPAR',policy,manifest,resolver),true);
