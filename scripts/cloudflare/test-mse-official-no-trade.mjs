@@ -1,3 +1,4 @@
+import {isVerifiedNoTradeGap} from './europe-run-policy.mjs';
 import assert from 'node:assert/strict';
 import {parseMseOfficialPriceList,mseOfficialNoTradeStatus,fetchMseOfficialPriceList,MSE_PRICE_LIST_URL} from '../history/providers/mse-official-price-list.mjs';
 const lines=[
@@ -20,6 +21,8 @@ assert.equal(snapshot.rows.has('MT0000021312'),false,'Bond rows must never be tr
 const status=mseOfficialNoTradeStatus(snapshot,{mic:'XMAL',isin:'MT0000040106',symbol:'LOM'},'2026-10-22');
 assert.equal(status.status,'NO_TRADES');
 assert.equal(status.lastTradeDate,'2026-10-19');
+assert.equal(isVerifiedNoTradeGap(status,'2026-10-19','2026-10-22'),true,'Only the exact stored last-trade date is officially verified');
+assert.equal(isVerifiedNoTradeGap(status,'2026-10-17','2026-10-22'),false,'Missing intermediate trades must remain missing');
 assert.equal(status.bar,undefined,'Official price list lacks OPEN: no synthetic OHLC');
 assert.equal(mseOfficialNoTradeStatus(snapshot,{mic:'XMAL',isin:'MT0000020116',symbol:'BOV'},'2026-10-22'),null,'A trade on the report date is not no-trade');
 assert.equal(mseOfficialNoTradeStatus(snapshot,{mic:'XMAL',isin:'MT0000040106',symbol:'WRONG'},'2026-10-22'),null,'Symbol mismatch fails closed');
