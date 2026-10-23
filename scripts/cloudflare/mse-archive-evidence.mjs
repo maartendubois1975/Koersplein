@@ -54,8 +54,15 @@ export async function probeMseArchive(targetDate,{fetchFn=fetch,extractPdf=null,
   result.archiveEntries=entries.length;
   result.archiveFormats=entries.reduce((counts,name)=>{const ext=name.split('.').pop().toLowerCase();const kind=['pdf','xls','xlsx','zip'].includes(ext)?ext:'other';counts[kind]=(counts[kind]||0)+1;return counts;},{});
   result.entryNameSamples=entries.filter(name=>name.length<=240).slice(0,12);
+  // MSE currently publishes monthly XLS archives, not daily PDFs. Absence of
+  // the target month must be explicit; a different month's XLS cannot prove
+  // that an individual security did not trade on the requested date.
+  result.monthsPresent=[...new Set(entries.map(name=>name.match(/(?:^|\/)(0[1-9]|1[0-2])_[A-Za-z]+2026\.xls$/i)?.[1]).filter(Boolean))].sort();
   result.pdfEntries=names.length;
-  if(!names.length){result.status='ARCHIVE_NO_PDF_ENTRIES';return result;}
+  if(!names.length){
+   result.status=result.monthsPresent.includes(targetDate.slice(5,7))?'TARGET_MONTH_SPREADSHEET_REVIEW_REQUIRED':'TARGET_MONTH_NOT_IN_OFFICIAL_ARCHIVE';
+   return result;
+  }
   const ordered=names.sort((a,b)=>priority(a,targetDate)-priority(b,targetDate)||a.localeCompare(b));
   for(const name of ordered){
    result.inspected++;
