@@ -15,6 +15,12 @@ export function renderEuropeReport(report,runUrl='') {
     lines.push(`| ${label} | ${t[key]??'unknown'} |`);
   const anomalies=report.marketCoverage?.anomalies||[];
   if(anomalies.length)lines.push('',`**Market coverage anomalies:** ${anomalies.length}`, ...anomalies.slice(0,6).map(x=>`- ${x.kind||'plan'} shard ${x.shard??'?'}: ${x.issue} ${x.mic||''}`));
+  const defects=Object.entries(report.invalidOhlcByDefect||{}).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  if(defects.length){
+    lines.push('','### Existing incomplete OHLC evidence','| Defect | Affected records |','|---|---:|');
+    for(const [defect,count] of defects)lines.push(`| ${defect} | ${count} |`);
+    lines.push('A candle can have multiple defects. Append-only storage preserves existing records; this is read-only repair evidence, not a claim that records were corrected.');
+  }
   lines.push('','### Largest remaining gaps','| MIC | Missing | Import failures |','|---|---:|---:|');
   for(const m of (report.recoveryPriority||[]).slice(0,12))lines.push(`| ${m.mic} | ${m.missingOpenClose??'?'} | ${m.importFailures??'?'} |`);
   lines.push('','Full instrument-level failures, audit results and source evidence are in the **europe-run-summary** artifact.');
