@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic} from './europe-ohlc-source-evidence.mjs';
+import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic,isCompleteOhlcSourceBar} from './europe-ohlc-source-evidence.mjs';
 const item={mic:'XLON',isin:'GB0000000001',symbol:'TEST',lastStoredDate:'2026-10-22',auditReason:'INCOMPLETE_OR_INVALID_OHLC'};
 const queue={markets:[{mic:'XLON',instruments:[item,{...item,isin:'GB0000000002',auditReason:'STALE_LAST_TRADE'}]},{mic:'XPAR',instruments:[{...item,mic:'XPAR',isin:'FR0000000001'}]}]};
 assert.equal(selectIncompleteOhlcCandidates(queue).length,2);
@@ -93,3 +93,31 @@ assert.equal(new Set(weighted.map(x=>x.mic+'|'+x.isin+'|'+x.lastStoredDate)).siz
 assert.deepEqual(selectIncompleteOhlcCandidates(weightedQueue,{limit:24,perMarket:20,rotation:0}),weighted);
 assert.notEqual(selectIncompleteOhlcCandidates(weightedQueue,{limit:1,perMarket:20,rotation:1})[0].mic,'XLON','Market fairness rotates across runs');
 console.log('Debt-weighted source probe allocates substantial London coverage without starving small markets PASS');
+
+
+// Regression: validBars only requires OPEN/CLOSE, so the repair-evidence path
+// must independently enforce complete HIGH/LOW and valid OHLC inequalities.
+const goodCandle={date:'2026-10-22',open:100,high:110,low:90,close:105};
+assert.equal(isCompleteOhlcSourceBar(goodCandle),true);
+for(const partial of [
+ {...goodCandle,high:null},
+ {...goodCandle,low:null},
+ {...goodCandle,high:undefined},
+ {...goodCandle,low:0},
+ {...goodCandle,high:104},
+ {...goodCandle,low:101},
+ {...goodCandle,high:89},
+ {...goodCandle,high:Infinity},
+ {...goodCandle,low:NaN},
+ {...goodCandle,open:'100'}
+]){
+ assert.equal(isCompleteOhlcSourceBar(partial),false,'Invalid or missing OHLC must not be repair-ready');
+ const partialRegistry={...registry,async fetchDaily(i,range,primary,opts){
+  assert.equal(opts.acceptResult({bars:[partial]}),false,'Provider acceptance must reject incomplete HIGH/LOW');
+  return {provider:{id:'good'},result:{bars:[partial],providerMeta:{currency:'GBX'}}};
+ }};
+ const probe=await probeIncompleteOhlcCandidate(item,{registry:partialRegistry,sources,market,listings});
+ assert.equal(probe.status,'NO_COMPLETE_APPROVED_SOURCE_BAR');
+ assert.equal(probe.candidateBar,undefined,'Never publish a partial bar as correction evidence');
+}
+console.log('Source evidence rejects missing/invalid HIGH/LOW, inconsistent OHLC and numeric-string candles PASS');
