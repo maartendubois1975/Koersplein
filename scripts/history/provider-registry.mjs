@@ -46,10 +46,10 @@ export class ProviderRegistry {
             // Only an explicit evidence-only caller may inspect empty source
             // responses. Default production routing still rejects them before
             // the acceptResult callback; no synthetic/no-trade bar is created.
-            if(inspectEmptyResult&&acceptResult)acceptResult(result,provider);
+            if(inspectEmptyResult&&acceptResult)await acceptResult(result,provider);
             throw Error('Provider returned no daily bars');
           }
-          if(acceptResult&&!acceptResult(result,provider))throw Error('Provider returned no usable bars in requested range');
+          if(acceptResult&&!(await acceptResult(result,provider)))throw Error('Provider returned no usable bars in requested range');
           return {provider,result};
         }
         const controller = new AbortController();
@@ -66,10 +66,10 @@ export class ProviderRegistry {
             // Only an explicit evidence-only caller may inspect empty source
             // responses. Default production routing still rejects them before
             // the acceptResult callback; no synthetic/no-trade bar is created.
-            if(inspectEmptyResult&&acceptResult)acceptResult(result,provider);
+            if(inspectEmptyResult&&acceptResult)await acceptResult(result,provider);
             throw Error('Provider returned no daily bars');
           }
-          if(acceptResult&&!acceptResult(result,provider))throw Error('Provider returned no usable bars in requested range');
+          if(acceptResult&&!(await acceptResult(result,provider)))throw Error('Provider returned no usable bars in requested range');
           return { provider, result };
         } finally {
           clearTimeout(timer);
