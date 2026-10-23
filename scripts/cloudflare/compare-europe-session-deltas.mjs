@@ -50,7 +50,23 @@ function validate(run,label){
   }
   for(const k of missing.keys())check(!noTrade.has(k),label+': missing and no-trade overlap');
   for(const [k,v] of Object.entries(totals))check(run.totals?.[k]===v,label+': inconsistent '+k);
-  return {totals,markets,missing,noTrade};
+  // An incomplete failure list could hide provider regressions while all OHLC
+  // partitions still add up. Import failures must be a unique subset of missing.
+  check(natural(run.totals?.failedImports),label+': invalid failedImports total');
+  check(Array.isArray(run.importFailures)&&run.importFailures.length===run.totals.failedImports,
+    label+': import failure details incomplete');
+  const failures=new Map();
+  for(const failure of run.importFailures){
+    const k=id(failure?.mic,failure?.isin);
+    check(missing.has(k),label+': import failure not in missing inventory');
+    check(!failures.has(k),label+': duplicate import failure');
+    check(typeof failure.symbol==='string'&&failure.symbol===missing.get(k).symbol,
+      label+': import failure ticker drift');
+    check(typeof failure.category==='string'&&/^[A-Z][A-Z0-9_]*$/.test(failure.category),
+      label+': invalid import failure category');
+    failures.set(k,{mic:failure.mic,isin:failure.isin,symbol:failure.symbol,category:failure.category});
+  }
+  return {totals:{...totals,failedImports:failures.size},markets,missing,noTrade,failures};
 }
 export function compareEuropeSessionDeltas(before,after){
   const a=validate(before,'before'),b=validate(after,'after');
@@ -73,25 +89,40 @@ export function compareEuropeSessionDeltas(before,after){
   const added=[...b.missing].filter(([k])=>!a.missing.has(k)).map(([,v])=>v);
   const reasonChanges=[...b.missing].filter(([k,v])=>a.missing.has(k)&&a.missing.get(k).reason!==v.reason)
     .map(([k,v])=>({mic:v.mic,isin:v.isin,before:a.missing.get(k).reason,after:v.reason}));
+  const failureRemoved=[...a.failures].filter(([k])=>!b.failures.has(k)).map(([,v])=>v);
+  const failureAdded=[...b.failures].filter(([k])=>!a.failures.has(k)).map(([,v])=>v);
+  const failureCategoryChanges=[...b.failures].filter(([k,v])=>
+    a.failures.has(k)&&a.failures.get(k).category!==v.category)
+    .map(([k,v])=>({mic:v.mic,isin:v.isin,before:a.failures.get(k).category,after:v.category}));
   const sort=(x,y)=>x.mic.localeCompare(y.mic)||x.isin.localeCompare(y.isin);
   removed.sort(sort);added.sort(sort);reasonChanges.sort(sort);
+  failureRemoved.sort(sort);failureAdded.sort(sort);failureCategoryChanges.sort(sort);
   check(a.missing.size-removed.length+added.length===b.missing.size,'identity arithmetic mismatch');
+  check(a.failures.size-failureRemoved.length+failureAdded.length===b.failures.size,
+    'failure identity arithmetic mismatch');
   const byMarket=[...a.markets.keys()].sort().map(mic=>{
     const x=a.markets.get(mic),y=b.markets.get(mic);
     return {mic,catalog:x.catalog,currentOhlcDelta:y.openCloseOk-x.openCloseOk,
       noTradeDelta:y.verifiedNoTrades-x.verifiedNoTrades,
       missingDelta:y.missingOpenClose-x.missingOpenClose,
       missingRemoved:removed.filter(v=>v.mic===mic).length,
-      missingAdded:added.filter(v=>v.mic===mic).length};
+      missingAdded:added.filter(v=>v.mic===mic).length,
+      failedImportsDelta:[...b.failures.values()].filter(v=>v.mic===mic).length-
+        [...a.failures.values()].filter(v=>v.mic===mic).length,
+      failureRemoved:failureRemoved.filter(v=>v.mic===mic).length,
+      failureAdded:failureAdded.filter(v=>v.mic===mic).length};
   });
   check(byMarket.every(v=>v.missingDelta===v.missingAdded-v.missingRemoved&&
+    v.failedImportsDelta===v.failureAdded-v.failureRemoved&&
     v.currentOhlcDelta+v.noTradeDelta+v.missingDelta===0),'market transition arithmetic mismatch');
   return {mode:'READ_ONLY_SAME_CUTOFF_INSTRUMENT_DELTA',status:'COMPLETE_COMPARISON',
     freshnessCutoff:before.freshnessCutoff,
-    before:{currentOhlc:a.totals.currentOpenClose,noTrade:a.totals.verifiedNoTrades,missing:a.missing.size},
-    after:{currentOhlc:b.totals.currentOpenClose,noTrade:b.totals.verifiedNoTrades,missing:b.missing.size},
-    removed,added,reasonChanges,
-    byMarket:byMarket.filter(v=>v.currentOhlcDelta||v.noTradeDelta||v.missingDelta),
+    before:{currentOhlc:a.totals.currentOpenClose,noTrade:a.totals.verifiedNoTrades,missing:a.missing.size,
+      failedImports:a.failures.size},
+    after:{currentOhlc:b.totals.currentOpenClose,noTrade:b.totals.verifiedNoTrades,missing:b.missing.size,
+      failedImports:b.failures.size},
+    removed,added,reasonChanges,failureRemoved,failureAdded,failureCategoryChanges,
+    byMarket:byMarket.filter(v=>v.currentOhlcDelta||v.noTradeDelta||v.missingDelta||v.failedImportsDelta),
     productionWrites:0,mappingsApproved:0,catalogMembershipVerified:false,
     nonIsinCatalogKeys:{before:[...a.missing.values(),...a.noTrade.values()].filter(v=>v.identifierType==='NON_ISIN_CATALOG_KEY').length,
       after:[...b.missing.values(),...b.noTrade.values()].filter(v=>v.identifierType==='NON_ISIN_CATALOG_KEY').length},
