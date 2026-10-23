@@ -26,6 +26,7 @@ export function classifyEuropeFailure(error) {
   // that exists but violates OHLC completeness. Both remain read-only and
   // neither proves delisting or authorizes an overwrite.
   if(/Source exact-date OHLC mixes complete and invalid duplicate bars/i.test(m))return 'SOURCE_EXACT_DATE_MIXED_BARS';
+  if(/Source duplicate-date OHLC conflict/i.test(m))return 'SOURCE_DUPLICATE_DATE_OHLC_CONFLICT';
   if(/Source exact-date OHLC incomplete or inconsistent/i.test(m))return 'SOURCE_EXACT_DATE_OHLC_INVALID';
   if(/Source has no exact-date daily bar/i.test(m))return 'SOURCE_EXACT_DATE_NO_BAR';
   const noRange=/Provider returned no usable bars in requested range/i.test(m);
@@ -51,6 +52,7 @@ const actions={
   NO_NEW_BARS_IN_RANGE:'Verify last actual trade and source freshness; do not invent a daily OHLC bar.',
   SOURCE_EXACT_DATE_OHLC_INVALID:'The source returned the requested date but incomplete or inconsistent OHLC; seek independently validated data, never synthesize high/low.',
   SOURCE_EXACT_DATE_MIXED_BARS:'The source returned both complete and invalid candles for the same date; quarantine that provider attempt and seek independently validated evidence.',
+  SOURCE_DUPLICATE_DATE_OHLC_CONFLICT:'A provider returned conflicting same-day OHLC values; quarantine that date, retain safe dates and seek independently verified evidence.',
   SOURCE_EXACT_DATE_NO_BAR:'The approved source has other bars but none for the exact date; verify trading activity before calling this a missing price.',
   PROVIDER_RETURNED_NO_BARS:'Check listing status and source coverage; distinguish inactive from unsupported.',
   OFFICIAL_SOURCE_NO_USABLE_BARS:'Official endpoint returned no validated bars for this range; check last actual trade and archive coverage without inventing prices.',
