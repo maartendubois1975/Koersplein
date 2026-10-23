@@ -5,6 +5,8 @@ on:
     paths:
       - 'scripts/cloudflare/exchange-bulk-reconcile.mjs'
       - 'scripts/cloudflare/exchange-bulk-reconcile.test.mjs'
+      - 'scripts/cloudflare/europe-exchange-bulk-pilot.mjs'
+      - 'scripts/cloudflare/europe-exchange-bulk-pilot.test.mjs'
       - '.github/workflows/europe-bulk-engine-tests.yml'
   workflow_dispatch:
 permissions:
@@ -20,3 +22,5 @@ jobs:
           node-version: '22'
       - name: Validate exchange-wide bars and ISIN mapping
         run: node scripts/cloudflare/exchange-bulk-reconcile.test.mjs
+      - name: Validate four-exchange pilot and isolated source failure
+        run: node scripts/cloudflare/europe-exchange-bulk-pilot.test.mjs
