@@ -1,0 +1,12 @@
+{
+  "requestedAt": "2026-10-23T09:00:00Z",
+  "mode": "READ_ONLY_REFERENCE_VALIDATION",
+  "sourceRunId": 39923000352,
+  "scope": [
+    "XSWX",
+    "XLON"
+  ],
+  "offset": 0,
+  "limit": 80,
+  "reason": "Validate first 80 unique OpenFIGI candidates from successful 475-ISIN read-only research against independent Yahoo symbol, venue, currency and complete recent OHLC. No production writes or mapping promotion; current official ISIN listing remains required."
+}
