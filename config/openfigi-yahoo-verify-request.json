@@ -1,12 +1,13 @@
 {
-  "requestedAt": "2026-10-23T09:00:00Z",
+  "requestedAt": "2026-10-23T09:13:00Z",
   "mode": "READ_ONLY_REFERENCE_VALIDATION",
   "sourceRunId": 39923000352,
   "scope": [
     "XSWX",
     "XLON"
   ],
-  "offset": 160,
-  "limit": 100,
-  "reason": "Continue independent read-only verification of unique London OpenFIGI candidates 161-260. Previous pages 0-79: 61 Yahoo matches, 19 HTTP 404; 80-159: 76 matches, 3 HTTP 404, 1 without recent complete OHLC. No automatic mapping or price writes."
+  "offset": 260,
+  "limit": 40,
+  "reason": "Complete final 17 of 277 unique Swiss/London OpenFIGI Yahoo candidates (pages 0-79, 80-159, 160-259 already reported). Fetch first-page Swiss evidence from run 39929012949 for independent official SIX sponsored cross-check. Read-only only; no price/catalog writes and no automatic promotion.",
+  "swissYahooRunId": 39929012949
 }
