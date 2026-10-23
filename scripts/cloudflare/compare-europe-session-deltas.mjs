@@ -39,7 +39,9 @@ function validate(run,label){
         // instruments without an ISIN. They are NOT verified ISIN mappings.
         const isIsin=typeof item.isin==='string'&&/^[A-Z]{2}[A-Z0-9]{10}$/.test(item.isin);
         const isCatalogPlaceholder=typeof item.isin==='string'&&
-          new RegExp('^'+m.mic+':[A-Z0-9._-]{1,32}
+          new RegExp('^'+m.mic+':[A-Z0-9._-]{1,32}$').test(item.isin);
+        check(isIsin||isCatalogPlaceholder,label+'/'+m.mic+': unrecognized catalog identifier');
+        const k=id(m.mic,item.isin);
         check(!target.has(k),label+'/'+m.mic+': duplicate '+kind+' ISIN');
         target.set(k,{mic:m.mic,isin:item.isin,identifierType:isIsin?'ISIN':'NON_ISIN_CATALOG_KEY',symbol:item.symbol??null,
           ...(kind==='missing'?{reason:item.reason??null,lastDate:item.lastDate??null}:{})});
