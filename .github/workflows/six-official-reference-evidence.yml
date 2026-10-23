@@ -6,6 +6,8 @@ on:
     paths:
       - 'scripts/research/six-official-symbol-evidence.mjs'
       - 'scripts/research/test-six-official-symbol-evidence.mjs'
+      - 'scripts/research/six-ipo-current-identity.mjs'
+      - 'scripts/research/test-six-ipo-current-identity.mjs'
       - '.github/workflows/six-official-reference-evidence.yml'
 permissions:
   contents: read
@@ -34,5 +36,19 @@ jobs:
         with:
           name: six-official-symbol-evidence
           path: research/output/six-official-symbol-evidence.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Test independent official IPO identity cross-check (read-only)
+        run: |
+          node --check scripts/research/six-ipo-current-identity.mjs
+          node --check scripts/research/test-six-ipo-current-identity.mjs
+          node scripts/research/test-six-ipo-current-identity.mjs
+      - name: Compare official historical IPO ISIN with current SIX title and Yahoo
+        run: node scripts/research/six-ipo-current-identity.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: six-ipo-current-identity
+          path: research/output/six-ipo-current-identity.json
           if-no-files-found: warn
           retention-days: 30
