@@ -34,7 +34,8 @@ export class ProviderRegistry {
     const ordered = preferredProvider
       ? (strictPreferred ? [preferred] : [preferred, ...this.candidates(instrument).filter((provider) => provider.id !== preferredProvider)]).filter(Boolean)
       : this.candidates(instrument);
-    const eligible = allowedProviderIds ? ordered.filter(provider => allowedProviderIds.includes(provider.id)) : ordered;
+    const supported=ordered.filter(provider=>provider.supports?.(instrument)!==false);
+    const eligible = allowedProviderIds ? supported.filter(provider => allowedProviderIds.includes(provider.id)) : supported;
     if (!eligible.length) throw new Error(`Geen toegestane provider beschikbaar voor ${instrument.isin}`);
     const failures = [];
     for (const provider of eligible) {
