@@ -44,6 +44,7 @@ jobs:
       - name: Verify approved Europe provider routing and Paris history safety
         run: |
           node scripts/cloudflare/test-europe-provider-routing.mjs
+          node scripts/cloudflare/test-europe-source-coverage-evidence.mjs
           node scripts/cloudflare/test-paris-history-eligibility.mjs
           node scripts/cloudflare/test-europe-failure-diagnosis.mjs
           node scripts/cloudflare/test-six-ipo-symbol-evidence.mjs
@@ -113,6 +114,10 @@ jobs:
         continue-on-error: true
         timeout-minutes: 8
         run: node scripts/cloudflare/europe-incomplete-ohlc-source-probe.mjs
+      - name: Audit registry preflight versus claimed coverage (read-only)
+        if: always()
+        continue-on-error: true
+        run: node scripts/cloudflare/write-europe-source-coverage-evidence.mjs
       - name: Publish run outcome to issue 205
         if: always()
         env:
@@ -132,6 +137,7 @@ jobs:
             research/output/europe-failure-diagnosis.json
             research/output/europe-recovery-queue.json
             research/output/europe-incomplete-ohlc-source-probe.json
+            research/output/europe-source-coverage-evidence.json
             research/output/six-ipo-symbol-probe.json
           retention-days: 90
 
