@@ -56,3 +56,12 @@ assert.match(severityReport,/not verified replacement prices/);
 const partialSeverity=renderEuropeReport(sourceReport,'',{...severityProbe,storedOhlcViolationSeverity:{...severityProbe.storedOhlcViolationSeverity,complete:false}});
 assert.match(partialSeverity,/partial or unverified/);
 console.log('Europe stored-candle severity reporting is evidence-only and completeness-gated PASS');
+
+
+const diverseProbe={...sourceProbe,probeCoverage:{readOnly:true,uniqueInstruments:26,probedDates:30,repeatedInstrumentDates:4,byMarket:{XLON:{probes:20,uniqueInstruments:16,repeatedInstrumentDates:4,failuresByCategory:{NO_NEW_BARS_IN_RANGE:14}}}}};
+const diverseReport=renderEuropeReport(sourceReport,'',diverseProbe);
+assert.match(diverseReport,/Distinct instruments sampled: \*\*26\/30\*\*/);
+assert.match(diverseReport,/London source sample: 16 distinct ISIN across 20 dates/);
+assert.match(diverseReport,/14 NO_NEW_BARS_IN_RANGE/);
+assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...diverseProbe,probeCoverage:{...diverseProbe.probeCoverage,probedDates:29}}),/Distinct instruments sampled/,'Do not claim coverage for inconsistent probe totals');
+console.log('Read-only distinct-ISIN source diversity and London missing-day classification PASS');
