@@ -32,3 +32,14 @@ assert.match(withDebt,/XLON 1100/);
 assert.ok(rendered.length<4000);
 assert.match(renderEuropeReport(null),/Summary unavailable/);
 console.log('Europe eight-shard market completeness and compact issue reporting PASS');
+
+const sourceReport={...report,generatedAt:'2026-10-23T10:50:02.000Z',missingByReason:{INCOMPLETE_OR_INVALID_OHLC:195,STALE_LAST_TRADE:100,NO_HISTORY_PARTITIONS:20},sourceFailureByMarket:{XLON:{failed:30,categories:{UNRESOLVED_MARKET_SYMBOL:18,ISIN_SEARCH_UNRESOLVED:10}},XSWX:{failed:227,categories:{ISIN_SEARCH_UNRESOLVED:227}}}};
+const sourceProbe={status:'COMPLETED',generatedAt:'2026-10-23T10:50:03.000Z',requested:30,counts:{COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW:17,NO_EXACT_CATALOG_ISIN_MIC:5,NO_COMPLETE_APPROVED_SOURCE_BAR:8}};
+const detailed=renderEuropeReport(sourceReport,'',sourceProbe);
+assert.match(detailed,/INCOMPLETE_OR_INVALID_OHLC: 195/);
+assert.match(detailed,/XLON: UNRESOLVED_MARKET_SYMBOL 18/);
+assert.match(detailed,/Historical source check \(read-only\)/);
+assert.match(detailed,/COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW 17/);
+assert.match(detailed,/No stored OHLC has been overwritten/);
+assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...sourceProbe,generatedAt:'2026-10-22T10:50:03.000Z'}),/Historical source check \(read-only\)/,'Stale evidence must not be presented as current');
+console.log('Evidence-rich Europe issue reporting, source blockers and freshness guard PASS');
