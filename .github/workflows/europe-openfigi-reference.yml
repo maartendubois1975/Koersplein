@@ -1,0 +1,64 @@
+name: Europe OpenFIGI read-only reference probe
+on:
+  push:
+    branches: [main]
+    paths: ['config/openfigi-probe-request.json']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+  issues: write
+concurrency:
+  group: koersplein-openfigi-reference
+  cancel-in-progress: true
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Verify read-only reference probe
+        run: |
+          node --check scripts/cloudflare/openfigi-reference-probe.mjs
+          node scripts/cloudflare/test-openfigi-reference-evidence.mjs
+      - name: Retrieve verified eight-shard missing-instrument queue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p research/output
+          SOURCE_RUN_ID=$(node -p "JSON.parse(require('fs').readFileSync('config/openfigi-probe-request.json','utf8')).sourceRunId")
+          test "$SOURCE_RUN_ID" -gt 0
+          gh run download "$SOURCE_RUN_ID" --repo "${{ github.repository }}" --name europe-run-summary --dir research/output
+          test -s research/output/europe-recovery-queue.json
+      - name: Map Swiss and London missing ISINs (reference evidence only)
+        run: node scripts/cloudflare/openfigi-reference-probe.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: openfigi-read-only-reference
+          path: research/output/openfigi-reference-probe.json
+          retention-days: 90
+      - name: Post compact read-only evidence to issue 205
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node --input-type=module <<'JS' > /tmp/openfigi-report.md
+          import fs from 'node:fs';
+          console.log('### Europe OpenFIGI read-only Swiss/London ISIN reference');
+          console.log('Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}');
+          const path='research/output/openfigi-reference-probe.json';
+          if(!fs.existsSync(path)){console.log('Reference probe unavailable; inspect workflow logs.');process.exit(0)}
+          const report=JSON.parse(fs.readFileSync(path,'utf8'));
+          console.log('Audited queue:',report.queueGeneratedAt,'ISINs queried:',report.itemsRequested,'Batch errors:',report.errors.length);
+          for(const [k,v] of Object.entries(report.counts))console.log('- '+k+': '+v);
+          for(const mic of ['XSWX','XLON']){
+           const examples=report.items.filter(x=>x.mic===mic&&x.classification==='REFERENCE_CANDIDATE_REQUIRES_INDEPENDENT_VERIFICATION').slice(0,5);
+           console.log('\\n'+mic+' candidate examples (NOT production-approved):');
+           for(const x of examples)console.log('- '+x.isin+' '+x.catalogSymbol+' => '+x.candidates[0].providerSymbol);
+          }
+          console.log('No history, catalog, or production price writes. Candidate identities require current official listing and Yahoo exchange/currency verification.');
+          JS
+          gh issue comment 205 --repo "${{ github.repository }}" --body-file /tmp/openfigi-report.md
