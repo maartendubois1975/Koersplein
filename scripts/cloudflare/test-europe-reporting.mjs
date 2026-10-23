@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {evaluateEuropeShardCoverage} from './europe-shard-coverage.mjs';
 import {renderEuropeReport} from './format-europe-run-report.mjs';
+import {evaluateEuropeSessionConsistency} from './europe-session-consistency.mjs';
 const plan={markets:Array.from({length:10},(_,i)=>({mic:`X${i}`,state:'COMPLETE'}))};
 const expected=Array.from({length:8},(_,shard)=>plan.markets.filter((_,i)=>i%8===shard).map(m=>({mic:m.mic})));
 const make=()=>expected.map((markets,shardIndex)=>({shardIndex,shardCount:8,markets:markets.map(x=>({...x}))}));
@@ -124,3 +125,24 @@ assert.match(missingAndMixedText,/1 correlated feed\/date disagreements/);
 assert.match(missingAndMixedText,/do NOT prove no trading or delisting/);
 assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...missingAndMixedProbe,generatedAt:'2026-10-22T10:50:03.000Z'}),/Exact-date source absence:/);
 console.log('Fresh read-only mixed/absent source observations are clearly distinguished from no-trade PASS');
+
+
+// A same-day production rerun can cross the 18:00 UTC completed-session
+// boundary: counts from 2026-10-22 and 2026-10-23 are not directly comparable.
+const sessionUpdates=Array.from({length:8},(_,shardIndex)=>({shardIndex,freshnessCutoff:'2026-10-22'}));
+const sessionAudits=Array.from({length:8},(_,shardIndex)=>({shardIndex,freshnessCutoff:'2026-10-22'}));
+const sameSession=evaluateEuropeSessionConsistency(sessionUpdates,sessionAudits);
+assert.equal(sameSession.complete,true);
+assert.equal(sameSession.cutoff,'2026-10-22');
+assert.equal(evaluateEuropeSessionConsistency(sessionUpdates,sessionAudits.map((x,i)=>i===7?{...x,freshnessCutoff:'2026-10-23'}:x)).complete,false);
+assert.equal(evaluateEuropeSessionConsistency(sessionUpdates,sessionAudits.map((x,i)=>i===7?{...x,freshnessCutoff:'2026-10-99'}:x)).complete,false);
+assert.equal(evaluateEuropeSessionConsistency(sessionUpdates,sessionAudits.slice(1)).complete,false);
+const sessionText=renderEuropeReport({...report,marketCoverage:{complete:true,anomalies:[]},sessionConsistency:sameSession,freshnessCutoff:sameSession.cutoff,recoveryPriority:[{mic:'XLON',missingOpenClose:376,importFailures:376,missingReasons:{STALE_LAST_TRADE:280,INCOMPLETE_OR_INVALID_OHLC:30,NO_HISTORY_PARTITIONS:66}},{mic:'XSWX',missingOpenClose:233,importFailures:233,missingReasons:{STALE_LAST_TRADE:230,INCOMPLETE_OR_INVALID_OHLC:3}}]});
+assert.match(sessionText,/Completed trading-session cutoff \(UTC\): \*\*2026-10-22\*\*/);
+assert.match(sessionText,/Compare daily missing counts only against audits with the same cutoff/);
+assert.match(sessionText,/\| XLON \| 280 \| 30 \| 66 \|/);
+assert.match(sessionText,/\| XSWX \| 230 \| 3 \| 0 \|/);
+const mismatchedSessionText=renderEuropeReport({...report,sessionConsistency:evaluateEuropeSessionConsistency(sessionUpdates,[...sessionAudits.slice(0,7),{shardIndex:7,freshnessCutoff:'2026-10-23'}]),freshnessCutoff:null});
+assert.match(mismatchedSessionText,/SESSION DATE UNVERIFIED/);
+assert.doesNotMatch(mismatchedSessionText,/Completed trading-session cutoff/);
+console.log('Europe completed-session cutoff, rollover safety and per-MIC failure breakdown PASS');
