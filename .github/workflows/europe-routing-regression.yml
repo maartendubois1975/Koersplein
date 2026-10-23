@@ -22,6 +22,7 @@ on:
       - 'scripts/cloudflare/test-europe-reporting.mjs'
       - 'scripts/cloudflare/test-europe-recovery-queue.mjs'
       - 'scripts/history/providers/yahoo-chart.mjs'
+      - 'scripts/history/providers/yahoo-isin.mjs'
       - 'config/paris-follow-policy.json'
       - 'data/euronext-zurich.json'
       - 'data/market-source-registry.json'
@@ -53,6 +54,7 @@ jobs:
           node --check scripts/cloudflare/six-ipo-symbol-probe.mjs
           node --check scripts/cloudflare/test-six-ipo-symbol-evidence.mjs
           node --check scripts/history/providers/yahoo-chart.mjs
+          node --check scripts/history/providers/yahoo-isin.mjs
           node --check scripts/history/providers/nasdaq-baltic.mjs
           node --check scripts/cloudflare/test-nasdaq-baltic-provider.mjs
           node --check scripts/cloudflare/europe-recovery-queue.mjs
