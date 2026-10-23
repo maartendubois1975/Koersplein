@@ -113,7 +113,9 @@ jobs:
         continue-on-error: true
         run: node scripts/cloudflare/six-ipo-symbol-probe.mjs
       - name: Collect definitive Europe run result
-        run: node scripts/cloudflare/summarize-europe-run.mjs
+        run: |
+          node scripts/cloudflare/test-europe-summary-integration.mjs
+          node scripts/cloudflare/summarize-europe-run.mjs
       - name: Probe approved sources for incomplete stored OHLC (read-only)
         if: always()
         continue-on-error: true
