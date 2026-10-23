@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {officialSixUrl,evaluateSixPage,selectSwissCandidates,fetchOfficialSixHtml,probeSwissReference} from './six-official-symbol-evidence.mjs';
+import {officialSixUrl,evaluateSixPage,selectSwissCandidates,fetchOfficialSixHtml,probeSwissReference,verifyYahooCandidate} from './six-official-symbol-evidence.mjs';
 const item={mic:'XSWX',isin:'FR0000125007',symbol:'490580',currency:'CHF'};
 const url=officialSixUrl(item);
 assert.equal(url,'https://www.six-group.com/en/market-data/shares/share-explorer/share-details.FR0000125007CHF4.html');
@@ -26,4 +26,11 @@ await assert.rejects(()=>fetchOfficialSixHtml('http://evil.invalid/a'),/UNAPPROV
 const fake=async u=>({ok:true,url:u,headers:{get:k=>k==='content-type'?'text/html':null},text:async()=>html});
 assert.equal(await fetchOfficialSixHtml(url,fake),html);
 await assert.rejects(()=>fetchOfficialSixHtml(url,async u=>({...await fake(u),url:'https://evil.invalid'})),/URL_MISMATCH/);
+const verified=await verifyYahooCandidate(item,'GOB',async()=>({providerMeta:{symbol:'GOB.SW',currency:'CHF',exchangeName:'EBS'},bars:[{date:'2026-10-22',open:10,high:11,low:9,close:10.5}]}));
+assert.equal(verified.status,'YAHOO_VENUE_CURRENCY_OHLC_MATCH_ISIN_UNPROVEN');
+assert.equal((await verifyYahooCandidate(item,'GOB',async()=>({providerMeta:{symbol:'GOB.SW',currency:'EUR',exchangeName:'EBS'},bars:[{date:'2026-10-22',open:10,high:11,low:9,close:10.5}]}))).status,'YAHOO_IDENTITY_OR_OHLC_NOT_PROVEN');
+assert.equal((await verifyYahooCandidate(item,'GOB',async()=>({providerMeta:{symbol:'GOB.SW',currency:'CHF',exchangeName:'EBS'},bars:[{date:'2026-10-22',open:10,high:9,low:11,close:10.5}]}))).status,'YAHOO_IDENTITY_OR_OHLC_NOT_PROVEN');
+const both=await probeSwissReference([item],{fetchHtml:async()=>html,fetchYahoo:async()=>({providerMeta:{symbol:'GOB.SW',currency:'CHF',exchangeName:'EBS'},bars:[{date:'2026-10-22',open:10,high:11,low:9,close:10.5}]})});
+assert.equal(both.results[0].yahooEvidence.status,'YAHOO_VENUE_CURRENCY_OHLC_MATCH_ISIN_UNPROVEN');
+assert.equal(both.results[0].approvedForProduction,false);
 console.log('SIX official read-only symbol evidence tests PASS');
