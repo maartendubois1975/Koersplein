@@ -17,6 +17,7 @@ assert.equal(auditBarIssue(good,'2026-10-22','2026-10-23'),null);
 assert.equal(auditBarIssue({...good,high:null},'2026-10-22','2026-10-23'),'INCOMPLETE_OR_INVALID_OHLC');
 assert.equal(auditBarIssue({...good,date:'2026-10-21'},'2026-10-22','2026-10-23'),'STALE_LAST_TRADE');
 assert.equal(auditBarIssue({...good,date:'2026-10-24'},'2026-10-22','2026-10-23'),'FUTURE_LAST_TRADE');
+assert.equal(auditBarIssue({...good,date:'2026-10-23'},'2026-10-22','2026-10-23'),'SESSION_NOT_YET_CLOSED');
 assert.equal(auditBarIssue(null,'2026-10-22','2026-10-23'),'NO_VALID_BAR');
 assert.equal(previousClosedWeekday('2026-10-26'),'2026-10-23','Monday looks back to Friday');
 assert.equal(previousClosedWeekday('2026-10-23'),'2026-10-22');
