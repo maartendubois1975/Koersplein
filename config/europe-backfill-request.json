@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-19T11:16:00Z",
+  "requestedAt": "2026-10-23",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
-  "mode": "FULL_APPEND_ONLY_BACKFILL_AND_DAILY_TAIL",
-  "reason": "Retry Europe daily OIDC-backed append-only processing after Paris identity-resolution improvement; retain verified market sources and preserve existing bars."
+  "mode": "DAILY_APPEND_ONLY_VERIFICATION",
+  "reason": "Explicit eight-shard production verification of approved provider allowlists, Paris existing-history-only protection, and audit latest-bar correction. No full backfill."
 }
