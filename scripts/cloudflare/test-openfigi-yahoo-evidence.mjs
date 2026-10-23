@@ -10,8 +10,8 @@ const report={mode:'READ_ONLY_NO_PRICE_WRITES',items:[london,ambiguous,swiss,oth
 const selection=selectOpenFigiYahooCandidates(report,{offset:0,limit:2});
 assert.equal(selection.totalEligible,3);
 assert.equal(selection.ambiguousDeferred,1);
-assert.deepEqual(selection.items.map(x=>x.isin),[swiss.isin,london.isin]);
-assert.deepEqual(selectOpenFigiYahooCandidates(report,{offset:2,limit:2}).items.map(x=>x.isin),[other.isin]);
+assert.deepEqual(selection.items.map(x=>x.isin),[swiss.isin,other.isin]);
+assert.deepEqual(selectOpenFigiYahooCandidates(report,{offset:2,limit:2}).items.map(x=>x.isin),[london.isin]);
 assert.throws(()=>selectOpenFigiYahooCandidates(report,{offset:-1}),/Invalid/);
 assert.throws(()=>selectOpenFigiYahooCandidates(report,{limit:101}),/Invalid/);
 assert.throws(()=>selectOpenFigiYahooCandidates({...report,mode:'WRITE'}),/read-only/);
