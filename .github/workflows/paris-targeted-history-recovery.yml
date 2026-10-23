@@ -1,8 +1,5 @@
 name: Paris targeted historical recovery
 on:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/paris-targeted-history-recovery.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -21,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: {node-version: 22}
-      - name: Recover only existing Paris listings with approved primary source
+      - name: Append only to already recorded Paris history with approved providers
         run: node scripts/cloudflare/paris-targeted-history-recovery.mjs
       - uses: actions/upload-artifact@v4
         if: always()
