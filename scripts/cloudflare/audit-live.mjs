@@ -2,6 +2,7 @@ import {readFile} from 'node:fs/promises';
 import {storageIdentityResolver} from './storage-identity.mjs';
 import { cloudflareCatalog } from './catalog.mjs';
 import { FactoryApiClient } from './client.mjs';
+import {fetchPublicHistoryManifest} from './public-history-manifest.mjs';
 
 export function compareCloudflareCoverage(expected, liveCatalog, manifest) {
   if (!Array.isArray(liveCatalog?.instruments) || !manifest?.instruments || typeof manifest.instruments !== 'object') {
@@ -65,9 +66,8 @@ if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).
     markets.push({...m,shares:c.shares||c.instruments||[]});
   }
   const api=String(process.env.KOERSPLEIN_API_URL||'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/,'');
-  const response=await fetch(api+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
-  if(!response.ok)throw Error('Public history manifest: HTTP '+response.status);
-  const manifest=await response.json();
-  if(!manifest?.instruments||typeof manifest.instruments!=='object')throw Error('Invalid public history manifest');
+  // A transient 30-second Worker timeout must not invalidate the coverage report.
+  // The shared reader still rejects missing/empty/malformed manifests.
+  const manifest={instruments:await fetchPublicHistoryManifest(api)};
   console.log(JSON.stringify(manifestCoverage(markets,manifest),null,2));
 }
