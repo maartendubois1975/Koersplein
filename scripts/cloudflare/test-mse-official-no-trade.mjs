@@ -45,6 +45,7 @@ assert.equal(isVerifiedNoTradeGap(laterStatus,'2026-10-19','2026-10-22'),true);
 assert.equal(isVerifiedNoTradeGap(laterStatus,'2026-10-18','2026-10-22'),false);
 assert.equal(mseOfficialNoTradeStatus(laterSnapshot,{mic:'XMAL',isin:'MT0000020116',symbol:'BOV'},'2026-10-22'),null,'Trading on the target date must not be labelled no-trade');
 assert.equal(mseOfficialNoTradeStatus(laterSnapshot,{mic:'XMAL',isin:'MT0000040106',symbol:'LOM'},'2026-10-24'),null,'Older report must never prove a later target session');
+assert.equal(mseOfficialNoTradeStatus(laterSnapshot,{mic:'XMAL',isin:'MT0000040106',symbol:'LOM'},'2026-02-31'),null,'Impossible calendar dates cannot be certified');
 assert.equal(mseOfficialNoTradeStatus({...laterSnapshot,sourceUrl:'https://unapproved.example/'},{mic:'XMAL',isin:'MT0000040106',symbol:'LOM'},'2026-10-22'),null,'Only the approved official URL is evidence');
 assert.throws(()=>parseMseOfficialPriceList(laterLines,{expectedDate:'2026-10-22'}),/date mismatch/,'Exact snapshot parsing remains the default');
 assert.throws(()=>parseMseOfficialPriceList(laterLines.replace('Friday, October 23, 2026','Friday, October 30, 2026'),{expectedDate:'2026-10-22',allowLaterSnapshot:true}),/date mismatch/,'Look-ahead is strictly bounded');
