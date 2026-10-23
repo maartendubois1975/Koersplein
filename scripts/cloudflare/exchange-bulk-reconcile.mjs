@@ -29,6 +29,12 @@ export function reconcileBulkWithCatalog({catalog,providerListings,bulkBars}){
   listingByCode.set(code,isin);
  }
  const byIsin=new Map(),ambiguousIsins=new Set();
+ for(const code of ambiguousCodes){
+  for(const listing of providerListings){
+   const listedCode=String(listing.Code||listing.code||'').trim().toUpperCase();
+   if(listedCode===code){const isin=String(listing.Isin||listing.ISIN||listing.isin||'').trim().toUpperCase();if(isin)ambiguousIsins.add(isin);}
+  }
+ }
  for(const [code,isin] of listingByCode){
   if(ambiguousCodes.has(code))continue;
   if(byIsin.has(isin))ambiguousIsins.add(isin);
