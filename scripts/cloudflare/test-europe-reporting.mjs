@@ -108,3 +108,19 @@ assert.match(contradictorySourceReport,/rejected as repair candidates/);
 assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...contradictorySourceProbe,generatedAt:'2026-10-22T10:50:03.000Z'}),/Conflicting complete same-date source observations/);
 console.log('Conflicting source-bar evidence is explicitly reported, separate from invalid individual bars PASS');
 
+
+const missingAndMixedProbe={...sourceProbe,sourceBarDiagnostics:{
+ readOnly:true,observations:8,invalidSourceBars:2,probesWithInvalidBars:1,
+ mixedSourceObservations:1,missingExactDateObservations:3,probesWithMissingExactDate:2,
+ distinctFeedNoExactDateObservations:1,discordantExactDateFeedObservations:1,
+ byMarket:{XLON:{sourceObservations:5,invalidSourceBars:2,mixedSourceObservations:1,missingExactDateObservations:2,defects:{HIGH_BELOW_CLOSE:1}},
+ XSWX:{sourceObservations:3,invalidSourceBars:0,missingExactDateObservations:1,defects:{}}}
+}};
+const missingAndMixedText=renderEuropeReport(sourceReport,'',missingAndMixedProbe);
+assert.match(missingAndMixedText,/Mixed complete\/invalid same-date source observations: 1 \(London 1\)/);
+assert.match(missingAndMixedText,/Exact-date source absence: 3 provider attempts \(London 2\)/);
+assert.match(missingAndMixedText,/1 feed\/date absences confirmed across observed adapters/);
+assert.match(missingAndMixedText,/1 correlated feed\/date disagreements/);
+assert.match(missingAndMixedText,/do NOT prove no trading or delisting/);
+assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...missingAndMixedProbe,generatedAt:'2026-10-22T10:50:03.000Z'}),/Exact-date source absence:/);
+console.log('Fresh read-only mixed/absent source observations are clearly distinguished from no-trade PASS');
