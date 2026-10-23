@@ -34,7 +34,7 @@ export function selectIncompleteOhlcCandidates(queue,{limit=30,perMarket=18,rota
  return out;
 }
 export async function probeIncompleteOhlcCandidate(item,{registry,sources,market,listings,timeoutMs=12000}){
- const base={mic:item.mic,isin:item.isin,symbol:item.symbol||null,date:item.lastStoredDate,readOnly:true};
+ const base={mic:item.mic,isin:item.isin,symbol:item.symbol||null,date:item.lastStoredDate,ohlcDefects:item.ohlcDefects||[],evidenceScope:item.evidenceScope||'LATEST_AUDIT_BAR',readOnly:true};
  if(item.auditReason!=='INCOMPLETE_OR_INVALID_OHLC'||!/^\d{4}-\d{2}-\d{2}$/.test(item.lastStoredDate||''))return {...base,status:'NOT_AN_INCOMPLETE_STORED_CANDLE'};
  if(!market||market.mic!==item.mic||sources?.status!=='APPROVED')return {...base,status:'NO_APPROVED_MARKET_ROUTE'};
  const matching=(listings||[]).filter(x=>x.isin===item.isin&&(x.mic||market.mic)===item.mic);
