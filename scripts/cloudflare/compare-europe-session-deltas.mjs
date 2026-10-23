@@ -66,6 +66,27 @@ function validate(run,label){
       label+': invalid import failure category');
     failures.set(k,{mic:failure.mic,isin:failure.isin,symbol:failure.symbol,category:failure.category});
   }
+  // The production summary also publishes a per-market provider-failure
+  // histogram. Cross-check that independent rollup against the immutable
+  // instrument failures before reporting a trustworthy same-cutoff delta.
+  const sourceSummary=run.sourceFailureByMarket;
+  check(sourceSummary&&typeof sourceSummary==='object'&&!Array.isArray(sourceSummary)&&
+    Object.keys(sourceSummary).length===markets.size,label+': source failure MIC coverage incomplete');
+  for(const mic of markets.keys()){
+    const row=sourceSummary[mic];
+    const actual=[...failures.values()].filter(f=>f.mic===mic);
+    check(row&&natural(row.failed)&&row.failed===actual.length,
+      label+'/'+mic+': source failure count mismatch');
+    const actualCategories=new Map();
+    for(const failure of actual)actualCategories.set(failure.category,(actualCategories.get(failure.category)||0)+1);
+    const reported=row.categories;
+    check(reported&&typeof reported==='object'&&!Array.isArray(reported)&&
+      Object.keys(reported).length===actualCategories.size,
+      label+'/'+mic+': source failure categories incomplete');
+    for(const [category,count] of actualCategories){
+      check(reported[category]===count,label+'/'+mic+': source failure category count mismatch');
+    }
+  }
   return {totals:{...totals,failedImports:failures.size},markets,missing,noTrade,failures};
 }
 export function compareEuropeSessionDeltas(before,after){

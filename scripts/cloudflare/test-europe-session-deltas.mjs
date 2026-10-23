@@ -11,7 +11,12 @@ function summary({cutoff='2026-10-23',missing=['GB0000000001','GB0000000002'],no
   });
   const importFailures=markets.flatMap(m=>m.missing.map(item=>({
     mic:m.mic,isin:item.isin,symbol:item.symbol,category:'NO_NEW_BARS_IN_RANGE'})));
+  const sourceFailureByMarket=Object.fromEntries(markets.map(m=>[m.mic,{
+    failed:m.missing.length,
+    categories:m.missing.length?{NO_NEW_BARS_IN_RANGE:m.missing.length}:{}
+  }]));
   return {shardsComplete:complete,
+    sourceFailureByMarket,
     importFailures,
     marketCoverage:{complete,expectedMarkets:31,reportedUpdateMarkets:31,reportedAuditMarkets:31,anomalies:[]},
     sessionConsistency:{complete,cutoff,observedCutoffs:[cutoff],anomalies:[]},freshnessCutoff:cutoff,markets,
@@ -48,6 +53,7 @@ assert.equal(reasonOnly.byMarket[0].missingDelta,0);
 assert.equal(compareEuropeSessionDeltas(b,a).added.length,1);
 const categoryChanged=summary();
 categoryChanged.importFailures[0].category='NETWORK_TIMEOUT';
+categoryChanged.sourceFailureByMarket.XLON.categories={NO_NEW_BARS_IN_RANGE:1,NETWORK_TIMEOUT:1};
 const categoryDiff=compareEuropeSessionDeltas(a,categoryChanged);
 assert.equal(categoryDiff.failureCategoryChanges.length,1);
 assert.equal(categoryDiff.failureCategoryChanges[0].before,'NO_NEW_BARS_IN_RANGE');
@@ -59,6 +65,8 @@ assert.equal(categoryDiff.byMarket[0].failedImportsDelta,0);
 const fewerFailures=summary();
 fewerFailures.importFailures.shift();
 fewerFailures.totals.failedImports=1;
+fewerFailures.sourceFailureByMarket.XLON.failed=1;
+fewerFailures.sourceFailureByMarket.XLON.categories.NO_NEW_BARS_IN_RANGE=1;
 const failureOnlyDiff=compareEuropeSessionDeltas(a,fewerFailures);
 assert.equal(failureOnlyDiff.removed.length,0);
 assert.equal(failureOnlyDiff.failureRemoved.length,1);
@@ -72,6 +80,11 @@ const reject=[
   [a,{...b,markets:b.markets.slice(1)},'not 31 markets'],
   [a,{...b,markets:b.markets.map((m,i)=>i===0?{...m,missing:[...m.missing,m.missing[0]]}:m)},'missing details incomplete'],
   [a,{...b,importFailures:undefined},'import failure details incomplete'],
+  [a,{...b,sourceFailureByMarket:undefined},'source failure MIC coverage incomplete'],
+  [a,{...b,sourceFailureByMarket:{...b.sourceFailureByMarket,XLON:{
+    ...b.sourceFailureByMarket.XLON,failed:0}}},'source failure count mismatch'],
+  [a,{...b,sourceFailureByMarket:{...b.sourceFailureByMarket,XLON:{
+    ...b.sourceFailureByMarket.XLON,categories:{NETWORK_TIMEOUT:1}}}},'source failure category count mismatch'],
   [a,{...b,totals:{...b.totals,failedImports:0}},'import failure details incomplete'],
   [a,{...b,importFailures:[...b.importFailures,b.importFailures[0]],
     totals:{...b.totals,failedImports:2}},'duplicate import failure'],
