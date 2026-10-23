@@ -20,7 +20,7 @@ try {
   await fs.writeFile(path.join(reportDir,`daily-open-close-update-${shard}.json`),JSON.stringify(update));
   await fs.writeFile(path.join(reportDir,`daily-open-close-audit-${shard}.json`),JSON.stringify(audit));
  }
- const run=()=>spawnSync(process.execPath,[executable],{cwd:fixture,encoding:'utf8',timeout:15000});
+ const run=()=>spawnSync(process.execPath,[executable],{cwd:fixture,encoding:'utf8',timeout:15000,env:{...process.env,GITHUB_STEP_SUMMARY:''}});
  let result=run();
  assert.equal(result.status,0,`Complete summary failed: ${result.stderr}`);
  let summary=JSON.parse(await fs.readFile(path.join(reportDir,'europe-run-summary.json'),'utf8'));
