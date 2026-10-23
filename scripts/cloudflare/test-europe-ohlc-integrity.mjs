@@ -35,6 +35,7 @@ const daily=await fs.readFile('scripts/cloudflare/daily-open-close-update.mjs','
 const official=await fs.readFile('scripts/cloudflare/reconcile-official-daily.mjs','utf8');
 for(const [name,content] of [['audit',audit],['daily',daily],['official',official]])assert.match(content,/isCompleteOhlcBar/,'OHLC gate missing in '+name);
 assert.match(audit,/isVerifiedNoTradeGap/);
+assert.match(audit,/dated\.filter\(x=>x\.date<=cutoff\)/,'Audit must inspect latest completed session, not an intraday bar');
 assert.match(daily,/isVerifiedNoTradeGap/);
 assert.match(official,/OFFICIAL_PARTIAL_OR_INVALID_OHLC/);
 const queue=await fs.readFile('scripts/cloudflare/europe-recovery-queue.mjs','utf8');
