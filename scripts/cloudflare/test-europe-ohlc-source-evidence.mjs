@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic,isCompleteOhlcSourceBar} from './europe-ohlc-source-evidence.mjs';
+import {selectIncompleteOhlcCandidates,probeIncompleteOhlcCandidate,approvedCatalogListingMic,isCompleteOhlcSourceBar,compareStoredAndSourceOhlc} from './europe-ohlc-source-evidence.mjs';
 const item={mic:'XLON',isin:'GB0000000001',symbol:'TEST',lastStoredDate:'2026-10-22',auditReason:'INCOMPLETE_OR_INVALID_OHLC'};
 const queue={markets:[{mic:'XLON',instruments:[item,{...item,isin:'GB0000000002',auditReason:'STALE_LAST_TRADE'}]},{mic:'XPAR',instruments:[{...item,mic:'XPAR',isin:'FR0000000001'}]}]};
 assert.equal(selectIncompleteOhlcCandidates(queue).length,2);
@@ -121,3 +121,27 @@ for(const partial of [
  assert.equal(probe.candidateBar,undefined,'Never publish a partial bar as correction evidence');
 }
 console.log('Source evidence rejects missing/invalid HIGH/LOW, inconsistent OHLC and numeric-string candles PASS');
+
+
+// Actual stored-bar snapshot must survive into source evidence without
+// changing production data; difference magnitudes guide later manual review.
+const storedSnapshot={open:100,high:104,low:95,close:105};
+const sourceSnapshot={date:'2026-10-22',open:100,high:110,low:90,close:105};
+const diff=compareStoredAndSourceOhlc(storedSnapshot,sourceSnapshot);
+assert.equal(diff.readOnly,true);
+assert.equal(diff.comparableFields,4);
+assert.equal(diff.fields.open.absoluteDifference,0);
+assert.equal(diff.fields.high.absoluteDifference,6);
+assert.equal(diff.fields.low.absoluteDifference,5);
+assert.ok(diff.maxRelativeDiffBps>500);
+assert.equal(compareStoredAndSourceOhlc(null,sourceSnapshot),null);
+assert.equal(compareStoredAndSourceOhlc(storedSnapshot,{...sourceSnapshot,high:null}),null);
+const missingField=compareStoredAndSourceOhlc({...storedSnapshot,low:null},sourceSnapshot);
+assert.equal(missingField.comparableFields,3);
+assert.equal(missingField.fields.low.absoluteDifference,null);
+const compared=await probeIncompleteOhlcCandidate({...item,storedOhlc:storedSnapshot},{registry,sources,market,listings});
+assert.equal(compared.status,'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW');
+assert.deepEqual(compared.storedOhlc,storedSnapshot);
+assert.equal(compared.sourceVsStored.fields.high.absoluteDifference,6);
+assert.equal(compared.storagePolicy,'APPEND_ONLY_EXISTING_BAR_UNCHANGED');
+console.log('Read-only stored-versus-source OHLC magnitude evidence and null-safe comparisons PASS');
