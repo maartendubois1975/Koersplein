@@ -1,5 +1,5 @@
 {
-  "requestedAt": "2026-10-23T08:08:00Z",
+  "requestedAt": "2026-10-23T08:11:00Z",
   "sourceRunId": 39917468053,
   "scope": [
     "XSWX",
@@ -7,5 +7,5 @@
   ],
   "mode": "READ_ONLY_ISIN_MIC_REFERENCE_DISCOVERY",
   "maxInstruments": 500,
-  "reason": "Retry audited Swiss/London read-only ISIN+MIC mapping after artifact nested-path discovery fix; no production writes."
+  "reason": "Retry read-only OpenFIGI Swiss/London research with recovery queue reconstructed from verified full audit summary; no production price writes."
 }
