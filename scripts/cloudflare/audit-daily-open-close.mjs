@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {latestClosedWeekday,mapConcurrent} from './europe-run-policy.mjs';
 import {storageIdentityResolver} from './storage-identity.mjs';
+import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 import { FactoryApiClient } from './client.mjs';
 
 const client=new FactoryApiClient();
@@ -12,7 +13,6 @@ const complete=plan.markets.filter(x=>x.state==='COMPLETE').filter((_,index)=>in
 const out=[];
 const storedCatalog=await client.catalog();
 const parisPolicy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
-const parisMics=new Set(parisPolicy.mics);
 const manifestResponse=await fetch(client.baseUrl+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
 if(!manifestResponse.ok)throw Error('Public manifest HTTP '+manifestResponse.status);
 const manifest=(await manifestResponse.json()).instruments||{};
@@ -21,7 +21,7 @@ for(const market of complete){
   const file=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
   const allShares=file.shares||file.instruments||[];
   const resolveStorage=storageIdentityResolver(storedCatalog.instruments||[],market.mic);
-  const shares=parisPolicy.mode==='existing-history-only'?allShares.filter(s=>!parisMics.has(s.mic||market.mic)||Boolean(manifest[resolveStorage(s)]?.lastDate)):allShares;
+  const shares=allShares.filter(s=>parisHistoryEligible(s,market.mic,parisPolicy,manifest,resolveStorage));
   const inactiveParis=allShares.length-shares.length;
   let ok=0,missing=[],skipped=0,noTrades=[];
   const knownUnavailable=new Map((market.dataUnavailable||[]).filter(x=>x.status==='DATA_UNAVAILABLE').map(x=>[x.isin,x]));
