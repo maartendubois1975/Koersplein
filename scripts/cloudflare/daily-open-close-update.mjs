@@ -60,6 +60,7 @@ for(const market of targetMarkets){
  const source=sourceRegistry.markets?.[market.mic];if(!source||source.status!=='APPROVED')throw Error(`${market.mic}: COMPLETE zonder APPROVED bronroute`);
  const primary=source.historySources?.find(x=>x.role==='PRIMARY')?.provider;if(!primary)throw Error(`${market.mic}: geen PRIMARY bronroute`);
  if(!providers.get(primary))throw Error(`${market.mic}: onbekende PRIMARY provider ${primary}; bronregister corrigeren`);
+ const allowedProviderIds=[primary,...(source.historySources||[]).filter(x=>x.role==='DISCOVERY_FALLBACK'&&x.provider!==primary&&providers.get(x.provider)).map(x=>x.provider)];
  const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),allShares=catalog.shares||catalog.instruments||[];
  const shares=parisRepair?allShares.filter(share=>!isInactiveParis(share,market.mic)&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate):allShares.filter(share=>!isInactiveParis(share,market.mic));
  if(shares.length!==allShares.length)console.log('PARIS_INACTIVE_EXCLUDED_FROM_DAILY',JSON.stringify({mic:market.mic,retained:shares.length,inactive:allShares.length-shares.length}));
@@ -100,7 +101,7 @@ for(const market of targetMarkets){
    }
 
    const range={startDate:fullBackfill||!beforeDate?'1990-01-01':new Date(new Date(beforeDate+'T00:00:00Z').getTime()+86400000).toISOString().slice(0,10),endDate:today};
-   const {provider,result}=await providers.fetchDaily(instrument,range,primary,{strictPreferred:false,timeoutMs:fullBackfill?60000:20000,acceptResult:r=>{
+   const {provider,result}=await providers.fetchDaily(instrument,range,primary,{strictPreferred:false,timeoutMs:fullBackfill?60000:20000,allowedProviderIds,acceptResult:r=>{
     const bars=validBars(r,range);
     return bars.length>0&&(fullBackfill||bars.at(-1).date>beforeDate);
    }});
@@ -113,7 +114,7 @@ for(const market of targetMarkets){
    if(fullBackfill&&afterDate&&afterDate<freshnessCutoff){
     const tailRange={startDate:new Date(new Date(afterDate+'T00:00:00Z').getTime()+86400000).toISOString().slice(0,10),endDate:today};
     try{
-     const tail=await providers.fetchDaily(instrument,tailRange,primary,{timeoutMs:20000,acceptResult:r=>validBars(r,tailRange).length>0});
+     const tail=await providers.fetchDaily(instrument,tailRange,primary,{timeoutMs:20000,allowedProviderIds,acceptResult:r=>validBars(r,tailRange).length>0});
      const tailBars=validBars(tail.result,tailRange);
      for(const [period,part] of partitionBars(tailBars))await client.putPartition(storageIsin,period,{bars:part,provider:tail.provider.id,appendOnly:true});
      if(tailBars.length){await client.completeHistory(storageIsin,{provider:tail.provider.id});afterDate=tailBars.at(-1).date;}
