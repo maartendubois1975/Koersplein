@@ -11,6 +11,10 @@ on:
       - 'scripts/cloudflare/europe-failure-diagnosis.mjs'
       - 'scripts/cloudflare/test-europe-failure-diagnosis.mjs'
       - 'scripts/cloudflare/summarize-europe-run.mjs'
+      - 'scripts/cloudflare/six-ipo-symbol-evidence.mjs'
+      - 'scripts/cloudflare/six-ipo-symbol-probe.mjs'
+      - 'scripts/cloudflare/test-six-ipo-symbol-evidence.mjs'
+      - 'scripts/history/providers/yahoo-chart.mjs'
       - 'config/paris-follow-policy.json'
       - 'scripts/cloudflare/test-europe-provider-routing.mjs'
       - '.github/workflows/europe-routing-regression.yml'
@@ -36,8 +40,13 @@ jobs:
           node --check scripts/cloudflare/europe-failure-diagnosis.mjs
           node --check scripts/cloudflare/test-europe-failure-diagnosis.mjs
           node --check scripts/cloudflare/summarize-europe-run.mjs
+          node --check scripts/cloudflare/six-ipo-symbol-evidence.mjs
+          node --check scripts/cloudflare/six-ipo-symbol-probe.mjs
+          node --check scripts/cloudflare/test-six-ipo-symbol-evidence.mjs
+          node --check scripts/history/providers/yahoo-chart.mjs
       - name: Test approved provider routing
         run: |
           node scripts/cloudflare/test-europe-provider-routing.mjs
           node scripts/cloudflare/test-paris-history-eligibility.mjs
           node scripts/cloudflare/test-europe-failure-diagnosis.mjs
+          node scripts/cloudflare/test-six-ipo-symbol-evidence.mjs
