@@ -65,3 +65,15 @@ assert.match(diverseReport,/London source sample: 16 distinct ISIN across 20 dat
 assert.match(diverseReport,/14 NO_NEW_BARS_IN_RANGE/);
 assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...diverseProbe,probeCoverage:{...diverseProbe.probeCoverage,probedDates:29}}),/Distinct instruments sampled/,'Do not claim coverage for inconsistent probe totals');
 console.log('Read-only distinct-ISIN source diversity and London missing-day classification PASS');
+
+const invalidSourceProbe={...sourceProbe,sourceBarDiagnostics:{
+ readOnly:true,observations:29,invalidSourceBars:25,probesWithInvalidBars:25,
+ byMarket:{XLON:{sourceObservations:29,invalidSourceBars:25,probesWithInvalidBars:25,defects:{INVALID_OR_MISSING_HIGH:18,HIGH_BELOW_CLOSE:7,NO_EXACT_DATE_BAR:3}}}
+}};
+const invalidSourceReport=renderEuropeReport(sourceReport,'',invalidSourceProbe);
+assert.match(invalidSourceReport,/25 invalid source bars in 29 provider-result observations/);
+assert.match(invalidSourceReport,/London exact-date source quality: 25 invalid bars/);
+assert.match(invalidSourceReport,/INVALID_OR_MISSING_HIGH 18/);
+assert.match(invalidSourceReport,/not additional stored-history defects/);
+assert.doesNotMatch(renderEuropeReport(sourceReport,'',{...invalidSourceProbe,generatedAt:'2026-10-22T10:50:03.000Z'}),/London exact-date source quality/);
+console.log('Source bar field-level defect reporting remains read-only and freshness-gated PASS');
