@@ -50,4 +50,5 @@ assert.match(runner,/yahoo\.offset!==0/);
 const workflow=await fs.readFile('.github/workflows/europe-openfigi-yahoo-verification.yml','utf8');
 assert.match(workflow,/swissYahooRunId/);
 assert.match(workflow,/six-sponsored-identity-probe\.mjs/);
+assert.match(workflow,/Optional official SIX admission check[^\n]*\n\s*continue-on-error: true/,'Unavailable dynamic SIX table must not invalidate independent Yahoo evidence');
 console.log('SIX provenance, missing-source prevention, shared-ticker ISIN collisions and read-only workflow guards PASS');
