@@ -39,13 +39,30 @@ export async function fetchOfficialSixHtml(url,fetchFn=fetch){
  if(html.length>2000000)throw Error('OFFICIAL_HTML_TOO_LARGE');
  return html;
 }
-export async function probeSwissReference(shares,{limit=12,rotation=0,fetchHtml=fetchOfficialSixHtml}={}){
+export async function verifyYahooCandidate(instrument,symbol,fetchYahoo){
+ if(!fetchYahoo||!/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(String(symbol||'')))return null;
+ const providerSymbol=symbol+'.SW';
+ try{
+  const response=await fetchYahoo({...instrument,providerSymbol});
+  const meta=response?.providerMeta||{};
+  const venue=[meta.exchangeName,meta.fullExchangeName].join(' ').toLowerCase();
+  const venueValid=/(?:ebs|swx|six swiss|swiss exchange|zurich)/.test(venue);
+  const identityValid=String(meta.symbol||'').toUpperCase()===providerSymbol.toUpperCase()&&String(meta.currency||'').toUpperCase()===instrument.currency&&venueValid;
+  const valid=(response?.bars||[]).filter(b=>{
+   const n=['open','high','low','close'].map(k=>Number(b[k]));
+   return /^\d{4}-\d{2}-\d{2}$/.test(String(b.date||''))&&n.every(x=>Number.isFinite(x)&&x>0)&&n[1]>=Math.max(n[0],n[3])&&n[2]<=Math.min(n[0],n[3]);
+  });
+  return {status:identityValid&&valid.length?'YAHOO_VENUE_CURRENCY_OHLC_MATCH_ISIN_UNPROVEN':'YAHOO_IDENTITY_OR_OHLC_NOT_PROVEN',validDays:valid.length,lastValidDate:valid.at(-1)?.date||null,readOnly:true};
+ }catch(error){return {status:'YAHOO_PROBE_FAILED',error:String(error.message).slice(0,140),readOnly:true};}
+}
+export async function probeSwissReference(shares,{limit=12,rotation=0,fetchHtml=fetchOfficialSixHtml,fetchYahoo=null}={}){
  const selected=selectSwissCandidates(shares,{limit,rotation}),results=[];
  for(const i of selected){
   const url=officialSixUrl(i);
   try{
    const evidence=evaluateSixPage(i,await fetchHtml(url),url);
-   results.push({isin:i.isin,valor:i.symbol,currency:i.currency,mic:'XSWX',officialUrl:url,...evidence,readOnly:true,approvedForProduction:false});
+   const yahooEvidence=evidence.symbol?await verifyYahooCandidate(i,evidence.symbol,fetchYahoo):null;
+   results.push({isin:i.isin,valor:i.symbol,currency:i.currency,mic:'XSWX',officialUrl:url,...evidence,yahooEvidence,readOnly:true,approvedForProduction:false});
   }catch(e){results.push({isin:i.isin,valor:i.symbol,currency:i.currency,mic:'XSWX',officialUrl:url,status:'OFFICIAL_FETCH_FAILED',error:String(e.message).slice(0,160),readOnly:true,approvedForProduction:false});}
  }
  const statuses={};for(const row of results)statuses[row.status]=(statuses[row.status]||0)+1;
@@ -53,7 +70,11 @@ export async function probeSwissReference(shares,{limit=12,rotation=0,fetchHtml=
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  const catalog=JSON.parse(await fs.readFile('data/euronext-zurich.json','utf8'));
- const report=await probeSwissReference(catalog.shares||[],{rotation:Number(process.env.GITHUB_RUN_NUMBER||0)});
+ const {YahooChartProvider}=await import('../history/providers/yahoo-chart.mjs');
+ const yahoo=new YahooChartProvider();
+ const endDate=new Date(Date.now()-86400000).toISOString().slice(0,10);
+ const startDate=new Date(Date.now()-14*86400000).toISOString().slice(0,10);
+ const report=await probeSwissReference(catalog.shares||[],{rotation:Number(process.env.GITHUB_RUN_NUMBER||0),fetchYahoo:i=>yahoo.fetchDaily(i,{startDate,endDate,signal:AbortSignal.timeout(12000)})});
  await fs.mkdir('research/output',{recursive:true});
  await fs.writeFile('research/output/six-official-symbol-evidence.json',JSON.stringify(report,null,2)+'\n');
  console.log('SIX_REFERENCE_READ_ONLY',JSON.stringify({requested:report.requested,statuses:report.statuses,productionMappingsCreated:0}));
