@@ -3,12 +3,16 @@ import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
 
 // Only investigate incomplete candles already identified by the authorized
 // read-only audit. No symbol guessing, no automatic identity promotion.
-export function selectIncompleteOhlcCandidates(queue,{limit=30,perMarket=18}={}){
- if(!Number.isInteger(limit)||limit<1||limit>100||!Number.isInteger(perMarket)||perMarket<1||perMarket>100)throw Error('Invalid OHLC probe limits');
+export function selectIncompleteOhlcCandidates(queue,{limit=30,perMarket=18,rotation=0}={}){
+ if(!Number.isInteger(limit)||limit<1||limit>100||!Number.isInteger(perMarket)||perMarket<1||perMarket>100||!Number.isSafeInteger(rotation)||rotation<0)throw Error('Invalid OHLC probe limits');
  const out=[];
  for(const market of queue?.markets||[]){
-  const items=(market.instruments||[]).filter(x=>x.auditReason==='INCOMPLETE_OR_INVALID_OHLC'&&/^\d{4}-\d{2}-\d{2}$/.test(x.lastStoredDate||'')).slice(0,perMarket);
-  out.push(...items);
+  const all=(market.instruments||[]).filter(x=>x.auditReason==='INCOMPLETE_OR_INVALID_OHLC'&&/^\d{4}-\d{2}-\d{2}$/.test(x.lastStoredDate||''));
+  if(!all.length)continue;
+  // Rotate the bounded read-only sample; otherwise every run probes the same first 30.
+  const start=((rotation%all.length)*perMarket)%all.length;
+  const count=Math.min(perMarket,all.length);
+  for(let i=0;i<count;i++)out.push(all[(start+i)%all.length]);
   if(out.length>=limit)break;
  }
  return out.slice(0,limit);
@@ -29,7 +33,15 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
  try{
   const {provider,result}=await registry.fetchDaily(instrument,range,primary,{allowedProviderIds:allowed,timeoutMs,acceptResult:r=>validBars(r,range).some(b=>b.date===item.lastStoredDate)});
   const bar=validBars(result,range).find(b=>b.date===item.lastStoredDate);
-  return {...base,status:'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW',provider:provider.id,barDate:bar.date,sourceCurrency:result.providerMeta?.currency||null,storagePolicy:'APPEND_ONLY_EXISTING_BAR_UNCHANGED'};
+  const normalizeCurrency=value=>String(value||'').trim()==='GBp'?'GBX':String(value||'').trim().toUpperCase();
+  const expectedCurrency=normalizeCurrency(instrument.currency);
+  const sourceCurrency=result.providerMeta?.currency||null;
+  const actualCurrency=normalizeCurrency(sourceCurrency);
+  const candidateBar={date:bar.date,open:bar.open,high:bar.high,low:bar.low,close:bar.close,volume:bar.volume??null};
+  const evidence={...base,provider:provider.id,sourceCurrency,expectedCurrency:instrument.currency||null,candidateBar,sourceSymbol:result.providerMeta?.symbol||null,sourceExchange:result.providerMeta?.fullExchangeName||result.providerMeta?.exchangeName||null,storagePolicy:'APPEND_ONLY_EXISTING_BAR_UNCHANGED'};
+  if(!expectedCurrency||!actualCurrency)return {...evidence,status:'SOURCE_CURRENCY_UNVERIFIED'};
+  if(expectedCurrency!==actualCurrency)return {...evidence,status:'SOURCE_CURRENCY_MISMATCH_REQUIRES_REVIEW'};
+  return {...evidence,status:'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW',currencyVerified:true,barDate:bar.date};
  }catch(error){
   return {...base,status:'NO_COMPLETE_APPROVED_SOURCE_BAR',failureCategory:classifyEuropeFailure(error.message),error:String(error.message).slice(0,400)};
  }
