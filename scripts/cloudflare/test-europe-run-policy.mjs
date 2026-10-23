@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {latestClosedWeekday,validBars,mapConcurrent} from './europe-run-policy.mjs';
+import {latestClosedWeekday,latestAuditBar,validBars,mapConcurrent} from './europe-run-policy.mjs';
 import {ProviderRegistry} from '../history/provider-registry.mjs';
 import {mergeHistoryPartition} from '../../cloudflare/worker.mjs';
 assert.equal(latestClosedWeekday(new Date('2026-10-17T08:00:00Z')),'2026-10-16');
@@ -23,3 +23,10 @@ let active=0,max=0,done=0;
 await mapConcurrent([1,2,3,4,5],2,async()=>{active++;max=Math.max(max,active);await new Promise(r=>setTimeout(r,2));active--;done++;});
 assert.equal(done,5);assert.equal(max,2);
 console.log('Europe run: daily freshness, stale-provider fallback, bounded concurrency and preserved historical bars OK');
+
+assert.deepEqual(latestAuditBar([incomplete,current]),current,'Complete same-day bar must win when stored after incomplete');
+assert.deepEqual(latestAuditBar([current,incomplete]),current,'Complete same-day bar must win independent of storage order');
+assert.deepEqual(latestAuditBar([{...current,date:'2026-10-17'},incomplete,current],'2026-10-16'),current,'Ignore a later unclosed session');
+assert.deepEqual(latestAuditBar([{...current,date:'2026-10-17'},current],'2026-10-16'),current);
+assert.equal(latestAuditBar([{...current,date:'2026-02-30'}]),null,'Reject impossible stored dates');
+console.log('Latest OHLC audit handles unsorted partitions, duplicate candles and unclosed sessions PASS');
