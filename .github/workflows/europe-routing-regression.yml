@@ -8,6 +8,9 @@ on:
       - 'scripts/cloudflare/reconcile-official-daily.mjs'
       - 'scripts/cloudflare/paris-history-eligibility.mjs'
       - 'scripts/cloudflare/test-paris-history-eligibility.mjs'
+      - 'scripts/cloudflare/europe-failure-diagnosis.mjs'
+      - 'scripts/cloudflare/test-europe-failure-diagnosis.mjs'
+      - 'scripts/cloudflare/summarize-europe-run.mjs'
       - 'config/paris-follow-policy.json'
       - 'scripts/cloudflare/test-europe-provider-routing.mjs'
       - '.github/workflows/europe-routing-regression.yml'
@@ -30,7 +33,11 @@ jobs:
           node --check scripts/cloudflare/reconcile-official-daily.mjs
           node --check scripts/cloudflare/paris-history-eligibility.mjs
           node --check scripts/cloudflare/test-paris-history-eligibility.mjs
+          node --check scripts/cloudflare/europe-failure-diagnosis.mjs
+          node --check scripts/cloudflare/test-europe-failure-diagnosis.mjs
+          node --check scripts/cloudflare/summarize-europe-run.mjs
       - name: Test approved provider routing
         run: |
           node scripts/cloudflare/test-europe-provider-routing.mjs
           node scripts/cloudflare/test-paris-history-eligibility.mjs
+          node scripts/cloudflare/test-europe-failure-diagnosis.mjs
