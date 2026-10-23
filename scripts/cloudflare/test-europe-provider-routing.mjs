@@ -28,7 +28,7 @@ import fs from 'node:fs/promises';
 const policy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
 const updateScript=await fs.readFile('scripts/cloudflare/daily-open-close-update.mjs','utf8');
 assert.equal(policy.mode,'existing-history-only');
-assert.match(updateScript,/const parisHistoryOnly=parisPolicy\.mode==='existing-history-only';/);
+assert.match(updateScript,/parisHistoryEligible\(share,marketMic,parisPolicy,manifest,resolveExisting\)/);
 assert.match(updateScript,/const shares=allShares\.filter\(share=>!isInactiveParis\(share,market\.mic\)\)/);
 assert.match(updateScript,/const fullRequested=process\.env\.EUROPE_FULL_BACKFILL==='1';/);
 console.log('Paris existing-history-only and explicit full-backfill guard PASS');
