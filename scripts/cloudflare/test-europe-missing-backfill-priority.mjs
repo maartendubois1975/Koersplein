@@ -15,7 +15,7 @@ const keys=approved.map(isin=>{
 });
 const unverified=catalog.shares.find(x=>x.isin==='CH0008967926');
 assert.equal(verifiedSwissPriorityKey(unverified,'XSWX'),null);
-assert.equal(verifiedSwissPriorityKey({...catalog.shares.find(x=>x.isin===approved[0]),providerSymbol:'41860974.SW'},'XSWX'),null===null? 'XSWX|41860974|AT0000KTMI02':'unreachable');
+assert.equal(verifiedSwissPriorityKey({...catalog.shares.find(x=>x.isin===approved[0]),providerSymbol:'41860974.SW'},'XSWX'),null,'Never prioritize a fabricated numeric Swiss valor symbol');
 assert.equal(verifiedSwissPriorityKey({...catalog.shares.find(x=>x.isin===approved[0]),mic:'XPAR'},'XPAR'),null);
 const pool=['XSWX|UNRELATED|CH0000000001',...keys,'XLON|ABC|GB0000000001'];
 const result=selectEuropeMissingBackfill(pool,{limit:1,dayIndex:0,priorityKeys:keys});
