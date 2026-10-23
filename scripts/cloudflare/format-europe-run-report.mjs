@@ -57,6 +57,16 @@ export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
         lines.push(`London source sample: ${london.uniqueInstruments} distinct ISIN across ${london.probes} dates; ${noRange} NO_NEW_BARS_IN_RANGE (not proof of delisting).`);
       }
     }
+    const sourceQuality=sourceProbe.sourceBarDiagnostics;
+    if(sourceQuality?.readOnly&&Number.isSafeInteger(sourceQuality.observations)&&Number.isSafeInteger(sourceQuality.invalidSourceBars)){
+      lines.push(`Exact-date source OHLC diagnostics (read-only): ${sourceQuality.invalidSourceBars} invalid source bars in ${sourceQuality.observations} provider-result observations; ${sourceQuality.probesWithInvalidBars||0} instrument/date probes affected.`);
+      const londonQuality=sourceQuality.byMarket?.XLON;
+      if(londonQuality){
+        const causes=Object.entries(londonQuality.defects||{}).filter(([,count])=>Number.isSafeInteger(count)&&count>0).sort((a,b)=>b[1]-a[1]).slice(0,5);
+        lines.push(`London exact-date source quality: ${londonQuality.invalidSourceBars} invalid bars; ${causes.map(([key,count])=>key+' '+count).join(', ')||'no field-level defects observed'}.`);
+      }
+      lines.push('These are provider-source defects, not additional stored-history defects or verified replacement prices.');
+    }
     const severity=sourceProbe.storedOhlcViolationSeverity;
     if(severity?.readOnly&&severity.complete&&severity.metric==='INTRINSIC_STORED_CANDLE_VIOLATION_NOT_SOURCE_COMPARISON'){
       const buckets=severity.counts||{};
