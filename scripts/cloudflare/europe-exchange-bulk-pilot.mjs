@@ -23,8 +23,9 @@ for(const {exchange,mic} of exchanges){
  const [listings,raw]=await Promise.all([get('exchange-symbol-list/'+exchange),get('eod-bulk-last-day/'+exchange)]);
  const normalized=normalizeBulkBars(raw,{date});
  const catalog=exchange==='PA'?officialParis.filter(x=>['XPAR','ALXP','XMLI'].includes(x.mic)):[];
+ const coverageComparable=exchange==='PA';
  const comparison=reconcileBulkWithCatalog({catalog,providerListings:listings,bulkBars:normalized.bars});
- const report={exchange,mic,date,providerListings:listings.length,rawBars:raw.length,validBars:normalized.bars.length,invalidRows:normalized.errors.slice(0,50),invalidRowCount:normalized.errors.length,officialCatalogSize:catalog.length,matched:comparison.matched.length,missing:comparison.missing.length,ambiguous:comparison.ambiguous.length,missingExamples:comparison.missing.slice(0,30)};
+ const report={exchange,mic,date,providerListings:listings.length,rawBars:raw.length,validBars:normalized.bars.length,invalidRows:normalized.errors.slice(0,50),invalidRowCount:normalized.errors.length,officialCatalogSize:coverageComparable?catalog.length:null,coverageComparable,matched:coverageComparable?comparison.matched.length:null,missing:coverageComparable?comparison.missing.length:null,ambiguous:coverageComparable?comparison.ambiguous.length:null,missingExamples:comparison.missing.slice(0,30)};
  reports.push(report);
  console.log('EXCHANGE_BULK_PILOT',JSON.stringify({...report,invalidRows:undefined,missingExamples:undefined}));
 }
