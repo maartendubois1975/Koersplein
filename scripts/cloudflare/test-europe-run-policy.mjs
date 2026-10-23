@@ -6,10 +6,11 @@ assert.equal(latestClosedWeekday(new Date('2026-10-17T08:00:00Z')),'2026-10-16')
 assert.equal(latestClosedWeekday(new Date('2026-10-19T07:00:00Z')),'2026-10-16');
 assert.equal(latestClosedWeekday(new Date('2026-10-19T18:45:00Z')),'2026-10-19');
 const range={startDate:'2026-10-15',endDate:'2026-10-16'};
-const old={date:'2026-10-14',open:10,close:11};
-const current={date:'2026-10-16',open:12,close:13};
-const invalid={date:'2026-10-16',open:Infinity,close:13};
-assert.deepEqual(validBars({bars:[current,old,invalid]},range),[current]);
+const old={date:'2026-10-14',open:10,high:12,low:9,close:11};
+const current={date:'2026-10-16',open:12,high:14,low:11,close:13};
+const invalid={date:'2026-10-16',open:Infinity,high:14,low:11,close:13};
+const incomplete={date:'2026-10-16',open:12,high:null,low:11,close:13};
+assert.deepEqual(validBars({bars:[current,old,invalid,incomplete]},range),[current]);
 const registry=new ProviderRegistry([
  {id:'stale',fetchDaily:async()=>({bars:[old]})},
  {id:'fresh',fetchDaily:async()=>({bars:[current]})}
