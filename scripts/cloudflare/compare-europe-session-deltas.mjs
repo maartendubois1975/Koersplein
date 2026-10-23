@@ -14,7 +14,7 @@ function validate(run,label){
   check(Array.isArray(run.marketCoverage.anomalies)&&run.marketCoverage.anomalies.length===0,label+': market anomalies');
   const cutoff=run.freshnessCutoff;
   check(typeof cutoff==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(cutoff)&&
-    !Number.isNaN(Date.parse(cutoff+'T00:00:00Z'))&&
+    new Date(cutoff+'T00:00:00Z').toISOString().slice(0,10)===cutoff&&
     run.sessionConsistency?.complete===true&&run.sessionConsistency.cutoff===cutoff&&
     Array.isArray(run.sessionConsistency.observedCutoffs)&&
     run.sessionConsistency.observedCutoffs.length===1&&run.sessionConsistency.observedCutoffs[0]===cutoff&&
@@ -53,6 +53,16 @@ export function compareEuropeSessionDeltas(before,after){
   check(a.totals.catalog===b.totals.catalog,'catalog changed');
   for(const [mic,m] of a.markets)
     check(b.markets.has(mic)&&b.markets.get(mic).catalog===m.catalog,mic+': catalog/market membership changed');
+  // A changed ticker for the same MIC/ISIN can invalidate a longitudinal comparison.
+  // Current-OHLC rows are not listed in the summary, so their identity is never inferred.
+  for(const [k,oldItem] of a.missing){
+    const next=b.missing.get(k)??b.noTrade.get(k);
+    if(next)check(oldItem.symbol===next.symbol,'ticker changed for '+oldItem.mic+'/'+oldItem.isin);
+  }
+  for(const [k,oldItem] of a.noTrade){
+    const next=b.missing.get(k)??b.noTrade.get(k);
+    if(next)check(oldItem.symbol===next.symbol,'ticker changed for '+oldItem.mic+'/'+oldItem.isin);
+  }
   const removed=[...a.missing].filter(([k])=>!b.missing.has(k)).map(([k,v])=>({
     ...v,after:b.noTrade.has(k)?'OFFICIAL_NO_TRADE':'NO_LONGER_MISSING_UNVERIFIED_PER_INSTRUMENT'}));
   const added=[...b.missing].filter(([k])=>!a.missing.has(k)).map(([,v])=>v);
@@ -77,7 +87,7 @@ export function compareEuropeSessionDeltas(before,after){
     after:{currentOhlc:b.totals.currentOpenClose,noTrade:b.totals.verifiedNoTrades,missing:b.missing.size},
     removed,added,reasonChanges,
     byMarket:byMarket.filter(v=>v.currentOhlcDelta||v.noTradeDelta||v.missingDelta),
-    productionWrites:0,mappingsApproved:0,
+    productionWrites:0,mappingsApproved:0,catalogMembershipVerified:false,
     warning:'NO_LONGER_MISSING is not independent proof of a new appended bar, approved source, or OHLC correctness. Check immutable shard artifacts and stored history before claiming a price repair.'};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
