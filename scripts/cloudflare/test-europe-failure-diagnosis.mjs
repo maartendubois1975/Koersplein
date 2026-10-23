@@ -19,6 +19,7 @@ assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0042900001: ya
 assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0040300001: yahoo-chart: Yahoo HTTP 403 voor TEST.L'),'AUTH_OR_ACCESS');
 assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0042900001: yahoo-chart: Yahoo HTTP 429 voor TEST.L'),'RATE_LIMIT');
 assert.equal(classifyEuropeFailure('Alle providers faalden voor SI0031103805: yahoo-isin-resolver: Geen Yahoo-beursregel voor XLJU'),'NO_SUPPORTED_PROVIDER_FOR_MARKET');
+assert.equal(classifyEuropeFailure('Alle providers faalden voor EE3100126368: nasdaq-baltic-official: Geen Nasdaq Baltic koershistorie voor EE3100126368; yahoo-isin-resolver: Geen Yahoo-beursregel voor XLIT'),'OFFICIAL_SOURCE_NO_USABLE_BARS','Do not misclassify a real official source attempt as unsupported');
 
 assert.deepEqual(providerAttempts(swiss).map(x=>x.provider),['yahoo-chart','yahoo-isin-resolver']);
 const updates=[{markets:[
