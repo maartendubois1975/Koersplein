@@ -38,8 +38,8 @@ function validate(run,label){
         // Existing Iceland catalog uses explicit MIC:symbol placeholders for eight
         // instruments without an ISIN. They are NOT verified ISIN mappings.
         const isIsin=typeof item.isin==='string'&&/^[A-Z]{2}[A-Z0-9]{10}$/.test(item.isin);
-        const isCatalogPlaceholder=typeof item.isin==='string'&&
-          new RegExp('^'+m.mic+':[A-Z0-9._-]{1,32}$').test(item.isin);
+        const isCatalogPlaceholder=m.mic==='XICE'&&typeof item.isin==='string'&&
+          /^XICE:[A-Z0-9._-]{1,32}$/.test(item.isin);
         check(isIsin||isCatalogPlaceholder,label+'/'+m.mic+': unrecognized catalog identifier');
         const k=id(m.mic,item.isin);
         check(!target.has(k),label+'/'+m.mic+': duplicate '+kind+' ISIN');
@@ -100,6 +100,15 @@ export function compareEuropeSessionDeltas(before,after){
   check(a.missing.size-removed.length+added.length===b.missing.size,'identity arithmetic mismatch');
   check(a.failures.size-failureRemoved.length+failureAdded.length===b.failures.size,
     'failure identity arithmetic mismatch');
+  const countByMic=items=>{
+    const counts=new Map();
+    for(const item of items)counts.set(item.mic,(counts.get(item.mic)||0)+1);
+    return counts;
+  };
+  const reasonChangesByMic=countByMic(reasonChanges);
+  const categoryChangesByMic=countByMic(failureCategoryChanges);
+  const beforeFailuresByMic=countByMic([...a.failures.values()]);
+  const afterFailuresByMic=countByMic([...b.failures.values()]);
   const byMarket=[...a.markets.keys()].sort().map(mic=>{
     const x=a.markets.get(mic),y=b.markets.get(mic);
     return {mic,catalog:x.catalog,currentOhlcDelta:y.openCloseOk-x.openCloseOk,
@@ -107,10 +116,12 @@ export function compareEuropeSessionDeltas(before,after){
       missingDelta:y.missingOpenClose-x.missingOpenClose,
       missingRemoved:removed.filter(v=>v.mic===mic).length,
       missingAdded:added.filter(v=>v.mic===mic).length,
-      failedImportsDelta:[...b.failures.values()].filter(v=>v.mic===mic).length-
-        [...a.failures.values()].filter(v=>v.mic===mic).length,
+      failedImportsDelta:(afterFailuresByMic.get(mic)||0)-(beforeFailuresByMic.get(mic)||0),
       failureRemoved:failureRemoved.filter(v=>v.mic===mic).length,
-      failureAdded:failureAdded.filter(v=>v.mic===mic).length};
+      failureAdded:failureAdded.filter(v=>v.mic===mic).length,
+      // Category-only and reason-only changes matter even with stable totals.
+      missingReasonChanges:reasonChangesByMic.get(mic)||0,
+      failureCategoryChanges:categoryChangesByMic.get(mic)||0};
   });
   check(byMarket.every(v=>v.missingDelta===v.missingAdded-v.missingRemoved&&
     v.failedImportsDelta===v.failureAdded-v.failureRemoved&&
@@ -122,7 +133,8 @@ export function compareEuropeSessionDeltas(before,after){
     after:{currentOhlc:b.totals.currentOpenClose,noTrade:b.totals.verifiedNoTrades,missing:b.missing.size,
       failedImports:b.failures.size},
     removed,added,reasonChanges,failureRemoved,failureAdded,failureCategoryChanges,
-    byMarket:byMarket.filter(v=>v.currentOhlcDelta||v.noTradeDelta||v.missingDelta||v.failedImportsDelta),
+    byMarket:byMarket.filter(v=>v.currentOhlcDelta||v.noTradeDelta||v.missingDelta||
+      v.failedImportsDelta||v.missingReasonChanges||v.failureCategoryChanges),
     productionWrites:0,mappingsApproved:0,catalogMembershipVerified:false,
     nonIsinCatalogKeys:{before:[...a.missing.values(),...a.noTrade.values()].filter(v=>v.identifierType==='NON_ISIN_CATALOG_KEY').length,
       after:[...b.missing.values(),...b.noTrade.values()].filter(v=>v.identifierType==='NON_ISIN_CATALOG_KEY').length},
