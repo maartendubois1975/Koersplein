@@ -71,7 +71,7 @@ const originalYahooFetch=globalThis.fetch,requestedYahoo=[];
 try{
  globalThis.fetch=async url=>{
   requestedYahoo.push(String(url));
-  if(String(url).includes('/v1/finance/search'))return {ok:true,async json(){return {quotes:[{symbol:'WRONG.PA'},{symbol:'VALID.L'}]};}};
+  if(String(url).includes('/v1/finance/search'))return {ok:true,async json(){return {quotes:[{symbol:'WRONG.PA'},{symbol:'WRONGISIN.L',isin:'FR0000000001',quoteType:'EQUITY'},{symbol:'ETF.L',quoteType:'ETF'},{symbol:'VALID.L',isin:'GB0000000001',quoteType:'EQUITY'}]};}};
   return {ok:true,async json(){return {chart:{result:[{
    meta:{symbol:'VALID.L',exchangeName:'LSE',fullExchangeName:'London Stock Exchange',currency:'GBP'},
    timestamp:[Math.floor(Date.parse('2026-10-22T12:00:00Z')/1000)],
@@ -84,6 +84,23 @@ try{
  assert.equal(requestedYahoo.length,2);
  assert.ok(!requestedYahoo.some(u=>u.includes('WRONG.PA')),'Do not fetch a matching ISIN on another exchange');
 }finally{globalThis.fetch=originalYahooFetch;}
+// Even on the correct .L exchange, an explicit conflicting ISIN or a
+// non-equity quote cannot become a production ticker identity.
+const rejectedCalls=[];
+try{
+ globalThis.fetch=async url=>{
+  rejectedCalls.push(String(url));
+  if(String(url).includes('/v1/finance/search'))return {ok:true,async json(){return {quotes:[
+   {symbol:'OTHER.L',isin:'FR0000000001',quoteType:'EQUITY'},
+   {symbol:'FUND.L',quoteType:'ETF'}
+  ]};}};
+  throw Error('Unverified Yahoo quote reached chart endpoint');
+ };
+ await assert.rejects(()=>isinResolver.fetchDaily({mic:'XLON',isin:'GB0000000001'},{startDate:'2026-10-22',endDate:'2026-10-22'}),/Geen Yahoo ISIN-resolutie/);
+ assert.equal(rejectedCalls.length,1,'Conflicting ISIN and ETF matches must be rejected before chart fetch');
+}finally{globalThis.fetch=originalYahooFetch;}
+console.log('Yahoo ISIN resolver rejects explicit mismatched ISINs and non-equity quote types PASS');
+
 console.log('Yahoo ISIN cross-exchange quote rejected; London validated .L quote accepted PASS');
 
 console.log('London and Swiss chart/ISIN market suffix agreement PASS');
