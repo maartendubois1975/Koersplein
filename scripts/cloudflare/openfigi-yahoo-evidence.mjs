@@ -52,6 +52,15 @@ export function evaluateYahooReference(item,chart,{asOf='2026-10-22',recentDays=
  if(!complete.length)return {...base,status:'NO_RECENT_COMPLETE_YAHOO_OHLC',barsSeen:bars.length,windowStart:minDate,windowEnd:asOf};
  return {...base,status:'YAHOO_VENUE_CURRENCY_OHLC_MATCH_OFFICIAL_ISIN_STILL_REQUIRED',observedCurrency:meta.currency,observedExchange:meta.exchangeName||meta.fullExchangeName||null,latestCompleteDate:complete.map(x=>x.date).sort().at(-1),completeBars:complete.length,windowStart:minDate,windowEnd:asOf};
 }
+// Keep HTTP statuses separate from ISIN digits and do not infer delisting.
+export function classifyYahooReferenceError(error){
+ const message=String(error?.message||error||'');
+ if(/^Yahoo read-only HTTP 404$/.test(message))return 'YAHOO_SYMBOL_NOT_FOUND';
+ if(/^Yahoo read-only HTTP 429$/.test(message))return 'YAHOO_RATE_LIMIT';
+ if(/^Yahoo read-only HTTP (401|403)$/.test(message))return 'YAHOO_ACCESS_DENIED';
+ if(/(?:timeout|AbortError|fetch failed|ETIMEDOUT|ECONN)/i.test(message))return 'YAHOO_TRANSIENT_NETWORK_ERROR';
+ return 'YAHOO_READ_ONLY_REQUEST_FAILED';
+}
 export async function fetchYahooReferenceChart(providerSymbol,{startDate,endDate,timeoutMs=15000}={}){
  if(!/^[A-Z0-9][A-Z0-9.\-]{0,19}\.(SW|L)$/.test(String(providerSymbol||'').toUpperCase()))throw Error('Unsafe read-only Yahoo symbol');
  const url=new URL('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(providerSymbol));
