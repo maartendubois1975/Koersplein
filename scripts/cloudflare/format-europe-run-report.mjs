@@ -60,6 +60,10 @@ export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
     const sourceQuality=sourceProbe.sourceBarDiagnostics;
     if(sourceQuality?.readOnly&&Number.isSafeInteger(sourceQuality.observations)&&Number.isSafeInteger(sourceQuality.invalidSourceBars)){
       lines.push(`Exact-date source OHLC diagnostics (read-only): ${sourceQuality.invalidSourceBars} invalid source bars in ${sourceQuality.observations} provider-result observations; ${sourceQuality.probesWithInvalidBars||0} instrument/date probes affected.`);
+      if(Number.isSafeInteger(sourceQuality.conflictingSourceObservations)&&sourceQuality.conflictingSourceObservations>0){
+        const londonConflicts=sourceQuality.byMarket?.XLON?.conflictingSourceObservations||0;
+        lines.push(`Conflicting complete same-date source observations: ${sourceQuality.conflictingSourceObservations} (London ${londonConflicts}). These were rejected as repair candidates; no source bar was selected.`);
+      }
       const londonQuality=sourceQuality.byMarket?.XLON;
       if(londonQuality){
         const causes=Object.entries(londonQuality.defects||{}).filter(([,count])=>Number.isSafeInteger(count)&&count>0).sort((a,b)=>b[1]-a[1]).slice(0,5);
