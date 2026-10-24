@@ -1,5 +1,6 @@
 // Evidence-only diagnostics for already stored OHLC records. No price repair,
 // interpolation, history mutation, or assumption that a missing high/low means no trade.
+import {parseOhlcPrice} from './europe-run-policy.mjs';
 const FIELDS=['open','high','low','close'];
 const isValidDate=value=>{
  if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;
@@ -17,8 +18,8 @@ export function describeOhlcDefects(bar){
    defects.push('MISSING_'+field.toUpperCase());
    continue;
   }
-  const price=Number(raw);
-  if(!Number.isFinite(price)||price<=0){defects.push('INVALID_'+field.toUpperCase());continue;}
+  const price=parseOhlcPrice(raw);
+  if(price===null){defects.push('INVALID_'+field.toUpperCase());continue;}
   prices[field]=price;
  }
  if(Number.isFinite(prices.high)&&Number.isFinite(prices.low)&&prices.high<prices.low)defects.push('HIGH_BELOW_LOW');
@@ -62,8 +63,8 @@ export function inspectStoredOhlcDateConflicts(bars,cutoff,windowDays=30){
    const signature=JSON.stringify(FIELDS.map(key=>{
     const value=bar[key];
     if(value===null||value===undefined||value==='')return null;
-    const number=Number(value);
-    return Number.isFinite(number)?number:String(value);
+    const number=parseOhlcPrice(value);
+    return number===null?String(value):number;
    }));
    variants.set(signature,describeOhlcDefects(bar).length===0);
   }
