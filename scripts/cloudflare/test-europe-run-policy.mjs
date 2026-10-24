@@ -57,7 +57,8 @@ const approved=await ambiguousRegistry.fetchDaily({isin:'test'},range,'ambiguous
 assert.equal(approved.provider.id,'independent','Contradictory primary must fall back to approved alternate source');
 console.log('Europe source duplicate-date quarantine PASS: conflicting complete, mixed invalid, safe history and fallback');
 
-\n// Yearly partition selection must preserve both halves of a 30-day window
+
+// Yearly partition selection must preserve both halves of a 30-day window
 // crossing New Year. It must not infer or fabricate an absent year.
 const yearPartitions=[{period:'2024'},{period:'2025'},{period:'2026'},{period:'2027'}];
 assert.deepEqual(selectEuropeAuditHistoryPeriods(yearPartitions,'2026-01-09',30),['2025','2026','2027']);
