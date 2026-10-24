@@ -73,7 +73,8 @@ assert.equal(sourceIntegrityQueue.markets.find(m=>m.mic==='XSWX').instruments[0]
 assert.equal(sourceIntegrityQueue.totals.missing,5);
 console.log('Quarantined duplicate-date source bars receive evidence-only triage; no-bar and unverified SIX identity remain distinct PASS');
 
-\nconst storedConflictAudit=[{markets:[{mic:'XLON',missing:[],storedOhlcConflictCandidates:[
+
+const storedConflictAudit=[{markets:[{mic:'XLON',missing:[],storedOhlcConflictCandidates:[
  {isin:'GB0000000042',symbol:'ABC',date:'2026-10-22',category:'MIXED_COMPLETE_INVALID_STORED_OHLC',rows:2,distinctOhlc:2}
 ]}]}];
 const storedConflicts=buildEuropeRecoveryQueue([],storedConflictAudit);
