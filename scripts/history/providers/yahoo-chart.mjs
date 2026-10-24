@@ -54,6 +54,10 @@ export class YahooChartProvider {
  supports(instrument){
   const rule=this.marketRule(instrument),explicit=instrument.providerSymbol||instrument.provider_symbol,ticker=instrument.ticker||instrument.symbol;
   if(!rule||!(explicit||ticker))return false;
+  // An explicit catalog providerSymbol is not allowed to escape its approved
+  // MIC's Yahoo venue suffix. A .L override on XSWX or .SW on XLON is a
+  // different trading line even if its search ranking looks convincing.
+  if(explicit&&!String(explicit).toUpperCase().endsWith(rule.suffix.toUpperCase()))return false;
   // SIX monthly trade data sometimes contains the numeric Swiss valor number,
   // not a Yahoo trading symbol. Never construct an unverified 123456.SW key.
   if(!explicit&&String(instrument.mic||instrument.market||'').toUpperCase()==='XSWX'&&/^\d{4,}$/.test(String(ticker)))return false;
@@ -63,6 +67,9 @@ export class YahooChartProvider {
  async fetchDaily(instrument,{startDate,endDate,signal,includeIncompleteBars=false}={}){const providerSymbol=this.providerSymbolFor(instrument);if(!providerSymbol)throw new Error(`Geen gecontroleerde Yahoo-koppeling voor ${instrument.isin}`);const period1=Math.floor(new Date(`${startDate}T00:00:00Z`).getTime()/1000),period2=Math.floor(new Date(`${endDate}T23:59:59Z`).getTime()/1000);const url=new URL(`${API_ROOT}/${encodeURIComponent(providerSymbol)}`);url.searchParams.set('period1',String(period1));url.searchParams.set('period2',String(period2));url.searchParams.set('interval','1d');url.searchParams.set('events','div,splits');const response=await fetch(url,{signal,headers:{Accept:'application/json','User-Agent':'Koersplein-history/1.0'}});if(!response.ok)throw new Error(`Yahoo HTTP ${response.status} voor ${providerSymbol}`);const payload=await response.json(),result=payload?.chart?.result?.[0];if(!result||payload?.chart?.error)throw new Error(payload?.chart?.error?.description||'Yahoo-resultaat ontbreekt');this.validateIdentity({...instrument,providerSymbol},result.meta);const quote=result.indicators?.quote?.[0]||{},adjusted=result.indicators?.adjclose?.[0]?.adjclose||[];const bars=(result.timestamp||[]).map((timestamp,index)=>{let high=finiteOrNull(quote.high?.[index]),low=finiteOrNull(quote.low?.[index]);if(high!==null&&low!==null&&high<low&&includeIncompleteBars!==true){high=null;low=null;}return{date:isoDate(timestamp),open:finiteOrNull(quote.open?.[index]),high,low,close:finiteOrNull(quote.close?.[index]),adjustedClose:finiteOrNull(adjusted[index]),volume:Number.isSafeInteger(quote.volume?.[index])?quote.volume[index]:null};}).filter(bar=>includeIncompleteBars===true||(bar.open!==null&&bar.close!==null));return{bars,requestUrl:url.toString(),providerMeta:{exchangeName:result.meta.exchangeName,fullExchangeName:result.meta.fullExchangeName,currency:result.meta.currency,symbol:result.meta.symbol,timezone:result.meta.exchangeTimezoneName}};}
  validateIdentity(instrument,meta={}){
   const expectedSymbol=String(instrument.providerSymbol||'').toUpperCase();
+  const venueRule=this.marketRule(instrument);
+  if(!venueRule||!expectedSymbol.endsWith(venueRule.suffix.toUpperCase()))
+   throw new Error(`Providersymbool wijkt af voor ${instrument.isin}: geen goedgekeurde MIC-suffix voor ${expectedSymbol}`);
   if(meta.symbol?.toUpperCase()!==expectedSymbol)throw new Error(`Providersymbool wijkt af voor ${instrument.isin}: verwacht ${expectedSymbol}, ontvangen ${meta.symbol||'onbekend'}`);
   const mic=String(instrument.mic||instrument.market||'').toUpperCase();
   // Currency is part of every approved listing identity, not just Swiss and
