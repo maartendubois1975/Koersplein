@@ -2,12 +2,12 @@ import assert from 'node:assert/strict';
 import {compareEuropeSessionDeltas} from './compare-europe-session-deltas.mjs';
 function summary({cutoff='2026-10-23',missing=['GB0000000001','GB0000000002'],noTrade=[],complete=true}={}){
   const markets=Array.from({length:31},(_,i)=>{
-    const mic=i===0?'XLON':'X'+String(i).padStart(3,'0');
+    const mic=i===0?'XBRU':'X'+String(i).padStart(3,'0');
     const items=i===0?missing:[],trades=i===0?noTrade:[];
     return {mic,catalog:i===0?3:1,openCloseOk:i===0?3-items.length-trades.length:1,
       verifiedNoTrades:trades.length,missingOpenClose:items.length,
       missing:items.map(isin=>({isin,symbol:'TST',reason:'STALE_LAST_TRADE',lastDate:'2026-10-22'})),
-      noTrades:trades.map(isin=>({isin,symbol:'TST'}))};
+      noTrades:trades.map(isin=>({isin,symbol:'TST',mic,date:cutoff,status:'NO_TRADES',provider:'euronext-live',sourceUrl:'https://live.euronext.com/en/ajax/getHistoricalPricePopup/'+isin+'-XBRU',trades:0,volume:0}))};
   });
   const importFailures=markets.flatMap(m=>m.missing.map(item=>({
     mic:m.mic,isin:item.isin,symbol:item.symbol,category:'NO_NEW_BARS_IN_RANGE'})));
@@ -50,6 +50,37 @@ assert.equal(noTrade.noTradeAdded[0].before,'MISSING');
 assert.equal(noTrade.noTradeRemoved.length,0);
 assert.equal(noTrade.byMarket[0].officialNoTradeAdded,1);
 assert.equal(noTrade.byMarket[0].officialNoTradeRemoved,0);
+// An apparent official NO_TRADES transition is not trusted merely because
+// it appears in a complete 31-MIC summary. Require matching approved-source
+// provenance and a zero-trade session (or the bounded MSE last-trade proof).
+for(const [field,value,error] of [
+  ['status','TRADED',/no-trade identity\/session provenance incomplete/],
+  ['date','2026-10-22',/no-trade identity\/session provenance incomplete/],
+  ['mic','XPAR',/no-trade identity\/session provenance incomplete/],
+  ['provider','unknown-feed',/no-trade provider not approved/],
+  ['sourceUrl','https://example.com/not-official',/no-trade source URL not official/],
+  ['trades',1,/no-trade zero-volume\/trades evidence incomplete/],
+  ['volume',null,/no-trade zero-volume\/trades evidence incomplete/]
+]){
+  const bad=summary({missing:['GB0000000002'],noTrade:['GB0000000001']});
+  bad.markets[0].noTrades[0][field]=value;
+  assert.throws(()=>compareEuropeSessionDeltas(a,bad),error);
+}
+const mse=summary({missing:['GB0000000002'],noTrade:['GB0000000001']});
+mse.markets[0].mic='XMAL';
+mse.sourceFailureByMarket.XMAL=mse.sourceFailureByMarket.XBRU;
+delete mse.sourceFailureByMarket.XBRU;
+mse.importFailures[0].mic='XMAL';
+mse.markets[0].noTrades[0]={
+  isin:'GB0000000001',symbol:'TST',mic:'XMAL',date:'2026-10-23',status:'NO_TRADES',
+  provider:'mse-official-price-list',
+  sourceUrl:'https://cdn.borzamalta.com.mt/download/statistics/Price_List/Price%20List.pdf',
+  lastTradeDate:'2026-10-22',verification:'OFFICIAL_LAST_TRADE_BEFORE_PRICE_LIST_SESSION',readOnly:true
+};
+assert.equal(compareEuropeSessionDeltas(mse,mse).status,'COMPLETE_COMPARISON');
+const badMse=structuredClone(mse);
+badMse.markets[0].noTrades[0].lastTradeDate='2026-10-23';
+assert.throws(()=>compareEuropeSessionDeltas(mse,badMse),/Malta no-trade last-trade evidence incomplete/);
 const previouslyNoTrade=summary({missing:['GB0000000002'],noTrade:['GB0000000001']});
 const tradeStatusLost=compareEuropeSessionDeltas(previouslyNoTrade,b);
 assert.equal(tradeStatusLost.noTradeRemoved.length,1);
@@ -72,20 +103,20 @@ assert.equal(reasonOnly.byMarket[0].missingDelta,0);
 assert.equal(compareEuropeSessionDeltas(b,a).added.length,1);
 const categoryChanged=summary();
 categoryChanged.importFailures[0].category='NETWORK_TIMEOUT';
-categoryChanged.sourceFailureByMarket.XLON.categories={NO_NEW_BARS_IN_RANGE:1,NETWORK_TIMEOUT:1};
+categoryChanged.sourceFailureByMarket.XBRU.categories={NO_NEW_BARS_IN_RANGE:1,NETWORK_TIMEOUT:1};
 const categoryDiff=compareEuropeSessionDeltas(a,categoryChanged);
 assert.equal(categoryDiff.failureCategoryChanges.length,1);
 assert.equal(categoryDiff.failureCategoryChanges[0].before,'NO_NEW_BARS_IN_RANGE');
 assert.equal(categoryDiff.failureCategoryChanges[0].after,'NETWORK_TIMEOUT');
 assert.equal(categoryDiff.byMarket.length,1,'category-only changes must appear in per-MIC rollup');
-assert.equal(categoryDiff.byMarket[0].mic,'XLON');
+assert.equal(categoryDiff.byMarket[0].mic,'XBRU');
 assert.equal(categoryDiff.byMarket[0].failureCategoryChanges,1);
 assert.equal(categoryDiff.byMarket[0].failedImportsDelta,0);
 const fewerFailures=summary();
 fewerFailures.importFailures.shift();
 fewerFailures.totals.failedImports=1;
-fewerFailures.sourceFailureByMarket.XLON.failed=1;
-fewerFailures.sourceFailureByMarket.XLON.categories.NO_NEW_BARS_IN_RANGE=1;
+fewerFailures.sourceFailureByMarket.XBRU.failed=1;
+fewerFailures.sourceFailureByMarket.XBRU.categories.NO_NEW_BARS_IN_RANGE=1;
 const failureOnlyDiff=compareEuropeSessionDeltas(a,fewerFailures);
 assert.equal(failureOnlyDiff.removed.length,0);
 assert.equal(failureOnlyDiff.failureRemoved.length,1);
@@ -101,9 +132,9 @@ const reject=[
   [a,{...b,importFailures:undefined},'import failure details incomplete'],
   [a,{...b,sourceFailureByMarket:undefined},'source failure MIC coverage incomplete'],
   [a,{...b,sourceFailureByMarket:{...b.sourceFailureByMarket,XLON:{
-    ...b.sourceFailureByMarket.XLON,failed:0}}},'source failure count mismatch'],
+    ...b.sourceFailureByMarket.XBRU,failed:0}}},'source failure count mismatch'],
   [a,{...b,sourceFailureByMarket:{...b.sourceFailureByMarket,XLON:{
-    ...b.sourceFailureByMarket.XLON,categories:{NETWORK_TIMEOUT:1}}}},'source failure category count mismatch'],
+    ...b.sourceFailureByMarket.XBRU,categories:{NETWORK_TIMEOUT:1}}}},'source failure category count mismatch'],
   [a,{...b,totals:{...b.totals,failedImports:0}},'import failure details incomplete'],
   [a,{...b,importFailures:[...b.importFailures,b.importFailures[0]],
     totals:{...b.totals,failedImports:2}},'duplicate import failure'],
@@ -122,10 +153,10 @@ assert.throws(()=>compareEuropeSessionDeltas(invalid,b),/unverified cutoff/);
 // but never mislabel them as verified ISIN identities.
 const iceBefore=summary(),iceAfter=summary({missing:['GB0000000002']});
 iceBefore.markets[0].mic='XICE';iceAfter.markets[0].mic='XICE';
-iceBefore.sourceFailureByMarket.XICE=iceBefore.sourceFailureByMarket.XLON;
-iceAfter.sourceFailureByMarket.XICE=iceAfter.sourceFailureByMarket.XLON;
-delete iceBefore.sourceFailureByMarket.XLON;
-delete iceAfter.sourceFailureByMarket.XLON;
+iceBefore.sourceFailureByMarket.XICE=iceBefore.sourceFailureByMarket.XBRU;
+iceAfter.sourceFailureByMarket.XICE=iceAfter.sourceFailureByMarket.XBRU;
+delete iceBefore.sourceFailureByMarket.XBRU;
+delete iceAfter.sourceFailureByMarket.XBRU;
 iceBefore.markets[0].missing[0].isin='XICE:BRIM';
 iceBefore.importFailures[0].mic='XICE';
 iceBefore.importFailures[0].isin='XICE:BRIM';
