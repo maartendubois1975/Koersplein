@@ -1,7 +1,7 @@
 {
-  "requestedAt": "2026-10-24T01:32:00.000Z",
+  "requestedAt": "2026-10-24T02:35:00.000Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Europe Bouw B protected 8-shard 31-MIC same-cutoff production verification after A's strict OHLC price gate and audit completeness changes at c51ad5d. Approved sources only, no full backfill, append-only, no existing OHLC overwrite, Paris existing-history-only. Record all 8 update and audit artifacts, market coverage, exact cutoff and source quarantine; compare to 40028556147 only if both runs share cutoff 2026-10-23."
+  "reason": "Europe Bouw B protected 8-shard 31-MIC same-cutoff production verification after approved Yahoo currency and missing-exchange identity gates plus distinct failure attribution on immutable 154982577. Approved providers only, no full backfill, append-only, no existing OHLC overwrite, Paris existing-history-only. Require all 8 update+audit artifacts and 31 MIC; compare to 40050251650 only at cutoff 2026-10-23. Inspect PROVIDER_CURRENCY_MISMATCH and PROVIDER_VENUE_UNVERIFIED counts separately; no per-ISIN price-write claim."
 }
