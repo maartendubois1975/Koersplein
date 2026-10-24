@@ -32,6 +32,20 @@ const d=summarizeStoredOhlcSeverity(duplicates);
 assert.equal(d.examined,1);
 assert.equal(d.duplicateDates,1);
 assert.equal(d.conflictingSnapshots,1);
+// Distinguish an actual same-date OHLC conflict from an equivalent legacy
+// decimal-string snapshot. Reject raw invalid type collisions conservatively.
+const equivalent={markets:[{mic:'XLON',recentOhlcDebt:[
+ row('XLON','GB1','2026-10-22',{...bar,high:100}),
+ row('XLON','GB1','2026-10-22',{...bar,high:'100.0'})
+]}]};
+const e=summarizeStoredOhlcSeverity(equivalent);
+assert.equal(e.duplicateDates,1);
+assert.equal(e.conflictingSnapshots,0,'Equivalent numeric legacy prices are not contradictory snapshots');
+const rawInvalid={markets:[{mic:'XLON',recentOhlcDebt:[
+ row('XLON','GB1','2026-10-22',{...bar,open:true}),
+ row('XLON','GB1','2026-10-22',{...bar,open:'true'})
+]}]};
+assert.equal(summarizeStoredOhlcSeverity(rawInvalid).conflictingSnapshots,1,'Invalid boolean and string prices must not collapse');
 assert.throws(()=>summarizeStoredOhlcSeverity({}),/unavailable/);
 assert.throws(()=>summarizeStoredOhlcSeverity({markets:[{mic:'XLON',recentOhlcDebt:[{...row('XLON','GB1','2026-10-22',bar),mic:'XPAR'}]}]}),/Invalid stored OHLC evidence/);
 console.log('Read-only stored OHLC intrinsic severity, materiality, missing values, duplicate evidence and immutability PASS');
