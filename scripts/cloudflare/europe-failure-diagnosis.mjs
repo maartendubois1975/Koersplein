@@ -21,6 +21,10 @@ export function classifyEuropeFailure(error) {
   if(/\bHTTP\s*(?:401|403)\b|\b(?:status|code)\s*[:=]?\s*(?:401|403)\b|\bunauthori[sz]ed\b|\bforbidden\b|\bAUTH_OR_ACCESS\b/i.test(m))return 'AUTH_OR_ACCESS';
   if(/\bHTTP\s*429\b|\brate.limit\b|too many requests/i.test(m))return 'RATE_LIMIT';
   if(/timeout|timed out|AbortError|fetch failed|ECONN|ETIMEDOUT/i.test(m))return 'NETWORK_TIMEOUT';
+  // Currency and missing venue metadata are distinct, fail-closed listing
+  // identity failures. Preserve their cause in production MIC histograms.
+  if(/Providervaluta wijkt af/i.test(m))return 'PROVIDER_CURRENCY_MISMATCH';
+  if(/Providerbeurs ontbreekt/i.test(m))return 'PROVIDER_VENUE_UNVERIFIED';
   if(/Providersymbool wijkt af|Providerbeurs wijkt af|invalid symbol|invalid ticker|symbol not/i.test(m))return 'SYMBOL_IDENTITY_MISMATCH';
   // Source evidence must distinguish a missing trading-date bar from a bar
   // that exists but violates OHLC completeness. Both remain read-only and
@@ -56,6 +60,8 @@ const actions={
   SOURCE_EXACT_DATE_NO_BAR:'The approved source has other bars but none for the exact date; verify trading activity before calling this a missing price.',
   PROVIDER_RETURNED_NO_BARS:'Check listing status and source coverage; distinguish inactive from unsupported.',
   OFFICIAL_SOURCE_NO_USABLE_BARS:'Official endpoint returned no validated bars for this range; check last actual trade and archive coverage without inventing prices.',
+  PROVIDER_CURRENCY_MISMATCH:'Verify approved MIC/ISIN/ticker and quote currency; never import a different currency trading line.',
+  PROVIDER_VENUE_UNVERIFIED:'Yahoo supplied no verifiable exchange metadata; require approved venue evidence before importing.',
   SYMBOL_IDENTITY_MISMATCH:'Quarantine mismatched provider identity until independently verified.',
   AUTH_OR_ACCESS:'Check authorization and provider access; do not bypass protection.',
   RATE_LIMIT:'Retry with bounded backoff and provider rate controls.',
