@@ -26,9 +26,13 @@ export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
   if(Number.isInteger(t.recentInvalidOhlcDays))lines.push(`| Incomplete OHLC dates in last 30 calendar days | ${t.recentInvalidOhlcDays} |`);
   if(Number.isInteger(t.recentInvalidOhlcInstruments))lines.push(`| Instruments with recent incomplete OHLC | ${t.recentInvalidOhlcInstruments} |`);
   if(report.historicalOhlcDebt?.readOnly){
-    lines.push(`Historical incomplete OHLC dates queued for read-only source review: **${report.historicalOhlcDebt.datesInRecoveryQueue??'unknown'}** (not repaired).`);
-    const debt=report.historicalOhlcDebt.byMarket||[];
-    if(debt.length)lines.push('Largest historical OHLC debt: '+debt.slice(0,5).map(m=>`${m.mic} ${m.defectiveDates}`).join(', ')+'.');
+    if(report.historicalOhlcDebt.complete===false)
+      lines.push('Historical OHLC debt audit: **UNVERIFIED** (partial shards or inconsistent session cutoff; no European debt count may be inferred).');
+    else {
+      lines.push(`Historical incomplete OHLC dates queued for read-only source review: **${report.historicalOhlcDebt.datesInRecoveryQueue??'unknown'}** (not repaired).`);
+      const debt=report.historicalOhlcDebt.byMarket||[];
+      if(debt.length)lines.push('Largest historical OHLC debt: '+debt.slice(0,5).map(m=>`${m.mic} ${m.defectiveDates}`).join(', ')+'.');
+    }
   }
   // A complete-looking stored candle may coexist with a contradictory
   // same-date row. This is storage provenance evidence, not a correction.
