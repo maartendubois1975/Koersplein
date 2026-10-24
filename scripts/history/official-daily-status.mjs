@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import {budapestClosedSessionStatus,BUDAPEST_CALENDAR_URL} from './providers/budapest-holiday.mjs';
 import {fetchMseOfficialPriceList,mseOfficialNoTradeStatus,MSE_PRICE_LIST_URL} from './providers/mse-official-price-list.mjs';
 import {BseSofiaProvider,bseSessionSnapshot} from './providers/bse-sofia.mjs';
 import {euronextDailySnapshot} from './providers/euronext-live.mjs';
@@ -51,6 +52,16 @@ export function zseRowStatus(row,date){
 async function cached(key,fn){if(!cache.has(key))cache.set(key,fn().catch(e=>{cache.delete(key);throw e;}));return cache.get(key);}
 export async function officialDailyStatus(instrument,date){
  const mic=instrument.mic||instrument.market,isin=instrument.officialIsin||instrument.isin;
+ if(mic==='XBUD'){
+  // Read-only official market-closure evidence; no invented daily prices.
+  const approved=await cached('budapest-calendar-approval',async()=>{
+   const registry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
+   const route=registry.markets?.XBUD?.officialNoTradeEvidence;
+   return registry.markets?.XBUD?.status==='APPROVED'&&route?.status==='APPROVED_READ_ONLY_NO_TRADE'&&
+    route.provider==='bse-budapest-calendar'&&route.sourceUrl===BUDAPEST_CALENDAR_URL;
+  });
+  return approved?budapestClosedSessionStatus({...instrument,mic,isin},date):null;
+ }
  if(mic==='XMAL'){
   // MSE price list has no opening price. Its approved scope is solely to
   // confirm a last-traded date before the exact completed session.

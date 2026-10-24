@@ -121,6 +121,28 @@ for(const [mic,provider,url] of [
   Object.assign(example.markets[0].noTrades[0],{mic,provider,sourceUrl:url});
   assert.equal(compareEuropeSessionDeltas(example,example).status,'COMPLETE_COMPARISON');
 }
+// Official market closure is not an OHLC price or a provider fallback.
+const budapest=summary({missing:['HU0000170824'],noTrade:['HU0000061726']});
+budapest.markets[0].mic='XBUD';
+budapest.sourceFailureByMarket.XBUD=budapest.sourceFailureByMarket.XBRU;
+delete budapest.sourceFailureByMarket.XBRU;
+budapest.importFailures[0].mic='XBUD';
+budapest.markets[0].noTrades[0]={isin:'HU0000061726',symbol:'OTP',mic:'XBUD',date:'2026-10-23',
+ status:'NO_TRADES',provider:'bse-budapest-calendar',sourceUrl:'https://bse.hu/newkibdata/129344942/Trading%20holidays_2026_ENG.pdf',
+ trades:0,volume:0,lastTradeDate:null,
+ verification:'OFFICIAL_MARKET_CLOSED_RESOLUTION_380_2025',marketClosed:true};
+assert.equal(compareEuropeSessionDeltas(budapest,budapest).status,'COMPLETE_COMPARISON');
+for(const field of ['marketClosed','verification','sourceUrl']){
+ const bad=structuredClone(budapest);
+ bad.markets[0].noTrades[0][field]=field==='marketClosed'?false:'UNVERIFIED';
+ assert.throws(()=>compareEuropeSessionDeltas(budapest,bad),/Budapest official full-session closure evidence incomplete|no-trade source URL not official/);
+}
+const fakeHoliday=structuredClone(budapest);
+fakeHoliday.freshnessCutoff='2026-10-22';
+fakeHoliday.sessionConsistency.cutoff='2026-10-22';
+fakeHoliday.sessionConsistency.observedCutoffs=['2026-10-22'];
+fakeHoliday.markets[0].noTrades[0].date='2026-10-22';
+assert.throws(()=>compareEuropeSessionDeltas(fakeHoliday,fakeHoliday),/Budapest official full-session closure evidence incomplete/);
 const mse=summary({missing:['GB0000000002'],noTrade:['GB0000000001']});
 mse.markets[0].mic='XMAL';
 mse.sourceFailureByMarket.XMAL=mse.sourceFailureByMarket.XBRU;

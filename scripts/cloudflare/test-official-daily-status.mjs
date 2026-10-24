@@ -1,4 +1,18 @@
 import assert from 'node:assert/strict';
+import {budapestClosedSessionStatus,isOfficialBudapestClosedDate,BUDAPEST_CALENDAR_URL} from '../history/providers/budapest-holiday.mjs';
+const budapest={mic:'XBUD',isin:'HU0000061726',symbol:'OTP',currency:'HUF',identityResolution:'OFFICIAL_BSE_ORDINARY_REGULATED_SHARE_FREE_HISTORY_PROOF'};
+const holiday=budapestClosedSessionStatus(budapest,'2026-10-23');
+assert.equal(holiday?.status,'NO_TRADES');
+assert.equal(holiday?.sourceUrl,BUDAPEST_CALENDAR_URL);
+assert.equal(holiday?.trades,0);
+assert.equal(holiday?.volume,0);
+assert.equal(holiday?.bar,undefined,'A market holiday cannot invent OHLC');
+assert.equal(budapestClosedSessionStatus(budapest,'2026-10-22'),null);
+assert.equal(budapestClosedSessionStatus({...budapest,mic:'XSWX'},'2026-10-23'),null);
+assert.equal(budapestClosedSessionStatus({...budapest,isin:'BAD'},'2026-10-23'),null);
+assert.equal(budapestClosedSessionStatus({...budapest,currency:'USD'},'2026-10-23'),null);
+assert.equal(budapestClosedSessionStatus({...budapest,identityResolution:'UNVERIFIED'},'2026-10-23'),null);
+assert.equal(isOfficialBudapestClosedDate('2026-10-23'),true);
 import {createHash,createCipheriv} from 'node:crypto';
 import {parseBalticStatistics,zseRowStatus} from '../history/official-daily-status.mjs';
 import {decodeEuronextBody,parseEuronextHistoryRows,euronextProviderMic,EuronextLiveProvider} from '../history/providers/euronext-live.mjs';

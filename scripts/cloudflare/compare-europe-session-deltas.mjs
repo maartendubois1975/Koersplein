@@ -1,6 +1,7 @@
 // Strictly read-only, same-cutoff Europe daily audit comparison.
 // A missing->nonmissing transition is NOT proof of a new price write.
 import { readFile } from 'node:fs/promises';
+import {BUDAPEST_CALENDAR_URL,isOfficialBudapestClosedDate} from '../history/providers/budapest-holiday.mjs';
 import { pathToFileURL } from 'node:url';
 function check(ok,why){if(!ok)throw new Error('UNVERIFIED_EUROPE_RUN: '+why);}
 const natural=x=>Number.isSafeInteger(x)&&x>=0;
@@ -10,6 +11,7 @@ const OFFICIAL_NO_TRADE_SOURCES=Object.freeze({
     mics:new Set(['XAMS','XBRU','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL','XDUB','XMSM','XESM','XATL'])},
   'nasdaq-baltic-official':{host:'nasdaqbaltic.com',prefix:'/statistics/en/statistics/stats_json',
     mics:new Set(['XTAL','XRIS','XLIT'])},
+  'bse-budapest-calendar':{host:'bse.hu',prefix:'/newkibdata/129344942/',mics:new Set(['XBUD'])},
   'bse-sofia-official':{host:'www.bse-sofia.bg',prefix:'/en/',
     mics:new Set(['XBUL'])},
   'zse-price-list':{host:'rest.zse.hr',prefix:'/web/',
@@ -47,6 +49,12 @@ function verifyOfficialNoTrade(item,mic,cutoff,label){
     const providerMic=item.mic==='XDUB'?'XMSM':item.mic;
     check(url.pathname===route.prefix+encodeURIComponent(item.isin+'-'+providerMic),
       label+'/'+mic+': no-trade Euronext ISIN/venue URL mismatch');
+  }
+  if(item.provider==='bse-budapest-calendar'){
+    check(item.sourceUrl===BUDAPEST_CALENDAR_URL&&isOfficialBudapestClosedDate(cutoff)&&
+      item.verification==='OFFICIAL_MARKET_CLOSED_RESOLUTION_380_2025'&&
+      item.marketClosed===true&&item.lastTradeDate===null&&item.bar===undefined,
+      label+'/'+mic+': Budapest official full-session closure evidence incomplete');
   }
   if(item.provider==='mse-official-price-list'){
     check(item.readOnly===true&&

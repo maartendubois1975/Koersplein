@@ -700,6 +700,14 @@
       "status": "APPROVED",
       "catalogFingerprint": "4813606c54eca6ba4af4af49c170ada5a22271077c8d7ff9bd459fb354a7b445",
       "catalogSource": "BSE official Prime + Standard regulated ordinary shares; candidates independently revalidated; preference/expired/Xtend/BÉTa/non-trading excluded",
+      "officialNoTradeEvidence": {
+        "status": "APPROVED_READ_ONLY_NO_TRADE",
+        "provider": "bse-budapest-calendar",
+        "sourceUrl": "https://bse.hu/newkibdata/129344942/Trading%20holidays_2026_ENG.pdf",
+        "resolution": "BSE Resolution 380/2025",
+        "scope": "XBUD_FULL_MARKET_CLOSED_SESSIONS_2026_ONLY",
+        "note": "Official exchange-wide closed sessions only. No traded OHLC, no inferred last-trade date, no synthetic bars, no history writes."
+      },
       "historySources": [
         {
           "provider": "yahoo-isin-resolver",
