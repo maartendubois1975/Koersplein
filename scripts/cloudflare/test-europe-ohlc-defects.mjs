@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {describeOhlcDefects,countOhlcDefects,recentOhlcDebt} from './europe-ohlc-defects.mjs';
+import {describeOhlcDefects,countOhlcDefects,recentOhlcDebt,inspectStoredOhlcDateConflicts} from './europe-ohlc-defects.mjs';
 const valid={date:'2026-10-22',open:10,high:12,low:9,close:11};
 assert.deepEqual(describeOhlcDefects(valid),[]);
 assert.deepEqual(describeOhlcDefects({...valid,high:null}),['MISSING_HIGH']);
@@ -19,6 +19,8 @@ const summary=await fs.readFile('scripts/cloudflare/summarize-europe-run.mjs','u
 assert.match(audit,/describeOhlcDefects/);
 assert.match(audit,/invalidOhlcByDefect:countOhlcDefects/);
 assert.match(audit,/recentOhlcDebt\(bars,cutoff,30\)/);
+assert.match(audit,/selectEuropeAuditHistoryPeriods/,'Audit must fetch all yearly partitions intersecting the 30-day window');
+assert.match(audit,/inspectStoredOhlcDateConflicts/);
 assert.match(audit,/recentInvalidOhlcDays/);
 assert.match(audit,/recentOhlcDebtCandidates/,'All recent stored defect dates must be exported, not only 12 examples');
 assert.match(audit,/storedOhlc/,'Audit must export exact stored OHLC snapshots for source comparison');
@@ -35,3 +37,29 @@ assert.equal(recent.windowStart,'2026-10-13');
 assert.deepEqual(recentOhlcDebt([{...valid,date:'2026-10-23',high:null}],'2026-10-22').invalidDates,[],'Do not count intraday bars as closed-session debt');
 assert.throws(()=>recentOhlcDebt([], '2026-02-30'),/Invalid closed-session/);
 console.log('Stored OHLC defect classification and aggregation PASS');
+
+\n// A 30-day history audit crossing 1 January must retain prior-year defects.
+const yearBars=[{...valid,date:'2025-12-20',high:null},{...valid,date:'2026-01-04',low:null}];
+assert.equal(recentOhlcDebt(yearBars,'2026-01-09',30).invalidDates.length,2);
+const conflictingRows=[
+ {...valid,date:'2026-01-04',close:11},
+ {...valid,date:'2026-01-04',close:10},
+ {...valid,date:'2026-01-05'},
+ {...valid,date:'2026-01-05',high:null},
+ {...valid,date:'2026-01-06'},
+ {...valid,date:'2026-01-06'},
+ {...valid,date:'2025-11-01',close:12}
+];
+const duplicateEvidence=inspectStoredOhlcDateConflicts(conflictingRows,'2026-01-09',30);
+assert.equal(duplicateEvidence.readOnly,true);
+assert.equal(duplicateEvidence.count,2);
+assert.deepEqual(duplicateEvidence.dates.map(x=>[x.date,x.category]),[
+ ['2026-01-04','CONFLICTING_COMPLETE_STORED_OHLC'],
+ ['2026-01-05','MIXED_COMPLETE_INVALID_STORED_OHLC']
+]);
+assert.equal(duplicateEvidence.dates[0].distinctOhlc,2);
+assert.equal(duplicateEvidence.dates[0].rows,2);
+assert.equal(recentOhlcDebt(conflictingRows,'2026-01-09',30).invalidDates.length,0,'Legacy defect metric remains separate from duplicate provenance');
+assert.equal(inspectStoredOhlcDateConflicts([{...valid,date:'2026-01-04',open:'10'},{...valid,date:'2026-01-04',open:10}],'2026-01-09').count,0,'Equivalent numeric OHLC values are not conflicts');
+assert.throws(()=>inspectStoredOhlcDateConflicts([], '2026-02-30'),/Invalid stored OHLC conflict window/);
+console.log('Cross-year debt and immutable same-date stored OHLC conflict diagnostics PASS');
