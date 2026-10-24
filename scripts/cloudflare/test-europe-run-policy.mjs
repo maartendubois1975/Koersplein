@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {latestClosedWeekday,latestAuditBar,selectEuropeAuditHistoryPeriods,validBars,inspectDailyBarIntegrity,mapConcurrent} from './europe-run-policy.mjs';
+import {latestClosedWeekday,latestAuditBar,selectEuropeAuditHistoryPeriods,validBars,inspectDailyBarIntegrity,parseOhlcPrice,isCompleteOhlcBar,mapConcurrent} from './europe-run-policy.mjs';
 import {ProviderRegistry} from '../history/provider-registry.mjs';
 import {mergeHistoryPartition} from '../../cloudflare/worker.mjs';
 assert.equal(latestClosedWeekday(new Date('2026-10-17T08:00:00Z')),'2026-10-16');
@@ -10,6 +10,20 @@ const old={date:'2026-10-14',open:10,high:12,low:9,close:11};
 const current={date:'2026-10-16',open:12,high:14,low:11,close:13};
 const invalid={date:'2026-10-16',open:Infinity,high:14,low:11,close:13};
 const incomplete={date:'2026-10-16',open:12,high:null,low:11,close:13};
+for(const invalidPrice of [true,false,[],[12],{},'0xC','0b1100','Infinity',' ',null,undefined]){
+ assert.equal(parseOhlcPrice(invalidPrice),null,'Coercible non-price value must be rejected: '+String(invalidPrice));
+ assert.equal(isCompleteOhlcBar({...current,open:invalidPrice}),false);
+ assert.deepEqual(validBars({bars:[{...current,open:invalidPrice}]},range),[],'Never import coerced non-price OHLC');
+}
+for(const goodPrice of [12,'12',' 12.00 ','1.2e1']){
+ assert.equal(parseOhlcPrice(goodPrice),12);
+ assert.equal(isCompleteOhlcBar({...current,open:goodPrice}),true);
+}
+assert.equal(parseOhlcPrice('1e999'),null);
+assert.equal(parseOhlcPrice('-5'),null);
+assert.deepEqual(validBars({bars:[current,{...current,open:'12.00'}]},range),[current],'Equivalent decimal representations must not create a source conflict');
+console.log('OHLC import rejects Boolean, array, hex and object coercion; decimal-string legacy values remain valid PASS');
+
 assert.deepEqual(validBars({bars:[current,old,invalid,incomplete]},range),[],'Mixed complete/invalid same-day rows must be quarantined, not arbitrarily accepted');
 const registry=new ProviderRegistry([
  {id:'stale',fetchDaily:async()=>({bars:[old]})},
