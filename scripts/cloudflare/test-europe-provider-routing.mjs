@@ -96,9 +96,50 @@ try{
   ]};}};
   throw Error('Unverified Yahoo quote reached chart endpoint');
  };
- await assert.rejects(()=>isinResolver.fetchDaily({mic:'XLON',isin:'GB0000000001'},{startDate:'2026-10-22',endDate:'2026-10-22'}),/Geen Yahoo ISIN-resolutie/);
+ await assert.rejects(()=>isinResolver.fetchDaily({mic:'XLON',isin:'GB0000000001'},{startDate:'2026-10-22',endDate:'2026-10-22'}),/Geen expliciet ISIN\/EQUITY-bevestigde Yahoo-resolutie/);
  assert.equal(rejectedCalls.length,1,'Conflicting ISIN and ETF matches must be rejected before chart fetch');
 }finally{globalThis.fetch=originalYahooFetch;}
+// An ISIN search query is NOT proof that a returned ticker has that ISIN.
+// Without explicit matching ISIN + equity metadata, a correct suffix and
+// even a valid-looking chart venue must never be consulted.
+for(const [label,quotes,expectedError] of [
+ ['missing ISIN',[{symbol:'UNKNOWN.L',quoteType:'EQUITY'}],/Geen expliciet ISIN\/EQUITY-bevestigde Yahoo-resolutie/],
+ ['missing equity type',[{symbol:'UNKNOWN.L',isin:'GB0000000001'}],/Geen expliciet ISIN\/EQUITY-bevestigde Yahoo-resolutie/],
+ ['two matching symbols',[{symbol:'FIRST.L',isin:'GB0000000001',quoteType:'EQUITY'},{symbol:'SECOND.L',isin:'GB0000000001',quoteType:'EQUITY'}],/Ambigue Yahoo ISIN-resolutie/]
+]){
+ const requested=[];
+ try{
+  globalThis.fetch=async url=>{
+   requested.push(String(url));
+   if(String(url).includes('/v1/finance/search'))return {ok:true,async json(){return {quotes};}};
+   throw Error('Unverified/ambiguous ISIN hit reached chart endpoint: '+label);
+  };
+  await assert.rejects(()=>isinResolver.fetchDaily({mic:'XLON',isin:'GB0000000001'},{startDate:'2026-10-22',endDate:'2026-10-22'}),expectedError,label);
+  assert.equal(requested.length,1,'Only the search endpoint may be queried for '+label);
+ }finally{globalThis.fetch=originalYahooFetch;}
+}
+// Identical repeated search rows are not multiple trading lines. They may
+// proceed to the independent chart symbol/venue/currency gate once.
+let dedupChartRequests=0;
+try{
+ globalThis.fetch=async url=>{
+  if(String(url).includes('/v1/finance/search'))return {ok:true,async json(){return {quotes:[
+   {symbol:'VALID.L',isin:'GB0000000001',quoteType:'EQUITY'},
+   {symbol:'valid.l',isin:'GB0000000001',quoteType:'EQUITY'}
+  ]};}};
+  dedupChartRequests++;
+  return {ok:true,async json(){return {chart:{result:[{
+   meta:{symbol:'VALID.L',exchangeName:'LSE',fullExchangeName:'London Stock Exchange',currency:'GBP'},
+   timestamp:[Math.floor(Date.parse('2026-10-22T12:00:00Z')/1000)],
+   indicators:{quote:[{open:[10],high:[11],low:[9],close:[10.5]}]}
+  }]}};}};
+ };
+ const validDedup=await isinResolver.fetchDaily({mic:'XLON',isin:'GB0000000001',currency:'GBP'},{startDate:'2026-10-22',endDate:'2026-10-22'});
+ assert.equal(validDedup.bars[0].close,10.5);
+ assert.equal(dedupChartRequests,1);
+}finally{globalThis.fetch=originalYahooFetch;}
+console.log('Yahoo resolver requires explicit ISIN/EQUITY, quarantines ambiguous symbols and deduplicates identical search hits PASS');
+
 console.log('Yahoo ISIN resolver rejects explicit mismatched ISINs and non-equity quote types PASS');
 
 console.log('Yahoo ISIN cross-exchange quote rejected; London validated .L quote accepted PASS');
