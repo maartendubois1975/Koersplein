@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {latestClosedWeekday,latestAuditBar,validBars,inspectDailyBarIntegrity,mapConcurrent} from './europe-run-policy.mjs';
+import {latestClosedWeekday,latestAuditBar,selectEuropeAuditHistoryPeriods,validBars,inspectDailyBarIntegrity,mapConcurrent} from './europe-run-policy.mjs';
 import {ProviderRegistry} from '../history/provider-registry.mjs';
 import {mergeHistoryPartition} from '../../cloudflare/worker.mjs';
 assert.equal(latestClosedWeekday(new Date('2026-10-17T08:00:00Z')),'2026-10-16');
@@ -56,3 +56,15 @@ const ambiguousRegistry=new ProviderRegistry([
 const approved=await ambiguousRegistry.fetchDaily({isin:'test'},range,'ambiguous',{acceptResult:r=>validBars(r,range).length>0});
 assert.equal(approved.provider.id,'independent','Contradictory primary must fall back to approved alternate source');
 console.log('Europe source duplicate-date quarantine PASS: conflicting complete, mixed invalid, safe history and fallback');
+
+\n// Yearly partition selection must preserve both halves of a 30-day window
+// crossing New Year. It must not infer or fabricate an absent year.
+const yearPartitions=[{period:'2024'},{period:'2025'},{period:'2026'},{period:'2027'}];
+assert.deepEqual(selectEuropeAuditHistoryPeriods(yearPartitions,'2026-01-09',30),['2025','2026','2027']);
+assert.deepEqual(selectEuropeAuditHistoryPeriods(yearPartitions,'2026-10-23',30),['2026','2027']);
+assert.deepEqual(selectEuropeAuditHistoryPeriods([{period:'2023'},{period:'2024'}],'2026-01-09',30),['2024'],'Keep last available stored history for stale classification');
+assert.deepEqual(selectEuropeAuditHistoryPeriods([{period:'2025'},{period:'2025'}],'2026-01-09',30),['2025'],'Duplicate metadata cannot cause duplicate requests');
+assert.deepEqual(selectEuropeAuditHistoryPeriods([],'2026-01-09',30),[]);
+assert.throws(()=>selectEuropeAuditHistoryPeriods(yearPartitions,'2026-02-30',30),/Invalid history audit window/);
+assert.throws(()=>selectEuropeAuditHistoryPeriods([{period:'2026-01'}],'2026-01-09',30),/Invalid yearly history partition/);
+console.log('Europe yearly history audit spans calendar-year rollover without inventing missing partitions PASS');
