@@ -76,3 +76,32 @@ for (const [mic,symbol,exchange,expected,wrong] of [
 assert.doesNotThrow(()=>yahoo.validateIdentity({mic:'XPAR',providerSymbol:'TEST.PA'},
  {symbol:'TEST.PA',exchangeName:'PAR',currency:'EUR'}));
 console.log('Yahoo approved venue/currency identity guard across Europe PASS');
+
+// A Yahoo symbol suffix and matching currency do not prove the venue if
+// Yahoo omits both exchange labels. Production must fail closed, while one
+// explicit approved exchange label is sufficient for legacy Yahoo responses.
+for(const [mic,symbol,exchange,currency] of [
+ ['XPAR','TEST.PA','PAR','EUR'],
+ ['XETR','TEST.DE','GER','EUR'],
+ ['XSTO','TEST.ST','STO','SEK'],
+ ['XBSE','TEST.RO','BVB','RON'],
+ ['XLON','TEST.L','LSE','GBp'],
+ ['XSWX','TEST.SW','EBS','CHF']
+]){
+ const listing={isin:'GB0000000001',mic,providerSymbol:symbol,currency:mic==='XLON'?'GBX':currency};
+ const noVenue={symbol,currency};
+ assert.throws(()=>yahoo.validateIdentity(listing,noVenue),/Providerbeurs ontbreekt/,mic+' no exchange metadata must not be accepted');
+ assert.throws(()=>yahoo.validateIdentity(listing,{...noVenue,exchangeName:' ',fullExchangeName:null}),/Providerbeurs ontbreekt/,mic+' blank exchange metadata must not be accepted');
+ assert.doesNotThrow(()=>yahoo.validateIdentity(listing,{...noVenue,exchangeName:exchange}),mic+' single verified exchange label');
+ assert.throws(()=>yahoo.validateIdentity(listing,{...noVenue,exchangeName:'OTHER'}),/Providerbeurs wijkt af/,mic+' wrong exchange must fail');
+}
+const previousFetch=globalThis.fetch;
+try{
+ globalThis.fetch=async()=>({ok:true,async json(){return {chart:{result:[{
+  meta:{symbol:'III.L',currency:'GBp'},
+  timestamp:[Math.floor(Date.parse('2026-10-22T12:00:00Z')/1000)],
+  indicators:{quote:[{open:[100],high:[110],low:[90],close:[105]}]}
+ }]}};}});
+ await assert.rejects(()=>yahoo.fetchDaily(base,{startDate:'2026-10-22',endDate:'2026-10-22'}),/Providerbeurs ontbreekt/,'No unverified venue candle can enter production');
+}finally{globalThis.fetch=previousFetch;}
+console.log('Yahoo missing venue identity fail-closed across approved European MICs PASS');
