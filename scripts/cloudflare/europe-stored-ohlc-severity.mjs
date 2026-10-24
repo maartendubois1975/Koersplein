@@ -1,22 +1,10 @@
 import {parseOhlcPrice} from './europe-run-policy.mjs';
+import {canonicalStoredOhlcSignature} from './europe-ohlc-defects.mjs';
 // Read-only severity audit of the *stored* historical OHLC snapshots.
 // This does not infer a correct price, authorize a replacement, or write bars.
 const FIELDS=['open','high','low','close'];
 const BUCKETS=['UNDER_1_BPS','FROM_1_TO_10_BPS','FROM_10_TO_100_BPS','FROM_100_TO_1000_BPS','AT_LEAST_1000_BPS','INVALID_OR_MISSING_FIELDS','FLAGGED_WITHOUT_VIOLATION'];
 function emptyCounts(){return Object.fromEntries(BUCKETS.map(key=>[key,0]));}
-// Match stored-date conflict diagnostics: decimal strings and numbers are
-// equivalent OHLC evidence, but distinct invalid raw types are not. The
-// original JSON snapshot remains immutable and is never rewritten.
-function canonicalStoredOhlcSignature(bar){
- if(!bar||typeof bar!=='object')return JSON.stringify(bar??null);
- return JSON.stringify(FIELDS.map(key=>{
-  const value=bar[key];
-  if(value===null||value===undefined||value==='')return null;
-  const parsed=parseOhlcPrice(value);
-  return parsed===null?JSON.stringify([typeof value,value]):parsed;
- }));
-}
-
 export function storedOhlcViolationSeverity(bar){
  const prices=bar&&Object.fromEntries(FIELDS.map(key=>[key,parseOhlcPrice(bar[key])]));
  if(!prices||FIELDS.some(key=>prices[key]===null))return {bucket:'INVALID_OR_MISSING_FIELDS',violationBps:null,readOnly:true};
