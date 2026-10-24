@@ -99,7 +99,7 @@ export function validBars(result,range) {
 // the newest partition (to preserve visibility of future-dated stored rows).
 // This is strictly read-only; it does not authorize historical corrections.
 export function selectEuropeAuditHistoryPeriods(partitions,cutoff,windowDays=30) {
- if(typeof cutoff!=='string'||!/^\\d{4}-\\d{2}-\\d{2}$/.test(cutoff)||
+ if(typeof cutoff!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(cutoff)||
     !Number.isFinite(Date.parse(cutoff+'T00:00:00Z'))||
     new Date(cutoff+'T00:00:00Z').toISOString().slice(0,10)!==cutoff||
     !Number.isInteger(windowDays)||windowDays<1||windowDays>366)throw Error('Invalid history audit window');
@@ -107,7 +107,7 @@ export function selectEuropeAuditHistoryPeriods(partitions,cutoff,windowDays=30)
  min.setUTCDate(min.getUTCDate()-windowDays+1);
  const startYear=min.toISOString().slice(0,4),endYear=cutoff.slice(0,4);
  const periods=(partitions||[]).map(p=>p?.period);
- if(periods.some(p=>typeof p!=='string'||!/^\\d{4}$/.test(p)))throw Error('Invalid yearly history partition metadata');
+ if(periods.some(p=>typeof p!=='string'||!/^\d{4}$/.test(p)))throw Error('Invalid yearly history partition metadata');
  const sorted=[...new Set(periods)].sort();
  if(!sorted.length)return [];
  const chosen=new Set([sorted.at(-1)]);
