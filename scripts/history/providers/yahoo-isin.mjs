@@ -19,26 +19,23 @@ export class YahooIsinProvider {
   const r=await fetch(url,{signal:opts.signal,headers:{Accept:'application/json','User-Agent':'Koersplein-history/1.0'}});
   if(!r.ok)throw Error(`Yahoo search HTTP ${r.status} voor ${isin}`);
   const p=await r.json();
-  // Search ranking is not identity evidence: when Yahoo supplies an ISIN or
-  // instrument type, a contradictory match must never reach the chart route.
-  // Some valid Yahoo equity quotes omit ISIN/type, so absent metadata is not
-  // treated as an independently verified match (MIC/symbol/currency still gate).
-  const quotes=(Array.isArray(p?.quotes)?p.quotes:[]).filter(q=>{
-   if(!q?.symbol||!String(q.symbol).toUpperCase().endsWith(suffix.toUpperCase()))return false;
-   if(q.isin&&String(q.isin).toUpperCase()!==isin.toUpperCase())return false;
-   if(q.quoteType&&String(q.quoteType).toUpperCase()!=='EQUITY')return false;
-   return true;
-  });
-  if(!quotes.length)throw Error(`Geen Yahoo ISIN-resolutie voor ${isin} op ${mic}`);
-  let last;
-  for(const q of quotes){
-   try{
-    // Search ranking and a .SW suffix are not proof of the trading venue.
-    // Apply the same strict chart MIC, symbol and currency gate to SIX as to
-    // every other approved exchange; no resolver-specific venue bypass.
-    return await chart.fetchDaily({...instrument,providerSymbol:q.symbol},opts);
-   }catch(e){last=e}
-  }
-  throw last||Error(`Geen gevalideerde Yahoo ISIN-route voor ${isin}`);
+  // Yahoo search ranking is not instrument identity. A suffix and venue
+  // describe the trading line, not its ISIN. Only an explicit, matching
+  // provider-reported ISIN AND EQUITY type may enter this fallback. Quotes
+  // omitting either are unresolved, not implicitly confirmed. Officially
+  // verified catalog providerSymbol overrides still use the direct chart route.
+  const quotes=(Array.isArray(p?.quotes)?p.quotes:[]).filter(q=>
+   typeof q?.symbol==='string'&&q.symbol.toUpperCase().endsWith(suffix.toUpperCase())&&
+   typeof q.isin==='string'&&q.isin.trim().toUpperCase()===isin.toUpperCase()&&
+   String(q.quoteType||'').toUpperCase()==='EQUITY'
+  );
+  const symbols=[...new Map(quotes.map(q=>[q.symbol.toUpperCase(),q.symbol])).values()];
+  if(!symbols.length)throw Error(`Geen expliciet ISIN/EQUITY-bevestigde Yahoo-resolutie voor ${isin} op ${mic}`);
+  // Multiple distinct Yahoo symbols for one ISIN on the same suffix are not
+  // permission to pick the first search result. Quarantine for manual review.
+  if(symbols.length!==1)throw Error(`Ambigue Yahoo ISIN-resolutie voor ${isin} op ${mic}: ${symbols.length} symbolen`);
+  // Search metadata is only a first-party assertion, NOT independent official
+  // ISIN verification. The chart still must pass symbol, MIC and currency.
+  return chart.fetchDaily({...instrument,providerSymbol:symbols[0]},opts);
  }
 }
