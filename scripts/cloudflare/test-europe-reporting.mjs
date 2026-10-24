@@ -146,3 +146,12 @@ const mismatchedSessionText=renderEuropeReport({...report,sessionConsistency:eva
 assert.match(mismatchedSessionText,/SESSION DATE UNVERIFIED/);
 assert.doesNotMatch(mismatchedSessionText,/Completed trading-session cutoff/);
 console.log('Europe completed-session cutoff, rollover safety and per-MIC failure breakdown PASS');
+
+\nconst duplicateText=renderEuropeReport({...report,storedOhlcDuplicateEvidence:{readOnly:true,complete:true,dates:3,byMarket:[{mic:'XLON',conflictingDates:2},{mic:'XSWX',conflictingDates:1}]}});
+assert.match(duplicateText,/Stored duplicate-date OHLC conflicts.*\\*\\*3\\*\\*/);
+assert.match(duplicateText,/XLON 2, XSWX 1/);
+assert.match(duplicateText,/existing bars remain unchanged/);
+const unverifiedDuplicate=renderEuropeReport({...report,storedOhlcDuplicateEvidence:{readOnly:true,complete:false,dates:null,byMarket:[]}});
+assert.match(unverifiedDuplicate,/conflict audit: \\*\\*UNVERIFIED\\*\\*/);
+assert.doesNotMatch(unverifiedDuplicate,/conflicts.*\\*\\*0\\*\\*/);
+console.log('Stored conflict provenance reporting distinguishes complete and missing audit evidence PASS');
