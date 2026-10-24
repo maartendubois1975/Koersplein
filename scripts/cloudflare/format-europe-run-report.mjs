@@ -30,6 +30,17 @@ export function renderEuropeReport(report,runUrl='',sourceProbe=null) {
     const debt=report.historicalOhlcDebt.byMarket||[];
     if(debt.length)lines.push('Largest historical OHLC debt: '+debt.slice(0,5).map(m=>`${m.mic} ${m.defectiveDates}`).join(', ')+'.');
   }
+  // A complete-looking stored candle may coexist with a contradictory
+  // same-date row. This is storage provenance evidence, not a correction.
+  const duplicateEvidence=report.storedOhlcDuplicateEvidence;
+  if(duplicateEvidence?.readOnly){
+    if(!duplicateEvidence.complete)lines.push('Stored duplicate-date OHLC conflict audit: **UNVERIFIED** (one or more audit shards lack consistent evidence).');
+    else {
+      lines.push(`Stored duplicate-date OHLC conflicts (read-only, separate from incomplete candles): **${duplicateEvidence.dates}**.`);
+      if(duplicateEvidence.byMarket?.length)lines.push('Largest stored conflicts: '+duplicateEvidence.byMarket.slice(0,5).map(m=>`${m.mic} ${m.conflictingDates}`).join(', ')+'.');
+      lines.push('Contradictory stored rows are not resolved by choosing a complete-looking duplicate; existing bars remain unchanged.');
+    }
+  }
   const anomalies=report.marketCoverage?.anomalies||[];
   if(anomalies.length)lines.push('',`**Market coverage anomalies:** ${anomalies.length}`, ...anomalies.slice(0,6).map(x=>`- ${x.kind||'plan'} shard ${x.shard??'?'}: ${x.issue} ${x.mic||''}`));
   const defects=Object.entries(report.invalidOhlcByDefect||{}).sort((a,b)=>b[1]-a[1]).slice(0,6);
