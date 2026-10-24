@@ -190,6 +190,44 @@ assert.equal(contradictory[0].storedEvidenceConflict,true);
 const conflictingProbe=await probeIncompleteOhlcCandidate(contradictory[0],{registry,sources,market,listings:[{...listings[0],isin:duplicateLatest.isin}]});
 assert.equal(conflictingProbe.status,'CONFLICTING_STORED_OHLC_EVIDENCE');
 
+// The historical stored-bar audit and the source probe must use the same
+// canonical fingerprint. Invalid boolean and string values are NOT equal;
+// equivalent positive decimal strings and numbers ARE equal.
+const typedStoredConflict=selectIncompleteOhlcCandidates({markets:[{mic:'XLON',
+ instruments:[{...duplicateLatest,storedOhlc:{open:true,high:102,low:90,close:105}}],
+ recentOhlcDebt:[{...duplicateHistory,storedOhlc:{open:'true',high:102,low:90,close:105}}]
+}]},{limit:2});
+assert.equal(typedStoredConflict[0].storedEvidenceConflict,true,'Boolean true and string true must not merge');
+assert.equal((await probeIncompleteOhlcCandidate(typedStoredConflict[0],{registry,sources,market,listings})).status,
+ 'CONFLICTING_STORED_OHLC_EVIDENCE','Conflicting stored provenance must not reach an approved provider');
+const equivalentStored=selectIncompleteOhlcCandidates({markets:[{mic:'XLON',
+ instruments:[{...duplicateLatest,storedOhlc:{open:100,high:102,low:90,close:105}}],
+ recentOhlcDebt:[{...duplicateHistory,storedOhlc:{open:'100.00',high:'102',low:'90.0',close:'105e0'}}]
+}]},{limit:2});
+assert.equal(equivalentStored[0].storedEvidenceConflict,undefined,'Equivalent decimal legacy prices are not contradictory');
+
+// A conflicting symbol for the same exchange/ISIN/date is an identity
+// disagreement, not a reason to silently prefer the first audit scope.
+const auditSymbolConflict=selectIncompleteOhlcCandidates({markets:[{mic:'XLON',
+ instruments:[duplicateLatest],
+ recentOhlcDebt:[{...duplicateHistory,symbol:'DIFFERENT'}]
+}]},{limit:2});
+assert.equal(auditSymbolConflict[0].auditIdentityConflict,true);
+assert.equal((await probeIncompleteOhlcCandidate(auditSymbolConflict[0],{registry,sources,market,listings})).status,
+ 'CONFLICTING_AUDIT_INSTRUMENT_IDENTITY');
+const caseEquivalent=selectIncompleteOhlcCandidates({markets:[{mic:'XLON',
+ instruments:[duplicateLatest],
+ recentOhlcDebt:[{...duplicateHistory,symbol:'test'}]
+}]},{limit:2});
+assert.equal(caseEquivalent[0].auditIdentityConflict,undefined,'Case-only symbol formatting must not trigger a false identity conflict');
+const recoveredSymbol=selectIncompleteOhlcCandidates({markets:[{mic:'XLON',
+ instruments:[{...duplicateLatest,symbol:undefined}],
+ recentOhlcDebt:[duplicateHistory]
+}]},{limit:2});
+assert.equal(recoveredSymbol[0].symbol,'TEST','Preserve the one available audit symbol without guessing a mapping');
+console.log('Cross-scope canonical stored OHLC and instrument identity quarantine PASS');
+
+
 // Rotate through both historical debt and latest gaps even if the latter is huge.
 const mixedLatest=Array.from({length:70},(_,i)=>({...item,isin:'GB'+String(i).padStart(10,'0')}));
 const mixedHistory=Array.from({length:70},(_,i)=>({...item,isin:'GH'+String(i).padStart(10,'0'),evidenceScope:'RECENT_STORED_HISTORY',ohlcDefects:['INVALID_HIGH']}));
