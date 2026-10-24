@@ -1,10 +1,10 @@
 {
-  "requestedAt": "2026-10-24T05:00:55.664Z",
+  "requestedAt": "2026-10-24T08:00:18.954Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Bouw A: production verification of official BSE Resolution 380/2025 full-session closure on 2026-10-23 for all 29 XBUD approved catalog identities; no OHLC synthesized. Preserve Paris existing-history-only, approved providers and append-only history. Require 8/8 update+audit and 31/31 MIC, compare immutable same-cutoff run 40054758587; valid OHLC must not be credited to holiday no-trades.",
-  "baselineRunId": 40054758587,
+  "reason": "Bouw A: production verification of approved official BSE Sofia zero-chart route. Require independently checked exact ISIN, ticker, currency, listed segment and complete dated 2026-10-23 session before NO_TRADES; only previous-closed-weekday stored bars qualify without official lastTradeDate. No OHLC synthesis, append-only, Paris existing-history-only. Immutable 8/8 update + 8/8 audit + 31/31 MIC, same-cutoff comparison to 40064599065.",
+  "baselineRunId": 40064599065,
   "expectedCutoff": "2026-10-23",
-  "codeCommit": "e958a17f13d27b97b33b8541c33a2ead809a375c"
+  "codeCommit": "d8cf3d8b066e3c1ed17cafafcd0a8c2e71df2e4e"
 }
