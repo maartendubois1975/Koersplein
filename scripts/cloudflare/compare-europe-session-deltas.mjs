@@ -4,7 +4,39 @@ import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 function check(ok,why){if(!ok)throw new Error('UNVERIFIED_EUROPE_RUN: '+why);}
 const natural=x=>Number.isSafeInteger(x)&&x>=0;
-const id=(mic,isin)=>mic+'\u0000'+isin;
+const id=(mic,isin)=>mic+'\\u0000'+isin;
+const OFFICIAL_NO_TRADE_SOURCES=Object.freeze({
+  'euronext-live':{host:'live.euronext.com',prefix:'/en/ajax/getHistoricalPricePopup/',
+    mics:new Set(['XAMS','XBRU','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL','XDUB','XMSM','XESM','XATL'])},
+  'nasdaq-baltic-official':{host:'nasdaqbaltic.com',prefix:'/statistics/en/statistics/stats_json',
+    mics:new Set(['XTAL','XRIS','XLIT'])},
+  'bse-sofia-official':{host:'www.bse-sofia.bg',prefix:'/en/',
+    mics:new Set(['XBUL'])},
+  'zse-price-list':{host:'rest.zse.hr',prefix:'/web/',
+    mics:new Set(['XZAG'])},
+  'mse-official-price-list':{host:'cdn.borzamalta.com.mt',prefix:'/download/statistics/Price_List/Price%20List.pdf',
+    mics:new Set(['XMAL'])}
+});
+function verifyOfficialNoTrade(item,mic,cutoff,label){
+  check(item.status==='NO_TRADES'&&item.date===cutoff&&item.mic===mic&&item.isin,
+    label+'/'+mic+': no-trade identity/session provenance incomplete');
+  const route=OFFICIAL_NO_TRADE_SOURCES[item.provider];
+  check(route?.mics.has(mic),label+'/'+mic+': no-trade provider not approved for MIC');
+  let url;
+  try{url=new URL(item.sourceUrl);}catch{}
+  check(url?.protocol==='https:'&&url.hostname===route.host&&!url.username&&!url.password&&
+    !url.port&&url.pathname.startsWith(route.prefix),
+    label+'/'+mic+': no-trade source URL not official');
+  if(item.provider==='mse-official-price-list'){
+    check(item.readOnly===true&&
+      ['OFFICIAL_LAST_TRADE_BEFORE_PRICE_LIST_SESSION','OFFICIAL_LATER_SNAPSHOT_PROVES_NO_TARGET_SESSION_TRADE'].includes(item.verification)&&
+      typeof item.lastTradeDate==='string'&&item.lastTradeDate<cutoff,
+      label+'/'+mic+': Malta no-trade last-trade evidence incomplete');
+  }else{
+    check(item.trades===0&&item.volume===0,
+      label+'/'+mic+': no-trade zero-volume/trades evidence incomplete');
+  }
+}
 function validate(run,label){
   check(run&&typeof run==='object',label+': missing summary');
   check(run.shardsComplete===true,label+': incomplete shards');
@@ -41,6 +73,7 @@ function validate(run,label){
         const isCatalogPlaceholder=m.mic==='XICE'&&typeof item.isin==='string'&&
           /^XICE:[A-Z0-9._-]{1,32}$/.test(item.isin);
         check(isIsin||isCatalogPlaceholder,label+'/'+m.mic+': unrecognized catalog identifier');
+        if(kind==='no-trade')verifyOfficialNoTrade(item,m.mic,cutoff,label);
         const k=id(m.mic,item.isin);
         check(!target.has(k),label+'/'+m.mic+': duplicate '+kind+' ISIN');
         target.set(k,{mic:m.mic,isin:item.isin,identifierType:isIsin?'ISIN':'NON_ISIN_CATALOG_KEY',symbol:item.symbol??null,
