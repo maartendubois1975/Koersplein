@@ -56,8 +56,8 @@ assert.equal(noTrade.byMarket[0].officialNoTradeRemoved,0);
 for(const [field,value,error] of [
   ['status','TRADED',/no-trade identity\/session provenance incomplete/],
   ['date','2026-10-22',/no-trade identity\/session provenance incomplete/],
-  ['mic','XPAR',/no-trade identity\/session provenance incomplete/],
-  ['provider','unknown-feed',/no-trade provider not approved/],
+  ['mic','XPAR',/no-trade provider\/venue not approved/],
+  ['provider','unknown-feed',/no-trade provider\/venue not approved/],
   ['sourceUrl','https://example.com/not-official',/no-trade source URL not official/],
   ['trades',1,/no-trade zero-volume\/trades evidence incomplete/],
   ['volume',null,/no-trade zero-volume\/trades evidence incomplete/]
@@ -66,6 +66,20 @@ for(const [field,value,error] of [
   bad.markets[0].noTrades[0][field]=value;
   assert.throws(()=>compareEuropeSessionDeltas(a,bad),error);
 }
+const euronextSubvenue=summary({missing:['GB0000000002'],noTrade:['GB0000000001']});
+euronextSubvenue.markets[0].mic='XPAR';
+euronextSubvenue.sourceFailureByMarket.XPAR=euronextSubvenue.sourceFailureByMarket.XBRU;
+delete euronextSubvenue.sourceFailureByMarket.XBRU;
+euronextSubvenue.importFailures[0].mic='XPAR';
+euronextSubvenue.markets[0].noTrades[0].mic='XMLI';
+euronextSubvenue.markets[0].noTrades[0].sourceUrl='https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB0000000001-XMLI';
+assert.equal(compareEuropeSessionDeltas(euronextSubvenue,euronextSubvenue).status,'COMPLETE_COMPARISON');
+const badSubvenue=structuredClone(euronextSubvenue);
+badSubvenue.markets[0].noTrades[0].mic='MTAA';
+assert.throws(()=>compareEuropeSessionDeltas(euronextSubvenue,badSubvenue),/no-trade provider\/venue not approved/);
+const badSubvenueUrl=structuredClone(euronextSubvenue);
+badSubvenueUrl.markets[0].noTrades[0].sourceUrl='https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB0000000002-XMLI';
+assert.throws(()=>compareEuropeSessionDeltas(euronextSubvenue,badSubvenueUrl),/no-trade Euronext ISIN\/venue URL mismatch/);
 const mse=summary({missing:['GB0000000002'],noTrade:['GB0000000001']});
 mse.markets[0].mic='XMAL';
 mse.sourceFailureByMarket.XMAL=mse.sourceFailureByMarket.XBRU;
