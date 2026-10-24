@@ -1,5 +1,6 @@
 import {validBars,parseOhlcPrice} from './europe-run-policy.mjs';
 import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
+import {canonicalStoredOhlcSignature} from './europe-ohlc-defects.mjs';
 
 // Parent catalogues contain legitimate submarket MICs (e.g. XPAR -> ALXP).
 // Explicitly allow only known child boards; never treat an arbitrary MIC as
@@ -54,9 +55,16 @@ export function selectIncompleteOhlcCandidates(queue,{limit=30,perMarket=18,rota
     const existing=byKey.get(key);
     if(existing){
      if(existing.storedOhlc&&item.storedOhlc){
-      const fields=['open','high','low','close'];
-      if(fields.some(k=>String(existing.storedOhlc[k]??'')!==String(item.storedOhlc[k]??'')))existing.storedEvidenceConflict=true;
+      // Reuse the stored-history audit fingerprint: String(value) merges
+      // invalid booleans with strings and splits equivalent decimal prices.
+      if(canonicalStoredOhlcSignature(existing.storedOhlc)!==canonicalStoredOhlcSignature(item.storedOhlc))existing.storedEvidenceConflict=true;
      }else if(!existing.storedOhlc&&item.storedOhlc)existing.storedOhlc=item.storedOhlc;
+     // A latest audit and a historical audit must not silently disagree on
+     // the instrument symbol for the same MIC/ISIN/date. Do not select one.
+     const symbol=value=>typeof value==='string'?value.trim().toUpperCase():'';
+     const first=symbol(existing.symbol),second=symbol(item.symbol);
+     if(first&&second&&first!==second)existing.auditIdentityConflict=true;
+     else if(!first&&second)existing.symbol=item.symbol;
      existing.ohlcDefects=[...new Set([...(existing.ohlcDefects||[]),...(item.ohlcDefects||[])])];
      continue;
     }
@@ -255,6 +263,7 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
  const base={mic:item.mic,isin:item.isin,symbol:item.symbol||null,date:item.lastStoredDate,ohlcDefects:item.ohlcDefects||[],evidenceScope:item.evidenceScope||'LATEST_AUDIT_BAR',storedOhlc:item.storedOhlc||null,readOnly:true};
  if(item.auditReason!=='INCOMPLETE_OR_INVALID_OHLC'||!isRealIsoDay(item.lastStoredDate))return {...base,status:'NOT_AN_INCOMPLETE_STORED_CANDLE'};
  if(item.storedEvidenceConflict)return {...base,status:'CONFLICTING_STORED_OHLC_EVIDENCE'};
+ if(item.auditIdentityConflict)return {...base,status:'CONFLICTING_AUDIT_INSTRUMENT_IDENTITY'};
  if(!market||market.mic!==item.mic||sources?.status!=='APPROVED')return {...base,status:'NO_APPROVED_MARKET_ROUTE'};
  // The market's own catalogue is already scoped to the parent exchange.
  // Preserve the listing's actual MIC (Growth/Access boards differ from XPAR).
