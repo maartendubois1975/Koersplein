@@ -71,7 +71,10 @@ export class YahooChartProvider {
   // In London, GBX/GBp are pence while GBP means pounds; never mix units.
   if(instrument.currency&&priceCurrency(instrument.currency)!==priceCurrency(meta.currency))
    throw new Error(`Providervaluta wijkt af voor ${instrument.isin}: verwacht ${instrument.currency}, ontvangen ${meta.currency||'onbekend'}`);
-  if(instrument.allowProviderExchangeMismatch)return;
+  // Every approved venue, including Swiss ISIN-resolved fallback symbols,
+  // must have independently consistent exchange metadata. A .SW suffix and
+  // matching currency alone do not prove that the returned trading line
+  // belongs to SIX; never bypass the venue gate for resolver candidates.
   const rule=this.marketRule(instrument);
   if(!rule)throw new Error(`Geen Yahoo-beursregel voor ${instrument.mic||instrument.market}`);
   const exchangeFields=[meta.exchangeName,meta.fullExchangeName].map(normalize).filter(Boolean);
