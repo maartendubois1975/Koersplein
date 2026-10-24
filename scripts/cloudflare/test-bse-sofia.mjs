@@ -32,3 +32,44 @@ const sessions={'1':{result:{tables:[{table_name:'BSE MAIN MARKET – Standard E
 const session=parseBseSession(sessions,'Trading Session Results 2026-10-16','2026-10-16');assert.ok(session.symbols.has('SFA'));assert.ok(!session.symbols.has('SPDY'));
 assert.throws(()=>parseBseSession(sessions,'Trading Session Results 2026-10-15','2026-10-16'),/date mismatch/);
 assert.throws(()=>parseBseSession({'1':{result:{tables:sessions['1'].result.tables.slice(0,1)}}},'Trading Session Results 2026-10-16','2026-10-16'),/markets incomplete/);
+
+
+const {officialDailyStatus}=await import('../history/official-daily-status.mjs');
+const {isVerifiedNoTradeGap}=await import('./europe-run-policy.mjs');
+const noTradeDate='2026-10-23';
+const sessionTables={'1':{result:{tables:[
+ {table_name:'BSE MAIN MARKET – Standard Equities Segment',names:['code','volume'],data:[]},
+ {table_name:'BASE ALTERNATIVE MARKET – Equities Segment',names:['code','volume'],data:[]}
+]}}};
+const sofiaIdentity=(symbol,isin)=>({'1':{result:{data:[
+ ['BSE Code',symbol],['ISIN Code',isin],['Security Type','shares'],
+ ['Trading currency','EUR'],['Market','BSE Main Market']
+]}}});
+const noTradeInstrument={mic:'XBUL',symbol:'BLRN',isin:'BG1100022232',currency:'EUR'};
+const callsZeroBars=[];
+try{
+ globalThis.fetch=async(url,options)=>{
+  const target=String(url);callsZeroBars.push(target);
+  if(target.includes('/get/charts/history'))return new Response(JSON.stringify({s:'no_data'}),{status:200});
+  if(target.includes('/Content/trading-data/'))return new Response('Trading Session Results '+noTradeDate,{status:200});
+  if(target.includes('/dashboard/dispatcher/')){
+   const form=new URLSearchParams(options.body);
+   return new Response(JSON.stringify(form.has('profilmarketinfo_1[parameters][code]')?
+    sofiaIdentity('BLRN','BG1100022232'):sessionTables),{status:200});
+  }
+  throw Error('Unexpected official source: '+target);
+ };
+ const status=await officialDailyStatus(noTradeInstrument,noTradeDate);
+ assert.equal(status?.status,'NO_TRADES');
+ assert.equal(status?.lastTradeDate,null);
+ assert.equal(status?.trades,0);
+ assert.equal(status?.volume,0);
+ assert.equal(status?.sourceUrl,'https://www.bse-sofia.bg/en/Content/trading-data/trading-on-a-regulated-market/'+noTradeDate);
+ assert.equal(status?.bar,undefined);
+ assert.ok(isVerifiedNoTradeGap(status,'2026-10-22',noTradeDate));
+ assert.ok(!isVerifiedNoTradeGap(status,'2026-10-20',noTradeDate));
+ assert.equal(await officialDailyStatus({...noTradeInstrument,currency:'BGN'},noTradeDate),null);
+ assert.ok(callsZeroBars.some(x=>x.includes('/get/charts/history')));
+ assert.ok(callsZeroBars.some(x=>x.includes('/Content/trading-data/')));
+}finally{globalThis.fetch=original;}
+console.log('BSE Sofia zero-bar official session: exact ISIN/market/currency, no fabricated last trade, previous-session-only NO_TRADES PASS');
