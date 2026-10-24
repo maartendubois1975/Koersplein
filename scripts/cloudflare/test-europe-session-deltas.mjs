@@ -80,6 +80,47 @@ assert.throws(()=>compareEuropeSessionDeltas(euronextSubvenue,badSubvenue),/no-t
 const badSubvenueUrl=structuredClone(euronextSubvenue);
 badSubvenueUrl.markets[0].noTrades[0].sourceUrl='https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB0000000002-XMLI';
 assert.throws(()=>compareEuropeSessionDeltas(euronextSubvenue,badSubvenueUrl),/no-trade Euronext ISIN\/venue URL mismatch/);
+// Exercise the actual approved catalog->official Euronext subvenue groupings.
+// The audit groups these under parent MICs; the official source must still
+// identify the exact subvenue and ISIN in its URL.
+for(const [catalogMic,venueMics] of Object.entries({
+  XPAR:['XPAR','XMLI','ALXP'],
+  XMIL:['XMIL','MTAA','EXGM'],
+  XOSL:['XOSL','MERK','XOAS'],
+  XLIS:['XLIS','ALXL','ENXL'],
+  XDUB:['XDUB','XMSM','XESM','XATL'],
+  XBRU:['XBRU'],
+  XAMS:['XAMS']
+})){
+  for(const venueMic of venueMics){
+    const example=summary({missing:['GB0000000002'],noTrade:['GB0000000001']});
+    example.markets[0].mic=catalogMic;
+    example.sourceFailureByMarket[catalogMic]=example.sourceFailureByMarket.XBRU;
+    if(catalogMic!=='XBRU')delete example.sourceFailureByMarket.XBRU;
+    example.importFailures[0].mic=catalogMic;
+    example.markets[0].noTrades[0].mic=venueMic;
+    example.markets[0].noTrades[0].sourceUrl=
+      'https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB0000000001-'+
+      (venueMic==='XDUB'?'XMSM':venueMic);
+    assert.equal(compareEuropeSessionDeltas(example,example).status,'COMPLETE_COMPARISON',
+      catalogMic+'/'+venueMic+' must preserve official source evidence');
+  }
+}
+for(const [mic,provider,url] of [
+  ['XBUL','bse-sofia-official','https://www.bse-sofia.bg/en/get/charts/history?symbol=TST'],
+  ['XZAG','zse-price-list','https://rest.zse.hr/web/Bvt9fe2peQ7pwpyYqODM/price-list/XZAG/2026-10-23/csv?language=EN'],
+  ['XTAL','nasdaq-baltic-official','https://nasdaqbaltic.com/statistics/en/statistics/stats_json'],
+  ['XRIS','nasdaq-baltic-official','https://nasdaqbaltic.com/statistics/en/statistics/stats_json'],
+  ['XLIT','nasdaq-baltic-official','https://nasdaqbaltic.com/statistics/en/statistics/stats_json']
+]){
+  const example=summary({missing:['GB0000000002'],noTrade:['GB0000000001']});
+  example.markets[0].mic=mic;
+  example.sourceFailureByMarket[mic]=example.sourceFailureByMarket.XBRU;
+  delete example.sourceFailureByMarket.XBRU;
+  example.importFailures[0].mic=mic;
+  Object.assign(example.markets[0].noTrades[0],{mic,provider,sourceUrl:url});
+  assert.equal(compareEuropeSessionDeltas(example,example).status,'COMPLETE_COMPARISON');
+}
 const mse=summary({missing:['GB0000000002'],noTrade:['GB0000000001']});
 mse.markets[0].mic='XMAL';
 mse.sourceFailureByMarket.XMAL=mse.sourceFailureByMarket.XBRU;
