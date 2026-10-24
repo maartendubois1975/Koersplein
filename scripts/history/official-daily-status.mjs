@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import {budapestClosedSessionStatus,BUDAPEST_CALENDAR_URL} from './providers/budapest-holiday.mjs';
 import {fetchMseOfficialPriceList,mseOfficialNoTradeStatus,MSE_PRICE_LIST_URL} from './providers/mse-official-price-list.mjs';
-import {BseSofiaProvider,bseSessionSnapshot} from './providers/bse-sofia.mjs';
+import {BseSofiaProvider,bseOfficialIdentity,bseSessionSnapshot} from './providers/bse-sofia.mjs';
 import {euronextDailySnapshot} from './providers/euronext-live.mjs';
 import {zseDailySnapshot} from './providers/zse-price-list.mjs';
 const cache=new Map();
@@ -78,14 +78,34 @@ export async function officialDailyStatus(instrument,date){
   return mseOfficialNoTradeStatus(snapshot,{...instrument,mic,isin},date);
  }
  if(mic==='XBUL'){
-  const r=await cached(`bse:${isin}:${date}`,()=>new BseSofiaProvider().fetchDaily({...instrument,mic,isin},{startDate:'1990-01-01',endDate:date,signal:AbortSignal.timeout(20000)}));
-  const bar=r.bars.find(x=>x.date===date);
-  const common={date,mic,isin,provider:'bse-sofia-official',sourceUrl:r.requestUrl,retrievedAt:new Date().toISOString()};
-  if(bar)return {...common,status:'TRADED',lastTradeDate:date,bar};
+  const symbol=String(instrument.symbol||instrument.ticker||'').toUpperCase();
+  // The official chart can return zero rows for a valid, illiquid equity.
+  // That is NOT proof of no trades: verify the official ISIN, quote currency,
+  // listed market and the complete dated session table independently.
+  let r=null,verified=null;
+  try{
+   r=await cached(`bse:${isin}:${date}`,()=>new BseSofiaProvider().fetchDaily({...instrument,mic,isin},{startDate:'1990-01-01',endDate:date,signal:AbortSignal.timeout(20000)}));
+   verified=r.providerMeta;
+  }catch(error){
+   if(error.message!=='BSE no traded daily bars in requested range')throw error;
+   verified=await cached(`bse-identity:${symbol}`,()=>bseOfficialIdentity(symbol,AbortSignal.timeout(20000)));
+  }
+  if(!verified||verified.isin!==isin||verified.symbol!==symbol||
+    verified.currency!==instrument.currency)return null;
+  const bar=r?.bars.find(x=>x.date===date);
+  const common={date,mic,isin,provider:'bse-sofia-official',retrievedAt:new Date().toISOString()};
+  if(bar)return {...common,status:'TRADED',lastTradeDate:date,bar,sourceUrl:r.requestUrl};
   const session=await cached('bse-session:'+date,()=>bseSessionSnapshot(date,AbortSignal.timeout(20000)));
-  const symbol=String(instrument.symbol||instrument.ticker||'').toUpperCase(),last=r.bars.at(-1)?.date;
-  if(last&&last<date&&session.markets.has(r.providerMeta.market)&&!session.symbols.has(symbol))return {...common,status:'NO_TRADES',lastTradeDate:last,volume:0,trades:0,sessionSourceUrl:session.sourceUrl,verification:'NO_TRADES_IN_COMPLETE_OFFICIAL_SESSION_RESULTS'};
-  return null;
+  if(!session.markets.has(verified.market)||session.symbols.has(symbol))return null;
+  const last=r?.bars.at(-1)?.date||null;
+  // With no historical bars the source cannot establish a last-trade date.
+  // The caller's isVerifiedNoTradeGap gate then permits this only when the
+  // stored last bar is exactly the previous closed weekday, never for a stale
+  // multi-day/month gap. No price or last-trade date is fabricated.
+  if(last&&last>=date)return null;
+  return {...common,status:'NO_TRADES',lastTradeDate:last,trades:0,volume:0,
+   sourceUrl:session.sourceUrl,sessionSourceUrl:session.sourceUrl,
+   verification:'NO_TRADES_IN_COMPLETE_OFFICIAL_SESSION_RESULTS'};
  }
  if(mic==='XZAG'){
   const s=await cached('zse:'+date,()=>zseDailySnapshot(date,AbortSignal.timeout(20000)));
