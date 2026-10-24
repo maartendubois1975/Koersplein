@@ -29,7 +29,7 @@ export function parseOhlcPrice(value) {
  if(typeof value==='number')return Number.isFinite(value)&&value>0?value:null;
  if(typeof value!=='string')return null;
  const text=value.trim();
- if(!/^[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?$/.test(text))return null;
+ if(!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(text))return null;
  const number=Number(text);
  return Number.isFinite(number)&&number>0?number:null;
 }
