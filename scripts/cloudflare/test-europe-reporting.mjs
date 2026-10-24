@@ -156,3 +156,12 @@ const unverifiedDuplicate=renderEuropeReport({...report,storedOhlcDuplicateEvide
 assert.match(unverifiedDuplicate,/conflict audit: \*\*UNVERIFIED\*\*/);
 assert.doesNotMatch(unverifiedDuplicate,/conflicts.*\*\*0\*\*/);
 console.log('Stored conflict provenance reporting distinguishes complete and missing audit evidence PASS');
+const partialHistoricalReport=renderEuropeReport({...report,
+ historicalOhlcDebt:{readOnly:true,complete:false,datesInRecoveryQueue:null,byMarket:[]},
+ totals:{...report.totals,catalog:null,currentOpenClose:null,missingOpenClose:null,recentInvalidOhlcDays:null},
+ marketCoverage:{complete:false,anomalies:[{kind:'audit',shard:7,issue:'REPORT_COUNT'}]}});
+assert.match(partialHistoricalReport,/Historical OHLC debt audit: \*\*UNVERIFIED\*\*/);
+assert.doesNotMatch(partialHistoricalReport,/Historical incomplete OHLC dates queued for read-only source review:/);
+assert.match(partialHistoricalReport,/\| Missing open\/close \| unknown \|/);
+console.log('Partial audit reports never present a historical debt number or missing-coverage total PASS');
+
