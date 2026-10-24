@@ -1,7 +1,7 @@
 import {fetchPublicHistoryManifest} from './public-history-manifest.mjs';
 import fs from 'node:fs/promises';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
-import {latestClosedWeekday,isCompleteOhlcBar,isVerifiedNoTradeGap,auditBarIssue,latestAuditBar,mapConcurrent} from './europe-run-policy.mjs';
+import {latestClosedWeekday,isCompleteOhlcBar,isVerifiedNoTradeGap,auditBarIssue,latestAuditBar,mapConcurrent,selectEuropeAuditHistoryPeriods} from './europe-run-policy.mjs';
 import {storageIdentityResolver} from './storage-identity.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 import {describeOhlcDefects,countOhlcDefects,recentOhlcDebt} from './europe-ohlc-defects.mjs';
@@ -38,10 +38,13 @@ for(const market of complete){
       const storageIsin=resolveStorage(s);
       if(!storageIsin)throw Error('CATALOG_INSTRUMENT_MISSING '+s.isin);
       const partitions=await client.historyPartitions(storageIsin);
-      const last=(partitions.partitions||[]).slice().sort((a,b)=>a.period.localeCompare(b.period)).at(-1);
-      if(!last)throw Error('NO_HISTORY_PARTITIONS');
-      const h=await client.historyPartition(storageIsin,last.period);
-      const bars=h?.bars||h?.history||[];
+      // The 30-day window crosses two yearly partitions around New Year.
+      // Reading only the latest year undercounts historical defects and can
+      // mistake a valid prior-year latest trade for missing stored history.
+      const periods=selectEuropeAuditHistoryPeriods(partitions.partitions||[],cutoff,30);
+      if(!periods.length)throw Error('NO_HISTORY_PARTITIONS');
+      const histories=await Promise.all(periods.map(period=>client.historyPartition(storageIsin,period)));
+      const bars=histories.flatMap(h=>h?.bars||h?.history||[]);
       const debt=recentOhlcDebt(bars,cutoff,30);
       if(debt.invalidDates.length){
         recentInvalidOhlcInstruments++;
