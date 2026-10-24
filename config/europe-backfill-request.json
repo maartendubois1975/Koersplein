@@ -1,7 +1,10 @@
 {
-  "requestedAt": "2026-10-24T02:35:00.000Z",
+  "requestedAt": "2026-10-24T05:00:55.664Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Europe Bouw B protected 8-shard 31-MIC same-cutoff production verification after approved Yahoo currency and missing-exchange identity gates plus distinct failure attribution on immutable 154982577. Approved providers only, no full backfill, append-only, no existing OHLC overwrite, Paris existing-history-only. Require all 8 update+audit artifacts and 31 MIC; compare to 40050251650 only at cutoff 2026-10-23. Inspect PROVIDER_CURRENCY_MISMATCH and PROVIDER_VENUE_UNVERIFIED counts separately; no per-ISIN price-write claim."
+  "reason": "Bouw A: production verification of official BSE Resolution 380/2025 full-session closure on 2026-10-23 for all 29 XBUD approved catalog identities; no OHLC synthesized. Preserve Paris existing-history-only, approved providers and append-only history. Require 8/8 update+audit and 31/31 MIC, compare immutable same-cutoff run 40054758587; valid OHLC must not be credited to holiday no-trades.",
+  "baselineRunId": 40054758587,
+  "expectedCutoff": "2026-10-23",
+  "codeCommit": "e958a17f13d27b97b33b8541c33a2ead809a375c"
 }
