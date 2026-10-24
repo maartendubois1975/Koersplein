@@ -16,7 +16,7 @@ try {
  const reportDir=path.join(fixture,'research/output');
  for(let shard=0;shard<8;shard++){
   const update={generatedAt:'2026-10-23T10:00:00Z',shardIndex:shard,shardCount:8,freshnessCutoff:'2026-10-22',markets:shard===0?[{mic:'XPAR',failed:[],deferredMissing:0,historicalBackfillFailures:[]}]:[]};
-  const audit={generatedAt:'2026-10-23T10:00:00Z',shardIndex:shard,shardCount:8,freshnessCutoff:'2026-10-22',markets:shard===0?[{mic:'XPAR',catalog:1,openCloseOk:1,verifiedNoTrades:0,missingOpenClose:0,skippedDataUnavailable:0,recentInvalidOhlcDays:1,recentInvalidOhlcInstruments:1,recentOhlcDebtCandidates:[{isin:'FR0000061418',symbol:'SACI',date:'2026-10-22',defects:['HIGH_BELOW_CLOSE']}],missing:[],missingReasons:{},invalidOhlcByDefect:{}}]:[]};
+  const audit={generatedAt:'2026-10-23T10:00:00Z',shardIndex:shard,shardCount:8,freshnessCutoff:'2026-10-22',markets:shard===0?[{mic:'XPAR',catalog:1,openCloseOk:1,verifiedNoTrades:0,missingOpenClose:0,skippedDataUnavailable:0,recentInvalidOhlcDays:1,recentInvalidOhlcInstruments:1,recentOhlcDebtCandidates:[{isin:'FR0000061418',symbol:'SACI',date:'2026-10-22',defects:['HIGH_BELOW_CLOSE']}],storedOhlcConflictDates:1,storedOhlcConflictCandidates:[{isin:'FR0000061418',symbol:'SACI',date:'2026-10-22',category:'MIXED_COMPLETE_INVALID_STORED_OHLC',rows:2,distinctOhlc:2}],missing:[],missingReasons:{},invalidOhlcByDefect:{}}]:[]};
   await fs.writeFile(path.join(reportDir,`daily-open-close-update-${shard}.json`),JSON.stringify(update));
   await fs.writeFile(path.join(reportDir,`daily-open-close-audit-${shard}.json`),JSON.stringify(audit));
  }
@@ -27,6 +27,12 @@ try {
  assert.equal(summary.marketCoverage.complete,true);
  assert.equal(summary.totals.catalog,1);
  assert.equal(summary.historicalOhlcDebt.datesInRecoveryQueue,1);
+ assert.equal(summary.storedOhlcDuplicateEvidence.complete,true);
+ assert.equal(summary.storedOhlcDuplicateEvidence.dates,1);
+ assert.equal(summary.storedOhlcDuplicateEvidence.byMarket[0].mic,'XPAR');
+ const recovery=JSON.parse(await fs.readFile(path.join(reportDir,'europe-recovery-queue.json'),'utf8'));
+ assert.equal(recovery.totals.storedOhlcConflictDates,1);
+ assert.equal(recovery.totals.recentOhlcDebtDates,1,'Stored duplicate conflicts cannot inflate ordinary OHLC debt');
  assert.equal(summary.status,'DAILY_STATUS_VERIFIED');
  assert.equal(summary.freshnessCutoff,'2026-10-22');
  assert.equal(summary.sessionConsistency.complete,true);
