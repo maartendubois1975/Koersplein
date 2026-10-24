@@ -59,3 +59,19 @@ assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0000000001: ya
 assert.equal(classifyEuropeFailure('Alle providers faalden voor FR0000000001: yahoo-chart: Providerbeurs ontbreekt voor FR0000000001: verwacht XPAR'),'PROVIDER_VENUE_UNVERIFIED');
 assert.equal(classifyEuropeFailure('Alle providers faalden voor FR0000000001: yahoo-chart: Providerbeurs wijkt af voor FR0000000001: verwacht XPAR, ontvangen LSE'),'SYMBOL_IDENTITY_MISMATCH');
 console.log('Yahoo currency/venue identity failure provenance PASS');
+
+// Resolver identity uncertainty is not a generic provider failure and must
+// remain distinct from ordinary no-bars or direct-symbol HTTP 404.
+for(const [message,category] of [
+ ['Alle providers faalden voor CH0000000001: yahoo-isin-resolver: Geen expliciet ISIN/EQUITY-bevestigde Yahoo-resolutie voor CH0000000001 op XSWX','ISIN_SEARCH_IDENTITY_UNVERIFIED'],
+ ['Alle providers faalden voor GB0000000001: yahoo-isin-resolver: Ambigue Yahoo ISIN-resolutie voor GB0000000001 op XLON: 2 symbolen','ISIN_SEARCH_AMBIGUOUS'],
+ ['Alle providers faalden voor GB0000000001: yahoo-chart: Yahoo HTTP 404 voor TEST.L; yahoo-isin-resolver: Geen expliciet ISIN/EQUITY-bevestigde Yahoo-resolutie voor GB0000000001 op XLON','ISIN_SEARCH_IDENTITY_UNVERIFIED']
+])assert.equal(classifyEuropeFailure(message),category);
+const identityTriage=diagnoseEuropeReports([{markets:[{mic:'XSWX',failed:[
+ {isin:'CH0000000001',symbol:'TEST',error:'yahoo-isin-resolver: Geen expliciet ISIN/EQUITY-bevestigde Yahoo-resolutie voor CH0000000001 op XSWX'}
+]}]}],[{markets:[{mic:'XSWX',missingOpenClose:1}]}]);
+assert.equal(identityTriage.markets[0].categories.ISIN_SEARCH_IDENTITY_UNVERIFIED,1);
+assert.match(identityTriage.markets[0].nextAction,/official ISIN-to-venue reference data/);
+console.log('Yahoo ISIN ambiguity and missing identity metadata are separately classified PASS');
+
+
