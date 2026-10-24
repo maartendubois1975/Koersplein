@@ -49,6 +49,7 @@ jobs:
           node scripts/cloudflare/test-europe-failure-diagnosis.mjs
           node scripts/cloudflare/test-six-ipo-symbol-evidence.mjs
           node scripts/cloudflare/test-nasdaq-baltic-provider.mjs
+          node scripts/cloudflare/test-bse-sofia.mjs
           node scripts/cloudflare/test-official-daily-status.mjs
           node scripts/cloudflare/test-europe-recovery-queue.mjs
           node scripts/cloudflare/test-europe-reporting.mjs
