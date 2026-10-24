@@ -33,9 +33,10 @@ export class YahooIsinProvider {
   let last;
   for(const q of quotes){
    try{
-    // Yahoo may label some SIX .SW listings with a generic metadata exchange.
-    // The validated .SW suffix remains mandatory. No such exception for XLUX.
-    return await chart.fetchDaily({...instrument,providerSymbol:q.symbol,allowProviderExchangeMismatch:mic==='XSWX'},opts);
+    // Search ranking and a .SW suffix are not proof of the trading venue.
+    // Apply the same strict chart MIC, symbol and currency gate to SIX as to
+    // every other approved exchange; no resolver-specific venue bypass.
+    return await chart.fetchDaily({...instrument,providerSymbol:q.symbol},opts);
    }catch(e){last=e}
   }
   throw last||Error(`Geen gevalideerde Yahoo ISIN-route voor ${isin}`);
