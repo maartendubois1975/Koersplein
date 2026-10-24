@@ -4,6 +4,19 @@ import {parseOhlcPrice} from './europe-run-policy.mjs';
 const FIELDS=['open','high','low','close'];
 const BUCKETS=['UNDER_1_BPS','FROM_1_TO_10_BPS','FROM_10_TO_100_BPS','FROM_100_TO_1000_BPS','AT_LEAST_1000_BPS','INVALID_OR_MISSING_FIELDS','FLAGGED_WITHOUT_VIOLATION'];
 function emptyCounts(){return Object.fromEntries(BUCKETS.map(key=>[key,0]));}
+// Match stored-date conflict diagnostics: decimal strings and numbers are
+// equivalent OHLC evidence, but distinct invalid raw types are not. The
+// original JSON snapshot remains immutable and is never rewritten.
+function canonicalStoredOhlcSignature(bar){
+ if(!bar||typeof bar!=='object')return JSON.stringify(bar??null);
+ return JSON.stringify(FIELDS.map(key=>{
+  const value=bar[key];
+  if(value===null||value===undefined||value==='')return null;
+  const parsed=parseOhlcPrice(value);
+  return parsed===null?JSON.stringify([typeof value,value]):parsed;
+ }));
+}
+
 export function storedOhlcViolationSeverity(bar){
  const prices=bar&&Object.fromEntries(FIELDS.map(key=>[key,parseOhlcPrice(bar[key])]));
  if(!prices||FIELDS.some(key=>prices[key]===null))return {bucket:'INVALID_OR_MISSING_FIELDS',violationBps:null,readOnly:true};
@@ -33,7 +46,7 @@ export function summarizeStoredOhlcSeverity(queue){
    const key=[row.mic,row.isin,row.lastStoredDate].join('|');
    if(seen.has(key)){
     duplicateDates++;
-    if(JSON.stringify(seen.get(key))!==JSON.stringify(row.storedOhlc??null))conflictingSnapshots++;
+    if(canonicalStoredOhlcSignature(seen.get(key))!==canonicalStoredOhlcSignature(row.storedOhlc??null))conflictingSnapshots++;
     continue;
    }
    seen.set(key,row.storedOhlc??null);
