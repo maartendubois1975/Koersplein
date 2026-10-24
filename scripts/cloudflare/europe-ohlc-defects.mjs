@@ -39,6 +39,45 @@ export function countOhlcDefects(missing){
 }
 
  
+// Independently expose contradictory stored rows for the same session.
+// The ordinary defect counter intentionally prefers a complete duplicate,
+// but that can hide a conflicting stored snapshot. Do not change or merge any
+// existing bars: this is a separate, evidence-only quarantine signal.
+export function inspectStoredOhlcDateConflicts(bars,cutoff,windowDays=30){
+ if(!isValidDate(cutoff)||!Number.isInteger(windowDays)||windowDays<1||windowDays>366)throw Error('Invalid stored OHLC conflict window');
+ const min=new Date(cutoff+'T00:00:00Z');
+ min.setUTCDate(min.getUTCDate()-windowDays+1);
+ const windowStart=min.toISOString().slice(0,10),groups=new Map();
+ for(const bar of bars||[]){
+  const date=bar?.date;
+  if(!isValidDate(date)||date<windowStart||date>cutoff)continue;
+  if(!groups.has(date))groups.set(date,[]);
+  groups.get(date).push(bar);
+ }
+ const dates=[];
+ for(const [date,rows] of groups){
+  if(rows.length<2)continue;
+  const variants=new Map();
+  for(const bar of rows){
+   const signature=JSON.stringify(FIELDS.map(key=>{
+    const value=bar[key];
+    if(value===null||value===undefined||value==='')return null;
+    const number=Number(value);
+    return Number.isFinite(number)?number:String(value);
+   }));
+   variants.set(signature,describeOhlcDefects(bar).length===0);
+  }
+  if(variants.size<2)continue; // Identical OHLC rows are not contradictory.
+  const completeVariants=[...variants.values()].filter(Boolean).length;
+  const invalidVariants=variants.size-completeVariants;
+  const category=completeVariants&&invalidVariants?'MIXED_COMPLETE_INVALID_STORED_OHLC':
+    completeVariants>1?'CONFLICTING_COMPLETE_STORED_OHLC':'CONFLICTING_INVALID_STORED_OHLC';
+  dates.push({date,category,rows:rows.length,distinctOhlc:variants.size});
+ }
+ dates.sort((a,b)=>a.date.localeCompare(b.date));
+ return {readOnly:true,windowStart,windowEnd:cutoff,count:dates.length,dates};
+}
+
 // Count historical OHLC debt in the most recent closed calendar window even
 // after a newer valid daily candle makes the instrument look current. If
 // duplicate rows exist for a date, a complete row prevents a false defect.
