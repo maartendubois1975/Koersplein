@@ -52,3 +52,10 @@ console.log('Mixed-validity duplicate OHLC evidence is separately classified PAS
 assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0000000001: yahoo-chart: Source duplicate-date OHLC conflict'),'SOURCE_DUPLICATE_DATE_OHLC_CONFLICT');
 assert.equal(classifyEuropeFailure('Alle providers faalden voor CH0000000001: yahoo-chart: Source duplicate-date OHLC conflict; yahoo-isin-resolver: Provider returned no daily bars'),'SOURCE_DUPLICATE_DATE_OHLC_CONFLICT');
 console.log('Conflicting same-day production source OHLC is quarantined and classified PASS');
+
+// New production identity gates must remain diagnosable by MIC, not collapse
+// into PROVIDER_OTHER or be mistaken for a missing trading-day bar.
+assert.equal(classifyEuropeFailure('Alle providers faalden voor GB0000000001: yahoo-chart: Providervaluta wijkt af voor GB0000000001: verwacht GBX, ontvangen GBP'),'PROVIDER_CURRENCY_MISMATCH');
+assert.equal(classifyEuropeFailure('Alle providers faalden voor FR0000000001: yahoo-chart: Providerbeurs ontbreekt voor FR0000000001: verwacht XPAR'),'PROVIDER_VENUE_UNVERIFIED');
+assert.equal(classifyEuropeFailure('Alle providers faalden voor FR0000000001: yahoo-chart: Providerbeurs wijkt af voor FR0000000001: verwacht XPAR, ontvangen LSE'),'SYMBOL_IDENTITY_MISMATCH');
+console.log('Yahoo currency/venue identity failure provenance PASS');
