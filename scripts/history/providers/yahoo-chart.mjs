@@ -81,7 +81,14 @@ export class YahooChartProvider {
   // Missing exchange metadata is not positive evidence of the approved MIC.
   // A correct ticker suffix alone cannot independently verify the venue.
   if(!exchangeFields.length)throw new Error(`Providerbeurs ontbreekt voor ${instrument.isin}: verwacht ${instrument.mic||instrument.market}`);
-  if(!exchangeFields.some(field=>rule.exchanges.some(expected=>field.includes(expected))))
+  // Never accept substring coincidences (e.g. FALSE contains LSE), or
+  // contradictory exchangeName/fullExchangeName pairs where one looks right.
+  // Exact aliases and their explicit descriptive extensions are accepted;
+  // a prefix such as "NOT LSE" cannot masquerade as the LSE venue.
+  const matchesVenue=field=>rule.exchanges.some(alias=>
+   field===alias||[' stock exchange',' exchange',' market',' ab',' xetra'].some(extension=>field===alias+extension)
+  );
+  if(!exchangeFields.every(matchesVenue))
    throw new Error(`Providerbeurs wijkt af voor ${instrument.isin}: verwacht ${instrument.mic||instrument.market}, ontvangen ${meta.fullExchangeName||meta.exchangeName}`);
  }
 }
