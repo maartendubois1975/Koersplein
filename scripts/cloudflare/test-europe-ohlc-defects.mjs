@@ -66,5 +66,20 @@ assert.equal(duplicateEvidence.dates[0].distinctOhlc,2);
 assert.equal(duplicateEvidence.dates[0].rows,2);
 assert.equal(recentOhlcDebt(conflictingRows,'2026-01-09',30).invalidDates.length,0,'Legacy defect metric remains separate from duplicate provenance');
 assert.equal(inspectStoredOhlcDateConflicts([{...valid,date:'2026-01-04',open:'10'},{...valid,date:'2026-01-04',open:10}],'2026-01-09').count,0,'Equivalent numeric OHLC values are not conflicts');
+// Previously String(value) collapsed invalid booleans, strings and objects
+// into identical signatures, hiding contradictory immutable snapshots.
+const invalidTypeConflicts=inspectStoredOhlcDateConflicts([
+ {...valid,date:'2026-01-07',open:true},
+ {...valid,date:'2026-01-07',open:'true'},
+ {...valid,date:'2026-01-08',open:{bad:1}},
+ {...valid,date:'2026-01-08',open:{bad:2}},
+ {...valid,date:'2026-01-09',open:false},
+ {...valid,date:'2026-01-09',open:false}
+],'2026-01-09',30);
+assert.deepEqual(invalidTypeConflicts.dates.map(x=>[x.date,x.category]),[
+ ['2026-01-07','CONFLICTING_INVALID_STORED_OHLC'],
+ ['2026-01-08','CONFLICTING_INVALID_STORED_OHLC']
+]);
+assert.equal(invalidTypeConflicts.count,2,'Identical invalid duplicates remain non-conflicting');
 assert.throws(()=>inspectStoredOhlcDateConflicts([], '2026-02-30'),/Invalid stored OHLC conflict window/);
 console.log('Cross-year debt and immutable same-date stored OHLC conflict diagnostics PASS');
