@@ -108,6 +108,13 @@ export function compareEuropeSessionDeltas(before,after){
   const removed=[...a.missing].filter(([k])=>!b.missing.has(k)).map(([k,v])=>({
     ...v,after:b.noTrade.has(k)?'OFFICIAL_NO_TRADE':'NO_LONGER_MISSING_UNVERIFIED_PER_INSTRUMENT'}));
   const added=[...b.missing].filter(([k])=>!a.missing.has(k)).map(([,v])=>v);
+  // An official NO_TRADES classification is a separate evidence state. Changes
+  // must be traceable per MIC/identifier, not inferred from aggregate counts:
+  // a disappearance is NOT proof of trading or a newly appended OHLC bar.
+  const noTradeRemoved=[...a.noTrade].filter(([k])=>!b.noTrade.has(k))
+    .map(([k,v])=>({...v,after:b.missing.has(k)?'MISSING':'NO_LONGER_OFFICIAL_NO_TRADE_UNVERIFIED'}));
+  const noTradeAdded=[...b.noTrade].filter(([k])=>!a.noTrade.has(k))
+    .map(([k,v])=>({...v,before:a.missing.has(k)?'MISSING':'PREVIOUSLY_NOT_OFFICIAL_NO_TRADE_UNVERIFIED'}));
   const reasonChanges=[...b.missing].filter(([k,v])=>a.missing.has(k)&&a.missing.get(k).reason!==v.reason)
     .map(([k,v])=>({mic:v.mic,isin:v.isin,before:a.missing.get(k).reason,after:v.reason}));
   const failureRemoved=[...a.failures].filter(([k])=>!b.failures.has(k)).map(([,v])=>v);
@@ -117,8 +124,11 @@ export function compareEuropeSessionDeltas(before,after){
     .map(([k,v])=>({mic:v.mic,isin:v.isin,before:a.failures.get(k).category,after:v.category}));
   const sort=(x,y)=>x.mic.localeCompare(y.mic)||x.isin.localeCompare(y.isin);
   removed.sort(sort);added.sort(sort);reasonChanges.sort(sort);
+  noTradeRemoved.sort(sort);noTradeAdded.sort(sort);
   failureRemoved.sort(sort);failureAdded.sort(sort);failureCategoryChanges.sort(sort);
   check(a.missing.size-removed.length+added.length===b.missing.size,'identity arithmetic mismatch');
+  check(a.noTrade.size-noTradeRemoved.length+noTradeAdded.length===b.noTrade.size,
+    'official no-trade identity arithmetic mismatch');
   check(a.failures.size-failureRemoved.length+failureAdded.length===b.failures.size,
     'failure identity arithmetic mismatch');
   const countByMic=items=>{
@@ -137,6 +147,8 @@ export function compareEuropeSessionDeltas(before,after){
       missingDelta:y.missingOpenClose-x.missingOpenClose,
       missingRemoved:removed.filter(v=>v.mic===mic).length,
       missingAdded:added.filter(v=>v.mic===mic).length,
+      officialNoTradeRemoved:noTradeRemoved.filter(v=>v.mic===mic).length,
+      officialNoTradeAdded:noTradeAdded.filter(v=>v.mic===mic).length,
       failedImportsDelta:(afterFailuresByMic.get(mic)||0)-(beforeFailuresByMic.get(mic)||0),
       failureRemoved:failureRemoved.filter(v=>v.mic===mic).length,
       failureAdded:failureAdded.filter(v=>v.mic===mic).length,
@@ -144,7 +156,8 @@ export function compareEuropeSessionDeltas(before,after){
       missingReasonChanges:reasonChangesByMic.get(mic)||0,
       failureCategoryChanges:categoryChangesByMic.get(mic)||0};
   });
-  check(byMarket.every(v=>v.missingDelta===v.missingAdded-v.missingRemoved&&
+  check(byMarket.every(v=>v.noTradeDelta===v.officialNoTradeAdded-v.officialNoTradeRemoved&&
+    v.missingDelta===v.missingAdded-v.missingRemoved&&
     v.failedImportsDelta===v.failureAdded-v.failureRemoved&&
     v.currentOhlcDelta+v.noTradeDelta+v.missingDelta===0),'market transition arithmetic mismatch');
   return {mode:'READ_ONLY_SAME_CUTOFF_INSTRUMENT_DELTA',status:'COMPLETE_COMPARISON',
@@ -153,13 +166,13 @@ export function compareEuropeSessionDeltas(before,after){
       failedImports:a.failures.size},
     after:{currentOhlc:b.totals.currentOpenClose,noTrade:b.totals.verifiedNoTrades,missing:b.missing.size,
       failedImports:b.failures.size},
-    removed,added,reasonChanges,failureRemoved,failureAdded,failureCategoryChanges,
+    removed,added,noTradeRemoved,noTradeAdded,reasonChanges,failureRemoved,failureAdded,failureCategoryChanges,
     byMarket:byMarket.filter(v=>v.currentOhlcDelta||v.noTradeDelta||v.missingDelta||
       v.failedImportsDelta||v.missingReasonChanges||v.failureCategoryChanges),
     productionWrites:0,mappingsApproved:0,catalogMembershipVerified:false,
     nonIsinCatalogKeys:{before:[...a.missing.values(),...a.noTrade.values()].filter(v=>v.identifierType==='NON_ISIN_CATALOG_KEY').length,
       after:[...b.missing.values(),...b.noTrade.values()].filter(v=>v.identifierType==='NON_ISIN_CATALOG_KEY').length},
-    warning:'NO_LONGER_MISSING is not independent proof of a new appended bar, approved source, or OHLC correctness. Check immutable shard artifacts and stored history before claiming a price repair.'};
+    warning:'NO_LONGER_MISSING and NO_LONGER_OFFICIAL_NO_TRADE are not proof of a new appended bar or actual trading. Check official source evidence, immutable shard artifacts and stored history before claiming a price repair.'};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
   if(process.argv.length!==4){console.error('Usage: node compare-europe-session-deltas.mjs <before-summary.json> <after-summary.json>');process.exitCode=2;}
