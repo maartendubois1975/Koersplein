@@ -93,6 +93,30 @@ export function inspectDailyBarIntegrity(result,{startDate,endDate}) {
 export function validBars(result,range) {
  return inspectDailyBarIntegrity(result,range).bars;
 }
+// A yearly history partition can straddle the 30-calendar-day audit window
+// at New Year. Always include every existing year intersecting that window,
+// the most recent closed-year partition (for stale-price classification), and
+// the newest partition (to preserve visibility of future-dated stored rows).
+// This is strictly read-only; it does not authorize historical corrections.
+export function selectEuropeAuditHistoryPeriods(partitions,cutoff,windowDays=30) {
+ if(typeof cutoff!=='string'||!/^\\d{4}-\\d{2}-\\d{2}$/.test(cutoff)||
+    !Number.isFinite(Date.parse(cutoff+'T00:00:00Z'))||
+    new Date(cutoff+'T00:00:00Z').toISOString().slice(0,10)!==cutoff||
+    !Number.isInteger(windowDays)||windowDays<1||windowDays>366)throw Error('Invalid history audit window');
+ const min=new Date(cutoff+'T00:00:00Z');
+ min.setUTCDate(min.getUTCDate()-windowDays+1);
+ const startYear=min.toISOString().slice(0,4),endYear=cutoff.slice(0,4);
+ const periods=(partitions||[]).map(p=>p?.period);
+ if(periods.some(p=>typeof p!=='string'||!/^\\d{4}$/.test(p)))throw Error('Invalid yearly history partition metadata');
+ const sorted=[...new Set(periods)].sort();
+ if(!sorted.length)return [];
+ const chosen=new Set([sorted.at(-1)]);
+ const latestClosed=sorted.filter(p=>p<=endYear).at(-1);
+ if(latestClosed)chosen.add(latestClosed);
+ for(const period of sorted)if(period>=startYear&&period<=endYear)chosen.add(period);
+ return [...chosen].sort();
+}
+
 export async function mapConcurrent(items,limit,fn) {
  let cursor=0;
  await Promise.all(Array.from({length:Math.min(limit,items.length)},async()=>{
