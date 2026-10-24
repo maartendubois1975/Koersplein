@@ -17,16 +17,37 @@ const OFFICIAL_NO_TRADE_SOURCES=Object.freeze({
   'mse-official-price-list':{host:'cdn.borzamalta.com.mt',prefix:'/download/statistics/Price_List/Price%20List.pdf',
     mics:new Set(['XMAL'])}
 });
+// The catalog groups official Euronext subvenues under parent markets.
+// An official XMLI no-trade observation belongs to the XPAR catalog, not to
+// an invented XPAR listing. Keep both identities and bind the source URL to
+// the exact official venue/ISIN, never accept an arbitrary cross-MIC claim.
+const EURONEXT_CATALOG_MIC_GROUPS=Object.freeze({
+  XPAR:new Set(['XPAR','XMLI','ALXP']),
+  XMIL:new Set(['XMIL','MTAA','EXGM']),
+  XOSL:new Set(['XOSL','MERK','XOAS']),
+  XLIS:new Set(['XLIS','ALXL','ENXL']),
+  XDUB:new Set(['XDUB','XMSM','XESM','XATL']),
+  XBRU:new Set(['XBRU']),
+  XAMS:new Set(['XAMS'])
+});
 function verifyOfficialNoTrade(item,mic,cutoff,label){
-  check(item.status==='NO_TRADES'&&item.date===cutoff&&item.mic===mic&&item.isin,
+  check(item.status==='NO_TRADES'&&item.date===cutoff&&typeof item.mic==='string'&&item.isin,
     label+'/'+mic+': no-trade identity/session provenance incomplete');
   const route=OFFICIAL_NO_TRADE_SOURCES[item.provider];
-  check(route?.mics.has(mic),label+'/'+mic+': no-trade provider not approved for MIC');
+  const approvedVenue=item.provider==='euronext-live'?
+    EURONEXT_CATALOG_MIC_GROUPS[mic]?.has(item.mic):item.mic===mic;
+  check(approvedVenue&&route?.mics.has(item.mic),
+    label+'/'+mic+': no-trade provider/venue not approved for catalog MIC');
   let url;
   try{url=new URL(item.sourceUrl);}catch{}
   check(url?.protocol==='https:'&&url.hostname===route.host&&!url.username&&!url.password&&
     !url.port&&url.pathname.startsWith(route.prefix),
     label+'/'+mic+': no-trade source URL not official');
+  if(item.provider==='euronext-live'){
+    const providerMic=item.mic==='XDUB'?'XMSM':item.mic;
+    check(url.pathname===route.prefix+encodeURIComponent(item.isin+'-'+providerMic),
+      label+'/'+mic+': no-trade Euronext ISIN/venue URL mismatch');
+  }
   if(item.provider==='mse-official-price-list'){
     check(item.readOnly===true&&
       ['OFFICIAL_LAST_TRADE_BEFORE_PRICE_LIST_SESSION','OFFICIAL_LATER_SNAPSHOT_PROVES_NO_TARGET_SESSION_TRADE'].includes(item.verification)&&
