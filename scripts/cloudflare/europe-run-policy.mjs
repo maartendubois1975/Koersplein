@@ -21,6 +21,18 @@ export function isVerifiedNoTradeGap(status,lastStoredDate,cutoff) {
  return lastStoredDate===previousClosedWeekday(cutoff);
 }
 
+// Numeric strings from legacy history are permitted, but JavaScript's Number()
+// also accepts booleans, arrays, hexadecimal literals and whitespace. None of
+// those is evidence of a real traded price. Keep this gate shared by import,
+// stored-history diagnostics and source-conflict comparisons.
+export function parseOhlcPrice(value) {
+ if(typeof value==='number')return Number.isFinite(value)&&value>0?value:null;
+ if(typeof value!=='string')return null;
+ const text=value.trim();
+ if(!/^[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?$/.test(text))return null;
+ const number=Number(text);
+ return Number.isFinite(number)&&number>0?number:null;
+}
 // A complete OHLC bar needs all four independently reported prices. Null
 // high/low, an inverted range, or a close outside the high/low range must
 // never be stored as a valid daily candle or counted as current by the audit.
@@ -28,11 +40,8 @@ export function isCompleteOhlcBar(b) {
  if(!b||!/^\d{4}-\d{2}-\d{2}$/.test(String(b.date||'')))return false;
  const d=new Date(b.date+'T00:00:00Z');
  if(Number.isNaN(d.getTime())||d.toISOString().slice(0,10)!==b.date)return false;
- const prices=['open','high','low','close'].map(k=>{
-  const value=b[k];
-  return value===null||value===undefined||value===''?NaN:Number(value);
- });
- if(!prices.every(x=>Number.isFinite(x)&&x>0))return false;
+ const prices=['open','high','low','close'].map(k=>parseOhlcPrice(b[k]));
+ if(prices.some(x=>x===null))return false;
  const [open,high,low,close]=prices;
  return high>=Math.max(open,close)&&low<=Math.min(open,close);
 }
@@ -74,7 +83,7 @@ export function inspectDailyBarIntegrity(result,{startDate,endDate}) {
   const group=byDate.get(date);
   if(!isCompleteOhlcBar(bar)){group.invalid++;continue;}
   group.complete.push(bar);
-  group.signatures.add(JSON.stringify(['open','high','low','close'].map(key=>Number(bar[key]))));
+  group.signatures.add(JSON.stringify(['open','high','low','close'].map(key=>parseOhlcPrice(bar[key]))));
  }
  const bars=[],conflicts=[];
  for(const [date,group] of byDate){
