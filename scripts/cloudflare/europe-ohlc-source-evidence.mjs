@@ -234,8 +234,8 @@ export function compareStoredAndSourceOhlc(stored,source){
  const fields={};let maxRelativeDiffBps=0,comparable=0;
  for(const key of ['open','high','low','close']){
   const raw=stored[key];
-  const value=raw===null||raw===undefined||raw===''?NaN:Number(raw);
-  if(!Number.isFinite(value)||value<=0){fields[key]={stored:raw??null,source:source[key],absoluteDifference:null,relativeDifferenceBps:null};continue;}
+  const value=parseOhlcPrice(raw);
+  if(value===null){fields[key]={stored:raw??null,source:source[key],absoluteDifference:null,relativeDifferenceBps:null};continue;}
   const absoluteDifference=Math.abs(value-source[key]);
   const relativeDifferenceBps=absoluteDifference/source[key]*10000;
   fields[key]={stored:value,source:source[key],absoluteDifference,relativeDifferenceBps};
