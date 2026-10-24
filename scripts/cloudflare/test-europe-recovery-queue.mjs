@@ -72,3 +72,14 @@ assert.equal(londonIntegrity.instruments[0].priority,96,'Quarantined source conf
 assert.equal(sourceIntegrityQueue.markets.find(m=>m.mic==='XSWX').instruments[0].workstream,'VERIFY_SIX_VALOR_TO_CURRENT_TICKER','Unverified SIX identity must remain blocked before any source use');
 assert.equal(sourceIntegrityQueue.totals.missing,5);
 console.log('Quarantined duplicate-date source bars receive evidence-only triage; no-bar and unverified SIX identity remain distinct PASS');
+
+\nconst storedConflictAudit=[{markets:[{mic:'XLON',missing:[],storedOhlcConflictCandidates:[
+ {isin:'GB0000000042',symbol:'ABC',date:'2026-10-22',category:'MIXED_COMPLETE_INVALID_STORED_OHLC',rows:2,distinctOhlc:2}
+]}]}];
+const storedConflicts=buildEuropeRecoveryQueue([],storedConflictAudit);
+assert.equal(storedConflicts.totals.missing,0,'Stored conflicts do not create fabricated missing current prices');
+assert.equal(storedConflicts.totals.recentOhlcDebtDates,0,'Stored conflicts are not counted as incomplete candle debt');
+assert.equal(storedConflicts.totals.storedOhlcConflictDates,1);
+assert.equal(storedConflicts.markets[0].storedOhlcConflicts[0].evidenceScope,'STORED_SAME_DATE_CONFLICT');
+assert.match(storedConflicts.markets[0].storedOhlcConflicts[0].repairPolicy,/APPEND_ONLY/);
+console.log('Stored same-date conflict queue remains read-only and separate from current/history debt PASS');
