@@ -75,7 +75,10 @@ export class YahooChartProvider {
   const rule=this.marketRule(instrument);
   if(!rule)throw new Error(`Geen Yahoo-beursregel voor ${instrument.mic||instrument.market}`);
   const exchangeFields=[meta.exchangeName,meta.fullExchangeName].map(normalize).filter(Boolean);
-  if(exchangeFields.length&&!exchangeFields.some(field=>rule.exchanges.some(expected=>field.includes(expected))))
+  // Missing exchange metadata is not positive evidence of the approved MIC.
+  // A correct ticker suffix alone cannot independently verify the venue.
+  if(!exchangeFields.length)throw new Error(`Providerbeurs ontbreekt voor ${instrument.isin}: verwacht ${instrument.mic||instrument.market}`);
+  if(!exchangeFields.some(field=>rule.exchanges.some(expected=>field.includes(expected))))
    throw new Error(`Providerbeurs wijkt af voor ${instrument.isin}: verwacht ${instrument.mic||instrument.market}, ontvangen ${meta.fullExchangeName||meta.exchangeName}`);
  }
 }
