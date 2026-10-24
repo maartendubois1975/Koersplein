@@ -7,6 +7,16 @@ assert.equal(chart.supports(valor),false);
 assert.equal(chart.providerSymbolFor(valor),null,'Do not manufacture <numeric SIX valor>.SW in direct calls');
 const verified={...valor,providerSymbol:'BMAG.SW'};
 assert.equal(chart.providerSymbolFor(verified),'BMAG.SW');
+
+assert.equal(chart.supports({...verified,providerSymbol:'BMAG.L'}),false,
+ 'A London providerSymbol cannot be used as a Swiss catalog override');
+assert.equal(chart.providerSymbolFor({...verified,providerSymbol:'BMAG.L'}),null);
+assert.throws(()=>chart.validateIdentity({...verified,providerSymbol:'BMAG.L'},{
+ symbol:'BMAG.L',exchangeName:'EBS',fullExchangeName:'SIX Swiss Exchange',currency:'CHF'
+}),/Providersymbool wijkt af/,'Even matching provider metadata cannot authorize a wrong-MIC suffix');
+assert.equal(chart.supports({isin:'GB0000000001',mic:'XLON',providerSymbol:'TEST.SW'}),false);
+assert.equal(chart.supports({isin:'FR0000000001',mic:'XPAR',providerSymbol:'TEST.BR'}),false);
+console.log('Explicit Yahoo catalog overrides cannot escape approved MIC suffix PASS');
 const meta={symbol:'BMAG.SW',exchangeName:'EBS',fullExchangeName:'SIX Swiss Exchange',currency:'CHF'};
 assert.doesNotThrow(()=>chart.validateIdentity(verified,meta));
 assert.throws(()=>chart.validateIdentity(verified,{...meta,currency:'USD'}),/Providervaluta wijkt af/);
