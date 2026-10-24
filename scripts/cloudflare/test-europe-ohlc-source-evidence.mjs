@@ -136,6 +136,18 @@ assert.equal(diff.fields.low.absoluteDifference,5);
 assert.ok(diff.maxRelativeDiffBps>500);
 assert.equal(compareStoredAndSourceOhlc(null,sourceSnapshot),null);
 assert.equal(compareStoredAndSourceOhlc(storedSnapshot,{...sourceSnapshot,high:null}),null);
+// The read-only difference report must use the SAME strict parser as stored
+// OHLC severity. JavaScript Number() would misclassify coercible values as
+// real historical prices and publish misleading source-vs-storage magnitudes.
+for(const invalid of [true,[100],{valueOf:()=>100},'0x64',' ']){
+ const comparison=compareStoredAndSourceOhlc({...storedSnapshot,open:invalid},sourceSnapshot);
+ assert.equal(comparison.comparableFields,3,'Coercible non-price evidence must not be compared');
+ assert.equal(comparison.fields.open.relativeDifferenceBps,null);
+ assert.equal(classifyOhlcDifferenceMagnitude(comparison),'NOT_FULLY_COMPARABLE');
+}
+const decimalLegacyComparison=compareStoredAndSourceOhlc({...storedSnapshot,open:'100.0'},sourceSnapshot);
+assert.equal(decimalLegacyComparison.comparableFields,4,'Legacy decimal strings are valid price evidence');
+assert.equal(decimalLegacyComparison.fields.open.absoluteDifference,0);
 const missingField=compareStoredAndSourceOhlc({...storedSnapshot,low:null},sourceSnapshot);
 assert.equal(missingField.comparableFields,3);
 assert.equal(missingField.fields.low.absoluteDifference,null);
