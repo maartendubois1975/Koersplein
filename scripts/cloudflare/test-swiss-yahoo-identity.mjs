@@ -12,6 +12,22 @@ assert.doesNotThrow(()=>chart.validateIdentity(verified,meta));
 assert.throws(()=>chart.validateIdentity(verified,{...meta,currency:'USD'}),/Providervaluta wijkt af/);
 assert.throws(()=>chart.validateIdentity(verified,{...meta,currency:null}),/Providervaluta wijkt af/);
 assert.throws(()=>chart.validateIdentity(verified,{...meta,exchangeName:'LSE',fullExchangeName:'London Stock Exchange'}),/Providerbeurs wijkt af/);
+
+assert.throws(()=>chart.validateIdentity(verified,{...meta,exchangeName:'EBS',fullExchangeName:'London Stock Exchange'}),/Providerbeurs wijkt af/,
+ 'A correct SIX short venue cannot hide a contradictory London full venue');
+assert.throws(()=>chart.validateIdentity(verified,{...meta,exchangeName:'NOT EBS',fullExchangeName:null}),/Providerbeurs wijkt af/,
+ 'A negated venue label is not SIX identity evidence');
+assert.throws(()=>chart.validateIdentity(verified,{...meta,exchangeName:'NON SWISS',fullExchangeName:null}),/Providerbeurs wijkt af/,
+ 'Substring SWISS inside an unrelated venue must not pass');
+assert.doesNotThrow(()=>chart.validateIdentity(verified,{...meta,exchangeName:'EBS',fullExchangeName:null}),
+ 'An exact SIX short code alone remains valid venue evidence');
+const london={isin:'GB0000000001',mic:'XLON',providerSymbol:'TEST.L',currency:'GBX'};
+assert.throws(()=>chart.validateIdentity(london,{symbol:'TEST.L',currency:'GBp',exchangeName:'FALSE',fullExchangeName:null}),/Providerbeurs wijkt af/,
+ 'FALSE contains the substring LSE but is not London Stock Exchange');
+assert.throws(()=>chart.validateIdentity(london,{symbol:'TEST.L',currency:'GBp',exchangeName:'LSE',fullExchangeName:'SIX Swiss Exchange'}),/Providerbeurs wijkt af/,
+ 'Contradictory full venue must not be hidden by matching LSE short code');
+assert.doesNotThrow(()=>chart.validateIdentity(london,{symbol:'TEST.L',currency:'GBp',exchangeName:'LSE',fullExchangeName:'London Stock Exchange'}));
+console.log('Exact Yahoo venue aliases reject misleading substrings and contradictory metadata PASS');
 assert.throws(()=>chart.validateIdentity(verified,{...meta,symbol:'WRONG.SW'}),/Providersymbool wijkt af/);
 assert.throws(()=>chart.validateIdentity({...verified,allowProviderExchangeMismatch:true},{...meta,exchangeName:'LSE',fullExchangeName:'London Stock Exchange'}),/Providerbeurs wijkt af/,
  'Even a legacy venue-bypass flag must not approve another exchange');
