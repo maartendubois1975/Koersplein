@@ -56,3 +56,23 @@ try {
 
 } finally {globalThis.fetch=originalFetch;}
 console.log('Yahoo incomplete OPEN/CLOSE preserved only for read-only source diagnostics PASS');
+
+// Currency is a listing identity invariant for EVERY approved Yahoo venue.
+// A valid MIC/symbol alone cannot authorize a different currency trading line.
+for (const [mic,symbol,exchange,expected,wrong] of [
+ ['XPAR','TEST.PA','PAR','EUR','USD'],
+ ['XETR','TEST.DE','GER','EUR','CHF'],
+ ['XSTO','TEST.ST','STO','SEK','EUR'],
+ ['XBSE','TEST.RO','BVB','RON','EUR']
+]) {
+ const listing={isin:'GB0000000001',mic,providerSymbol:symbol,currency:expected};
+ const venue={symbol,exchangeName:exchange,currency:expected.toLowerCase()};
+ assert.doesNotThrow(()=>yahoo.validateIdentity(listing,venue),mic+' exact quote currency');
+ assert.throws(()=>yahoo.validateIdentity(listing,{...venue,currency:wrong}),/Providervaluta wijkt af/,mic+' mismatched quote currency must fail closed');
+ assert.throws(()=>yahoo.validateIdentity(listing,{...venue,currency:null}),/Providervaluta wijkt af/,mic+' unknown provider currency must fail closed');
+}
+// Legacy catalog rows with no asserted currency are not retroactively assigned
+// one. Such rows must still pass the independent MIC and ticker checks.
+assert.doesNotThrow(()=>yahoo.validateIdentity({mic:'XPAR',providerSymbol:'TEST.PA'},
+ {symbol:'TEST.PA',exchangeName:'PAR',currency:'EUR'}));
+console.log('Yahoo approved venue/currency identity guard across Europe PASS');
