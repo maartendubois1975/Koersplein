@@ -36,7 +36,13 @@ export function classifyEuropeFailure(error) {
   const noRange=/Provider returned no usable bars in requested range/i.test(m);
   const noBars=/Provider returned no daily bars/i.test(m);
   const noIsin=/Geen Yahoo ISIN-resolutie/i.test(m);
+  const noVerifiedIsin=/Geen expliciet ISIN\/EQUITY-bevestigde Yahoo-resolutie/i.test(m);
+  const ambiguousIsin=/Ambigue Yahoo ISIN-resolutie/i.test(m);
   const direct404=/Yahoo HTTP 404/i.test(m);
+  // Distinguish search hits without explicit ISIN/equity provenance from
+  // several conflicting same-ISIN trading lines. Neither is a usable mapping.
+  if(ambiguousIsin)return 'ISIN_SEARCH_AMBIGUOUS';
+  if(noVerifiedIsin)return 'ISIN_SEARCH_IDENTITY_UNVERIFIED';
   if(direct404&&noIsin)return 'UNRESOLVED_MARKET_SYMBOL';
   if(direct404)return 'DIRECT_SYMBOL_NOT_FOUND';
   if(noIsin)return 'ISIN_SEARCH_UNRESOLVED';
@@ -53,6 +59,8 @@ const actions={
   UNRESOLVED_MARKET_SYMBOL:'Verify the official ISIN-to-exchange ticker mapping; do not guess another listing.',
   DIRECT_SYMBOL_NOT_FOUND:'Verify ticker and market suffix against official reference data.',
   ISIN_SEARCH_UNRESOLVED:'Seek authorized official reference data or a verified alternative identifier.',
+  ISIN_SEARCH_IDENTITY_UNVERIFIED:'Yahoo search did not explicitly confirm the same ISIN and equity type; obtain official ISIN-to-venue reference data before using a ticker.',
+  ISIN_SEARCH_AMBIGUOUS:'Multiple distinct symbols claim the same ISIN on this venue; reconcile against official instrument identity before selecting a line.',
   NO_NEW_BARS_IN_RANGE:'Verify last actual trade and source freshness; do not invent a daily OHLC bar.',
   SOURCE_EXACT_DATE_OHLC_INVALID:'The source returned the requested date but incomplete or inconsistent OHLC; seek independently validated data, never synthesize high/low.',
   SOURCE_EXACT_DATE_MIXED_BARS:'The source returned both complete and invalid candles for the same date; quarantine that provider attempt and seek independently validated evidence.',
