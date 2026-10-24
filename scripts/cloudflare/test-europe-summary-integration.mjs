@@ -47,6 +47,11 @@ try {
  assert.equal(summary.marketCoverage.complete,true);
  assert.equal(summary.sessionConsistency.complete,false);
  assert.equal(summary.freshnessCutoff,null);
+ assert.equal(summary.auditEvidenceComplete,false);
+ assert.equal(summary.totals.currentOpenClose,null,'Different cutoffs cannot prove European current coverage');
+ assert.equal(summary.totals.recentInvalidOhlcDays,null,'Different cutoffs cannot prove historical OHLC debt');
+ assert.equal(summary.historicalOhlcDebt.datesInRecoveryQueue,null);
+ assert.equal(summary.storedOhlcDuplicateEvidence.complete,false);
  assert.ok(summary.sessionConsistency.anomalies.some(x=>x.issue==='SESSION_CUTOFF_MISMATCH'));
  await fs.writeFile(audit7Path,JSON.stringify(audit7));
  // Missing metadata must never be silently inferred from generatedAt.
@@ -65,6 +70,16 @@ try {
  summary=JSON.parse(await fs.readFile(path.join(reportDir,'europe-run-summary.json'),'utf8'));
  assert.equal(summary.marketCoverage.complete,false);
  assert.equal(summary.status,'INCOMPLETE');
+ assert.equal(summary.auditEvidenceComplete,false);
+ for(const key of ['catalog','currentOpenClose','verifiedNoTrades','missingOpenClose','recentInvalidOhlcDays','recentInvalidOhlcInstruments'])
+  assert.equal(summary.totals[key],null,'Missing audit shard must not publish partial '+key);
+ assert.equal(summary.historicalOhlcDebt.complete,false);
+ assert.equal(summary.historicalOhlcDebt.datesInRecoveryQueue,null,'Missing audit shard cannot prove historical debt');
+ assert.deepEqual(summary.historicalOhlcDebt.byMarket,[]);
+ assert.equal(summary.storedOhlcDuplicateEvidence.complete,false,'Missing audit shard cannot prove stored duplicate count');
+ assert.equal(summary.storedOhlcDuplicateEvidence.dates,null);
+ assert.deepEqual(summary.recoveryPriority,[],'Do not rank partial market gaps as complete Europe');
+ assert.deepEqual(summary.missingByReason,{});
  assert.ok(summary.marketCoverage.anomalies.some(x=>x.kind==='audit'&&x.shard===7&&x.issue==='REPORT_COUNT'));
  await fs.writeFile(path.join(reportDir,'daily-open-close-audit-7.json'),JSON.stringify({generatedAt:'2026-10-23T10:00:00Z',shardIndex:7,shardCount:8,freshnessCutoff:'2026-10-22',markets:[]}));
  await fs.unlink(path.join(reportDir,'daily-open-close-update-7.json'));
@@ -72,6 +87,10 @@ try {
  assert.equal(result.status,2,`Missing update shard must fail closed: ${result.stderr}`);
  summary=JSON.parse(await fs.readFile(path.join(reportDir,'europe-run-summary.json'),'utf8'));
  assert.equal(summary.marketCoverage.complete,false);
+ assert.equal(summary.auditEvidenceComplete,false,'Missing update shard also leaves session consistency unverified');
+ assert.equal(summary.totals.catalog,null,'Cross-shard incomplete session must not publish European coverage');
+ assert.equal(summary.storedOhlcDuplicateEvidence.complete,false);
+ assert.equal(summary.historicalOhlcDebt.datesInRecoveryQueue,null);
  assert.equal(summary.totals.failedImports,null,'Missing update report must not imply zero failed imports');
  assert.equal(summary.totals.deferredMissing,null);
  assert.equal(summary.totals.historicalBackfillFailures,null);
