@@ -64,7 +64,10 @@ export function inspectStoredOhlcDateConflicts(bars,cutoff,windowDays=30){
     const value=bar[key];
     if(value===null||value===undefined||value==='')return null;
     const number=parseOhlcPrice(value);
-    return number===null?String(value):number;
+    // Keep invalid raw type/value provenance: String(true) and String('true')
+    // collide, as do distinct objects. Never silently merge contradictory
+    // stored rows simply because both failed the strict price parser.
+    return number===null?JSON.stringify([typeof value,value]):number;
    }));
    variants.set(signature,describeOhlcDefects(bar).length===0);
   }
