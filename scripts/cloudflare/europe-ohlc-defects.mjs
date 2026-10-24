@@ -40,6 +40,22 @@ export function countOhlcDefects(missing){
 }
 
  
+// Shared read-only canonical fingerprint for stored OHLC provenance.
+// Decimal legacy strings compare numerically; invalid raw types retain their
+// type/value identity and are never treated as validated price evidence.
+export function canonicalStoredOhlcSignature(bar){
+ if(!bar||typeof bar!=='object')return JSON.stringify(bar??null);
+ return JSON.stringify(FIELDS.map(key=>{
+   const value=bar[key];
+   if(value===null||value===undefined||value==='')return null;
+   const number=parseOhlcPrice(value);
+   // Keep invalid raw type/value provenance: String(true) and String('true')
+   // collide, as do distinct objects. Never silently merge contradictory
+   // stored rows simply because both failed the strict price parser.
+   return number===null?JSON.stringify([typeof value,value]):number;
+  }));
+}
+
 // Independently expose contradictory stored rows for the same session.
 // The ordinary defect counter intentionally prefers a complete duplicate,
 // but that can hide a conflicting stored snapshot. Do not change or merge any
@@ -60,15 +76,7 @@ export function inspectStoredOhlcDateConflicts(bars,cutoff,windowDays=30){
   if(rows.length<2)continue;
   const variants=new Map();
   for(const bar of rows){
-   const signature=JSON.stringify(FIELDS.map(key=>{
-    const value=bar[key];
-    if(value===null||value===undefined||value==='')return null;
-    const number=parseOhlcPrice(value);
-    // Keep invalid raw type/value provenance: String(true) and String('true')
-    // collide, as do distinct objects. Never silently merge contradictory
-    // stored rows simply because both failed the strict price parser.
-    return number===null?JSON.stringify([typeof value,value]):number;
-   }));
+   const signature=canonicalStoredOhlcSignature(bar);
    variants.set(signature,describeOhlcDefects(bar).length===0);
   }
   if(variants.size<2)continue; // Identical OHLC rows are not contradictory.
