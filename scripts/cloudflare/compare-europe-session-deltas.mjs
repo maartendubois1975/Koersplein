@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 function check(ok,why){if(!ok)throw new Error('UNVERIFIED_EUROPE_RUN: '+why);}
 const natural=x=>Number.isSafeInteger(x)&&x>=0;
-const id=(mic,isin)=>mic+'\\u0000'+isin;
+const id=(mic,isin)=>mic+'\u0000'+isin;
 const OFFICIAL_NO_TRADE_SOURCES=Object.freeze({
   'euronext-live':{host:'live.euronext.com',prefix:'/en/ajax/getHistoricalPricePopup/',
     mics:new Set(['XAMS','XBRU','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL','XDUB','XMSM','XESM','XATL'])},
