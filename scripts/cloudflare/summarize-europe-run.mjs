@@ -44,11 +44,24 @@ for(const m of updates.flatMap(x=>x.markets)){
 const recoveryPriority=markets.map(m=>({mic:m.mic,catalog:m.catalog,missingOpenClose:m.missingOpenClose,knownDataUnavailableAmongMissing:m.knownDataUnavailableAmongMissing||0,missingReasons:m.missingReasons||{},importFailures:sourceFailureByMarket[m.mic]?.failed||0})).sort((a,b)=>b.missingOpenClose-a.missingOpenClose);
 const diagnosis=diagnoseEuropeReports(updates,audits);
 const recoveryQueue=buildEuropeRecoveryQueue(updates,audits);
+// Do not publish a fabricated zero if an old audit shard did not record
+// same-day stored conflicts. This metric is separate from invalid OHLC debt.
+const storedConflictEvidenceComplete=markets.every(m=>
+ Number.isSafeInteger(m.storedOhlcConflictDates)&&m.storedOhlcConflictDates>=0&&
+ Array.isArray(m.storedOhlcConflictCandidates)&&
+ m.storedOhlcConflictCandidates.length===m.storedOhlcConflictDates);
+const storedOhlcDuplicateEvidence={
+ readOnly:true,complete:storedConflictEvidenceComplete,
+ dates:storedConflictEvidenceComplete?markets.reduce((n,m)=>n+m.storedOhlcConflictDates,0):null,
+ byMarket:storedConflictEvidenceComplete?markets.filter(m=>m.storedOhlcConflictDates>0)
+  .map(m=>({mic:m.mic,conflictingDates:m.storedOhlcConflictDates}))
+  .sort((a,b)=>b.conflictingDates-a.conflictingDates):[]
+};
 const historicalOhlcDebt={readOnly:true,datesInRecoveryQueue:recoveryQueue.totals.recentOhlcDebtDates,byMarket:markets.map(m=>({mic:m.mic,defectiveDates:m.recentInvalidOhlcDays||0,affectedInstruments:m.recentInvalidOhlcInstruments||0})).filter(m=>m.defectiveDates).sort((a,b)=>b.defectiveDates-a.defectiveDates)};
 await fs.writeFile(`${dir}/europe-recovery-queue.json`,JSON.stringify(recoveryQueue,null,2));
 await fs.writeFile(`${dir}/europe-failure-diagnosis.json`,JSON.stringify(diagnosis,null,2));
 const failureDiagnosis=diagnosis.markets.slice(0,12).map(({mic,failed,missingOpenClose,numericSymbolFailures,categories,primaryCause,nextAction})=>({mic,failed,missingOpenClose,numericSymbolFailures,categories,primaryCause,nextAction}));
-const report={generatedAt:new Date().toISOString(),status:dailyVerified?'DAILY_STATUS_VERIFIED':'INCOMPLETE',historyCompleteness:'NOT_PROVEN_BY_DAILY_AUDIT',shardsComplete,marketCoverage,sessionConsistency,freshnessCutoff:sessionConsistency.cutoff,totals:reportedTotals,recoveryQueueOverview:recoveryQueue.markets.slice(0,8).map(({mic,missing,numericSwissValor,knownDataUnavailable,workstreams})=>({mic,missing,numericSwissValor,knownDataUnavailable,workstreams})),recoveryPriority,historicalOhlcDebt,failureDiagnosis,missingByReason,invalidOhlcByDefect,knownDataUnavailableByMarket,sourceFailureByMarket,markets,historicalBackfillFailures:updates.flatMap(x=>x.markets.flatMap(m=>(m.historicalBackfillFailures||[]).map(f=>({mic:m.mic,...f})))),importFailures:updates.flatMap(x=>x.markets.flatMap(m=>m.failed.map(f=>({mic:m.mic,...f}))))};
+const report={generatedAt:new Date().toISOString(),status:dailyVerified?'DAILY_STATUS_VERIFIED':'INCOMPLETE',historyCompleteness:'NOT_PROVEN_BY_DAILY_AUDIT',shardsComplete,marketCoverage,sessionConsistency,freshnessCutoff:sessionConsistency.cutoff,totals:reportedTotals,recoveryQueueOverview:recoveryQueue.markets.slice(0,8).map(({mic,missing,numericSwissValor,knownDataUnavailable,workstreams})=>({mic,missing,numericSwissValor,knownDataUnavailable,workstreams})),recoveryPriority,historicalOhlcDebt,storedOhlcDuplicateEvidence,failureDiagnosis,missingByReason,invalidOhlcByDefect,knownDataUnavailableByMarket,sourceFailureByMarket,markets,historicalBackfillFailures:updates.flatMap(x=>x.markets.flatMap(m=>(m.historicalBackfillFailures||[]).map(f=>({mic:m.mic,...f})))),importFailures:updates.flatMap(x=>x.markets.flatMap(m=>m.failed.map(f=>({mic:m.mic,...f}))))};
 await fs.writeFile(`${dir}/europe-run-summary.json`,JSON.stringify(report,null,2));
 const summary=`Europe run: ${report.status}\n\n${JSON.stringify(reportedTotals,null,2)}\n\nFull historical completeness is not established by the daily OHLC check.\n`;
 console.log(summary);
