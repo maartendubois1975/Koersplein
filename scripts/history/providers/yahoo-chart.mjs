@@ -65,9 +65,11 @@ export class YahooChartProvider {
   const expectedSymbol=String(instrument.providerSymbol||'').toUpperCase();
   if(meta.symbol?.toUpperCase()!==expectedSymbol)throw new Error(`Providersymbool wijkt af voor ${instrument.isin}: verwacht ${expectedSymbol}, ontvangen ${meta.symbol||'onbekend'}`);
   const mic=String(instrument.mic||instrument.market||'').toUpperCase();
-  // Swiss securities and London listings can have several currency lines.
+  // Currency is part of every approved listing identity, not just Swiss and
+  // London symbols. A correct exchange suffix with a different quote currency
+  // is a different trading line and must never be imported into this listing.
   // In London, GBX/GBp are pence while GBP means pounds; never mix units.
-  if(['XSWX','XLON'].includes(mic)&&instrument.currency&&priceCurrency(instrument.currency)!==priceCurrency(meta.currency))
+  if(instrument.currency&&priceCurrency(instrument.currency)!==priceCurrency(meta.currency))
    throw new Error(`Providervaluta wijkt af voor ${instrument.isin}: verwacht ${instrument.currency}, ontvangen ${meta.currency||'onbekend'}`);
   if(instrument.allowProviderExchangeMismatch)return;
   const rule=this.marketRule(instrument);
