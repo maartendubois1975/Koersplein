@@ -145,9 +145,9 @@ const reject=[
   [a,{...b,markets:b.markets.map((m,i)=>i===0?{...m,missing:[...m.missing,m.missing[0]]}:m)},'missing details incomplete'],
   [a,{...b,importFailures:undefined},'import failure details incomplete'],
   [a,{...b,sourceFailureByMarket:undefined},'source failure MIC coverage incomplete'],
-  [a,{...b,sourceFailureByMarket:{...b.sourceFailureByMarket,XLON:{
+  [a,{...b,sourceFailureByMarket:{...b.sourceFailureByMarket,XBRU:{
     ...b.sourceFailureByMarket.XBRU,failed:0}}},'source failure count mismatch'],
-  [a,{...b,sourceFailureByMarket:{...b.sourceFailureByMarket,XLON:{
+  [a,{...b,sourceFailureByMarket:{...b.sourceFailureByMarket,XBRU:{
     ...b.sourceFailureByMarket.XBRU,categories:{NETWORK_TIMEOUT:1}}}},'source failure category count mismatch'],
   [a,{...b,totals:{...b.totals,failedImports:0}},'import failure details incomplete'],
   [a,{...b,importFailures:[...b.importFailures,b.importFailures[0]],
