@@ -84,3 +84,20 @@ assert.equal(storedConflicts.totals.storedOhlcConflictDates,1);
 assert.equal(storedConflicts.markets[0].storedOhlcConflicts[0].evidenceScope,'STORED_SAME_DATE_CONFLICT');
 assert.match(storedConflicts.markets[0].storedOhlcConflicts[0].repairPolicy,/APPEND_ONLY/);
 console.log('Stored same-date conflict queue remains read-only and separate from current/history debt PASS');
+
+const venueCurrencyUpdates=[{markets:[{mic:'XPAR',failed:[
+ {isin:'FR0000000001',symbol:'TEST',error:'Alle providers faalden voor FR0000000001: yahoo-chart: Providervaluta wijkt af voor FR0000000001: verwacht EUR, ontvangen USD'},
+ {isin:'FR0000000002',symbol:'TEST2',error:'Alle providers faalden voor FR0000000002: yahoo-chart: Providerbeurs ontbreekt voor FR0000000002: verwacht XPAR'}
+]}]}];
+const venueCurrencyAudits=[{markets:[{mic:'XPAR',missing:[
+ {isin:'FR0000000001',symbol:'TEST',reason:'STALE_LAST_TRADE'},
+ {isin:'FR0000000002',symbol:'TEST2',reason:'STALE_LAST_TRADE'}
+]}]}];
+const venueCurrencyQueue=buildEuropeRecoveryQueue(venueCurrencyUpdates,venueCurrencyAudits);
+assert.equal(venueCurrencyQueue.totals.missing,2);
+for(const row of venueCurrencyQueue.markets[0].instruments){
+ assert.equal(row.workstream,'VERIFY_OFFICIAL_ISIN_MIC_TICKER','Provider identity failure cannot be routed to generic retry');
+ assert.equal(row.priority,85);
+}
+assert.deepEqual(venueCurrencyQueue.markets[0].instruments.map(x=>x.sourceFailureCategory).sort(),['PROVIDER_CURRENCY_MISMATCH','PROVIDER_VENUE_UNVERIFIED']);
+console.log('Yahoo currency and missing venue failures require official identity review PASS');
