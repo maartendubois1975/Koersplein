@@ -38,7 +38,8 @@ assert.deepEqual(recentOhlcDebt([{...valid,date:'2026-10-23',high:null}],'2026-1
 assert.throws(()=>recentOhlcDebt([], '2026-02-30'),/Invalid closed-session/);
 console.log('Stored OHLC defect classification and aggregation PASS');
 
-\n// A 30-day history audit crossing 1 January must retain prior-year defects.
+
+// A 30-day history audit crossing 1 January must retain prior-year defects.
 const yearBars=[{...valid,date:'2025-12-20',high:null},{...valid,date:'2026-01-04',low:null}];
 assert.equal(recentOhlcDebt(yearBars,'2026-01-09',30).invalidDates.length,2);
 const conflictingRows=[
