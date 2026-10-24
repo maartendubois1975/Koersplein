@@ -1,4 +1,4 @@
-import {validBars} from './europe-run-policy.mjs';
+import {validBars,parseOhlcPrice} from './europe-run-policy.mjs';
 import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
 
 // Parent catalogues contain legitimate submarket MICs (e.g. XPAR -> ALXP).
