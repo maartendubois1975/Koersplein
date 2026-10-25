@@ -46,7 +46,7 @@ export function manifestResolver(manifest,mic){
   // The manifest itself may be corrupt or stale: a matching MIC/ticker and
   // storage key must not override a contradictory instrument ISIN.
   const manifestIsin=String(manifest.instruments[id]?.isin||'').trim().toUpperCase();
-  if(manifestIsin&&![official,venue+':'+official].includes(manifestIsin))return null;
+  if(manifestIsin&&![official,venue+':'+official].includes(manifestIsin)&&!(id===share.legacyStorageIsin&&manifestIsin===String(id).toUpperCase()))return null;
   // A reused ticker does not prove the same security; legacy storage needs an explicit link.
   return id&&(id===official||id===venue+':'+official||id===share.legacyStorageIsin)?id:null;
  };
