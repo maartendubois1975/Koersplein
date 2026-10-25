@@ -131,7 +131,7 @@ try{
   return {ok:true,async json(){return {chart:{result:[{
    meta:{symbol:'VALID.L',exchangeName:'LSE',fullExchangeName:'London Stock Exchange',currency:'GBP'},
    timestamp:[Math.floor(Date.parse('2026-10-22T12:00:00Z')/1000)],
-   indicators:{quote:[{open:[10],high:[11],low:[9],close:[10.5]}]}
+   indicators:{quote:[{open:[10],high:[11],low:[9],close:[10.5],volume:[100]}]}
   }]}};}};
  };
  const validDedup=await isinResolver.fetchDaily({mic:'XLON',isin:'GB0000000001',currency:'GBP'},{startDate:'2026-10-22',endDate:'2026-10-22'});
