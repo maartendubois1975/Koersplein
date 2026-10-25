@@ -7,7 +7,7 @@ import {createHash} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
 import path from 'node:path';
 import {setTimeout as delay} from 'node:timers/promises';
-import {AMSTERDAM_REFERENCE_WEEK,verifiedNoTradeStatus} from '../../market-week-core.mjs';
+import {AMSTERDAM_REFERENCE_WEEK,verifiedNoTradeStatus,collectMarketWeek,sessionChange} from '../../market-week-core.mjs';
 
 const site=String(process.env.KOERSPLEIN_SITE_URL||'https://koersplein.onrender.com').replace(/\/$/,'');
 const sha=text=>createHash('sha256').update(text).digest('hex');
@@ -64,7 +64,20 @@ assert.equal(market.mic,'XAMS');
 const target={innerHTML:'',textContent:''},count={textContent:''},search={value:'',addEventListener(){}};
 globalThis.window={KOERSPLEIN_MARKET:market};
 globalThis.document={getElementById:id=>({'week-prices-table':target,'share-count':count,search}[id]||null)};
-globalThis.fetch=(url,opts)=>originalFetch(new URL(String(url),site+'/').href,opts);
+// Capture exactly the public Worker responses consumed by the rendered page.
+// Replay these in the independent coverage assertion: no second 124-instrument API sweep.
+const apiBase=String(market.api||'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/,'');
+let capturedManifest=null;
+const capturedHistory=new Map();
+globalThis.fetch=async(url,opts)=>{
+ const absolute=new URL(String(url),site+'/').href;
+ const response=await originalFetch(absolute,opts);
+ if(absolute===apiBase+'/api/history/manifest.json'&&response.ok)
+  capturedManifest=await response.clone().json();
+ else if(absolute.startsWith(apiBase+'/api/history/')&&!absolute.endsWith('/manifest.json'))
+  capturedHistory.set(absolute,{ok:response.ok,status:response.status,data:response.ok?await response.clone().json():null});
+ return response;
+};
 try{
  // Asset hashes above prove that this local executable is byte-for-byte the deployed module.
  await import(pathToFileURL(path.resolve('amsterdam-week.js')).href+'?public-page-audit='+Date.now());
@@ -79,6 +92,26 @@ try{
  assert.ok(totals,'PUBLIC_COVERAGE_SUMMARY_MISSING');
  const [valid,noTrade,unresolved]=totals.slice(1).map(Number);
  assert.equal(valid+noTrade+unresolved,620,'PUBLIC_COVERAGE_NOT_PARTITIONED');
+ assert.ok(capturedManifest,'PUBLIC_MANIFEST_NOT_CAPTURED');
+ assert.ok(capturedHistory.size>0,'PUBLIC_HISTORY_NOT_CAPTURED');
+ const replay=async url=>{
+  const item=capturedHistory.get(url);
+  assert.ok(item,'PUBLIC_HISTORY_REQUEST_NOT_CAPTURED '+url);
+  return {ok:item.ok,status:item.status,json:async()=>item.data};
+ };
+ const measured=await collectMarketWeek({catalog:catalog.shares,manifest:capturedManifest,apiBase,mic:'XAMS',
+  dates:AMSTERDAM_REFERENCE_WEEK,fetchImpl:replay,concurrency:8});
+ const expectedNoTrade=date=>measured.rows.filter(row=>!row.bars.has(date)&&
+  verifiedNoTradeStatus(audit,row.share,'XAMS',date,AMSTERDAM_REFERENCE_WEEK)).length;
+ const perDay=Object.fromEntries(AMSTERDAM_REFERENCE_WEEK.map(date=>{
+  const traded=measured.coverage.perDay[date].valid,notTraded=expectedNoTrade(date);
+  return [date,{traded,noTrade:notTraded,unresolved:124-traded-notTraded}];
+ }));
+ const expectedValid=measured.coverage.validSessions;
+ const expectedNoTradeTotal=Object.values(perDay).reduce((sum,day)=>sum+day.noTrade,0);
+ assert.equal(valid,expectedValid,'PUBLIC_OHLC_DIFFERS_FROM_WORKER');
+ assert.equal(noTrade,expectedNoTradeTotal,'PUBLIC_NO_TRADES_DIFFERS_FROM_AUDIT');
+ assert.equal(unresolved,620-expectedValid-expectedNoTradeTotal,'PUBLIC_MISSING_DIFFERS_FROM_WORKER');
  assert.ok(valid>=507,'PUBLIC_VALID_OHLC_REGRESSION');
  assert.ok(noTrade<=auditedNoTrade,'PUBLIC_NO_TRADE_NOT_AUDITED');
  const body=rendered.match(/<tbody>([\s\S]*?)<\/tbody>/)?.[1];
@@ -86,11 +119,32 @@ try{
  assert.equal((body.match(/<tr>/g)||[]).length,124,'PUBLIC_NOT_ALL_CATALOG_ROWS');
  for(const date of AMSTERDAM_REFERENCE_WEEK){
   assert.ok(rendered.includes(date+' (XAMS)'),'PUBLIC_DAY_MISSING '+date);
-  assert.match(rendered,new RegExp(date.slice(8)+' okt: \\d+ koers · \\d+ geen handel · \\d+ open'),'PUBLIC_DAY_COUNTS_MISSING '+date);
+  const d=perDay[date];
+  assert.ok(rendered.includes(date.slice(8)+' okt: '+d.traded+' koers · '+d.noTrade+' geen handel · '+d.unresolved+' open'),
+   'PUBLIC_DAY_COUNTS_DIFFER_FROM_WORKER '+date);
  }
- for(const ticker of ['AALB','ABN','ASML'])assert.ok(rendered.includes('>'+ticker+' · '),'PUBLIC_EXAMPLE_MISSING '+ticker);
+ const money=(value,currency)=>new Intl.NumberFormat('nl-NL',{style:'currency',currency,minimumFractionDigits:2,maximumFractionDigits:4}).format(value);
+ const signed=value=>new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:2,maximumFractionDigits:2}).format(value);
+ const samples=[['AALB','2026-10-19'],['ABN','2026-10-23'],['ASML','2026-10-23']];
+ const verifiedSamples=[];
+ for(const [ticker,date] of samples){
+  const row=measured.rows.find(item=>item.share.symbol===ticker);
+  assert.ok(row,'PUBLIC_SAMPLE_LISTING_MISSING '+ticker);
+  const bar=row.bars.get(date);
+  assert.ok(bar,'PUBLIC_SAMPLE_OHLC_MISSING '+ticker+' '+date);
+  const htmlRow=body.split('</tr>').find(item=>item.includes('>'+ticker+' · '));
+  assert.ok(htmlRow,'PUBLIC_SAMPLE_ROW_MISSING '+ticker);
+  const currency=row.currency||'EUR',delta=sessionChange(bar.open,bar.close);
+  assert.ok(htmlRow.includes(money(bar.open,currency)),'PUBLIC_SAMPLE_OPEN_DIFFERS '+ticker);
+  assert.ok(htmlRow.includes(money(bar.close,currency)),'PUBLIC_SAMPLE_CLOSE_DIFFERS '+ticker);
+  assert.ok(htmlRow.includes(signed(delta.absolute)+' '+currency+' / '+signed(delta.percent)+'%'),
+   'PUBLIC_SAMPLE_CHANGE_DIFFERS '+ticker);
+  verifiedSamples.push({ticker,date,open:bar.open,close:bar.close,volume:bar.volume,percent:delta.percent});
+ }
  assert.ok(rendered.includes('Dag ± = slot minus opening'),'PUBLIC_DELTA_DEFINITION_MISSING');
- console.log('XAMS_PUBLIC_PAGE_E2E '+JSON.stringify({site,cutoff:AMSTERDAM_REFERENCE_WEEK.at(-1),catalog:124,valid,noTrade,unresolved,staticAssets:'SHA256_MATCH',renderedRows:124,worker:'PUBLIC_LIVE',noHistoryWrites:true}));
+ console.log('XAMS_PUBLIC_PAGE_E2E '+JSON.stringify({site,cutoff:AMSTERDAM_REFERENCE_WEEK.at(-1),catalog:124,
+  valid,noTrade,unresolved,perDay,verifiedSamples,staticAssets:'SHA256_MATCH',renderedRows:124,
+  worker:'PUBLIC_LIVE',apiFrontendParity:'EXACT_PER_DAY_AND_SAMPLES',noHistoryWrites:true}));
 }finally{
  globalThis.fetch=originalFetch;
  delete globalThis.document;
