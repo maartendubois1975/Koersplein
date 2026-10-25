@@ -16,7 +16,10 @@ function render(){
   const currency=row.currency||'EUR';
   const cells=days.map((date,i)=>{
    const b=row.bars.get(date),previous=i>0?row.bars.get(days[i-1]):null;
-   return '<td class="price">'+fmt(b?.open,currency)+'</td><td class="price">'+fmt(b?.close,currency)+'</td><td class="price">'+(b?change(b.open,b.close,currency):'—')+'</td><td class="price">'+(b&&previous?change(previous.close,b.open,currency):'—')+'</td>';
+   const defect=row.conflicts.find(x=>x.date===date)?.reason;
+   const missingReason=defect||row.error||'NO_VALID_STORED_BAR';
+   const status=b?'':(' title="'+esc(missingReason)+'"');
+   return '<td class="price"'+status+'>'+fmt(b?.open,currency)+'</td><td class="price"'+status+'>'+fmt(b?.close,currency)+'</td><td class="price"'+status+'>'+(b?change(b.open,b.close,currency):'—')+'</td><td class="price"'+status+'>'+(b&&previous?change(previous.close,b.open,currency):'—')+'</td>';
   }).join('');
   const first=row.bars.get(days[0]),last=row.bars.get(days.at(-1));
   const weekly=first&&last?change(first.open,last.close,currency):'—';
@@ -24,7 +27,16 @@ function render(){
   return '<tr><td><a class="share-link" href="share.html?isin='+encodeURIComponent(row.share.isin)+'&mic=XAMS&symbol='+encodeURIComponent(row.share.symbol)+'">'+esc(row.share.name)+'</a><br><small>'+esc(row.share.symbol)+' · '+esc(row.share.isin)+'</small></td>'+cells+'<td class="price">'+weekly+'</td><td><small>'+esc(source)+'</small></td></tr>';
  }).join('');
  const totals=days.map(d=>'<span>'+esc(d.slice(8))+' okt: '+snapshot.coverage.perDay[d].valid+'/'+snapshot.coverage.catalog+'</span>').join(' · ');
- target.innerHTML='<p><strong>'+snapshot.coverage.complete+' van '+snapshot.coverage.catalog+'</strong> aandelen hebben vijf gevalideerde handelsdagen; '+snapshot.coverage.validSessions+'/'+snapshot.coverage.expectedSessions+' dagkoersen beschikbaar. '+totals+'.</p><p>Dag ± = slot minus opening; t.o.v. vorig slot = opening minus slot vorige dag. Week ± = vrijdagslot minus maandagopening. Ontbrekende gegevens zijn niet automatisch dagen zonder handel. Historische koersen; bron en handelsdatum staan vermeld.</p><div class="table-wrap" style="overflow-x:auto"><table><thead>'+head+'</thead><tbody>'+rows+'</tbody></table></div><p>Resultaten zijn afhankelijk van bronbeschikbaarheid en rechten op herpublicatie. Niet beschikbare of conflicterende koersen worden niet geschat.</p>';
+ const missingByDay=days.map(date=>{
+  const reasons={};
+  for(const row of snapshot.rows){
+   if(row.bars.has(date))continue;
+   const reason=row.conflicts.find(x=>x.date===date)?.reason||row.error||'NO_VALID_STORED_BAR';
+   reasons[reason]=(reasons[reason]||0)+1;
+  }
+  return '<li><strong>'+esc(date)+'</strong>: '+Object.entries(reasons).map(([reason,count])=>esc(reason)+' '+count).join(' · ')+'</li>';
+ }).join('');
+ target.innerHTML='<p><strong>'+snapshot.coverage.complete+' van '+snapshot.coverage.catalog+'</strong> aandelen hebben vijf gevalideerde handelsdagen; '+snapshot.coverage.validSessions+'/'+snapshot.coverage.expectedSessions+' dagkoersen beschikbaar. '+totals+'.</p><p>Dag ± = slot minus opening; t.o.v. vorig slot = opening minus slot vorige dag. Week ± = vrijdagslot minus maandagopening. Ontbrekende gegevens zijn niet automatisch dagen zonder handel. Historische koersen; bron en handelsdatum staan vermeld.</p><details><summary>Ontbrekende handelsdagen en technische oorzaken</summary><ul>'+missingByDay+'</ul><p>ZERO_VOLUME_REFERENCE_BAR is geen bewezen handel. NO_MATCHING_MIC_TICKER_HISTORY betekent dat geen veilig gekoppelde beursnotering is gevonden. NO_VALID_STORED_BAR betekent dat voor deze datum geen geldige koers is opgeslagen. Dit is geen bewijs van NO_TRADES.</p></details><div class="table-wrap" style="overflow-x:auto"><table><thead>'+head+'</thead><tbody>'+rows+'</tbody></table></div><p>Resultaten zijn afhankelijk van bronbeschikbaarheid en rechten op herpublicatie. Niet beschikbare of conflicterende koersen worden niet geschat.</p>';
 }
 async function start(){
  if(!target)return;
