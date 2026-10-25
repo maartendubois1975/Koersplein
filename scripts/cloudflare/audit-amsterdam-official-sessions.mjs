@@ -22,7 +22,7 @@ if(process.argv.includes('--self-test')){
  assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'NO_TRADES',volume:0,trades:null},share,date),'OFFICIAL_UNVERIFIED_STATUS');
  console.log('XAMS official session identity, volume and no-trade gates PASS');
 }else{
- const base=String(process.env.KOERSPLEIN_API_URL||'https://koersplein.maarten-dubois1975.workers.dev').replace(/\\/$/,'');
+ const base=String(process.env.KOERSPLEIN_API_URL||'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/,'');
  const catalog=JSON.parse(await fs.readFile('data/euronext-amsterdam.json','utf8')).shares||[];
  const manifestResponse=await fetch(base+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
  if(!manifestResponse.ok)throw Error('XAMS_MANIFEST_HTTP_'+manifestResponse.status);
@@ -56,6 +56,6 @@ if(process.argv.includes('--self-test')){
    'Source errors and absent source rows are NOT evidence of NO_TRADES.'
   ]};
  await fs.mkdir('research/output/audit',{recursive:true});
- await fs.writeFile('research/output/audit/amsterdam-official-session-status.json',JSON.stringify(report,null,2)+'\\n');
+ await fs.writeFile('research/output/audit/amsterdam-official-session-status.json',JSON.stringify(report,null,2)+'\n');
  console.log('XAMS_OFFICIAL_SESSION_AUDIT '+JSON.stringify({cutoff,catalog:stored.coverage.catalog,storedValid:stored.coverage.validSessions,perDay,unresolved:results.filter(r=>!['OFFICIAL_NO_TRADES','OFFICIAL_TRADED_CANDIDATE'].includes(r.classification)).length}));
 }
