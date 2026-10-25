@@ -11,7 +11,7 @@ const manifest=await fetchXamsManifest(base);
 const stored=await collectMarketWeek({catalog,manifest,apiBase:base,mic:'XAMS',dates,concurrency:6});
 // A temporary Worker failure is not an absent traded candle. Retest only the
 // affected instruments once before interpreting their five days as missing.
-const transientError=row=>/^HISTORY_(?:TIMEOUT|FETCH_ERROR|HTTP_5\\d\\d)$/.test(String(row.error||''));
+const transientError=row=>/^HISTORY_(?:TIMEOUT|FETCH_ERROR|HTTP_5[0-9][0-9])$/.test(String(row.error||''));
 const retryIndexes=stored.rows.flatMap((row,i)=>transientError(row)?[i]:[]);
 if(retryIndexes.length){
  const retry=await collectMarketWeek({catalog:retryIndexes.map(i=>catalog[i]),manifest,apiBase:base,mic:'XAMS',dates,concurrency:2});
