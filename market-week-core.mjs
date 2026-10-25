@@ -121,3 +121,16 @@ export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetc
  }));
  return {mic,dates,rows,coverage:weekCoverage(rows,dates)};
 }
+
+/**
+ * Status-only historical audit. This is never a synthetic price or volume bar.
+ * An explicit audited ISIN + MIC + date is required; a missing bar is not proof.
+ */
+export function verifiedNoTradeStatus(audit,share,mic,date,week){
+ if(!audit||audit.schemaVersion!==1||audit.mic!==mic||audit.scope!=='OFFICIAL_NO_TRADES_STATUS_ONLY_NO_PRICE_DATA')return false;
+ if(!Array.isArray(week)||!Array.isArray(audit.week)||week.length!==audit.week.length||week.some((d,i)=>d!==audit.week[i]))return false;
+ if(!/^[a-f0-9]{40}$/i.test(String(audit.auditCommit||''))||!/^\\d+$/.test(String(audit.auditRun||'')))return false;
+ if(!validDate(date)||!week.includes(date)||String(share?.mic||mic).toUpperCase()!==mic)return false;
+ const isin=String(share?.isin||'').toUpperCase();
+ return /^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)&&Array.isArray(audit.noTrades?.[isin])&&audit.noTrades[isin].includes(date);
+}
