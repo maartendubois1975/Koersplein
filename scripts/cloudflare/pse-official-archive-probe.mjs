@@ -6,7 +6,8 @@ import {mkdtemp,readFile,rm,writeFile,mkdir} from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 const run=promisify(execFile);
-const targetIsins=['CS0008419750','CZ0009011474','CS0008416251','CZ0005088559','CZ0009009718','CZ1008000823','CZ0009011714'];
+const catalog=JSON.parse(await readFile('data/euronext-prague.json','utf8'));
+const targetIsins=(catalog.shares||[]).map(x=>x.isin);
 const dates=['2026-10-23','2026-10-22','2026-10-21'];
 const results=[];
 const sha256=b=>createHash('sha256').update(b).digest('hex');
@@ -36,7 +37,7 @@ for(const date of dates){
   result.csvSha256=sha256(raw);
   result.separatorCounts={semicolon:(lines[0]?.match(/;/g)||[]).length,comma:(lines[0]?.match(/,/g)||[]).length,tab:(lines[0]?.match(/\t/g)||[]).length};
   result.matchedIsins=targetIsins.filter(isin=>lines.some(line=>line.includes(isin)));
-  // Private research artifact only: expose the exact official fields for seven
+  // Private research artifact only: expose the exact official fields for 30
   // ISINs to validate session, executed volume and OHLC before any adapter.
   const splitCsv=line=>{const out=[];let cell='',quoted=false;for(let k=0;k<line.length;k++){const ch=line[k];if(ch==='"'){if(quoted&&line[k+1]==='"'){cell+='"';k++;}else quoted=!quoted;}else if(ch===','&&!quoted){out.push(cell);cell='';}else cell+=ch;}out.push(cell);return out;};
   result.matchingRows=targetIsins.map(isin=>{const line=lines.find(row=>row.includes(isin));return line?{isin,fields:splitCsv(line)}:null;}).filter(Boolean);
