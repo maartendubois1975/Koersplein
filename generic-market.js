@@ -1,4 +1,4 @@
-import {manifestResolver,validTradedBar,sessionChange,collectMarketWeek,AMSTERDAM_REFERENCE_WEEK,verifiedNoTradeStatus} from './market-week-core.mjs';
+import {manifestResolver,validTradedBar,sessionChange,collectMarketWeek,AMSTERDAM_REFERENCE_WEEK,verifiedNoTradeStatus} from './market-week-core.mjs?v=20261025xams-week2';
 const q=s=>document.querySelector(s),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const code=new URLSearchParams(location.search).get('market');let shares=[],prices=new Map(),market=null,amsterdamWeek=null,noTradesAudit=null;
 async function load(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);return r.json()}
@@ -14,8 +14,10 @@ function renderAmsterdamWeek(){
  const totals=Object.fromEntries(dates.map(date=>[date,{valid:0,noTrades:0,invalid:0,stale:0,missing:0}]));
  const classify=(row,date)=>{
   if(row.bars.has(date))return 'valid';
-  if(row.conflicts.some(c=>c.date===date))return 'invalid';
+  // An explicitly audited NO_TRADES day takes precedence over an invalid
+  // zero-volume reference candle: the candle is NOT an executed trade.
   if(verifiedNoTradeStatus(noTradesAudit,row.share,'XAMS',date,dates))return 'noTrades';
+  if(row.conflicts.some(c=>c.date===date))return 'invalid';
   if(row.lastStoredDate&&row.lastStoredDate<date&&!row.error)return 'stale';
   return 'missing';
  };

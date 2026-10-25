@@ -18,7 +18,7 @@ const get=async url=>{
  return response.text();
 };
 const pageUrl=site+'/amsterdam.html';
-let html,js,core,statusText,catalogText;
+let html,js,core,statusText,catalogText,marketHtml,genericJs;
 for(let attempt=1;attempt<=12;attempt++){
  try{
   html=await get(pageUrl+'?audit='+Date.now());
@@ -30,8 +30,19 @@ for(let attempt=1;attempt<=12;attempt++){
   core=await get(site+'/'+corePath);
   statusText=await get(site+'/data/amsterdam-no-trades-2026-10-19-23.json');
   catalogText=await get(site+'/data/euronext-amsterdam.json');
+  // The generic market route is the public Amsterdam entry point too. Both
+  // routes must serve the current JS and the SAME versioned OHLCV validator.
+  marketHtml=await get(site+'/market.html?market=amsterdam&audit='+Date.now());
+  const genericScript=marketHtml.match(/src=["'](generic-market\.js\?v=[^"']+)["']/)?.[1];
+  assert.ok(genericScript,'PUBLIC_GENERIC_XAMS_SCRIPT_NOT_VERSIONED');
+  genericJs=await get(site+'/'+genericScript);
+  const genericCorePath=genericJs.match(/from\s+["']\.\/(market-week-core\.mjs\?v=[^"']+)["']/)?.[1];
+  assert.ok(genericCorePath,'PUBLIC_GENERIC_CORE_IMPORT_NOT_VERSIONED');
+  const genericCore=await get(site+'/'+genericCorePath);
+  assert.equal(sha(genericCore),sha(core),'PUBLIC_AMSTERDAM_ROUTES_DIFFERENT_VALIDATORS');
   for(const [name,remote] of [
    ['amsterdam-week.js',js],['market-week-core.mjs',core],
+   ['market.html',marketHtml],['generic-market.js',genericJs],
    ['data/amsterdam-no-trades-2026-10-19-23.json',statusText],
    ['data/euronext-amsterdam.json',catalogText]
   ]){
@@ -142,6 +153,60 @@ try{
   verifiedSamples.push({ticker,date,open:bar.open,close:bar.close,volume:bar.volume,percent:delta.percent});
  }
  assert.ok(rendered.includes('Dag ± = slot minus opening'),'PUBLIC_DELTA_DEFINITION_MISSING');
+ // Replay the exact same captured Worker responses through the second public
+ // Amsterdam renderer. This tests real 124 x 5-day data without a second sweep.
+ const dom=new Map();
+ const node=selector=>{
+  if(!dom.has(selector))dom.set(selector,{value:'',textContent:'',innerHTML:'',addEventListener(){}});
+  return dom.get(selector);
+ };
+ globalThis.document={title:'',querySelector:node};
+ globalThis.location={search:'?market=amsterdam'};
+ globalThis.fetch=async url=>{
+  const absolute=new URL(String(url),site+'/').href;
+  let data;
+  if(absolute===site+'/data/world-fill-plan.json'){
+   const r=await originalFetch(absolute,{cache:'no-store',signal:AbortSignal.timeout(30000)});
+   if(!r.ok)throw Error('PUBLIC_MARKET_PLAN_HTTP_'+r.status);
+   data=await r.json();
+  }else if(absolute===site+'/data/euronext-amsterdam.json')data=catalog;
+  else if(absolute===site+'/data/amsterdam-no-trades-2026-10-19-23.json')data=audit;
+  else if(absolute===apiBase+'/api/history/manifest.json')data=capturedManifest;
+  else if(capturedHistory.has(absolute)){
+   const item=capturedHistory.get(absolute);
+   return {ok:item.ok,status:item.status,json:async()=>item.data};
+  }else throw Error('PUBLIC_GENERIC_UNEXPECTED_FETCH '+absolute);
+  return {ok:true,status:200,json:async()=>data};
+ };
+ await import(pathToFileURL(path.resolve('generic-market.js')).href+'?public-page-audit='+Date.now());
+ for(let i=0;i<200&&!node('#share-groups').innerHTML.includes('Amsterdam · vijf afgesloten handelsdagen');i++)await delay(100);
+ const genericRendered=node('#share-groups').innerHTML;
+ assert.ok(genericRendered.includes('Amsterdam · vijf afgesloten handelsdagen'),'PUBLIC_GENERIC_XAMS_RENDER_FAILED');
+ assert.equal(Number(node('#share-count').textContent),124,'PUBLIC_GENERIC_XAMS_CATALOG_DIFFERS');
+ const genericBodies=genericRendered.split('<tbody>');
+ assert.equal(genericBodies.length,3,'PUBLIC_GENERIC_XAMS_TABLES_MISSING');
+ const genericRows=genericBodies[2].split('</tbody>')[0];
+ assert.equal((genericRows.match(/<tr>/g)||[]).length,620,'PUBLIC_GENERIC_XAMS_NOT_FIVE_DAYS');
+ const genericSummary=genericBodies[1].split('</tbody>')[0];
+ const genericPerDay={};
+ for(const date of AMSTERDAM_REFERENCE_WEEK){
+  const match=genericSummary.match(new RegExp('<tr><td>'+date+'<\\/td><td>(\\d+)<\\/td><td>(\\d+)<\\/td><td>(\\d+)<\\/td><td>(\\d+)<\\/td><td>(\\d+)<\\/td><\\/tr>'));
+  assert.ok(match,'PUBLIC_GENERIC_XAMS_DAY_MISSING '+date);
+  const [traded,noTrade,invalid,stale,missing]=match.slice(1).map(Number);
+  assert.equal(traded,perDay[date].traded,'PUBLIC_GENERIC_XAMS_OHLC_DIFFERS '+date);
+  assert.equal(noTrade,perDay[date].noTrade,'PUBLIC_GENERIC_XAMS_NO_TRADES_DIFFERS '+date);
+  assert.equal(traded+noTrade+invalid+stale+missing,124,'PUBLIC_GENERIC_XAMS_UNPARTITIONED '+date);
+  genericPerDay[date]={traded,noTrade,invalid,stale,missing};
+ }
+ for(const sample of verifiedSamples){
+  const row=genericRows.split('</tr>').find(x=>x.includes('>'+sample.ticker+'</td>')&&x.includes('>'+sample.date+'</td>'));
+  assert.ok(row,'PUBLIC_GENERIC_XAMS_SAMPLE_MISSING '+sample.ticker);
+  assert.ok(row.includes(money(sample.open,'EUR')),'PUBLIC_GENERIC_XAMS_SAMPLE_OPEN_DIFFERS '+sample.ticker);
+  assert.ok(row.includes(money(sample.close,'EUR')),'PUBLIC_GENERIC_XAMS_SAMPLE_CLOSE_DIFFERS '+sample.ticker);
+ }
+ console.log('XAMS_PUBLIC_GENERIC_MARKET_E2E '+JSON.stringify({site,cutoff:AMSTERDAM_REFERENCE_WEEK.at(-1),
+  catalog:124,renderedSessions:620,perDay:genericPerDay,apiFrontendParity:'EXACT_PER_DAY_AND_SAMPLES',
+  staticAssets:'SHA256_MATCH',noHistoryWrites:true}));
  console.log('XAMS_PUBLIC_PAGE_E2E '+JSON.stringify({site,cutoff:AMSTERDAM_REFERENCE_WEEK.at(-1),catalog:124,
   valid,noTrade,unresolved,perDay,verifiedSamples,staticAssets:'SHA256_MATCH',renderedRows:124,
   worker:'PUBLIC_LIVE',apiFrontendParity:'EXACT_PER_DAY_AND_SAMPLES',noHistoryWrites:true}));

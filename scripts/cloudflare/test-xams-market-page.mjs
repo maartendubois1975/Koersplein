@@ -2,7 +2,9 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 const html=await readFile(new URL('../../market.html',import.meta.url),'utf8');
-assert.match(html,/generic-market\.js\?v=20261025xams-week/,'Browser must fetch updated JS');
+assert.match(html,/generic-market\.js\?v=20261025xams-week2/,'Browser must fetch updated JS');
+const browserJs=await readFile(new URL('../../generic-market.js',import.meta.url),'utf8');
+assert.match(browserJs,/market-week-core\.mjs\?v=20261025xams-week2/,'Browser must fetch the updated shared OHLCV validator');
 const nodes=new Map();
 globalThis.document={querySelector(selector){
  if(!nodes.has(selector))nodes.set(selector,{value:'',textContent:'',innerHTML:'',addEventListener(){}});
@@ -19,7 +21,7 @@ const manifest={instruments:Object.fromEntries(shares.map(s=>['XAMS:'+s.isin,{mi
 const bar=(date,volume=100)=>({date,open:100,high:110,low:95,close:105,volume});
 const histories={
  'XAMS:NL0000852564':{instrument:{isin:'XAMS:NL0000852564',mic:'XAMS',symbol:'AALB',currency:'EUR'},coverage:{lastDate:'2026-10-20'},bars:[bar(dates[0]),bar(dates[1],0)]},
- 'XAMS:NL0011540547':{instrument:{isin:'XAMS:NL0011540547',mic:'XAMS',symbol:'ABN',currency:'EUR'},coverage:{lastDate:'2026-10-23'},bars:[bar(dates[0]),bar(dates[4])]},
+ 'XAMS:NL0011540547':{instrument:{isin:'XAMS:NL0011540547',mic:'XAMS',symbol:'ABN',currency:'EUR'},coverage:{lastDate:'2026-10-23'},bars:[bar(dates[0]),bar(dates[1],0),bar(dates[4])]},
  'XAMS:NL0010273215':{instrument:{isin:'XAMS:NL9999999999',mic:'XAMS',symbol:'ASML',currency:'EUR'},coverage:{lastDate:'2026-10-23'},bars:dates.map(date=>bar(date))}
 };
 const status={schemaVersion:1,mic:'XAMS',scope:'OFFICIAL_NO_TRADES_STATUS_ONLY_NO_PRICE_DATA',week:dates,
@@ -44,6 +46,8 @@ for(let i=0;i<100;i++){
 }
 assert.match(output,/Amsterdam · vijf afgesloten handelsdagen/,'Public XAMS page must render all five days');
 assert.match(output,/Geen handel \(officieel\)/,'Audited NO_TRADES must be visible');
+assert.match(output,/<tr><td>2026-10-20<\/td><td>0<\/td><td>1<\/td><td>1<\/td><td>0<\/td><td>1<\/td><\/tr>/,
+ 'Official NO_TRADES must override invalid zero-volume reference bars, while other invalid bars remain quarantined');
 assert.match(output,/Ongeldige koers/,'Zero-volume source bars must not be published');
 assert.match(output,/Verouderde historie/,'Old as-of date must be classified');
 assert.match(output,/Niet bevestigd/,'ISIN mismatch must not borrow prices');
