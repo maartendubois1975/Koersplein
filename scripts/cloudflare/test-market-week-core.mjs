@@ -42,6 +42,7 @@ assert.equal(actual.coverage.perDay[days[4]].valid,1);
 assert.equal(actual.rows[0].storageId,'XAMS:NL111');
 assert.equal(actual.rows[1].storageId,'LEGACY-NL222');
 assert.equal(calls.length,2);
+assert.ok(calls.some(url=>url.endsWith('/api/history/XAMS:NL111')),'MIC prefix must remain a literal colon for Worker path matching');
 assert.deepEqual(weekCoverage(actual.rows,days),actual.coverage);
 const mismatch=await collectMarketWeek({catalog:[shares[0]],manifest,apiBase:'https://api.example',mic:'XAMS',dates:days,fetchImpl:async()=>({ok:true,json:async()=>({instrument:{mic:'XBRU',symbol:'AAA'},bars:days.map(d=>good(d))})})});
 assert.equal(mismatch.coverage.validSessions,0);
