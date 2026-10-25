@@ -14,6 +14,9 @@ on:
       - 'data/euronext-*.json'
 permissions:
   contents: read
+concurrency:
+  group: koersplein-live-europe-coverage-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   coverage:
     runs-on: ubuntu-latest
