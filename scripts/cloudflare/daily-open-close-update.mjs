@@ -81,7 +81,19 @@ for(const market of targetMarkets){
    // receive the full archive from 1990.
    fullBackfill=firstFullAttempt||(fullRequested&&!beforeDate);
    if(!beforeDate&&!selectedMissing.has((s.mic||market.mic)+'|'+(s.symbol||s.ticker||s.isin)+'|'+s.isin)){deferredMissing++;return;}
-   if(!fullBackfill&&beforeDate && beforeDate>=freshnessCutoff){current++;return;}
+   if(!fullBackfill&&beforeDate && beforeDate>=freshnessCutoff){
+    // A manifest's lastDate is metadata, not proof of an executed trade.
+    // Validate the actual XAMS cutoff partition before declaring a session current.
+    if(market.mic==='XAMS'){
+     const partition=await client.historyPartition(storageIsin,freshnessCutoff.slice(0,4));
+     const verified=inspectDailyBarIntegrity({bars:partition.bars||partition.history||[]},{startDate:freshnessCutoff,endDate:freshnessCutoff});
+     if(verified.bars.length!==1||verified.conflicts.length){
+      failed.push({isin:s.isin,symbol:s.symbol||s.ticker,category:'STORED_LATEST_SESSION_NOT_TRADED',error:'Manifest latestDate has no unambiguous positive-volume OHLCV on '+freshnessCutoff});
+      return;
+     }
+    }
+    current++;return;
+   }
    const instrument={...s,ticker:s.ticker||s.symbol,symbol:s.symbol||s.ticker,mic:s.mic||market.mic,market:s.mic||market.mic,currency:s.currency||market.currency,countryCode:market.country};
    if(!fullBackfill&&beforeDate){
     const status=await officialDailyStatus(instrument,freshnessCutoff);
