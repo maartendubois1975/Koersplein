@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {AMSTERDAM_REFERENCE_WEEK,validDate,positiveNumber,validTradedBar,sessionChange,manifestResolver,weekBars,weekCoverage,collectMarketWeek} from '../../market-week-core.mjs';
+import {AMSTERDAM_REFERENCE_WEEK,validDate,positiveNumber,validTradedBar,tradedBarDefect,sessionChange,manifestResolver,weekBars,weekCoverage,collectMarketWeek} from '../../market-week-core.mjs';
 const days=AMSTERDAM_REFERENCE_WEEK;
 const good=(date,open=100,close=105)=>({date,open,high:110,low:95,close,volume:200});
 assert.equal(validDate('2026-10-23'),true);
@@ -7,6 +7,9 @@ assert.equal(validDate('2026-02-30'),false);
 assert.equal(positiveNumber('  '),null);
 assert.equal(positiveNumber(true),null);
 assert.equal(validTradedBar(good(days[0])),true);
+assert.equal(tradedBarDefect({...good(days[0]),volume:0}),'ZERO_VOLUME_REFERENCE_BAR');
+assert.equal(tradedBarDefect({...good(days[0]),volume:null}),'MISSING_VOLUME');
+assert.equal(tradedBarDefect({...good(days[0]),high:101}),'INCOMPLETE_OR_INVALID_OHLC');
 for(const invalid of [{...good(days[0]),volume:0},{...good(days[0]),volume:null},{...good(days[0]),high:101},{...good(days[0]),low:106},{...good(days[0]),open:null},{...good(days[0]),date:'2026-02-30'}])
  assert.equal(validTradedBar(invalid),false,'Invalid OHLC must not count '+JSON.stringify(invalid));
 assert.equal(sessionChange(100,105).absolute,5);
