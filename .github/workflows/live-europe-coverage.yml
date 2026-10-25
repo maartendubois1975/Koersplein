@@ -35,6 +35,8 @@ jobs:
           node --check amsterdam-week.js
           node --check scripts/cloudflare/audit-amsterdam-week.mjs
           node scripts/cloudflare/test-market-week-core.mjs
+          node --check scripts/cloudflare/audit-amsterdam-official-sessions.mjs
+          node scripts/cloudflare/audit-amsterdam-official-sessions.mjs --self-test
       - name: Audit five Amsterdam sessions in public canonical history (read-only)
         env:
           KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
@@ -42,6 +44,9 @@ jobs:
       - name: Probe missing XAMS sessions against official historical source (read-only)
         timeout-minutes: 10
         run: node scripts/cloudflare/probe-amsterdam-week-gaps.mjs
+      - name: Classify missing XAMS dates using exact official daily status (read-only)
+        timeout-minutes: 12
+        run: node scripts/cloudflare/audit-amsterdam-official-sessions.mjs
       - name: Check API configuration
         id: config
         run: |
@@ -69,6 +74,7 @@ jobs:
           path: |
             research/output/audit/amsterdam-week-coverage.json
             research/output/audit/amsterdam-official-gap-probe.json
+            research/output/audit/amsterdam-official-session-status.json
             research/output/audit/live-europe-coverage.json
             research/output/europe-stale-history-inventory.json
             research/output/europe-missing-history-inventory.json
