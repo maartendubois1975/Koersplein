@@ -1,10 +1,10 @@
 {
-  "requestedAt": "2026-10-25T00:07:25.993Z",
+  "requestedAt": "2026-10-25T00:25:15.956Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Bouw A: verify approved Nasdaq Baltic historical import guard (positive executed share volume, no turnover substitution, conflicting same-date bars retained for quarantine) after commit 97d1f591. Run immutable 8/8 updates + 8/8 audits + 31/31 MIC at same cutoff 2026-10-23; preserve append-only and Paris existing-history-only. Compare individual OHLC/no-trade/history transitions against 40076340939; do not infer repaired historical rows.",
-  "baselineRunId": 40076340939,
+  "reason": "Bouw A: repeat immutable same-cutoff 2026-10-23 8/8 updates + 8/8 audits + 31/31 MIC after Yahoo zero-volume production rejection and stored reference-bar audit exclusion. Baseline run 40145464094 appeared +314 OHLC, but official PSE 23 Oct and read-only Yahoo probe show 76/87 inspected new bars had zero executed volume. Do not overwrite historical bars, do not fabricate NO_TRADES, Paris existing-history-only. Compare instrument transitions and real traded coverage only.",
+  "baselineRunId": 40145464094,
   "expectedCutoff": "2026-10-23",
-  "codeCommit": "97d1f59195fd1b806083adb6ad11ca42ac78fe6f"
+  "codeCommit": "81d764c7d461e7db6e75c28dd7f9d0abad2fb7af"
 }
