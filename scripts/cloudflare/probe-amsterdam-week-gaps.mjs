@@ -26,8 +26,12 @@ await Promise.all(Array.from({length:Math.min(4,candidates.length)},async()=>{
    record.sourceTradedDates=missing.filter(d=>sourceDates.has(d));
    record.status=record.sourceTradedDates.length?'OFFICIAL_SOURCE_HAS_TRADED_CANDIDATE':'NO_SOURCE_TRADE_FOR_MISSING_DATE';
   }catch(error){
-   record.status='OFFICIAL_SOURCE_UNAVAILABLE';
-   record.error=String(error.message||error).slice(0,180);
+   const message=String(error.message||error);
+   // A successful official response with zero traded rows is not a network failure
+   // and is not proof of an official NO_TRADES session.
+   record.status=/^Geen verhandelde Euronext koershistorie voor .*; mislukte vensters: 0$/.test(message)
+    ?'OFFICIAL_SOURCE_NO_TRADED_ROWS':'OFFICIAL_SOURCE_UNAVAILABLE';
+   record.error=message.slice(0,180);
   }
  }
 }));
@@ -51,5 +55,6 @@ await fs.writeFile('research/output/audit/amsterdam-official-gap-probe.json',JSO
 console.log('XAMS_OFFICIAL_GAP_PROBE '+JSON.stringify({cutoff,storedCoverage:stored.coverage,perDay,
  candidateListings:rows.filter(r=>r.sourceTradedDates.length).length,
  sourceUnavailable:rows.filter(r=>r.status==='OFFICIAL_SOURCE_UNAVAILABLE').length,
+ sourceNoTradedRows:rows.filter(r=>r.status==='OFFICIAL_SOURCE_NO_TRADED_ROWS').length,
  noSourceTrade:rows.filter(r=>r.status==='NO_SOURCE_TRADE_FOR_MISSING_DATE').length,
  sample:rows.filter(r=>r.sourceTradedDates.length).slice(0,8)}));
