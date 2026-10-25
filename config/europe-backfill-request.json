@@ -1,10 +1,10 @@
 {
-  "requestedAt": "2026-10-25T00:25:15.956Z",
+  "requestedAt": "2026-10-25T02:06:23.893Z",
   "scope": "ALL_COMPLETE_EUROPEAN_MARKET_LISTINGS",
   "startDate": "1990-01-01",
   "mode": "DAILY_APPEND_ONLY_VERIFICATION",
-  "reason": "Bouw A: repeat immutable same-cutoff 2026-10-23 8/8 updates + 8/8 audits + 31/31 MIC after Yahoo zero-volume production rejection and stored reference-bar audit exclusion. Baseline run 40145464094 appeared +314 OHLC, but official PSE 23 Oct and read-only Yahoo probe show 76/87 inspected new bars had zero executed volume. Do not overwrite historical bars, do not fabricate NO_TRADES, Paris existing-history-only. Compare instrument transitions and real traded coverage only.",
-  "baselineRunId": 40145464094,
+  "reason": "Bouw A: validate independent approved exact-day NO_TRADES for 267 instruments previously lost solely because older stored zero-volume reference bars were quarantined; preserve quarantine of 315 false-current zero-volume OHLC. New official source+MIC+ISIN+cutoff+gap+conflict gate tested (Europe routing, A-to-Z, live success at 33f84a2; blocker regression at 40ff2c3). Compare immutable 8/8 update + 8/8 audit + 31/31 MIC with 40146624207 at identical 2026-10-23 cutoff; no OHLC overwrite or synthetic trades.",
+  "baselineRunId": 40146624207,
   "expectedCutoff": "2026-10-23",
-  "codeCommit": "81d764c7d461e7db6e75c28dd7f9d0abad2fb7af"
+  "codeCommit": "40ff2c3115a1037f35375e77b77362139e5bca4e"
 }
