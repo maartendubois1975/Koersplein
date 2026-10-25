@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {compareEuropeSessionDeltas} from './compare-europe-session-deltas.mjs';
+import {compareEuropeSessionDeltas,isVerifiedNoTradeDespiteZeroVolumeReference} from './compare-europe-session-deltas.mjs';
 function summary({cutoff='2026-10-23',missing=['GB0000000001','GB0000000002'],noTrade=[],complete=true}={}){
   const markets=Array.from({length:31},(_,i)=>{
     const mic=i===0?'XBRU':'X'+String(i).padStart(3,'0');
@@ -256,4 +256,37 @@ fakeSwiss.markets[0].missing[0].isin='XSWX:123456';
 fakeSwiss.importFailures[0].mic='XSWX';
 fakeSwiss.importFailures[0].isin='XSWX:123456';
 assert.throws(()=>compareEuropeSessionDeltas(fakeSwiss,b),/unrecognized catalog identifier/);
+// Regression from immutable 40145464094 -> 40146624207: 267 official
+// NO_TRADES became missing only because a prior stored reference had volume=0.
+// Restore only independently source-proven exact-day NO_TRADES, never OHLC.
+const reference={date:'2026-10-22',open:10,high:11,low:9,close:10,volume:0};
+const officialRef=summary({missing:['GB0000000002'],noTrade:['GB0000000001']}).markets[0].noTrades[0];
+const refArgs={cutoff:'2026-10-23',catalogMic:'XBRU',isin:'GB0000000001'};
+const verified=(bar=reference,status=officialRef,args=refArgs)=>
+  isVerifiedNoTradeDespiteZeroVolumeReference(bar,status,args);
+assert.equal(verified(),true,'Independent official no-trade survives a previous zero-volume reference');
+assert.equal(verified({...reference,date:'2026-10-23'}),false,'Never promote a current zero-volume reference');
+assert.equal(verified({...reference,volume:1}),false,'Only the isolated zero-volume-reference case qualifies');
+assert.equal(verified({...reference,high:8}),false,'Invalid stored OHLC cannot be used as a gap anchor');
+assert.equal(verified({...reference,date:'2026-10-20'}),false,'Undated multi-day gaps remain blocked');
+assert.equal(verified(reference,officialRef,{...refArgs,storedConflictDates:['2026-10-22']}),false,
+  'Conflicting stored date must remain quarantined');
+assert.equal(verified(reference,{...officialRef,isin:'GB0000000002'}),false,'Never cross-assign another ISIN');
+assert.equal(verified(reference,{...officialRef,provider:'unapproved'}),false,'Unapproved feed cannot prove no trades');
+assert.equal(verified(reference,{...officialRef,sourceUrl:'https://example.com/false'}),false,'Wrong source host');
+assert.equal(verified(reference,{...officialRef,trades:1}),false,'Actual trade contradicts no-trade claim');
+assert.equal(verified(reference,{...officialRef,status:'TRADED'}),false,'A trade is not a no-trade');
+assert.equal(verified(reference,{...officialRef,date:'2026-10-22'}),false,'Cutoff must match exactly');
+assert.equal(verified(reference,{...officialRef,lastTradeDate:'2026-10-01'}),false,
+  'Official last trade date must match the stored gap anchor');
+const mseOfficial=mse.markets[0].noTrades[0];
+assert.equal(verified(reference,mseOfficial,{...refArgs,catalogMic:'XMAL'}),true,
+  'Malta official last-trade evidence is independently verifiable');
+const budapestOfficial=budapest.markets[0].noTrades[0];
+assert.equal(verified(reference,budapestOfficial,{...refArgs,catalogMic:'XBUD',isin:'HU0000061726'}),true,
+  'Official market closure is separate from a stored zero-volume price');
+const parisOfficial=euronextSubvenue.markets[0].noTrades[0];
+assert.equal(verified(reference,parisOfficial,{...refArgs,catalogMic:'XPAR'}),true,
+  'Euronext catalog parent and official sub-MIC remain identity-bound');
+console.log('Europe zero-volume stored reference: independently verified NO_TRADES only; OHLC quarantine intact PASS');
 console.log('Europe same-cutoff instrument delta PASS: identity, no-trade, import-failure provenance, category changes, fail-closed, immutable');
