@@ -260,3 +260,19 @@ for(const timeoutMs of [0,1000]){
  assert.deepEqual(emptyObserved,['empty','verified'],'Read-only async empty-bar evidence must finish before fallback');
 }
 console.log('Async source validators fail closed in normal and timeout registry paths PASS');
+
+const originalZeroVolumeFetch=globalThis.fetch;
+try{
+ globalThis.fetch=async()=>({ok:true,async json(){return {chart:{result:[{
+  meta:{symbol:'FOOT.PR',exchangeName:'PRA',fullExchangeName:'Prague Stock Exchange',currency:'CZK'},
+  timestamp:['2026-10-21','2026-10-22','2026-10-23'].map(d=>Math.floor(Date.parse(d+'T12:00:00Z')/1000)),
+  indicators:{quote:[{open:[70,72,72],high:[73,72,72],low:[70,72,72],close:[72,72,72],volume:[100,0,0]}]}
+ }]}};}});
+ const instrument={mic:'XPRA',isin:'CZ0009011474',ticker:'FOOT',currency:'CZK'};
+ const provider=new YahooChartProvider();
+ const traded=await provider.fetchDaily(instrument,{startDate:'2026-10-21',endDate:'2026-10-23'});
+ assert.deepEqual(traded.bars.map(b=>b.date),['2026-10-21'],'Zero-volume Yahoo reference candles cannot become production OHLC');
+ const diagnostic=await provider.fetchDaily(instrument,{startDate:'2026-10-21',endDate:'2026-10-23',includeIncompleteBars:true});
+ assert.equal(diagnostic.bars.length,3,'Read-only source diagnostics retain zero-volume evidence');
+}finally{globalThis.fetch=originalZeroVolumeFetch;}
+console.log('Yahoo production rejects zero-volume reference OHLC; read-only diagnostic preserved PASS');

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {latestClosedWeekday,latestAuditBar,selectEuropeAuditHistoryPeriods,validBars,inspectDailyBarIntegrity,parseOhlcPrice,isCompleteOhlcBar,mapConcurrent} from './europe-run-policy.mjs';
+import {latestClosedWeekday,latestAuditBar,selectEuropeAuditHistoryPeriods,validBars,inspectDailyBarIntegrity,parseOhlcPrice,isCompleteOhlcBar,auditBarIssue,mapConcurrent} from './europe-run-policy.mjs';
 import {ProviderRegistry} from '../history/provider-registry.mjs';
 import {mergeHistoryPartition} from '../../cloudflare/worker.mjs';
 assert.equal(latestClosedWeekday(new Date('2026-10-17T08:00:00Z')),'2026-10-16');
@@ -83,3 +83,9 @@ assert.deepEqual(selectEuropeAuditHistoryPeriods([],'2026-01-09',30),[]);
 assert.throws(()=>selectEuropeAuditHistoryPeriods(yearPartitions,'2026-02-30',30),/Invalid history audit window/);
 assert.throws(()=>selectEuropeAuditHistoryPeriods([{period:'2026-01'}],'2026-01-09',30),/Invalid yearly history partition/);
 console.log('Europe yearly history audit spans calendar-year rollover without inventing missing partitions PASS');
+
+const zeroVolumeReference={date:'2026-10-23',open:72,high:72,low:72,close:72,volume:0};
+assert.equal(isCompleteOhlcBar(zeroVolumeReference),true,'OHLC shape alone does not prove an executed trade');
+assert.equal(auditBarIssue(zeroVolumeReference,'2026-10-23','2026-10-25'),'ZERO_VOLUME_REFERENCE_BAR');
+assert.equal(auditBarIssue({...zeroVolumeReference,volume:10},'2026-10-23','2026-10-25'),null);
+console.log('Immutable audit excludes zero-volume reference candles from traded coverage PASS');
