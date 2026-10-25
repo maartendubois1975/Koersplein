@@ -1,11 +1,10 @@
 // Read-only production audit for Amsterdam's fixed five-session reference week.
 import fs from 'node:fs/promises';
 import {AMSTERDAM_REFERENCE_WEEK,collectMarketWeek,sessionChange} from '../../market-week-core.mjs';
+import {fetchXamsManifest} from './xams-manifest.mjs';
 const base=String(process.env.KOERSPLEIN_API_URL||'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/,'');
 const catalog=JSON.parse(await fs.readFile('data/euronext-amsterdam.json','utf8')).shares||[];
-const manifestResponse=await fetch(base+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
-if(!manifestResponse.ok)throw Error('XAMS_MANIFEST_HTTP_'+manifestResponse.status);
-const manifest=await manifestResponse.json();
+const manifest=await fetchXamsManifest(base);
 const week=await collectMarketWeek({catalog,manifest,apiBase:base,mic:'XAMS',dates:AMSTERDAM_REFERENCE_WEEK,concurrency:6});
 const errors={},providers={},missingByDay={},missingReasonsByDay={},examples=[];
 for(const date of AMSTERDAM_REFERENCE_WEEK){missingByDay[date]=[];missingReasonsByDay[date]={};}
