@@ -1,3 +1,4 @@
+import {AMSTERDAM_REFERENCE_WEEK,tradedBarDefect,weekBars} from '../market-week-core.mjs';
 import { verifyGithubIdentity, allowsDailyRequest } from './github-oidc.mjs';
 const JOB_TYPES = new Set(['HISTORY_BACKFILL', 'DAILY_UPDATE', 'REPAIR_MISSING', 'VALIDATE_HISTORY', 'CHECK_AMSTERDAM']);
 const json = (value, status = 200, headers = {}) => new Response(JSON.stringify(value), { status, headers: { 'content-type': 'application/json; charset=utf-8', ...headers } });
@@ -232,6 +233,29 @@ async function route(request, env) {
     const body = await request.json(), period = partitionPut[2], key = `history/v1/mic=${target.mic}/isin=${target.isin}/year=${period}/prices.ndjson.gz`;
     const previousPartition=await env.DB.prepare('SELECT object_key,checksum FROM history_partitions WHERE instrument_id=? AND period=?').bind(target.id,period).first();
     const existing = await gunzip(await env.HISTORY.get(previousPartition?.object_key||key));
+    // Only XAMS is in the verified rollout. Preserve legacy stored rows, but
+    // never append an untraded, provisional or identity-mismatched new candle.
+    if(target.mic==='XAMS'){
+      if(body.appendOnly!==true)return json({error:'XAMS_APPEND_ONLY_REQUIRED'},409);
+      if(!Array.isArray(body.bars))return json({error:'XAMS_BARS_NOT_ARRAY'},400);
+      const todayAmsterdam=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+      const seen=new Set(),present=new Set(existing.map(bar=>bar.date));
+      for(const bar of body.bars){
+        if(!bar||typeof bar.date!=='string'||seen.has(bar.date))return json({error:'XAMS_DUPLICATE_OR_MISSING_DATE'},422);
+        seen.add(bar.date);
+        if(!bar.date.startsWith(period))return json({error:'XAMS_WRONG_PARTITION',date:bar.date},422);
+        if(present.has(bar.date))continue; // Existing rows are immutable, including legacy defects.
+        const defect=tradedBarDefect(bar);
+        if(defect)return json({error:'XAMS_INVALID_TRADED_OHLCV',date:bar.date,reason:defect},422);
+        if(bar.date>=todayAmsterdam)return json({error:'XAMS_PROVISIONAL_OR_FUTURE_SESSION',date:bar.date},422);
+        if(target.currency&&bar.currency&&String(target.currency).toUpperCase()!==String(bar.currency).toUpperCase())
+          return json({error:'XAMS_CURRENCY_MISMATCH',date:bar.date},422);
+      }
+      for(const [field,actual] of [['mic',target.mic],['isin',target.isin],['ticker',target.ticker]]){
+        if(body[field]&&String(body[field]).toUpperCase()!==String(actual).toUpperCase())
+          return json({error:'XAMS_LISTING_IDENTITY_MISMATCH',field},422);
+      }
+    }
     const bars = mergeHistoryPartition(existing,body.bars||[],body.appendOnly===true).filter((bar) => bar.date.startsWith(period));
     if (!bars.length) return json({ error: 'Lege partitie' }, 400);
     // Append-only replays cannot change an existing value. Avoid compression,
@@ -247,10 +271,23 @@ async function route(request, env) {
     if (!(await isFactory(request, env))) return json({ error: 'Niet geautoriseerd' }, 401);
     const target = await instrument(env, complete[1]); if (!target) return json({ error: 'Instrument ontbreekt' }, 404);
     const body = await request.json(), coverage = await env.DB.prepare('SELECT SUM(record_count) record_count,MIN(first_date) first_date,MAX(last_date) last_date FROM history_partitions WHERE instrument_id=?').bind(target.id).first();
-    await env.DB.prepare(`UPDATE history_status SET status='COMPLETE',first_date=?,last_date=?,record_count=?,provider=?,storage_format='ndjson+gzip-v1',manifest_key=?,last_checked=?,error=NULL,updated_at=? WHERE instrument_id=?`).bind(coverage.first_date, coverage.last_date, coverage.record_count || 0, body.provider || target.provider || 'unknown', `history/v1/mic=${target.mic}/isin=${target.isin}/manifest.json`, now(), now(), target.id).run();
+    let historyState='COMPLETE',verifiedWeekSessions=null;
+    if(target.mic==='XAMS'){
+      // A nonempty partition is NOT proof of complete traded OHLCV history.
+      // The fixed Amsterdam reference week is the only scope certified here.
+      const reference=await env.DB.prepare('SELECT object_key FROM history_partitions WHERE instrument_id=? AND period=?').bind(target.id,'2026').first();
+      const bars=reference?await gunzip(await env.HISTORY.get(reference.object_key)):[];
+      verifiedWeekSessions=weekBars(bars,AMSTERDAM_REFERENCE_WEEK).bars.size;
+      historyState=verifiedWeekSessions===AMSTERDAM_REFERENCE_WEEK.length?'COMPLETE':'PARTIAL';
+    }
+    await env.DB.prepare(`UPDATE history_status SET status=?,first_date=?,last_date=?,record_count=?,provider=?,storage_format='ndjson+gzip-v1',manifest_key=?,last_checked=?,error=NULL,updated_at=? WHERE instrument_id=?`).bind(historyState,coverage.first_date, coverage.last_date, coverage.record_count || 0, body.provider || target.provider || 'unknown', `history/v1/mic=${target.mic}/isin=${target.isin}/manifest.json`, now(), now(), target.id).run();
     const last = await env.DB.prepare('SELECT object_key FROM history_partitions WHERE instrument_id=? ORDER BY period DESC LIMIT 1').bind(target.id).first();
-    if (last) { const bars = await gunzip(await env.HISTORY.get(last.object_key)); const bar = bars.at(-1); await env.DB.prepare(`INSERT INTO latest_prices(instrument_id,trading_date,open,high,low,close,volume,adjusted_close,provider,imported_at) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(instrument_id) DO UPDATE SET trading_date=excluded.trading_date,open=excluded.open,high=excluded.high,low=excluded.low,close=excluded.close,volume=excluded.volume,adjusted_close=excluded.adjusted_close,provider=excluded.provider,imported_at=excluded.imported_at`).bind(target.id, bar.date, bar.open, bar.high, bar.low, bar.close, bar.volume, bar.adjustedClose, body.provider || 'unknown', now()).run(); }
-    return json({ isin: target.isin, ...coverage });
+    if(last){
+      const bars=await gunzip(await env.HISTORY.get(last.object_key));
+      const bar=target.mic==='XAMS'?bars.filter(item=>!tradedBarDefect(item)).at(-1):bars.at(-1);
+      if(bar)await env.DB.prepare(`INSERT INTO latest_prices(instrument_id,trading_date,open,high,low,close,volume,adjusted_close,provider,imported_at) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(instrument_id) DO UPDATE SET trading_date=excluded.trading_date,open=excluded.open,high=excluded.high,low=excluded.low,close=excluded.close,volume=excluded.volume,adjusted_close=excluded.adjusted_close,provider=excluded.provider,imported_at=excluded.imported_at WHERE latest_prices.trading_date<=excluded.trading_date`).bind(target.id,bar.date,bar.open,bar.high,bar.low,bar.close,bar.volume,bar.adjustedClose,body.provider||'unknown',now()).run();
+    }
+    return json({isin:target.isin,...coverage,status:historyState,verifiedWeekSessions});
   }
   return json({ error: 'Niet gevonden' }, 404);
 }
