@@ -39,6 +39,9 @@ jobs:
         env:
           KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
         run: node scripts/cloudflare/audit-amsterdam-week.mjs
+      - name: Probe missing XAMS sessions against official historical source (read-only)
+        timeout-minutes: 10
+        run: node scripts/cloudflare/probe-amsterdam-week-gaps.mjs
       - name: Check API configuration
         id: config
         run: |
@@ -65,6 +68,7 @@ jobs:
           name: live-europe-coverage
           path: |
             research/output/audit/amsterdam-week-coverage.json
+            research/output/audit/amsterdam-official-gap-probe.json
             research/output/audit/live-europe-coverage.json
             research/output/europe-stale-history-inventory.json
             research/output/europe-missing-history-inventory.json
