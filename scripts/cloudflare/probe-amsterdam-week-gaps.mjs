@@ -3,12 +3,11 @@
 import fs from 'node:fs/promises';
 import {AMSTERDAM_REFERENCE_WEEK,collectMarketWeek,validTradedBar} from '../../market-week-core.mjs';
 import {EuronextLiveProvider} from '../history/providers/euronext-live.mjs';
+import {fetchXamsManifest} from './xams-manifest.mjs';
 const dates=AMSTERDAM_REFERENCE_WEEK,cutoff=dates.at(-1);
 const base=String(process.env.KOERSPLEIN_API_URL||'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/,'');
 const catalog=JSON.parse(await fs.readFile('data/euronext-amsterdam.json','utf8')).shares||[];
-const manifestResponse=await fetch(base+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
-if(!manifestResponse.ok)throw Error('XAMS_MANIFEST_HTTP_'+manifestResponse.status);
-const manifest=await manifestResponse.json();
+const manifest=await fetchXamsManifest(base);
 const stored=await collectMarketWeek({catalog,manifest,apiBase:base,mic:'XAMS',dates,concurrency:6});
 const candidates=stored.rows.filter(row=>dates.some(d=>!row.bars.has(d)));
 const provider=new EuronextLiveProvider();
