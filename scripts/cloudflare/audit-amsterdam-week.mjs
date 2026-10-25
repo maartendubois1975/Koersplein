@@ -1,6 +1,6 @@
 // Read-only production audit for Amsterdam's fixed five-session reference week.
 import fs from 'node:fs/promises';
-import {AMSTERDAM_REFERENCE_WEEK,collectMarketWeek} from '../../market-week-core.mjs';
+import {AMSTERDAM_REFERENCE_WEEK,collectMarketWeek,sessionChange} from '../../market-week-core.mjs';
 const base=String(process.env.KOERSPLEIN_API_URL||'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/,'');
 const catalog=JSON.parse(await fs.readFile('data/euronext-amsterdam.json','utf8')).shares||[];
 const manifestResponse=await fetch(base+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
@@ -20,6 +20,15 @@ for(const row of week.rows){
  }
  if(examples.length<12&&(!row.storageId||row.conflicts.length||row.error))examples.push({isin:row.share.isin,symbol:row.share.symbol,storageId:row.storageId,error:row.error,conflicts:row.conflicts});
 }
+// Publish a tiny verifiable price sample in CI output, not just success flags.
+// Each row has already passed the MIC/ISIN/ticker/currency and OHLCV gates.
+const sampleTradedSessions=week.rows.filter(row=>['AALB','ABN','ASML'].includes(row.share.symbol)).flatMap(row=>
+ AMSTERDAM_REFERENCE_WEEK.flatMap(date=>{
+  const bar=row.bars.get(date);if(!bar)return [];
+  return [{date,mic:'XAMS',isin:row.share.isin,ticker:row.share.symbol,currency:row.currency,
+   open:bar.open,close:bar.close,volume:bar.volume,change:sessionChange(bar.open,bar.close),provider:row.provider}];
+ })
+);
 // Identify why catalog securities cannot be joined, without silently borrowing another MIC's prices.
 const unmatchedListings=week.rows.filter(row=>row.error==='NO_MATCHING_MIC_TICKER_HISTORY').map(row=>{
  const isin=String(row.share.isin||'').toUpperCase();
@@ -33,7 +42,7 @@ const unmatchedListings=week.rows.filter(row=>row.error==='NO_MATCHING_MIC_TICKE
 const report={
  generatedAt:new Date().toISOString(),commit:process.env.GITHUB_SHA||null,mic:'XAMS',week:AMSTERDAM_REFERENCE_WEEK,
  source:'PUBLIC_CLOUDFLARE_HISTORY_READ_ONLY',catalog:week.coverage.catalog,coverage:week.coverage,
- errors,providers,missingReasonsByDay,missingByDay,unmatchedListings,examples,notes:[
+ errors,providers,missingReasonsByDay,missingByDay,unmatchedListings,examples,sampleTradedSessions,notes:[
   'A valid session requires independent positive OHLC, coherent high/low and strictly positive volume.',
   'No-trade is not inferred from a missing history bar.',
   'Provider license and public redistribution permissions are not proven by this audit.',
@@ -42,6 +51,6 @@ const report={
 };
 await fs.mkdir('research/output/audit',{recursive:true});
 await fs.writeFile('research/output/audit/amsterdam-week-coverage.json',JSON.stringify(report,null,2)+'\n');
-console.log('XAMS_WEEK_AUDIT '+JSON.stringify({mic:'XAMS',week:AMSTERDAM_REFERENCE_WEEK,coverage:week.coverage,errors,providers,missingReasonsByDay,unmatchedListings,examples}));
+console.log('XAMS_WEEK_AUDIT '+JSON.stringify({mic:'XAMS',week:AMSTERDAM_REFERENCE_WEEK,coverage:week.coverage,errors,providers,missingReasonsByDay,unmatchedListings,examples,sampleTradedSessions}));
 if(week.coverage.catalog!==124)console.warn('XAMS_CATALOG_COUNT_CHANGED '+week.coverage.catalog);
 if(!week.coverage.validSessions)process.exitCode=2;
