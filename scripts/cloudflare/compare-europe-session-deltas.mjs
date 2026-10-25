@@ -3,6 +3,7 @@
 import { readFile } from 'node:fs/promises';
 import {BUDAPEST_CALENDAR_URL,isOfficialBudapestClosedDate} from '../history/providers/budapest-holiday.mjs';
 import { pathToFileURL } from 'node:url';
+import {isCompleteOhlcBar,isVerifiedNoTradeGap} from './europe-run-policy.mjs';
 function check(ok,why){if(!ok)throw new Error('UNVERIFIED_EUROPE_RUN: '+why);}
 const natural=x=>Number.isSafeInteger(x)&&x>=0;
 const id=(mic,isin)=>mic+'\u0000'+isin;
@@ -66,6 +67,19 @@ function verifyOfficialNoTrade(item,mic,cutoff,label){
       label+'/'+mic+': no-trade zero-volume/trades evidence incomplete');
   }
 }
+// An untraded stored reference candle is NEVER a valid current OHLC bar.
+// It also must not erase independently verified official NO_TRADES for a later
+// completed session. Keep the original no-trade gap bound AND require the
+// exact approved official source/venue/ISIN proof, with no stored conflict.
+export function isVerifiedNoTradeDespiteZeroVolumeReference(bar,status,{cutoff,catalogMic,isin,storedConflictDates=[]}={}){
+  if(!bar||bar.volume!==0||!isCompleteOhlcBar(bar)||typeof cutoff!=='string'||
+     bar.date>=cutoff||status?.isin!==isin||
+     storedConflictDates.includes(bar.date)||
+     !isVerifiedNoTradeGap(status,bar.date,cutoff))return false;
+  try{verifyOfficialNoTrade(status,catalogMic,cutoff,'stored-reference');return true;}
+  catch{return false;}
+}
+
 function validate(run,label){
   check(run&&typeof run==='object',label+': missing summary');
   check(run.shardsComplete===true,label+': incomplete shards');
