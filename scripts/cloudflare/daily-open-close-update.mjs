@@ -11,7 +11,7 @@ import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
 import {verifiedSwissPriorityKey,selectEuropeMissingBackfill} from './europe-missing-backfill-priority.mjs';
 const client=new FactoryApiClient(),providers=createDefaultProviderRegistry();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8')),sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
-const today=new Date().toISOString().slice(0,10),results=[];
+const results=[];
 const shardCount=Number(process.env.EUROPE_SHARD_COUNT||1),shardIndex=Number(process.env.EUROPE_SHARD_INDEX||0);
 if(!Number.isInteger(shardCount)||shardCount<1||!Number.isInteger(shardIndex)||shardIndex<0||shardIndex>=shardCount)throw Error('Invalid Europe shard configuration');
 const parisRepair=process.env.PARIS_REPAIR_ONLY==='1';
@@ -104,7 +104,7 @@ for(const market of targetMarkets){
     }
     return check.bars;
    };
-   const range={startDate:fullBackfill||!beforeDate?'1990-01-01':new Date(new Date(beforeDate+'T00:00:00Z').getTime()+86400000).toISOString().slice(0,10),endDate:today};
+   const range={startDate:fullBackfill||!beforeDate?'1990-01-01':new Date(new Date(beforeDate+'T00:00:00Z').getTime()+86400000).toISOString().slice(0,10),endDate:freshnessCutoff};
    const {provider,result}=await providers.fetchDaily(instrument,range,primary,{strictPreferred:false,timeoutMs:fullBackfill?60000:20000,allowedProviderIds,acceptResult:(r,attemptedProvider)=>{
     const bars=checkedSourceBars(r,attemptedProvider,range);
     return bars.length>0&&(fullBackfill||bars.at(-1).date>beforeDate);
@@ -116,7 +116,7 @@ for(const market of targetMarkets){
    // A historical response may stop early. Preserve it, then try all usable
    // providers for the remaining daily tail instead of declaring it current.
    if(fullBackfill&&afterDate&&afterDate<freshnessCutoff){
-    const tailRange={startDate:new Date(new Date(afterDate+'T00:00:00Z').getTime()+86400000).toISOString().slice(0,10),endDate:today};
+    const tailRange={startDate:new Date(new Date(afterDate+'T00:00:00Z').getTime()+86400000).toISOString().slice(0,10),endDate:freshnessCutoff};
     try{
      const tail=await providers.fetchDaily(instrument,tailRange,primary,{timeoutMs:20000,allowedProviderIds,acceptResult:(r,attemptedProvider)=>checkedSourceBars(r,attemptedProvider,tailRange).length>0});
      const tailBars=validBars(tail.result,tailRange);
