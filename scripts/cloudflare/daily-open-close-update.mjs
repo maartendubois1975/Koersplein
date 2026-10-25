@@ -86,7 +86,8 @@ for(const market of targetMarkets){
     // Validate the actual XAMS cutoff partition before declaring a session current.
     if(market.mic==='XAMS'){
      const partition=await client.historyPartition(storageIsin,freshnessCutoff.slice(0,4));
-     const verified=inspectDailyBarIntegrity({bars:partition.bars||partition.history||[]},{startDate:freshnessCutoff,endDate:freshnessCutoff});
+     const cutoffWindow={startDate:freshnessCutoff};cutoffWindow.endDate=freshnessCutoff;
+     const verified=inspectDailyBarIntegrity({bars:partition.bars||partition.history||[]},cutoffWindow);
      if(verified.bars.length!==1||verified.conflicts.length){
       failed.push({isin:s.isin,symbol:s.symbol||s.ticker,category:'STORED_LATEST_SESSION_NOT_TRADED',error:'Manifest latestDate has no unambiguous positive-volume OHLCV on '+freshnessCutoff});
       return;
