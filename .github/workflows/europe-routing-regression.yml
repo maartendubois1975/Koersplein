@@ -56,6 +56,7 @@ on:
       - 'scripts/history/providers/nasdaq-baltic.mjs'
       - 'scripts/cloudflare/pse-official-archive-probe.mjs'
       - 'scripts/cloudflare/yahoo-source-volume-probe.mjs'
+      - 'scripts/cloudflare/yahoo-transition-volume-probe.mjs'
       - 'research/europe-source-blockers.json'
       - 'research/europe-recovery-priority.json'
       - 'scripts/cloudflare/test-europe-source-blockers.mjs'
@@ -188,6 +189,17 @@ jobs:
         run: |
           command -v pdftotext || (sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils)
           node scripts/cloudflare/mse-archive-probe.mjs
+      - name: Probe same-cutoff Yahoo source volumes for 94 transitioned instruments (read-only)
+        if: github.event_name == 'push' && contains(github.event.head_commit.message, '[yahoo-transition-probe]')
+        continue-on-error: true
+        timeout-minutes: 4
+        run: node scripts/cloudflare/yahoo-transition-volume-probe.mjs
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'push' && contains(github.event.head_commit.message, '[yahoo-transition-probe]')
+        with:
+          name: yahoo-transition-volume-evidence
+          path: research/output/yahoo-transition-volume-probe.json
+          retention-days: 30
       - name: Check read-only Yahoo source volume probe syntax
         if: github.event_name == 'push' && contains(github.event.head_commit.message, '[yahoo-source-probe]')
         run: node --check scripts/cloudflare/yahoo-source-volume-probe.mjs
