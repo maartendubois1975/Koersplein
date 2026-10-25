@@ -132,5 +132,10 @@ export function verifiedNoTradeStatus(audit,share,mic,date,week){
  if(!/^[a-f0-9]{40}$/i.test(String(audit.auditCommit||''))||!/^[0-9]+$/.test(String(audit.auditRun||'')))return false;
  if(!validDate(date)||!week.includes(date)||String(share?.mic||mic).toUpperCase()!==mic)return false;
  const isin=String(share?.isin||'').toUpperCase();
- return /^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)&&Array.isArray(audit.noTrades?.[isin])&&audit.noTrades[isin].includes(date);
+ const ticker=String(share?.symbol||share?.ticker||'').trim().toUpperCase();
+ // A historical status is tied to the audited listing, not only its ISIN:
+ // the same security may have a different symbol or a reused ticker.
+ return /^[A-Z]{2}[A-Z0-9]{10}$/.test(isin)&&ticker.length>0&&
+  String(audit.tickers?.[isin]||'').trim().toUpperCase()===ticker&&
+  Array.isArray(audit.noTrades?.[isin])&&audit.noTrades[isin].includes(date);
 }
