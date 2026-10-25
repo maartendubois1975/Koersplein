@@ -1,7 +1,7 @@
 // Read-only, bounded source probe for missing Amsterdam sessions. NEVER imports or republishes prices.
 // A historical AJAX response is not proof of commercial redistribution rights.
 import fs from 'node:fs/promises';
-import {AMSTERDAM_REFERENCE_WEEK,collectMarketWeek,validTradedBar} from '../../market-week-core.mjs';
+import {AMSTERDAM_REFERENCE_WEEK,collectMarketWeek,weekCoverage,validTradedBar} from '../../market-week-core.mjs';
 import {EuronextLiveProvider} from '../history/providers/euronext-live.mjs';
 import {fetchXamsManifest} from './xams-manifest.mjs';
 const dates=AMSTERDAM_REFERENCE_WEEK,cutoff=dates.at(-1);
@@ -9,6 +9,17 @@ const base=String(process.env.KOERSPLEIN_API_URL||'https://koersplein.maarten-du
 const catalog=JSON.parse(await fs.readFile('data/euronext-amsterdam.json','utf8')).shares||[];
 const manifest=await fetchXamsManifest(base);
 const stored=await collectMarketWeek({catalog,manifest,apiBase:base,mic:'XAMS',dates,concurrency:6});
+// A temporary Worker failure is not an absent traded candle. Retest only the
+// affected instruments once before interpreting their five days as missing.
+const transientError=row=>/^HISTORY_(?:TIMEOUT|FETCH_ERROR|HTTP_5\\d\\d)$/.test(String(row.error||''));
+const retryIndexes=stored.rows.flatMap((row,i)=>transientError(row)?[i]:[]);
+if(retryIndexes.length){
+ const retry=await collectMarketWeek({catalog:retryIndexes.map(i=>catalog[i]),manifest,apiBase:base,mic:'XAMS',dates,concurrency:2});
+ retryIndexes.forEach((index,i)=>{stored.rows[index]=retry.rows[i];});
+ stored.coverage=weekCoverage(stored.rows,dates);
+}
+const unresolved=stored.rows.filter(transientError);
+if(unresolved.length)throw Error('XAMS_STORAGE_SNAPSHOT_UNAVAILABLE: '+unresolved.map(row=>row.share.symbol).join(','));
 const candidates=stored.rows.filter(row=>dates.some(d=>!row.bars.has(d)));
 const provider=new EuronextLiveProvider();
 const rows=Array(candidates.length);let cursor=0;
