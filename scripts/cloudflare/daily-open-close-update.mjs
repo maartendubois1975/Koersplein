@@ -4,7 +4,7 @@ import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {FactoryApiClient} from './client.mjs';
 import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
 import {storageIdentityResolver,newListingStorageKey} from './storage-identity.mjs';
-import {latestClosedWeekday,previousClosedWeekday,isVerifiedNoTradeGap,isCompleteOhlcBar,validBars,inspectDailyBarIntegrity,mapConcurrent} from './europe-run-policy.mjs';
+import {latestClosedWeekday,previousClosedWeekday,isVerifiedNoTradeGap,isCompleteOhlcBar,isTradedOhlcvBar,validBars,inspectDailyBarIntegrity,mapConcurrent} from './europe-run-policy.mjs';
 import {partitionBars} from './history-format.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
@@ -87,7 +87,7 @@ for(const market of targetMarkets){
     const status=await officialDailyStatus(instrument,freshnessCutoff);
     const previous=previousClosedWeekday(freshnessCutoff);
     if(isVerifiedNoTradeGap(status,beforeDate,freshnessCutoff)){noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,...status});return;}
-    if(status?.status==='TRADED'&&isCompleteOhlcBar(status.bar)&&beforeDate===previous){
+    if(status?.status==='TRADED'&&isCompleteOhlcBar(status.bar)&&isTradedOhlcvBar(status.bar)&&beforeDate===previous){
      await client.putPartition(storageIsin,freshnessCutoff.slice(0,4),{bars:[status.bar],provider:status.provider,appendOnly:true});
      await client.completeHistory(storageIsin,{provider:status.provider});advanced++;return;
     }
@@ -126,7 +126,7 @@ for(const market of targetMarkets){
    }
    if(afterDate&&afterDate<freshnessCutoff){
     const status=await officialDailyStatus(instrument,freshnessCutoff);
-    if(status?.status==='TRADED'&&isCompleteOhlcBar(status.bar)){
+    if(status?.status==='TRADED'&&isCompleteOhlcBar(status.bar)&&isTradedOhlcvBar(status.bar)){
      await client.putPartition(storageIsin,freshnessCutoff.slice(0,4),{bars:[status.bar],provider:status.provider,appendOnly:true});
      await client.completeHistory(storageIsin,{provider:status.provider});afterDate=freshnessCutoff;
      failed=failed.filter(x=>x.isin!==s.isin);
