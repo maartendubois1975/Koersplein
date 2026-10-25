@@ -12,12 +12,16 @@ export function positiveNumber(value){
  if(typeof value!=='string'||!/^(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(value.trim()))return null;
  const n=Number(value);return Number.isFinite(n)&&n>0?n:null;
 }
-export function validTradedBar(bar){
- if(!bar||!validDate(bar.date))return false;
+export function tradedBarDefect(bar){
+ if(!bar||!validDate(bar.date))return 'INVALID_SESSION_DATE';
  const [open,high,low,close]=['open','high','low','close'].map(k=>positiveNumber(bar[k]));
- const volume=positiveNumber(bar.volume);
- return [open,high,low,close,volume].every(v=>v!==null)&&high>=Math.max(open,close)&&low<=Math.min(open,close);
+ if([open,high,low,close].some(v=>v===null)||high<Math.max(open,close)||low>Math.min(open,close))return 'INCOMPLETE_OR_INVALID_OHLC';
+ if(bar.volume===0||bar.volume==='0')return 'ZERO_VOLUME_REFERENCE_BAR';
+ if(bar.volume===null||bar.volume===undefined||bar.volume==='')return 'MISSING_VOLUME';
+ if(positiveNumber(bar.volume)===null)return 'INVALID_VOLUME';
+ return null;
 }
+export function validTradedBar(bar){return tradedBarDefect(bar)===null;}
 export function sessionChange(open,close){
  const a=positiveNumber(open),b=positiveNumber(close);
  return a===null||b===null?null:{absolute:b-a,percent:(b/a-1)*100};
@@ -43,7 +47,8 @@ export function weekBars(bars,dates){
  }
  const result=new Map(),conflicts=[];
  for(const [date,items] of groups){
-  if(items.some(bar=>!validTradedBar(bar))){conflicts.push({date,reason:'INVALID_OR_ZERO_VOLUME'});continue;}
+  const defects=items.map(tradedBarDefect).filter(Boolean);
+  if(defects.length){conflicts.push({date,reason:new Set(defects).size===1?defects[0]:'MIXED_INVALID_BAR_TYPES'});continue;}
   const signatures=new Set(items.map(bar=>JSON.stringify(['open','high','low','close','volume'].map(k=>positiveNumber(bar[k])))));
   if(signatures.size!==1){conflicts.push({date,reason:'CONFLICTING_DUPLICATES'});continue;}
   result.set(date,items[0]);
