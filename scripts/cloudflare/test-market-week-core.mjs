@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import {AMSTERDAM_REFERENCE_WEEK,validDate,positiveNumber,validTradedBar,tradedBarDefect,sessionChange,manifestResolver,weekBars,weekCoverage,collectMarketWeek} from '../../market-week-core.mjs';
+import fs from 'node:fs';
+import {AMSTERDAM_REFERENCE_WEEK,validDate,positiveNumber,validTradedBar,tradedBarDefect,sessionChange,manifestResolver,weekBars,weekCoverage,collectMarketWeek,verifiedNoTradeStatus} from '../../market-week-core.mjs';
 const days=AMSTERDAM_REFERENCE_WEEK;
 const good=(date,open=100,close=105)=>({date,open,high:110,low:95,close,volume:200});
 assert.equal(validDate('2026-10-23'),true);
@@ -66,4 +67,22 @@ assert.equal(manifestResolver(manifest,'XAMS')({isin:'NL111',symbol:'AAA',mic:'X
 const unlabelledCurrency=await collectMarketWeek({catalog:[shares[0]],manifest,apiBase:'https://api.example',mic:'XAMS',dates:days,fetchImpl:async()=>({ok:true,json:async()=>({instrument:{isin:'XAMS:NL111',mic:'XAMS',symbol:'AAA',currency:'USD'},bars:days.map(d=>good(d))})})});
 assert.equal(unlabelledCurrency.coverage.validSessions,0);
 assert.equal(unlabelledCurrency.rows[0].error,'HISTORY_CURRENCY_MISMATCH');
+const statusAudit=JSON.parse(fs.readFileSync('data/amsterdam-no-trades-2026-10-19-23.json','utf8'));
+assert.equal(statusAudit.mic,'XAMS');
+assert.equal(statusAudit.source,'euronext-live');
+assert.deepEqual(statusAudit.week,days);
+const counts=Object.fromEntries(days.map(date=>[date,0]));
+for(const [isin,dates] of Object.entries(statusAudit.noTrades)){
+ assert.match(isin,/^[A-Z]{2}[A-Z0-9]{10}$/);
+ assert.equal(new Set(dates).size,dates.length,'Duplicate no-trade status');
+ for(const date of dates){
+  assert.ok(verifiedNoTradeStatus(statusAudit,{isin,symbol:'TEST'},'XAMS',date,days),'Exact official no-trade proof required');
+  counts[date]++;
+ }
+}
+assert.deepEqual(counts,{'2026-10-19':13,'2026-10-20':13,'2026-10-21':16,'2026-10-22':11,'2026-10-23':13});
+assert.equal(verifiedNoTradeStatus(statusAudit,{isin:'VGG885761301',mic:'XBRU'},'XAMS',days[0],days),false,'Never borrow another MIC');
+assert.equal(verifiedNoTradeStatus(statusAudit,{isin:'NL0000852564'},'XAMS',days[0],days),false,'Unlisted ISIN is not no-trade');
+assert.equal(verifiedNoTradeStatus(statusAudit,{isin:'VGG885761301'},'XAMS','2026-10-26',days),false,'Outside cutoff');
+assert.equal(verifiedNoTradeStatus({...statusAudit,auditRun:'unknown'},{isin:'VGG885761301'},'XAMS',days[0],days),false,'Unverified audit provenance');
 console.log('Amsterdam week: MIC-safe identity, positive traded OHLC, conflict quarantine, five-day coverage and deltas PASS');
