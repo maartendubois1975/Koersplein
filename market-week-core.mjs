@@ -36,7 +36,13 @@ export function manifestResolver(manifest,mic){
   if(byListing.has(key)&&byListing.get(key)!==id)byListing.set(key,null);
   else if(!byListing.has(key))byListing.set(key,id);
  }
- return share=>byListing.get(listingKey(share.mic||mic,share.symbol||share.ticker))||null;
+ return share=>{
+  const venue=String(share.mic||mic).trim().toUpperCase();
+  const id=byListing.get(listingKey(venue,share.symbol||share.ticker));
+  const official=String(share.isin||'').trim().toUpperCase();
+  // A reused ticker does not prove the same security; legacy storage needs an explicit link.
+  return id&&(id===official||id===venue+':'+official||id===share.legacyStorageIsin)?id:null;
+ };
 }
 export function weekBars(bars,dates){
  const expected=new Set(dates),groups=new Map();
