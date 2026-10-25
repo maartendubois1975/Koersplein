@@ -2,8 +2,9 @@ import {manifestResolver,validTradedBar,sessionChange,collectMarketWeek,AMSTERDA
 const q=s=>document.querySelector(s),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const code=new URLSearchParams(location.search).get('market');let shares=[],prices=new Map(),market=null,amsterdamWeek=null,noTradesAudit=null;
 async function load(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);return r.json()}
-const fmt=(n,c)=>n!==null&&n!==undefined&&n!==''&&Number.isFinite(Number(n))?new Intl.NumberFormat('nl-NL',{style:'currency',currency:c||'EUR',maximumFractionDigits:4}).format(Number(n)):'—';
+const fmt=(n,c)=>Number.isFinite(Number(n))?new Intl.NumberFormat('nl-NL',{style:'currency',currency:c||'EUR',maximumFractionDigits:4}).format(Number(n)):'—';
 
+const fmtXams=n=>n===null||n===undefined||n===''?'—':fmt(n,'EUR');
 // Amsterdam's historical reference week is a five-session table, not a latest-price
 // snapshot. The same identity and OHLCV gates are used by the production audit.
 function renderAmsterdamWeek(){
@@ -31,7 +32,7 @@ function renderAmsterdamWeek(){
   const x=row.share,bar=row.bars.get(date),type=classify(row,date),delta=bar?sessionChange(bar.open,bar.close):null;
   const label={valid:'Geldige koers',noTrades:'Geen handel (officieel)',invalid:'Ongeldige koers',stale:'Verouderde historie',missing:'Niet bevestigd'}[type];
   const change=delta?(delta.absolute>=0?'+':'')+delta.absolute.toFixed(2)+' EUR / '+(delta.percent>=0?'+':'')+delta.percent.toFixed(2)+'%':'—';
-  return '<tr><td>'+esc(x.name||x.company)+'</td><td>'+esc(x.symbol||x.ticker)+'</td><td>'+esc(x.isin)+'</td><td>'+esc(date)+'</td><td>'+fmt(bar?.open,'EUR')+'</td><td>'+fmt(bar?.close,'EUR')+'</td><td>'+esc(change)+'</td><td>'+esc(label)+'</td></tr>';
+  return '<tr><td>'+esc(x.name||x.company)+'</td><td>'+esc(x.symbol||x.ticker)+'</td><td>'+esc(x.isin)+'</td><td>'+esc(date)+'</td><td>'+fmtXams(bar?.open)+'</td><td>'+fmtXams(bar?.close)+'</td><td>'+esc(change)+'</td><td>'+esc(label)+'</td></tr>';
  })).join('');
  root.innerHTML='<section class="share-group"><header><div><p>Geverifieerde handelskoersen</p><h3>Amsterdam · vijf afgesloten handelsdagen</h3></div><span>'+rows.length+' aandelen</span></header>'+
  summary+'<div class="table-wrap"><table><thead><tr><th>Bedrijf</th><th>Ticker</th><th>ISIN</th><th>Handelsdatum</th><th>Opening</th><th>Slot</th><th>Verschil</th><th>Status</th></tr></thead><tbody>'+body+'</tbody></table></div></section>';
