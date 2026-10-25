@@ -11,3 +11,11 @@ for(const [index,block] of checkoutBlocks.entries()){
 }
 assert.ok(!/ref:\s*main\b/.test(workflow),'No production job may silently switch to a newer main revision');
 console.log('Europe daily workflow immutable commit pinning: all update, summary and repair jobs PASS');
+
+// A morning/opening trigger must never turn an unfinished trading session
+// into immutable daily OHLC. Both the ordinary fetch and historical tail
+// are bounded by the last completed-session cutoff, not today's date.
+const updater=await fs.readFile('scripts/cloudflare/daily-open-close-update.mjs','utf8');
+assert.equal((updater.match(/endDate:freshnessCutoff/g)||[]).length,2,'Both daily provider windows must end at the closed-session cutoff');
+assert.ok(!/endDate:today\b/.test(updater),'Unfinished intraday bars must not be eligible for daily history writes');
+console.log('Europe EOD importer never fetches current unclosed session bars PASS');
