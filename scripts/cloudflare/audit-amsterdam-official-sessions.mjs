@@ -6,6 +6,23 @@ import assert from 'node:assert/strict';
 import {AMSTERDAM_REFERENCE_WEEK,collectMarketWeek,validTradedBar} from '../../market-week-core.mjs';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
 const dates=AMSTERDAM_REFERENCE_WEEK,cutoff=dates.at(-1);
+// Transient Worker timeouts must not prevent the independent public-page audit.
+export async function fetchManifestWithRetry(base,fetchImpl=globalThis.fetch,wait=ms=>new Promise(resolve=>setTimeout(resolve,ms))){
+ let lastError;
+ for(let attempt=0;attempt<3;attempt++){
+  try{
+   const response=await fetchImpl(base+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
+   if(response.ok)return await response.json();
+   if(response.status!==429&&response.status<500)throw Error('XAMS_MANIFEST_PERMANENT_HTTP_'+response.status);
+   lastError=Error('XAMS_MANIFEST_HTTP_'+response.status);
+  }catch(error){
+   if(String(error?.message||'').startsWith('XAMS_MANIFEST_PERMANENT_HTTP_'))throw error;
+   lastError=error;
+  }
+  if(attempt<2)await wait(1000*(attempt+1));
+ }
+ throw lastError;
+}
 export function classifyOfficialSession(status,share,date){
  if(!status)return 'NO_OFFICIAL_SESSION_EVIDENCE';
  if(status.date!==date||status.mic!=='XAMS'||String(status.isin||'').toUpperCase()!==String(share.isin||'').toUpperCase())return 'OFFICIAL_IDENTITY_OR_DATE_MISMATCH';
@@ -20,13 +37,18 @@ if(process.argv.includes('--self-test')){
  assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'NO_TRADES',volume:0,trades:0},share,date),'OFFICIAL_NO_TRADES');
  assert.equal(classifyOfficialSession({date,mic:'XBRU',isin:share.isin,status:'NO_TRADES',volume:0,trades:0},share,date),'OFFICIAL_IDENTITY_OR_DATE_MISMATCH');
  assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'NO_TRADES',volume:0,trades:null},share,date),'OFFICIAL_UNVERIFIED_STATUS');
+ let attempts=0;
+ const manifest=await fetchManifestWithRetry('https://fixture',async()=>{
+  if(++attempts<3)throw Error('transient timeout');
+  return {ok:true,json:async()=>({instruments:{}})};
+ },async()=>{});
+ assert.deepEqual(manifest,{instruments:{}});
+ assert.equal(attempts,3,'Transient manifest failures are retried only twice');
  console.log('XAMS official session identity, volume and no-trade gates PASS');
 }else{
  const base=String(process.env.KOERSPLEIN_API_URL||'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/,'');
  const catalog=JSON.parse(await fs.readFile('data/euronext-amsterdam.json','utf8')).shares||[];
- const manifestResponse=await fetch(base+'/api/history/manifest.json',{signal:AbortSignal.timeout(30000)});
- if(!manifestResponse.ok)throw Error('XAMS_MANIFEST_HTTP_'+manifestResponse.status);
- const manifest=await manifestResponse.json();
+ const manifest=await fetchManifestWithRetry(base);
  const stored=await collectMarketWeek({catalog,manifest,apiBase:base,mic:'XAMS',dates,concurrency:6});
  const tasks=stored.rows.flatMap(row=>dates.filter(date=>!row.bars.has(date)).map(date=>({row,date})));
  const results=Array(tasks.length);let cursor=0;
