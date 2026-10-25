@@ -2,7 +2,7 @@ import {fetchPublicHistoryManifest} from './public-history-manifest.mjs';
 import fs from 'node:fs/promises';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {isVerifiedNoTradeDespiteZeroVolumeReference} from './compare-europe-session-deltas.mjs';
-import {latestClosedWeekday,isCompleteOhlcBar,isVerifiedNoTradeGap,auditBarIssue,latestAuditBar,mapConcurrent,selectEuropeAuditHistoryPeriods} from './europe-run-policy.mjs';
+import {latestClosedWeekday,isCompleteOhlcBar,isTradedOhlcvBar,isVerifiedNoTradeGap,auditBarIssue,latestAuditBar,mapConcurrent,selectEuropeAuditHistoryPeriods} from './europe-run-policy.mjs';
 import {storageIdentityResolver} from './storage-identity.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 import {describeOhlcDefects,countOhlcDefects,recentOhlcDebt,inspectStoredOhlcDateConflicts} from './europe-ohlc-defects.mjs';
@@ -78,7 +78,7 @@ for(const market of complete){
       const barIssue=auditBarIssue(b||latestAny,cutoff,new Date().toISOString().slice(0,10));
       if(barIssue){
         const status=await officialDailyStatus({...s,mic:s.mic||market.mic},cutoff);
-        if(barIssue==='STALE_LAST_TRADE'&&isCompleteOhlcBar(b)&&b.volume!==0&&b.date<cutoff&&isVerifiedNoTradeGap(status,b.date,cutoff)){
+        if(barIssue==='STALE_LAST_TRADE'&&isCompleteOhlcBar(b)&&isTradedOhlcvBar(b)&&b.date<cutoff&&isVerifiedNoTradeGap(status,b.date,cutoff)){
           noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,lastStoredDate:b.date,...status});return;
         }
         // Never count a zero-volume stored reference as traded OHLC. However,
