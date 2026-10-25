@@ -76,11 +76,13 @@ for(const [isin,dates] of Object.entries(statusAudit.noTrades)){
  assert.match(isin,/^[A-Z]{2}[A-Z0-9]{10}$/);
  assert.equal(new Set(dates).size,dates.length,'Duplicate no-trade status');
  for(const date of dates){
-  assert.ok(verifiedNoTradeStatus(statusAudit,{isin,symbol:'TEST'},'XAMS',date,days),'Exact official no-trade proof required');
+  assert.ok(verifiedNoTradeStatus(statusAudit,{isin,symbol:statusAudit.tickers[isin]},'XAMS',date,days),'Exact official no-trade proof requires audited ticker');
   counts[date]++;
  }
 }
 assert.deepEqual(counts,{'2026-10-19':13,'2026-10-20':13,'2026-10-21':16,'2026-10-22':11,'2026-10-23':13});
+assert.equal(verifiedNoTradeStatus(statusAudit,{isin:'VGG885761301',symbol:'REUSED'},'XAMS',days[0],days),false,'Never transfer a no-trade status to a different ticker');
+assert.equal(verifiedNoTradeStatus({...statusAudit,tickers:{}},{isin:'VGG885761301',symbol:statusAudit.tickers.VGG885761301},'XAMS',days[0],days),false,'Legacy ISIN-only audit must fail closed');
 assert.equal(verifiedNoTradeStatus(statusAudit,{isin:'VGG885761301',mic:'XBRU'},'XAMS',days[0],days),false,'Never borrow another MIC');
 assert.equal(verifiedNoTradeStatus(statusAudit,{isin:'NL0000852564'},'XAMS',days[0],days),false,'Unlisted ISIN is not no-trade');
 assert.equal(verifiedNoTradeStatus(statusAudit,{isin:'VGG885761301'},'XAMS','2026-10-26',days),false,'Outside cutoff');
