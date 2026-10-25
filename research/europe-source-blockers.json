@@ -1,9 +1,9 @@
 {
   "version": 1,
   "cutoff": "2026-10-23",
-  "updatedAt": "2026-10-25T02:05:56.631Z",
+  "updatedAt": "2026-10-25T02:19:47.731Z",
   "readOnlyEvidence": true,
-  "sourceOfTruth": "Three immutable same-cutoff 8/8 update + 8/8 audit + 31/31 MIC summaries: 40076340939, 40145464094, 40146624207; instrument-key diff on cutoff 2026-10-23. Latest audit 5693 OHLC, 188 NO_TRADES, 1170 missing, 578 failedImports, 3093 historical defects.",
+  "sourceOfTruth": "Immutable 8/8 updates + 8/8 audits + 31/31 MIC, identical cutoff 2026-10-23: 40146624207 -> 40153186546. Catalog 7051; valid OHLC 5693 -> 5693; official NO_TRADES 188 -> 455; missing 1170 -> 903; failedImports 578 -> 578; historical defects 3093 -> 3093. Exactly 267 MIC|ISIN MISSING -> approved NO_TRADES, 0 new OHLC.",
   "sources": [
     {
       "id": "BALTIC-EXACT-SESSION",
@@ -85,16 +85,16 @@
     {
       "id": "YAHOO-TRANSITION-20261023",
       "scope": "EUROPE_MULTI_MIC",
-      "status": "ZERO_VOLUME_QUARANTINE_CONFIRMED_315_CURRENT_AND_267_NO_TRADE_STATUS_REGRESSION",
-      "fingerprint": "Same-cutoff 40145464094 -> 40146624207: 6008 -> 5693 traded OHLC (-315), 455 -> 188 official NO_TRADES (-267), 588 -> 1170 missing (+582), failedImports 578 -> 578, historical defect dates 3093 -> 3093. Exact MIC|ISIN diff: 315 CURRENT -> MISSING ZERO_VOLUME_REFERENCE_BAR and 267 previously official NO_TRADES -> MISSING ZERO_VOLUME_REFERENCE_BAR; 0 new OHLC. 697 total zero-volume missing, including pre-existing. 267 previously approved official no-trade statuses retained independent officialNoTradeReported=true in latest audit; 222 had stored reference dated previous closed weekday 2026-10-22. The 315 formerly-current bars are NOT proven trades.",
-      "reopenWhen": "Require CI and a new immutable 8/8+31/31 same-cutoff audit after independent official NO_TRADES/source-identity guard; restore no-trade status only with exact approved provider, venue, ISIN, cutoff, last-trade gap and no stored conflict. Never count 315 zero-volume reference candles as OHLC; obtain positive executed-volume official rights for each."
+      "status": "QUARANTINE_CONFIRMED_430_ZERO_VOLUME_MISSING_AFTER_OFFICIAL_NOTRADE_RECONCILIATION",
+      "fingerprint": "Same-cutoff 40145464094 -> 40146624207: 6008 -> 5693 traded OHLC (-315), 455 -> 188 official NO_TRADES (-267), 588 -> 1170 missing (+582), failedImports 578 -> 578, historical defect dates 3093 -> 3093. Exact MIC|ISIN diff: 315 CURRENT -> MISSING ZERO_VOLUME_REFERENCE_BAR and 267 previously official NO_TRADES -> MISSING ZERO_VOLUME_REFERENCE_BAR; 0 new OHLC. 697 total zero-volume missing, including pre-existing. 267 previously approved official no-trade statuses retained independent officialNoTradeReported=true in latest audit; 222 had stored reference dated previous closed weekday 2026-10-22. The 315 formerly-current bars are NOT proven trades. Final immutable 40153186546: 267 official no-trade statuses restored, 0 new traded OHLC, 430 remaining ZERO_VOLUME_REFERENCE_BAR missing; 6 official no-trade indications remain blocked by last-trade gap mismatch. XBUD 0 current missing, but 1 historical defect remains.",
+      "reopenWhen": "For 430 remaining zero-volume reference bars, require per-ISIN approved official executed trades, full OHLC, MIC/ticker/currency and redistribution rights, or independently proven exact-day NO_TRADES with valid gap. The 267 recovered no-trade statuses must not be retried or re-counted as traded OHLC."
     },
     {
       "id": "OFFICIAL-NO-TRADE-ZERO-VOLUME-STORED-REFERENCE",
       "scope": "XPAR/XMIL/XBUL/XMAL/XBRU/XOSL/XLIS/XAMS/XZAG/XBUD/XDUB/XTAL/XLIT",
-      "status": "INDEPENDENT_SOURCE_PROOF_REQUIRES_NEW_IMMUTABLE_AUDIT",
-      "fingerprint": "267 same-cutoff NO_TRADES -> MISSING in 40146624207 solely due stale stored zero-volume reference; providers: euronext-live 218, bse-sofia-official 25, mse-official-price-list 16, zse-price-list 3, bse-budapest-calendar 3, nasdaq-baltic-official 2. Previous 40145464094 carried approved official no-trade evidence for all 267; latest still marks officialNoTradeReported=true. Code on 33f84a2 distinguishes independent official NO_TRADES from stored untraded reference OHLC; no price writes.",
-      "reopenWhen": "After CI success, run exactly one protected full 8/8 audit, compare same 2026-10-23 cutoff and all 267 exact MIC|ISIN transitions, reject any missing official source/venue/ISIN/date/trades proof; leave zero-volume stored OHLC quarantined."
+      "status": "RESOLVED_VERIFIED_267_OFFICIAL_NOTRADE_RECLASSIFICATIONS",
+      "fingerprint": "267 same-cutoff NO_TRADES -> MISSING in 40146624207 solely due stale stored zero-volume reference; providers: euronext-live 218, bse-sofia-official 25, mse-official-price-list 16, zse-price-list 3, bse-budapest-calendar 3, nasdaq-baltic-official 2. Previous 40145464094 carried approved official no-trade evidence for all 267; latest still marks officialNoTradeReported=true. Code on 33f84a2 distinguishes independent official NO_TRADES from stored untraded reference OHLC; no price writes. Immutable verification 40153186546 (cutoff 2026-10-23): 8/8 update, 8/8 audit, 31/31 MIC, no anomalies; exact 267 no-trade additions all have storedZeroVolumeReference=true and approved source evidence, 0 removals, 0 current OHLC additions, no historical overwrite. XBUD now 29/29 officially closed/no-trade, 0 current missing, 1 historical defect.",
+      "reopenWhen": "Reopen only if later immutable same-cutoff run loses official source identity/date/trade proof, or if a verified official trade/correction contradicts one of these 267; no further code changes for this closed blocker."
     }
   ]
 }
