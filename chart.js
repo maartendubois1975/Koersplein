@@ -12,7 +12,7 @@ const shortDate = (value) => new Intl.DateTimeFormat('nl-NL', {
 export function validateHistoryDocument(document, identity) {
   if (!document || document.schemaVersion !== 1 || !Array.isArray(document.bars)) throw new Error('Historieformaat wordt niet herkend');
   const instrument = document.instrument || {};
-  if (instrument.isin !== identity.isin || instrument.symbol !== identity.symbol || instrument.mic !== 'XAMS') throw new Error('Historie-identiteit wijkt af');
+  if (instrument.isin !== identity.isin || instrument.symbol !== (identity.symbol||identity.ticker) || instrument.mic !== (identity.mic||'XAMS')) throw new Error('Historie-identiteit wijkt af');
   const seen = new Set();
   const bars = document.bars.map((bar) => ({
     date: String(bar.date || ''),
