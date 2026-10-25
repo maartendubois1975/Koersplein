@@ -95,6 +95,18 @@ export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetc
        String(data.instrument?.symbol||'').toUpperCase()!==String(share.symbol||share.ticker||'').toUpperCase()){
      row.error='HISTORY_LISTING_IDENTITY_MISMATCH';continue;
     }
+    // A matching MIC and ticker alone cannot prove security identity after ticker reuse.
+    // Legacy keys are accepted only when explicitly linked by the catalog.
+    const storedIsin=String(data.instrument?.isin||'').trim().toUpperCase();
+    const expectedIsin=String(share.isin||'').trim().toUpperCase();
+    if(storedIsin&&![expectedIsin,String(mic).toUpperCase()+':'+expectedIsin,String(id).toUpperCase()].includes(storedIsin)){
+     row.error='HISTORY_ISIN_IDENTITY_MISMATCH';continue;
+    }
+    const storedCurrency=String(data.instrument?.currency||'').trim().toUpperCase();
+    const expectedCurrency=String(share.currency||'').trim().toUpperCase();
+    if(expectedCurrency&&storedCurrency&&storedCurrency!==expectedCurrency){
+     row.error='HISTORY_CURRENCY_MISMATCH';continue;
+    }
     const found=weekBars(data.bars,dates);row.bars=found.bars;row.conflicts=found.conflicts;
     row.provider=data.provider?.name||null;row.currency=data.instrument?.currency||row.currency;
    }catch(e){row.error=e?.name==='TimeoutError'?'HISTORY_TIMEOUT':'HISTORY_FETCH_ERROR';}
