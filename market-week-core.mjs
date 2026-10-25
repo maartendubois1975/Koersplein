@@ -89,7 +89,7 @@ export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetc
    // The Amsterdam catalog currently omits quote currency. Do not silently
    // publish a USD history as EUR under the XAMS/EUR heading.
    const expectedCurrency=String(share.currency||(String(mic).toUpperCase()==='XAMS'?'EUR':'')).trim().toUpperCase();
-   const row={share,storageId:id,bars:new Map(),conflicts:[],error:null,provider:null,currency:expectedCurrency||null};
+   const row={share,storageId:id,bars:new Map(),conflicts:[],error:null,provider:null,currency:expectedCurrency||null,lastStoredDate:null};
    rows[index]=row;
    if(venue!==String(mic).trim().toUpperCase()){row.error='CATALOG_MIC_MISMATCH';continue;}
    if(!id){row.error='NO_MATCHING_MIC_TICKER_HISTORY';continue;}
@@ -114,6 +114,7 @@ export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetc
     if(expectedCurrency&&storedCurrency&&storedCurrency!==expectedCurrency){
      row.error='HISTORY_CURRENCY_MISMATCH';continue;
     }
+    row.lastStoredDate=validDate(data.coverage?.lastDate)?data.coverage.lastDate:null;
     const found=weekBars(data.bars,dates);row.bars=found.bars;row.conflicts=found.conflicts;
     row.provider=data.provider?.name||null;row.currency=data.instrument?.currency||row.currency;
    }catch(e){row.error=e?.name==='TimeoutError'?'HISTORY_TIMEOUT':'HISTORY_FETCH_ERROR';}
