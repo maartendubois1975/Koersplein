@@ -57,4 +57,13 @@ assert.equal(identityConflict.rows[0].error,'HISTORY_ISIN_IDENTITY_MISMATCH');
 const currencyConflict=await collectMarketWeek({catalog:[{...shares[0],currency:'EUR'}],manifest,apiBase:'https://api.example',mic:'XAMS',dates:days,fetchImpl:async()=>({ok:true,json:async()=>({instrument:{isin:'XAMS:NL111',mic:'XAMS',symbol:'AAA',currency:'USD'},bars:days.map(d=>good(d))})})});
 assert.equal(currencyConflict.coverage.validSessions,0,'Conflicting trading currency must not appear as EUR');
 assert.equal(currencyConflict.rows[0].error,'HISTORY_CURRENCY_MISMATCH');
+// Regression: an incorrect MIC in the XAMS catalog must never borrow XBRU candles.
+const foreignCatalog=await collectMarketWeek({catalog:[{isin:'NL111',symbol:'AAA',mic:'XBRU'}],manifest,apiBase:'https://api.example',mic:'XAMS',dates:days,fetchImpl:async()=>{throw Error('foreign MIC should not fetch');}});
+assert.equal(foreignCatalog.coverage.validSessions,0);
+assert.equal(foreignCatalog.rows[0].error,'CATALOG_MIC_MISMATCH');
+assert.equal(manifestResolver(manifest,'XAMS')({isin:'NL111',symbol:'AAA',mic:'XBRU'}),null);
+// XAMS catalog omits currency: a USD history is not a verified EUR listing.
+const unlabelledCurrency=await collectMarketWeek({catalog:[shares[0]],manifest,apiBase:'https://api.example',mic:'XAMS',dates:days,fetchImpl:async()=>({ok:true,json:async()=>({instrument:{isin:'XAMS:NL111',mic:'XAMS',symbol:'AAA',currency:'USD'},bars:days.map(d=>good(d))})})});
+assert.equal(unlabelledCurrency.coverage.validSessions,0);
+assert.equal(unlabelledCurrency.rows[0].error,'HISTORY_CURRENCY_MISMATCH');
 console.log('Amsterdam week: MIC-safe identity, positive traded OHLC, conflict quarantine, five-day coverage and deltas PASS');
