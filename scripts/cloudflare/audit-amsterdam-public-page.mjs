@@ -128,6 +128,18 @@ try{
  const body=rendered.match(/<tbody>([\s\S]*?)<\/tbody>/)?.[1];
  assert.ok(body,'PUBLIC_TABLE_BODY_MISSING');
  assert.equal((body.match(/<tr>/g)||[]).length,124,'PUBLIC_NOT_ALL_CATALOG_ROWS');
+ const statusPerDay=Object.fromEntries(AMSTERDAM_REFERENCE_WEEK.map(date=>
+  [date,{valid:0,noTrades:0,invalid:0,stale:0,missing:0}]));
+ for(const match of rendered.matchAll(/data-session-date="(\d{4}-\d{2}-\d{2})" data-session-status="(valid|noTrades|invalid|stale|missing)"/g)){
+  assert.ok(statusPerDay[match[1]],'PUBLIC_UNKNOWN_SESSION_DATE '+match[1]);
+  statusPerDay[match[1]][match[2]]++;
+ }
+ for(const date of AMSTERDAM_REFERENCE_WEEK){
+  const statuses=statusPerDay[date];
+  assert.equal(Object.values(statuses).reduce((sum,n)=>sum+n,0),124,'PUBLIC_UNPARTITIONED_SESSION '+date);
+  assert.equal(statuses.valid,perDay[date].traded,'PUBLIC_SESSION_OHLC_DIFFERS '+date);
+  assert.equal(statuses.noTrades,perDay[date].noTrade,'PUBLIC_SESSION_NO_TRADES_DIFFERS '+date);
+ }
  for(const date of AMSTERDAM_REFERENCE_WEEK){
   assert.ok(rendered.includes(date+' (XAMS)'),'PUBLIC_DAY_MISSING '+date);
   const d=perDay[date];
@@ -152,6 +164,15 @@ try{
    'PUBLIC_SAMPLE_CHANGE_DIFFERS '+ticker);
   verifiedSamples.push({ticker,date,open:bar.open,close:bar.close,volume:bar.volume,percent:delta.percent});
  }
+ // Verify a real two-day close-to-close change, distinct from an overnight
+ // open-to-previous-close gap. The former is the labelled return in the table.
+ const aalb=measured.rows.find(row=>row.share.symbol==='AALB');
+ const monday=aalb?.bars.get(AMSTERDAM_REFERENCE_WEEK[0]),tuesday=aalb?.bars.get(AMSTERDAM_REFERENCE_WEEK[1]);
+ assert.ok(monday&&tuesday,'PUBLIC_PREVIOUS_CLOSE_SAMPLE_MISSING');
+ const aalbHtml=body.split('</tr>').find(item=>item.includes('>AALB · '));
+ const closeReturn=sessionChange(monday.close,tuesday.close);
+ assert.ok(aalbHtml.includes(signed(closeReturn.absolute)+' EUR / '+signed(closeReturn.percent)+'%'),
+  'PUBLIC_PREVIOUS_CLOSE_RETURN_DIFFERS');
  assert.ok(rendered.includes('Dag ± = slot minus opening'),'PUBLIC_DELTA_DEFINITION_MISSING');
  // Replay the exact same captured Worker responses through the second public
  // Amsterdam renderer. This tests real 124 x 5-day data without a second sweep.
@@ -198,6 +219,13 @@ try{
   assert.equal(traded+noTrade+invalid+stale+missing,124,'PUBLIC_GENERIC_XAMS_UNPARTITIONED '+date);
   genericPerDay[date]={traded,noTrade,invalid,stale,missing};
  }
+ for(const date of AMSTERDAM_REFERENCE_WEEK){
+  const generic=genericPerDay[date];
+  assert.deepEqual(statusPerDay[date],{
+   valid:generic.traded,noTrades:generic.noTrade,invalid:generic.invalid,
+   stale:generic.stale,missing:generic.missing
+  },'PUBLIC_AMSTERDAM_ROUTES_DAILY_CLASSIFICATION_DIFFERS '+date);
+ }
  for(const sample of verifiedSamples){
   const row=genericRows.split('</tr>').find(x=>x.includes('>'+sample.ticker+'</td>')&&x.includes('>'+sample.date+'</td>'));
   assert.ok(row,'PUBLIC_GENERIC_XAMS_SAMPLE_MISSING '+sample.ticker);
@@ -209,7 +237,7 @@ try{
   staticAssets:'SHA256_MATCH',noHistoryWrites:true}));
  console.log('XAMS_PUBLIC_PAGE_E2E '+JSON.stringify({site,cutoff:AMSTERDAM_REFERENCE_WEEK.at(-1),catalog:124,
   valid,noTrade,unresolved,perDay,verifiedSamples,staticAssets:'SHA256_MATCH',renderedRows:124,
-  worker:'PUBLIC_LIVE',apiFrontendParity:'EXACT_PER_DAY_AND_SAMPLES',noHistoryWrites:true}));
+  worker:'PUBLIC_LIVE',apiFrontendParity:'EXACT_PER_DAY_AND_SAMPLES',dailyStatusParity:'EXACT_FIVE_CLASSES',noHistoryWrites:true}));
 }finally{
  globalThis.fetch=originalFetch;
  delete globalThis.document;

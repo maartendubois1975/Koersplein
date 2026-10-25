@@ -60,3 +60,31 @@ assert.match(nodes.get('#market-meta').textContent,/19–23 oktober 2026 \(afges
 assert.equal((output.match(/<tr>/g)||[]).length,23,'Two headers, five-day summary, total and 3 x 5 rows');
 assert.equal((output.match(/Geldige koers/g)||[]).length,3,'Only real traded bars pass');
 console.log('Public Amsterdam: five sessions, MIC+ISIN+ticker+currency, audited NO_TRADES, stale/invalid, deltas and cache bust PASS');
+
+// The separate amsterdam.html renderer must use the same five-state rules,
+// and close-to-previous-close must NOT be the overnight opening gap.
+histories['XAMS:NL0000852564'].bars=[
+ bar(dates[0]),{...bar(dates[1]),open:102,close:108},bar(dates[2],0)
+];
+const weekTarget={innerHTML:'',textContent:''};
+const weekCount={textContent:''};
+const weekSearch={value:'',addEventListener(){}};
+globalThis.document={getElementById:id=>({
+ 'week-prices-table':weekTarget,'share-count':weekCount,search:weekSearch
+}[id]||null)};
+globalThis.window={KOERSPLEIN_MARKET:{mic:'XAMS',api:'https://koersplein.maarten-dubois1975.workers.dev'}};
+await import('../../amsterdam-week.js?test=xams-five-state-parity');
+for(let i=0;i<100&&!weekTarget.innerHTML.includes('<table>');i++)
+ await new Promise(resolve=>setTimeout(resolve,20));
+const weekOutput=weekTarget.innerHTML;
+assert.match(weekOutput,/Slot t\.o\.v\. vorig slot/,'The second delta must be close-to-previous-close');
+assert.match(weekOutput,/\+3,00 EUR \/ \+2,86%/,'Close 108 versus previous close 105 is +3 (+2.86%), not the opening gap');
+const sessions=[...weekOutput.matchAll(/data-session-date="(2026-10-\d{2})" data-session-status="(valid|noTrades|invalid|stale|missing)"/g)];
+assert.equal(sessions.length,15,'Every share/date needs one explicit public status');
+const statusCounts=sessions.reduce((o,m)=>(o[m[2]]=(o[m[2]]||0)+1,o),{});
+assert.deepEqual(statusCounts,{valid:4,invalid:1,stale:2,noTrades:1,missing:7},
+ 'Public status partition must match the generic renderer for the same fixture');
+for(const statusLabel of ['Ongeldige koers','Verouderde historie','Niet bevestigd','Geen handel'])
+ assert.ok(weekOutput.includes(statusLabel),'Explicit missing-session classification: '+statusLabel);
+assert.doesNotMatch(weekOutput,/€\s*0,00/,'Missing sessions must not be zero-priced');
+console.log('Amsterdam detail page: five explicit session states, true previous-close return and no synthetic prices PASS');
