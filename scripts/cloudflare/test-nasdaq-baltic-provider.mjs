@@ -20,6 +20,18 @@ const history='<table><tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th
  '<tr><td>2026-10-20</td><td>1.1</td><td>1.2</td><td>1.0</td><td>1.3</td><td>10</td></tr></table>';
 assert.deepEqual(parse(history).map(b=>b.date),['2026-10-22'],'Close-only or inconsistent OHLC cannot become a synthetic daily bar');
 
+const fullOhlcZeroVolume='<table><tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr>'+
+ '<tr><td>2026-10-16</td><td>1.3</td><td>1.3</td><td>1.3</td><td>1.3</td><td>0</td></tr></table>';
+assert.equal(parse(fullOhlcZeroVolume).length,0,'A reference OHLC with zero executed volume is not a traded candle');
+const turnoverOnly='<table><tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Turnover</th></tr>'+
+ '<tr><td>2026-10-16</td><td>1.3</td><td>1.3</td><td>1.3</td><td>1.3</td><td>130</td></tr></table>';
+assert.equal(parse(turnoverOnly).length,0,'Monetary turnover cannot masquerade as share volume');
+const conflictingHistory='<table><tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr>'+
+ '<tr><td>2026-10-22</td><td>1.2</td><td>1.4</td><td>1.1</td><td>1.3</td><td>150</td></tr>'+
+ '<tr><td>2026-10-22</td><td>1.2</td><td>1.5</td><td>1.1</td><td>1.3</td><td>150</td></tr></table>';
+assert.equal(parse(conflictingHistory).length,2,'Conflicting same-date source candles must reach the shared quarantine unchanged');
+
+
 const provider=new NasdaqBalticProvider();
 const originalFetch=globalThis.fetch,requested=[];
 try{
