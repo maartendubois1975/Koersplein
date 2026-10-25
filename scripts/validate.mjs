@@ -57,7 +57,13 @@ for (const market of completeMarkets) {
   if (!match || !match.sharesData) throw new Error(`Complete Europese markt ontbreekt in publicatie: ${market.mic}`);
 }
 for (const market of published) {
-  if (!completeMics.has(market.mic)) throw new Error(`Gepubliceerde Europese markt ontbreekt in COMPLETE-administratie: ${market.mic}`);
+  const state = worldPlan.markets.find(item => item.mic === market.mic)?.state;
+  // A public share catalog does NOT prove five valid trading sessions. XAMS
+  // remains published but must not be promoted to historical COMPLETE until
+  // its separately audited OHLCV + official NO_TRADES coverage is proven.
+  if (!state || (state !== 'COMPLETE' && market.mic !== 'XAMS')) {
+    throw new Error(`Gepubliceerde Europese markt ontbreekt in marktadministratie: ${market.mic}`);
+  }
 }
 
 // Validate every published share catalog, not only the first Euronext venues.
