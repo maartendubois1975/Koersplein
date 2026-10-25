@@ -38,6 +38,9 @@ export function manifestResolver(manifest,mic){
  }
  return share=>{
   const venue=String(share.mic||mic).trim().toUpperCase();
+  // A foreign MIC embedded in the catalog must not redirect a requested XAMS audit
+  // to another exchange's history, even when its ISIN and ticker are identical.
+  if(venue!==String(mic).trim().toUpperCase())return null;
   const id=byListing.get(listingKey(venue,share.symbol||share.ticker));
   const official=String(share.isin||'').trim().toUpperCase();
   // A reused ticker does not prove the same security; legacy storage needs an explicit link.
@@ -82,8 +85,13 @@ export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetc
  await Promise.all(Array.from({length:Math.min(concurrency,catalog.length)},async()=>{
   while(cursor<catalog.length){
    const index=cursor++,share=catalog[index],id=resolve(share);
-   const row={share,storageId:id,bars:new Map(),conflicts:[],error:null,provider:null,currency:share.currency||null};
+   const venue=String(share.mic||mic).trim().toUpperCase();
+   // The Amsterdam catalog currently omits quote currency. Do not silently
+   // publish a USD history as EUR under the XAMS/EUR heading.
+   const expectedCurrency=String(share.currency||(String(mic).toUpperCase()==='XAMS'?'EUR':'')).trim().toUpperCase();
+   const row={share,storageId:id,bars:new Map(),conflicts:[],error:null,provider:null,currency:expectedCurrency||null};
    rows[index]=row;
+   if(venue!==String(mic).trim().toUpperCase()){row.error='CATALOG_MIC_MISMATCH';continue;}
    if(!id){row.error='NO_MATCHING_MIC_TICKER_HISTORY';continue;}
    try{
     // Cloudflare route matches literal MIC colon; %3A in the URL path produces 404.
@@ -91,7 +99,7 @@ export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetc
     const response=await fetchImpl(apiBase.replace(/\/$/,'')+'/api/history/'+encodeURIComponent(id).replace(/%3A/gi,':'),{cache:'no-store',signal:AbortSignal.timeout(30000)});
     if(!response.ok){row.error='HISTORY_HTTP_'+response.status;continue;}
     const data=await response.json();
-    if(String(data.instrument?.mic||'').toUpperCase()!==String(share.mic||mic).toUpperCase()||
+    if(String(data.instrument?.mic||'').toUpperCase()!==String(mic).toUpperCase()||
        String(data.instrument?.symbol||'').toUpperCase()!==String(share.symbol||share.ticker||'').toUpperCase()){
      row.error='HISTORY_LISTING_IDENTITY_MISMATCH';continue;
     }
@@ -103,7 +111,6 @@ export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetc
      row.error='HISTORY_ISIN_IDENTITY_MISMATCH';continue;
     }
     const storedCurrency=String(data.instrument?.currency||'').trim().toUpperCase();
-    const expectedCurrency=String(share.currency||'').trim().toUpperCase();
     if(expectedCurrency&&storedCurrency&&storedCurrency!==expectedCurrency){
      row.error='HISTORY_CURRENCY_MISMATCH';continue;
     }
