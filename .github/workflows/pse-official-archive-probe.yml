@@ -1,0 +1,27 @@
+name: PSE Prague official source probe
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/cloudflare/pse-official-archive-probe.mjs'
+      - '.github/workflows/pse-official-archive-probe.yml'
+permissions:
+  contents: read
+jobs:
+  source-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Check read-only source probe syntax
+        run: node --check scripts/cloudflare/pse-official-archive-probe.mjs
+      - name: Probe free official PSE AK archive identities without importing prices
+        run: node scripts/cloudflare/pse-official-archive-probe.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pse-official-archive-probe
+          path: research/output/pse-official-archive-probe.json
+          retention-days: 30
