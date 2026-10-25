@@ -1,9 +1,9 @@
 {
   "version": 1,
   "cutoff": "2026-10-23",
-  "updatedAt": "2026-10-25T00:16:30.902Z",
+  "updatedAt": "2026-10-25T00:24:53.622Z",
   "readOnlyEvidence": true,
-  "sourceOfTruth": "Immutable Europe audit 40076340939 plus PSE source probe 40145948725; not a new production coverage count",
+  "sourceOfTruth": "Same-cutoff immutable audits 40076340939 and 40145464094; official PSE AK 2026-10-23; read-only Yahoo transition source-volume probe 40146460206",
   "sources": [
     {
       "id": "BALTIC-EXACT-SESSION",
@@ -16,21 +16,21 @@
       "id": "PSE-AK-20261023",
       "scope": "XPRA",
       "status": "COMMERCIAL_RIGHTS_CONFLICT",
-      "fingerprint": "Official PSE AK261023.csv in pl261023.zip sha256:11f9fbc09e78550cc4d7a148b8af22c1c65b88e19c4277720a47155b273c6dbe; 30/30 catalog ISIN matched, 23 positive-volume traded, 7 zero-volume. Old ftp.pse.cz/readmeen.htm permits free file dissemination; current pse.cz/en/legal-information forbids nonpersonal copying/processing/redistribution.",
+      "fingerprint": "Official PSE AK261023.csv in pl261023.zip sha256:11f9fbc09e78550cc4d7a148b8af22c1c65b88e19c4277720a47155b273c6dbe; 30/30 catalog ISIN matched, 23 positive-volume traded, 7 zero-volume. Old ftp.pse.cz/readmeen.htm permits free file dissemination; current pse.cz/en/legal-information forbids nonpersonal copying/processing/redistribution. Official 2026-10-23 CSV confirms all seven volume=0 and lastTradeDate prior to cutoff; six were nevertheless marked newly current in pre-volume-gate audit 40145464094. Commercial use still blocked by conflicting PSE legal notices.",
       "reopenWhen": "Written confirmation that Koersplein may commercially process and redistribute derived daily OHLC and NO_TRADES from free AK files; verify MIC/ticker/currency and source row before append. Do not infer a license from free download."
     },
     {
       "id": "PSE-AK-20261022-PROVENANCE",
       "scope": "XPRA",
       "status": "THREE_STORED_SESSION_CONFLICTS",
-      "fingerprint": "Official AK261022.csv: ENERG CS0008419750 volume=0 lastTrade=2026-10-16; TOMA CZ0005088559 volume=0 lastTrade=2026-10-21; M1997 CZ0009011714 volume=0 lastTrade=2026-10-15. Koersplein 2026-10-23 audit reports lastStoredDate=2026-10-22 for all three.",
+      "fingerprint": "Official AK261022.csv: ENERG CS0008419750 volume=0 lastTrade=2026-10-16; TOMA CZ0005088559 volume=0 lastTrade=2026-10-21; M1997 CZ0009011714 volume=0 lastTrade=2026-10-15. Koersplein 2026-10-23 audit reports lastStoredDate=2026-10-22 for all three. Yahoo read-only probe 40146366275 confirms all three 2026-10-22 Yahoo candles had volume=0.",
       "reopenWhen": "Identify exact historical storage provider and row provenance; obtain authorized correction process respecting append-only; do not count synthetic/reference 22-Oct candles as genuine trades."
     },
     {
       "id": "XHEL-DOV1V-SUSPENSION",
       "scope": "XHEL",
       "status": "SUSPENSION_AND_STORAGE_CONFLICT",
-      "fingerprint": "Nasdaq suspension effective 2026-01-02 until further notice for FI0009008098; Koersplein audit lastStoredDate=2026-10-22.",
+      "fingerprint": "Nasdaq suspension effective 2026-01-02 until further notice for FI0009008098; Koersplein audit lastStoredDate=2026-10-22. Yahoo source probe 40146366275 shows complete 2026-10-22/23 reference OHLC with volume=0.",
       "reopenWhen": "Official dated resumption or continued suspension as of 2026-10-23 plus 22-Oct stored-bar provenance."
     },
     {
@@ -44,7 +44,7 @@
       "id": "XWBO-OFFICIAL-CSV",
       "scope": "XWBO",
       "status": "TRADE_ROWS_AND_RIGHTS_UNVERIFIED",
-      "fingerprint": "Wiener Börse Tagesstatistik 2026-10-23 downloadable CSV; 4 missing XPRA-independent XWBO ISINs still have stored lastDate 2026-10-22.",
+      "fingerprint": "Wiener Börse Tagesstatistik 2026-10-23 downloadable CSV; 4 missing XPRA-independent XWBO ISINs still have stored lastDate 2026-10-22. Yahoo source probe 40146366275 confirms 2026-10-23 volume=0 for all four apparent new current candles.",
       "reopenWhen": "Confirm current commercial rights and parse 23-Oct official dated OHLC/trade volume for all 4 with verified ISIN/MIC/currency."
     },
     {
@@ -67,6 +67,27 @@
       "status": "APPROVED_RIGHTS_OR_IDENTITY_MISSING",
       "fingerprint": "Last immutable audit: XLON 366, XSWX 233, XCYS 49 missing; no licensed ISIN-verified complete OHLC route.",
       "reopenWhen": "Written licensed feed and per-instrument official ISIN/MIC/ticker/currency match."
+    },
+    {
+      "id": "XWAR-YAHOO-ZERO-20261023",
+      "scope": "XWAR",
+      "status": "OFFICIAL_DATED_TRADES_AND_RIGHTS_MISSING",
+      "fingerprint": "Read-only Yahoo transition probe 40146460206: 22/23 newly-current Warsaw symbols have complete-looking 2026-10-23 candles with volume=0; YAN volume>0. This is not proof of NO_TRADES.",
+      "reopenWhen": "Official Warsaw exact-session trade counts and last-trade dates for all 22 ISINs, plus commercial use rights; never import Yahoo zero-volume candles."
+    },
+    {
+      "id": "XBSE-YAHOO-ZERO-20261023",
+      "scope": "XBSE",
+      "status": "OFFICIAL_DATED_TRADES_AND_RIGHTS_MISSING",
+      "fingerprint": "Read-only Yahoo transition probe 40146460206: 14/14 newly-current Bucharest symbols show 2026-10-23 volume=0 despite complete OHLC. This is not official NO_TRADES.",
+      "reopenWhen": "Official BVB dated trades/volume/last-trade per ISIN and permitted reuse; zero-volume Yahoo bars must remain excluded."
+    },
+    {
+      "id": "YAHOO-TRANSITION-20261023",
+      "scope": "EUROPE_MULTI_MIC",
+      "status": "ZERO_VOLUME_REFERENCE_BARS_DISCOVERED",
+      "fingerprint": "Same-cutoff pre-guard audit 40145464094 appeared to add 314 current OHLC. Targeted read-only Yahoo probe 40146460206 of 94 transitions: 87 source bars, 76 volume=0, 11 positive, 7 unavailable. XLON alone showed 203 apparent new OHLC, not yet individually volume-verified.",
+      "reopenWhen": "Run new immutable 8/8 audit with Yahoo zero-volume import rejection and stored zero-volume audit exclusion; compare identical 2026-10-23 cutoff and instrument transitions. Independent official trade evidence still required."
     }
   ]
 }
