@@ -22,7 +22,8 @@ const manifest={instruments:{
 }};
 const resolve=manifestResolver(manifest,'XAMS');
 assert.equal(resolve({isin:'NL111',symbol:'AAA'}),'XAMS:NL111','Crosslisted ISIN must resolve by MIC and ticker');
-assert.equal(resolve({isin:'NL222',symbol:'BBB'}),'LEGACY-NL222');
+assert.equal(resolve({isin:'NL222',symbol:'BBB',legacyStorageIsin:'LEGACY-NL222'}),'LEGACY-NL222');
+assert.equal(resolve({isin:'NL222',symbol:'BBB'}),null,'Legacy identity requires explicit provenance');
 assert.equal(resolve({isin:'NL111',symbol:'UNKNOWN'}),null,'No fallback to another ticker');
 assert.equal(manifestResolver({instruments:{...manifest.instruments,'XAMS:ALT':{mic:'XAMS',symbol:'AAA'}}},'XAMS')({symbol:'AAA'}),null,'Ambiguous listing must fail closed');
 const found=weekBars([good(days[0]),good(days[0]),{...good(days[1]),close:106},good(days[1]),good(days[2]),{...good(days[3]),volume:0}],days);
@@ -30,7 +31,7 @@ assert.equal(found.bars.has(days[0]),true,'Identical duplicates may be accepted'
 assert.equal(found.bars.has(days[1]),false,'Conflicting same-day OHLC must be quarantined');
 assert.equal(found.bars.has(days[3]),false,'Zero-volume bars are not traded prices');
 assert.equal(found.conflicts.length,2);
-const shares=[{isin:'NL111',symbol:'AAA',name:'A'},{isin:'NL222',symbol:'BBB',name:'B'}];
+const shares=[{isin:'NL111',symbol:'AAA',name:'A'},{isin:'NL222',symbol:'BBB',name:'B',legacyStorageIsin:'LEGACY-NL222'}];
 const calls=[];
 const fetchImpl=async url=>{
  calls.push(url);
