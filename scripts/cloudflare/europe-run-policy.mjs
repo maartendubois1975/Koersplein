@@ -45,11 +45,21 @@ export function isCompleteOhlcBar(b) {
  const [open,high,low,close]=prices;
  return high>=Math.max(open,close)&&low<=Math.min(open,close);
 }
+// Traded OHLCV is stricter than a geometrically complete OHLC reference.
+// A zero, missing or nonnumeric volume is not evidence of an executed trade.
+export function isTradedOhlcvBar(bar) {
+ return isCompleteOhlcBar(bar)&&parseOhlcPrice(bar.volume)!==null;
+}
+export function tradedVolumeDefect(bar) {
+ if(!bar||bar.volume===null||bar.volume===undefined||bar.volume==='')return 'MISSING_VOLUME';
+ if(bar.volume===0||bar.volume==='0')return 'ZERO_VOLUME_REFERENCE_BAR';
+ return parseOhlcPrice(bar.volume)===null?'INVALID_VOLUME':null;
+}
 export function auditBarIssue(bar,cutoff,today) {
  if(!bar)return 'NO_VALID_BAR';
  if(!isCompleteOhlcBar(bar))return 'INCOMPLETE_OR_INVALID_OHLC';
  // A dated reference candle with zero executed shares is not a traded OHLC.
- if(bar.volume===0)return 'ZERO_VOLUME_REFERENCE_BAR';
+ const volumeDefect=tradedVolumeDefect(bar);if(volumeDefect)return volumeDefect;
  if(bar.date>today)return 'FUTURE_LAST_TRADE';
  if(bar.date>cutoff)return 'SESSION_NOT_YET_CLOSED';
  if(bar.date<cutoff)return 'STALE_LAST_TRADE';
@@ -65,7 +75,7 @@ export function latestAuditBar(bars,maxDate=null) {
   const date=new Date(bar.date+'T00:00:00Z');
   if(Number.isNaN(date.getTime())||date.toISOString().slice(0,10)!==bar.date)continue;
   if(maxDate&&bar.date>maxDate)continue;
-  if(!latest||bar.date>latest.date||(bar.date===latest.date&&isCompleteOhlcBar(bar)&&!isCompleteOhlcBar(latest)))latest=bar;
+  if(!latest||bar.date>latest.date||(bar.date===latest.date&&isTradedOhlcvBar(bar)&&!isTradedOhlcvBar(latest)))latest=bar;
  }
  return latest;
 }
@@ -83,9 +93,9 @@ export function inspectDailyBarIntegrity(result,{startDate,endDate}) {
   if(!Number.isFinite(parsed.getTime())||parsed.toISOString().slice(0,10)!==date)continue;
   if(!byDate.has(date))byDate.set(date,{complete:[],invalid:0,signatures:new Set()});
   const group=byDate.get(date);
-  if(!isCompleteOhlcBar(bar)){group.invalid++;continue;}
+  if(!isTradedOhlcvBar(bar)){group.invalid++;continue;}
   group.complete.push(bar);
-  group.signatures.add(JSON.stringify(['open','high','low','close'].map(key=>parseOhlcPrice(bar[key]))));
+  group.signatures.add(JSON.stringify(['open','high','low','close','volume'].map(key=>parseOhlcPrice(bar[key]))));
  }
  const bars=[],conflicts=[];
  for(const [date,group] of byDate){
