@@ -55,6 +55,7 @@ on:
       - 'scripts/cloudflare/test-six-ipo-symbol-evidence.mjs'
       - 'scripts/history/providers/nasdaq-baltic.mjs'
       - 'scripts/cloudflare/pse-official-archive-probe.mjs'
+      - 'scripts/cloudflare/yahoo-source-volume-probe.mjs'
       - 'research/europe-source-blockers.json'
       - 'research/europe-recovery-priority.json'
       - 'scripts/cloudflare/test-europe-source-blockers.mjs'
@@ -187,6 +188,20 @@ jobs:
         run: |
           command -v pdftotext || (sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils)
           node scripts/cloudflare/mse-archive-probe.mjs
+      - name: Check read-only Yahoo source volume probe syntax
+        if: github.event_name == 'push' && contains(github.event.head_commit.message, '[yahoo-source-probe]')
+        run: node --check scripts/cloudflare/yahoo-source-volume-probe.mjs
+      - name: Verify Yahoo reference candles against official Prague volume (read-only)
+        if: github.event_name == 'push' && contains(github.event.head_commit.message, '[yahoo-source-probe]')
+        continue-on-error: true
+        timeout-minutes: 3
+        run: node scripts/cloudflare/yahoo-source-volume-probe.mjs
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'push' && contains(github.event.head_commit.message, '[yahoo-source-probe]')
+        with:
+          name: yahoo-source-volume-evidence
+          path: research/output/yahoo-zero-volume-source-evidence.json
+          retention-days: 30
       - name: Probe Prague official free archive for seven exact ISINs (read-only)
         if: github.event_name == 'push' && contains(github.event.head_commit.message, '[pse-official-probe]')
         continue-on-error: true
