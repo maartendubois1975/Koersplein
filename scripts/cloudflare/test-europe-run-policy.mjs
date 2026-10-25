@@ -1,15 +1,15 @@
 import assert from 'node:assert/strict';
-import {latestClosedWeekday,latestAuditBar,selectEuropeAuditHistoryPeriods,validBars,inspectDailyBarIntegrity,parseOhlcPrice,isCompleteOhlcBar,auditBarIssue,mapConcurrent} from './europe-run-policy.mjs';
+import {latestClosedWeekday,latestAuditBar,selectEuropeAuditHistoryPeriods,validBars,inspectDailyBarIntegrity,parseOhlcPrice,isCompleteOhlcBar,isTradedOhlcvBar,auditBarIssue,mapConcurrent} from './europe-run-policy.mjs';
 import {ProviderRegistry} from '../history/provider-registry.mjs';
 import {mergeHistoryPartition} from '../../cloudflare/worker.mjs';
 assert.equal(latestClosedWeekday(new Date('2026-10-17T08:00:00Z')),'2026-10-16');
 assert.equal(latestClosedWeekday(new Date('2026-10-19T07:00:00Z')),'2026-10-16');
 assert.equal(latestClosedWeekday(new Date('2026-10-19T18:45:00Z')),'2026-10-19');
 const range={startDate:'2026-10-15',endDate:'2026-10-16'};
-const old={date:'2026-10-14',open:10,high:12,low:9,close:11};
-const current={date:'2026-10-16',open:12,high:14,low:11,close:13};
-const invalid={date:'2026-10-16',open:Infinity,high:14,low:11,close:13};
-const incomplete={date:'2026-10-16',open:12,high:null,low:11,close:13};
+const old={date:'2026-10-14',open:10,high:12,low:9,close:11,volume:20};
+const current={date:'2026-10-16',open:12,high:14,low:11,close:13,volume:20};
+const invalid={date:'2026-10-16',open:Infinity,high:14,low:11,close:13,volume:20};
+const incomplete={date:'2026-10-16',open:12,high:null,low:11,close:13,volume:20};
 for(const invalidPrice of [true,false,[],[12],{},'0xC','0b1100','Infinity',' ',null,undefined]){
  assert.equal(parseOhlcPrice(invalidPrice),null,'Coercible non-price value must be rejected: '+String(invalidPrice));
  assert.equal(isCompleteOhlcBar({...current,open:invalidPrice}),false);
@@ -48,7 +48,7 @@ console.log('Latest OHLC audit handles unsorted partitions, duplicate candles an
 
 // A provider can return two individually valid but contradictory OHLC bars for
 // the same session. Neither row may be appended; other dates remain eligible.
-const prior={date:'2026-10-15',open:8,high:11,low:7,close:10};
+const prior={date:'2026-10-15',open:8,high:11,low:7,close:10,volume:20};
 const conflict={...current,close:12};
 const contradictory=inspectDailyBarIntegrity({bars:[prior,current,conflict]},range);
 assert.deepEqual(contradictory.bars,[prior]);
@@ -87,5 +87,12 @@ console.log('Europe yearly history audit spans calendar-year rollover without in
 const zeroVolumeReference={date:'2026-10-23',open:72,high:72,low:72,close:72,volume:0};
 assert.equal(isCompleteOhlcBar(zeroVolumeReference),true,'OHLC shape alone does not prove an executed trade');
 assert.equal(auditBarIssue(zeroVolumeReference,'2026-10-23','2026-10-25'),'ZERO_VOLUME_REFERENCE_BAR');
+assert.equal(isTradedOhlcvBar(zeroVolumeReference),false);
+assert.equal(isTradedOhlcvBar({...zeroVolumeReference,volume:null}),false);
+assert.equal(isTradedOhlcvBar({...zeroVolumeReference,volume:12}),true);
+assert.equal(auditBarIssue({...zeroVolumeReference,volume:null},'2026-10-23','2026-10-25'),'MISSING_VOLUME');
+assert.equal(auditBarIssue({...zeroVolumeReference,volume:'bad'},'2026-10-23','2026-10-25'),'INVALID_VOLUME');
+assert.deepEqual(validBars({bars:[zeroVolumeReference]}, {startDate:'2026-10-23',endDate:'2026-10-23'}),[],'Zero-volume reference cannot enter production history');
+assert.deepEqual(validBars({bars:[{...zeroVolumeReference,volume:undefined}]}, {startDate:'2026-10-23',endDate:'2026-10-23'}),[],'Missing-volume reference cannot enter production history');
 assert.equal(auditBarIssue({...zeroVolumeReference,volume:10},'2026-10-23','2026-10-25'),null);
 console.log('Immutable audit excludes zero-volume reference candles from traded coverage PASS');
