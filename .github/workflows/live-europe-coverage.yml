@@ -47,6 +47,11 @@ jobs:
       - name: Classify missing XAMS dates using exact official daily status (read-only)
         timeout-minutes: 12
         run: node scripts/cloudflare/audit-amsterdam-official-sessions.mjs
+      - name: Verify official XAMS/TNLA/XAMC listing identity (read-only)
+        timeout-minutes: 3
+        run: |
+          node scripts/cloudflare/audit-amsterdam-mic-evidence.mjs --self-test
+          node scripts/cloudflare/audit-amsterdam-mic-evidence.mjs
       - name: Verify deployed Amsterdam page and live Worker five-day rendering (read-only)
         if: ${{ !cancelled() }}
         timeout-minutes: 5
@@ -79,6 +84,7 @@ jobs:
             research/output/audit/amsterdam-week-coverage.json
             research/output/audit/amsterdam-official-gap-probe.json
             research/output/audit/amsterdam-official-session-status.json
+            research/output/audit/amsterdam-official-mic-evidence.json
             research/output/audit/live-europe-coverage.json
             research/output/europe-stale-history-inventory.json
             research/output/europe-missing-history-inventory.json
