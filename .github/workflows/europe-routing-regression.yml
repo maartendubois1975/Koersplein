@@ -55,6 +55,9 @@ on:
       - 'scripts/cloudflare/test-six-ipo-symbol-evidence.mjs'
       - 'scripts/history/providers/nasdaq-baltic.mjs'
       - 'scripts/cloudflare/pse-official-archive-probe.mjs'
+      - 'research/europe-source-blockers.json'
+      - 'research/europe-recovery-priority.json'
+      - 'scripts/cloudflare/test-europe-source-blockers.mjs'
       - 'scripts/cloudflare/test-nasdaq-baltic-provider.mjs'
       - 'scripts/cloudflare/test-bse-sofia.mjs'
       - 'scripts/cloudflare/europe-recovery-queue.mjs'
@@ -139,6 +142,7 @@ jobs:
           node --check scripts/cloudflare/test-bse-sofia.mjs
           node --check scripts/cloudflare/europe-recovery-queue.mjs
           node --check scripts/cloudflare/test-europe-recovery-queue.mjs
+          node --check scripts/cloudflare/test-europe-source-blockers.mjs
           node --check scripts/cloudflare/europe-shard-coverage.mjs
           node --check scripts/cloudflare/format-europe-run-report.mjs
           node --check scripts/cloudflare/test-europe-reporting.mjs
@@ -170,6 +174,7 @@ jobs:
           node scripts/cloudflare/test-bse-sofia.mjs
           node scripts/cloudflare/test-official-daily-status.mjs
           node scripts/cloudflare/test-europe-recovery-queue.mjs
+          node scripts/cloudflare/test-europe-source-blockers.mjs
           node scripts/cloudflare/test-europe-reporting.mjs
           node scripts/cloudflare/test-swiss-yahoo-identity.mjs
           node scripts/cloudflare/test-london-yahoo-currency.mjs

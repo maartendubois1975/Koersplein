@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "cutoff": "2026-10-23",
+  "updatedAt": "2026-10-25T00:16:30.902Z",
+  "readOnlyEvidence": true,
+  "sourceOfTruth": "Immutable Europe audit 40076340939 plus PSE source probe 40145948725; not a new production coverage count",
+  "sources": [
+    {
+      "id": "BALTIC-EXACT-SESSION",
+      "scope": "XTAL/XRIS/XLIT",
+      "status": "DATED_TRADE_PROOF_INCOMPLETE",
+      "fingerprint": "Nasdaq Baltic 2026-10-23 stats snapshot; later asOf; CTS1L stored 2026-10-16 vs official last trade 2026-10-15",
+      "reopenWhen": "Per-ISIN exact 2026-10-23 session and historical provenance verified, including correct last-trade date; no reference-price bar treated as executed."
+    },
+    {
+      "id": "PSE-AK-20261023",
+      "scope": "XPRA",
+      "status": "COMMERCIAL_RIGHTS_CONFLICT",
+      "fingerprint": "Official PSE AK261023.csv in pl261023.zip sha256:11f9fbc09e78550cc4d7a148b8af22c1c65b88e19c4277720a47155b273c6dbe; 30/30 catalog ISIN matched, 23 positive-volume traded, 7 zero-volume. Old ftp.pse.cz/readmeen.htm permits free file dissemination; current pse.cz/en/legal-information forbids nonpersonal copying/processing/redistribution.",
+      "reopenWhen": "Written confirmation that Koersplein may commercially process and redistribute derived daily OHLC and NO_TRADES from free AK files; verify MIC/ticker/currency and source row before append. Do not infer a license from free download."
+    },
+    {
+      "id": "PSE-AK-20261022-PROVENANCE",
+      "scope": "XPRA",
+      "status": "THREE_STORED_SESSION_CONFLICTS",
+      "fingerprint": "Official AK261022.csv: ENERG CS0008419750 volume=0 lastTrade=2026-10-16; TOMA CZ0005088559 volume=0 lastTrade=2026-10-21; M1997 CZ0009011714 volume=0 lastTrade=2026-10-15. Koersplein 2026-10-23 audit reports lastStoredDate=2026-10-22 for all three.",
+      "reopenWhen": "Identify exact historical storage provider and row provenance; obtain authorized correction process respecting append-only; do not count synthetic/reference 22-Oct candles as genuine trades."
+    },
+    {
+      "id": "XHEL-DOV1V-SUSPENSION",
+      "scope": "XHEL",
+      "status": "SUSPENSION_AND_STORAGE_CONFLICT",
+      "fingerprint": "Nasdaq suspension effective 2026-01-02 until further notice for FI0009008098; Koersplein audit lastStoredDate=2026-10-22.",
+      "reopenWhen": "Official dated resumption or continued suspension as of 2026-10-23 plus 22-Oct stored-bar provenance."
+    },
+    {
+      "id": "XDUB-GDL-NO-HISTORY",
+      "scope": "XDUB",
+      "status": "SOURCE_AND_IDENTITY_UNVERIFIED",
+      "fingerprint": "IE000HBCCM49 GDL: no stored history, Yahoo GDL.IR HTTP 404; official Euronext 2026-10-23 OHLC/last-trade absent.",
+      "reopenWhen": "Approved full OHLC and venue/ISIN/currency match, or official exact-day no-trade with accepted storage policy."
+    },
+    {
+      "id": "XWBO-OFFICIAL-CSV",
+      "scope": "XWBO",
+      "status": "TRADE_ROWS_AND_RIGHTS_UNVERIFIED",
+      "fingerprint": "Wiener Börse Tagesstatistik 2026-10-23 downloadable CSV; 4 missing XPRA-independent XWBO ISINs still have stored lastDate 2026-10-22.",
+      "reopenWhen": "Confirm current commercial rights and parse 23-Oct official dated OHLC/trade volume for all 4 with verified ISIN/MIC/currency."
+    },
+    {
+      "id": "XOSL-LIFECYCLE",
+      "scope": "XOSL",
+      "status": "LIFECYCLE_AND_SOURCE_UNVERIFIED",
+      "fingerprint": "4 Oslo missing with lastStoredDates 2026-10-05,08,09,22; delisting/status investigation not equivalent to NO_TRADES.",
+      "reopenWhen": "Per-ISIN official exchange lifecycle and 23-Oct trade evidence; approved OHLC or explicit classification."
+    },
+    {
+      "id": "XPAR-WARRANTS",
+      "scope": "XPAR",
+      "status": "INSTRUMENT_TYPE_TRIAGE",
+      "fingerprint": "20/27 XPAR missing names explicitly BSA/BS/WARRANT/DS in catalog; 18/23 official no-trade indications are in this group, but missing dated last-trade proof.",
+      "reopenWhen": "Verify instrument class, active/expired status and last-trade date for each; retain historical OHLC and Paris existing-history-only."
+    },
+    {
+      "id": "XLON-XSWX-XCYS",
+      "scope": "XLON/XSWX/XCYS",
+      "status": "APPROVED_RIGHTS_OR_IDENTITY_MISSING",
+      "fingerprint": "Last immutable audit: XLON 366, XSWX 233, XCYS 49 missing; no licensed ISIN-verified complete OHLC route.",
+      "reopenWhen": "Written licensed feed and per-instrument official ISIN/MIC/ticker/currency match."
+    }
+  ]
+}
