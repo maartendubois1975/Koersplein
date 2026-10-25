@@ -43,6 +43,10 @@ assert.ok(detail.includes('history-state') && detailScript.includes('/api/histor
 assert.ok(!detailScript.includes('catch { /*'), 'Historiefouten mogen niet stil worden ingeslikt');
 assert.ok(css.includes('@media(max-width:640px)') && css.includes('.chart-shell svg{height:220px}'));
 
+const micHistory={schemaVersion:1,instrument:{isin:'XAMS:NL111',symbol:'AAA',mic:'XAMS'},coverage:{records:1,firstDate:'2026-10-23',lastDate:'2026-10-23'},bars:[{date:'2026-10-23',open:100,high:110,low:95,close:105,volume:100}]};
+assert.equal(validateHistoryDocument(micHistory,{isin:'XAMS:NL111',symbol:'AAA',mic:'XAMS'}).length,1,'MIC-scoped storage key should render');
+assert.throws(()=>validateHistoryDocument(micHistory,{isin:'XBRU:NL111',symbol:'AAA',mic:'XBRU'}),/Historie-identiteit wijkt af/,'Cross-listed venue must not inherit another exchange candle');
+
 const synthetic = Array.from({ length: 7241 }, (_, index) => {
   const date = new Date(Date.UTC(1998, 6, 20) + index * 1.42 * 86_400_000).toISOString().slice(0, 10);
   return { date, open: 100 + index / 20, high: 102 + index / 20, low: 99 + index / 20, close: 101 + index / 20, adjustedClose: 101 + index / 20, volume: null };
