@@ -1,6 +1,7 @@
 import {fetchPublicHistoryManifest} from './public-history-manifest.mjs';
 import fs from 'node:fs/promises';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
+import {isVerifiedNoTradeDespiteZeroVolumeReference} from './compare-europe-session-deltas.mjs';
 import {latestClosedWeekday,isCompleteOhlcBar,isVerifiedNoTradeGap,auditBarIssue,latestAuditBar,mapConcurrent,selectEuropeAuditHistoryPeriods} from './europe-run-policy.mjs';
 import {storageIdentityResolver} from './storage-identity.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
@@ -79,6 +80,16 @@ for(const market of complete){
         const status=await officialDailyStatus({...s,mic:s.mic||market.mic},cutoff);
         if(barIssue==='STALE_LAST_TRADE'&&isCompleteOhlcBar(b)&&b.volume!==0&&b.date<cutoff&&isVerifiedNoTradeGap(status,b.date,cutoff)){
           noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,lastStoredDate:b.date,...status});return;
+        }
+        // Never count a zero-volume stored reference as traded OHLC. However,
+        // a separate approved exchange source can independently prove that
+        // the exact cutoff session had NO_TRADES. Keep the original bounded
+        // gap check, verify official MIC/ISIN/source and reject stored conflicts.
+        if(barIssue==='ZERO_VOLUME_REFERENCE_BAR'&&
+           isVerifiedNoTradeDespiteZeroVolumeReference(b,status,{cutoff,catalogMic:market.mic,isin:s.isin,
+             storedConflictDates:conflicts.dates.map(x=>x.date)})){
+          noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,lastStoredDate:b.date,
+            storedZeroVolumeReference:true,...status});return;
         }
         pushMissing({isin:s.isin,symbol:s.symbol||s.ticker,lastDate:b?.date||latestAny?.date||null,reason:barIssue,ohlcDefects:barIssue==='INCOMPLETE_OR_INVALID_OHLC'?describeOhlcDefects(b||latestAny):[],storedOhlc:barIssue==='INCOMPLETE_OR_INVALID_OHLC'&& (b||latestAny)?{open:(b||latestAny).open??null,high:(b||latestAny).high??null,low:(b||latestAny).low??null,close:(b||latestAny).close??null}:null,officialNoTradeReported:status?.status==='NO_TRADES',officialLastTradeDate:status?.lastTradeDate||null,knownDataUnavailable:knownUnavailable.get(s.isin)?.reason||null});
         return;
