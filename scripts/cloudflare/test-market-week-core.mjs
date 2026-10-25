@@ -26,6 +26,7 @@ assert.equal(resolve({isin:'NL111',symbol:'AAA'}),'XAMS:NL111','Crosslisted ISIN
 assert.equal(resolve({isin:'NL222',symbol:'BBB',legacyStorageIsin:'LEGACY-NL222'}),'LEGACY-NL222');
 assert.equal(resolve({isin:'NL222',symbol:'BBB'}),null,'Legacy identity requires explicit provenance');
 assert.equal(resolve({isin:'NL111',symbol:'UNKNOWN'}),null,'No fallback to another ticker');
+assert.equal(manifestResolver({instruments:{'XAMS:NL111':{isin:'XAMS:NL999',mic:'XAMS',symbol:'AAA'}}},'XAMS')({isin:'NL111',symbol:'AAA'}),null,'Contradictory manifest ISIN must not resolve a reused listing');
 assert.equal(manifestResolver({instruments:{...manifest.instruments,'XAMS:ALT':{mic:'XAMS',symbol:'AAA'}}},'XAMS')({symbol:'AAA'}),null,'Ambiguous listing must fail closed');
 const found=weekBars([good(days[0]),good(days[0]),{...good(days[1]),close:106},good(days[1]),good(days[2]),{...good(days[3]),volume:0}],days);
 assert.equal(found.bars.has(days[0]),true,'Identical duplicates may be accepted');
@@ -58,6 +59,9 @@ assert.equal(identityConflict.rows[0].error,'HISTORY_ISIN_IDENTITY_MISMATCH');
 const currencyConflict=await collectMarketWeek({catalog:[{...shares[0],currency:'EUR'}],manifest,apiBase:'https://api.example',mic:'XAMS',dates:days,fetchImpl:async()=>({ok:true,json:async()=>({instrument:{isin:'XAMS:NL111',mic:'XAMS',symbol:'AAA',currency:'USD'},bars:days.map(d=>good(d))})})});
 assert.equal(currencyConflict.coverage.validSessions,0,'Conflicting trading currency must not appear as EUR');
 assert.equal(currencyConflict.rows[0].error,'HISTORY_CURRENCY_MISMATCH');
+const unknownCurrency=await collectMarketWeek({catalog:[shares[0]],manifest,apiBase:'https://api.example',mic:'XAMS',dates:days,fetchImpl:async()=>({ok:true,json:async()=>({instrument:{isin:'XAMS:NL111',mic:'XAMS',symbol:'AAA'},bars:days.map(d=>good(d))})})});
+assert.equal(unknownCurrency.coverage.validSessions,0,'Missing currency must never be displayed as EUR');
+assert.equal(unknownCurrency.rows[0].error,'HISTORY_CURRENCY_MISMATCH');
 // Regression: an incorrect MIC in the XAMS catalog must never borrow XBRU candles.
 const foreignCatalog=await collectMarketWeek({catalog:[{isin:'NL111',symbol:'AAA',mic:'XBRU'}],manifest,apiBase:'https://api.example',mic:'XAMS',dates:days,fetchImpl:async()=>{throw Error('foreign MIC should not fetch');}});
 assert.equal(foreignCatalog.coverage.validSessions,0);

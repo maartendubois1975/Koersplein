@@ -43,6 +43,10 @@ export function manifestResolver(manifest,mic){
   if(venue!==String(mic).trim().toUpperCase())return null;
   const id=byListing.get(listingKey(venue,share.symbol||share.ticker));
   const official=String(share.isin||'').trim().toUpperCase();
+  // The manifest itself may be corrupt or stale: a matching MIC/ticker and
+  // storage key must not override a contradictory instrument ISIN.
+  const manifestIsin=String(manifest.instruments[id]?.isin||'').trim().toUpperCase();
+  if(manifestIsin&&![official,venue+':'+official].includes(manifestIsin))return null;
   // A reused ticker does not prove the same security; legacy storage needs an explicit link.
   return id&&(id===official||id===venue+':'+official||id===share.legacyStorageIsin)?id:null;
  };
@@ -111,7 +115,9 @@ export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetc
      row.error='HISTORY_ISIN_IDENTITY_MISMATCH';continue;
     }
     const storedCurrency=String(data.instrument?.currency||'').trim().toUpperCase();
-    if(expectedCurrency&&storedCurrency&&storedCurrency!==expectedCurrency){
+    // Unknown currency is not proof of EUR: do not label an unverified
+    // currency as EUR merely because the Amsterdam catalog defaults to it.
+    if(expectedCurrency&&storedCurrency!==expectedCurrency){
      row.error='HISTORY_CURRENCY_MISMATCH';continue;
     }
     row.lastStoredDate=validDate(data.coverage?.lastDate)?data.coverage.lastDate:null;
