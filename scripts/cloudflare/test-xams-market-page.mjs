@@ -50,6 +50,6 @@ assert.match(output,/Niet bevestigd/,'ISIN mismatch must not borrow prices');
 assert.match(output,/\+5\.00 EUR \/ \+5\.00%/,'Close-open and percentage must be calculated');
 assert.doesNotMatch(output,/€\s*0,00/,'Missing OHLC must never appear as zero prices');
 assert.match(nodes.get('#market-meta').textContent,/19–23 oktober 2026 \(afgesloten\)/);
-assert.equal((output.match(/<tr>/g)||[]).length,21,'Five-day summary plus 3 x 5 rows');
+assert.equal((output.match(/<tr>/g)||[]).length,23,'Two headers, five-day summary, total and 3 x 5 rows');
 assert.equal((output.match(/Geldige koers/g)||[]).length,3,'Only real traded bars pass');
 console.log('Public Amsterdam: five sessions, MIC+ISIN+ticker+currency, audited NO_TRADES, stale/invalid, deltas and cache bust PASS');
