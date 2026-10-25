@@ -36,6 +36,11 @@ for(const date of dates){
   result.csvSha256=sha256(raw);
   result.separatorCounts={semicolon:(lines[0]?.match(/;/g)||[]).length,comma:(lines[0]?.match(/,/g)||[]).length,tab:(lines[0]?.match(/\t/g)||[]).length};
   result.matchedIsins=targetIsins.filter(isin=>lines.some(line=>line.includes(isin)));
+  // Private research artifact only: expose the exact official fields for seven
+  // ISINs to validate session, executed volume and OHLC before any adapter.
+  const splitCsv=line=>{const out=[];let cell='',quoted=false;for(let k=0;k<line.length;k++){const ch=line[k];if(ch==='"'){if(quoted&&line[k+1]==='"'){cell+='"';k++;}else quoted=!quoted;}else if(ch===','&&!quoted){out.push(cell);cell='';}else cell+=ch;}out.push(cell);return out;};
+  result.matchingRows=targetIsins.map(isin=>{const line=lines.find(row=>row.includes(isin));return line?{isin,fields:splitCsv(line)}:null;}).filter(Boolean);
+
   result.missingIsins=targetIsins.filter(isin=>!result.matchedIsins.includes(isin));
   result.status='AK_IDENTITIES_PROBED';
  }catch(error){result.status='TRANSPORT_OR_ARCHIVE_ERROR';result.error=String(error?.message||error).slice(0,240);}
