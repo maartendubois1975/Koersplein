@@ -30,11 +30,13 @@ const [html, app, detail, contracts, detailScript, chartScript, css] = await Pro
   readFile(new URL('../chart.js', import.meta.url), 'utf8'),
   readFile(new URL('../styles.css', import.meta.url), 'utf8')
 ]);
-for (const text of ['3 maanden', '6 maanden', '12 maanden', '24 maanden', '+10%', '+20%', '+30%']) assert.ok(html.includes(text));
-const htmlLower = html.toLowerCase();
-assert.ok(htmlLower.includes('selectie-engine') && htmlLower.includes('geen rendementsbelofte'));
-assert.ok(html.includes('Koershistorie') && html.includes('Gevalideerde marktdata'));
-assert.ok(app.includes('share.html?isin=') && app.includes('[share.name,share.symbol,share.isin]'), 'Aandelen moeten klikbaar en op naam/ticker/ISIN doorzoekbaar blijven');
+const weekPage = await readFile(new URL('../amsterdam.html', import.meta.url), 'utf8');
+const weekScript = await readFile(new URL('../amsterdam-week.js', import.meta.url), 'utf8');
+const weekCore = await readFile(new URL('../market-week-core.mjs', import.meta.url), 'utf8');
+assert.ok(html.includes('Openings- en slotkoersen') && html.includes('amsterdam.html'), 'Homepage must focus on open and close');
+assert.ok(html.includes('home-markets.js') && !html.includes('top5-markets.js') && !html.includes('opportunity-form'), 'Homepage must not run prediction or ranking engines');
+assert.ok(weekPage.includes('2026') && weekPage.includes('week-prices-table') && weekPage.includes('type="module"'), 'Amsterdam must expose the five-session table');
+assert.ok(weekScript.includes('collectMarketWeek') && weekScript.includes('sessionChange') && weekCore.includes('manifestResolver'), 'Amsterdam must use MIC-safe canonical history and calculate daily changes');
 assert.ok(detail.includes('Koersplein-analyse'));
 assert.ok(detail.includes('Kans- en risicoanalyse wordt beschikbaar') && !detail.includes('model-contract'));
 assert.ok(detail.includes('history-state') && detailScript.includes('/api/history/') && detailScript.includes('runtime.apiBaseUrl') && detailScript.includes('renderHistoryChart'));
