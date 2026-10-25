@@ -16,8 +16,8 @@ for(const date of dates){
  const result={date,url,status:'NOT_CHECKED',archiveSha256:null,entryNames:[],matchedIsins:[],missingIsins:targetIsins,readOnly:true};
  const dir=await mkdtemp(path.join(os.tmpdir(),'koersplein-pse-'));
  try{
-  const response=await fetch(url,{signal:AbortSignal.timeout(18000),headers:{Accept:'application/zip'}});
-  result.httpStatus=response.status;
+  const response=await fetch(url,{signal:AbortSignal.timeout(18000),headers:{Accept:'*/*','User-Agent':'Mozilla/5.0 (compatible; KoerspleinSourceResearch/1.0)'}});
+  result.httpStatus=response.status;result.contentType=response.headers.get('content-type');result.server=response.headers.get('server');
   if(!response.ok){result.status='HTTP_'+response.status;continue;}
   const archive=Buffer.from(await response.arrayBuffer());
   if(archive.length<100||archive[0]!==0x50||archive[1]!==0x4b){result.status='NOT_ZIP';continue;}
