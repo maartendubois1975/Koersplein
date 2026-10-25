@@ -75,7 +75,9 @@ export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetc
    rows[index]=row;
    if(!id){row.error='NO_MATCHING_MIC_TICKER_HISTORY';continue;}
    try{
-    const response=await fetchImpl(apiBase.replace(/\/$/,'')+'/api/history/'+encodeURIComponent(id),{cache:'no-store',signal:AbortSignal.timeout(30000)});
+    // Cloudflare route matches literal MIC colon; %3A in the URL path produces 404.
+    if(!/^[A-Z0-9][A-Z0-9:-]{2,31}$/.test(id)){row.error='INVALID_STORAGE_KEY';continue;}
+    const response=await fetchImpl(apiBase.replace(/\/$/,'')+'/api/history/'+encodeURIComponent(id).replace(/%3A/gi,':'),{cache:'no-store',signal:AbortSignal.timeout(30000)});
     if(!response.ok){row.error='HISTORY_HTTP_'+response.status;continue;}
     const data=await response.json();
     if(String(data.instrument?.mic||'').toUpperCase()!==String(share.mic||mic).toUpperCase()||
