@@ -1,9 +1,13 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
-import {auditBarIssue,isCompleteOhlcBar,isVerifiedNoTradeGap,previousClosedWeekday,validBars,latestAuditBar} from './europe-run-policy.mjs';
+import {auditBarIssue,isCompleteOhlcBar,isTradedOhlcvBar,isVerifiedNoTradeGap,previousClosedWeekday,validBars,latestAuditBar} from './europe-run-policy.mjs';
 
 const good={date:'2026-10-22',open:100,high:105,low:95,close:102,volume:20};
 assert.equal(isCompleteOhlcBar(good),true);
+assert.equal(isTradedOhlcvBar(good),true);
+assert.equal(isTradedOhlcvBar({...good,volume:0}),false);
+assert.equal(isTradedOhlcvBar({...good,volume:null}),false);
+assert.equal(isTradedOhlcvBar({...good,volume:'0'}),false);
 for(const invalid of [
  {...good,open:null},{...good,high:null},{...good,low:null},{...good,close:null},
  {...good,high:101},{...good,low:101},{...good,high:94},{...good,low:106},
@@ -40,6 +44,9 @@ assert.match(audit,/latestAuditBar\(bars,cutoff\)/,'Audit must inspect latest co
 assert.deepEqual(latestAuditBar([{...good,date:'2026-10-23'},good,{...good,high:null}],'2026-10-22'),good,'Cutoff and complete duplicate take precedence');
 assert.deepEqual(latestAuditBar([{...good,high:null},good],'2026-10-22'),good,'Complete duplicate wins regardless of storage order');
 assert.match(daily,/isVerifiedNoTradeGap/);
+assert.match(daily,/market\.mic==='XAMS'/,'XAMS metadata-current shortcut must validate actual stored session');
+assert.match(daily,/STORED_LATEST_SESSION_NOT_TRADED/,'Do not call zero-volume reference candles current');
+assert.match(daily,/isTradedOhlcvBar\(status\.bar\)/,'Official append requires executed volume');
 assert.match(official,/OFFICIAL_PARTIAL_OR_INVALID_OHLC/);
 const queue=await fs.readFile('scripts/cloudflare/europe-recovery-queue.mjs','utf8');
 assert.match(queue,/REPAIR_INCOMPLETE_OHLC/);
