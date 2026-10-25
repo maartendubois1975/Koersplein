@@ -47,6 +47,9 @@ jobs:
       - name: Classify missing XAMS dates using exact official daily status (read-only)
         timeout-minutes: 12
         run: node scripts/cloudflare/audit-amsterdam-official-sessions.mjs
+      - name: Verify deployed Amsterdam page and live Worker five-day rendering (read-only)
+        timeout-minutes: 5
+        run: node scripts/cloudflare/audit-amsterdam-public-page.mjs
       - name: Check API configuration
         id: config
         run: |
