@@ -37,8 +37,8 @@ assert.ok(html.includes('Openings- en slotkoersen') && html.includes('amsterdam.
 assert.ok(html.includes('home-markets.js') && !html.includes('top5-markets.js') && !html.includes('opportunity-form'), 'Homepage must not run prediction or ranking engines');
 assert.ok(weekPage.includes('2026') && weekPage.includes('week-prices-table') && weekPage.includes('type="module"'), 'Amsterdam must expose the five-session table');
 assert.ok(weekScript.includes('collectMarketWeek') && weekScript.includes('sessionChange') && weekCore.includes('manifestResolver'), 'Amsterdam must use MIC-safe canonical history and calculate daily changes');
-assert.ok(detail.includes('Koersplein-analyse'));
-assert.ok(detail.includes('Kans- en risicoanalyse wordt beschikbaar') && !detail.includes('model-contract'));
+assert.ok(detail.includes('Dagelijkse koersgegevens') && !detail.includes('Kans- en risicoanalyse'));
+assert.ok(detail.includes('Opening, slot en verloop') && !detail.includes('model-contract'));
 assert.ok(detail.includes('history-state') && detailScript.includes('/api/history/') && detailScript.includes('runtime.apiBaseUrl') && detailScript.includes('renderHistoryChart'));
 assert.ok(!detailScript.includes('catch { /*'), 'Historiefouten mogen niet stil worden ingeslikt');
 assert.ok(css.includes('@media(max-width:640px)') && css.includes('.chart-shell svg{height:220px}'));
