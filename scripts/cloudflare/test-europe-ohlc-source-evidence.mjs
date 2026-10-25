@@ -9,7 +9,7 @@ const market={mic:'XLON',currency:'GBX'};
 const listings=[{mic:'XLON',isin:item.isin,symbol:'TEST',currency:'GBX'}];
 const sources={status:'APPROVED',historySources:[{role:'PRIMARY',provider:'good'},{role:'FALLBACK',provider:'backup'},{role:'CANDIDATE_PAID',provider:'unapproved'}]};
 const calls=[];
-const registry={get:id=>id==='good'||id==='backup'?{id}:null,async fetchDaily(i,range,primary,opts){calls.push({i,range,primary,opts});return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:100,high:110,low:90,close:105}],providerMeta:{currency:'GBX'}}};}};
+const registry={get:id=>id==='good'||id==='backup'?{id}:null,async fetchDaily(i,range,primary,opts){calls.push({i,range,primary,opts});return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:100,high:110,low:90,close:105,volume:20}],providerMeta:{currency:'GBX'}}};}};
 const res=await probeIncompleteOhlcCandidate(item,{registry,sources,market,listings});
 assert.equal(res.status,'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW');
 assert.equal(res.storagePolicy,'APPEND_ONLY_EXISTING_BAR_UNCHANGED');
@@ -30,13 +30,13 @@ assert.equal(second.length,2);
 assert.ok(first.every(x=>!second.some(y=>y.isin===x.isin)),'Rotated probe must advance beyond first fixed batch');
 assert.deepEqual(selectIncompleteOhlcCandidates(rotatingQueue,{limit:2,perMarket:2,rotation:1}),second,'Same run rotation must be reproducible');
 assert.throws(()=>selectIncompleteOhlcCandidates(rotatingQueue,{rotation:-1}),/Invalid OHLC probe limits/);
-assert.deepEqual(res.candidateBar,{date:'2026-10-22',open:100,high:110,low:90,close:105,volume:null});
+assert.deepEqual(res.candidateBar,{date:'2026-10-22',open:100,high:110,low:90,close:105,volume:20});
 assert.equal(res.currencyVerified,true);
-const gbpence={...registry,async fetchDaily(){return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:100,high:110,low:90,close:105}],providerMeta:{currency:'GBp'}}};}};
+const gbpence={...registry,async fetchDaily(){return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:100,high:110,low:90,close:105,volume:20}],providerMeta:{currency:'GBp'}}};}};
 assert.equal((await probeIncompleteOhlcCandidate(item,{registry:gbpence,sources,market,listings})).status,'COMPLETE_BAR_CANDIDATE_REQUIRES_CORRECTION_REVIEW','GBp and GBX are both pence');
-const wrongCurrency={...registry,async fetchDaily(){return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:100,high:110,low:90,close:105}],providerMeta:{currency:'GBP'}}};}};
+const wrongCurrency={...registry,async fetchDaily(){return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:100,high:110,low:90,close:105,volume:20}],providerMeta:{currency:'GBP'}}};}};
 assert.equal((await probeIncompleteOhlcCandidate(item,{registry:wrongCurrency,sources,market,listings})).status,'SOURCE_CURRENCY_MISMATCH_REQUIRES_REVIEW','GBP pounds must never be treated as GBX pence');
-const missingCurrency={...registry,async fetchDaily(){return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:100,high:110,low:90,close:105}],providerMeta:{}}};}};
+const missingCurrency={...registry,async fetchDaily(){return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:100,high:110,low:90,close:105,volume:20}],providerMeta:{}}};}};
 assert.equal((await probeIncompleteOhlcCandidate(item,{registry:missingCurrency,sources,market,listings})).status,'SOURCE_CURRENCY_UNVERIFIED');
 console.log('Rotating OHLC read-only coverage and exact source candle/currency evidence PASS');
 
@@ -64,7 +64,7 @@ const parisListing={mic:'ALXP',isin:parisItem.isin,symbol:parisItem.symbol,curre
 const euroRegistry={...registry,async fetchDaily(i,range,primary,opts){
  assert.equal(i.mic,'ALXP','The original Paris Growth board MIC must reach the provider');
  assert.equal(i.market,'ALXP');
- return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:10,high:12,low:9,close:11}],providerMeta:{currency:'EUR'}}};
+ return {provider:{id:'good'},result:{bars:[{date:'2026-10-22',open:10,high:12,low:9,close:11,volume:20}],providerMeta:{currency:'EUR'}}};
 }};
 assert.equal(approvedCatalogListingMic('XPAR','ALXP'),true);
 assert.equal(approvedCatalogListingMic('XPAR','XMLI'),true);
@@ -97,7 +97,7 @@ console.log('Debt-weighted source probe allocates substantial London coverage wi
 
 // Regression: validBars only requires OPEN/CLOSE, so the repair-evidence path
 // must independently enforce complete HIGH/LOW and valid OHLC inequalities.
-const goodCandle={date:'2026-10-22',open:100,high:110,low:90,close:105};
+const goodCandle={date:'2026-10-22',open:100,high:110,low:90,close:105,volume:20};
 assert.equal(isCompleteOhlcSourceBar(goodCandle),true);
 for(const partial of [
  {...goodCandle,high:null},
@@ -308,7 +308,7 @@ assert.equal(sourceQuality.defects.LOW_ABOVE_CLOSE,1);
 assert.equal(sourceQuality.defects.HIGH_BELOW_LOW,1);
 assert.deepEqual(describeExactDateSourceBars([],'2026-10-22').defects,{NO_EXACT_DATE_BAR:1});
 
-const sameDayA={date:'2026-10-22',open:100,high:110,low:90,close:105};
+const sameDayA={date:'2026-10-22',open:100,high:110,low:90,close:105,volume:20};
 const sameDayB={...sameDayA,close:106};
 const conflict=describeExactDateSourceBars([sameDayA,sameDayB],'2026-10-22');
 assert.equal(conflict.completeBars,2,'Both source bars can be individually valid');
@@ -411,7 +411,7 @@ console.log('Yahoo shared-source correlation and read-only missing-field range g
 
 // A provider may return a valid bar and an invalid bar for the same date.
 // Selecting the valid duplicate silently hides contradictory raw evidence.
-const mixedValid={date:'2026-10-22',open:100,high:110,low:90,close:105};
+const mixedValid={date:'2026-10-22',open:100,high:110,low:90,close:105,volume:20};
 const mixedInvalid={...mixedValid,high:99};
 const mixedObservation=describeExactDateSourceBars([mixedValid,mixedInvalid],'2026-10-22');
 assert.equal(mixedObservation.completeBars,1);
