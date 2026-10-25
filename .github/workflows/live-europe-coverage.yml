@@ -14,7 +14,7 @@ permissions:
 jobs:
   coverage:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     env:
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
@@ -23,6 +23,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Test MIC-safe Amsterdam week renderer and audit contract
+        run: |
+          node --check market-week-core.mjs
+          node --check amsterdam-week.js
+          node --check scripts/cloudflare/audit-amsterdam-week.mjs
+          node scripts/cloudflare/test-market-week-core.mjs
+      - name: Audit five Amsterdam sessions in public canonical history (read-only)
+        env:
+          KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+        run: node scripts/cloudflare/audit-amsterdam-week.mjs
       - name: Check API configuration
         id: config
         run: |
@@ -44,10 +54,11 @@ jobs:
           node scripts/cloudflare/europe-missing-history-inventory.mjs > research/output/audit/missing-history-log.txt
           node --input-type=module -e "import fs from 'node:fs';const r=JSON.parse(fs.readFileSync('research/output/europe-missing-history-inventory.json','utf8'));console.log('Ontbrekende historie:',r.count,JSON.stringify(r.byMarket));fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Ontbrekende Europese historie: '+r.count+' instrumenten\\n');"
       - uses: actions/upload-artifact@v4
-        if: steps.config.outputs.available == 'true'
+        if: always()
         with:
           name: live-europe-coverage
           path: |
+            research/output/audit/amsterdam-week-coverage.json
             research/output/audit/live-europe-coverage.json
             research/output/europe-stale-history-inventory.json
             research/output/europe-missing-history-inventory.json
