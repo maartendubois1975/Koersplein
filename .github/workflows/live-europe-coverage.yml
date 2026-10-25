@@ -6,6 +6,9 @@ on:
     paths:
       - '.github/workflows/live-europe-coverage.yml'
       - 'scripts/cloudflare/**'
+      - 'market-week-core.mjs'
+      - 'amsterdam-week.js'
+      - 'amsterdam.html'
       - 'config/europe-backfill-request.json'
       - 'data/markets.json'
       - 'data/euronext-*.json'
