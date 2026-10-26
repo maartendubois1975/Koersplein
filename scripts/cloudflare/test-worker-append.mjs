@@ -60,6 +60,9 @@ const completeEnv={FACTORY_TOKEN:'test-token',DB:{prepare(sql){return {args:[],b
  if(sql.includes('SUM(record_count)'))return {record_count:2,first_date:'2026-10-19',last_date:'2026-10-20'};
  if(sql.includes('FROM history_partitions'))return {object_key:'xams/2026.gz'};
  throw Error('Unexpected complete query '+sql);
+},async all(){
+ if(sql.includes('FROM history_partitions'))return {results:[{object_key:'xams/2026.gz'}]};
+ throw Error('Unexpected complete list query '+sql);
 },async run(){
  if(sql.includes('UPDATE history_status'))lastStatus=this.args[0];
  if(sql.includes('INSERT INTO latest_prices')){latestWrites++;latestDates.push(this.args[1]);}
@@ -84,3 +87,38 @@ completeResponse=await route(completeRequest(),completeEnv);
 assert.equal((await completeResponse.json()).status,'COMPLETE');
 assert.equal(latestDates.at(-1),'2026-10-23','Latest XAMS price must ignore foreign currency and current-day bars');
 console.log('XAMS append-only strict OHLCV, provisional cutoff, identity and honest COMPLETE gates PASS');
+
+// XAMS: a future-only partition must not hide the last real closed trading day.
+const partitionsByKey={
+ 'xams/2099.gz':[{date:'2099-01-01',open:10,high:12,low:9,close:11,volume:100,currency:'EUR'}],
+ 'xams/2026.gz':[{date:'2026-10-23',open:20,high:23,low:19,close:22,volume:250,currency:'EUR'}],
+ 'xams/2025.gz':[{date:'2025-12-30',open:8,high:9,low:7,close:8.5,volume:50,currency:'EUR'}]
+};
+let repairedLatest=null,latestUpsertSql=null;
+const partitionEnv={FACTORY_TOKEN:'test-token',DB:{prepare(sql){return {bind(...args){this.args=args;return this},
+ async first(){
+  if(sql.includes('FROM instruments i'))return {id:2,isin:'XAMS:NL0000852564',mic:'XAMS',ticker:'AALB',currency:'EUR'};
+  if(sql.includes('SUM(record_count)'))return {record_count:3,first_date:'2025-12-30',last_date:'2099-01-01'};
+  if(sql.includes('FROM history_partitions')&&sql.includes('period=?'))return {object_key:'xams/2026.gz'};
+  throw Error('Unexpected partition query '+sql);
+ },
+ async all(){
+  if(sql.includes('FROM history_partitions')&&sql.includes('ORDER BY period DESC'))return {results:[
+   {object_key:'xams/2099.gz'},{object_key:'xams/2026.gz'},{object_key:'xams/2025.gz'}]};
+  throw Error('Unexpected partition list query '+sql);
+ },
+ async run(){
+  if(sql.includes('INSERT INTO latest_prices')){repairedLatest=this.args[1];latestUpsertSql=sql;}
+  return {};
+ }};}},HISTORY:{async get(key){return {body:new Blob([gzipSync(partitionsByKey[key].map(x=>JSON.stringify(x)).join('\n')+'\n')]).stream()};}}};
+let partitionResult=await route(completeRequest(),partitionEnv);
+assert.equal(partitionResult.status,200);
+assert.equal(repairedLatest,'2026-10-23','Skip future-only latest partition and use real 2026 session');
+assert.ok(!latestUpsertSql.includes('WHERE latest_prices.trading_date<=excluded.trading_date'),
+ 'XAMS must repair previously stored provisional/future latest_prices rows');
+partitionsByKey['xams/2026.gz']=[{date:'2026-10-23',open:20,high:23,low:19,close:22,volume:250,currency:'USD'}];
+repairedLatest=null;
+partitionResult=await route(completeRequest(),partitionEnv);
+assert.equal(partitionResult.status,200);
+assert.equal(repairedLatest,'2025-12-30','Skip foreign-currency 2026 partition and fall back to last valid year');
+console.log('XAMS latest-price recovery across partitions, closed-day/currency validation and invalid future latest repair PASS');

@@ -281,15 +281,28 @@ async function route(request, env) {
       historyState=verifiedWeekSessions===AMSTERDAM_REFERENCE_WEEK.length?'COMPLETE':'PARTIAL';
     }
     await env.DB.prepare(`UPDATE history_status SET status=?,first_date=?,last_date=?,record_count=?,provider=?,storage_format='ndjson+gzip-v1',manifest_key=?,last_checked=?,error=NULL,updated_at=? WHERE instrument_id=?`).bind(historyState,coverage.first_date, coverage.last_date, coverage.record_count || 0, body.provider || target.provider || 'unknown', `history/v1/mic=${target.mic}/isin=${target.isin}/manifest.json`, now(), now(), target.id).run();
-    const last = await env.DB.prepare('SELECT object_key FROM history_partitions WHERE instrument_id=? ORDER BY period DESC LIMIT 1').bind(target.id).first();
-    if(last){
-      const bars=await gunzip(await env.HISTORY.get(last.object_key));
-      // Latest XAMS price must use the same currency/duplicate OHLCV gate as
-      // the public week. A provisional current-day legacy candle is not final.
-      const todayAmsterdam=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-      const eligibleDates=target.mic==='XAMS'?[...new Set(bars.map(item=>item.date).filter(date=>typeof date==='string'&&date<todayAmsterdam))]:[];
-      const bar=target.mic==='XAMS'?[...weekBars(bars,eligibleDates,target.currency).bars.values()].sort((a,b)=>a.date.localeCompare(b.date)).at(-1):bars.at(-1);
-      if(bar)await env.DB.prepare(`INSERT INTO latest_prices(instrument_id,trading_date,open,high,low,close,volume,adjusted_close,provider,imported_at) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(instrument_id) DO UPDATE SET trading_date=excluded.trading_date,open=excluded.open,high=excluded.high,low=excluded.low,close=excluded.close,volume=excluded.volume,adjusted_close=excluded.adjusted_close,provider=excluded.provider,imported_at=excluded.imported_at WHERE latest_prices.trading_date<=excluded.trading_date`).bind(target.id,bar.date,bar.open,bar.high,bar.low,bar.close,bar.volume,bar.adjustedClose,body.provider||'unknown',now()).run();
+    // A future-only, provisional or foreign-currency newest partition must
+    // not hide the last verified CLOSED XAMS bar from an earlier partition.
+    const xams=target.mic==='XAMS';
+    const partitions=xams
+      ? (await env.DB.prepare('SELECT object_key FROM history_partitions WHERE instrument_id=? ORDER BY period DESC').bind(target.id).all()).results
+      : [await env.DB.prepare('SELECT object_key FROM history_partitions WHERE instrument_id=? ORDER BY period DESC LIMIT 1').bind(target.id).first()].filter(Boolean);
+    const todayAmsterdam=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+    let latest=null;
+    for(const partition of partitions||[]){
+      const bars=await gunzip(await env.HISTORY.get(partition.object_key));
+      if(xams){
+        const eligibleDates=[...new Set(bars.map(item=>item.date).filter(date=>typeof date==='string'&&date<todayAmsterdam))];
+        latest=[...weekBars(bars,eligibleDates,target.currency).bars.values()].sort((a,b)=>a.date.localeCompare(b.date)).at(-1);
+      }else latest=bars.at(-1);
+      if(latest)break;
+    }
+    if(latest){
+      // Verified XAMS R2 history is authoritative: correct an older latest_prices
+      // row even if it incorrectly contains a later provisional/future date.
+      // Non-XAMS retains its original monotonic-update policy.
+      const updateGuard=xams?'':' WHERE latest_prices.trading_date<=excluded.trading_date';
+      await env.DB.prepare(`INSERT INTO latest_prices(instrument_id,trading_date,open,high,low,close,volume,adjusted_close,provider,imported_at) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(instrument_id) DO UPDATE SET trading_date=excluded.trading_date,open=excluded.open,high=excluded.high,low=excluded.low,close=excluded.close,volume=excluded.volume,adjusted_close=excluded.adjusted_close,provider=excluded.provider,imported_at=excluded.imported_at${updateGuard}`).bind(target.id,latest.date,latest.open,latest.high,latest.low,latest.close,latest.volume,latest.adjustedClose,body.provider||'unknown',now()).run();
     }
     return json({isin:target.isin,...coverage,status:historyState,verifiedWeekSessions});
   }
