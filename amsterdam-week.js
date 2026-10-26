@@ -6,6 +6,17 @@ const fmt=(value,currency)=>{const n=positiveNumber(value);if(n===null)return '�
 const signed=(value,digits=2)=>new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:digits,maximumFractionDigits:digits}).format(value);
 const change=(open,close,currency)=>{const d=sessionChange(open,close);if(!d)return '—';return signed(d.absolute,2)+' '+esc(currency||'EUR')+' / '+signed(d.percent,2)+'%';};
 const days=AMSTERDAM_REFERENCE_WEEK;
+// Previous *traded* close can cross a session only if the exchange explicitly
+// confirmed NO_TRADES. Never skip an invalid or unverified missing session:
+// doing so would fabricate an uninterrupted close-to-close return.
+const previousVerifiedClose=(row,index)=>{
+ for(let j=index-1;j>=0;j--){
+  const date=days[j],bar=row.bars.get(date);
+  if(bar)return bar.close;
+  if(!isNoTrade(row,date))break;
+ }
+ return null;
+};
 let snapshot=null,statusAudit=null;
 const isNoTrade=(row,date)=>!row.bars.has(date)&&verifiedNoTradeStatus(statusAudit,row.share,'XAMS',date,days);
 // Identical five-state precedence to the generic Amsterdam renderer. A verified
@@ -36,8 +47,8 @@ function render(){
     const label={invalid:'Ongeldige koers',stale:'Verouderde historie',missing:'Niet bevestigd'}[state];
     return '<td class="price" colspan="4"'+tag+' title="'+esc(reason)+'"><strong>'+label+'</strong><br><small>'+esc(reason)+'</small></td>';
    }
-   const previous=i>0?row.bars.get(days[i-1]):null;
-   return '<td class="price"'+tag+'>'+fmt(b.open,currency)+'</td><td class="price">'+fmt(b.close,currency)+'</td><td class="price">'+change(b.open,b.close,currency)+'</td><td class="price">'+(previous?change(previous.close,b.close,currency):'—')+'</td>';
+   const previousClose=previousVerifiedClose(row,i);
+   return '<td class="price"'+tag+'>'+fmt(b.open,currency)+'</td><td class="price">'+fmt(b.close,currency)+'</td><td class="price">'+change(b.open,b.close,currency)+'</td><td class="price">'+(previousClose!==null?change(previousClose,b.close,currency):'—')+'</td>';
   }).join('');
   const first=row.bars.get(days[0]),last=row.bars.get(days.at(-1));
   const weekly=first&&last?change(first.open,last.close,currency):'—';
@@ -56,7 +67,7 @@ function render(){
   }
   return '<li><strong>'+esc(date)+'</strong>: '+Object.entries(reasons).map(([reason,count])=>esc(reason)+' '+count).join(' · ')+'</li>';
  }).join('');
- target.innerHTML='<p><strong>'+explained+' van '+snapshot.coverage.catalog+'</strong> aandelen hebben vijf verklaarde handelsdagen (echte koers of gecontroleerd geen handel). '+snapshot.coverage.validSessions+' geldige koersdagen · '+statusCount+' dagen zonder handel · '+(snapshot.coverage.expectedSessions-snapshot.coverage.validSessions-statusCount)+' nog niet verklaard. '+totals+'.</p><p>Dag ± = slot minus opening; Slot t.o.v. vorig slot = dagslot minus slot van de vorige handelsdag (alleen wanneer beide geldig zijn). Week ± = vrijdagslot minus maandagopening. Geen handel wordt uitsluitend getoond bij expliciete gedateerde beursstatus; een nulvolume-referentiekoers is nooit een echte openings- of slotkoers. Historische koersen; bron en handelsdatum staan vermeld. <a href="https://github.com/maartendubois1975/Koersplein/actions/runs/40196069402" rel="noopener">Bronstatus-audit 25 oktober</a>.</p><details><summary>Ontbrekende handelsdagen en technische oorzaken</summary><ul>'+missingByDay+'</ul><p>ZERO_VOLUME_REFERENCE_BAR is geen bewezen handel. NO_MATCHING_MIC_TICKER_HISTORY betekent dat geen veilig gekoppelde beursnotering is gevonden. NO_VALID_STORED_BAR betekent dat voor deze datum geen geldige koers is opgeslagen. Dit is geen bewijs van NO_TRADES.</p></details><div class="table-wrap" style="overflow-x:auto"><table><thead>'+head+'</thead><tbody>'+rows+'</tbody></table></div><p>Resultaten zijn afhankelijk van bronbeschikbaarheid en rechten op herpublicatie. Niet beschikbare of conflicterende koersen worden niet geschat.</p>';
+ target.innerHTML='<p><strong>'+explained+' van '+snapshot.coverage.catalog+'</strong> aandelen hebben vijf verklaarde handelsdagen (echte koers of gecontroleerd geen handel). '+snapshot.coverage.validSessions+' geldige koersdagen · '+statusCount+' dagen zonder handel · '+(snapshot.coverage.expectedSessions-snapshot.coverage.validSessions-statusCount)+' nog niet verklaard. '+totals+'.</p><p>Dag ± = slot minus opening; Slot t.o.v. vorig slot = dagslot minus het laatst bevestigde eerdere slot; alleen officieel bevestigde dagen zonder handel mogen worden overgeslagen. Bij ongeldige of ontbrekende tussendagen tonen we geen rendement. Week ± = vrijdagslot minus maandagopening. Geen handel wordt uitsluitend getoond bij expliciete gedateerde beursstatus; een nulvolume-referentiekoers is nooit een echte openings- of slotkoers. Historische koersen; bron en handelsdatum staan vermeld. <a href="https://github.com/maartendubois1975/Koersplein/actions/runs/40196069402" rel="noopener">Bronstatus-audit 25 oktober</a>.</p><details><summary>Ontbrekende handelsdagen en technische oorzaken</summary><ul>'+missingByDay+'</ul><p>ZERO_VOLUME_REFERENCE_BAR is geen bewezen handel. NO_MATCHING_MIC_TICKER_HISTORY betekent dat geen veilig gekoppelde beursnotering is gevonden. NO_VALID_STORED_BAR betekent dat voor deze datum geen geldige koers is opgeslagen. Dit is geen bewijs van NO_TRADES.</p></details><div class="table-wrap" style="overflow-x:auto"><table><thead>'+head+'</thead><tbody>'+rows+'</tbody></table></div><p>Resultaten zijn afhankelijk van bronbeschikbaarheid en rechten op herpublicatie. Niet beschikbare of conflicterende koersen worden niet geschat.</p>';
 }
 async function start(){
  if(!target)return;
