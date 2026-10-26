@@ -25,6 +25,7 @@ on:
       - 'share.js'
       - '*.html'
       - 'scripts/cloudflare/**'
+      - 'cloudflare/worker.mjs'
       - 'scripts/research/**'
       - 'data/machine-pipeline.json'
       - '.github/workflows/universal-source-first.yml'

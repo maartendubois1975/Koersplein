@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/live-europe-coverage.yml'
       - 'scripts/cloudflare/**'
+      - 'cloudflare/worker.mjs'
       - 'market-week-core.mjs'
       - 'amsterdam-week.js'
       - 'amsterdam.html'
