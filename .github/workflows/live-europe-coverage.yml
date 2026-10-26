@@ -13,6 +13,9 @@ on:
       - 'config/europe-backfill-request.json'
       - 'data/markets.json'
       - 'data/euronext-*.json'
+      - 'data/amsterdam-no-trades-2026-10-19-23.json'
+      - 'scripts/history/official-daily-status.mjs'
+      - 'scripts/history/providers/euronext-live.mjs'
 permissions:
   contents: read
 concurrency:
@@ -21,7 +24,7 @@ concurrency:
 jobs:
   coverage:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     env:
       KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
       KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
