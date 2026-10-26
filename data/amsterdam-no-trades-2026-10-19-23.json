@@ -13,7 +13,29 @@
   "auditRun": "40196069402",
   "source": "euronext-live",
   "scope": "OFFICIAL_NO_TRADES_STATUS_ONLY_NO_PRICE_DATA",
-  "noTrades": {
+  "noTrades": {},
+  "tickers": {
+    "BMG7209L1000": "PPLAA",
+    "BMG7209L1182": "PPLAB",
+    "GB00B94QM994": "ECT",
+    "GB00BMXH3352": "MTRK",
+    "GG00BMB5XZ39": "CABLE",
+    "KYG137071075": "BACE",
+    "LU2290522684": "INPST",
+    "NL0000285278": "BEVER",
+    "NL0000336303": "PBH",
+    "NL0000378669": "PORF",
+    "NL0009822014": "NSE",
+    "NL0010556726": "HWK",
+    "NL0010661864": "VALUE",
+    "NL0010696704": "AMUND",
+    "NL0015000CG2": "NAI",
+    "NL0015000NM7": "QEV",
+    "NL0015118803": "PREVA",
+    "US69355L1098": "PPLA",
+    "VGG885761301": "AGIL"
+  },
+  "unverifiedNoTradeCandidates": {
     "VGG885761301": [
       "2026-10-19",
       "2026-10-20",
@@ -119,25 +141,5 @@
       "2026-10-21"
     ]
   },
-  "tickers": {
-    "BMG7209L1000": "PPLAA",
-    "BMG7209L1182": "PPLAB",
-    "GB00B94QM994": "ECT",
-    "GB00BMXH3352": "MTRK",
-    "GG00BMB5XZ39": "CABLE",
-    "KYG137071075": "BACE",
-    "LU2290522684": "INPST",
-    "NL0000285278": "BEVER",
-    "NL0000336303": "PBH",
-    "NL0000378669": "PORF",
-    "NL0009822014": "NSE",
-    "NL0010556726": "HWK",
-    "NL0010661864": "VALUE",
-    "NL0010696704": "AMUND",
-    "NL0015000CG2": "NAI",
-    "NL0015000NM7": "QEV",
-    "NL0015118803": "PREVA",
-    "US69355L1098": "PPLA",
-    "VGG885761301": "AGIL"
-  }
+  "note": "66 historical zero-volume reference-price classifications quarantined: no independent trade-count or complete-session evidence. Do not display as verified NO_TRADES until revalidated."
 }
