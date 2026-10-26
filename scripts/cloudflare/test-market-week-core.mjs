@@ -95,7 +95,19 @@ for(const [isin,dates] of Object.entries(statusAudit.noTrades)){
   counts[date]++;
  }
 }
-assert.deepEqual(counts,{'2026-10-19':13,'2026-10-20':13,'2026-10-21':16,'2026-10-22':11,'2026-10-23':13});
+assert.deepEqual(counts,Object.fromEntries(days.map(date=>[date,0])),'Unproven sessions must not be displayed as verified NO_TRADES');
+const quarantined=statusAudit.unverifiedNoTradeCandidates||{};
+const quarantineCounts=Object.fromEntries(days.map(date=>[date,0]));
+for(const [isin,dates] of Object.entries(quarantined)){
+ assert.match(isin,/^[A-Z]{2}[A-Z0-9]{10}$/);
+ assert.equal(new Set(dates).size,dates.length,'Duplicate quarantined date');
+ for(const date of dates){
+  assert.ok(days.includes(date),'Quarantine outside reference week');
+  assert.equal(verifiedNoTradeStatus(statusAudit,{isin,symbol:statusAudit.tickers[isin]},'XAMS',date,days),false,'Quarantined candidate cannot be verified');
+  quarantineCounts[date]++;
+ }
+}
+assert.deepEqual(quarantineCounts,{'2026-10-19':13,'2026-10-20':13,'2026-10-21':16,'2026-10-22':11,'2026-10-23':13},'Preserve all 66 candidates for independent review');
 assert.equal(verifiedNoTradeStatus(statusAudit,{isin:'VGG885761301',symbol:'REUSED'},'XAMS',days[0],days),false,'Never transfer a no-trade status to a different ticker');
 assert.equal(verifiedNoTradeStatus({...statusAudit,tickers:{}},{isin:'VGG885761301',symbol:statusAudit.tickers.VGG885761301},'XAMS',days[0],days),false,'Legacy ISIN-only audit must fail closed');
 assert.equal(verifiedNoTradeStatus(statusAudit,{isin:'VGG885761301',mic:'XBRU'},'XAMS',days[0],days),false,'Never borrow another MIC');
