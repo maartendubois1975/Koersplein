@@ -125,6 +125,8 @@ try{
  assert.equal(valid,expectedValid,'PUBLIC_OHLC_DIFFERS_FROM_WORKER');
  assert.equal(noTrade,expectedNoTradeTotal,'PUBLIC_NO_TRADES_DIFFERS_FROM_AUDIT');
  assert.equal(unresolved,620-expectedValid-expectedNoTradeTotal,'PUBLIC_MISSING_DIFFERS_FROM_WORKER');
+ console.log('XAMS_PUBLIC_CAPTURED_COVERAGE '+JSON.stringify({valid,expectedValid,perDay,
+  errors:Object.fromEntries([...new Set(measured.rows.map(r=>r.error).filter(Boolean))].map(error=>[error,measured.rows.filter(r=>r.error===error).length]))}));
  assert.ok(valid>=507,'PUBLIC_VALID_OHLC_REGRESSION');
  assert.ok(noTrade<=auditedNoTrade,'PUBLIC_NO_TRADE_NOT_AUDITED');
  const body=rendered.match(/<tbody>([\s\S]*?)<\/tbody>/)?.[1];

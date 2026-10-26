@@ -1,4 +1,4 @@
-import {manifestResolver,validTradedBar,sessionChange,collectMarketWeek,AMSTERDAM_REFERENCE_WEEK,verifiedNoTradeStatus} from './market-week-core.mjs?v=20261026xams-isin2';
+import {manifestResolver,validTradedBar,sessionChange,collectMarketWeek,AMSTERDAM_REFERENCE_WEEK,verifiedNoTradeStatus} from './market-week-core.mjs?v=20261026xams-retry1';
 const q=s=>document.querySelector(s),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const code=new URLSearchParams(location.search).get('market');let shares=[],prices=new Map(),market=null,amsterdamWeek=null,noTradesAudit=null;
 async function load(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);return r.json()}

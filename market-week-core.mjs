@@ -88,6 +88,18 @@ export function weekCoverage(rows,dates){
  }
  return {catalog:rows.length,complete,perDay,validSessions:Object.values(perDay).reduce((n,v)=>n+v.valid,0),expectedSessions:rows.length*dates.length};
 }
+// A transient Worker outage is not evidence that a completed XAMS candle is missing.
+async function fetchWeekHistory(fetchImpl,url,mic){
+ const attempts=String(mic).toUpperCase()==='XAMS'?3:1;
+ for(let attempt=0;attempt<attempts;attempt++){
+  try{
+   const response=await fetchImpl(url,{cache:'no-store',signal:AbortSignal.timeout(30000)});
+   if(response.ok||![429,500,502,503,504,520,522,524].includes(response.status)||attempt===attempts-1)return response;
+  }catch(error){if(attempt===attempts-1)throw error;}
+  await new Promise(resolve=>setTimeout(resolve,100*(attempt+1)));
+ }
+ throw Error('HISTORY_RETRY_EXHAUSTED');
+}
 export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetchImpl=globalThis.fetch,concurrency=6}){
  if(!Array.isArray(dates)||dates.length<1||dates.some(d=>!validDate(d))||new Set(dates).size!==dates.length)throw Error('INVALID_WEEK_DATES');
  if(!Array.isArray(catalog)||!mic||!/^https:\/\//.test(apiBase))throw Error('INVALID_WEEK_CONFIG');
@@ -107,7 +119,7 @@ export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetc
    try{
     // Cloudflare route matches literal MIC colon; %3A in the URL path produces 404.
     if(!/^[A-Z0-9][A-Z0-9:-]{2,31}$/.test(id)){row.error='INVALID_STORAGE_KEY';continue;}
-    const response=await fetchImpl(apiBase.replace(/\/$/,'')+'/api/history/'+encodeURIComponent(id).replace(/%3A/gi,':'),{cache:'no-store',signal:AbortSignal.timeout(30000)});
+    const response=await fetchWeekHistory(fetchImpl,apiBase.replace(/\/$/,'')+'/api/history/'+encodeURIComponent(id).replace(/%3A/gi,':'),mic);
     if(!response.ok){row.error='HISTORY_HTTP_'+response.status;continue;}
     const data=await response.json();
     if(String(data.instrument?.mic||'').toUpperCase()!==String(mic).toUpperCase()||
