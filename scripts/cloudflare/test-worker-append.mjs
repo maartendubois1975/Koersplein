@@ -52,7 +52,7 @@ assert.equal((await route(xamsRequest([traded],{ticker:'WRONG'}),xamsEnv)).statu
 assert.equal((await route(xamsRequest([traded],{appendOnly:false}),xamsEnv)).status,409);
 
 // The factory's COMPLETE flag must not describe incomplete XAMS week coverage.
-let lastStatus=null,latestWrites=0;
+let lastStatus=null,latestWrites=0,latestDates=[];
 const completeBars=[{date:'2026-10-19',open:10,high:12,low:9,close:11,volume:100},
  {date:'2026-10-20',open:10,high:12,low:9,close:11,volume:100}];
 const completeEnv={FACTORY_TOKEN:'test-token',DB:{prepare(sql){return {args:[],bind(...args){this.args=args;return this},async first(){
@@ -62,7 +62,7 @@ const completeEnv={FACTORY_TOKEN:'test-token',DB:{prepare(sql){return {args:[],b
  throw Error('Unexpected complete query '+sql);
 },async run(){
  if(sql.includes('UPDATE history_status'))lastStatus=this.args[0];
- if(sql.includes('INSERT INTO latest_prices'))latestWrites++;
+ if(sql.includes('INSERT INTO latest_prices')){latestWrites++;latestDates.push(this.args[1]);}
  return {};
 }};}},HISTORY:{async get(){return {body:new Blob([gzipSync(completeBars.map(x=>JSON.stringify(x)).join('\n')+'\n')]).stream()};}}};
 const completeRequest=()=>new Request('https://test.invalid/api/factory/history/XAMS:NL0000852564/complete',{method:'POST',headers:{authorization:'Bearer test-token','content-type':'application/json'},body:JSON.stringify({provider:'test'})});
@@ -75,4 +75,12 @@ completeBars.push(...['2026-10-21','2026-10-22','2026-10-23'].map(date=>({date,o
 completeResponse=await route(completeRequest(),completeEnv);
 assert.equal((await completeResponse.json()).status,'COMPLETE');
 assert.equal(lastStatus,'COMPLETE');
+// A legacy foreign-currency bar and an in-progress Amsterdam session must
+// never replace the latest verified, closed XAMS session.
+const todayAmsterdam=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+completeBars.push({date:'2026-10-24',open:10,high:12,low:9,close:11,volume:100,currency:'USD'});
+completeBars.push({date:todayAmsterdam,open:10,high:12,low:9,close:11,volume:100,currency:'EUR'});
+completeResponse=await route(completeRequest(),completeEnv);
+assert.equal((await completeResponse.json()).status,'COMPLETE');
+assert.equal(latestDates.at(-1),'2026-10-23','Latest XAMS price must ignore foreign currency and current-day bars');
 console.log('XAMS append-only strict OHLCV, provisional cutoff, identity and honest COMPLETE gates PASS');

@@ -284,7 +284,11 @@ async function route(request, env) {
     const last = await env.DB.prepare('SELECT object_key FROM history_partitions WHERE instrument_id=? ORDER BY period DESC LIMIT 1').bind(target.id).first();
     if(last){
       const bars=await gunzip(await env.HISTORY.get(last.object_key));
-      const bar=target.mic==='XAMS'?bars.filter(item=>!tradedBarDefect(item)).at(-1):bars.at(-1);
+      // Latest XAMS price must use the same currency/duplicate OHLCV gate as
+      // the public week. A provisional current-day legacy candle is not final.
+      const todayAmsterdam=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+      const eligibleDates=target.mic==='XAMS'?[...new Set(bars.map(item=>item.date).filter(date=>typeof date==='string'&&date<todayAmsterdam))]:[];
+      const bar=target.mic==='XAMS'?[...weekBars(bars,eligibleDates,target.currency).bars.values()].sort((a,b)=>a.date.localeCompare(b.date)).at(-1):bars.at(-1);
       if(bar)await env.DB.prepare(`INSERT INTO latest_prices(instrument_id,trading_date,open,high,low,close,volume,adjusted_close,provider,imported_at) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(instrument_id) DO UPDATE SET trading_date=excluded.trading_date,open=excluded.open,high=excluded.high,low=excluded.low,close=excluded.close,volume=excluded.volume,adjusted_close=excluded.adjusted_close,provider=excluded.provider,imported_at=excluded.imported_at WHERE latest_prices.trading_date<=excluded.trading_date`).bind(target.id,bar.date,bar.open,bar.high,bar.low,bar.close,bar.volume,bar.adjustedClose,body.provider||'unknown',now()).run();
     }
     return json({isin:target.isin,...coverage,status:historyState,verifiedWeekSessions});
