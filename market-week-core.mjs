@@ -118,7 +118,9 @@ export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetc
     // Legacy keys are accepted only when explicitly linked by the catalog.
     const storedIsin=String(data.instrument?.isin||'').trim().toUpperCase();
     const expectedIsin=String(share.isin||'').trim().toUpperCase();
-    if(storedIsin&&![expectedIsin,String(mic).toUpperCase()+':'+expectedIsin,String(id).toUpperCase()].includes(storedIsin)){
+    // Missing ISIN is not a verified listing identity. MIC + ticker can be
+    // reused by another security, so fail closed even for legacy storage keys.
+    if(!storedIsin||![expectedIsin,String(mic).toUpperCase()+':'+expectedIsin,String(id).toUpperCase()].includes(storedIsin)){
      row.error='HISTORY_ISIN_IDENTITY_MISMATCH';continue;
     }
     const storedCurrency=String(data.instrument?.currency||'').trim().toUpperCase();

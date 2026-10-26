@@ -43,7 +43,7 @@ const calls=[];
 const fetchImpl=async url=>{
  calls.push(url);
  const id=decodeURIComponent(url.split('/').at(-1));
- return {ok:true,json:async()=>({instrument:{mic:'XAMS',symbol:id==='XAMS:NL111'?'AAA':'BBB',currency:'EUR'},provider:{name:'fixture'},bars:id==='XAMS:NL111'?days.map(d=>good(d)):days.slice(0,4).map(d=>good(d))})};
+ return {ok:true,json:async()=>({instrument:{isin:id,mic:'XAMS',symbol:id==='XAMS:NL111'?'AAA':'BBB',currency:'EUR'},provider:{name:'fixture'},bars:id==='XAMS:NL111'?days.map(d=>good(d)):days.slice(0,4).map(d=>good(d))})};
 };
 const actual=await collectMarketWeek({catalog:shares,manifest,apiBase:'https://api.example',mic:'XAMS',dates:days,fetchImpl,concurrency:2});
 assert.equal(actual.coverage.catalog,2);
@@ -61,6 +61,9 @@ assert.equal(mismatch.rows[0].error,'HISTORY_LISTING_IDENTITY_MISMATCH');
 const identityConflict=await collectMarketWeek({catalog:[shares[0]],manifest,apiBase:'https://api.example',mic:'XAMS',dates:days,fetchImpl:async()=>({ok:true,json:async()=>({instrument:{isin:'XAMS:NL999',mic:'XAMS',symbol:'AAA',currency:'EUR'},bars:days.map(d=>good(d))})})});
 assert.equal(identityConflict.coverage.validSessions,0,'Ticker reuse must not import another ISIN');
 assert.equal(identityConflict.rows[0].error,'HISTORY_ISIN_IDENTITY_MISMATCH');
+const missingStoredIsin=await collectMarketWeek({catalog:[shares[0]],manifest,apiBase:'https://api.example',mic:'XAMS',dates:days,fetchImpl:async()=>({ok:true,json:async()=>({instrument:{mic:'XAMS',symbol:'AAA',currency:'EUR'},bars:days.map(d=>good(d))})})});
+assert.equal(missingStoredIsin.coverage.validSessions,0,'Missing history ISIN must never be accepted on ticker alone');
+assert.equal(missingStoredIsin.rows[0].error,'HISTORY_ISIN_IDENTITY_MISMATCH');
 const currencyConflict=await collectMarketWeek({catalog:[{...shares[0],currency:'EUR'}],manifest,apiBase:'https://api.example',mic:'XAMS',dates:days,fetchImpl:async()=>({ok:true,json:async()=>({instrument:{isin:'XAMS:NL111',mic:'XAMS',symbol:'AAA',currency:'USD'},bars:days.map(d=>good(d))})})});
 assert.equal(currencyConflict.coverage.validSessions,0,'Conflicting trading currency must not appear as EUR');
 assert.equal(currencyConflict.rows[0].error,'HISTORY_CURRENCY_MISMATCH');
