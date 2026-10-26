@@ -51,6 +51,29 @@ assert.equal(xamsWritten[1].volume,150,'Append only a verified traded bar');
 assert.equal((await route(xamsRequest([traded],{ticker:'WRONG'}),xamsEnv)).status,422);
 assert.equal((await route(xamsRequest([traded],{appendOnly:false}),xamsEnv)).status,409);
 
+ 
+// Regression: an append-only write must not collapse two conflicting legacy
+// rows on the same date. Those duplicates must remain visible to weekBars()
+// as an INVALID session, not silently become a fabricated valid close.
+const duplicateLegacy={...xamsExisting[0],close:10.75,volume:0,legacyAuditTag:'preserve-me'};
+xamsExisting.push(duplicateLegacy);
+let replayResponse=await route(xamsRequest([{...xamsExisting[0],close:999}]),xamsEnv);
+assert.equal(replayResponse.status,200);
+assert.equal((await replayResponse.json()).unchanged,true,'Duplicate-only replay must not rewrite R2');
+assert.equal(xamsWrites,1,'No R2 write for legacy duplicate-only replay');
+assert.equal(xamsUpdates,1,'No D1 write for legacy duplicate-only replay');
+const nextTraded={...traded,date:'2026-10-21'};
+const appendedResponse=await route(xamsRequest([nextTraded]),xamsEnv);
+assert.equal(appendedResponse.status,200);
+assert.equal(xamsWrites,2,'Exactly one R2 write for a genuinely new session');
+assert.equal(xamsUpdates,2,'Exactly one D1 write for a genuinely new session');
+assert.equal(xamsWritten.length,3,'Both legacy duplicate rows must survive the append');
+assert.deepEqual(xamsWritten.filter(x=>x.date==='2026-10-19'),xamsExisting,
+ 'Do not normalize, drop or overwrite conflicting legacy rows');
+assert.equal(xamsWritten[2].date,'2026-10-21','Only the new closed trading day may be added');
+console.log('XAMS append-only preserves duplicate-date conflicts and raw legacy evidence PASS');
+
+
 // The factory's COMPLETE flag must not describe incomplete XAMS week coverage.
 let lastStatus=null,latestWrites=0,latestDates=[];
 const completeBars=[{date:'2026-10-19',open:10,high:12,low:9,close:11,volume:100},

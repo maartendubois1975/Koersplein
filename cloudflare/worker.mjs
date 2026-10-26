@@ -323,5 +323,22 @@ export default {
   scheduled(event, env, ctx) { ctx.waitUntil(scheduled(env)); }
 };
 
-export function mergeHistoryPartition(existing,incoming,appendOnly=false){return appendOnly?merge(incoming,existing):merge(existing,incoming);}
+export function mergeHistoryPartition(existing,incoming,appendOnly=false){
+  if(!appendOnly)return merge(existing,incoming);
+  // Preserve ALL legacy rows verbatim, including same-date conflicts and
+  // incomplete OHLC. Deduplicating or normalizing stored rows would silently
+  // erase evidence and could convert a quarantined session into a valid one.
+  const stored=Array.isArray(existing)?existing:[];
+  const present=new Set(stored.map(bar=>bar.date));
+  const additions=[];
+  for(const bar of Array.isArray(incoming)?incoming:[]){
+    if(present.has(bar.date))continue;
+    present.add(bar.date);
+    additions.push(normalize(bar));
+  }
+  // A replay must be a true no-op even when legacy storage is unsorted.
+  if(!additions.length)return stored;
+  // Stable sort retains original relative order for conflicting legacy dates.
+  return [...stored,...additions].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+}
 export { merge, normalize, route };
