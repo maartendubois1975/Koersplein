@@ -10,7 +10,11 @@ const dates=AMSTERDAM_REFERENCE_WEEK,cutoff=dates.at(-1);
 export function classifyOfficialSession(status,share,date){
  if(!status)return 'NO_OFFICIAL_SESSION_EVIDENCE';
  if(status.date!==date||status.mic!=='XAMS'||String(status.isin||'').toUpperCase()!==String(share.isin||'').toUpperCase())return 'OFFICIAL_IDENTITY_OR_DATE_MISMATCH';
- // Zero volume alone is never a no-trade certificate. Demand explicit, dated\n // complete-session transaction evidence from the approved XAMS source.\n if(status.status==='NO_TRADES'&&status.volume===0&&status.trades===0&&\n    status.provider==='euronext-live'&&status.verification==='COMPLETE_OFFICIAL_SESSION_TRADE_COUNT'&&\n    typeof status.sourceUrl==='string'&&status.sourceUrl.startsWith('https://live.euronext.com/'))return 'OFFICIAL_NO_TRADES';
+ // Zero volume alone is never a no-trade certificate. Demand explicit, dated
+ // complete-session transaction evidence from the approved XAMS source.
+ if(status.status==='NO_TRADES'&&status.volume===0&&status.trades===0&&
+    status.provider==='euronext-live'&&status.verification==='COMPLETE_OFFICIAL_SESSION_TRADE_COUNT'&&
+    typeof status.sourceUrl==='string'&&status.sourceUrl.startsWith('https://live.euronext.com/'))return 'OFFICIAL_NO_TRADES';
  if(status.status==='TRADED'&&validTradedBar(status.bar)&&status.bar.date===date)return 'OFFICIAL_TRADED_CANDIDATE';
  return 'OFFICIAL_UNVERIFIED_STATUS';
 }
@@ -18,7 +22,8 @@ if(process.argv.includes('--self-test')){
  const share={isin:'NL0000000001'},date=dates[0],bar={date,open:10,high:11,low:9,close:10.5,volume:100};
  assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'TRADED',bar},share,date),'OFFICIAL_TRADED_CANDIDATE');
  assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'TRADED',bar:{...bar,volume:0}},share,date),'OFFICIAL_UNVERIFIED_STATUS');
- assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'NO_TRADES',volume:0,trades:0},share,date),'OFFICIAL_UNVERIFIED_STATUS');\n assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'NO_TRADES',volume:0,trades:0,provider:'euronext-live',verification:'COMPLETE_OFFICIAL_SESSION_TRADE_COUNT',sourceUrl:'https://live.euronext.com/official-session'},share,date),'OFFICIAL_NO_TRADES');
+ assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'NO_TRADES',volume:0,trades:0},share,date),'OFFICIAL_UNVERIFIED_STATUS');
+ assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'NO_TRADES',volume:0,trades:0,provider:'euronext-live',verification:'COMPLETE_OFFICIAL_SESSION_TRADE_COUNT',sourceUrl:'https://live.euronext.com/official-session'},share,date),'OFFICIAL_NO_TRADES');
  assert.equal(classifyOfficialSession({date,mic:'XBRU',isin:share.isin,status:'NO_TRADES',volume:0,trades:0},share,date),'OFFICIAL_IDENTITY_OR_DATE_MISMATCH');
  assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'NO_TRADES',volume:0,trades:null},share,date),'OFFICIAL_UNVERIFIED_STATUS');
  let attempts=0;
