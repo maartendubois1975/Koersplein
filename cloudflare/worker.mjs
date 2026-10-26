@@ -277,7 +277,7 @@ async function route(request, env) {
       // The fixed Amsterdam reference week is the only scope certified here.
       const reference=await env.DB.prepare('SELECT object_key FROM history_partitions WHERE instrument_id=? AND period=?').bind(target.id,'2026').first();
       const bars=reference?await gunzip(await env.HISTORY.get(reference.object_key)):[];
-      verifiedWeekSessions=weekBars(bars,AMSTERDAM_REFERENCE_WEEK).bars.size;
+      verifiedWeekSessions=weekBars(bars,AMSTERDAM_REFERENCE_WEEK,target.currency).bars.size;
       historyState=verifiedWeekSessions===AMSTERDAM_REFERENCE_WEEK.length?'COMPLETE':'PARTIAL';
     }
     await env.DB.prepare(`UPDATE history_status SET status=?,first_date=?,last_date=?,record_count=?,provider=?,storage_format='ndjson+gzip-v1',manifest_key=?,last_checked=?,error=NULL,updated_at=? WHERE instrument_id=?`).bind(historyState,coverage.first_date, coverage.last_date, coverage.record_count || 0, body.provider || target.provider || 'unknown', `history/v1/mic=${target.mic}/isin=${target.isin}/manifest.json`, now(), now(), target.id).run();

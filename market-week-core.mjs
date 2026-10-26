@@ -14,6 +14,7 @@ export function positiveNumber(value){
 }
 export function tradedBarDefect(bar){
  if(!bar||!validDate(bar.date))return 'INVALID_SESSION_DATE';
+ if(bar.currency!==undefined&&bar.currency!==null&&bar.currency!==''&&!/^[A-Za-z]{3}$/.test(String(bar.currency)))return 'INVALID_BAR_CURRENCY';
  const [open,high,low,close]=['open','high','low','close'].map(k=>positiveNumber(bar[k]));
  if([open,high,low,close].some(v=>v===null)||high<Math.max(open,close)||low>Math.min(open,close))return 'INCOMPLETE_OR_INVALID_OHLC';
  if(bar.volume===0||bar.volume==='0')return 'ZERO_VOLUME_REFERENCE_BAR';
@@ -51,7 +52,7 @@ export function manifestResolver(manifest,mic){
   return id&&(id===official||id===venue+':'+official||id===share.legacyStorageIsin)?id:null;
  };
 }
-export function weekBars(bars,dates){
+export function weekBars(bars,dates,expectedCurrency=null){
  const expected=new Set(dates),groups=new Map();
  for(const bar of Array.isArray(bars)?bars:[]){
   if(!expected.has(bar?.date))continue;
@@ -60,7 +61,13 @@ export function weekBars(bars,dates){
  }
  const result=new Map(),conflicts=[];
  for(const [date,items] of groups){
-  const defects=items.map(tradedBarDefect).filter(Boolean);
+  // Reject a per-bar trading currency that contradicts the verified instrument.
+  // Older bars with no currency field retain the instrument-level currency gate.
+  const currency=String(expectedCurrency||'').trim().toUpperCase();
+  const defects=items.map(bar=>tradedBarDefect(bar)||(
+   currency&&bar.currency!==undefined&&bar.currency!==null&&bar.currency!==''&&
+   String(bar.currency).trim().toUpperCase()!==currency?'BAR_CURRENCY_MISMATCH':null
+  )).filter(Boolean);
   if(defects.length){conflicts.push({date,reason:new Set(defects).size===1?defects[0]:'MIXED_INVALID_BAR_TYPES'});continue;}
   const signatures=new Set(items.map(bar=>JSON.stringify(['open','high','low','close','volume'].map(k=>positiveNumber(bar[k])))));
   if(signatures.size!==1){conflicts.push({date,reason:'CONFLICTING_DUPLICATES'});continue;}
@@ -121,7 +128,7 @@ export async function collectMarketWeek({catalog,manifest,apiBase,mic,dates,fetc
      row.error='HISTORY_CURRENCY_MISMATCH';continue;
     }
     row.lastStoredDate=validDate(data.coverage?.lastDate)?data.coverage.lastDate:null;
-    const found=weekBars(data.bars,dates);row.bars=found.bars;row.conflicts=found.conflicts;
+    const found=weekBars(data.bars,dates,expectedCurrency);row.bars=found.bars;row.conflicts=found.conflicts;
     row.provider=data.provider?.name||null;row.currency=data.instrument?.currency||row.currency;
    }catch(e){row.error=e?.name==='TimeoutError'?'HISTORY_TIMEOUT':'HISTORY_FETCH_ERROR';}
   }

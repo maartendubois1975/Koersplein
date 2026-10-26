@@ -5,9 +5,9 @@ const html=await readFile(new URL('../../market.html',import.meta.url),'utf8');
 const plan=JSON.parse(await readFile(new URL('../../data/world-fill-plan.json',import.meta.url),'utf8'));
 assert.equal(plan.markets.find(x=>x.mic==='XAMS')?.state,'INCOMPLETE',
  'XAMS must not claim COMPLETE while the fixed 2026-10-19..23 week still has 47 unresolved sessions');
-assert.match(html,/generic-market\.js\?v=20261025xams-week3/,'Browser must fetch updated JS');
+assert.match(html,/generic-market\.js\?v=20261026xams-currency1/,'Browser must fetch updated JS');
 const browserJs=await readFile(new URL('../../generic-market.js',import.meta.url),'utf8');
-assert.match(browserJs,/market-week-core\.mjs\?v=20261025xams-week3/,'Browser must fetch the updated shared OHLCV validator');
+assert.match(browserJs,/market-week-core\.mjs\?v=20261026xams-currency1/,'Browser must fetch the updated shared OHLCV validator');
 const nodes=new Map();
 globalThis.document={querySelector(selector){
  if(!nodes.has(selector))nodes.set(selector,{value:'',textContent:'',innerHTML:'',addEventListener(){}});
