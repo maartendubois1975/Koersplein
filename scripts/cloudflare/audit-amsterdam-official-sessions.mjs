@@ -7,6 +7,13 @@ import {AMSTERDAM_REFERENCE_WEEK,collectMarketWeek,validTradedBar} from '../../m
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {fetchXamsManifest} from './xams-manifest.mjs';
 const dates=AMSTERDAM_REFERENCE_WEEK,cutoff=dates.at(-1);
+// Match both public Amsterdam renderers exactly: an older lastDate is STALE,
+// not MISSING. Invalid daily bars always take precedence over staleness.
+export function classifyStoredGap(row,date){
+ if(row.conflicts?.some(conflict=>conflict.date===date))return 'INVALID';
+ if(row.lastStoredDate&&row.lastStoredDate<date&&!row.error)return 'STALE';
+ return 'MISSING';
+}
 export function classifyOfficialSession(status,share,date){
  if(!status)return 'NO_OFFICIAL_SESSION_EVIDENCE';
  if(status.date!==date||status.mic!=='XAMS'||String(status.isin||'').toUpperCase()!==String(share.isin||'').toUpperCase())return 'OFFICIAL_IDENTITY_OR_DATE_MISMATCH';
@@ -20,6 +27,10 @@ export function classifyOfficialSession(status,share,date){
 }
 if(process.argv.includes('--self-test')){
  const share={isin:'NL0000000001'},date=dates[0],bar={date,open:10,high:11,low:9,close:10.5,volume:100};
+ assert.equal(classifyStoredGap({conflicts:[],lastStoredDate:'2026-10-22',error:null},'2026-10-23'),'STALE');
+ assert.equal(classifyStoredGap({conflicts:[{date:'2026-10-23'}],lastStoredDate:'2026-10-22',error:null},'2026-10-23'),'INVALID');
+ assert.equal(classifyStoredGap({conflicts:[],lastStoredDate:null,error:'NO_MATCHING_MIC_TICKER_HISTORY'},'2026-10-23'),'MISSING');
+ assert.equal(classifyStoredGap({conflicts:[],lastStoredDate:'2026-10-22',error:'HISTORY_FETCH_ERROR'},'2026-10-23'),'MISSING');
  assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'TRADED',bar},share,date),'OFFICIAL_TRADED_CANDIDATE');
  assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'TRADED',bar:{...bar,volume:0}},share,date),'OFFICIAL_UNVERIFIED_STATUS');
  assert.equal(classifyOfficialSession({date,mic:'XAMS',isin:share.isin,status:'NO_TRADES',volume:0,trades:0},share,date),'OFFICIAL_UNVERIFIED_STATUS');
@@ -52,10 +63,10 @@ if(process.argv.includes('--self-test')){
   while(cursor<tasks.length){
    const index=cursor++,{row,date}=tasks[index];
    const storedReason=row.error||row.conflicts.find(x=>x.date===date)?.reason||'NO_VALID_STORED_BAR';
-   const invalid=Boolean(row.conflicts.some(x=>x.date===date))||/^(HISTORY_CURRENCY_MISMATCH|HISTORY_IDENTITY_MISMATCH)$/.test(storedReason);
+   const storedStatus=classifyStoredGap(row,date);
    const listing=currentListings.get(row.share.isin+'|'+row.share.symbol);
    const record={date,mic:'XAMS',isin:row.share.isin,ticker:row.share.symbol,currency:row.currency||null,
-    storageId:row.storageId||null,storedReason,storedStatus:invalid?'INVALID':'MISSING',
+    storageId:row.storageId||null,lastStoredDate:row.lastStoredDate||null,storedReason,storedStatus,
     unverifiedNoTradeCandidate:(quarantine.unverifiedNoTradeCandidates?.[row.share.isin]||[]).includes(date),
     currentMicEvidence:micEvidence.completeSourceSnapshot?(listing?.classification||'NO_CURRENT_DIRECTORY_MATCH'):'SOURCE_UNAVAILABLE',
     historicalListingAsOfDate:'UNVERIFIED',
@@ -76,7 +87,10 @@ if(process.argv.includes('--self-test')){
  const perDay=Object.fromEntries(dates.map(date=>{
   const items=results.filter(r=>r.date===date),statuses={};
   for(const r of items)statuses[r.classification]=(statuses[r.classification]||0)+1;
-  return [date,{storedValid:stored.coverage.perDay[date].valid,storedMissing:items.length,statuses}];
+  return [date,{storedValid:stored.coverage.perDay[date].valid,storedUnresolved:items.length,
+   storedInvalid:items.filter(item=>item.storedStatus==='INVALID').length,
+   storedStale:items.filter(item=>item.storedStatus==='STALE').length,
+   storedMissing:items.filter(item=>item.storedStatus==='MISSING').length,statuses}];
  }));
  const generatedAt=new Date().toISOString();
  const totalUnverified=results.filter(r=>r.classification!=='OFFICIAL_NO_TRADES').length;
@@ -85,10 +99,16 @@ if(process.argv.includes('--self-test')){
   officialTradedCandidates:results.filter(r=>r.classification==='OFFICIAL_TRADED_CANDIDATE').length,
   unverifiedNoTradeCandidates:results.filter(r=>r.unverifiedNoTradeCandidate).length,
   invalidStored:results.filter(r=>r.storedStatus==='INVALID').length,
+  staleStored:results.filter(r=>r.storedStatus==='STALE').length,
   missingStored:results.filter(r=>r.storedStatus==='MISSING').length,
   newlyImportedBars:0};
  assert.equal(summary.storedValid+results.length,summary.expected,'XAMS_GAP_INVENTORY_NOT_EXHAUSTIVE');
- const csvColumns=['date','mic','isin','ticker','currency','storageId','storedStatus','storedReason',
+ assert.equal(summary.invalidStored+summary.staleStored+summary.missingStored,results.length,'XAMS_GAP_STATUSES_NOT_PARTITIONED');
+ for(const date of dates){
+  const day=perDay[date];
+  assert.equal(day.storedInvalid+day.storedStale+day.storedMissing,day.storedUnresolved,'XAMS_DAY_STATUSES_NOT_PARTITIONED '+date);
+ }
+ const csvColumns=['date','mic','isin','ticker','currency','storageId','lastStoredDate','storedStatus','storedReason',
   'unverifiedNoTradeCandidate','currentMicEvidence','historicalListingAsOfDate','classification',
   'officialSourceTradedCandidate','positiveTradedVolume','source','sourceUrl','volume','redistributionRights','safeImport'];
  const csvCell=value=>'"'+String(value??'').replace(/"/g,'""')+'"';
