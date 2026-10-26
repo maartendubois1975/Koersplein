@@ -2,6 +2,8 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 const html=await readFile(new URL('../../market.html',import.meta.url),'utf8');
+const amsterdamHtml=await readFile(new URL('../../amsterdam.html',import.meta.url),'utf8');
+assert.match(amsterdamHtml,/amsterdam-week\.js\?v=20261026xams-prevclose3/,'Amsterdam detail page must load the fixed previous-close renderer');
 const plan=JSON.parse(await readFile(new URL('../../data/world-fill-plan.json',import.meta.url),'utf8'));
 assert.equal(plan.markets.find(x=>x.mic==='XAMS')?.state,'INCOMPLETE',
  'XAMS must not claim COMPLETE while the fixed 2026-10-19..23 week still has 47 unresolved sessions');
@@ -66,6 +68,9 @@ console.log('Public Amsterdam: five sessions, MIC+ISIN+ticker+currency, audited 
 histories['XAMS:NL0000852564'].bars=[
  bar(dates[0]),{...bar(dates[1]),open:102,close:108},bar(dates[2],0)
 ];
+// ABN has a verified NO_TRADES Tuesday followed by a real Wednesday trade.
+// Wednesday's previous close is Monday's close, not Tuesday's nonexistent close.
+histories['XAMS:NL0011540547'].bars.push({...bar(dates[2]),open:100,close:108});
 const weekTarget={innerHTML:'',textContent:''};
 const weekCount={textContent:''};
 const weekSearch={value:'',addEventListener(){}};
@@ -79,12 +84,16 @@ for(let i=0;i<100&&!weekTarget.innerHTML.includes('<table>');i++)
 const weekOutput=weekTarget.innerHTML;
 assert.match(weekOutput,/Slot t\.o\.v\. vorig slot/,'The second delta must be close-to-previous-close');
 assert.match(weekOutput,/\+3,00 EUR \/ \+2,86%/,'Close 108 versus previous close 105 is +3 (+2.86%), not the opening gap');
+const abnRow=weekOutput.split('</tr>').find(x=>x.includes('>ABN · '));
+assert.ok(abnRow,'ABN row missing');
+assert.match(abnRow,/\+3,00 EUR \/ \+2,86%/,'An officially confirmed NO_TRADES session must not break previous-close return');
+assert.match(abnRow,/2026-10-23[^]*?<td class="price">—<\/td>/,'Unverified intervening Thursday must block Friday previous-close return');
 const sessions=[...weekOutput.matchAll(/data-session-date="(2026-10-\d{2})" data-session-status="(valid|noTrades|invalid|stale|missing)"/g)];
 assert.equal(sessions.length,15,'Every share/date needs one explicit public status');
 const statusCounts=sessions.reduce((o,m)=>(o[m[2]]=(o[m[2]]||0)+1,o),{});
-assert.deepEqual(statusCounts,{valid:4,invalid:1,stale:2,noTrades:1,missing:7},
+assert.deepEqual(statusCounts,{valid:5,invalid:1,stale:2,noTrades:1,missing:6},
  'Public status partition must match the generic renderer for the same fixture');
 for(const statusLabel of ['Ongeldige koers','Verouderde historie','Niet bevestigd','Geen handel'])
  assert.ok(weekOutput.includes(statusLabel),'Explicit missing-session classification: '+statusLabel);
 assert.doesNotMatch(weekOutput,/€\s*0,00/,'Missing sessions must not be zero-priced');
-console.log('Amsterdam detail page: five explicit session states, true previous-close return and no synthetic prices PASS');
+console.log('Amsterdam detail page: five explicit session states, previous-close through official NO_TRADES only, no synthetic prices PASS');
