@@ -256,7 +256,7 @@ async function route(request, env) {
           return json({error:'XAMS_LISTING_IDENTITY_MISMATCH',field},422);
       }
     }
-    const bars = mergeHistoryPartition(existing,body.bars||[],body.appendOnly===true).filter((bar) => bar.date.startsWith(period));
+    const bars = mergeHistoryPartition(existing,body.bars||[],body.appendOnly===true,target.mic==='XAMS').filter((bar) => bar.date.startsWith(period));
     if (!bars.length) return json({ error: 'Lege partitie' }, 400);
     // Append-only replays cannot change an existing value. Avoid compression,
     // R2 writes and D1 updates when every supplied date is already present.
@@ -323,8 +323,9 @@ export default {
   scheduled(event, env, ctx) { ctx.waitUntil(scheduled(env)); }
 };
 
-export function mergeHistoryPartition(existing,incoming,appendOnly=false){
-  if(!appendOnly)return merge(existing,incoming);
+export function mergeHistoryPartition(existing,incoming,appendOnly=false,preserveXamsLegacy=false){
+  // Other MICs retain their pre-existing merge policy until separately audited.
+  if(!appendOnly||!preserveXamsLegacy)return appendOnly?merge(incoming,existing):merge(existing,incoming);
   // Preserve ALL legacy rows verbatim, including same-date conflicts and
   // incomplete OHLC. Deduplicating or normalizing stored rows would silently
   // erase evidence and could convert a quarantined session into a valid one.
