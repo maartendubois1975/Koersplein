@@ -123,7 +123,10 @@ export async function officialDailyStatus(instrument,date){
   const row=snapshot.rows.find(x=>x.date===date);
   if(!row)return null;
   const common={date,mic,isin,provider:'euronext-live',sourceUrl:snapshot.sourceUrl,retrievedAt:new Date().toISOString(),lastTradeDate:null};
-  if(row.volume===0&&row.open===null&&row.close>0)return {...common,status:'NO_TRADES',trades:0,volume:0};
+  // A zero-volume reference close with no opening price is not independent
+  // evidence of zero executed trades. Fail closed until a dated official
+  // transaction count or complete-session record establishes NO_TRADES.
+  if(row.volume===0&&row.open===null&&row.close>0)return null;
   // Euronext can publish a reference price without an executed trade.
   // Require positive reported volume before asserting TRADED.
   if(row.open>0&&row.close>0&&Number(row.volume)>0)return {...common,status:'TRADED',lastTradeDate:date,bar:row};
