@@ -1,4 +1,4 @@
-name: Koersplein live Europese koersdekking
+name: Koersplein Amsterdam XAMS vijfdaagse dekking
 on:
   workflow_dispatch:
   push:
@@ -6,93 +6,83 @@ on:
     paths:
       - '.github/workflows/live-europe-coverage.yml'
       - 'scripts/cloudflare/**'
+      - 'scripts/history/official-daily-status.mjs'
+      - 'scripts/history/providers/euronext-live.mjs'
       - 'cloudflare/worker.mjs'
       - 'market-week-core.mjs'
       - 'amsterdam-week.js'
       - 'amsterdam.html'
-      - 'config/europe-backfill-request.json'
-      - 'data/markets.json'
-      - 'data/euronext-*.json'
+      - 'market.html'
+      - 'market.js'
+      - 'data/euronext-amsterdam.json'
       - 'data/amsterdam-no-trades-2026-10-19-23.json'
-      - 'scripts/history/official-daily-status.mjs'
-      - 'scripts/history/providers/euronext-live.mjs'
+      - 'data/market-source-registry.json'
 permissions:
   contents: read
 concurrency:
-  group: koersplein-live-europe-coverage-${{ github.ref }}
+  group: koersplein-xams-coverage-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  coverage:
+  xams-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
-    env:
-      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
-      KOERSPLEIN_FACTORY_TOKEN: ${{ secrets.KOERSPLEIN_FACTORY_TOKEN }}
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Test MIC-safe Amsterdam week renderer and audit contract
+      - name: Verify XAMS strict validation and official evidence gates
         run: |
           node --check market-week-core.mjs
           node --check amsterdam-week.js
           node --check scripts/cloudflare/audit-amsterdam-week.mjs
+          node --check scripts/cloudflare/audit-amsterdam-official-sessions.mjs
           node scripts/cloudflare/test-market-week-core.mjs
           node scripts/cloudflare/test-xams-market-page.mjs
-          node --check scripts/cloudflare/audit-amsterdam-official-sessions.mjs
           node scripts/cloudflare/audit-amsterdam-official-sessions.mjs --self-test
-      - name: Audit five Amsterdam sessions in public canonical history (read-only)
-        env:
-          KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+          node scripts/cloudflare/audit-amsterdam-mic-evidence.mjs --self-test
+  xams-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      KOERSPLEIN_API_URL: ${{ secrets.KOERSPLEIN_API_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Audit public Worker canonical XAMS history for five completed sessions
+        timeout-minutes: 8
         run: node scripts/cloudflare/audit-amsterdam-week.mjs
-      - name: Probe missing XAMS sessions against official historical source (read-only)
-        timeout-minutes: 10
+      - name: Probe exact-date official traded candidates without importing
+        timeout-minutes: 12
         run: node scripts/cloudflare/probe-amsterdam-week-gaps.mjs
-      - name: Classify missing XAMS dates using exact official daily status (read-only)
+      - name: Verify all three official Euronext MIC directories
+        timeout-minutes: 4
+        run: node scripts/cloudflare/audit-amsterdam-mic-evidence.mjs
+      - name: Build full dated XAMS gap evidence inventory (no data writes)
         timeout-minutes: 12
         run: node scripts/cloudflare/audit-amsterdam-official-sessions.mjs
-      - name: Verify official XAMS/TNLA/XAMC listing identity (read-only)
-        timeout-minutes: 3
-        run: |
-          node scripts/cloudflare/audit-amsterdam-mic-evidence.mjs --self-test
-          node scripts/cloudflare/audit-amsterdam-mic-evidence.mjs
-      - name: Verify deployed Amsterdam page and live Worker five-day rendering (read-only)
-        if: ${{ !cancelled() }}
-        timeout-minutes: 5
-        run: node scripts/cloudflare/audit-amsterdam-public-page.mjs
-      - name: Check API configuration
-        id: config
-        run: |
-          if [ -n "$KOERSPLEIN_API_URL" ] && [ -n "$KOERSPLEIN_FACTORY_TOKEN" ]; then
-            echo 'available=true' >> "$GITHUB_OUTPUT"
-          else
-            echo 'available=false' >> "$GITHUB_OUTPUT"
-            echo 'Live audit overgeslagen: KOERSPLEIN_API_URL of KOERSPLEIN_FACTORY_TOKEN ontbreekt in GitHub Secrets.' >> "$GITHUB_STEP_SUMMARY"
-          fi
-      - name: Compare live European catalog and history
-        if: github.event_name == 'workflow_dispatch' && steps.config.outputs.available == 'true'
-        run: |
-          mkdir -p research/output/audit
-          node scripts/cloudflare/audit-live.mjs > research/output/audit/live-europe-coverage.json
-          node --input-type=module -e "import fs from 'node:fs'; const r=JSON.parse(fs.readFileSync('research/output/audit/live-europe-coverage.json','utf8')); console.log(JSON.stringify(r.totals)); fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, 'Live Europese koersdekking: '+JSON.stringify(r.totals)+'\\n');"
-      - name: Inventariseer ontbrekende Europese koershistorie per beurs
-        if: github.event_name == 'workflow_dispatch' && steps.config.outputs.available == 'true'
-        run: |
-          node scripts/cloudflare/europe-missing-history-inventory.mjs > research/output/audit/missing-history-log.txt
-          node --input-type=module -e "import fs from 'node:fs';const r=JSON.parse(fs.readFileSync('research/output/europe-missing-history-inventory.json','utf8'));console.log('Ontbrekende historie:',r.count,JSON.stringify(r.byMarket));fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Ontbrekende Europese historie: '+r.count+' instrumenten\\n');"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: live-europe-coverage
+          name: xams-five-day-evidence
           path: |
             research/output/audit/amsterdam-week-coverage.json
             research/output/audit/amsterdam-official-gap-probe.json
-            research/output/audit/amsterdam-official-session-status.json
             research/output/audit/amsterdam-official-mic-evidence.json
-            research/output/audit/live-europe-coverage.json
-            research/output/europe-stale-history-inventory.json
-            research/output/europe-missing-history-inventory.json
-            research/output/europe-missing-history-inventory.csv
-            research/output/audit/missing-history-log.txt
+            research/output/audit/amsterdam-official-session-status.json
+            research/output/audit/amsterdam-gap-evidence.json
+            research/output/audit/amsterdam-gap-evidence.csv
           retention-days: 30
+  xams-public:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify both deployed Amsterdam routes and Worker/API parity
+        timeout-minutes: 10
+        run: node scripts/cloudflare/audit-amsterdam-public-page.mjs
