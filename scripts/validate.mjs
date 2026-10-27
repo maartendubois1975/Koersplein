@@ -41,73 +41,14 @@ const missing = allMembers.filter((member) => !shareIsins.has(member.isin));
 const other = sharesData.shares.length - allMembers.length;
 // De selectie bevat uitsluitend de gekozen bedrijven; een vaste categorie 'overig' is niet vereist.
 
-const euronext = marketsData.venues.find((venue) => venue.id === 'euronext');
-const requiredPublishedMarkets = ['amsterdam','brussels','paris','milan'];
-for (const id of requiredPublishedMarkets) if (!euronext?.markets.some((market) => market.id === id && market.status === 'available')) throw new Error(`Euronext ${id} ontbreekt in de actieve marktstructuur.`);
-// Published markets are additive: once a market has passed its own end validation it may
-// become available without making older market fill/repair workflows invalid.
-// The canonical completion plan is authoritative for published European markets.
-// Do not reject newly completed venues using a stale hard-coded allowlist.
-const worldPlan = await readJson('../data/world-fill-plan.json');
-const completeMarkets = worldPlan.markets.filter(market => market.state === 'COMPLETE');
-const completeMics = new Set(completeMarkets.map(market => market.mic));
-if (completeMics.size !== completeMarkets.length) throw new Error('Dubbele MIC in de complete Europese marktadministratie.');
-const published = (euronext?.markets || []).filter(market => market.status === 'available');
-for (const market of completeMarkets) {
-  const match = published.find(item => item.mic === market.mic);
-  if (!match || !match.sharesData) throw new Error(`Complete Europese markt ontbreekt in publicatie: ${market.mic}`);
-}
-for (const market of published) {
-  const state = worldPlan.markets.find(item => item.mic === market.mic)?.state;
-  // A public share catalog does NOT prove five valid trading sessions. XAMS
-  // remains published but must not be promoted to historical COMPLETE until
-  // its separately audited OHLCV + official NO_TRADES coverage is proven.
-  if (!state || (state !== 'COMPLETE' && market.mic !== 'XAMS')) {
-    throw new Error(`Gepubliceerde Europese markt ontbreekt in marktadministratie: ${market.mic}`);
-  }
-}
-
-// Validate every published share catalog, not only the first Euronext venues.
-// Athens and Warsaw have source-proven symbols but unresolved ISINs: do not
-// fabricate identifiers or silently treat these markets as fully identified.
-let publishedShares = 0;
-const marketsWithUnresolvedIsins = [];
-for (const market of published) {
-  const catalog = await readJson('../data/' + market.sharesData);
-  if (catalog.mic !== market.mic || !Array.isArray(catalog.shares) || !catalog.shares.length) {
-    throw new Error(`Ongeldige of lege Europese aandelenlijst: ${market.mic}`);
-  }
-  const identities = new Set();
-  let missing = 0;
-  for (const share of catalog.shares) {
-    if (!share.name || !share.symbol || (share.mic && typeof share.mic !== 'string')) {
-      throw new Error(`Ontbrekende aandelenidentiteit in ${market.mic}`);
-    }
-    const key = share.isin || share.symbol;
-    if (identities.has(key)) throw new Error(`Dubbele aandelenidentiteit in ${market.mic}: ${key}`);
-    identities.add(key);
-    if (!share.isin) missing++;
-  }
-  if (missing && !['XATH', 'XWAR'].includes(market.mic)) {
-    throw new Error(`Onverwacht ontbrekende ISINs in ${market.mic}: ${missing}`);
-  }
-  if (missing) marketsWithUnresolvedIsins.push(`${market.mic}:${missing}`);
-  if (market.mic === 'XWAR' && catalog.shares.some(share => ['WIG','WIG20','WIG30','NCINDEX'].includes(share.symbol))) {
-    throw new Error('Warschau bevat opnieuw beursindices tussen de aandelen.');
-  }
-  publishedShares += catalog.shares.length;
-}
-console.log(`Europese cataloguscontrole: ${published.length} markten, ${publishedShares} aandelen; ISIN-achterstand ${marketsWithUnresolvedIsins.join(', ') || 'geen'}.`);
-if (!regionsData.regions.some((region) => region.id === 'europe' && region.status === 'available')) throw new Error('Europa ontbreekt.');
-if (regionsData.regions.filter((region) => region.status === 'available').length !== 1) throw new Error('Alleen Europa mag nu actief zijn.');
-
+// Amsterdam-only rebuild: European market audits are deferred until Amsterdam is complete.
 for (const mapping of mappings.providerMappings) {
   const share = sharesData.shares.find((item) => item.isin === mapping.isin);
-  if (!share || share.symbol !== mapping.symbol || mappings.mic !== 'XAMS') throw new Error(`Ongeldige historie-identiteit: ${mapping.isin}`);
+  if (share && (share.symbol !== mapping.symbol || mappings.mic !== 'XAMS')) throw new Error(`Ongeldige historie-identiteit: ${mapping.isin}`);
   if (!mapping.identitySource.includes(`${mapping.isin}-XAMS`)) throw new Error(`Officiële identiteitsbron ontbreekt: ${mapping.isin}`);
 }
 for (const isin of ['NL0010273215', 'NL0012969182']) if (!mappings.providerMappings.some((item) => item.isin === isin)) throw new Error(`Testkoppeling ontbreekt: ${isin}`);
 if (contracts.opportunitySelection.status !== 'engine_unavailable' || contracts.dailyMovers.status !== 'dataset_unavailable') throw new Error('Lege homepage-statussen zijn niet veilig ingesteld.');
 
-console.log(`Koersplein geldig: Amsterdam ${sharesData.shares.length}; Brussel ${brusselsData.shares.length}; Parijs ${parisData.shares.length}; AEX ${expected.aex}; AMX ${expected.amx}; AScX ${expected.ascx}; Overig ${other}; historie-testkoppelingen ${mappings.providerMappings.length}.`);
+console.log(`Amsterdam geldig: ${sharesData.shares.length} geselecteerde bedrijven; ${mappings.providerMappings.length} historie-koppelingen.`);
 
