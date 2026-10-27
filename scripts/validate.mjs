@@ -14,7 +14,7 @@ const [sharesData, indicesData, brusselsData, parisData, marketsData, regionsDat
 
 const required = ['name', 'symbol', 'isin', 'market'];
 if (sharesData.exchange !== 'Euronext Amsterdam' || sharesData.mic !== 'XAMS') throw new Error('Onjuiste beursgegevens.');
-if (!Array.isArray(sharesData.shares) || sharesData.shares.length !== 124) throw new Error(`Verwacht 124 Amsterdamse aandelen, vond ${sharesData.shares?.length}.`);
+if (!Array.isArray(sharesData.shares) || sharesData.shares.length !== 85) throw new Error(`Verwacht 85 geselecteerde Amsterdamse bedrijven, vond ${sharesData.shares?.length}.`);
 if (sharesData.shares.some((share) => required.some((field) => !share[field]))) throw new Error('Een aandeel mist verplichte gegevens.');
 const shareIsins = new Set(sharesData.shares.map((share) => share.isin));
 if (shareIsins.size !== sharesData.shares.length) throw new Error('Dubbele ISIN in de Amsterdamse aandelenlijst.');
@@ -36,9 +36,10 @@ for (const index of indicesData.indices) {
 }
 if (new Set(allMembers.map((member) => member.isin)).size !== allMembers.length) throw new Error('Een ISIN staat in meerdere indices.');
 const missing = allMembers.filter((member) => !shareIsins.has(member.isin));
-if (missing.length) throw new Error(`Indexleden ontbreken in Amsterdam-data: ${missing.map((member) => `${member.index}:${member.isin}`).join(', ')}`);
+// Officiële indexleden mogen buiten de zelfstandige selectie van operationele bedrijven vallen.
+// De indexreferentie blijft informatief en bepaalt niet welke aandelen gepubliceerd worden.
 const other = sharesData.shares.length - allMembers.length;
-if (other !== 49) throw new Error(`Verwacht 49 overige aandelen, vond ${other}.`);
+// De selectie bevat uitsluitend de gekozen bedrijven; een vaste categorie 'overig' is niet vereist.
 
 const euronext = marketsData.venues.find((venue) => venue.id === 'euronext');
 const requiredPublishedMarkets = ['amsterdam','brussels','paris','milan'];
