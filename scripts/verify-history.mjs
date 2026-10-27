@@ -24,7 +24,7 @@ for (const result of second) {
 }
 
 const instrumentFiles = (await readdir(historyUrl)).filter((name) => /^[A-Z]{2}[A-Z0-9]{10}\.json$/.test(name)).sort();
-assert.deepEqual(instrumentFiles, [...expected].map((isin) => `${isin}.json`).sort(), 'Alleen ASML en Adyen mogen historische instrumentbestanden hebben');
+for (const isin of expected) assert.ok(instrumentFiles.includes(`${isin}.json`), `Historisch testbestand ontbreekt: ${isin}`);
 
 const instruments = {};
 for (const instrument of catalog) {
@@ -67,13 +67,14 @@ for (const instrument of catalog) {
 }
 
 await mkdir(historyUrl, { recursive: true });
+const previousManifest = await readJson(new URL('manifest.json', historyUrl), { schemaVersion: 1, instruments: {} });
 await writeFile(new URL('manifest.json', historyUrl), `${JSON.stringify({
   schemaVersion: 1,
   generatedAt: new Date().toISOString(),
-  scope: 'golden-test-cases-only',
-  instruments
+  scope: 'amsterdam-history',
+  instruments: { ...previousManifest.instruments, ...instruments }
 }, null, 2)}\n`);
 const manifest = await readJson(new URL('manifest.json', historyUrl));
-assert.deepEqual(Object.keys(manifest.instruments).sort(), [...expected].sort());
-console.log('Publiek historie-manifest gecontroleerd: ASML + Adyen, geen derde aandeel.');
+for (const isin of expected) assert.ok(manifest.instruments[isin], `Historie-manifest mist ${isin}`);
+console.log(`Historie-manifest gecontroleerd: ASML + Adyen aanwezig; ${Object.keys(manifest.instruments).length} instrumenten behouden.`);
 console.log('ASML/Adyen backfill, data-audit en echte idempotente no-op-rerun: OK.');
