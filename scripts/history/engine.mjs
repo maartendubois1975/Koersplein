@@ -63,7 +63,9 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
   if (mode === 'backfill' && existing?.coverage?.backfillComplete) {
     return { isin: instrument.isin, outcome: 'unchanged', reason: 'backfill-complete', providerRequest: false, records: existing.bars.length, firstDate: existing.coverage.firstDate, lastDate: existing.coverage.lastDate };
   }
-  const startDate = mode === 'update' && existing?.coverage?.lastDate ? nextDate(existing.coverage.lastDate) : '1990-01-01';
+  // Refresh the latest stored trading session as well: an intraday candle can
+  // change until the official close, and providers may correct the last bar.
+  const startDate = mode === 'update' && existing?.coverage?.lastDate ? existing.coverage.lastDate : '1990-01-01';
   const endDate = today();
   if (startDate > endDate) return { isin: instrument.isin, outcome: 'unchanged', reason: 'already-current', providerRequest: false, records: existing.bars.length, firstDate: existing.coverage.firstDate, lastDate: existing.coverage.lastDate };
   const fetched = await provider.fetchDaily(instrument, { startDate, endDate });
