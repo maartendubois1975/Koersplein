@@ -25,7 +25,7 @@ jobs:
         run: npm run validate
       - name: Probe first 15 unmapped Amsterdam companies
         env:
-          AMSTERDAM_DISCOVERY_BATCH: '15'
+          AMSTERDAM_DISCOVERY_BATCH: '82'
         run: npm run amsterdam:discover
       - name: Save discovery evidence
         if: always()
