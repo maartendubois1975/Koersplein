@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 const html=await readFile(new URL('../../market.html',import.meta.url),'utf8');
 const amsterdamHtml=await readFile(new URL('../../amsterdam.html',import.meta.url),'utf8');
-assert.match(amsterdamHtml,/amsterdam-week\.js\?v=20261026xams-retry1/,'Amsterdam detail page must load the fixed previous-close renderer');
+assert.match(amsterdamHtml,/amsterdam-week\.js\?v=20261028rolling1/,'Amsterdam detail page must load the fixed previous-close renderer');
 const plan=JSON.parse(await readFile(new URL('../../data/world-fill-plan.json',import.meta.url),'utf8'));
 assert.equal(plan.markets.find(x=>x.mic==='XAMS')?.state,'INCOMPLETE',
  'XAMS must not claim COMPLETE while the fixed 2026-10-19..23 week still has 47 unresolved sessions');
