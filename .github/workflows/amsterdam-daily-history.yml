@@ -32,6 +32,9 @@ jobs:
       - name: Compare latest dates with official Euronext historical source
         if: github.event_name == 'push' || inputs.dry_run == true
         run: node scripts/history/diagnose-amsterdam-freshness.mjs
+      - name: Check five dual-listed instruments across official venues
+        if: github.event_name == 'push'
+        run: node scripts/history/diagnose-five-amsterdam.mjs
       - name: Refresh only mapped Amsterdam daily OHLC histories
         id: refresh
         continue-on-error: true
