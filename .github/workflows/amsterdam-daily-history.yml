@@ -45,6 +45,8 @@ jobs:
         run: node scripts/research/amsterdam-readiness.mjs
       - name: Run Amsterdam point-in-time baseline research exam
         run: node scripts/research/amsterdam-machine1.mjs
+      - name: Run hindsight postmortem without changing frozen predictions
+        run: node scripts/research/amsterdam-machine2.mjs research/output/amsterdam-machine1-results.jsonl
       - name: Judge baseline with chronological folds and untouched holdout
         run: node scripts/research/amsterdam-baseline-judge.mjs
       - name: Audit latest Amsterdam trading session and percentage changes
