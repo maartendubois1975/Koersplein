@@ -24,7 +24,7 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
    if(!storageId)throw Error('Geen gevalideerde Amsterdamse koershistorie');
    h=await load('data/history/'+encodeURIComponent(storageId)+'.json');
   }else{
-   const api=String(runtime.apiBaseUrl||'').replace(/\\/$/,'');
+   const api=String(runtime.apiBaseUrl||'').replace(/\/$/,'');
    if(!api)throw Error('Koersplein API is niet geconfigureerd');
    const manifest=await load(api+'/api/history/manifest.json');
    storageId=manifestResolver(manifest,mic)(share);
