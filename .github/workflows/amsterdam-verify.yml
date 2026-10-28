@@ -1,0 +1,36 @@
+name: Amsterdam one-time data verification
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/amsterdam-verify.yml'
+      - 'scripts/history/**'
+      - 'data/euronext-amsterdam.json'
+      - 'data/history-instruments.json'
+      - 'package.json'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check Amsterdam session correction
+        run: npm run test:amsterdam-session
+      - name: Check catalog and mappings
+        run: npm run validate
+      - name: Probe first 15 unmapped Amsterdam companies
+        env:
+          AMSTERDAM_DISCOVERY_BATCH: '15'
+        run: npm run amsterdam:discover
+      - name: Save discovery evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-discovery-first-15
+          path: data/amsterdam-discovery-result-0.json
+          if-no-files-found: warn
