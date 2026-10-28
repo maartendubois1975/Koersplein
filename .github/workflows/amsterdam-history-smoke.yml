@@ -12,8 +12,11 @@ jobs:
         with:
           node-version: '22'
       - run: node scripts/history.mjs update --all --batch-size 10
+      - run: node scripts/history/audit-amsterdam-import.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: amsterdam-history-evidence
-          path: data/history/*.json
+          path: |
+            data/history/*.json
+            data/amsterdam-import-audit.json
