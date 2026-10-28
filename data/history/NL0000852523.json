@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0000852523-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "TWEKA.AS",
-    "retrievedAt": "2026-10-28T04:50:58.435Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/TWEKA.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0000852523-XAMS",
+    "retrievedAt": "2026-10-28T05:13:16.523Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000852523-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "TWEKA.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0000852523",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "1998-07-21",
-    "lastDate": "2026-10-26",
-    "records": 7216,
-    "volumeRecords": 7216,
+    "lastDate": "2026-10-27",
+    "records": 7217,
+    "volumeRecords": 7217,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -64970,12 +64971,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 48.81999969482422,
-      "high": 50.349998474121094,
-      "low": 48.7400016784668,
+      "open": 48.82,
+      "high": 50.35,
+      "low": 48.74,
       "close": 50,
       "adjustedClose": 50,
       "volume": 45349
+    },
+    {
+      "date": "2026-10-27",
+      "open": 49.86,
+      "high": 51,
+      "low": 49.62,
+      "close": 50.65,
+      "adjustedClose": 50.65,
+      "volume": 32776
     }
   ]
 }

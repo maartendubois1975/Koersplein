@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0000337319-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "BAMNB.AS",
-    "retrievedAt": "2026-10-28T04:50:56.781Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BAMNB.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0000337319-XAMS",
+    "retrievedAt": "2026-10-28T05:13:11.762Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000337319-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "BAMNB.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0000337319",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2000-12-22",
-    "lastDate": "2026-10-26",
-    "records": 6604,
-    "volumeRecords": 6604,
+    "lastDate": "2026-10-27",
+    "records": 6605,
+    "volumeRecords": 6605,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -59462,12 +59463,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 11.59000015258789,
-      "high": 11.920000076293945,
-      "low": 11.569999694824219,
-      "close": 11.90999984741211,
-      "adjustedClose": 11.90999984741211,
+      "open": 11.59,
+      "high": 11.92,
+      "low": 11.57,
+      "close": 11.91,
+      "adjustedClose": 11.91,
       "volume": 471896
+    },
+    {
+      "date": "2026-10-27",
+      "open": 11.9,
+      "high": 12.14,
+      "low": 11.79,
+      "close": 12.1,
+      "adjustedClose": 12.1,
+      "volume": 576447
     }
   ]
 }

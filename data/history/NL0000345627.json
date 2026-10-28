@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0000345627-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "EAS2P.AS",
-    "retrievedAt": "2026-10-28T04:50:57.035Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/EAS2P.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0000345627-XAMS",
+    "retrievedAt": "2026-10-28T05:13:13.196Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000345627-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "EAS2P.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0000345627",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "1998-07-20",
-    "lastDate": "2026-10-26",
-    "records": 7028,
-    "volumeRecords": 7028,
+    "lastDate": "2026-10-27",
+    "records": 7029,
+    "volumeRecords": 7029,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -63278,12 +63279,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 0.5580000281333923,
-      "high": 0.5580000281333923,
-      "low": 0.5239999890327454,
-      "close": 0.5239999890327454,
-      "adjustedClose": 0.5239999890327454,
+      "open": 0.558,
+      "high": 0.558,
+      "low": 0.524,
+      "close": 0.524,
+      "adjustedClose": 0.524,
       "volume": 7129
+    },
+    {
+      "date": "2026-10-27",
+      "open": 0.532,
+      "high": 0.61,
+      "low": 0.532,
+      "close": 0.594,
+      "adjustedClose": 0.594,
+      "volume": 114582
     }
   ]
 }

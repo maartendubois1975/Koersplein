@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0013332471-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "TOM2.AS",
-    "retrievedAt": "2026-10-28T04:50:58.359Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/TOM2.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0013332471-XAMS",
+    "retrievedAt": "2026-10-28T05:13:15.645Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0013332471-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "TOM2.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0013332471",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2005-05-27",
-    "lastDate": "2026-10-26",
-    "records": 5479,
-    "volumeRecords": 5479,
+    "lastDate": "2026-10-27",
+    "records": 5480,
+    "volumeRecords": 5480,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -49337,12 +49338,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 3.680000066757202,
-      "high": 3.7799999713897705,
-      "low": 3.6740000247955322,
-      "close": 3.7039999961853027,
-      "adjustedClose": 3.7039999961853027,
+      "open": 3.68,
+      "high": 3.78,
+      "low": 3.674,
+      "close": 3.704,
+      "adjustedClose": 3.704,
       "volume": 156221
+    },
+    {
+      "date": "2026-10-27",
+      "open": 3.706,
+      "high": 3.736,
+      "low": 3.684,
+      "close": 3.722,
+      "adjustedClose": 3.722,
+      "volume": 218060
     }
   ]
 }

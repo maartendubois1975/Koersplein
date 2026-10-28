@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0006237562-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "ARCAD.AS",
-    "retrievedAt": "2026-10-28T04:50:56.429Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ARCAD.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0006237562-XAMS",
+    "retrievedAt": "2026-10-28T05:13:10.914Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0006237562-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "ARCAD.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0006237562",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "1998-07-20",
-    "lastDate": "2026-10-26",
-    "records": 7195,
-    "volumeRecords": 7195,
+    "lastDate": "2026-10-27",
+    "records": 7196,
+    "volumeRecords": 7196,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -64781,12 +64782,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 42.619998931884766,
-      "high": 43.68000030517578,
-      "low": 42.619998931884766,
-      "close": 43.619998931884766,
-      "adjustedClose": 43.619998931884766,
+      "open": 42.62,
+      "high": 43.68,
+      "low": 42.62,
+      "close": 43.62,
+      "adjustedClose": 43.62,
       "volume": 117673
+    },
+    {
+      "date": "2026-10-27",
+      "open": 43.64,
+      "high": 44.2,
+      "low": 43.42,
+      "close": 43.9,
+      "adjustedClose": 43.9,
+      "volume": 93479
     }
   ]
 }

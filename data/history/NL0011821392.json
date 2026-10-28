@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0011821392-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "LIGHT.AS",
-    "retrievedAt": "2026-10-28T04:50:57.614Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/LIGHT.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0011821392-XAMS",
+    "retrievedAt": "2026-10-28T05:13:14.428Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0011821392-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "LIGHT.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0011821392",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2016-05-27",
-    "lastDate": "2026-10-26",
-    "records": 2667,
-    "volumeRecords": 2667,
+    "lastDate": "2026-10-27",
+    "records": 2668,
+    "volumeRecords": 2668,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -24029,12 +24030,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 15.300000190734863,
-      "high": 15.699999809265137,
-      "low": 15.050000190734863,
-      "close": 15.510000228881836,
-      "adjustedClose": 15.510000228881836,
+      "open": 15.3,
+      "high": 15.7,
+      "low": 15.05,
+      "close": 15.51,
+      "adjustedClose": 15.51,
       "volume": 666580
+    },
+    {
+      "date": "2026-10-27",
+      "open": 15.58,
+      "high": 15.74,
+      "low": 15.51,
+      "close": 15.56,
+      "adjustedClose": 15.56,
+      "volume": 511280
     }
   ]
 }

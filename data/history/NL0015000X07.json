@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0015000X07-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "BNJ.AS",
-    "retrievedAt": "2026-10-28T04:50:56.673Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BNJ.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0015000X07-XAMS",
+    "retrievedAt": "2026-10-28T05:13:12.383Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0015000X07-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "BNJ.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0015000X07",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2022-07-01",
-    "lastDate": "2026-10-26",
-    "records": 1104,
-    "volumeRecords": 1104,
+    "lastDate": "2026-10-27",
+    "records": 1105,
+    "volumeRecords": 1105,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -9963,11 +9964,20 @@
     {
       "date": "2026-10-26",
       "open": 8,
-      "high": 8.020000457763672,
-      "low": 7.960000038146973,
-      "close": 7.980000019073486,
-      "adjustedClose": 7.980000019073486,
+      "high": 8.02,
+      "low": 7.96,
+      "close": 7.98,
+      "adjustedClose": 7.98,
       "volume": 12632
+    },
+    {
+      "date": "2026-10-27",
+      "open": 8,
+      "high": 8.02,
+      "low": 7.86,
+      "close": 7.88,
+      "adjustedClose": 7.88,
+      "volume": 14171
     }
   ]
 }

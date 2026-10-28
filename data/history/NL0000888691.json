@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0000888691-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "AMG.AS",
-    "retrievedAt": "2026-10-28T04:50:56.485Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AMG.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0000888691-XAMS",
+    "retrievedAt": "2026-10-28T05:13:10.730Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000888691-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "AMG.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0000888691",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2007-07-11",
-    "lastDate": "2026-10-26",
-    "records": 4938,
-    "volumeRecords": 4938,
+    "lastDate": "2026-10-27",
+    "records": 4939,
+    "volumeRecords": 4939,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -44468,12 +44469,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 22.760000228881836,
-      "high": 23.399999618530273,
-      "low": 22.700000762939453,
-      "close": 23.040000915527344,
-      "adjustedClose": 23.040000915527344,
+      "open": 22.76,
+      "high": 23.4,
+      "low": 22.7,
+      "close": 23.04,
+      "adjustedClose": 23.04,
       "volume": 249879
+    },
+    {
+      "date": "2026-10-27",
+      "open": 22.88,
+      "high": 23.76,
+      "low": 22.86,
+      "close": 23.76,
+      "adjustedClose": 23.76,
+      "volume": 292276
     }
   ]
 }

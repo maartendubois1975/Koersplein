@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0000371243-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "NEDAP.AS",
-    "retrievedAt": "2026-10-28T04:50:57.655Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/NEDAP.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0000371243-XAMS",
+    "retrievedAt": "2026-10-28T05:13:15.039Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000371243-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "NEDAP.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0000371243",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "1998-07-21",
-    "lastDate": "2026-10-26",
-    "records": 7173,
-    "volumeRecords": 7173,
+    "lastDate": "2026-10-27",
+    "records": 7174,
+    "volumeRecords": 7174,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -64584,11 +64585,20 @@
     {
       "date": "2026-10-26",
       "open": 89,
-      "high": 91.69999694824219,
+      "high": 91.7,
       "low": 89,
-      "close": 91.4000015258789,
-      "adjustedClose": 91.4000015258789,
+      "close": 91.4,
+      "adjustedClose": 91.4,
       "volume": 3857
+    },
+    {
+      "date": "2026-10-27",
+      "open": 91.3,
+      "high": 91.3,
+      "low": 89.7,
+      "close": 90.8,
+      "adjustedClose": 90.8,
+      "volume": 3054
     }
   ]
 }

@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0015002IE0-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "AVTX.AS",
-    "retrievedAt": "2026-10-28T04:50:56.319Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AVTX.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0015002IE0-XAMS",
+    "retrievedAt": "2026-10-28T05:13:11.259Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0015002IE0-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "AVTX.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0015002IE0",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2017-03-15",
-    "lastDate": "2026-10-26",
-    "records": 2459,
-    "volumeRecords": 2459,
+    "lastDate": "2026-10-27",
+    "records": 2460,
+    "volumeRecords": 2460,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -22157,12 +22158,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 4.5,
-      "high": 4.579999923706055,
-      "low": 4.480000019073486,
-      "close": 4.514999866485596,
-      "adjustedClose": 4.514999866485596,
-      "volume": 90981
+      "open": 3.0164835,
+      "high": 3.0701099,
+      "low": 3.0030769,
+      "close": 3.0265385,
+      "adjustedClose": 3.0265385,
+      "volume": 135725
+    },
+    {
+      "date": "2026-10-27",
+      "open": 3.0533516,
+      "high": 3.0634066,
+      "low": 2.5807692,
+      "close": 2.6142857,
+      "adjustedClose": 2.6142857,
+      "volume": 1346786
     }
   ]
 }

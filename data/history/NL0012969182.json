@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0012969182-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "ADYEN.AS",
-    "retrievedAt": "2026-10-28T04:50:56.047Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ADYEN.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0012969182-XAMS",
+    "retrievedAt": "2026-10-28T05:13:09.914Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0012969182-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "ADYEN.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0012969182",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2018-06-13",
-    "lastDate": "2026-10-26",
-    "records": 2144,
-    "volumeRecords": 2144,
+    "lastDate": "2026-10-27",
+    "records": 2145,
+    "volumeRecords": 2145,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -19323,11 +19324,20 @@
     {
       "date": "2026-10-26",
       "open": 953,
-      "high": 956.7999877929688,
+      "high": 956.8,
       "low": 926,
       "close": 926,
       "adjustedClose": 926,
       "volume": 102874
+    },
+    {
+      "date": "2026-10-27",
+      "open": 928.9,
+      "high": 955.1,
+      "low": 925,
+      "close": 944,
+      "adjustedClose": 944,
+      "volume": 125081
     }
   ]
 }

@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0010391025-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "PHARM.AS",
-    "retrievedAt": "2026-10-28T04:50:57.862Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/PHARM.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0010391025-XAMS",
+    "retrievedAt": "2026-10-28T05:13:14.970Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0010391025-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "PHARM.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0010391025",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "1999-06-16",
-    "lastDate": "2026-10-26",
-    "records": 6995,
-    "volumeRecords": 6995,
+    "lastDate": "2026-10-27",
+    "records": 6996,
+    "volumeRecords": 6996,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -62981,12 +62982,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 1.0110000371932983,
-      "high": 1.0700000524520874,
-      "low": 1.0099999904632568,
-      "close": 1.0540000200271606,
-      "adjustedClose": 1.0540000200271606,
+      "open": 1.011,
+      "high": 1.07,
+      "low": 1.01,
+      "close": 1.054,
+      "adjustedClose": 1.054,
       "volume": 11722731
+    },
+    {
+      "date": "2026-10-27",
+      "open": 1.0715,
+      "high": 1.108,
+      "low": 1.046,
+      "close": 1.08,
+      "adjustedClose": 1.08,
+      "volume": 24112331
     }
   ]
 }

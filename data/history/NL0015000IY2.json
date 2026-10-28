@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0015000IY2-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "UMG.AS",
-    "retrievedAt": "2026-10-28T04:50:58.244Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/UMG.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0015000IY2-XAMS",
+    "retrievedAt": "2026-10-28T05:13:16.294Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0015000IY2-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "UMG.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0015000IY2",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2021-09-21",
-    "lastDate": "2026-10-26",
-    "records": 1306,
-    "volumeRecords": 1306,
+    "lastDate": "2026-10-27",
+    "records": 1307,
+    "volumeRecords": 1307,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -11780,12 +11781,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 15.925000190734863,
-      "high": 16.014999389648438,
-      "low": 15.78499984741211,
-      "close": 15.800000190734863,
-      "adjustedClose": 15.800000190734863,
+      "open": 15.925,
+      "high": 16.015,
+      "low": 15.785,
+      "close": 15.8,
+      "adjustedClose": 15.8,
       "volume": 1671062
+    },
+    {
+      "date": "2026-10-27",
+      "open": 16.275,
+      "high": 16.775,
+      "low": 16.055,
+      "close": 16.45,
+      "adjustedClose": 16.45,
+      "volume": 3886217
     }
   ]
 }

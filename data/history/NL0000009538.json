@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0000009538-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "PHIA.AS",
-    "retrievedAt": "2026-10-28T04:50:58.115Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/PHIA.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0000009538-XAMS",
+    "retrievedAt": "2026-10-28T05:13:15.080Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000009538-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "PHIA.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0000009538",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "1995-08-01",
-    "lastDate": "2026-10-26",
-    "records": 7945,
-    "volumeRecords": 7945,
+    "lastDate": "2026-10-27",
+    "records": 7946,
+    "volumeRecords": 7946,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -71531,12 +71532,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 24.020000457763672,
-      "high": 24.170000076293945,
-      "low": 23.899999618530273,
-      "close": 23.940000534057617,
-      "adjustedClose": 23.940000534057617,
+      "open": 24.02,
+      "high": 24.17,
+      "low": 23.9,
+      "close": 23.94,
+      "adjustedClose": 23.94,
       "volume": 1505801
+    },
+    {
+      "date": "2026-10-27",
+      "open": 23.69,
+      "high": 23.95,
+      "low": 23.61,
+      "close": 23.78,
+      "adjustedClose": 23.78,
+      "volume": 1670518
     }
   ]
 }

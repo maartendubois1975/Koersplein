@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0011872643-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "ASRNL.AS",
-    "retrievedAt": "2026-10-28T04:50:56.303Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ASRNL.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0011872643-XAMS",
+    "retrievedAt": "2026-10-28T05:13:11.265Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0011872643-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "ASRNL.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0011872643",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2016-06-10",
-    "lastDate": "2026-10-26",
-    "records": 2657,
-    "volumeRecords": 2657,
+    "lastDate": "2026-10-27",
+    "records": 2658,
+    "volumeRecords": 2658,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -23939,12 +23940,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 74.36000061035156,
-      "high": 75.23999786376953,
-      "low": 74.13999938964844,
-      "close": 74.83999633789062,
-      "adjustedClose": 74.83999633789062,
+      "open": 74.36,
+      "high": 75.24,
+      "low": 74.14,
+      "close": 74.84,
+      "adjustedClose": 74.84,
       "volume": 361561
+    },
+    {
+      "date": "2026-10-27",
+      "open": 74.78,
+      "high": 75.72,
+      "low": 74.6,
+      "close": 75.52,
+      "adjustedClose": 75.52,
+      "volume": 339583
     }
   ]
 }

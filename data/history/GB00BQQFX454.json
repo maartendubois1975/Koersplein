@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/GB00BQQFX454-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "AXS.AS",
-    "retrievedAt": "2026-10-28T04:50:56.393Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AXS.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "GB00BQQFX454-XAMS",
+    "retrievedAt": "2026-10-28T05:13:11.240Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB00BQQFX454-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "AXS.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "GB00BQQFX454",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2007-09-18",
-    "lastDate": "2026-10-26",
-    "records": 4759,
-    "volumeRecords": 4759,
+    "lastDate": "2026-10-27",
+    "records": 4760,
+    "volumeRecords": 4760,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -42857,12 +42858,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 0.6489999890327454,
-      "high": 0.6579999923706055,
-      "low": 0.6489999890327454,
-      "close": 0.6489999890327454,
-      "adjustedClose": 0.6489999890327454,
+      "open": 0.649,
+      "high": 0.658,
+      "low": 0.649,
+      "close": 0.649,
+      "adjustedClose": 0.649,
       "volume": 65896
+    },
+    {
+      "date": "2026-10-27",
+      "open": 0.658,
+      "high": 0.658,
+      "low": 0.632,
+      "close": 0.645,
+      "adjustedClose": 0.645,
+      "volume": 108227
     }
   ]
 }

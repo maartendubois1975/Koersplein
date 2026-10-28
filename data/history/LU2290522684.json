@@ -10,17 +10,18 @@
     "identitySource": "https://live.euronext.com/en/product/equities/LU2290522684-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "INPST.AS",
-    "retrievedAt": "2026-10-28T04:50:57.242Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/INPST.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "LU2290522684-XAMS",
+    "retrievedAt": "2026-10-28T05:13:14.297Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/LU2290522684-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "INPST.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "LU2290522684",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
@@ -13266,10 +13267,10 @@
     {
       "date": "2026-10-22",
       "open": 15.25,
-      "high": 15.4399995803833,
+      "high": 15.44,
       "low": 15.25,
-      "close": 15.390000343322754,
-      "adjustedClose": 15.390000343322754,
+      "close": 15.39,
+      "adjustedClose": 15.39,
       "volume": 132837
     }
   ]

@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0009432491-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "VPK.AS",
-    "retrievedAt": "2026-10-28T04:50:58.391Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/VPK.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0009432491-XAMS",
+    "retrievedAt": "2026-10-28T05:13:16.643Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0009432491-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "VPK.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0009432491",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "1999-11-04",
-    "lastDate": "2026-10-26",
-    "records": 6898,
-    "volumeRecords": 6898,
+    "lastDate": "2026-10-27",
+    "records": 6899,
+    "volumeRecords": 6899,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -62110,10 +62111,19 @@
       "date": "2026-10-26",
       "open": 54,
       "high": 54,
-      "low": 53.150001525878906,
-      "close": 53.849998474121094,
-      "adjustedClose": 53.849998474121094,
+      "low": 53.15,
+      "close": 53.85,
+      "adjustedClose": 53.85,
       "volume": 114835
+    },
+    {
+      "date": "2026-10-27",
+      "open": 53.8,
+      "high": 54.05,
+      "low": 53.6,
+      "close": 54,
+      "adjustedClose": 54,
+      "volume": 123038
     }
   ]
 }

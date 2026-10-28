@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/GB00BN0VZ646-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "FERGR.AS",
-    "retrievedAt": "2026-10-28T04:50:56.901Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/FERGR.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "GB00BN0VZ646-XAMS",
+    "retrievedAt": "2026-10-28T05:13:12.900Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB00BN0VZ646-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "FERGR.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "GB00BN0VZ646",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2025-02-13",
-    "lastDate": "2026-10-26",
-    "records": 434,
-    "volumeRecords": 434,
+    "lastDate": "2026-10-27",
+    "records": 435,
+    "volumeRecords": 435,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -3932,12 +3933,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 7.329999923706055,
-      "high": 7.519999980926514,
-      "low": 7.309999942779541,
-      "close": 7.46999979019165,
-      "adjustedClose": 7.46999979019165,
+      "open": 7.33,
+      "high": 7.52,
+      "low": 7.31,
+      "close": 7.47,
+      "adjustedClose": 7.47,
       "volume": 35186
+    },
+    {
+      "date": "2026-10-27",
+      "open": 7.39,
+      "high": 7.55,
+      "low": 7.39,
+      "close": 7.5,
+      "adjustedClose": 7.5,
+      "volume": 21604
     }
   ]
 }

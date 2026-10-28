@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0011821202-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "INGA.AS",
-    "retrievedAt": "2026-10-28T04:50:57.393Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/INGA.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0011821202-XAMS",
+    "retrievedAt": "2026-10-28T05:13:13.486Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0011821202-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "INGA.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0011821202",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "1995-08-01",
-    "lastDate": "2026-10-26",
-    "records": 7939,
-    "volumeRecords": 7939,
+    "lastDate": "2026-10-27",
+    "records": 7940,
+    "volumeRecords": 7940,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -71477,12 +71478,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 28.670000076293945,
-      "high": 29.104999542236328,
-      "low": 28.600000381469727,
-      "close": 29.03499984741211,
-      "adjustedClose": 29.03499984741211,
+      "open": 28.67,
+      "high": 29.105,
+      "low": 28.6,
+      "close": 29.035,
+      "adjustedClose": 29.035,
       "volume": 5506867
+    },
+    {
+      "date": "2026-10-27",
+      "open": 28.93,
+      "high": 29.25,
+      "low": 28.695,
+      "close": 29.25,
+      "adjustedClose": 29.25,
+      "volume": 4988789
     }
   ]
 }

@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0009391242-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "HYDRA.AS",
-    "retrievedAt": "2026-10-28T04:50:57.321Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/HYDRA.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0009391242-XAMS",
+    "retrievedAt": "2026-10-28T05:13:13.525Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0009391242-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "HYDRA.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0009391242",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2008-10-24",
-    "lastDate": "2026-10-26",
-    "records": 2794,
-    "volumeRecords": 2794,
+    "lastDate": "2026-10-27",
+    "records": 2795,
+    "volumeRecords": 2795,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -25178,6 +25179,15 @@
       "close": 200,
       "adjustedClose": 200,
       "volume": 37
+    },
+    {
+      "date": "2026-10-27",
+      "open": 202,
+      "high": 202,
+      "low": 202,
+      "close": 202,
+      "adjustedClose": 202,
+      "volume": 30
     }
   ]
 }

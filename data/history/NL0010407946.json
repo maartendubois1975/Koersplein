@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0010407946-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "TRIO.AS",
-    "retrievedAt": "2026-10-28T04:50:58.217Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/TRIO.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0010407946-XAMS",
+    "retrievedAt": "2026-10-28T05:13:16.287Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0010407946-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "TRIO.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0010407946",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2025-06-18",
-    "lastDate": "2026-10-26",
-    "records": 348,
-    "volumeRecords": 348,
+    "lastDate": "2026-10-27",
+    "records": 349,
+    "volumeRecords": 349,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -3159,11 +3160,20 @@
     {
       "date": "2026-10-26",
       "open": 34,
-      "high": 34.70000076293945,
+      "high": 34.7,
       "low": 33.5,
-      "close": 34.400001525878906,
-      "adjustedClose": 34.400001525878906,
+      "close": 34.4,
+      "adjustedClose": 34.4,
       "volume": 25948
+    },
+    {
+      "date": "2026-10-27",
+      "open": 34.2,
+      "high": 34.95,
+      "low": 34,
+      "close": 34.6,
+      "adjustedClose": 34.6,
+      "volume": 15636
     }
   ]
 }

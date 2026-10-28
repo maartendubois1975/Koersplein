@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0011872650-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "BFIT.AS",
-    "retrievedAt": "2026-10-28T04:50:56.595Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BFIT.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0011872650-XAMS",
+    "retrievedAt": "2026-10-28T05:13:11.254Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0011872650-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "BFIT.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0011872650",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2016-06-10",
-    "lastDate": "2026-10-26",
-    "records": 2657,
-    "volumeRecords": 2657,
+    "lastDate": "2026-10-27",
+    "records": 2658,
+    "volumeRecords": 2658,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -23939,12 +23940,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 28.719999313354492,
-      "high": 30.479999542236328,
-      "low": 28.68000030517578,
-      "close": 29.65999984741211,
-      "adjustedClose": 29.65999984741211,
+      "open": 28.72,
+      "high": 30.48,
+      "low": 28.68,
+      "close": 29.66,
+      "adjustedClose": 29.66,
       "volume": 266178
+    },
+    {
+      "date": "2026-10-27",
+      "open": 29.66,
+      "high": 30.08,
+      "low": 29.44,
+      "close": 29.92,
+      "adjustedClose": 29.92,
+      "volume": 145835
     }
   ]
 }

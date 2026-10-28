@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/NL0009739416-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "PNL.AS",
-    "retrievedAt": "2026-10-28T04:50:57.900Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/PNL.AS?period1=631152000&period2=1793231999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0009739416-XAMS",
+    "retrievedAt": "2026-10-28T05:13:15.025Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0009739416-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "PNL.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0009739416",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "1998-07-21",
-    "lastDate": "2026-10-26",
-    "records": 7228,
-    "volumeRecords": 7228,
+    "lastDate": "2026-10-27",
+    "records": 7229,
+    "volumeRecords": 7229,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -65078,12 +65079,21 @@
     },
     {
       "date": "2026-10-26",
-      "open": 0.8119999766349792,
-      "high": 0.8370000123977661,
-      "low": 0.7900000214576721,
-      "close": 0.8314999938011169,
-      "adjustedClose": 0.8314999938011169,
+      "open": 0.812,
+      "high": 0.837,
+      "low": 0.79,
+      "close": 0.8315,
+      "adjustedClose": 0.8315,
       "volume": 3963064
+    },
+    {
+      "date": "2026-10-27",
+      "open": 0.83,
+      "high": 0.8335,
+      "low": 0.8075,
+      "close": 0.812,
+      "adjustedClose": 0.812,
+      "volume": 2168830
     }
   ]
 }
