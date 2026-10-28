@@ -32,6 +32,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Compare latest dates with official Euronext historical source
+        if: github.event_name == 'push' || inputs.dry_run == true
+        run: node scripts/history/diagnose-amsterdam-freshness.mjs
       - name: Refresh only mapped Amsterdam daily OHLC histories
         id: refresh
         continue-on-error: true
