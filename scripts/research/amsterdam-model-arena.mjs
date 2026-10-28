@@ -31,8 +31,13 @@ for(const h of horizons){
   output.push({horizonMonths:h,model:name,holdoutStart,holdoutReserved:reserved.length,dates:byDev.size,selected:selected.length,meanTop5Return:mean(selected.map(x=>x.realized[k])),meanUniverseReturn:mean(baseline.map(x=>x.realized[k])),targets:Object.fromEntries(targets.map(t=>[t+'pct',{top5HitRate:mean(selected.map(x=>Number(x.realized[k]>=t/100))),universeHitRate:mean(baseline.map(x=>Number(x.realized[k]>=t/100)))}])),researchOnly:true});
  }
  const candidates=output.filter(x=>x.horizonMonths===h&&x.selected>=100&&x.dates>=24).map(x=>({...x,excessReturn:x.meanTop5Return-x.meanUniverseReturn})).sort((a,b)=>b.excessReturn-a.excessReturn);
- const leader=candidates[0];const leaderStability=stability.find(x=>x.horizonMonths===h&&x.model===leader?.model);const developmentQualified=Boolean(leader&&leader.selected>=promotionRules.minSelected&&leader.dates>=promotionRules.minDistinctDates&&leader.excessReturn>=promotionRules.minExcessReturn&&leaderStability?.eligibleYears>=promotionRules.minEligibleYears&&leaderStability?.positiveYearShare>=promotionRules.minPositiveYearShare);
- leaderboard.push({horizonMonths:h,developmentLeader:leader?.model||null,developmentExcessReturn:leader?.excessReturn??null,comparedModels:candidates.length,leaderStability,developmentQualified,holdoutEvaluated:false,promotedToProduction:false,decision:developmentQualified?'AWAITING_INDEPENDENT_HOLDOUT':'REJECTED_DEVELOPMENT_GATE'});
+ const qualify=x=>{const s=stability.find(v=>v.horizonMonths===h&&v.model===x.model);return x.selected>=promotionRules.minSelected&&x.dates>=promotionRules.minDistinctDates&&x.excessReturn>=promotionRules.minExcessReturn&&s?.eligibleYears>=promotionRules.minEligibleYears&&s?.positiveYearShare>=promotionRules.minPositiveYearShare};
+ const qualified=candidates.filter(qualify);
+ const leader=qualified[0]||null;
+ const rejectedFrontRunner=candidates[0]&&!qualify(candidates[0])?{model:candidates[0].model,excessReturn:candidates[0].excessReturn,reason:'FAILED_DEVELOPMENT_STABILITY_OR_SAMPLE_GATE'}:null;
+ const leaderStability=stability.find(x=>x.horizonMonths===h&&x.model===leader?.model);
+ const developmentQualified=Boolean(leader);
+ leaderboard.push({horizonMonths:h,developmentLeader:leader?.model||null,developmentExcessReturn:leader?.excessReturn??null,comparedModels:candidates.length,qualifiedModels:qualified.map(x=>x.model),rejectedFrontRunner,leaderStability,developmentQualified,holdoutEvaluated:false,promotedToProduction:false,decision:developmentQualified?'AWAITING_INDEPENDENT_HOLDOUT':'REJECTED_DEVELOPMENT_GATE'});
 }
 const report={market:'XAMS',status:'EXPLORATORY_DEVELOPMENT_ONLY_NOT_OOS_VALIDATED',warning:'All models compared on development period; selection is NOT independent. Two calendar years of matured labels reserved per horizon. Holdout remains unused.',models:Object.keys(models),sectorCoverage:'Not evaluated; sector classifications require point-in-time validation',results:output,stability,leaderboard,promotionRules};
 await fs.writeFile('research/output/amsterdam-model-arena.json',JSON.stringify(report,null,2));
