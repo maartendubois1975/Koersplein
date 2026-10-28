@@ -38,6 +38,8 @@ globalThis.fetch=async url=>{
  else if(path.endsWith('data/euronext-amsterdam.json'))data={shares};
  else if(path.endsWith('data/amsterdam-no-trades-2026-10-19-23.json'))data=status;
  else if(path.endsWith('/api/history/manifest.json'))data=manifest;
+ else if(path.endsWith('data/amsterdam-history-manifest.json'))data={instruments:Object.fromEntries(shares.map(s=>[s.isin,{mic:'XAMS',symbol:s.symbol,isin:s.isin}]))};
+ else if(path.includes('data/history/')){const isin=decodeURIComponent(path.split('/').at(-1)).replace(/\.json$/,'');const row=histories['XAMS:'+isin];if(row)data={...row,instrument:{...row.instrument,isin:row.instrument.isin==='XAMS:NL9999999999'?'NL9999999999':isin}};}
  else if(path.includes('/api/history/'))data=histories[decodeURIComponent(path.split('/').at(-1))];
  if(!data)throw Error('Unexpected test fetch '+path);
  return {ok:true,status:200,json:async()=>data};
