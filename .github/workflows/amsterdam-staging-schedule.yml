@@ -25,6 +25,8 @@ jobs:
         run: node scripts/history.mjs update --all --batch-size 8
       - name: Validate Amsterdam history and public market integration
         run: npm test && npm run history:test
+      - name: Refresh audited Amsterdam coverage report
+        run: node scripts/history/audit-amsterdam-import.mjs
       - name: Persist validated data only to staging
         run: |
           test "$(git branch --show-current)" = "amsterdam-reset-20261027"
@@ -37,4 +39,13 @@ jobs:
           else
             git commit -m 'data: refresh validated Amsterdam daily history (staging)'
             git push origin HEAD:amsterdam-reset-20261027
+          fi
+      - name: Fast-forward validated data to isolated Render test branch
+        run: |
+          git fetch origin codex/koersplein-home-history
+          if git merge-base --is-ancestor origin/codex/koersplein-home-history HEAD; then
+            git push origin HEAD:codex/koersplein-home-history
+          else
+            echo 'Test branch diverged; refusing unsafe overwrite' >&2
+            exit 1
           fi
