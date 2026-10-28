@@ -33,7 +33,8 @@
     "cloudflare:sync-plan": "node scripts/cloudflare/sync-plan.mjs",
     "isin:verify": "node scripts/research/test-reconcile-isin.mjs && node scripts/research/test-import-isin-evidence.mjs && node scripts/research/test-fetch-gpw-evidence.mjs",
     "isin:gpw": "node scripts/research/fetch-gpw-evidence.mjs",
-    "test:amsterdam-session": "node scripts/history/test-amsterdam-session.mjs"
+    "test:amsterdam-session": "node scripts/history/test-amsterdam-session.mjs",
+    "amsterdam:discover": "node scripts/history/discover-amsterdam.mjs"
   },
   "engines": {
     "node": ">=22.5"
