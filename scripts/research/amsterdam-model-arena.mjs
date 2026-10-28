@@ -48,3 +48,6 @@ for(const h of horizons){
 const report={market:'XAMS',status:'EXPLORATORY_DEVELOPMENT_ONLY_NOT_OOS_VALIDATED',warning:'All models compared on development period; selection is NOT independent. Two calendar years of matured labels reserved per horizon. Holdout remains unused.',models:Object.keys(models),sectorCoverage:'Not evaluated; sector classifications require point-in-time validation',results:output,stability,regimes,regimeRecommendations,leaderboard,promotionRules};
 await fs.writeFile('research/output/amsterdam-model-arena.json',JSON.stringify(report,null,2));
 console.log('AMSTERDAM_MODEL_ARENA '+JSON.stringify({models:report.models,rows:output.length,regimeRows:regimes.length,regimeRecommendations,leaderboard,first:output[0]}));
+
+// Evaluate the frozen development policy on reserved historical dates after writing its manifest.
+await import('./amsterdam-blind-strategy-exam.mjs');
