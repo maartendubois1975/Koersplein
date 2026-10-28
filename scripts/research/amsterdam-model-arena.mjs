@@ -13,6 +13,7 @@ const models={
 };
 const output=[];
 const stability=[];
+const regimes=[];
 const leaderboard=[];
 const promotionRules={minSelected:500,minDistinctDates:100,minExcessReturn:0.01,minEligibleYears:3,minPositiveYearShare:0.6,requireIndependentHoldout:true};
 for(const h of horizons){
@@ -28,6 +29,9 @@ for(const h of horizons){
   const yearly=Map.groupBy(dev,r=>r.predictionDate.slice(0,4));
   const annual=[...yearly.entries()].map(([year,all])=>{const daily=Map.groupBy(all,r=>r.predictionDate),top=[];for(const day of daily.values())top.push(...day.filter(x=>Number.isFinite(score(x))).sort((a,b)=>score(b)-score(a)).slice(0,5));return {year,selected:top.length,dates:daily.size,excessReturn:top.length?mean(top.map(x=>x.realized[k]))-mean(all.map(x=>x.realized[k])):null}}).filter(x=>x.selected>=20);
   stability.push({horizonMonths:h,model:name,years:annual,positiveYears:annual.filter(x=>x.excessReturn>0).length,eligibleYears:annual.length,positiveYearShare:annual.length?annual.filter(x=>x.excessReturn>0).length/annual.length:null});
+  const regimeGroups={rising:[],falling:[],sideways:[]};
+  for(const day of byDev.values()){const observed=day.map(x=>Number(x.availableSignals?.momentum3m)).filter(Number.isFinite);if(observed.length<5)continue;const avg=mean(observed),regime=avg>0.05?'rising':avg< -0.05?'falling':'sideways';regimeGroups[regime].push(day)}
+  for(const [regime,days] of Object.entries(regimeGroups)){const universe=days.flat(),picks=days.flatMap(day=>day.filter(x=>Number.isFinite(score(x))).sort((a,b)=>score(b)-score(a)).slice(0,5));regimes.push({horizonMonths:h,model:name,regime,dates:days.length,selected:picks.length,meanTop5Return:mean(picks.map(x=>x.realized[k])),meanUniverseReturn:mean(universe.map(x=>x.realized[k])),excessReturn:picks.length?mean(picks.map(x=>x.realized[k]))-mean(universe.map(x=>x.realized[k])):null,regimeDefinedBy:'CROSS_SECTIONAL_3M_MOMENTUM_KNOWN_AT_T',caution:'Proxy based on current-universe historical constituents, not an official market index'})}
   output.push({horizonMonths:h,model:name,holdoutStart,holdoutReserved:reserved.length,dates:byDev.size,selected:selected.length,meanTop5Return:mean(selected.map(x=>x.realized[k])),meanUniverseReturn:mean(baseline.map(x=>x.realized[k])),targets:Object.fromEntries(targets.map(t=>[t+'pct',{top5HitRate:mean(selected.map(x=>Number(x.realized[k]>=t/100))),universeHitRate:mean(baseline.map(x=>Number(x.realized[k]>=t/100)))}])),researchOnly:true});
  }
  const candidates=output.filter(x=>x.horizonMonths===h&&x.selected>=100&&x.dates>=24).map(x=>({...x,excessReturn:x.meanTop5Return-x.meanUniverseReturn})).sort((a,b)=>b.excessReturn-a.excessReturn);
@@ -39,6 +43,6 @@ for(const h of horizons){
  const developmentQualified=Boolean(leader);
  leaderboard.push({horizonMonths:h,developmentLeader:leader?.model||null,developmentExcessReturn:leader?.excessReturn??null,comparedModels:candidates.length,qualifiedModels:qualified.map(x=>x.model),rejectedFrontRunner,leaderStability,developmentQualified,holdoutEvaluated:false,promotedToProduction:false,decision:developmentQualified?'AWAITING_INDEPENDENT_HOLDOUT':'REJECTED_DEVELOPMENT_GATE'});
 }
-const report={market:'XAMS',status:'EXPLORATORY_DEVELOPMENT_ONLY_NOT_OOS_VALIDATED',warning:'All models compared on development period; selection is NOT independent. Two calendar years of matured labels reserved per horizon. Holdout remains unused.',models:Object.keys(models),sectorCoverage:'Not evaluated; sector classifications require point-in-time validation',results:output,stability,leaderboard,promotionRules};
+const report={market:'XAMS',status:'EXPLORATORY_DEVELOPMENT_ONLY_NOT_OOS_VALIDATED',warning:'All models compared on development period; selection is NOT independent. Two calendar years of matured labels reserved per horizon. Holdout remains unused.',models:Object.keys(models),sectorCoverage:'Not evaluated; sector classifications require point-in-time validation',results:output,stability,regimes,leaderboard,promotionRules};
 await fs.writeFile('research/output/amsterdam-model-arena.json',JSON.stringify(report,null,2));
-console.log('AMSTERDAM_MODEL_ARENA '+JSON.stringify({models:report.models,rows:output.length,leaderboard,first:output[0]}));
+console.log('AMSTERDAM_MODEL_ARENA '+JSON.stringify({models:report.models,rows:output.length,regimeRows:regimes.length,leaderboard,first:output[0]}));
