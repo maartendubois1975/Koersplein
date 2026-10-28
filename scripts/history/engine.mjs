@@ -67,14 +67,31 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
   const startDate = mode === 'update' && existing?.coverage?.lastDate ? existing.coverage.lastDate : '1990-01-01';
   const endDate = today();
   if (startDate > endDate) return { isin: instrument.isin, outcome: 'unchanged', reason: 'already-current', providerRequest: false, records: existing.bars.length, firstDate: existing.coverage.firstDate, lastDate: existing.coverage.lastDate };
-  const fetched = await provider.fetchDaily(instrument, { startDate, endDate });
+  // Euronext is the primary daily source for XAMS; retain the verified Yahoo
+  // mapping as fallback and historical backfill source. Do not mix source
+  // attribution: record the provider actually used for this refresh.
+  let usedProvider = provider;
+  let fetched;
+  if (mode === 'update' && instrument.mic === 'XAMS') {
+    const official = providers.get('euronext-live');
+    try {
+      fetched = await official.fetchDaily(instrument, { startDate, endDate });
+      if (fetched.providerMeta?.partialHistory) throw new Error('Incomplete official Euronext window');
+      usedProvider = official;
+    } catch (officialError) {
+      fetched = await provider.fetchDaily(instrument, { startDate, endDate });
+      fetched.providerMeta = { ...fetched.providerMeta, officialFallbackReason: officialError.message };
+    }
+  } else {
+    fetched = await provider.fetchDaily(instrument, { startDate, endDate });
+  }
   const bars = mergeBars(existing?.bars || [], fetched.bars);
   if (!bars.length) throw new Error(`Geen geldige dagkoersen voor ${instrument.isin}`);
   const volumeRecords = bars.filter((bar) => bar.volume !== null).length;
   const document = {
     schemaVersion: 1,
     instrument: { isin: instrument.isin, name: instrument.name, symbol: instrument.symbol, mic: instrument.mic, market: instrument.market, currency: instrument.currency, identitySource: instrument.identitySource },
-    provider: { id: provider.id, name: provider.name, symbol: instrument.providerSymbol, retrievedAt: new Date().toISOString(), requestUrl: fetched.requestUrl, metadata: fetched.providerMeta, licenseNote: 'Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd.' },
+    provider: { id: usedProvider.id, name: usedProvider.name, symbol: usedProvider.id === 'euronext-live' ? instrument.isin+'-'+instrument.mic : instrument.providerSymbol, retrievedAt: new Date().toISOString(), requestUrl: fetched.requestUrl, metadata: fetched.providerMeta, licenseNote: 'Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd.' },
     coverage: { firstDate: bars[0].date, lastDate: bars.at(-1).date, records: bars.length, volumeRecords, missingVolumeRecords: bars.length - volumeRecords, backfillComplete: mode === 'backfill' || existing?.coverage?.backfillComplete === true },
     bars
   };
