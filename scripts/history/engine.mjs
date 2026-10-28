@@ -64,7 +64,7 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
   }
   // Refresh the latest stored trading session as well: an intraday candle can
   // change until the official close, and providers may correct the last bar.
-  const startDate = mode === 'update' && existing?.coverage?.lastDate ? existing.coverage.lastDate : '1990-01-01';
+  const startDate = mode === 'update' && existing?.coverage?.lastDate ? existing.coverage.lastDate : (mode === 'update' && instrument.provider === 'euronext-live' ? '2026-10-01' : '1990-01-01');
   const endDate = today();
   if (startDate > endDate) return { isin: instrument.isin, outcome: 'unchanged', reason: 'already-current', providerRequest: false, records: existing.bars.length, firstDate: existing.coverage.firstDate, lastDate: existing.coverage.lastDate };
   // Euronext is the primary daily source for XAMS; retain the verified Yahoo
