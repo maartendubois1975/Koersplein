@@ -1,14 +1,14 @@
 import fs from 'node:fs/promises';
 
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
-if(!API) throw new Error('KOERSPLEIN_API_URL ontbreekt');
+// Local verified Amsterdam history is the default; remote API is an optional fallback.
 const catalog=JSON.parse(await fs.readFile('data/euronext-amsterdam.json','utf8'));
-const instruments=Array.isArray(catalog)?catalog:(catalog.instruments||catalog.shares||[]);
+const instruments=(Array.isArray(catalog)?catalog:(catalog.instruments||catalog.shares||[])).filter(x=>x.displayPolicy!=='cross-market-reference-only');
 const pct=(a,b)=>a&&b?(b/a-1):null;
 const monthKey=d=>d.slice(0,7);
 const addMonths=(date,n)=>{const d=new Date(date+'T00:00:00Z');d.setUTCMonth(d.getUTCMonth()+n);return d.toISOString().slice(0,10)};
 const nearest=(bars,date)=>bars.find(b=>b.date>=date)||null;
-const history=async isin=>{const r=await fetch(`${API}/api/history/${encodeURIComponent(isin)}`);if(!r.ok)throw new Error(`history ${r.status}`);return r.json()};
+const history=async isin=>{try{return JSON.parse(await fs.readFile('data/history/'+isin+'.json','utf8'))}catch(e){if(!API)throw e;const r=await fetch(`${API}/api/history/${encodeURIComponent(isin)}`);if(!r.ok)throw new Error(`history ${r.status}`);return r.json()}};
 const getBars=x=>Array.isArray(x)?x:(x.bars||x.records||x.history||[]);
 const results=[];let failed=0;
 for(const item of instruments){
