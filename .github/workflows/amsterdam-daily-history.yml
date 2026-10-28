@@ -1,6 +1,12 @@
 name: Amsterdam daily history refresh (staging)
 on:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Test provider import and audits without committing updated prices'
+        required: false
+        default: true
+        type: boolean
   schedule:
     - cron: '20 19 * * 1-5'
       timezone: 'Europe/Amsterdam'
@@ -22,10 +28,20 @@ jobs:
         with:
           node-version: '22'
       - name: Refresh only mapped Amsterdam daily OHLC histories
+        id: refresh
+        continue-on-error: true
         run: node scripts/history.mjs update --all --batch-size 8
       - name: Validate all histories and Amsterdam browser integration
         run: npm test && npm run history:test
+      - name: Summarize provider refresh and public data checks
+        if: always()
+        run: |
+          echo '## Amsterdam daily history refresh' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Provider outcome: ${{ steps.refresh.outcome }}' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Audit outcome: ${{ job.status }}' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Dry run: ${{ inputs.dry_run }}' >> "$GITHUB_STEP_SUMMARY"
       - name: Commit only audited historical data
+        if: success() && inputs.dry_run != true
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
