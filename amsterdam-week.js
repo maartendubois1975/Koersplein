@@ -11,7 +11,7 @@ const latestClosedWeek=()=>{
  const weekday=now.getUTCDay();
  const daysSinceMonday=(weekday+6)%7;
  const monday=new Date(now);
- monday.setUTCDate(monday.getUTCDate()-daysSinceMonday-7);
+ monday.setUTCDate(monday.getUTCDate()-daysSinceMonday-(weekday>=1&&weekday<=5?7:0));
  return Array.from({length:5},(_,i)=>{const d=new Date(monday);d.setUTCDate(d.getUTCDate()+i);return d.toISOString().slice(0,10);});
 };
 const days=latestClosedWeek();
