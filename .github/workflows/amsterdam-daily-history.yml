@@ -12,9 +12,6 @@ on:
         required: false
         default: true
         type: boolean
-  schedule:
-    - cron: '20 19 * * 1-5'
-      timezone: 'Europe/Amsterdam'
 permissions:
   contents: write
 concurrency:
