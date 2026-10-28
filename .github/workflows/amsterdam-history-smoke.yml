@@ -1,0 +1,14 @@
+name: Amsterdam history smoke
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/amsterdam-history-smoke.yml'
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/history.mjs update --isin NL0010273215
