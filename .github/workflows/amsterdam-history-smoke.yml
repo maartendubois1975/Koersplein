@@ -11,4 +11,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node scripts/history.mjs update --isin NL0010273215
+      - run: node scripts/history.mjs update --all --batch-size 10
