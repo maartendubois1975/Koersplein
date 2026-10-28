@@ -22,7 +22,7 @@ for(const h of horizons){
   const byDev=Map.groupBy(dev,r=>r.predictionDate),selected=[];
   for(const daily of byDev.values())selected.push(...daily.filter(x=>Number.isFinite(score(x))).sort((a,b)=>score(b)-score(a)).slice(0,5));
   const baseline=dev;
-  output.push({horizonMonths:h,model:name,dates:byDev.size,selected:selected.length,meanTop5Return:mean(selected.map(x=>x.realized[k])),meanUniverseReturn:mean(baseline.map(x=>x.realized[k])),targets:Object.fromEntries(targets.map(t=>[t+'pct',{top5HitRate:mean(selected.map(x=>+(x.realized[k]>=t/100))),universeHitRate:mean(baseline.map(x=>+(x.realized[k]>=t/100))}])),researchOnly:true});
+  output.push({horizonMonths:h,model:name,dates:byDev.size,selected:selected.length,meanTop5Return:mean(selected.map(x=>x.realized[k])),meanUniverseReturn:mean(baseline.map(x=>x.realized[k])),targets:Object.fromEntries(targets.map(t=>[t+'pct',{top5HitRate:mean(selected.map(x=>Number(x.realized[k]>=t/100))),universeHitRate:mean(baseline.map(x=>Number(x.realized[k]>=t/100)))}])),researchOnly:true});
  }
 }
 const report={market:'XAMS',status:'EXPLORATORY_DEVELOPMENT_ONLY_NOT_OOS_VALIDATED',warning:'All models compared on development period; selection is NOT independent. Holdout remains unused.',models:Object.keys(models),sectorCoverage:'Not evaluated; sector classifications require point-in-time validation',results:output};
