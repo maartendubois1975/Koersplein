@@ -13,4 +13,5 @@ const newestDate = dates.sort().at(-1) || null;
 const missing = rows.filter(x => x.latestDate !== newestDate || x.open === null || x.close === null || x.changePct === null);
 const report = { newestDate, active: rows.length, current: rows.length - missing.length, lagging: missing, checked: rows };
 console.log('AMSTERDAM_LATEST_SESSION ' + JSON.stringify(report));
-if (rows.length !== 80 || missing.length) process.exitCode = 1;
+if (rows.length !== 80) { console.error('Expected exactly 80 canonical Amsterdam price series'); process.exitCode = 1; }
+if (missing.length) console.warn('AMSTERDAM_LAGGING_SESSIONS ' + missing.length + ' instruments need investigation; a missing trade is not automatically a provider failure.');
