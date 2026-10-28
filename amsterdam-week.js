@@ -6,6 +6,7 @@ const fmt=(value,currency)=>{const n=positiveNumber(value);if(n===null)return '�
 const signed=(value,digits=2)=>new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:digits,maximumFractionDigits:digits}).format(value);
 const change=(open,close,currency)=>{const d=sessionChange(open,close);if(!d)return '—';return signed(d.absolute,2)+' '+esc(currency||'EUR')+' / '+signed(d.percent,2)+'%';};
 const days=AMSTERDAM_REFERENCE_WEEK;
+const LOCAL_HISTORY_BASE='data/history/';
 // Previous *traded* close can cross a session only if the exchange explicitly
 // confirmed NO_TRADES. Never skip an invalid or unverified missing session:
 // doing so would fabricate an uninterrupted close-to-close return.
@@ -76,7 +77,7 @@ async function start(){
   if(!catalogResponse.ok)throw Error('CATALOG_HTTP_'+catalogResponse.status);
   const catalog=await catalogResponse.json();
   const api=String(window.KOERSPLEIN_MARKET?.api||'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/,'');
-  const manifestResponse=await fetch(api+'/api/history/manifest.json',{cache:'no-store'});
+  const manifestResponse=await fetch('data/amsterdam-history-manifest.json',{cache:'no-store'});
   if(!manifestResponse.ok)throw Error('MANIFEST_HTTP_'+manifestResponse.status);
   const manifest=await manifestResponse.json();
   const shares=catalog.shares||[];
@@ -84,7 +85,7 @@ async function start(){
   try{const statusResponse=await fetch('data/amsterdam-no-trades-2026-10-19-23.json',{cache:'no-store'});if(statusResponse.ok)statusAudit=await statusResponse.json();}catch{statusAudit=null;}
   document.getElementById('share-count').textContent=shares.length;
   target.textContent='Vijf handelsdagen voor '+shares.length+' aandelen worden gecontroleerd…';
-  snapshot=await collectMarketWeek({catalog:shares,manifest,apiBase:api,mic:'XAMS',dates:days,concurrency:8});
+  snapshot=await collectMarketWeek({catalog:shares,manifest,apiBase:api,mic:'XAMS',dates:days,concurrency:8,fetchImpl:async (url,options)=>{const id=decodeURIComponent(url.split('/').at(-1));return fetch(LOCAL_HISTORY_BASE+encodeURIComponent(id)+'.json',options);}});
   render();
  }catch(e){target.textContent='Amsterdamse weekkoersen niet beschikbaar: '+e.message;}
 }
