@@ -1,0 +1,32 @@
+import fs from 'node:fs/promises';
+const root='research/output/';
+const report=JSON.parse(await fs.readFile(root+'amsterdam-model-arena.json','utf8'));
+const rows=(await fs.readFile(root+'amsterdam-machine1-results.jsonl','utf8')).trim().split('\n').filter(Boolean).map(JSON.parse);
+const mean=a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:null;
+const score=(model,r,h)=>model==='momentum3m'?r.availableSignals?.momentum3m:model==='momentum6m'?r.availableSignals?.momentum6m:model==='momentum12m'?r.availableSignals?.momentum12m:model==='reversal3m'?-r.availableSignals?.momentum3m:r.predictions?.['3m'];
+const result=[];
+for(const horizon of [3,6,12,24]){
+ const k=horizon+'m',leader=report.leaderboard.find(x=>x.horizonMonths===horizon);
+ const start=report.results.find(x=>x.horizonMonths===horizon)?.holdoutStart;
+ const holdout=rows.filter(x=>x.predictionDate>=start&&Number.isFinite(x.realized?.[k]));
+ const days=Map.groupBy(holdout,x=>x.predictionDate);
+ const selected=[],unconditional=[],all=[],skipped=[];
+ const counts={rising:0,falling:0,sideways:0,unknown:0};
+ for(const [date,day] of days){
+  const signals=day.map(x=>x.availableSignals?.momentum3m).filter(Number.isFinite);
+  const momentum=mean(signals),regime=signals.length>=5?(momentum>0.05?'rising':momentum< -0.05?'falling':'sideways'):'unknown';
+  counts[regime]++;
+  all.push(...day.map(x=>x.realized[k]));
+  const fixed=leader.developmentLeader;
+  if(fixed)unconditional.push(...day.filter(x=>Number.isFinite(score(fixed,x,horizon))).sort((a,b)=>score(fixed,b,horizon)-score(fixed,a,horizon)).slice(0,5).map(x=>x.realized[k]));
+  const rule=report.regimeRecommendations.find(x=>x.horizonMonths===horizon&&x.regime===regime);
+  if(!leader.developmentQualified||!rule?.regimeQualified||!rule.developmentLeader){skipped.push({date,regime,reason:'NO_DEVELOPMENT_QUALIFIED_MODEL'});continue}
+  const model=rule.developmentLeader;
+  selected.push(...day.filter(x=>Number.isFinite(score(model,x,horizon))).sort((a,b)=>score(model,b,horizon)-score(model,a,horizon)).slice(0,5).map(x=>x.realized[k]));
+ }
+ const strategy=mean(selected),baseline=mean(all),always=mean(unconditional);
+ result.push({horizonMonths:horizon,holdoutStart:start,holdoutDates:days.size,regimeDates:counts,investedSelections:selected.length,skippedDates:skipped.length,meanSelectedReturn:strategy,meanUniverseReturn:baseline,meanUnconditionalLeaderReturn:always,excessVsUniverse:strategy===null||baseline===null?null:strategy-baseline,excessVsUnconditional:strategy===null||always===null?null:strategy-always,decision:'INDEPENDENT_HOLDOUT_AUDIT_ONLY_NO_PRODUCTION_PROMOTION',caveat:'Conditional returns exclude no-pick dates; not portfolio return. Historical current-universe survivorship bias, overlapping labels and costs remain unresolved.'});
+}
+const out={market:'XAMS',strategyFrozenFrom:'amsterdam-model-arena.json',status:'FIRST_HOLDOUT_EVALUATION_RESEARCH_ONLY',warning:'Do not optimize thresholds or select models using these holdout results. No live publication.',results:result};
+await fs.writeFile(root+'amsterdam-blind-strategy-exam.json',JSON.stringify(out,null,2));
+console.log('AMSTERDAM_BLIND_STRATEGY_EXAM '+JSON.stringify(result));
