@@ -14,6 +14,7 @@ const models={
 const output=[];
 const stability=[];
 const regimes=[];
+const regimeRecommendations=[];
 const leaderboard=[];
 const promotionRules={minSelected:500,minDistinctDates:100,minExcessReturn:0.01,minEligibleYears:3,minPositiveYearShare:0.6,requireIndependentHoldout:true};
 for(const h of horizons){
@@ -37,12 +38,13 @@ for(const h of horizons){
  const candidates=output.filter(x=>x.horizonMonths===h&&x.selected>=100&&x.dates>=24).map(x=>({...x,excessReturn:x.meanTop5Return-x.meanUniverseReturn})).sort((a,b)=>b.excessReturn-a.excessReturn);
  const qualify=x=>{const s=stability.find(v=>v.horizonMonths===h&&v.model===x.model);return x.selected>=promotionRules.minSelected&&x.dates>=promotionRules.minDistinctDates&&x.excessReturn>=promotionRules.minExcessReturn&&s?.eligibleYears>=promotionRules.minEligibleYears&&s?.positiveYearShare>=promotionRules.minPositiveYearShare};
  const qualified=candidates.filter(qualify);
+ for(const regime of ['rising','falling','sideways']){const eligible=qualified.map(x=>({model:x.model,stats:regimes.find(v=>v.horizonMonths===h&&v.model===x.model&&v.regime===regime)})).filter(x=>x.stats?.dates>=30&&x.stats?.selected>=100&&Number.isFinite(x.stats.excessReturn)).sort((a,b)=>b.stats.excessReturn-a.stats.excessReturn);const best=eligible[0];regimeRecommendations.push({horizonMonths:h,regime,developmentLeader:best?.model||null,excessReturn:best?.stats.excessReturn??null,eligibleModels:eligible.length,minimumRegimeDates:30,minimumRegimeSelections:100,decision:'DIAGNOSTIC_ONLY_NOT_DEPLOYABLE',holdoutEvaluated:false})}
  const leader=qualified[0]||null;
  const rejectedFrontRunner=candidates[0]&&!qualify(candidates[0])?{model:candidates[0].model,excessReturn:candidates[0].excessReturn,reason:'FAILED_DEVELOPMENT_STABILITY_OR_SAMPLE_GATE'}:null;
  const leaderStability=stability.find(x=>x.horizonMonths===h&&x.model===leader?.model);
  const developmentQualified=Boolean(leader);
  leaderboard.push({horizonMonths:h,developmentLeader:leader?.model||null,developmentExcessReturn:leader?.excessReturn??null,comparedModels:candidates.length,qualifiedModels:qualified.map(x=>x.model),rejectedFrontRunner,leaderStability,developmentQualified,holdoutEvaluated:false,promotedToProduction:false,decision:developmentQualified?'AWAITING_INDEPENDENT_HOLDOUT':'REJECTED_DEVELOPMENT_GATE'});
 }
-const report={market:'XAMS',status:'EXPLORATORY_DEVELOPMENT_ONLY_NOT_OOS_VALIDATED',warning:'All models compared on development period; selection is NOT independent. Two calendar years of matured labels reserved per horizon. Holdout remains unused.',models:Object.keys(models),sectorCoverage:'Not evaluated; sector classifications require point-in-time validation',results:output,stability,regimes,leaderboard,promotionRules};
+const report={market:'XAMS',status:'EXPLORATORY_DEVELOPMENT_ONLY_NOT_OOS_VALIDATED',warning:'All models compared on development period; selection is NOT independent. Two calendar years of matured labels reserved per horizon. Holdout remains unused.',models:Object.keys(models),sectorCoverage:'Not evaluated; sector classifications require point-in-time validation',results:output,stability,regimes,regimeRecommendations,leaderboard,promotionRules};
 await fs.writeFile('research/output/amsterdam-model-arena.json',JSON.stringify(report,null,2));
-console.log('AMSTERDAM_MODEL_ARENA '+JSON.stringify({models:report.models,rows:output.length,regimeRows:regimes.length,leaderboard,first:output[0]}));
+console.log('AMSTERDAM_MODEL_ARENA '+JSON.stringify({models:report.models,rows:output.length,regimeRows:regimes.length,regimeRecommendations,leaderboard,first:output[0]}));
