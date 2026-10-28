@@ -51,8 +51,10 @@
       "symbol": "AF",
       "isin": "FR001400J770",
       "market": "Euronext Paris, Amsterdam",
-      "historyStatus": "unverified-amsterdam-trading",
-      "historyStatusNote": "Official Euronext historical XAMS query returned no traded daily bars for 2026-10-01 through 2026-10-28. Listing presence does not establish executed trades; do not substitute XPAR/XBRU prices."
+      "historyStatus": "canonical-on-other-market",
+      "historyStatusNote": "One ISIN, one primary-market price series. See data/canonical-listings.json. Do not duplicate XPAR/XBRU prices as XAMS.",
+      "primaryMic": "XPAR",
+      "displayPolicy": "cross-market-reference-only"
     },
     {
       "name": "AJAX",
@@ -239,16 +241,20 @@
       "symbol": "ENX",
       "isin": "NL0006294274",
       "market": "Euronext Paris, Amsterdam, Brussels",
-      "historyStatus": "unverified-amsterdam-trading",
-      "historyStatusNote": "Official Euronext historical XAMS query returned no traded daily bars for 2026-10-01 through 2026-10-28. Listing presence does not establish executed trades; do not substitute XPAR/XBRU prices."
+      "historyStatus": "canonical-on-other-market",
+      "historyStatusNote": "One ISIN, one primary-market price series. See data/canonical-listings.json. Do not duplicate XPAR/XBRU prices as XAMS.",
+      "primaryMic": "XPAR",
+      "displayPolicy": "cross-market-reference-only"
     },
     {
       "name": "FAGRON",
       "symbol": "FAGR",
       "isin": "BE0003874915",
       "market": "Euronext Brussels, Amsterdam",
-      "historyStatus": "unverified-amsterdam-trading",
-      "historyStatusNote": "Official Euronext historical XAMS query returned no traded daily bars for 2026-10-01 through 2026-10-28. Listing presence does not establish executed trades; do not substitute XPAR/XBRU prices."
+      "historyStatus": "canonical-on-other-market",
+      "historyStatusNote": "One ISIN, one primary-market price series. See data/canonical-listings.json. Do not duplicate XPAR/XBRU prices as XAMS.",
+      "primaryMic": "XBRU",
+      "displayPolicy": "cross-market-reference-only"
     },
     {
       "name": "FASTNED",
@@ -387,8 +393,10 @@
       "symbol": "ONWD",
       "isin": "NL0015000HT4",
       "market": "Euronext Brussels, Amsterdam, Paris",
-      "historyStatus": "unverified-amsterdam-trading",
-      "historyStatusNote": "Official Euronext historical XAMS query returned no traded daily bars for 2026-10-01 through 2026-10-28. Listing presence does not establish executed trades; do not substitute XPAR/XBRU prices."
+      "historyStatus": "canonical-on-other-market",
+      "historyStatusNote": "One ISIN, one primary-market price series. See data/canonical-listings.json. Do not duplicate XPAR/XBRU prices as XAMS.",
+      "primaryMic": "XBRU",
+      "displayPolicy": "cross-market-reference-only"
     },
     {
       "name": "PHARMING GROUP",
@@ -431,8 +439,10 @@
       "symbol": "SGO",
       "isin": "FR0000125007",
       "market": "Euronext Paris, Amsterdam, Brussels",
-      "historyStatus": "unverified-amsterdam-trading",
-      "historyStatusNote": "Official Euronext historical XAMS query returned no traded daily bars for 2026-10-01 through 2026-10-28. Listing presence does not establish executed trades; do not substitute XPAR/XBRU prices."
+      "historyStatus": "canonical-on-other-market",
+      "historyStatusNote": "One ISIN, one primary-market price series. See data/canonical-listings.json. Do not duplicate XPAR/XBRU prices as XAMS.",
+      "primaryMic": "XPAR",
+      "displayPolicy": "cross-market-reference-only"
     },
     {
       "name": "SBM OFFSHORE",
