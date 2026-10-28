@@ -11,21 +11,24 @@ for(const horizon of [3,6,12,24]){
  const holdout=rows.filter(x=>x.predictionDate>=start&&Number.isFinite(x.realized?.[k]));
  const days=Map.groupBy(holdout,x=>x.predictionDate);
  const selected=[],unconditional=[],all=[],skipped=[];
+ const equalDateStrategy=[],equalDateFixed=[],equalDateUniverse=[];
  const counts={rising:0,falling:0,sideways:0,unknown:0};
  for(const [date,day] of days){
   const signals=day.map(x=>x.availableSignals?.momentum3m).filter(Number.isFinite);
   const momentum=mean(signals),regime=signals.length>=5?(momentum>0.05?'rising':momentum< -0.05?'falling':'sideways'):'unknown';
   counts[regime]++;
   all.push(...day.map(x=>x.realized[k]));
+  equalDateUniverse.push(mean(day.map(x=>x.realized[k])));
   const fixed=leader.developmentLeader;
-  if(fixed)unconditional.push(...day.filter(x=>Number.isFinite(score(fixed,x,horizon))).sort((a,b)=>score(fixed,b,horizon)-score(fixed,a,horizon)).slice(0,5).map(x=>x.realized[k]));
+  if(fixed){const picks=day.filter(x=>Number.isFinite(score(fixed,x,horizon))).sort((a,b)=>score(fixed,b,horizon)-score(fixed,a,horizon)).slice(0,5).map(x=>x.realized[k]);unconditional.push(...picks);equalDateFixed.push(mean(picks)??0)}else equalDateFixed.push(0);
   const rule=report.regimeRecommendations.find(x=>x.horizonMonths===horizon&&x.regime===regime);
-  if(!leader.developmentQualified||!rule?.regimeQualified||!rule.developmentLeader){skipped.push({date,regime,reason:'NO_DEVELOPMENT_QUALIFIED_MODEL'});continue}
+  if(!leader.developmentQualified||!rule?.regimeQualified||!rule.developmentLeader){skipped.push({date,regime,reason:'NO_DEVELOPMENT_QUALIFIED_MODEL'});equalDateStrategy.push(0);continue}
   const model=rule.developmentLeader;
-  selected.push(...day.filter(x=>Number.isFinite(score(model,x,horizon))).sort((a,b)=>score(model,b,horizon)-score(model,a,horizon)).slice(0,5).map(x=>x.realized[k]));
+  const picks=day.filter(x=>Number.isFinite(score(model,x,horizon))).sort((a,b)=>score(model,b,horizon)-score(model,a,horizon)).slice(0,5).map(x=>x.realized[k]);
+  selected.push(...picks);equalDateStrategy.push(mean(picks)??0);
  }
  const strategy=mean(selected),baseline=mean(all),always=mean(unconditional);
- result.push({horizonMonths:horizon,holdoutStart:start,holdoutDates:days.size,regimeDates:counts,investedSelections:selected.length,skippedDates:skipped.length,meanSelectedReturn:strategy,meanUniverseReturn:baseline,meanUnconditionalLeaderReturn:always,excessVsUniverse:strategy===null||baseline===null?null:strategy-baseline,excessVsUnconditional:strategy===null||always===null?null:strategy-always,decision:'INDEPENDENT_HOLDOUT_AUDIT_ONLY_NO_PRODUCTION_PROMOTION',caveat:'Conditional returns exclude no-pick dates; not portfolio return. Historical current-universe survivorship bias, overlapping labels and costs remain unresolved.'});
+ result.push({horizonMonths:horizon,holdoutStart:start,holdoutDates:days.size,regimeDates:counts,investedSelections:selected.length,skippedDates:skipped.length,coverage:days.size?(days.size-skipped.length)/days.size:null,equalDateStrategyReturnWithCashZero:mean(equalDateStrategy),equalDateFixedModelReturnWithCashZero:mean(equalDateFixed),equalDateUniverseReturn:mean(equalDateUniverse),equalDateExcessVsFixed:mean(equalDateStrategy)-mean(equalDateFixed),equalDateExcessVsUniverse:mean(equalDateStrategy)-mean(equalDateUniverse),meanSelectedReturn:strategy,meanUniverseReturn:baseline,meanUnconditionalLeaderReturn:always,excessVsUniverse:strategy===null||baseline===null?null:strategy-baseline,excessVsUnconditional:strategy===null||always===null?null:strategy-always,decision:'INDEPENDENT_HOLDOUT_AUDIT_ONLY_NO_PRODUCTION_PROMOTION',caveat:'Equal-date metrics assign 0 to no-pick dates and are NOT a tradable compounded portfolio: forward holding periods overlap, cash yield assumed zero, and transaction costs, delistings and survivorship bias remain unresolved.'});
 }
 const out={market:'XAMS',strategyFrozenFrom:'amsterdam-model-arena.json',status:'FIRST_HOLDOUT_EVALUATION_RESEARCH_ONLY',warning:'Do not optimize thresholds or select models using these holdout results. No live publication.',results:result};
 await fs.writeFile(root+'amsterdam-blind-strategy-exam.json',JSON.stringify(out,null,2));
