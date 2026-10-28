@@ -8,7 +8,7 @@
     "update:amsterdam": "node scripts/import-euronext-amsterdam.mjs",
     "validate": "node scripts/validate.mjs",
     "test": "node scripts/validate.mjs && node scripts/test.mjs && node scripts/factory/test.mjs && node scripts/cloudflare/test.mjs && node scripts/cloudflare/test-market-week-core.mjs && node scripts/cloudflare/test-xams-market-page.mjs",
-    "history:test": "node scripts/history/audit-amsterdam-import.mjs",
+    "history:test": "node scripts/history/audit-amsterdam-import.mjs && node scripts/history/test-amsterdam-public-integration.mjs",
     "history:update": "node scripts/history.mjs update --all",
     "history:status": "node scripts/history.mjs status",
     "history:movers": "node scripts/history.mjs movers",
