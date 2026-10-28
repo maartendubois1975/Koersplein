@@ -49,6 +49,8 @@ jobs:
         run: node scripts/research/amsterdam-machine2.mjs research/output/amsterdam-machine1-results.jsonl
       - name: Judge baseline with chronological folds and untouched holdout
         run: node scripts/research/amsterdam-baseline-judge.mjs
+      - name: Compare five exploratory Amsterdam price models
+        run: node scripts/research/amsterdam-model-arena.mjs
       - name: Audit latest Amsterdam trading session and percentage changes
         run: node scripts/history/check-amsterdam-latest-session.mjs
       - name: Require a clean provider refresh before publishing
