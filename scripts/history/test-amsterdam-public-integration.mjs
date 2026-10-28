@@ -24,5 +24,5 @@ assert.equal(report.catalog,85);
 assert.equal(report.mapped,80);
 assert.equal(report.filesLoaded,80);
 assert.equal(report.errors.length,0,'Every mapped history must pass public MIC/ticker/ISIN/currency checks');
-assert.ok(report.sharesWithReferenceWeekPrices>=65,'At least 65 mapped shares must have real week prices');
-assert.ok(report.validWeekSessions>=300,'Historical week must have at least 300 verified sessions');
+assert.equal(report.sharesWithReferenceWeekPrices,80,'Every one of the 80 mapped Amsterdam shares must have real week prices');
+assert.ok(report.validWeekSessions>=390,'At least 390 of 400 possible verified Amsterdam sessions must be present in the reference week');
