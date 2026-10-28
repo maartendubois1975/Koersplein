@@ -9,7 +9,9 @@ for (const file of files) {
  const bars = data.bars || [];
  const latest = bars.at(-1);
  const latestDay = latest ? { date: latest.date, open: latest.open, close: latest.close, absolute: +(latest.close-latest.open).toFixed(6), percent: +((latest.close/latest.open-1)*100).toFixed(4) } : null;
- const invalid = bars.filter(b => !Number.isFinite(b.open)||b.open<=0||!Number.isFinite(b.close)||b.close<=0||b.high<b.low||b.high<b.open||b.high<b.close||b.low>b.open||b.low>b.close).length;
+ const invalidRows = bars.filter(b => !Number.isFinite(b.open)||b.open<=0||!Number.isFinite(b.close)||b.close<=0||(Number.isFinite(b.high)&&Number.isFinite(b.low)&&b.high<b.low)||(Number.isFinite(b.high)&&b.high<b.open)||(Number.isFinite(b.high)&&b.high<b.close)||(Number.isFinite(b.low)&&b.low>b.open)||(Number.isFinite(b.low)&&b.low>b.close));
+ const invalid = invalidRows.length;
+ if(invalid) console.log('INVALID_OHLC',data.instrument.symbol,JSON.stringify(invalidRows.slice(0,5)));
  const unique = new Set(bars.map(b=>b.date)).size===bars.length;
  instruments.push({isin:data.instrument.isin,symbol:data.instrument.symbol,records:bars.length,firstDate:bars[0]?.date||null,lastDate:latest?.date||null,invalid,uniqueDates:unique,latestDay});
 }
