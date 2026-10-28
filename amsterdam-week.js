@@ -5,7 +5,17 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const fmt=(value,currency)=>{const n=positiveNumber(value);if(n===null)return '—';try{return new Intl.NumberFormat('nl-NL',{style:'currency',currency:currency||'EUR',minimumFractionDigits:2,maximumFractionDigits:4}).format(n)}catch{return new Intl.NumberFormat('nl-NL',{maximumFractionDigits:4}).format(n)}};
 const signed=(value,digits=2)=>new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:digits,maximumFractionDigits:digits}).format(value);
 const change=(open,close,currency)=>{const d=sessionChange(open,close);if(!d)return '—';return signed(d.absolute,2)+' '+esc(currency||'EUR')+' / '+signed(d.percent,2)+'%';};
-const days=AMSTERDAM_REFERENCE_WEEK;
+const amsterdamDate=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const latestClosedWeek=()=>{
+ const now=new Date(amsterdamDate()+'T12:00:00Z');
+ const weekday=now.getUTCDay();
+ const daysSinceMonday=(weekday+6)%7;
+ const monday=new Date(now);
+ monday.setUTCDate(monday.getUTCDate()-daysSinceMonday-7);
+ return Array.from({length:5},(_,i)=>{const d=new Date(monday);d.setUTCDate(d.getUTCDate()+i);return d.toISOString().slice(0,10);});
+};
+const days=latestClosedWeek();
+const weekLabel=days[0]+' t/m '+days.at(-1);
 const LOCAL_HISTORY_BASE='data/history/';
 // Previous *traded* close can cross a session only if the exchange explicitly
 // confirmed NO_TRADES. Never skip an invalid or unverified missing session:
@@ -56,7 +66,7 @@ function render(){
   const source=row.error?row.error:row.provider||'—';
   return '<tr><td><a class="share-link" href="share.html?isin='+encodeURIComponent(row.share.isin)+'&mic=XAMS&symbol='+encodeURIComponent(row.share.symbol)+'">'+esc(row.share.name)+'</a><br><small>'+esc(row.share.symbol)+' · '+esc(row.share.isin)+'</small></td>'+cells+'<td class="price">'+weekly+'</td><td><small>'+esc(source)+'</small></td></tr>';
  }).join('');
- const totals=days.map(d=>{const valid=snapshot.coverage.perDay[d].valid,noTrade=snapshot.rows.filter(row=>isNoTrade(row,d)).length;return '<span>'+esc(d.slice(8))+' okt: '+valid+' koers · '+noTrade+' geen handel · '+(snapshot.coverage.catalog-valid-noTrade)+' open</span>'}).join(' · ');
+ const totals=days.map(d=>{const valid=snapshot.coverage.perDay[d].valid,noTrade=snapshot.rows.filter(row=>isNoTrade(row,d)).length;return '<span>'+esc(d.slice(5))+': '+valid+' koers · '+noTrade+' geen handel · '+(snapshot.coverage.catalog-valid-noTrade)+' open</span>'}).join(' · ');
  const statusCount=days.reduce((sum,d)=>sum+snapshot.rows.filter(row=>isNoTrade(row,d)).length,0);
  const explained=snapshot.rows.filter(row=>days.every(date=>row.bars.has(date)||isNoTrade(row,date))).length;
  const missingByDay=days.map(date=>{
@@ -73,6 +83,7 @@ function render(){
 async function start(){
  if(!target)return;
  try{
+  const heading=document.getElementById('week-heading');if(heading)heading.textContent='Afgesloten handelsweek '+weekLabel;
   const catalogResponse=await fetch('data/euronext-amsterdam.json',{cache:'no-store'});
   if(!catalogResponse.ok)throw Error('CATALOG_HTTP_'+catalogResponse.status);
   const catalog=await catalogResponse.json();
