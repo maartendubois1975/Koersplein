@@ -8,6 +8,7 @@ const pct=(a,b)=>a&&b?(b/a-1):null;
 const monthKey=d=>d.slice(0,7);
 const addMonths=(date,n)=>{const d=new Date(date+'T00:00:00Z');d.setUTCMonth(d.getUTCMonth()+n);return d.toISOString().slice(0,10)};
 const nearest=(bars,date)=>bars.find(b=>b.date>=date)||null;
+const lastAvailable=bars=>bars.at(-1)?.date||null;
 const history=async isin=>{try{return JSON.parse(await fs.readFile('data/history/'+isin+'.json','utf8'))}catch(e){if(!API)throw e;const r=await fetch(`${API}/api/history/${encodeURIComponent(isin)}`);if(!r.ok)throw new Error(`history ${r.status}`);return r.json()}};
 const getBars=x=>Array.isArray(x)?x:(x.bars||x.records||x.history||[]);
 const results=[];let failed=0;
@@ -22,7 +23,7 @@ for(const item of instruments){
    // Baseline v1: puur point-in-time prijsmodel. Geen toekomstige of nog niet ingelezen fundamentele/news-data.
    const score=(signals.momentum3m??0)*.2+(signals.momentum6m??0)*.3+(signals.momentum12m??0)*.5;
    const predictions={};const realized={};
-   for(const h of [3,6,12,24]){predictions[`${h}m`]=score;const future=nearest(bars,addMonths(now.date,h));realized[`${h}m`]=future?pct(now.close,future.close):null;}
+   for(const h of [3,6,12,24]){predictions[`${h}m`]=score;const maturity=addMonths(now.date,h);const future=lastAvailable(bars)>=maturity?nearest(bars,maturity):null;realized[`${h}m`]=future?pct(now.close,future.close):null;}
    results.push({instrument:item.isin,ticker:item.ticker||item.symbol,company:item.company||item.name,predictionDate:now.date,informationCutoff:now.date,modelVersion:'machine1-price-baseline-v1',availableSignals:signals,missingSignals:['fundamentals-point-in-time','analyst-revisions','news-sentiment','macro-point-in-time','flows-options-short'],predictions,realized});
   }
  }catch(e){failed++;console.error(JSON.stringify({isin:item.isin,error:e.message}));}
