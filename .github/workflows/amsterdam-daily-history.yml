@@ -1,5 +1,10 @@
 name: Amsterdam daily history refresh (staging)
 on:
+  push:
+    branches:
+      - amsterdam-reset-20261027
+    paths:
+      - .github/amsterdam-dry-run-trigger.txt
   workflow_dispatch:
     inputs:
       dry_run:
@@ -34,7 +39,7 @@ jobs:
       - name: Validate all histories and Amsterdam browser integration
         run: npm test && npm run history:test
       - name: Require a clean provider refresh before publishing
-        if: inputs.dry_run != true && steps.refresh.outcome != 'success'
+        if: github.event_name != 'push' && inputs.dry_run != true && steps.refresh.outcome != 'success'
         run: |
           echo 'Provider refresh had errors; refusing to publish any partial daily update.' >&2
           exit 1
@@ -46,7 +51,7 @@ jobs:
           echo 'Audit outcome: ${{ job.status }}' >> "$GITHUB_STEP_SUMMARY"
           echo 'Dry run: ${{ inputs.dry_run }}' >> "$GITHUB_STEP_SUMMARY"
       - name: Commit only audited historical data
-        if: success() && steps.refresh.outcome == 'success' && inputs.dry_run != true
+        if: success() && steps.refresh.outcome == 'success' && github.event_name != 'push' && inputs.dry_run != true
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
