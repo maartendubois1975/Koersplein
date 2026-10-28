@@ -34,3 +34,4 @@ Check paired-date model consistency and year-by-year independent holdout results
 Enforce blind strategy gate: beat fixed model and be stable in 60 percent of years.
 Audit 0 10 25 50 basis-point transaction-cost scenarios for frozen strategy.
 Check cost exposure from actual selected positions, not observed returns.
+Diagnose missing regime signal coverage without changing frozen model thresholds.
