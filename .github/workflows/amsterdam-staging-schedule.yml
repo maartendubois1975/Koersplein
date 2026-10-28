@@ -1,0 +1,40 @@
+name: Amsterdam staging daily refresh
+on:
+  schedule:
+    - cron: '20 19 * * 1-5'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: koersplein-amsterdam-staging-scheduled
+  cancel-in-progress: false
+jobs:
+  refresh-staging:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout isolated Amsterdam staging branch
+        uses: actions/checkout@v4
+        with:
+          ref: amsterdam-reset-20261027
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch official Euronext daily bars with verified fallback
+        run: node scripts/history.mjs update --all --batch-size 8
+      - name: Validate Amsterdam history and public market integration
+        run: npm test && npm run history:test
+      - name: Persist validated data only to staging
+        run: |
+          test "$(git branch --show-current)" = "amsterdam-reset-20261027"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/history/*.json
+          git add data/amsterdam-import-audit.json
+          if git diff --cached --quiet; then
+            echo 'No new validated daily prices'
+          else
+            git commit -m 'data: refresh validated Amsterdam daily history (staging)'
+            git push origin HEAD:amsterdam-reset-20261027
+          fi
