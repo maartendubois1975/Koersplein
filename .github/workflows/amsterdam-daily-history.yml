@@ -33,6 +33,11 @@ jobs:
         run: node scripts/history.mjs update --all --batch-size 8
       - name: Validate all histories and Amsterdam browser integration
         run: npm test && npm run history:test
+      - name: Require a clean provider refresh before publishing
+        if: inputs.dry_run != true && steps.refresh.outcome != 'success'
+        run: |
+          echo 'Provider refresh had errors; refusing to publish any partial daily update.' >&2
+          exit 1
       - name: Summarize provider refresh and public data checks
         if: always()
         run: |
