@@ -47,7 +47,7 @@ async function atomicWrite(url, value) {
 export async function loadCatalog() {
   const [shares, mappings] = await Promise.all([readJson(new URL('euronext-amsterdam.json', dataUrl)), readJson(new URL('history-instruments.json', dataUrl))]);
   const byIsin = new Map(shares.shares.map((share) => [share.isin, share]));
-  return mappings.providerMappings.filter((mapping) => byIsin.get(mapping.isin)?.historyStatus !== 'unverified-amsterdam-trading').map((mapping) => {
+  return mappings.providerMappings.filter((mapping) => !['unverified-amsterdam-trading', 'canonical-on-other-market'].includes(byIsin.get(mapping.isin)?.historyStatus)).map((mapping) => {
     const share = byIsin.get(mapping.isin);
     if (!share || share.symbol !== mapping.symbol) throw new Error(`Identiteitskoppeling ongeldig voor ${mapping.isin}`);
     return { ...mapping, market: shares.exchange, mic: shares.mic, country: 'Nederland' };
