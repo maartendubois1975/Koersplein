@@ -1,5 +1,5 @@
 const DAY = 86_400_000;
-const PERIODS = { '1J': 1, '3J': 3, '5J': 5, '10J': 10, MAX: null };
+const PERIODS = { '1M': 1, '3M': 3, '6M': 6, '1J': 12, '3J': 36, '5J': 60, MAX: null };
 
 const finite = (value) => Number.isFinite(Number(value));
 const money = (value, currency = 'EUR') => new Intl.NumberFormat('nl-NL', {
@@ -37,7 +37,7 @@ export function filterPeriod(bars, period) {
   if (!(period in PERIODS) || period === 'MAX') return bars;
   const latest = new Date(`${bars.at(-1).date}T00:00:00Z`);
   const threshold = new Date(latest);
-  threshold.setUTCFullYear(threshold.getUTCFullYear() - PERIODS[period]);
+  threshold.setUTCMonth(threshold.getUTCMonth() - PERIODS[period]);
   const result = bars.filter((bar) => bar.date >= threshold.toISOString().slice(0, 10));
   return result.length > 1 ? result : bars.slice(-2);
 }
