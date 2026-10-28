@@ -7,9 +7,11 @@ const shares = await read('data/euronext-amsterdam.json');
 const registry = await read('data/history-instruments.json');
 const provider = new YahooChartProvider();
 const batchSize = Number(process.env.AMSTERDAM_DISCOVERY_BATCH || 15);
+const offset = Number(process.env.AMSTERDAM_DISCOVERY_OFFSET || 0);
+if (!Number.isInteger(offset) || offset < 0 || offset > 85) throw Error('Offset must be 0..85');
 if (!Number.isInteger(batchSize) || batchSize < 1 || batchSize > 85) throw Error('Batch size must be 1..85');
 const existing = new Set(registry.providerMappings.map(item => item.isin));
-const pending = shares.shares.filter(share => !existing.has(share.isin)).slice(0, batchSize);
+const pending = shares.shares.filter(share => !existing.has(share.isin)).slice(offset, offset + batchSize);
 const today = new Date().toISOString().slice(0, 10);
 const since = new Date(Date.now() - 21 * 86400000).toISOString().slice(0, 10);
 const accepted = [];
@@ -37,11 +39,11 @@ for (const share of pending) {
   }
 }
 const output = {
-  checkedAt: new Date().toISOString(), checked: pending.length,
+  checkedAt: new Date().toISOString(), offset, checked: pending.length,
   verified: accepted.length, rejected: rejected.length,
   providerMappings: accepted, failures: rejected
 };
-await writeFile(new URL('data/amsterdam-discovery-result.json', root), JSON.stringify(output, null, 2) + '\n');
+await writeFile(new URL('data/amsterdam-discovery-result-' + offset + '.json', root), JSON.stringify(output, null, 2) + '\n');
 console.log(JSON.stringify({ checked: output.checked, verified: output.verified, rejected: output.rejected }));
 // A reviewable discovery report is intentionally separate from the live registry.
 // Never publish candidate mappings without checking the recorded evidence.
