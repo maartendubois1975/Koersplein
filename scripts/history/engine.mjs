@@ -95,7 +95,7 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
     coverage: { firstDate: bars[0].date, lastDate: bars.at(-1).date, records: bars.length, volumeRecords, missingVolumeRecords: bars.length - volumeRecords, backfillComplete: mode === 'backfill' || existing?.coverage?.backfillComplete === true },
     bars
   };
-  await atomicWrite(fileUrl, document);
+  if (!existing || JSON.stringify(existing.bars) !== JSON.stringify(bars)) await atomicWrite(fileUrl, document);
   const added = bars.length - (existing?.bars?.length || 0);
   return { isin: instrument.isin, outcome: added ? 'updated' : 'unchanged', added, providerRequest: true, records: bars.length, firstDate: bars[0].date, lastDate: bars.at(-1).date };
 }
