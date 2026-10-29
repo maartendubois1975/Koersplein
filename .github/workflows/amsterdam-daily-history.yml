@@ -53,6 +53,8 @@ jobs:
         run: node scripts/research/amsterdam-baseline-judge.mjs
       - name: Compare five exploratory Amsterdam price models
         run: node scripts/research/amsterdam-model-arena.mjs
+      - name: Audit Amsterdam history for suspicious corporate actions and gaps
+        run: node scripts/research/amsterdam-history-quality-audit.mjs
       - name: Simulate Amsterdam historical portfolio in research mode
         run: node scripts/research/amsterdam-portfolio-diagnostic.mjs
       - name: Audit latest Amsterdam trading session and percentage changes
