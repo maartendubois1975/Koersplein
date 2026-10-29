@@ -55,3 +55,4 @@ Investigate three invalid OHLC rows with exact ISIN date and price evidence; dis
 Verify whether three OHLC anomalies persist after floating point rounding tolerance.
 Separate three historical missing high/low fields from logically invalid OHLC records.
 Recheck corrected low-bound tolerance after false positive count of 86600 OHLC bars.
+Run immutable baseline and issuer-by-issuer price anomaly case reports; validate upload artifacts.
