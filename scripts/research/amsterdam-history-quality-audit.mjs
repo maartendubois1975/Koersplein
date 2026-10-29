@@ -4,7 +4,7 @@ const stocks=(catalog.shares||catalog.instruments||[]).filter(x=>x.displayPolicy
 const issues=[],summary={catalog:stocks.length,files:0,missing:0,largeDailyMoves:0,duplicateDates:0,invalidPrices:0,gapsOver30Days:0};
 for(const stock of stocks){
  let raw;
- try{raw=JSON.parse(await fs.readFile('data/history/'+stock.isin+'.json','utf8')))}catch{summary.missing++;issues.push({isin:stock.isin,issue:'MISSING_HISTORY'});continue}
+ try{raw=JSON.parse(await fs.readFile('data/history/'+stock.isin+'.json','utf8'))}catch{summary.missing++;issues.push({isin:stock.isin,issue:'MISSING_HISTORY'});continue}
  const data=(Array.isArray(raw)?raw:raw.bars||raw.records||raw.history||[]).slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
  summary.files++;
  let prev=null;
