@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 const catalog=JSON.parse(await fs.readFile('data/euronext-amsterdam.json','utf8'));
 const shares=(catalog.shares||[]).filter(x=>x.displayPolicy!=='cross-market-reference-only');
-const issues=[],byInstrument=[],counts={instruments:shares.length,files:0,invalidDates:0,invalidOHLC:0,invalidVolume:0,duplicateDates:0,unsortedDates:0,coverageMismatch:0,nonEUR:0,wrongVenue:0,missingBars:0};
+const issues=[],byInstrument=[],counts={instruments:shares.length,files:0,invalidDates:0,invalidOHLC:0,missingHighLow:0,invalidVolume:0,duplicateDates:0,unsortedDates:0,coverageMismatch:0,nonEUR:0,wrongVenue:0,missingBars:0};
 const validDate=s=>typeof s==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(s)&&!Number.isNaN(Date.parse(s))&&new Date(s+'T00:00:00Z').toISOString().slice(0,10)===s;
 for(const stock of shares){
  let h;try{h=JSON.parse(await fs.readFile('data/history/'+stock.isin+'.json','utf8'))}catch(e){issues.push({isin:stock.isin,issue:'MISSING_FILE',detail:e.message});continue}
@@ -14,7 +14,8 @@ for(const stock of shares){
   if(!validDate(b.date)){counts.invalidDates++;issues.push({isin:stock.isin,issue:'INVALID_DATE',date:b.date});continue}
   if(seen.has(b.date)){counts.duplicateDates++;issues.push({isin:stock.isin,issue:'DUPLICATE_DATE',date:b.date})}seen.add(b.date);
   if(previous&&b.date<previous){counts.unsortedDates++;issues.push({isin:stock.isin,issue:'UNSORTED_DATE',date:b.date,previous})}previous=b.date;
-  const o=Number(b.open),hi=Number(b.high),lo=Number(b.low),cl=Number(b.close);
+  const o=b.open==null?NaN:Number(b.open),hi=b.high==null?NaN:Number(b.high),lo=b.low==null?NaN:Number(b.low),cl=b.close==null?NaN:Number(b.close);
+  if(b.high==null||b.low==null){counts.missingHighLow++;issues.push({isin:stock.isin,issue:'MISSING_HIGH_LOW',date:b.date,open:b.open,high:b.high,low:b.low,close:b.close});continue}
   if(![o,hi,lo,cl].every(v=>Number.isFinite(v)&&v>0)||lo>Math.min(o,cl)-Math.max(0.00001,Math.min(o,cl)*0.000001)||hi<Math.max(o,cl)-Math.max(0.00001,Math.max(o,cl)*0.000001)||hi<lo){counts.invalidOHLC++;local++;issues.push({isin:stock.isin,issue:'INVALID_OHLC',date:b.date,open:b.open,high:b.high,low:b.low,close:b.close})}
   if(b.volume!=null&&(!Number.isFinite(Number(b.volume))||Number(b.volume)<0)){counts.invalidVolume++;issues.push({isin:stock.isin,issue:'INVALID_VOLUME',date:b.date,volume:b.volume})}
  }
