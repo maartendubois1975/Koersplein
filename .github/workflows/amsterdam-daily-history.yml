@@ -57,6 +57,29 @@ jobs:
         run: node scripts/research/amsterdam-data-provenance-audit.mjs
       - name: Audit Amsterdam history for suspicious corporate actions and gaps
         run: node scripts/research/amsterdam-history-quality-audit.mjs
+      - name: Publish audit evidence as downloadable GitHub Actions artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-research-data-audits
+          path: |
+            research/output/amsterdam-structural-integrity-audit.json
+            research/output/amsterdam-data-provenance-audit.json
+            research/output/amsterdam-history-quality-audit.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Show prioritized issuer investigations in run summary
+        if: always()
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          const file='research/output/amsterdam-history-quality-audit.json';
+          if(!fs.existsSync(file))process.exit(0);
+          const report=JSON.parse(fs.readFileSync(file,'utf8'));
+          const lines=['','### Highest-priority unverified price movements','','| ISIN | Date | Ratio | Days between records |','|---|---|---:|---:|'];
+          for(const x of (report.reviewQueue||[]).slice(0,12))lines.push(`| ${x.isin} | ${x.date} | ${Number(x.ratio).toFixed(3)} | ${x.calendarDaysBetweenObservations??'?'} |`);
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,lines.join('\\n')+'\\n');
+          EOF
       - name: Assess Amsterdam readiness for blind prediction exams
         if: false # PAUSED: historical price provenance and point-in-time universe are unverified
         run: node scripts/research/amsterdam-readiness.mjs
