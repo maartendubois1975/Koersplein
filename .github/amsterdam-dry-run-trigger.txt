@@ -41,3 +41,4 @@ Verify aligned month-end signals and exclude stale price observations.
 Execute portfolio simulator smoke tests on staging; no production publication.
 Run historical Amsterdam portfolio research diagnostic on staging only.
 Verify execution-day price eligibility and portfolio transaction fee regression.
+Verify staging workflow does not push history data during code validation.
