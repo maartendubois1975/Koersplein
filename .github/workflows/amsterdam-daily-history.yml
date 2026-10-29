@@ -29,6 +29,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Syntax check Amsterdam research programs before provider calls
+        run: |
+          node --check scripts/research/amsterdam-history-quality-audit.mjs
+          node --check scripts/research/amsterdam-portfolio-diagnostic.mjs
+          node --check scripts/research/amsterdam-portfolio-simulator.mjs
+          node --check scripts/research/test-amsterdam-portfolio-simulator.mjs
       - name: Compare latest dates with official Euronext historical source
         if: github.event_name == 'push' || inputs.dry_run == true
         run: node scripts/history/diagnose-amsterdam-freshness.mjs
