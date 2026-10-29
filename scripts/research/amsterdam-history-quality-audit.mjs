@@ -21,7 +21,7 @@ for(const stock of stocks){
   prev={date:b.date,price:p};
  }
 }
-const report={status:issues.length?'RESEARCH_DATA_REQUIRES_REVIEW':'NO_FLAGGED_ISSUES',summary,issues:issues.slice(0,250),truncated:issues.length>250,note:'Flags are not automatically errors: splits, dividends and suspended stocks require source verification. No portfolio promotion.'};
+const report={status:issues.length?'RESEARCH_DATA_REQUIRES_REVIEW':'NO_FLAGGED_ISSUES',summary,issues,issueCount:issues.length,truncated:false,note:'Flags are not automatically errors: splits, dividends and suspended stocks require source verification. No portfolio promotion.'};
 await fs.mkdir('research/output',{recursive:true});
 await fs.writeFile('research/output/amsterdam-history-quality-audit.json',JSON.stringify(report,null,2));
 console.log('AMSTERDAM_HISTORY_QUALITY_AUDIT',JSON.stringify({status:report.status,summary,issues:issues.length}));
