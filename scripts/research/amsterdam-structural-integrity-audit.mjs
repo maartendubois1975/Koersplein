@@ -16,7 +16,7 @@ for(const stock of shares){
   if(previous&&b.date<previous){counts.unsortedDates++;issues.push({isin:stock.isin,issue:'UNSORTED_DATE',date:b.date,previous})}previous=b.date;
   const o=b.open==null?NaN:Number(b.open),hi=b.high==null?NaN:Number(b.high),lo=b.low==null?NaN:Number(b.low),cl=b.close==null?NaN:Number(b.close);
   if(b.high==null||b.low==null){counts.missingHighLow++;issues.push({isin:stock.isin,issue:'MISSING_HIGH_LOW',date:b.date,open:b.open,high:b.high,low:b.low,close:b.close});continue}
-  if(![o,hi,lo,cl].every(v=>Number.isFinite(v)&&v>0)||lo>Math.min(o,cl)-Math.max(0.00001,Math.min(o,cl)*0.000001)||hi<Math.max(o,cl)-Math.max(0.00001,Math.max(o,cl)*0.000001)||hi<lo){counts.invalidOHLC++;local++;issues.push({isin:stock.isin,issue:'INVALID_OHLC',date:b.date,open:b.open,high:b.high,low:b.low,close:b.close})}
+  if(![o,hi,lo,cl].every(v=>Number.isFinite(v)&&v>0)||lo>Math.min(o,cl)+Math.max(0.00001,Math.min(o,cl)*0.000001)||hi<Math.max(o,cl)-Math.max(0.00001,Math.max(o,cl)*0.000001)||hi<lo){counts.invalidOHLC++;local++;issues.push({isin:stock.isin,issue:'INVALID_OHLC',date:b.date,open:b.open,high:b.high,low:b.low,close:b.close})}
   if(b.volume!=null&&(!Number.isFinite(Number(b.volume))||Number(b.volume)<0)){counts.invalidVolume++;issues.push({isin:stock.isin,issue:'INVALID_VOLUME',date:b.date,volume:b.volume})}
  }
  byInstrument.push({isin:stock.isin,name:stock.name,records:bars.length,first:bars[0]?.date,last:bars.at(-1)?.date,invalidOHLC:local});
@@ -25,4 +25,4 @@ const report={status:issues.length?'STRUCTURAL_DATA_ISSUES_REQUIRE_REVIEW':'STRU
 await fs.mkdir('research/output',{recursive:true});
 await fs.writeFile('research/output/amsterdam-structural-integrity-audit.json',JSON.stringify(report,null,2));
 console.log('AMSTERDAM_STRUCTURAL_INTEGRITY_AUDIT',JSON.stringify({status:report.status,counts,issues:issues.length}));
-console.log('AMSTERDAM_STRUCTURAL_ISSUES',JSON.stringify(issues.slice(0,100)));
+console.log('AMSTERDAM_STRUCTURAL_ISSUES',JSON.stringify(issues.slice(0,20)));
