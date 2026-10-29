@@ -70,7 +70,7 @@ jobs:
           echo 'Audit outcome: ${{ job.status }}' >> "$GITHUB_STEP_SUMMARY"
           echo 'Dry run: ${{ inputs.dry_run }}' >> "$GITHUB_STEP_SUMMARY"
       - name: Commit only audited historical data
-        if: success() && steps.refresh.outcome == 'success' && ((github.event_name == 'push' && github.ref == 'refs/heads/amsterdam-reset-20261027') || (github.event_name != 'push' && inputs.dry_run == false))
+        if: success() && steps.refresh.outcome == 'success' && github.event_name == 'workflow_dispatch' && inputs.dry_run == false
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
