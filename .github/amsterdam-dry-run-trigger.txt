@@ -54,3 +54,4 @@ Run structural OHLC integrity, full provenance counters and ranked issuer anomal
 Investigate three invalid OHLC rows with exact ISIN date and price evidence; distinguish long-gap jumps.
 Verify whether three OHLC anomalies persist after floating point rounding tolerance.
 Separate three historical missing high/low fields from logically invalid OHLC records.
+Recheck corrected low-bound tolerance after false positive count of 86600 OHLC bars.
