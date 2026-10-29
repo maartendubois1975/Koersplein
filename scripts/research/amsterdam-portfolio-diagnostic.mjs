@@ -26,6 +26,7 @@ for(const [cutoff,group] of groups){
 decisions.sort((a,b)=>a.date.localeCompare(b.date));
 if(!decisions.length)throw Error('No valid decisions');
 const result=simulatePortfolio({bars:bars.filter(x=>x.date>=decisions[0].date),decisions});
-const report={status:'RESEARCH_ONLY_NOT_INDEPENDENT_VALIDATION',strategy:'FROZEN_12M_MOMENTUM_TOP5',execution:'FIRST_SESSION_AFTER_MONTH_END',dataInstruments:new Set(bars.map(x=>x.instrument)).size,decisions:decisions.length,initialCash:result.initialCash,finalNav:result.finalNav,totalReturn:result.totalReturn,totalFees:result.totalFees,maxDrawdown:result.maxDrawdown,trades:result.ledger.length};
+const quality=JSON.parse(await fs.readFile('research/output/amsterdam-history-quality-audit.json','utf8'));
+const report={status:'RESEARCH_ONLY_NOT_INDEPENDENT_VALIDATION',historyQualityStatus:quality.status,historyQualitySummary:quality.summary,strategy:'FROZEN_12M_MOMENTUM_TOP5',execution:'FIRST_SESSION_AFTER_MONTH_END',dataInstruments:new Set(bars.map(x=>x.instrument)).size,decisions:decisions.length,initialCash:result.initialCash,finalNav:result.finalNav,totalReturn:result.totalReturn,totalFees:result.totalFees,maxDrawdown:result.maxDrawdown,trades:result.ledger.length,warning:'Raw cumulative return is not independently validated, adjusted for corporate actions, or suitable for publication.'};
 await fs.writeFile('research/output/amsterdam-portfolio-diagnostic.json',JSON.stringify(report,null,2));
 console.log(JSON.stringify(report));
