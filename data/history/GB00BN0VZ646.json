@@ -13,7 +13,7 @@
     "id": "euronext-live",
     "name": "Euronext Live historical prices",
     "symbol": "GB00BN0VZ646-XAMS",
-    "retrievedAt": "2026-10-28T23:17:28.610Z",
+    "retrievedAt": "2026-10-29T23:20:43.251Z",
     "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB00BN0VZ646-XAMS",
     "metadata": {
       "mic": "XAMS",
@@ -21,15 +21,17 @@
       "source": "Euronext Live",
       "windowPolicy": "<=700d chunks",
       "partialHistory": false,
-      "failedWindows": []
+      "failedWindows": [],
+      "adjustmentStatus": "UNVERIFIED_RAW_CLOSE_ONLY",
+      "adjustedCloseSource": null
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2025-02-13",
-    "lastDate": "2026-10-28",
-    "records": 436,
-    "volumeRecords": 436,
+    "lastDate": "2026-10-29",
+    "records": 437,
+    "volumeRecords": 437,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -40,7 +42,7 @@
       "high": 9.229999542236328,
       "low": 8.600000381469727,
       "close": 9,
-      "adjustedClose": 8.344437599182129,
+      "adjustedClose": null,
       "volume": 3442683
     },
     {
@@ -49,7 +51,7 @@
       "high": 9.079000473022461,
       "low": 8.699999809265137,
       "close": 8.850000381469727,
-      "adjustedClose": 8.205364227294922,
+      "adjustedClose": null,
       "volume": 874305
     },
     {
@@ -58,7 +60,7 @@
       "high": 9.527000427246094,
       "low": 8.762999534606934,
       "close": 9.050000190734863,
-      "adjustedClose": 8.390795707702637,
+      "adjustedClose": null,
       "volume": 191723
     },
     {
@@ -67,7 +69,7 @@
       "high": 9.189000129699707,
       "low": 8.930999755859375,
       "close": 9.100000381469727,
-      "adjustedClose": 8.437154769897461,
+      "adjustedClose": null,
       "volume": 246838
     },
     {
@@ -76,7 +78,7 @@
       "high": 9.423999786376953,
       "low": 9,
       "close": 9.045999526977539,
-      "adjustedClose": 8.387086868286133,
+      "adjustedClose": null,
       "volume": 95335
     },
     {
@@ -85,7 +87,7 @@
       "high": 9.24899959564209,
       "low": 8.901000022888184,
       "close": 8.949999809265137,
-      "adjustedClose": 8.298080444335938,
+      "adjustedClose": null,
       "volume": 69614
     },
     {
@@ -94,7 +96,7 @@
       "high": 9.119999885559082,
       "low": 8.6899995803833,
       "close": 8.800000190734863,
-      "adjustedClose": 8.159006118774414,
+      "adjustedClose": null,
       "volume": 110662
     },
     {
@@ -103,7 +105,7 @@
       "high": 9,
       "low": 8.4399995803833,
       "close": 8.600000381469727,
-      "adjustedClose": 7.973574161529541,
+      "adjustedClose": null,
       "volume": 123960
     },
     {
@@ -112,7 +114,7 @@
       "high": 8.649999618530273,
       "low": 8.399999618530273,
       "close": 8.449999809265137,
-      "adjustedClose": 7.834499835968018,
+      "adjustedClose": null,
       "volume": 74825
     },
     {
@@ -121,7 +123,7 @@
       "high": 8.630000114440918,
       "low": 8.319999694824219,
       "close": 8.630000114440918,
-      "adjustedClose": 8.001388549804688,
+      "adjustedClose": null,
       "volume": 60606
     },
     {
@@ -130,7 +132,7 @@
       "high": 8.649999618530273,
       "low": 8.319999694824219,
       "close": 8.319999694824219,
-      "adjustedClose": 7.713968753814697,
+      "adjustedClose": null,
       "volume": 148073
     },
     {
@@ -139,7 +141,7 @@
       "high": 8.479999542236328,
       "low": 7.5,
       "close": 8,
-      "adjustedClose": 7.417278289794922,
+      "adjustedClose": null,
       "volume": 229360
     },
     {
@@ -148,7 +150,7 @@
       "high": 8.739999771118164,
       "low": 7.739999771118164,
       "close": 8.229999542236328,
-      "adjustedClose": 7.630524635314941,
+      "adjustedClose": null,
       "volume": 296046
     },
     {
@@ -157,7 +159,7 @@
       "high": 8.390000343322754,
       "low": 8.119999885559082,
       "close": 8.180000305175781,
-      "adjustedClose": 7.584167003631592,
+      "adjustedClose": null,
       "volume": 80348
     },
     {
@@ -166,7 +168,7 @@
       "high": 8.319999694824219,
       "low": 8.079999923706055,
       "close": 8.079999923706055,
-      "adjustedClose": 7.491450786590576,
+      "adjustedClose": null,
       "volume": 45783
     },
     {
@@ -175,7 +177,7 @@
       "high": 8.149999618530273,
       "low": 7.880000114440918,
       "close": 8,
-      "adjustedClose": 7.417278289794922,
+      "adjustedClose": null,
       "volume": 48734
     },
     {
@@ -184,7 +186,7 @@
       "high": 8.029999732971191,
       "low": 7.900000095367432,
       "close": 8,
-      "adjustedClose": 7.417278289794922,
+      "adjustedClose": null,
       "volume": 60779
     },
     {
@@ -193,7 +195,7 @@
       "high": 8.399999618530273,
       "low": 7.510000228881836,
       "close": 7.679999828338623,
-      "adjustedClose": 7.12058687210083,
+      "adjustedClose": null,
       "volume": 93306
     },
     {
@@ -202,7 +204,7 @@
       "high": 7.690000057220459,
       "low": 7.440000057220459,
       "close": 7.5,
-      "adjustedClose": 6.95369815826416,
+      "adjustedClose": null,
       "volume": 69297
     },
     {
@@ -211,7 +213,7 @@
       "high": 7.980000019073486,
       "low": 7.230000019073486,
       "close": 7.849999904632568,
-      "adjustedClose": 7.278203964233398,
+      "adjustedClose": null,
       "volume": 107955
     },
     {
@@ -220,7 +222,7 @@
       "high": 8.1899995803833,
       "low": 7.800000190734863,
       "close": 7.980000019073486,
-      "adjustedClose": 7.3987345695495605,
+      "adjustedClose": null,
       "volume": 135542
     },
     {
@@ -229,7 +231,7 @@
       "high": 8.369999885559082,
       "low": 8,
       "close": 8.15999984741211,
-      "adjustedClose": 7.5656232833862305,
+      "adjustedClose": null,
       "volume": 88285
     },
     {
@@ -238,7 +240,7 @@
       "high": 8.109999656677246,
       "low": 7.880000114440918,
       "close": 7.980000019073486,
-      "adjustedClose": 7.3987345695495605,
+      "adjustedClose": null,
       "volume": 41646
     },
     {
@@ -247,7 +249,7 @@
       "high": 8.40999984741211,
       "low": 7.710000038146973,
       "close": 7.960000038146973,
-      "adjustedClose": 7.380191802978516,
+      "adjustedClose": null,
       "volume": 36622
     },
     {
@@ -256,7 +258,7 @@
       "high": 8.020000457763672,
       "low": 7.840000152587891,
       "close": 8.020000457763672,
-      "adjustedClose": 7.435822010040283,
+      "adjustedClose": null,
       "volume": 56797
     },
     {
@@ -265,7 +267,7 @@
       "high": 8.369999885559082,
       "low": 7.940000057220459,
       "close": 8.199999809265137,
-      "adjustedClose": 7.602709770202637,
+      "adjustedClose": null,
       "volume": 49910
     },
     {
@@ -274,7 +276,7 @@
       "high": 8.369999885559082,
       "low": 8.109999656677246,
       "close": 8.109999656677246,
-      "adjustedClose": 7.519265651702881,
+      "adjustedClose": null,
       "volume": 12720
     },
     {
@@ -283,7 +285,7 @@
       "high": 8.109999656677246,
       "low": 7.710000038146973,
       "close": 8.039999961853027,
-      "adjustedClose": 7.45436429977417,
+      "adjustedClose": null,
       "volume": 51689
     },
     {
@@ -292,7 +294,7 @@
       "high": 8.359999656677246,
       "low": 8.020000457763672,
       "close": 8.300000190734863,
-      "adjustedClose": 7.695425987243652,
+      "adjustedClose": null,
       "volume": 29482
     },
     {
@@ -301,7 +303,7 @@
       "high": 8.5,
       "low": 8.210000038146973,
       "close": 8.350000381469727,
-      "adjustedClose": 7.74178409576416,
+      "adjustedClose": null,
       "volume": 80222
     },
     {
@@ -310,7 +312,7 @@
       "high": 8.5,
       "low": 8.319999694824219,
       "close": 8.449999809265137,
-      "adjustedClose": 7.834499835968018,
+      "adjustedClose": null,
       "volume": 26528
     },
     {
@@ -319,7 +321,7 @@
       "high": 8.449999809265137,
       "low": 7.909999847412109,
       "close": 8.010000228881836,
-      "adjustedClose": 7.426549911499023,
+      "adjustedClose": null,
       "volume": 103279
     },
     {
@@ -328,7 +330,7 @@
       "high": 8.039999961853027,
       "low": 7.78000020980835,
       "close": 7.900000095367432,
-      "adjustedClose": 7.3245625495910645,
+      "adjustedClose": null,
       "volume": 84376
     },
     {
@@ -337,7 +339,7 @@
       "high": 8.289999961853027,
       "low": 7.869999885559082,
       "close": 8.069999694824219,
-      "adjustedClose": 7.482178688049316,
+      "adjustedClose": null,
       "volume": 54642
     },
     {
@@ -346,7 +348,7 @@
       "high": 8.329999923706055,
       "low": 7.539999961853027,
       "close": 7.900000095367432,
-      "adjustedClose": 7.3245625495910645,
+      "adjustedClose": null,
       "volume": 29602
     },
     {
@@ -355,7 +357,7 @@
       "high": 7.880000114440918,
       "low": 7.28000020980835,
       "close": 7.360000133514404,
-      "adjustedClose": 6.8238959312438965,
+      "adjustedClose": null,
       "volume": 217713
     },
     {
@@ -364,7 +366,7 @@
       "high": 7.329999923706055,
       "low": 6.630000114440918,
       "close": 6.860000133514404,
-      "adjustedClose": 6.360315799713135,
+      "adjustedClose": null,
       "volume": 211475
     },
     {
@@ -373,7 +375,7 @@
       "high": 7.539999961853027,
       "low": 6.340000152587891,
       "close": 6.670000076293945,
-      "adjustedClose": 6.1841559410095215,
+      "adjustedClose": null,
       "volume": 63358
     },
     {
@@ -382,7 +384,7 @@
       "high": 7.309999942779541,
       "low": 6.599999904632568,
       "close": 7.019999980926514,
-      "adjustedClose": 6.50866174697876,
+      "adjustedClose": null,
       "volume": 34357
     },
     {
@@ -391,7 +393,7 @@
       "high": 6.989999771118164,
       "low": 6.429999828338623,
       "close": 6.71999979019165,
-      "adjustedClose": 6.230513095855713,
+      "adjustedClose": null,
       "volume": 89532
     },
     {
@@ -400,7 +402,7 @@
       "high": 7.300000190734863,
       "low": 6.829999923706055,
       "close": 6.840000152587891,
-      "adjustedClose": 6.34177303314209,
+      "adjustedClose": null,
       "volume": 52569
     },
     {
@@ -409,7 +411,7 @@
       "high": 6.920000076293945,
       "low": 6.5,
       "close": 6.679999828338623,
-      "adjustedClose": 6.193427085876465,
+      "adjustedClose": null,
       "volume": 65711
     },
     {
@@ -418,7 +420,7 @@
       "high": 7.019999980926514,
       "low": 6.78000020980835,
       "close": 7.019999980926514,
-      "adjustedClose": 6.50866174697876,
+      "adjustedClose": null,
       "volume": 91359
     },
     {
@@ -427,7 +429,7 @@
       "high": 7.199999809265137,
       "low": 6.909999847412109,
       "close": 7,
-      "adjustedClose": 6.490118503570557,
+      "adjustedClose": null,
       "volume": 87003
     },
     {
@@ -436,7 +438,7 @@
       "high": 7,
       "low": 6.539999961853027,
       "close": 6.800000190734863,
-      "adjustedClose": 6.304686546325684,
+      "adjustedClose": null,
       "volume": 15745
     },
     {
@@ -445,7 +447,7 @@
       "high": 7.269999980926514,
       "low": 6.579999923706055,
       "close": 6.690000057220459,
-      "adjustedClose": 6.202698707580566,
+      "adjustedClose": null,
       "volume": 45587
     },
     {
@@ -454,7 +456,7 @@
       "high": 7.019999980926514,
       "low": 6.369999885559082,
       "close": 6.539999961853027,
-      "adjustedClose": 6.063624858856201,
+      "adjustedClose": null,
       "volume": 34369
     },
     {
@@ -463,7 +465,7 @@
       "high": 7,
       "low": 6.550000190734863,
       "close": 6.670000076293945,
-      "adjustedClose": 6.1841559410095215,
+      "adjustedClose": null,
       "volume": 67988
     },
     {
@@ -472,7 +474,7 @@
       "high": 6.960000038146973,
       "low": 6.480000019073486,
       "close": 6.929999828338623,
-      "adjustedClose": 6.425217151641846,
+      "adjustedClose": null,
       "volume": 72587
     },
     {
@@ -481,7 +483,7 @@
       "high": 7.099999904632568,
       "low": 6.820000171661377,
       "close": 7.099999904632568,
-      "adjustedClose": 6.582834243774414,
+      "adjustedClose": null,
       "volume": 21849
     },
     {
@@ -490,7 +492,7 @@
       "high": 7.5,
       "low": 7.059999942779541,
       "close": 7.349999904632568,
-      "adjustedClose": 6.814624309539795,
+      "adjustedClose": null,
       "volume": 24200
     },
     {
@@ -499,7 +501,7 @@
       "high": 7.929999828338623,
       "low": 7.224999904632568,
       "close": 7.5,
-      "adjustedClose": 6.95369815826416,
+      "adjustedClose": null,
       "volume": 93078
     },
     {
@@ -508,7 +510,7 @@
       "high": 7.800000190734863,
       "low": 7.010000228881836,
       "close": 7.119999885559082,
-      "adjustedClose": 6.601377487182617,
+      "adjustedClose": null,
       "volume": 119896
     },
     {
@@ -517,7 +519,7 @@
       "high": 7.800000190734863,
       "low": 7.199999809265137,
       "close": 7.329999923706055,
-      "adjustedClose": 6.796081066131592,
+      "adjustedClose": null,
       "volume": 154257
     },
     {
@@ -526,7 +528,7 @@
       "high": 7.800000190734863,
       "low": 7.21999979019165,
       "close": 7.78000020980835,
-      "adjustedClose": 7.213303565979004,
+      "adjustedClose": null,
       "volume": 39284
     },
     {
@@ -535,7 +537,7 @@
       "high": 7.900000095367432,
       "low": 7.519999980926514,
       "close": 7.579999923706055,
-      "adjustedClose": 7.027871131896973,
+      "adjustedClose": null,
       "volume": 128777
     },
     {
@@ -544,7 +546,7 @@
       "high": 7.789999961853027,
       "low": 7.440000057220459,
       "close": 7.679999828338623,
-      "adjustedClose": 7.12058687210083,
+      "adjustedClose": null,
       "volume": 189801
     },
     {
@@ -553,7 +555,7 @@
       "high": 7.849999904632568,
       "low": 7.570000171661377,
       "close": 7.71999979019165,
-      "adjustedClose": 7.157672882080078,
+      "adjustedClose": null,
       "volume": 136996
     },
     {
@@ -562,7 +564,7 @@
       "high": 7.760000228881836,
       "low": 7.599999904632568,
       "close": 7.71999979019165,
-      "adjustedClose": 7.157672882080078,
+      "adjustedClose": null,
       "volume": 30868
     },
     {
@@ -571,7 +573,7 @@
       "high": 8.0600004196167,
       "low": 7.800000190734863,
       "close": 8,
-      "adjustedClose": 7.417278289794922,
+      "adjustedClose": null,
       "volume": 181692
     },
     {
@@ -580,7 +582,7 @@
       "high": 8.489999771118164,
       "low": 7.940000057220459,
       "close": 8.260000228881836,
-      "adjustedClose": 7.658339500427246,
+      "adjustedClose": null,
       "volume": 52314
     },
     {
@@ -589,7 +591,7 @@
       "high": 8.5,
       "low": 7.989999771118164,
       "close": 8.170000076293945,
-      "adjustedClose": 7.57489538192749,
+      "adjustedClose": null,
       "volume": 44570
     },
     {
@@ -598,7 +600,7 @@
       "high": 8.270000457763672,
       "low": 8.010000228881836,
       "close": 8.119999885559082,
-      "adjustedClose": 7.528537273406982,
+      "adjustedClose": null,
       "volume": 17842
     },
     {
@@ -607,7 +609,7 @@
       "high": 8.149999618530273,
       "low": 7.980000019073486,
       "close": 8.0600004196167,
-      "adjustedClose": 7.472908020019531,
+      "adjustedClose": null,
       "volume": 14384
     },
     {
@@ -616,7 +618,7 @@
       "high": 8.260000228881836,
       "low": 7.980000019073486,
       "close": 8.170000076293945,
-      "adjustedClose": 7.57489538192749,
+      "adjustedClose": null,
       "volume": 35523
     },
     {
@@ -625,7 +627,7 @@
       "high": 8.34000015258789,
       "low": 8.119999885559082,
       "close": 8.25,
-      "adjustedClose": 7.649068355560303,
+      "adjustedClose": null,
       "volume": 3899
     },
     {
@@ -634,7 +636,7 @@
       "high": 8.4399995803833,
       "low": 8.25,
       "close": 8.319999694824219,
-      "adjustedClose": 7.713968753814697,
+      "adjustedClose": null,
       "volume": 26236
     },
     {
@@ -643,7 +645,7 @@
       "high": 8.260000228881836,
       "low": 8.149999618530273,
       "close": 8.1899995803833,
-      "adjustedClose": 7.593437671661377,
+      "adjustedClose": null,
       "volume": 11449
     },
     {
@@ -652,7 +654,7 @@
       "high": 8.479999542236328,
       "low": 7.480000019073486,
       "close": 8,
-      "adjustedClose": 7.417278289794922,
+      "adjustedClose": null,
       "volume": 289268
     },
     {
@@ -661,7 +663,7 @@
       "high": 8.260000228881836,
       "low": 7.940000057220459,
       "close": 8,
-      "adjustedClose": 7.417278289794922,
+      "adjustedClose": null,
       "volume": 29722
     },
     {
@@ -670,7 +672,7 @@
       "high": 8.239999771118164,
       "low": 7.579999923706055,
       "close": 8.100000381469727,
-      "adjustedClose": 7.5099945068359375,
+      "adjustedClose": null,
       "volume": 81879
     },
     {
@@ -679,7 +681,7 @@
       "high": 8.34000015258789,
       "low": 8.020000457763672,
       "close": 8.279999732971191,
-      "adjustedClose": 7.676882743835449,
+      "adjustedClose": null,
       "volume": 22497
     },
     {
@@ -688,7 +690,7 @@
       "high": 8.520000457763672,
       "low": 8.210000038146973,
       "close": 8.430000305175781,
-      "adjustedClose": 7.815957069396973,
+      "adjustedClose": null,
       "volume": 78770
     },
     {
@@ -697,7 +699,7 @@
       "high": 8.84000015258789,
       "low": 8.369999885559082,
       "close": 8.569999694824219,
-      "adjustedClose": 7.945758819580078,
+      "adjustedClose": null,
       "volume": 101309
     },
     {
@@ -706,7 +708,7 @@
       "high": 8.90999984741211,
       "low": 8.470000267028809,
       "close": 8.510000228881836,
-      "adjustedClose": 7.890129566192627,
+      "adjustedClose": null,
       "volume": 26838
     },
     {
@@ -715,7 +717,7 @@
       "high": 8.510000228881836,
       "low": 8.289999961853027,
       "close": 8.479999542236328,
-      "adjustedClose": 7.862314224243164,
+      "adjustedClose": null,
       "volume": 24326
     },
     {
@@ -724,7 +726,7 @@
       "high": 9,
       "low": 8.329999923706055,
       "close": 8.84000015258789,
-      "adjustedClose": 8.19609260559082,
+      "adjustedClose": null,
       "volume": 144634
     },
     {
@@ -733,7 +735,7 @@
       "high": 9.069999694824219,
       "low": 8.710000038146973,
       "close": 8.899999618530273,
-      "adjustedClose": 8.251721382141113,
+      "adjustedClose": null,
       "volume": 357074
     },
     {
@@ -742,7 +744,7 @@
       "high": 9,
       "low": 8.609999656677246,
       "close": 8.680000305175781,
-      "adjustedClose": 8.047747611999512,
+      "adjustedClose": null,
       "volume": 44180
     },
     {
@@ -751,7 +753,7 @@
       "high": 9.039999961853027,
       "low": 7.829999923706055,
       "close": 8.970000267028809,
-      "adjustedClose": 8.31662368774414,
+      "adjustedClose": null,
       "volume": 139362
     },
     {
@@ -760,7 +762,7 @@
       "high": 8.90999984741211,
       "low": 8.720000267028809,
       "close": 8.720000267028809,
-      "adjustedClose": 8.084833145141602,
+      "adjustedClose": null,
       "volume": 25243
     },
     {
@@ -769,7 +771,7 @@
       "high": 9.180000305175781,
       "low": 8.729999542236328,
       "close": 8.989999771118164,
-      "adjustedClose": 8.335165977478027,
+      "adjustedClose": null,
       "volume": 107158
     },
     {
@@ -778,7 +780,7 @@
       "high": 9.350000381469727,
       "low": 8.90999984741211,
       "close": 9,
-      "adjustedClose": 8.344437599182129,
+      "adjustedClose": null,
       "volume": 30962
     },
     {
@@ -787,7 +789,7 @@
       "high": 9.119999885559082,
       "low": 8.869999885559082,
       "close": 8.960000038146973,
-      "adjustedClose": 8.307351112365723,
+      "adjustedClose": null,
       "volume": 32847
     },
     {
@@ -796,7 +798,7 @@
       "high": 9.449999809265137,
       "low": 8.9399995803833,
       "close": 9.0600004196167,
-      "adjustedClose": 8.400068283081055,
+      "adjustedClose": null,
       "volume": 20922
     },
     {
@@ -805,7 +807,7 @@
       "high": 9.270000457763672,
       "low": 8.84000015258789,
       "close": 9.079999923706055,
-      "adjustedClose": 8.418610572814941,
+      "adjustedClose": null,
       "volume": 92618
     },
     {
@@ -814,7 +816,7 @@
       "high": 9.109999656677246,
       "low": 8.899999618530273,
       "close": 9.039999961853027,
-      "adjustedClose": 8.381524085998535,
+      "adjustedClose": null,
       "volume": 63989
     },
     {
@@ -823,7 +825,7 @@
       "high": 9.039999961853027,
       "low": 8.760000228881836,
       "close": 8.770000457763672,
-      "adjustedClose": 8.131192207336426,
+      "adjustedClose": null,
       "volume": 15283
     },
     {
@@ -832,7 +834,7 @@
       "high": 8.920000076293945,
       "low": 8.6899995803833,
       "close": 8.779999732971191,
-      "adjustedClose": 8.140461921691895,
+      "adjustedClose": null,
       "volume": 57868
     },
     {
@@ -841,7 +843,7 @@
       "high": 9.199999809265137,
       "low": 8.619999885559082,
       "close": 8.869999885559082,
-      "adjustedClose": 8.223906517028809,
+      "adjustedClose": null,
       "volume": 36401
     },
     {
@@ -850,7 +852,7 @@
       "high": 9.180000305175781,
       "low": 8.890000343322754,
       "close": 9.050000190734863,
-      "adjustedClose": 8.390795707702637,
+      "adjustedClose": null,
       "volume": 52293
     },
     {
@@ -859,7 +861,7 @@
       "high": 9.199999809265137,
       "low": 8.869999885559082,
       "close": 8.949999809265137,
-      "adjustedClose": 8.298080444335938,
+      "adjustedClose": null,
       "volume": 79597
     },
     {
@@ -868,7 +870,7 @@
       "high": 8.949999809265137,
       "low": 8.649999618530273,
       "close": 8.670000076293945,
-      "adjustedClose": 8.288519859313965,
+      "adjustedClose": null,
       "volume": 17647
     },
     {
@@ -877,7 +879,7 @@
       "high": 9.449999809265137,
       "low": 8.600000381469727,
       "close": 8.930000305175781,
-      "adjustedClose": 8.537079811096191,
+      "adjustedClose": null,
       "volume": 17687
     },
     {
@@ -886,7 +888,7 @@
       "high": 9.079999923706055,
       "low": 8.800000190734863,
       "close": 8.9399995803833,
-      "adjustedClose": 8.546639442443848,
+      "adjustedClose": null,
       "volume": 36141
     },
     {
@@ -895,7 +897,7 @@
       "high": 8.989999771118164,
       "low": 8.510000228881836,
       "close": 8.90999984741211,
-      "adjustedClose": 8.517959594726562,
+      "adjustedClose": null,
       "volume": 37084
     },
     {
@@ -904,7 +906,7 @@
       "high": 9.149999618530273,
       "low": 8.850000381469727,
       "close": 9.149999618530273,
-      "adjustedClose": 8.74739933013916,
+      "adjustedClose": null,
       "volume": 82370
     },
     {
@@ -913,7 +915,7 @@
       "high": 9.220000267028809,
       "low": 9.029999732971191,
       "close": 9.0600004196167,
-      "adjustedClose": 8.661359786987305,
+      "adjustedClose": null,
       "volume": 67283
     },
     {
@@ -922,7 +924,7 @@
       "high": 9.199999809265137,
       "low": 8.899999618530273,
       "close": 9.199999809265137,
-      "adjustedClose": 8.795199394226074,
+      "adjustedClose": null,
       "volume": 33818
     },
     {
@@ -931,7 +933,7 @@
       "high": 9.359999656677246,
       "low": 9.149999618530273,
       "close": 9.270000457763672,
-      "adjustedClose": 8.862120628356934,
+      "adjustedClose": null,
       "volume": 39179
     },
     {
@@ -940,7 +942,7 @@
       "high": 9.430000305175781,
       "low": 9.260000228881836,
       "close": 9.40999984741211,
-      "adjustedClose": 8.995959281921387,
+      "adjustedClose": null,
       "volume": 18893
     },
     {
@@ -949,7 +951,7 @@
       "high": 9.510000228881836,
       "low": 9.300000190734863,
       "close": 9.300000190734863,
-      "adjustedClose": 8.890799522399902,
+      "adjustedClose": null,
       "volume": 24427
     },
     {
@@ -958,7 +960,7 @@
       "high": 9.529999732971191,
       "low": 9.220000267028809,
       "close": 9.529999732971191,
-      "adjustedClose": 9.110679626464844,
+      "adjustedClose": null,
       "volume": 40175
     },
     {
@@ -967,7 +969,7 @@
       "high": 9.649999618530273,
       "low": 9.390000343322754,
       "close": 9.4399995803833,
-      "adjustedClose": 9.024639129638672,
+      "adjustedClose": null,
       "volume": 40526
     },
     {
@@ -976,7 +978,7 @@
       "high": 9.4399995803833,
       "low": 9.25,
       "close": 9.399999618530273,
-      "adjustedClose": 8.98639965057373,
+      "adjustedClose": null,
       "volume": 8744
     },
     {
@@ -985,7 +987,7 @@
       "high": 9.5,
       "low": 9.25,
       "close": 9.25,
-      "adjustedClose": 8.842999458312988,
+      "adjustedClose": null,
       "volume": 10221
     },
     {
@@ -994,7 +996,7 @@
       "high": 9.399999618530273,
       "low": 9.079999923706055,
       "close": 9.100000381469727,
-      "adjustedClose": 8.699600219726562,
+      "adjustedClose": null,
       "volume": 17575
     },
     {
@@ -1003,7 +1005,7 @@
       "high": 9.380000114440918,
       "low": 9.170000076293945,
       "close": 9.319999694824219,
-      "adjustedClose": 8.909919738769531,
+      "adjustedClose": null,
       "volume": 26691
     },
     {
@@ -1012,7 +1014,7 @@
       "high": 9.539999961853027,
       "low": 9.380000114440918,
       "close": 9.390000343322754,
-      "adjustedClose": 8.976840019226074,
+      "adjustedClose": null,
       "volume": 36261
     },
     {
@@ -1021,7 +1023,7 @@
       "high": 9.369999885559082,
       "low": 9.260000228881836,
       "close": 9.270000457763672,
-      "adjustedClose": 8.862120628356934,
+      "adjustedClose": null,
       "volume": 7398
     },
     {
@@ -1030,7 +1032,7 @@
       "high": 9.239999771118164,
       "low": 9.119999885559082,
       "close": 9.239999771118164,
-      "adjustedClose": 8.833439826965332,
+      "adjustedClose": null,
       "volume": 29867
     },
     {
@@ -1039,7 +1041,7 @@
       "high": 9.350000381469727,
       "low": 9.149999618530273,
       "close": 9.199999809265137,
-      "adjustedClose": 8.795199394226074,
+      "adjustedClose": null,
       "volume": 34134
     },
     {
@@ -1048,7 +1050,7 @@
       "high": 9.359999656677246,
       "low": 9.199999809265137,
       "close": 9.3100004196167,
-      "adjustedClose": 8.900360107421875,
+      "adjustedClose": null,
       "volume": 22142
     },
     {
@@ -1057,7 +1059,7 @@
       "high": 9.399999618530273,
       "low": 9.1899995803833,
       "close": 9.279999732971191,
-      "adjustedClose": 8.871679306030273,
+      "adjustedClose": null,
       "volume": 17601
     },
     {
@@ -1066,7 +1068,7 @@
       "high": 9.600000381469727,
       "low": 9.329999923706055,
       "close": 9.390000343322754,
-      "adjustedClose": 8.976840019226074,
+      "adjustedClose": null,
       "volume": 32667
     },
     {
@@ -1075,7 +1077,7 @@
       "high": 9.609999656677246,
       "low": 9.3100004196167,
       "close": 9.489999771118164,
-      "adjustedClose": 9.072439193725586,
+      "adjustedClose": null,
       "volume": 45042
     },
     {
@@ -1084,7 +1086,7 @@
       "high": 9.850000381469727,
       "low": 9.319999694824219,
       "close": 9.350000381469727,
-      "adjustedClose": 8.938600540161133,
+      "adjustedClose": null,
       "volume": 25475
     },
     {
@@ -1093,7 +1095,7 @@
       "high": 9.640000343322754,
       "low": 9.40999984741211,
       "close": 9.59000015258789,
-      "adjustedClose": 9.16804027557373,
+      "adjustedClose": null,
       "volume": 66276
     },
     {
@@ -1102,7 +1104,7 @@
       "high": 9.569999694824219,
       "low": 9.329999923706055,
       "close": 9.390000343322754,
-      "adjustedClose": 8.976840019226074,
+      "adjustedClose": null,
       "volume": 25087
     },
     {
@@ -1111,7 +1113,7 @@
       "high": 9.670000076293945,
       "low": 9.5,
       "close": 9.670000076293945,
-      "adjustedClose": 9.24452018737793,
+      "adjustedClose": null,
       "volume": 30691
     },
     {
@@ -1120,7 +1122,7 @@
       "high": 9.850000381469727,
       "low": 9.539999961853027,
       "close": 9.539999961853027,
-      "adjustedClose": 9.1202392578125,
+      "adjustedClose": null,
       "volume": 27070
     },
     {
@@ -1129,7 +1131,7 @@
       "high": 9.789999961853027,
       "low": 9.430000305175781,
       "close": 9.430000305175781,
-      "adjustedClose": 9.015080451965332,
+      "adjustedClose": null,
       "volume": 33493
     },
     {
@@ -1138,7 +1140,7 @@
       "high": 9.550000190734863,
       "low": 9.350000381469727,
       "close": 9.399999618530273,
-      "adjustedClose": 8.98639965057373,
+      "adjustedClose": null,
       "volume": 30855
     },
     {
@@ -1147,7 +1149,7 @@
       "high": 9.5,
       "low": 9.380000114440918,
       "close": 9.430000305175781,
-      "adjustedClose": 9.015080451965332,
+      "adjustedClose": null,
       "volume": 23583
     },
     {
@@ -1156,7 +1158,7 @@
       "high": 9.520000457763672,
       "low": 9.350000381469727,
       "close": 9.350000381469727,
-      "adjustedClose": 8.938600540161133,
+      "adjustedClose": null,
       "volume": 31136
     },
     {
@@ -1165,7 +1167,7 @@
       "high": 9.539999961853027,
       "low": 9.34000015258789,
       "close": 9.34000015258789,
-      "adjustedClose": 8.92903995513916,
+      "adjustedClose": null,
       "volume": 66946
     },
     {
@@ -1174,7 +1176,7 @@
       "high": 9.850000381469727,
       "low": 9.380000114440918,
       "close": 9.4399995803833,
-      "adjustedClose": 9.024639129638672,
+      "adjustedClose": null,
       "volume": 41663
     },
     {
@@ -1183,7 +1185,7 @@
       "high": 9.630000114440918,
       "low": 9.4399995803833,
       "close": 9.510000228881836,
-      "adjustedClose": 9.091560363769531,
+      "adjustedClose": null,
       "volume": 58751
     },
     {
@@ -1192,7 +1194,7 @@
       "high": 9.640000343322754,
       "low": 9.369999885559082,
       "close": 9.369999885559082,
-      "adjustedClose": 8.957719802856445,
+      "adjustedClose": null,
       "volume": 42374
     },
     {
@@ -1201,7 +1203,7 @@
       "high": 9.489999771118164,
       "low": 9.319999694824219,
       "close": 9.319999694824219,
-      "adjustedClose": 8.909919738769531,
+      "adjustedClose": null,
       "volume": 25391
     },
     {
@@ -1210,7 +1212,7 @@
       "high": 9.5,
       "low": 9.3100004196167,
       "close": 9.380000114440918,
-      "adjustedClose": 8.967279434204102,
+      "adjustedClose": null,
       "volume": 42640
     },
     {
@@ -1219,7 +1221,7 @@
       "high": 9.399999618530273,
       "low": 9.079999923706055,
       "close": 9.079999923706055,
-      "adjustedClose": 8.680480003356934,
+      "adjustedClose": null,
       "volume": 42901
     },
     {
@@ -1228,7 +1230,7 @@
       "high": 9.270000457763672,
       "low": 8.829999923706055,
       "close": 8.989999771118164,
-      "adjustedClose": 8.594439506530762,
+      "adjustedClose": null,
       "volume": 41247
     },
     {
@@ -1237,7 +1239,7 @@
       "high": 9.170000076293945,
       "low": 8.90999984741211,
       "close": 9.100000381469727,
-      "adjustedClose": 8.699600219726562,
+      "adjustedClose": null,
       "volume": 176599
     },
     {
@@ -1246,7 +1248,7 @@
       "high": 9.210000038146973,
       "low": 8.930000305175781,
       "close": 8.930000305175781,
-      "adjustedClose": 8.537079811096191,
+      "adjustedClose": null,
       "volume": 30163
     },
     {
@@ -1255,7 +1257,7 @@
       "high": 8.9399995803833,
       "low": 8.579999923706055,
       "close": 8.579999923706055,
-      "adjustedClose": 8.202479362487793,
+      "adjustedClose": null,
       "volume": 678992
     },
     {
@@ -1264,7 +1266,7 @@
       "high": 8.779999732971191,
       "low": 8.5,
       "close": 8.770000457763672,
-      "adjustedClose": 8.384119987487793,
+      "adjustedClose": null,
       "volume": 337564
     },
     {
@@ -1273,7 +1275,7 @@
       "high": 9,
       "low": 8.699999809265137,
       "close": 8.8100004196167,
-      "adjustedClose": 8.42236042022705,
+      "adjustedClose": null,
       "volume": 39789
     },
     {
@@ -1282,7 +1284,7 @@
       "high": 8.90999984741211,
       "low": 8.699999809265137,
       "close": 8.770000457763672,
-      "adjustedClose": 8.384119987487793,
+      "adjustedClose": null,
       "volume": 44216
     },
     {
@@ -1291,7 +1293,7 @@
       "high": 9.229999542236328,
       "low": 8.710000038146973,
       "close": 8.75,
-      "adjustedClose": 8.364999771118164,
+      "adjustedClose": null,
       "volume": 14301
     },
     {
@@ -1300,7 +1302,7 @@
       "high": 8.800000190734863,
       "low": 8.5600004196167,
       "close": 8.579999923706055,
-      "adjustedClose": 8.202479362487793,
+      "adjustedClose": null,
       "volume": 24122
     },
     {
@@ -1309,7 +1311,7 @@
       "high": 8.789999961853027,
       "low": 8.460000038146973,
       "close": 8.5,
-      "adjustedClose": 8.125999450683594,
+      "adjustedClose": null,
       "volume": 27588
     },
     {
@@ -1318,7 +1320,7 @@
       "high": 8.569999694824219,
       "low": 8.489999771118164,
       "close": 8.5,
-      "adjustedClose": 8.125999450683594,
+      "adjustedClose": null,
       "volume": 14700
     },
     {
@@ -1327,7 +1329,7 @@
       "high": 8.5600004196167,
       "low": 8.399999618530273,
       "close": 8.4399995803833,
-      "adjustedClose": 8.068639755249023,
+      "adjustedClose": null,
       "volume": 25354
     },
     {
@@ -1336,7 +1338,7 @@
       "high": 8.489999771118164,
       "low": 8.329999923706055,
       "close": 8.399999618530273,
-      "adjustedClose": 8.030399322509766,
+      "adjustedClose": null,
       "volume": 196693
     },
     {
@@ -1345,7 +1347,7 @@
       "high": 8.640000343322754,
       "low": 8.359999656677246,
       "close": 8.640000343322754,
-      "adjustedClose": 8.25984001159668,
+      "adjustedClose": null,
       "volume": 101586
     },
     {
@@ -1354,7 +1356,7 @@
       "high": 8.800000190734863,
       "low": 8.460000038146973,
       "close": 8.489999771118164,
-      "adjustedClose": 8.116439819335938,
+      "adjustedClose": null,
       "volume": 30726
     },
     {
@@ -1363,7 +1365,7 @@
       "high": 8.539999961853027,
       "low": 8.449999809265137,
       "close": 8.460000038146973,
-      "adjustedClose": 8.087759971618652,
+      "adjustedClose": null,
       "volume": 13923
     },
     {
@@ -1372,7 +1374,7 @@
       "high": 8.5,
       "low": 8.380000114440918,
       "close": 8.430000305175781,
-      "adjustedClose": 8.059080123901367,
+      "adjustedClose": null,
       "volume": 54047
     },
     {
@@ -1381,7 +1383,7 @@
       "high": 8.630000114440918,
       "low": 8.479999542236328,
       "close": 8.600000381469727,
-      "adjustedClose": 8.221600532531738,
+      "adjustedClose": null,
       "volume": 14557
     },
     {
@@ -1390,7 +1392,7 @@
       "high": 9.380000114440918,
       "low": 8.420000076293945,
       "close": 8.420000076293945,
-      "adjustedClose": 8.049519538879395,
+      "adjustedClose": null,
       "volume": 22948
     },
     {
@@ -1399,7 +1401,7 @@
       "high": 8.800000190734863,
       "low": 8.369999885559082,
       "close": 8.430000305175781,
-      "adjustedClose": 8.059080123901367,
+      "adjustedClose": null,
       "volume": 19185
     },
     {
@@ -1408,7 +1410,7 @@
       "high": 8.539999961853027,
       "low": 8.40999984741211,
       "close": 8.520000457763672,
-      "adjustedClose": 8.145120620727539,
+      "adjustedClose": null,
       "volume": 17326
     },
     {
@@ -1417,7 +1419,7 @@
       "high": 8.489999771118164,
       "low": 8.300000190734863,
       "close": 8.40999984741211,
-      "adjustedClose": 8.039959907531738,
+      "adjustedClose": null,
       "volume": 46273
     },
     {
@@ -1426,7 +1428,7 @@
       "high": 8.420000076293945,
       "low": 7.75,
       "close": 8.239999771118164,
-      "adjustedClose": 7.877439498901367,
+      "adjustedClose": null,
       "volume": 27472
     },
     {
@@ -1435,7 +1437,7 @@
       "high": 9,
       "low": 8.050000190734863,
       "close": 8.100000381469727,
-      "adjustedClose": 7.743599891662598,
+      "adjustedClose": null,
       "volume": 52133
     },
     {
@@ -1444,7 +1446,7 @@
       "high": 8.859999656677246,
       "low": 8.170000076293945,
       "close": 8.859999656677246,
-      "adjustedClose": 8.470159530639648,
+      "adjustedClose": null,
       "volume": 105191
     },
     {
@@ -1453,7 +1455,7 @@
       "high": 8.779999732971191,
       "low": 8.40999984741211,
       "close": 8.420000076293945,
-      "adjustedClose": 8.049519538879395,
+      "adjustedClose": null,
       "volume": 47927
     },
     {
@@ -1462,7 +1464,7 @@
       "high": 8.600000381469727,
       "low": 8.260000228881836,
       "close": 8.279999732971191,
-      "adjustedClose": 7.915679454803467,
+      "adjustedClose": null,
       "volume": 32776
     },
     {
@@ -1471,7 +1473,7 @@
       "high": 8.729999542236328,
       "low": 8.279999732971191,
       "close": 8.420000076293945,
-      "adjustedClose": 8.049519538879395,
+      "adjustedClose": null,
       "volume": 58074
     },
     {
@@ -1480,7 +1482,7 @@
       "high": 8.640000343322754,
       "low": 8.199999809265137,
       "close": 8.520000457763672,
-      "adjustedClose": 8.145120620727539,
+      "adjustedClose": null,
       "volume": 47105
     },
     {
@@ -1489,7 +1491,7 @@
       "high": 8.600000381469727,
       "low": 8.279999732971191,
       "close": 8.350000381469727,
-      "adjustedClose": 7.982600212097168,
+      "adjustedClose": null,
       "volume": 30852
     },
     {
@@ -1498,7 +1500,7 @@
       "high": 8.59000015258789,
       "low": 8.319999694824219,
       "close": 8.350000381469727,
-      "adjustedClose": 7.982600212097168,
+      "adjustedClose": null,
       "volume": 29088
     },
     {
@@ -1507,7 +1509,7 @@
       "high": 8.479999542236328,
       "low": 8.350000381469727,
       "close": 8.390000343322754,
-      "adjustedClose": 8.02083969116211,
+      "adjustedClose": null,
       "volume": 41710
     },
     {
@@ -1516,7 +1518,7 @@
       "high": 8.5,
       "low": 8.380000114440918,
       "close": 8.449999809265137,
-      "adjustedClose": 8.07819938659668,
+      "adjustedClose": null,
       "volume": 30170
     },
     {
@@ -1525,7 +1527,7 @@
       "high": 8.5600004196167,
       "low": 8.369999885559082,
       "close": 8.520000457763672,
-      "adjustedClose": 8.145120620727539,
+      "adjustedClose": null,
       "volume": 35304
     },
     {
@@ -1534,7 +1536,7 @@
       "high": 8.460000038146973,
       "low": 8.329999923706055,
       "close": 8.399999618530273,
-      "adjustedClose": 8.030399322509766,
+      "adjustedClose": null,
       "volume": 28572
     },
     {
@@ -1543,7 +1545,7 @@
       "high": 8.479999542236328,
       "low": 8.25,
       "close": 8.25,
-      "adjustedClose": 7.886999607086182,
+      "adjustedClose": null,
       "volume": 23663
     },
     {
@@ -1552,7 +1554,7 @@
       "high": 8.350000381469727,
       "low": 8.050000190734863,
       "close": 8.050000190734863,
-      "adjustedClose": 7.695799827575684,
+      "adjustedClose": null,
       "volume": 31905
     },
     {
@@ -1561,7 +1563,7 @@
       "high": 8.350000381469727,
       "low": 8.100000381469727,
       "close": 8.149999618530273,
-      "adjustedClose": 7.7913994789123535,
+      "adjustedClose": null,
       "volume": 29447
     },
     {
@@ -1570,7 +1572,7 @@
       "high": 8.319999694824219,
       "low": 8.069999694824219,
       "close": 8.149999618530273,
-      "adjustedClose": 7.7913994789123535,
+      "adjustedClose": null,
       "volume": 24455
     },
     {
@@ -1579,7 +1581,7 @@
       "high": 8.600000381469727,
       "low": 8.199999809265137,
       "close": 8.470000267028809,
-      "adjustedClose": 8.097319602966309,
+      "adjustedClose": null,
       "volume": 52555
     },
     {
@@ -1588,7 +1590,7 @@
       "high": 8.630000114440918,
       "low": 8.369999885559082,
       "close": 8.550000190734863,
-      "adjustedClose": 8.173799514770508,
+      "adjustedClose": null,
       "volume": 30044
     },
     {
@@ -1597,7 +1599,7 @@
       "high": 8.800000190734863,
       "low": 8.260000228881836,
       "close": 8.4399995803833,
-      "adjustedClose": 8.068639755249023,
+      "adjustedClose": null,
       "volume": 41054
     },
     {
@@ -1606,7 +1608,7 @@
       "high": 8.630000114440918,
       "low": 8.5,
       "close": 8.630000114440918,
-      "adjustedClose": 8.250279426574707,
+      "adjustedClose": null,
       "volume": 29264
     },
     {
@@ -1615,7 +1617,7 @@
       "high": 8.619999885559082,
       "low": 8.4399995803833,
       "close": 8.539999961853027,
-      "adjustedClose": 8.164239883422852,
+      "adjustedClose": null,
       "volume": 15029
     },
     {
@@ -1624,7 +1626,7 @@
       "high": 8.670000076293945,
       "low": 8.460000038146973,
       "close": 8.640000343322754,
-      "adjustedClose": 8.25984001159668,
+      "adjustedClose": null,
       "volume": 163242
     },
     {
@@ -1633,7 +1635,7 @@
       "high": 8.720000267028809,
       "low": 8.470000267028809,
       "close": 8.720000267028809,
-      "adjustedClose": 8.336319923400879,
+      "adjustedClose": null,
       "volume": 16342
     },
     {
@@ -1642,7 +1644,7 @@
       "high": 8.720000267028809,
       "low": 8.5,
       "close": 8.5,
-      "adjustedClose": 8.125999450683594,
+      "adjustedClose": null,
       "volume": 14655
     },
     {
@@ -1651,7 +1653,7 @@
       "high": 8.680000305175781,
       "low": 8.520000457763672,
       "close": 8.529999732971191,
-      "adjustedClose": 8.154679298400879,
+      "adjustedClose": null,
       "volume": 19326
     },
     {
@@ -1660,7 +1662,7 @@
       "high": 8.609999656677246,
       "low": 8.449999809265137,
       "close": 8.479999542236328,
-      "adjustedClose": 8.106879234313965,
+      "adjustedClose": null,
       "volume": 16181
     },
     {
@@ -1669,7 +1671,7 @@
       "high": 8.6899995803833,
       "low": 8.470000267028809,
       "close": 8.5600004196167,
-      "adjustedClose": 8.18336009979248,
+      "adjustedClose": null,
       "volume": 30785
     },
     {
@@ -1678,7 +1680,7 @@
       "high": 8.609999656677246,
       "low": 8.449999809265137,
       "close": 8.539999961853027,
-      "adjustedClose": 8.164239883422852,
+      "adjustedClose": null,
       "volume": 36171
     },
     {
@@ -1687,7 +1689,7 @@
       "high": 8.59000015258789,
       "low": 8.369999885559082,
       "close": 8.369999885559082,
-      "adjustedClose": 8.00171947479248,
+      "adjustedClose": null,
       "volume": 33572
     },
     {
@@ -1696,7 +1698,7 @@
       "high": 8.390000343322754,
       "low": 8.109999656677246,
       "close": 8.109999656677246,
-      "adjustedClose": 7.753159523010254,
+      "adjustedClose": null,
       "volume": 23410
     },
     {
@@ -1705,7 +1707,7 @@
       "high": 8.369999885559082,
       "low": 7.949999809265137,
       "close": 7.980000019073486,
-      "adjustedClose": 7.628879547119141,
+      "adjustedClose": null,
       "volume": 27587
     },
     {
@@ -1714,7 +1716,7 @@
       "high": 8.460000038146973,
       "low": 7.909999847412109,
       "close": 8.029999732971191,
-      "adjustedClose": 7.676679611206055,
+      "adjustedClose": null,
       "volume": 28323
     },
     {
@@ -1723,7 +1725,7 @@
       "high": 8.1899995803833,
       "low": 7.980000019073486,
       "close": 8.050000190734863,
-      "adjustedClose": 7.695799827575684,
+      "adjustedClose": null,
       "volume": 29989
     },
     {
@@ -1732,7 +1734,7 @@
       "high": 8.380000114440918,
       "low": 8.010000228881836,
       "close": 8.15999984741211,
-      "adjustedClose": 7.800959587097168,
+      "adjustedClose": null,
       "volume": 26002
     },
     {
@@ -1741,7 +1743,7 @@
       "high": 8.489999771118164,
       "low": 8.119999885559082,
       "close": 8.149999618530273,
-      "adjustedClose": 7.7913994789123535,
+      "adjustedClose": null,
       "volume": 6652
     },
     {
@@ -1750,7 +1752,7 @@
       "high": 8.300000190734863,
       "low": 8.100000381469727,
       "close": 8.199999809265137,
-      "adjustedClose": 7.839199542999268,
+      "adjustedClose": null,
       "volume": 10240
     },
     {
@@ -1759,7 +1761,7 @@
       "high": 8.489999771118164,
       "low": 8.149999618530273,
       "close": 8.15999984741211,
-      "adjustedClose": 7.800959587097168,
+      "adjustedClose": null,
       "volume": 28365
     },
     {
@@ -1768,7 +1770,7 @@
       "high": 8.239999771118164,
       "low": 8.0600004196167,
       "close": 8.210000038146973,
-      "adjustedClose": 7.848759651184082,
+      "adjustedClose": null,
       "volume": 34991
     },
     {
@@ -1777,7 +1779,7 @@
       "high": 8.289999961853027,
       "low": 7.949999809265137,
       "close": 8.029999732971191,
-      "adjustedClose": 7.676679611206055,
+      "adjustedClose": null,
       "volume": 24098
     },
     {
@@ -1786,7 +1788,7 @@
       "high": 8.239999771118164,
       "low": 8,
       "close": 8.100000381469727,
-      "adjustedClose": 7.743599891662598,
+      "adjustedClose": null,
       "volume": 50364
     },
     {
@@ -1795,7 +1797,7 @@
       "high": 8.199999809265137,
       "low": 8,
       "close": 8.149999618530273,
-      "adjustedClose": 7.7913994789123535,
+      "adjustedClose": null,
       "volume": 39803
     },
     {
@@ -1804,7 +1806,7 @@
       "high": 8.289999961853027,
       "low": 7.920000076293945,
       "close": 8.0600004196167,
-      "adjustedClose": 7.705359935760498,
+      "adjustedClose": null,
       "volume": 36047
     },
     {
@@ -1813,7 +1815,7 @@
       "high": 8.449999809265137,
       "low": 8.050000190734863,
       "close": 8.449999809265137,
-      "adjustedClose": 8.07819938659668,
+      "adjustedClose": null,
       "volume": 46463
     },
     {
@@ -1822,7 +1824,7 @@
       "high": 8.5,
       "low": 8.170000076293945,
       "close": 8.170000076293945,
-      "adjustedClose": 7.810519695281982,
+      "adjustedClose": null,
       "volume": 17970
     },
     {
@@ -1831,7 +1833,7 @@
       "high": 8.5,
       "low": 8.149999618530273,
       "close": 8.399999618530273,
-      "adjustedClose": 8.030399322509766,
+      "adjustedClose": null,
       "volume": 69904
     },
     {
@@ -1840,7 +1842,7 @@
       "high": 8.4399995803833,
       "low": 8.149999618530273,
       "close": 8.399999618530273,
-      "adjustedClose": 8.030399322509766,
+      "adjustedClose": null,
       "volume": 11587
     },
     {
@@ -1849,7 +1851,7 @@
       "high": 8.579999923706055,
       "low": 8.34000015258789,
       "close": 8.399999618530273,
-      "adjustedClose": 8.030399322509766,
+      "adjustedClose": null,
       "volume": 30481
     },
     {
@@ -1858,7 +1860,7 @@
       "high": 8.979999542236328,
       "low": 8.479999542236328,
       "close": 8.859999656677246,
-      "adjustedClose": 8.470159530639648,
+      "adjustedClose": null,
       "volume": 77026
     },
     {
@@ -1867,7 +1869,7 @@
       "high": 9.319999694824219,
       "low": 8.75,
       "close": 9.319999694824219,
-      "adjustedClose": 8.909919738769531,
+      "adjustedClose": null,
       "volume": 71986
     },
     {
@@ -1876,7 +1878,7 @@
       "high": 9.369999885559082,
       "low": 8.399999618530273,
       "close": 9.229999542236328,
-      "adjustedClose": 8.82387924194336,
+      "adjustedClose": null,
       "volume": 18058
     },
     {
@@ -1885,7 +1887,7 @@
       "high": 9.390000343322754,
       "low": 9.010000228881836,
       "close": 9.3100004196167,
-      "adjustedClose": 8.900360107421875,
+      "adjustedClose": null,
       "volume": 43096
     },
     {
@@ -1894,7 +1896,7 @@
       "high": 9.399999618530273,
       "low": 9.260000228881836,
       "close": 9.279999732971191,
-      "adjustedClose": 8.871679306030273,
+      "adjustedClose": null,
       "volume": 33873
     },
     {
@@ -1903,7 +1905,7 @@
       "high": 9.470000267028809,
       "low": 9.300000190734863,
       "close": 9.399999618530273,
-      "adjustedClose": 8.98639965057373,
+      "adjustedClose": null,
       "volume": 27301
     },
     {
@@ -1912,7 +1914,7 @@
       "high": 9.489999771118164,
       "low": 9.3100004196167,
       "close": 9.380000114440918,
-      "adjustedClose": 8.967279434204102,
+      "adjustedClose": null,
       "volume": 48055
     },
     {
@@ -1921,7 +1923,7 @@
       "high": 9.5,
       "low": 9.300000190734863,
       "close": 9.359999656677246,
-      "adjustedClose": 8.948159217834473,
+      "adjustedClose": null,
       "volume": 28127
     },
     {
@@ -1930,7 +1932,7 @@
       "high": 9.5,
       "low": 9.260000228881836,
       "close": 9.34000015258789,
-      "adjustedClose": 8.92903995513916,
+      "adjustedClose": null,
       "volume": 5129
     },
     {
@@ -1939,7 +1941,7 @@
       "high": 9.5,
       "low": 9.260000228881836,
       "close": 9.420000076293945,
-      "adjustedClose": 9.00551986694336,
+      "adjustedClose": null,
       "volume": 5121
     },
     {
@@ -1948,7 +1950,7 @@
       "high": 9.569999694824219,
       "low": 9.260000228881836,
       "close": 9.430000305175781,
-      "adjustedClose": 9.015080451965332,
+      "adjustedClose": null,
       "volume": 25127
     },
     {
@@ -1957,7 +1959,7 @@
       "high": 9.460000038146973,
       "low": 9.210000038146973,
       "close": 9.210000038146973,
-      "adjustedClose": 8.804759979248047,
+      "adjustedClose": null,
       "volume": 8952
     },
     {
@@ -1966,7 +1968,7 @@
       "high": 9.399999618530273,
       "low": 8.800000190734863,
       "close": 9,
-      "adjustedClose": 8.604000091552734,
+      "adjustedClose": null,
       "volume": 41494
     },
     {
@@ -1975,7 +1977,7 @@
       "high": 9.149999618530273,
       "low": 8.770000457763672,
       "close": 8.920000076293945,
-      "adjustedClose": 8.527520179748535,
+      "adjustedClose": null,
       "volume": 87955
     },
     {
@@ -1984,7 +1986,7 @@
       "high": 9.039999961853027,
       "low": 8.5,
       "close": 9.029999732971191,
-      "adjustedClose": 8.63267993927002,
+      "adjustedClose": null,
       "volume": 13928
     },
     {
@@ -1993,7 +1995,7 @@
       "high": 9.119999885559082,
       "low": 8.850000381469727,
       "close": 9.039999961853027,
-      "adjustedClose": 8.642239570617676,
+      "adjustedClose": null,
       "volume": 6523
     },
     {
@@ -2002,7 +2004,7 @@
       "high": 9.039999961853027,
       "low": 8.789999961853027,
       "close": 8.9399995803833,
-      "adjustedClose": 8.546639442443848,
+      "adjustedClose": null,
       "volume": 59506
     },
     {
@@ -2011,7 +2013,7 @@
       "high": 8.949999809265137,
       "low": 8.760000228881836,
       "close": 8.829999923706055,
-      "adjustedClose": 8.441479682922363,
+      "adjustedClose": null,
       "volume": 68703
     },
     {
@@ -2020,7 +2022,7 @@
       "high": 9.399999618530273,
       "low": 8.609999656677246,
       "close": 9.09000015258789,
-      "adjustedClose": 8.69003963470459,
+      "adjustedClose": null,
       "volume": 42717
     },
     {
@@ -2029,7 +2031,7 @@
       "high": 9.069999694824219,
       "low": 8.800000190734863,
       "close": 9.069999694824219,
-      "adjustedClose": 8.670919418334961,
+      "adjustedClose": null,
       "volume": 1141
     },
     {
@@ -2038,7 +2040,7 @@
       "high": 9.109999656677246,
       "low": 8.920000076293945,
       "close": 9.09000015258789,
-      "adjustedClose": 8.69003963470459,
+      "adjustedClose": null,
       "volume": 20794
     },
     {
@@ -2047,7 +2049,7 @@
       "high": 9.109999656677246,
       "low": 9,
       "close": 9.109999656677246,
-      "adjustedClose": 8.709159851074219,
+      "adjustedClose": null,
       "volume": 4796
     },
     {
@@ -2056,7 +2058,7 @@
       "high": 9.380000114440918,
       "low": 9.079999923706055,
       "close": 9.140000343322754,
-      "adjustedClose": 8.737839698791504,
+      "adjustedClose": null,
       "volume": 5804
     },
     {
@@ -2065,7 +2067,7 @@
       "high": 9.210000038146973,
       "low": 9,
       "close": 9.0600004196167,
-      "adjustedClose": 8.661359786987305,
+      "adjustedClose": null,
       "volume": 15091
     },
     {
@@ -2074,7 +2076,7 @@
       "high": 9.5,
       "low": 9.0600004196167,
       "close": 9.239999771118164,
-      "adjustedClose": 8.833439826965332,
+      "adjustedClose": null,
       "volume": 7771
     },
     {
@@ -2083,7 +2085,7 @@
       "high": 9.369999885559082,
       "low": 9.039999961853027,
       "close": 9.369999885559082,
-      "adjustedClose": 8.957719802856445,
+      "adjustedClose": null,
       "volume": 8033
     },
     {
@@ -2092,7 +2094,7 @@
       "high": 9.800000190734863,
       "low": 9.260000228881836,
       "close": 9.529999732971191,
-      "adjustedClose": 9.110679626464844,
+      "adjustedClose": null,
       "volume": 20648
     },
     {
@@ -2101,7 +2103,7 @@
       "high": 9.529999732971191,
       "low": 9.3100004196167,
       "close": 9.510000228881836,
-      "adjustedClose": 9.091560363769531,
+      "adjustedClose": null,
       "volume": 8410
     },
     {
@@ -2110,7 +2112,7 @@
       "high": 9.6899995803833,
       "low": 9.449999809265137,
       "close": 9.600000381469727,
-      "adjustedClose": 9.177599906921387,
+      "adjustedClose": null,
       "volume": 5630
     },
     {
@@ -2119,7 +2121,7 @@
       "high": 9.460000038146973,
       "low": 9.180000305175781,
       "close": 9.25,
-      "adjustedClose": 8.842999458312988,
+      "adjustedClose": null,
       "volume": 12308
     },
     {
@@ -2128,7 +2130,7 @@
       "high": 9.399999618530273,
       "low": 9.050000190734863,
       "close": 9.229999542236328,
-      "adjustedClose": 8.82387924194336,
+      "adjustedClose": null,
       "volume": 38073
     },
     {
@@ -2137,7 +2139,7 @@
       "high": 9.470000267028809,
       "low": 9.149999618530273,
       "close": 9.399999618530273,
-      "adjustedClose": 8.98639965057373,
+      "adjustedClose": null,
       "volume": 250044
     },
     {
@@ -2146,7 +2148,7 @@
       "high": 9.880000114440918,
       "low": 9.279999732971191,
       "close": 9.880000114440918,
-      "adjustedClose": 9.445280075073242,
+      "adjustedClose": null,
       "volume": 34095
     },
     {
@@ -2155,7 +2157,7 @@
       "high": 10.0600004196167,
       "low": 9.5,
       "close": 9.760000228881836,
-      "adjustedClose": 9.330559730529785,
+      "adjustedClose": null,
       "volume": 26546
     },
     {
@@ -2164,7 +2166,7 @@
       "high": 9.989999771118164,
       "low": 9.4399995803833,
       "close": 9.600000381469727,
-      "adjustedClose": 9.177599906921387,
+      "adjustedClose": null,
       "volume": 77209
     },
     {
@@ -2173,7 +2175,7 @@
       "high": 9.710000038146973,
       "low": 9.520000457763672,
       "close": 9.520000457763672,
-      "adjustedClose": 9.101119995117188,
+      "adjustedClose": null,
       "volume": 20725
     },
     {
@@ -2182,7 +2184,7 @@
       "high": 9.649999618530273,
       "low": 9.329999923706055,
       "close": 9.529999732971191,
-      "adjustedClose": 9.110679626464844,
+      "adjustedClose": null,
       "volume": 7614
     },
     {
@@ -2191,7 +2193,7 @@
       "high": 9.920000076293945,
       "low": 9.720000267028809,
       "close": 9.899999618530273,
-      "adjustedClose": 9.464399337768555,
+      "adjustedClose": null,
       "volume": 7938
     },
     {
@@ -2200,7 +2202,7 @@
       "high": 10.100000381469727,
       "low": 9.800000190734863,
       "close": 10.020000457763672,
-      "adjustedClose": 9.579119682312012,
+      "adjustedClose": null,
       "volume": 12769
     },
     {
@@ -2209,7 +2211,7 @@
       "high": 10.460000038146973,
       "low": 10,
       "close": 10.039999961853027,
-      "adjustedClose": 9.59823989868164,
+      "adjustedClose": null,
       "volume": 17910
     },
     {
@@ -2218,7 +2220,7 @@
       "high": 10.279999732971191,
       "low": 10.079999923706055,
       "close": 10.079999923706055,
-      "adjustedClose": 9.636479377746582,
+      "adjustedClose": null,
       "volume": 14448
     },
     {
@@ -2227,7 +2229,7 @@
       "high": 10.5600004196167,
       "low": 10.140000343322754,
       "close": 10.4399995803833,
-      "adjustedClose": 9.980639457702637,
+      "adjustedClose": null,
       "volume": 15698
     },
     {
@@ -2236,7 +2238,7 @@
       "high": 11,
       "low": 10.140000343322754,
       "close": 10.140000343322754,
-      "adjustedClose": 9.693840026855469,
+      "adjustedClose": null,
       "volume": 17203
     },
     {
@@ -2245,7 +2247,7 @@
       "high": 10.600000381469727,
       "low": 10.119999885559082,
       "close": 10.119999885559082,
-      "adjustedClose": 9.67471981048584,
+      "adjustedClose": null,
       "volume": 16732
     },
     {
@@ -2254,7 +2256,7 @@
       "high": 10.399999618530273,
       "low": 9.869999885559082,
       "close": 10.279999732971191,
-      "adjustedClose": 9.827679634094238,
+      "adjustedClose": null,
       "volume": 27029
     },
     {
@@ -2263,7 +2265,7 @@
       "high": 10.800000190734863,
       "low": 10.140000343322754,
       "close": 10.199999809265137,
-      "adjustedClose": 9.751199722290039,
+      "adjustedClose": null,
       "volume": 54722
     },
     {
@@ -2272,7 +2274,7 @@
       "high": 10.420000076293945,
       "low": 10.15999984741211,
       "close": 10.279999732971191,
-      "adjustedClose": 9.827679634094238,
+      "adjustedClose": null,
       "volume": 18473
     },
     {
@@ -2281,7 +2283,7 @@
       "high": 10.479999542236328,
       "low": 10.199999809265137,
       "close": 10.359999656677246,
-      "adjustedClose": 9.904159545898438,
+      "adjustedClose": null,
       "volume": 11919
     },
     {
@@ -2290,7 +2292,7 @@
       "high": 10.84000015258789,
       "low": 10.220000267028809,
       "close": 10.760000228881836,
-      "adjustedClose": 10.28656005859375,
+      "adjustedClose": null,
       "volume": 38215
     },
     {
@@ -2299,7 +2301,7 @@
       "high": 11.079999923706055,
       "low": 10.420000076293945,
       "close": 11.079999923706055,
-      "adjustedClose": 10.592479705810547,
+      "adjustedClose": null,
       "volume": 50489
     },
     {
@@ -2308,7 +2310,7 @@
       "high": 11.260000228881836,
       "low": 10.800000190734863,
       "close": 11.15999984741211,
-      "adjustedClose": 10.668959617614746,
+      "adjustedClose": null,
       "volume": 41973
     },
     {
@@ -2317,7 +2319,7 @@
       "high": 11.260000228881836,
       "low": 10.600000381469727,
       "close": 10.600000381469727,
-      "adjustedClose": 10.133600234985352,
+      "adjustedClose": null,
       "volume": 30345
     },
     {
@@ -2326,7 +2328,7 @@
       "high": 10.800000190734863,
       "low": 10.399999618530273,
       "close": 10.619999885559082,
-      "adjustedClose": 10.152719497680664,
+      "adjustedClose": null,
       "volume": 15387
     },
     {
@@ -2335,7 +2337,7 @@
       "high": 11.199999809265137,
       "low": 10.420000076293945,
       "close": 10.5,
-      "adjustedClose": 10.038000106811523,
+      "adjustedClose": null,
       "volume": 11493
     },
     {
@@ -2344,7 +2346,7 @@
       "high": 10.760000228881836,
       "low": 10.5600004196167,
       "close": 10.739999771118164,
-      "adjustedClose": 10.267439842224121,
+      "adjustedClose": null,
       "volume": 6360
     },
     {
@@ -2353,7 +2355,7 @@
       "high": 10.760000228881836,
       "low": 10.279999732971191,
       "close": 10.279999732971191,
-      "adjustedClose": 9.827679634094238,
+      "adjustedClose": null,
       "volume": 10314
     },
     {
@@ -2362,7 +2364,7 @@
       "high": 10.640000343322754,
       "low": 10.119999885559082,
       "close": 10.640000343322754,
-      "adjustedClose": 10.171839714050293,
+      "adjustedClose": null,
       "volume": 16784
     },
     {
@@ -2371,7 +2373,7 @@
       "high": 10.539999961853027,
       "low": 10.319999694824219,
       "close": 10.359999656677246,
-      "adjustedClose": 9.904159545898438,
+      "adjustedClose": null,
       "volume": 15160
     },
     {
@@ -2380,7 +2382,7 @@
       "high": 10.739999771118164,
       "low": 10.300000190734863,
       "close": 10.539999961853027,
-      "adjustedClose": 10.076239585876465,
+      "adjustedClose": null,
       "volume": 18620
     },
     {
@@ -2389,7 +2391,7 @@
       "high": 10.600000381469727,
       "low": 10.399999618530273,
       "close": 10.539999961853027,
-      "adjustedClose": 10.076239585876465,
+      "adjustedClose": null,
       "volume": 7031
     },
     {
@@ -2398,7 +2400,7 @@
       "high": 10.800000190734863,
       "low": 10.300000190734863,
       "close": 10.399999618530273,
-      "adjustedClose": 9.942399024963379,
+      "adjustedClose": null,
       "volume": 19634
     },
     {
@@ -2407,7 +2409,7 @@
       "high": 10.5600004196167,
       "low": 10.119999885559082,
       "close": 10.359999656677246,
-      "adjustedClose": 9.904159545898438,
+      "adjustedClose": null,
       "volume": 10617
     },
     {
@@ -2416,7 +2418,7 @@
       "high": 10.5600004196167,
       "low": 10.300000190734863,
       "close": 10.5,
-      "adjustedClose": 10.038000106811523,
+      "adjustedClose": null,
       "volume": 8140
     },
     {
@@ -2425,7 +2427,7 @@
       "high": 10.520000457763672,
       "low": 10.279999732971191,
       "close": 10.279999732971191,
-      "adjustedClose": 9.827679634094238,
+      "adjustedClose": null,
       "volume": 35677
     },
     {
@@ -2434,7 +2436,7 @@
       "high": 10.180000305175781,
       "low": 9.899999618530273,
       "close": 10.020000457763672,
-      "adjustedClose": 9.579119682312012,
+      "adjustedClose": null,
       "volume": 9854
     },
     {
@@ -2443,7 +2445,7 @@
       "high": 9.869999885559082,
       "low": 9.100000381469727,
       "close": 9.470000267028809,
-      "adjustedClose": 9.053319931030273,
+      "adjustedClose": null,
       "volume": 15240
     },
     {
@@ -2452,7 +2454,7 @@
       "high": 10,
       "low": 9.199999809265137,
       "close": 9.949999809265137,
-      "adjustedClose": 9.512199401855469,
+      "adjustedClose": null,
       "volume": 47886
     },
     {
@@ -2461,7 +2463,7 @@
       "high": 10,
       "low": 9.319999694824219,
       "close": 9.350000381469727,
-      "adjustedClose": 8.938600540161133,
+      "adjustedClose": null,
       "volume": 36449
     },
     {
@@ -2470,7 +2472,7 @@
       "high": 9.649999618530273,
       "low": 9.270000457763672,
       "close": 9.420000076293945,
-      "adjustedClose": 9.00551986694336,
+      "adjustedClose": null,
       "volume": 21129
     },
     {
@@ -2479,7 +2481,7 @@
       "high": 9.319999694824219,
       "low": 9.020000457763672,
       "close": 9.119999885559082,
-      "adjustedClose": 8.718719482421875,
+      "adjustedClose": null,
       "volume": 20120
     },
     {
@@ -2488,7 +2490,7 @@
       "high": 9.399999618530273,
       "low": 9.149999618530273,
       "close": 9.199999809265137,
-      "adjustedClose": 8.795199394226074,
+      "adjustedClose": null,
       "volume": 44170
     },
     {
@@ -2497,7 +2499,7 @@
       "high": 9.5,
       "low": 8.850000381469727,
       "close": 8.989999771118164,
-      "adjustedClose": 8.594439506530762,
+      "adjustedClose": null,
       "volume": 76049
     },
     {
@@ -2506,7 +2508,7 @@
       "high": 9.020000457763672,
       "low": 8.819999694824219,
       "close": 8.819999694824219,
-      "adjustedClose": 8.43191909790039,
+      "adjustedClose": null,
       "volume": 24420
     },
     {
@@ -2515,7 +2517,7 @@
       "high": 8.90999984741211,
       "low": 8.520000457763672,
       "close": 8.579999923706055,
-      "adjustedClose": 8.202479362487793,
+      "adjustedClose": null,
       "volume": 35187
     },
     {
@@ -2524,7 +2526,7 @@
       "high": 8.899999618530273,
       "low": 8.399999618530273,
       "close": 8.460000038146973,
-      "adjustedClose": 8.087759971618652,
+      "adjustedClose": null,
       "volume": 41559
     },
     {
@@ -2533,7 +2535,7 @@
       "high": 8.699999809265137,
       "low": 8.470000267028809,
       "close": 8.539999961853027,
-      "adjustedClose": 8.164239883422852,
+      "adjustedClose": null,
       "volume": 11376
     },
     {
@@ -2542,7 +2544,7 @@
       "high": 8.779999732971191,
       "low": 8.5600004196167,
       "close": 8.5600004196167,
-      "adjustedClose": 8.18336009979248,
+      "adjustedClose": null,
       "volume": 12663
     },
     {
@@ -2551,7 +2553,7 @@
       "high": 8.789999961853027,
       "low": 8.149999618530273,
       "close": 8.300000190734863,
-      "adjustedClose": 7.934800148010254,
+      "adjustedClose": null,
       "volume": 13565
     },
     {
@@ -2560,7 +2562,7 @@
       "high": 8.369999885559082,
       "low": 8.170000076293945,
       "close": 8.199999809265137,
-      "adjustedClose": 7.839199542999268,
+      "adjustedClose": null,
       "volume": 65877
     },
     {
@@ -2569,7 +2571,7 @@
       "high": 8.550000190734863,
       "low": 7.900000095367432,
       "close": 8.420000076293945,
-      "adjustedClose": 8.049519538879395,
+      "adjustedClose": null,
       "volume": 23257
     },
     {
@@ -2578,7 +2580,7 @@
       "high": 8.699999809265137,
       "low": 8.289999961853027,
       "close": 8.430000305175781,
-      "adjustedClose": 8.059080123901367,
+      "adjustedClose": null,
       "volume": 12431
     },
     {
@@ -2587,7 +2589,7 @@
       "high": 8.569999694824219,
       "low": 8.359999656677246,
       "close": 8.4399995803833,
-      "adjustedClose": 8.068639755249023,
+      "adjustedClose": null,
       "volume": 18515
     },
     {
@@ -2596,7 +2598,7 @@
       "high": 8.329999923706055,
       "low": 8.170000076293945,
       "close": 8.300000190734863,
-      "adjustedClose": 7.934800148010254,
+      "adjustedClose": null,
       "volume": 11601
     },
     {
@@ -2605,7 +2607,7 @@
       "high": 8.149999618530273,
       "low": 7.659999847412109,
       "close": 7.929999828338623,
-      "adjustedClose": 7.581079483032227,
+      "adjustedClose": null,
       "volume": 69212
     },
     {
@@ -2614,7 +2616,7 @@
       "high": 8.5,
       "low": 7.800000190734863,
       "close": 7.920000076293945,
-      "adjustedClose": 7.57151985168457,
+      "adjustedClose": null,
       "volume": 39862
     },
     {
@@ -2623,7 +2625,7 @@
       "high": 8.369999885559082,
       "low": 7.849999904632568,
       "close": 8.369999885559082,
-      "adjustedClose": 8.00171947479248,
+      "adjustedClose": null,
       "volume": 33211
     },
     {
@@ -2632,7 +2634,7 @@
       "high": 8.699999809265137,
       "low": 8.4399995803833,
       "close": 8.550000190734863,
-      "adjustedClose": 8.173799514770508,
+      "adjustedClose": null,
       "volume": 39194
     },
     {
@@ -2641,7 +2643,7 @@
       "high": 9,
       "low": 8.140000343322754,
       "close": 8.25,
-      "adjustedClose": 7.886999607086182,
+      "adjustedClose": null,
       "volume": 38338
     },
     {
@@ -2650,7 +2652,7 @@
       "high": 8.350000381469727,
       "low": 7.789999961853027,
       "close": 7.789999961853027,
-      "adjustedClose": 7.447239875793457,
+      "adjustedClose": null,
       "volume": 97575
     },
     {
@@ -2659,7 +2661,7 @@
       "high": 8.350000381469727,
       "low": 7.940000057220459,
       "close": 8.010000228881836,
-      "adjustedClose": 7.657559871673584,
+      "adjustedClose": null,
       "volume": 47761
     },
     {
@@ -2668,7 +2670,7 @@
       "high": 8.300000190734863,
       "low": 7.539999961853027,
       "close": 7.539999961853027,
-      "adjustedClose": 7.208239555358887,
+      "adjustedClose": null,
       "volume": 108401
     },
     {
@@ -2677,7 +2679,7 @@
       "high": 7.619999885559082,
       "low": 7.230000019073486,
       "close": 7.230000019073486,
-      "adjustedClose": 6.911880016326904,
+      "adjustedClose": null,
       "volume": 86352
     },
     {
@@ -2686,7 +2688,7 @@
       "high": 7.949999809265137,
       "low": 7.309999942779541,
       "close": 7.409999847412109,
-      "adjustedClose": 7.083959579467773,
+      "adjustedClose": null,
       "volume": 57627
     },
     {
@@ -2695,7 +2697,7 @@
       "high": 7.53000020980835,
       "low": 7.349999904632568,
       "close": 7.440000057220459,
-      "adjustedClose": 7.112639904022217,
+      "adjustedClose": null,
       "volume": 158538
     },
     {
@@ -2704,7 +2706,7 @@
       "high": 7.599999904632568,
       "low": 7.460000038146973,
       "close": 7.53000020980835,
-      "adjustedClose": 7.1986799240112305,
+      "adjustedClose": null,
       "volume": 62810
     },
     {
@@ -2713,7 +2715,7 @@
       "high": 7.599999904632568,
       "low": 7.159999847412109,
       "close": 7.329999923706055,
-      "adjustedClose": 7.007479667663574,
+      "adjustedClose": null,
       "volume": 137881
     },
     {
@@ -2722,7 +2724,7 @@
       "high": 7.940000057220459,
       "low": 7.269999980926514,
       "close": 7.880000114440918,
-      "adjustedClose": 7.533279895782471,
+      "adjustedClose": null,
       "volume": 234033
     },
     {
@@ -2731,7 +2733,7 @@
       "high": 7.980000019073486,
       "low": 7.619999885559082,
       "close": 7.869999885559082,
-      "adjustedClose": 7.523719787597656,
+      "adjustedClose": null,
       "volume": 61074
     },
     {
@@ -2740,7 +2742,7 @@
       "high": 8.09000015258789,
       "low": 7.840000152587891,
       "close": 7.940000057220459,
-      "adjustedClose": 7.590639591217041,
+      "adjustedClose": null,
       "volume": 51592
     },
     {
@@ -2749,7 +2751,7 @@
       "high": 8.029999732971191,
       "low": 7.869999885559082,
       "close": 7.96999979019165,
-      "adjustedClose": 7.619319438934326,
+      "adjustedClose": null,
       "volume": 33731
     },
     {
@@ -2758,7 +2760,7 @@
       "high": 8.029999732971191,
       "low": 7.900000095367432,
       "close": 8,
-      "adjustedClose": 7.6479997634887695,
+      "adjustedClose": null,
       "volume": 41379
     },
     {
@@ -2767,7 +2769,7 @@
       "high": 8.029999732971191,
       "low": 7.889999866485596,
       "close": 7.96999979019165,
-      "adjustedClose": 7.619319438934326,
+      "adjustedClose": null,
       "volume": 29922
     },
     {
@@ -2776,7 +2778,7 @@
       "high": 8.130000114440918,
       "low": 8.010000228881836,
       "close": 8.109999656677246,
-      "adjustedClose": 7.753159523010254,
+      "adjustedClose": null,
       "volume": 22233
     },
     {
@@ -2785,7 +2787,7 @@
       "high": 8.119999885559082,
       "low": 7.980000019073486,
       "close": 8.050000190734863,
-      "adjustedClose": 7.695799827575684,
+      "adjustedClose": null,
       "volume": 22972
     },
     {
@@ -2794,7 +2796,7 @@
       "high": 8.100000381469727,
       "low": 8.039999961853027,
       "close": 8.039999961853027,
-      "adjustedClose": 7.686239719390869,
+      "adjustedClose": null,
       "volume": 28975
     },
     {
@@ -2803,7 +2805,7 @@
       "high": 8.170000076293945,
       "low": 7.909999847412109,
       "close": 8.140000343322754,
-      "adjustedClose": 7.7818403244018555,
+      "adjustedClose": null,
       "volume": 105785
     },
     {
@@ -2812,7 +2814,7 @@
       "high": 8.260000228881836,
       "low": 8.020000457763672,
       "close": 8.020000457763672,
-      "adjustedClose": 7.667119979858398,
+      "adjustedClose": null,
       "volume": 90373
     },
     {
@@ -2821,7 +2823,7 @@
       "high": 8.25,
       "low": 7.960000038146973,
       "close": 8,
-      "adjustedClose": 7.6479997634887695,
+      "adjustedClose": null,
       "volume": 32645
     },
     {
@@ -2830,7 +2832,7 @@
       "high": 8.4399995803833,
       "low": 8.1899995803833,
       "close": 8.239999771118164,
-      "adjustedClose": 7.877439498901367,
+      "adjustedClose": null,
       "volume": 36575
     },
     {
@@ -2839,7 +2841,7 @@
       "high": 8.289999961853027,
       "low": 8.180000305175781,
       "close": 8.199999809265137,
-      "adjustedClose": 7.839199542999268,
+      "adjustedClose": null,
       "volume": 50357
     },
     {
@@ -2848,7 +2850,7 @@
       "high": 8.15999984741211,
       "low": 7.909999847412109,
       "close": 8.100000381469727,
-      "adjustedClose": 7.743599891662598,
+      "adjustedClose": null,
       "volume": 46944
     },
     {
@@ -2857,7 +2859,7 @@
       "high": 8.300000190734863,
       "low": 8.039999961853027,
       "close": 8.109999656677246,
-      "adjustedClose": 7.753159523010254,
+      "adjustedClose": null,
       "volume": 51015
     },
     {
@@ -2866,7 +2868,7 @@
       "high": 8.199999809265137,
       "low": 7.909999847412109,
       "close": 7.909999847412109,
-      "adjustedClose": 7.561959743499756,
+      "adjustedClose": null,
       "volume": 43975
     },
     {
@@ -2875,7 +2877,7 @@
       "high": 8.09000015258789,
       "low": 7.829999923706055,
       "close": 7.949999809265137,
-      "adjustedClose": 7.6001996994018555,
+      "adjustedClose": null,
       "volume": 47739
     },
     {
@@ -2884,7 +2886,7 @@
       "high": 8.25,
       "low": 7.829999923706055,
       "close": 7.900000095367432,
-      "adjustedClose": 7.552399635314941,
+      "adjustedClose": null,
       "volume": 46244
     },
     {
@@ -2893,7 +2895,7 @@
       "high": 7.900000095367432,
       "low": 7.670000076293945,
       "close": 7.670000076293945,
-      "adjustedClose": 7.332520008087158,
+      "adjustedClose": null,
       "volume": 26704
     },
     {
@@ -2902,7 +2904,7 @@
       "high": 8.039999961853027,
       "low": 7.510000228881836,
       "close": 7.630000114440918,
-      "adjustedClose": 7.294280052185059,
+      "adjustedClose": null,
       "volume": 52263
     },
     {
@@ -2911,7 +2913,7 @@
       "high": 8.34000015258789,
       "low": 7.699999809265137,
       "close": 8.329999923706055,
-      "adjustedClose": 7.963479518890381,
+      "adjustedClose": null,
       "volume": 130658
     },
     {
@@ -2920,7 +2922,7 @@
       "high": 8.40999984741211,
       "low": 8.119999885559082,
       "close": 8.270000457763672,
-      "adjustedClose": 7.906120300292969,
+      "adjustedClose": null,
       "volume": 50392
     },
     {
@@ -2929,7 +2931,7 @@
       "high": 8.319999694824219,
       "low": 8.100000381469727,
       "close": 8.1899995803833,
-      "adjustedClose": 7.829639434814453,
+      "adjustedClose": null,
       "volume": 115060
     },
     {
@@ -2938,7 +2940,7 @@
       "high": 8.399999618530273,
       "low": 8.1899995803833,
       "close": 8.1899995803833,
-      "adjustedClose": 7.829639434814453,
+      "adjustedClose": null,
       "volume": 40302
     },
     {
@@ -2947,7 +2949,7 @@
       "high": 8.399999618530273,
       "low": 8.210000038146973,
       "close": 8.380000114440918,
-      "adjustedClose": 8.011280059814453,
+      "adjustedClose": null,
       "volume": 27523
     },
     {
@@ -2956,7 +2958,7 @@
       "high": 8.5,
       "low": 8.239999771118164,
       "close": 8.380000114440918,
-      "adjustedClose": 8.011280059814453,
+      "adjustedClose": null,
       "volume": 30331
     },
     {
@@ -2965,7 +2967,7 @@
       "high": 8.529999732971191,
       "low": 8.25,
       "close": 8.25,
-      "adjustedClose": 7.886999607086182,
+      "adjustedClose": null,
       "volume": 64089
     },
     {
@@ -2974,7 +2976,7 @@
       "high": 8.5,
       "low": 8.25,
       "close": 8.350000381469727,
-      "adjustedClose": 7.982600212097168,
+      "adjustedClose": null,
       "volume": 33946
     },
     {
@@ -2983,7 +2985,7 @@
       "high": 8.550000190734863,
       "low": 8.3100004196167,
       "close": 8.3100004196167,
-      "adjustedClose": 7.944360256195068,
+      "adjustedClose": null,
       "volume": 114373
     },
     {
@@ -2992,7 +2994,7 @@
       "high": 8.449999809265137,
       "low": 8.039999961853027,
       "close": 8.100000381469727,
-      "adjustedClose": 7.743599891662598,
+      "adjustedClose": null,
       "volume": 29784
     },
     {
@@ -3001,7 +3003,7 @@
       "high": 8.239999771118164,
       "low": 7.900000095367432,
       "close": 8.039999961853027,
-      "adjustedClose": 7.686239719390869,
+      "adjustedClose": null,
       "volume": 16928
     },
     {
@@ -3010,7 +3012,7 @@
       "high": 8.180000305175781,
       "low": 7.690000057220459,
       "close": 7.789999961853027,
-      "adjustedClose": 7.447239875793457,
+      "adjustedClose": null,
       "volume": 51472
     },
     {
@@ -3019,7 +3021,7 @@
       "high": 8.010000228881836,
       "low": 7.789999961853027,
       "close": 7.989999771118164,
-      "adjustedClose": 7.638439655303955,
+      "adjustedClose": null,
       "volume": 29242
     },
     {
@@ -3028,7 +3030,7 @@
       "high": 8.020000457763672,
       "low": 7.880000114440918,
       "close": 7.880000114440918,
-      "adjustedClose": 7.533279895782471,
+      "adjustedClose": null,
       "volume": 21830
     },
     {
@@ -3037,7 +3039,7 @@
       "high": 8,
       "low": 7.690000057220459,
       "close": 7.880000114440918,
-      "adjustedClose": 7.533279895782471,
+      "adjustedClose": null,
       "volume": 28652
     },
     {
@@ -3046,7 +3048,7 @@
       "high": 8.010000228881836,
       "low": 7.800000190734863,
       "close": 7.849999904632568,
-      "adjustedClose": 7.504599571228027,
+      "adjustedClose": null,
       "volume": 37524
     },
     {
@@ -3055,7 +3057,7 @@
       "high": 8,
       "low": 7.769999980926514,
       "close": 7.78000020980835,
-      "adjustedClose": 7.437679767608643,
+      "adjustedClose": null,
       "volume": 19254
     },
     {
@@ -3064,7 +3066,7 @@
       "high": 7.880000114440918,
       "low": 7.75,
       "close": 7.820000171661377,
-      "adjustedClose": 7.475919723510742,
+      "adjustedClose": null,
       "volume": 19643
     },
     {
@@ -3073,7 +3075,7 @@
       "high": 8,
       "low": 7.78000020980835,
       "close": 7.860000133514404,
-      "adjustedClose": 7.514159679412842,
+      "adjustedClose": null,
       "volume": 27713
     },
     {
@@ -3082,7 +3084,7 @@
       "high": 8.020000457763672,
       "low": 7.789999961853027,
       "close": 7.789999961853027,
-      "adjustedClose": 7.447239875793457,
+      "adjustedClose": null,
       "volume": 55560
     },
     {
@@ -3091,7 +3093,7 @@
       "high": 7.889999866485596,
       "low": 7.659999847412109,
       "close": 7.840000152587891,
-      "adjustedClose": 7.495039939880371,
+      "adjustedClose": null,
       "volume": 47083
     },
     {
@@ -3100,7 +3102,7 @@
       "high": 7.880000114440918,
       "low": 7.659999847412109,
       "close": 7.849999904632568,
-      "adjustedClose": 7.504599571228027,
+      "adjustedClose": null,
       "volume": 24428
     },
     {
@@ -3109,7 +3111,7 @@
       "high": 7.900000095367432,
       "low": 7.75,
       "close": 7.900000095367432,
-      "adjustedClose": 7.552399635314941,
+      "adjustedClose": null,
       "volume": 25638
     },
     {
@@ -3118,7 +3120,7 @@
       "high": 7.960000038146973,
       "low": 7.75,
       "close": 7.840000152587891,
-      "adjustedClose": 7.495039939880371,
+      "adjustedClose": null,
       "volume": 13919
     },
     {
@@ -3127,7 +3129,7 @@
       "high": 7.980000019073486,
       "low": 7.659999847412109,
       "close": 7.71999979019165,
-      "adjustedClose": 7.380319595336914,
+      "adjustedClose": null,
       "volume": 38905
     },
     {
@@ -3136,7 +3138,7 @@
       "high": 7.699999809265137,
       "low": 7.53000020980835,
       "close": 7.53000020980835,
-      "adjustedClose": 7.1986799240112305,
+      "adjustedClose": null,
       "volume": 31689
     },
     {
@@ -3145,7 +3147,7 @@
       "high": 7.900000095367432,
       "low": 7.400000095367432,
       "close": 7.5,
-      "adjustedClose": 7.169999599456787,
+      "adjustedClose": null,
       "volume": 61668
     },
     {
@@ -3154,7 +3156,7 @@
       "high": 7.300000190734863,
       "low": 7.090000152587891,
       "close": 7.260000228881836,
-      "adjustedClose": 7.260000228881836,
+      "adjustedClose": null,
       "volume": 81954
     },
     {
@@ -3163,7 +3165,7 @@
       "high": 7.349999904632568,
       "low": 7.110000133514404,
       "close": 7.199999809265137,
-      "adjustedClose": 7.199999809265137,
+      "adjustedClose": null,
       "volume": 100837
     },
     {
@@ -3172,7 +3174,7 @@
       "high": 7.320000171661377,
       "low": 7.150000095367432,
       "close": 7.239999771118164,
-      "adjustedClose": 7.239999771118164,
+      "adjustedClose": null,
       "volume": 91964
     },
     {
@@ -3181,7 +3183,7 @@
       "high": 7.449999809265137,
       "low": 7.150000095367432,
       "close": 7.150000095367432,
-      "adjustedClose": 7.150000095367432,
+      "adjustedClose": null,
       "volume": 79595
     },
     {
@@ -3190,7 +3192,7 @@
       "high": 7.579999923706055,
       "low": 7.099999904632568,
       "close": 7.53000020980835,
-      "adjustedClose": 7.53000020980835,
+      "adjustedClose": null,
       "volume": 106059
     },
     {
@@ -3199,7 +3201,7 @@
       "high": 7.809999942779541,
       "low": 7.400000095367432,
       "close": 7.690000057220459,
-      "adjustedClose": 7.690000057220459,
+      "adjustedClose": null,
       "volume": 70061
     },
     {
@@ -3208,7 +3210,7 @@
       "high": 7.960000038146973,
       "low": 7.639999866485596,
       "close": 7.889999866485596,
-      "adjustedClose": 7.889999866485596,
+      "adjustedClose": null,
       "volume": 74142
     },
     {
@@ -3217,7 +3219,7 @@
       "high": 8.140000343322754,
       "low": 7.829999923706055,
       "close": 7.829999923706055,
-      "adjustedClose": 7.829999923706055,
+      "adjustedClose": null,
       "volume": 48395
     },
     {
@@ -3226,7 +3228,7 @@
       "high": 8.010000228881836,
       "low": 7.829999923706055,
       "close": 7.900000095367432,
-      "adjustedClose": 7.900000095367432,
+      "adjustedClose": null,
       "volume": 34553
     },
     {
@@ -3235,7 +3237,7 @@
       "high": 7.989999771118164,
       "low": 7.630000114440918,
       "close": 7.739999771118164,
-      "adjustedClose": 7.739999771118164,
+      "adjustedClose": null,
       "volume": 46743
     },
     {
@@ -3244,7 +3246,7 @@
       "high": 7.800000190734863,
       "low": 7.650000095367432,
       "close": 7.71999979019165,
-      "adjustedClose": 7.71999979019165,
+      "adjustedClose": null,
       "volume": 23666
     },
     {
@@ -3253,7 +3255,7 @@
       "high": 7.869999885559082,
       "low": 7.760000228881836,
       "close": 7.760000228881836,
-      "adjustedClose": 7.760000228881836,
+      "adjustedClose": null,
       "volume": 12269
     },
     {
@@ -3262,7 +3264,7 @@
       "high": 7.889999866485596,
       "low": 7.769999980926514,
       "close": 7.769999980926514,
-      "adjustedClose": 7.769999980926514,
+      "adjustedClose": null,
       "volume": 30569
     },
     {
@@ -3271,7 +3273,7 @@
       "high": 7.949999809265137,
       "low": 7.670000076293945,
       "close": 7.949999809265137,
-      "adjustedClose": 7.949999809265137,
+      "adjustedClose": null,
       "volume": 26915
     },
     {
@@ -3280,7 +3282,7 @@
       "high": 8.069999694824219,
       "low": 7.829999923706055,
       "close": 7.989999771118164,
-      "adjustedClose": 7.989999771118164,
+      "adjustedClose": null,
       "volume": 21874
     },
     {
@@ -3289,7 +3291,7 @@
       "high": 8.109999656677246,
       "low": 7.949999809265137,
       "close": 8.109999656677246,
-      "adjustedClose": 8.109999656677246,
+      "adjustedClose": null,
       "volume": 67243
     },
     {
@@ -3298,7 +3300,7 @@
       "high": 8.130000114440918,
       "low": 7.860000133514404,
       "close": 8,
-      "adjustedClose": 8,
+      "adjustedClose": null,
       "volume": 31264
     },
     {
@@ -3307,7 +3309,7 @@
       "high": 8.109999656677246,
       "low": 7.900000095367432,
       "close": 7.900000095367432,
-      "adjustedClose": 7.900000095367432,
+      "adjustedClose": null,
       "volume": 32932
     },
     {
@@ -3316,7 +3318,7 @@
       "high": 8.069999694824219,
       "low": 7.789999961853027,
       "close": 7.840000152587891,
-      "adjustedClose": 7.840000152587891,
+      "adjustedClose": null,
       "volume": 36269
     },
     {
@@ -3325,7 +3327,7 @@
       "high": 8,
       "low": 7.760000228881836,
       "close": 7.820000171661377,
-      "adjustedClose": 7.820000171661377,
+      "adjustedClose": null,
       "volume": 33305
     },
     {
@@ -3334,7 +3336,7 @@
       "high": 7.860000133514404,
       "low": 7.699999809265137,
       "close": 7.699999809265137,
-      "adjustedClose": 7.699999809265137,
+      "adjustedClose": null,
       "volume": 23861
     },
     {
@@ -3343,7 +3345,7 @@
       "high": 7.800000190734863,
       "low": 7.650000095367432,
       "close": 7.670000076293945,
-      "adjustedClose": 7.670000076293945,
+      "adjustedClose": null,
       "volume": 26832
     },
     {
@@ -3352,7 +3354,7 @@
       "high": 7.949999809265137,
       "low": 7.650000095367432,
       "close": 7.840000152587891,
-      "adjustedClose": 7.840000152587891,
+      "adjustedClose": null,
       "volume": 30002
     },
     {
@@ -3361,7 +3363,7 @@
       "high": 8.100000381469727,
       "low": 7.840000152587891,
       "close": 7.900000095367432,
-      "adjustedClose": 7.900000095367432,
+      "adjustedClose": null,
       "volume": 21118
     },
     {
@@ -3370,7 +3372,7 @@
       "high": 8.039999961853027,
       "low": 7.920000076293945,
       "close": 7.949999809265137,
-      "adjustedClose": 7.949999809265137,
+      "adjustedClose": null,
       "volume": 25386
     },
     {
@@ -3379,7 +3381,7 @@
       "high": 8.300000190734863,
       "low": 7.989999771118164,
       "close": 8.149999618530273,
-      "adjustedClose": 8.149999618530273,
+      "adjustedClose": null,
       "volume": 113128
     },
     {
@@ -3388,7 +3390,7 @@
       "high": 8.220000267028809,
       "low": 8,
       "close": 8.029999732971191,
-      "adjustedClose": 8.029999732971191,
+      "adjustedClose": null,
       "volume": 21609
     },
     {
@@ -3397,7 +3399,7 @@
       "high": 8.199999809265137,
       "low": 8.029999732971191,
       "close": 8.069999694824219,
-      "adjustedClose": 8.069999694824219,
+      "adjustedClose": null,
       "volume": 24328
     },
     {
@@ -3406,7 +3408,7 @@
       "high": 8.119999885559082,
       "low": 8,
       "close": 8.010000228881836,
-      "adjustedClose": 8.010000228881836,
+      "adjustedClose": null,
       "volume": 29829
     },
     {
@@ -3415,7 +3417,7 @@
       "high": 8.119999885559082,
       "low": 7.949999809265137,
       "close": 8,
-      "adjustedClose": 8,
+      "adjustedClose": null,
       "volume": 74172
     },
     {
@@ -3424,7 +3426,7 @@
       "high": 8.130000114440918,
       "low": 7.960000038146973,
       "close": 7.96999979019165,
-      "adjustedClose": 7.96999979019165,
+      "adjustedClose": null,
       "volume": 22520
     },
     {
@@ -3433,7 +3435,7 @@
       "high": 8.170000076293945,
       "low": 8,
       "close": 8.010000228881836,
-      "adjustedClose": 8.010000228881836,
+      "adjustedClose": null,
       "volume": 83213
     },
     {
@@ -3442,7 +3444,7 @@
       "high": 8.09000015258789,
       "low": 7.929999828338623,
       "close": 7.940000057220459,
-      "adjustedClose": 7.940000057220459,
+      "adjustedClose": null,
       "volume": 26749
     },
     {
@@ -3451,7 +3453,7 @@
       "high": 8,
       "low": 7.900000095367432,
       "close": 7.929999828338623,
-      "adjustedClose": 7.929999828338623,
+      "adjustedClose": null,
       "volume": 22059
     },
     {
@@ -3460,7 +3462,7 @@
       "high": 8.029999732971191,
       "low": 7.929999828338623,
       "close": 8,
-      "adjustedClose": 8,
+      "adjustedClose": null,
       "volume": 17250
     },
     {
@@ -3469,7 +3471,7 @@
       "high": 8.180000305175781,
       "low": 7.980000019073486,
       "close": 8.09000015258789,
-      "adjustedClose": 8.09000015258789,
+      "adjustedClose": null,
       "volume": 100547
     },
     {
@@ -3478,7 +3480,7 @@
       "high": 8.270000457763672,
       "low": 8.020000457763672,
       "close": 8.050000190734863,
-      "adjustedClose": 8.050000190734863,
+      "adjustedClose": null,
       "volume": 43729
     },
     {
@@ -3487,7 +3489,7 @@
       "high": 8.069999694824219,
       "low": 7.829999923706055,
       "close": 7.829999923706055,
-      "adjustedClose": 7.829999923706055,
+      "adjustedClose": null,
       "volume": 22139
     },
     {
@@ -3496,7 +3498,7 @@
       "high": 7.889999866485596,
       "low": 7.659999847412109,
       "close": 7.670000076293945,
-      "adjustedClose": 7.670000076293945,
+      "adjustedClose": null,
       "volume": 29379
     },
     {
@@ -3505,7 +3507,7 @@
       "high": 7.809999942779541,
       "low": 7.599999904632568,
       "close": 7.809999942779541,
-      "adjustedClose": 7.809999942779541,
+      "adjustedClose": null,
       "volume": 25423
     },
     {
@@ -3514,7 +3516,7 @@
       "high": 7.920000076293945,
       "low": 7.670000076293945,
       "close": 7.75,
-      "adjustedClose": 7.75,
+      "adjustedClose": null,
       "volume": 24561
     },
     {
@@ -3523,7 +3525,7 @@
       "high": 7.869999885559082,
       "low": 7.730000019073486,
       "close": 7.860000133514404,
-      "adjustedClose": 7.860000133514404,
+      "adjustedClose": null,
       "volume": 24607
     },
     {
@@ -3532,7 +3534,7 @@
       "high": 7.920000076293945,
       "low": 7.75,
       "close": 7.840000152587891,
-      "adjustedClose": 7.840000152587891,
+      "adjustedClose": null,
       "volume": 19105
     },
     {
@@ -3541,7 +3543,7 @@
       "high": 7.900000095367432,
       "low": 7.769999980926514,
       "close": 7.880000114440918,
-      "adjustedClose": 7.880000114440918,
+      "adjustedClose": null,
       "volume": 5968
     },
     {
@@ -3550,7 +3552,7 @@
       "high": 8.15999984741211,
       "low": 7.739999771118164,
       "close": 8.039999961853027,
-      "adjustedClose": 8.039999961853027,
+      "adjustedClose": null,
       "volume": 46290
     },
     {
@@ -3559,7 +3561,7 @@
       "high": 8.050000190734863,
       "low": 7.840000152587891,
       "close": 7.960000038146973,
-      "adjustedClose": 7.960000038146973,
+      "adjustedClose": null,
       "volume": 22970
     },
     {
@@ -3568,7 +3570,7 @@
       "high": 8.199999809265137,
       "low": 7.909999847412109,
       "close": 8,
-      "adjustedClose": 8,
+      "adjustedClose": null,
       "volume": 43244
     },
     {
@@ -3577,7 +3579,7 @@
       "high": 8.199999809265137,
       "low": 7.860000133514404,
       "close": 7.960000038146973,
-      "adjustedClose": 7.960000038146973,
+      "adjustedClose": null,
       "volume": 24064
     },
     {
@@ -3586,7 +3588,7 @@
       "high": 8.100000381469727,
       "low": 7.809999942779541,
       "close": 7.909999847412109,
-      "adjustedClose": 7.909999847412109,
+      "adjustedClose": null,
       "volume": 20237
     },
     {
@@ -3595,7 +3597,7 @@
       "high": 8,
       "low": 7.659999847412109,
       "close": 7.849999904632568,
-      "adjustedClose": 7.849999904632568,
+      "adjustedClose": null,
       "volume": 22522
     },
     {
@@ -3604,7 +3606,7 @@
       "high": 8.010000228881836,
       "low": 7.809999942779541,
       "close": 8.010000228881836,
-      "adjustedClose": 8.010000228881836,
+      "adjustedClose": null,
       "volume": 13146
     },
     {
@@ -3613,7 +3615,7 @@
       "high": 8.239999771118164,
       "low": 7.989999771118164,
       "close": 8.119999885559082,
-      "adjustedClose": 8.119999885559082,
+      "adjustedClose": null,
       "volume": 22998
     },
     {
@@ -3622,7 +3624,7 @@
       "high": 8.25,
       "low": 7.929999828338623,
       "close": 8.050000190734863,
-      "adjustedClose": 8.050000190734863,
+      "adjustedClose": null,
       "volume": 19437
     },
     {
@@ -3631,7 +3633,7 @@
       "high": 8.149999618530273,
       "low": 7.940000057220459,
       "close": 8.050000190734863,
-      "adjustedClose": 8.050000190734863,
+      "adjustedClose": null,
       "volume": 82274
     },
     {
@@ -3640,7 +3642,7 @@
       "high": 8.15999984741211,
       "low": 7.960000038146973,
       "close": 8.140000343322754,
-      "adjustedClose": 8.140000343322754,
+      "adjustedClose": null,
       "volume": 113761
     },
     {
@@ -3649,7 +3651,7 @@
       "high": 8.239999771118164,
       "low": 7.949999809265137,
       "close": 8.119999885559082,
-      "adjustedClose": 8.119999885559082,
+      "adjustedClose": null,
       "volume": 49974
     },
     {
@@ -3658,7 +3660,7 @@
       "high": 8.270000457763672,
       "low": 8.140000343322754,
       "close": 8.15999984741211,
-      "adjustedClose": 8.15999984741211,
+      "adjustedClose": null,
       "volume": 29430
     },
     {
@@ -3667,7 +3669,7 @@
       "high": 8.279999732971191,
       "low": 8,
       "close": 8.020000457763672,
-      "adjustedClose": 8.020000457763672,
+      "adjustedClose": null,
       "volume": 36181
     },
     {
@@ -3676,7 +3678,7 @@
       "high": 8.350000381469727,
       "low": 7.989999771118164,
       "close": 7.989999771118164,
-      "adjustedClose": 7.989999771118164,
+      "adjustedClose": null,
       "volume": 41988
     },
     {
@@ -3685,7 +3687,7 @@
       "high": 8.15999984741211,
       "low": 8,
       "close": 8.149999618530273,
-      "adjustedClose": 8.149999618530273,
+      "adjustedClose": null,
       "volume": 84768
     },
     {
@@ -3694,7 +3696,7 @@
       "high": 8.729999542236328,
       "low": 8.300000190734863,
       "close": 8.449999809265137,
-      "adjustedClose": 8.449999809265137,
+      "adjustedClose": null,
       "volume": 176571
     },
     {
@@ -3703,7 +3705,7 @@
       "high": 8.5,
       "low": 8.100000381469727,
       "close": 8.100000381469727,
-      "adjustedClose": 8.100000381469727,
+      "adjustedClose": null,
       "volume": 195784
     },
     {
@@ -3712,7 +3714,7 @@
       "high": 8.270000457763672,
       "low": 7.820000171661377,
       "close": 7.889999866485596,
-      "adjustedClose": 7.889999866485596,
+      "adjustedClose": null,
       "volume": 62590
     },
     {
@@ -3721,7 +3723,7 @@
       "high": 8.149999618530273,
       "low": 7.840000152587891,
       "close": 8.010000228881836,
-      "adjustedClose": 8.010000228881836,
+      "adjustedClose": null,
       "volume": 40624
     },
     {
@@ -3730,7 +3732,7 @@
       "high": 8.09000015258789,
       "low": 7.599999904632568,
       "close": 7.599999904632568,
-      "adjustedClose": 7.599999904632568,
+      "adjustedClose": null,
       "volume": 266172
     },
     {
@@ -3739,7 +3741,7 @@
       "high": 7.800000190734863,
       "low": 7.409999847412109,
       "close": 7.409999847412109,
-      "adjustedClose": 7.409999847412109,
+      "adjustedClose": null,
       "volume": 75545
     },
     {
@@ -3748,7 +3750,7 @@
       "high": 7.599999904632568,
       "low": 7.340000152587891,
       "close": 7.409999847412109,
-      "adjustedClose": 7.409999847412109,
+      "adjustedClose": null,
       "volume": 54263
     },
     {
@@ -3757,7 +3759,7 @@
       "high": 7.5,
       "low": 7.400000095367432,
       "close": 7.400000095367432,
-      "adjustedClose": 7.400000095367432,
+      "adjustedClose": null,
       "volume": 37735
     },
     {
@@ -3766,7 +3768,7 @@
       "high": 7.409999847412109,
       "low": 7.230000019073486,
       "close": 7.329999923706055,
-      "adjustedClose": 7.329999923706055,
+      "adjustedClose": null,
       "volume": 66352
     },
     {
@@ -3775,7 +3777,7 @@
       "high": 7.679999828338623,
       "low": 7.380000114440918,
       "close": 7.659999847412109,
-      "adjustedClose": 7.659999847412109,
+      "adjustedClose": null,
       "volume": 58844
     },
     {
@@ -3784,7 +3786,7 @@
       "high": 7.71999979019165,
       "low": 7.369999885559082,
       "close": 7.369999885559082,
-      "adjustedClose": 7.369999885559082,
+      "adjustedClose": null,
       "volume": 241575
     },
     {
@@ -3793,7 +3795,7 @@
       "high": 7.650000095367432,
       "low": 7.320000171661377,
       "close": 7.360000133514404,
-      "adjustedClose": 7.360000133514404,
+      "adjustedClose": null,
       "volume": 46136
     },
     {
@@ -3802,7 +3804,7 @@
       "high": 7.650000095367432,
       "low": 7.210000038146973,
       "close": 7.300000190734863,
-      "adjustedClose": 7.300000190734863,
+      "adjustedClose": null,
       "volume": 125141
     },
     {
@@ -3811,7 +3813,7 @@
       "high": 7.420000076293945,
       "low": 7.289999961853027,
       "close": 7.409999847412109,
-      "adjustedClose": 7.409999847412109,
+      "adjustedClose": null,
       "volume": 148248
     },
     {
@@ -3820,7 +3822,7 @@
       "high": 7.590000152587891,
       "low": 7.269999980926514,
       "close": 7.5,
-      "adjustedClose": 7.5,
+      "adjustedClose": null,
       "volume": 48988
     },
     {
@@ -3829,7 +3831,7 @@
       "high": 7.53000020980835,
       "low": 7.400000095367432,
       "close": 7.480000019073486,
-      "adjustedClose": 7.480000019073486,
+      "adjustedClose": null,
       "volume": 43828
     },
     {
@@ -3838,7 +3840,7 @@
       "high": 7.630000114440918,
       "low": 7.440000057220459,
       "close": 7.630000114440918,
-      "adjustedClose": 7.630000114440918,
+      "adjustedClose": null,
       "volume": 26238
     },
     {
@@ -3847,7 +3849,7 @@
       "high": 7.639999866485596,
       "low": 7.5,
       "close": 7.599999904632568,
-      "adjustedClose": 7.599999904632568,
+      "adjustedClose": null,
       "volume": 10831
     },
     {
@@ -3856,7 +3858,7 @@
       "high": 7.639999866485596,
       "low": 7.5,
       "close": 7.550000190734863,
-      "adjustedClose": 7.550000190734863,
+      "adjustedClose": null,
       "volume": 14543
     },
     {
@@ -3865,7 +3867,7 @@
       "high": 7.699999809265137,
       "low": 7.5,
       "close": 7.570000171661377,
-      "adjustedClose": 7.570000171661377,
+      "adjustedClose": null,
       "volume": 12523
     },
     {
@@ -3874,7 +3876,7 @@
       "high": 7.599999904632568,
       "low": 7.429999828338623,
       "close": 7.570000171661377,
-      "adjustedClose": 7.570000171661377,
+      "adjustedClose": null,
       "volume": 41348
     },
     {
@@ -3883,7 +3885,7 @@
       "high": 7.789999961853027,
       "low": 7.309999942779541,
       "close": 7.699999809265137,
-      "adjustedClose": 7.699999809265137,
+      "adjustedClose": null,
       "volume": 53344
     },
     {
@@ -3892,7 +3894,7 @@
       "high": 7.639999866485596,
       "low": 7.53000020980835,
       "close": 7.639999866485596,
-      "adjustedClose": 7.639999866485596,
+      "adjustedClose": null,
       "volume": 14786
     },
     {
@@ -3901,7 +3903,7 @@
       "high": 7.610000133514404,
       "low": 7.449999809265137,
       "close": 7.550000190734863,
-      "adjustedClose": 7.550000190734863,
+      "adjustedClose": null,
       "volume": 18598
     },
     {
@@ -3910,7 +3912,7 @@
       "high": 7.639999866485596,
       "low": 7.5,
       "close": 7.639999866485596,
-      "adjustedClose": 7.639999866485596,
+      "adjustedClose": null,
       "volume": 24897
     },
     {
@@ -3919,7 +3921,7 @@
       "high": 7.630000114440918,
       "low": 7.5,
       "close": 7.630000114440918,
-      "adjustedClose": 7.630000114440918,
+      "adjustedClose": null,
       "volume": 11587
     },
     {
@@ -3928,7 +3930,7 @@
       "high": 7.670000076293945,
       "low": 7.300000190734863,
       "close": 7.329999923706055,
-      "adjustedClose": 7.329999923706055,
+      "adjustedClose": null,
       "volume": 20552
     },
     {
@@ -3937,7 +3939,7 @@
       "high": 7.52,
       "low": 7.31,
       "close": 7.47,
-      "adjustedClose": 7.47,
+      "adjustedClose": null,
       "volume": 35186
     },
     {
@@ -3946,7 +3948,7 @@
       "high": 7.55,
       "low": 7.39,
       "close": 7.5,
-      "adjustedClose": 7.5,
+      "adjustedClose": null,
       "volume": 21604
     },
     {
@@ -3955,8 +3957,17 @@
       "high": 7.6,
       "low": 7.35,
       "close": 7.6,
-      "adjustedClose": 7.6,
+      "adjustedClose": null,
       "volume": 17023
+    },
+    {
+      "date": "2026-10-29",
+      "open": 7.55,
+      "high": 7.64,
+      "low": 7.47,
+      "close": 7.55,
+      "adjustedClose": null,
+      "volume": 21158
     }
   ]
 }
