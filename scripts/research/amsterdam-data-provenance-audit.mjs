@@ -20,7 +20,8 @@ for(const s of stocks){
   rows.push({isin:s.isin,name:s.name,firstDate:h.coverage?.firstDate,lastDate:h.coverage?.lastDate,bars:bars.length,adjustedCloseIdenticalToClose:identical,adjustedClosePresent:withAdjusted,coverageRecordsMatch:h.coverage?.records===bars.length,adjustmentProvenanceVerified:adjustmentProvenance,backfillComplete:complete,source:h.provider?.id||null});
  }catch(e){missing++;rows.push({isin:s.isin,name:s.name,error:e.message})}
 }
-const report={status:'BLOCK_BACKTEST_UNTIL_DATA_PROVENANCE_REVIEWED',catalogSnapshotDate:catalog.retrievedAt,summary:{stocks:stocks.length,missing,exactAdjustedCopies,unverifiedAdjustment,unverifiedCompleteness},rows,interpretation:'Equality of adjustedClose and close does not prove an error, but is not evidence of corporate-action adjustment. Historical constituents and delistings are absent from the current-universe catalog.'};
+const reviewPriority=rows.filter(x=>!x.error).sort((a,b)=>(Number(a.adjustmentProvenanceVerified)-Number(b.adjustmentProvenanceVerified))||(Number(a.backfillComplete)-Number(b.backfillComplete))||a.isin.localeCompare(b.isin)).map((x,i)=>({...x,reviewOrder:i+1,reviewStatus:'UNVERIFIED'}));
+const report={reviewPriority,status:'BLOCK_BACKTEST_UNTIL_DATA_PROVENANCE_REVIEWED',catalogSnapshotDate:catalog.retrievedAt,summary:{stocks:stocks.length,missing,exactAdjustedCopies,unverifiedAdjustment,unverifiedCompleteness},rows,interpretation:'Equality of adjustedClose and close does not prove an error, but is not evidence of corporate-action adjustment. Historical constituents and delistings are absent from the current-universe catalog.'};
 await fs.mkdir('research/output',{recursive:true});
 await fs.writeFile('research/output/amsterdam-data-provenance-audit.json',JSON.stringify(report,null,2));
 console.log('AMSTERDAM_DATA_PROVENANCE_AUDIT',JSON.stringify(report.summary));
