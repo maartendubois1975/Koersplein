@@ -50,21 +50,27 @@ jobs:
         run: npm test && npm run history:test
       - name: Test research-only Amsterdam portfolio simulator
         run: node scripts/research/test-amsterdam-portfolio-simulator.mjs
-      - name: Assess Amsterdam readiness for blind prediction exams
-        run: node scripts/research/amsterdam-readiness.mjs
-      - name: Run Amsterdam point-in-time baseline research exam
-        run: node scripts/research/amsterdam-machine1.mjs
-      - name: Run hindsight postmortem without changing frozen predictions
-        run: node scripts/research/amsterdam-machine2.mjs research/output/amsterdam-machine1-results.jsonl
-      - name: Judge baseline with chronological folds and untouched holdout
-        run: node scripts/research/amsterdam-baseline-judge.mjs
-      - name: Compare five exploratory Amsterdam price models
-        run: node scripts/research/amsterdam-model-arena.mjs
       - name: Audit historical price provenance before model research
         run: node scripts/research/amsterdam-data-provenance-audit.mjs
       - name: Audit Amsterdam history for suspicious corporate actions and gaps
         run: node scripts/research/amsterdam-history-quality-audit.mjs
+      - name: Assess Amsterdam readiness for blind prediction exams
+        if: false # PAUSED: historical price provenance and point-in-time universe are unverified
+        run: node scripts/research/amsterdam-readiness.mjs
+      - name: Run Amsterdam point-in-time baseline research exam
+        if: false # PAUSED: historical price provenance and point-in-time universe are unverified
+        run: node scripts/research/amsterdam-machine1.mjs
+      - name: Run hindsight postmortem without changing frozen predictions
+        if: false # PAUSED: historical price provenance and point-in-time universe are unverified
+        run: node scripts/research/amsterdam-machine2.mjs research/output/amsterdam-machine1-results.jsonl
+      - name: Judge baseline with chronological folds and untouched holdout
+        if: false # PAUSED: historical price provenance and point-in-time universe are unverified
+        run: node scripts/research/amsterdam-baseline-judge.mjs
+      - name: Compare five exploratory Amsterdam price models
+        if: false # PAUSED: historical price provenance and point-in-time universe are unverified
+        run: node scripts/research/amsterdam-model-arena.mjs
       - name: Simulate Amsterdam historical portfolio in research mode
+        if: false # PAUSED: historical price provenance and point-in-time universe are unverified
         run: node scripts/research/amsterdam-portfolio-diagnostic.mjs
       - name: Audit latest Amsterdam trading session and percentage changes
         run: node scripts/history/check-amsterdam-latest-session.mjs
