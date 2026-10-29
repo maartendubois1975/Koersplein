@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 const catalog=JSON.parse(await fs.readFile('data/euronext-amsterdam.json','utf8'));
 const shares=(catalog.shares||[]).filter(x=>x.displayPolicy!=='cross-market-reference-only');
 const issues=[],byInstrument=[],counts={instruments:shares.length,files:0,invalidDates:0,invalidOHLC:0,invalidVolume:0,duplicateDates:0,unsortedDates:0,coverageMismatch:0,nonEUR:0,wrongVenue:0,missingBars:0};
-const validDate=s=>typeof s==='string'&&/^\\d{4}-\\d{2}-\\d{2}$/.test(s)&&!Number.isNaN(Date.parse(s))&&new Date(s+'T00:00:00Z').toISOString().slice(0,10)===s;
+const validDate=s=>typeof s==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(s)&&!Number.isNaN(Date.parse(s))&&new Date(s+'T00:00:00Z').toISOString().slice(0,10)===s;
 for(const stock of shares){
  let h;try{h=JSON.parse(await fs.readFile('data/history/'+stock.isin+'.json','utf8'))}catch(e){issues.push({isin:stock.isin,issue:'MISSING_FILE',detail:e.message});continue}
  counts.files++;const bars=h.bars||[],seen=new Set();let previous='',local=0;
