@@ -50,6 +50,7 @@ jobs:
             research/output/amsterdam-structural-integrity-audit.json
             research/output/amsterdam-data-provenance-audit.json
             research/output/amsterdam-history-quality-audit.json
+            research/output/amsterdam-issuer-investigation-cases.json
           retention-days: 30
       - name: Compare latest dates with official Euronext historical source
         if: github.event_name == 'push' || inputs.dry_run == true
@@ -80,6 +81,7 @@ jobs:
             research/output/amsterdam-structural-integrity-audit.json
             research/output/amsterdam-data-provenance-audit.json
             research/output/amsterdam-history-quality-audit.json
+            research/output/amsterdam-issuer-investigation-cases.json
           if-no-files-found: warn
           retention-days: 30
       - name: Show prioritized issuer investigations in run summary
