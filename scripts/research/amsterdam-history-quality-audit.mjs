@@ -12,16 +12,17 @@ for(const stock of stocks){
   const p=Number(b.close);
   if(!b.date||!Number.isFinite(p)||p<=0){summary.invalidPrices++;continue}
   if(prev){
-   if(b.date===prev.date){summary.duplicateDates++;issues.push({isin:stock.isin,date:b.date,issue:'DUPLICATE_DATE'})}
+   if(b.date===prev.date){summary.duplicateDates++;issues.push({isin:stock.isin,date:b.date,name:stock.name,issue:'DUPLICATE_DATE'})}
    const days=(Date.parse(b.date)-Date.parse(prev.date))/86400000;
-   if(days>30){summary.gapsOver30Days++;issues.push({isin:stock.isin,date:b.date,issue:'GAP_OVER_30_DAYS',days})}
+   if(days>30){summary.gapsOver30Days++;issues.push({isin:stock.isin,date:b.date,name:stock.name,previousDate:prev.date,issue:'GAP_OVER_30_DAYS',days})}
    const ratio=p/prev.price;
-   if(ratio>1.5||ratio<0.5){summary.largeDailyMoves++;issues.push({isin:stock.isin,date:b.date,issue:'PRICE_JUMP_REQUIRES_CORPORATE_ACTION_REVIEW',ratio})}
+   if(ratio>1.5||ratio<0.5){summary.largeDailyMoves++;issues.push({isin:stock.isin,date:b.date,name:stock.name,previousDate:prev.date,previousClose:prev.price,currentClose:p,issue:'PRICE_JUMP_REQUIRES_CORPORATE_ACTION_REVIEW',ratio})}
   }
   prev={date:b.date,price:p};
  }
 }
-const report={status:issues.length?'RESEARCH_DATA_REQUIRES_REVIEW':'NO_FLAGGED_ISSUES',summary,issues,issueCount:issues.length,truncated:false,note:'Flags are not automatically errors: splits, dividends and suspended stocks require source verification. No portfolio promotion.'};
+const reviewQueue=issues.filter(x=>x.issue==='PRICE_JUMP_REQUIRES_CORPORATE_ACTION_REVIEW').sort((a,b)=>Math.abs(Math.log(b.ratio))-Math.abs(Math.log(a.ratio))).map((x,i)=>({...x,priority:i+1,verificationStatus:'UNVERIFIED',possibleCauses:['split','reverse_split','rights_issue','corporate_action','genuine_move','data_error'],requiredEvidence:'Issuer announcement and independent dated price source'}));
+const report={reviewQueue,status:issues.length?'RESEARCH_DATA_REQUIRES_REVIEW':'NO_FLAGGED_ISSUES',summary,issues,issueCount:issues.length,truncated:false,note:'Flags are not automatically errors: splits, dividends and suspended stocks require source verification. No portfolio promotion.'};
 await fs.mkdir('research/output',{recursive:true});
 await fs.writeFile('research/output/amsterdam-history-quality-audit.json',JSON.stringify(report,null,2));
 console.log('AMSTERDAM_HISTORY_QUALITY_AUDIT',JSON.stringify({status:report.status,summary,issues:issues.length}));
