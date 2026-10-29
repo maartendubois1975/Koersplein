@@ -36,7 +36,7 @@ export const parseEuronextHistoryRows=html=>{
  const di=idx('date'),oi=idx('open'),hi=idx('high'),li=idx('low'),ci=idx('close');
  const vi=h.findIndex(x=>x.includes('number of shares')||x==='volume'||/^vol\.?$/i.test(x.trim())||x.includes('traded volume')||x.includes('quantity traded'));
  if(di<0||oi<0||ci<0)return[];
- return rows.slice(header+1).map(row=>({date:iso(row[di]),open:num(row[oi]),high:num(row[hi]),low:num(row[li]),close:num(row[ci]),adjustedClose:num(row[ci]),volume:vi>=0?num(row[vi]):null})).filter(x=>x.date&&x.close!==null&&x.close>0);
+ return rows.slice(header+1).map(row=>({date:iso(row[di]),open:num(row[oi]),high:num(row[hi]),low:num(row[li]),close:num(row[ci]),adjustedClose:null,volume:vi>=0?num(row[vi]):null})).filter(x=>x.date&&x.close!==null&&x.close>0);
 };
 // Euronext's public AJAX client uses this published transport format and
 // default passphrase (ajax_secure/js/ajax-secure.js); this is not an account credential.
