@@ -15,7 +15,7 @@ for(const stock of shares){
   if(seen.has(b.date)){counts.duplicateDates++;issues.push({isin:stock.isin,issue:'DUPLICATE_DATE',date:b.date})}seen.add(b.date);
   if(previous&&b.date<previous){counts.unsortedDates++;issues.push({isin:stock.isin,issue:'UNSORTED_DATE',date:b.date,previous})}previous=b.date;
   const o=Number(b.open),hi=Number(b.high),lo=Number(b.low),cl=Number(b.close);
-  if(![o,hi,lo,cl].every(v=>Number.isFinite(v)&&v>0)||lo>Math.min(o,cl)||hi<Math.max(o,cl)||hi<lo){counts.invalidOHLC++;local++;issues.push({isin:stock.isin,issue:'INVALID_OHLC',date:b.date,open:b.open,high:b.high,low:b.low,close:b.close})}
+  if(![o,hi,lo,cl].every(v=>Number.isFinite(v)&&v>0)||lo>Math.min(o,cl)-Math.max(0.00001,Math.min(o,cl)*0.000001)||hi<Math.max(o,cl)-Math.max(0.00001,Math.max(o,cl)*0.000001)||hi<lo){counts.invalidOHLC++;local++;issues.push({isin:stock.isin,issue:'INVALID_OHLC',date:b.date,open:b.open,high:b.high,low:b.low,close:b.close})}
   if(b.volume!=null&&(!Number.isFinite(Number(b.volume))||Number(b.volume)<0)){counts.invalidVolume++;issues.push({isin:stock.isin,issue:'INVALID_VOLUME',date:b.date,volume:b.volume})}
  }
  byInstrument.push({isin:stock.isin,name:stock.name,records:bars.length,first:bars[0]?.date,last:bars.at(-1)?.date,invalidOHLC:local});
