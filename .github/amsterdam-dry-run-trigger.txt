@@ -56,3 +56,4 @@ Verify whether three OHLC anomalies persist after floating point rounding tolera
 Separate three historical missing high/low fields from logically invalid OHLC records.
 Recheck corrected low-bound tolerance after false positive count of 86600 OHLC bars.
 Run immutable baseline and issuer-by-issuer price anomaly case reports; validate upload artifacts.
+Verify fail-closed publish protection and preserved issuer case artifacts.
