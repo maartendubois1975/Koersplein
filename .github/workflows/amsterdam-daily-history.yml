@@ -34,6 +34,7 @@ jobs:
           node --check scripts/research/amsterdam-structural-integrity-audit.mjs
           node --check scripts/research/amsterdam-data-provenance-audit.mjs
           node --check scripts/research/amsterdam-history-quality-audit.mjs
+          node --check scripts/research/amsterdam-consolidated-quality-gate.mjs
           node --check scripts/research/amsterdam-portfolio-diagnostic.mjs
           node --check scripts/research/amsterdam-portfolio-simulator.mjs
           node --check scripts/research/test-amsterdam-portfolio-simulator.mjs
@@ -42,6 +43,7 @@ jobs:
           node scripts/research/amsterdam-structural-integrity-audit.mjs
           node scripts/research/amsterdam-data-provenance-audit.mjs
           node scripts/research/amsterdam-history-quality-audit.mjs
+          node scripts/research/amsterdam-consolidated-quality-gate.mjs
       - name: Preserve immutable baseline audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -51,6 +53,7 @@ jobs:
             research/output/amsterdam-data-provenance-audit.json
             research/output/amsterdam-history-quality-audit.json
             research/output/amsterdam-issuer-investigation-cases.json
+            research/output/amsterdam-consolidated-quality-gate.json
           retention-days: 30
       - name: Compare latest dates with official Euronext historical source
         if: github.event_name == 'push' || inputs.dry_run == true
@@ -72,6 +75,7 @@ jobs:
         run: node scripts/research/amsterdam-data-provenance-audit.mjs
       - name: Audit Amsterdam history for suspicious corporate actions and gaps
         run: node scripts/research/amsterdam-history-quality-audit.mjs
+          node scripts/research/amsterdam-consolidated-quality-gate.mjs
       - name: Publish audit evidence as downloadable GitHub Actions artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -82,6 +86,7 @@ jobs:
             research/output/amsterdam-data-provenance-audit.json
             research/output/amsterdam-history-quality-audit.json
             research/output/amsterdam-issuer-investigation-cases.json
+            research/output/amsterdam-consolidated-quality-gate.json
           if-no-files-found: warn
           retention-days: 30
       - name: Show prioritized issuer investigations in run summary
