@@ -57,3 +57,4 @@ Separate three historical missing high/low fields from logically invalid OHLC re
 Recheck corrected low-bound tolerance after false positive count of 86600 OHLC bars.
 Run immutable baseline and issuer-by-issuer price anomaly case reports; validate upload artifacts.
 Verify fail-closed publish protection and preserved issuer case artifacts.
+Test Euronext raw-close labeling correction and adjusted-close provenance invalidation.
