@@ -41,6 +41,8 @@ jobs:
         run: node scripts/history.mjs update --all --batch-size 8
       - name: Validate all histories and Amsterdam browser integration
         run: npm test && npm run history:test
+      - name: Test research-only Amsterdam portfolio simulator
+        run: node scripts/research/test-amsterdam-portfolio-simulator.mjs
       - name: Assess Amsterdam readiness for blind prediction exams
         run: node scripts/research/amsterdam-readiness.mjs
       - name: Run Amsterdam point-in-time baseline research exam
