@@ -52,3 +52,4 @@ Recheck adjustedClose presence and metadata coverage consistency for 80 Amsterda
 Generate named issuer-by-issuer provenance and large-price-move investigation queues.
 Run structural OHLC integrity, full provenance counters and ranked issuer anomaly queues.
 Investigate three invalid OHLC rows with exact ISIN date and price evidence; distinguish long-gap jumps.
+Verify whether three OHLC anomalies persist after floating point rounding tolerance.
