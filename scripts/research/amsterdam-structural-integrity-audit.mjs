@@ -24,3 +24,4 @@ const report={status:issues.length?'STRUCTURAL_DATA_ISSUES_REQUIRE_REVIEW':'STRU
 await fs.mkdir('research/output',{recursive:true});
 await fs.writeFile('research/output/amsterdam-structural-integrity-audit.json',JSON.stringify(report,null,2));
 console.log('AMSTERDAM_STRUCTURAL_INTEGRITY_AUDIT',JSON.stringify({status:report.status,counts,issues:issues.length}));
+console.log('AMSTERDAM_STRUCTURAL_ISSUES',JSON.stringify(issues.slice(0,100)));
