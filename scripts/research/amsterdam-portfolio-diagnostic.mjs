@@ -3,6 +3,7 @@ import {simulatePortfolio} from './amsterdam-portfolio-simulator.mjs';
 const catalog=JSON.parse(await fs.readFile('data/euronext-amsterdam.json','utf8'));
 const stocks=(catalog.shares||catalog.instruments||[]).filter(x=>x.displayPolicy!=='cross-market-reference-only');
 const bars=[];
+const excluded=new Set();
 for(const s of stocks){
   try{
     const raw=JSON.parse(await fs.readFile('data/history/'+s.isin+'.json','utf8'));
@@ -27,6 +28,10 @@ decisions.sort((a,b)=>a.date.localeCompare(b.date));
 if(!decisions.length)throw Error('No valid decisions');
 const result=simulatePortfolio({bars:bars.filter(x=>x.date>=decisions[0].date),decisions});
 const quality=JSON.parse(await fs.readFile('research/output/amsterdam-history-quality-audit.json','utf8'));
-const report={status:'RESEARCH_ONLY_NOT_INDEPENDENT_VALIDATION',historyQualityStatus:quality.status,historyQualitySummary:quality.summary,strategy:'FROZEN_12M_MOMENTUM_TOP5',execution:'FIRST_SESSION_AFTER_MONTH_END',dataInstruments:new Set(bars.map(x=>x.instrument)).size,decisions:decisions.length,initialCash:result.initialCash,finalNav:result.finalNav,totalReturn:result.totalReturn,totalFees:result.totalFees,maxDrawdown:result.maxDrawdown,trades:result.ledger.length,warning:'Raw cumulative return is not independently validated, adjusted for corporate actions, or suitable for publication.'};
+for(const issue of quality.issues||[])if(issue.issue==='PRICE_JUMP_REQUIRES_CORPORATE_ACTION_REVIEW')excluded.add(issue.isin);
+const cleanBars=bars.filter(b=>!excluded.has(b.instrument));
+const cleanDecisions=decisions.map(d=>({...d,picks:d.picks.filter(id=>!excluded.has(id))})).filter(d=>d.picks.length===5);
+const cleanResult=cleanDecisions.length?simulatePortfolio({bars:cleanBars.filter(x=>x.date>=cleanDecisions[0].date),decisions:cleanDecisions}):null;
+const report={status:'RESEARCH_ONLY_NOT_INDEPENDENT_VALIDATION',historyQualityStatus:quality.status,historyQualitySummary:quality.summary,strategy:'FROZEN_12M_MOMENTUM_TOP5',execution:'FIRST_SESSION_AFTER_MONTH_END',dataInstruments:new Set(bars.map(x=>x.instrument)).size,decisions:decisions.length,initialCash:result.initialCash,finalNav:result.finalNav,totalReturn:result.totalReturn,totalFees:result.totalFees,maxDrawdown:result.maxDrawdown,trades:result.ledger.length,qualitySensitivity:{excludedInstruments:excluded.size,eligibleDecisions:cleanDecisions.length,finalNav:cleanResult?.finalNav??null,totalReturn:cleanResult?.totalReturn??null,maxDrawdown:cleanResult?.maxDrawdown??null,interpretation:'Conservative sensitivity: exclude any instrument with flagged >50% single-session move; not a corrected total-return backtest'},warning:'Raw cumulative return is not independently validated, adjusted for corporate actions, or suitable for publication.'};
 await fs.writeFile('research/output/amsterdam-portfolio-diagnostic.json',JSON.stringify(report,null,2));
 console.log(JSON.stringify(report));
