@@ -28,11 +28,23 @@ export function mergeBars(existing = [], incoming = []) {
   return validateBars([...byDate.values()]);
 }
 
-export function computeMovers(series) {
-  return series.flatMap(({ instrument, bars, provider }) => {
+// Movers must refer to the same latest observed trading session. Older last
+// trades remain visible in history but must not be ranked as today's movers.
+// An explicit targetSession allows callers to enforce an official session date.
+export function computeMovers(series, { targetSession = null } = {}) {
+  const prepared = series.map(({ instrument, bars, provider }) => {
     const valid = validateBars(bars);
-    if (valid.length < 2) return [];
-    const [previous, latest] = valid.slice(-2);
+    return { instrument, provider, valid, latest: valid.at(-1) };
+  });
+  const session = targetSession || prepared.map(x => x.latest?.date).filter(Boolean).sort().at(-1);
+  if (!session || !/^\\d{4}-\\d{2}-\\d{2}$/.test(session)) return [];
+  return prepared.flatMap(({ instrument, provider, valid, latest }) => {
+    if (valid.length < 2 || latest?.date !== session) return [];
+    const previous = valid.at(-2);
+    // A gap can indicate a trading suspension or missing provider sessions.
+    // Do not mislabel an arbitrarily old comparison as a one-day movement.
+    const gapDays = (Date.parse(latest.date + 'T00:00:00Z') - Date.parse(previous.date + 'T00:00:00Z')) / 86400000;
+    if (!Number.isFinite(gapDays) || gapDays > 4 || gapDays < 1) return [];
     return [{ isin: instrument.isin, name: instrument.name, symbol: instrument.symbol, exchange: instrument.market, mic: instrument.mic, country: instrument.country || null, close: latest.close, changePercent: ((latest.close / previous.close) - 1) * 100, tradingDate: latest.date, previousTradingDate: previous.date, provider }];
   }).sort((a, b) => b.changePercent - a.changePercent);
 }
