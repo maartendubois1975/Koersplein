@@ -22,3 +22,12 @@ assert.deepEqual(computeMovers(fixtures).map(x=>x.isin),['CURRENT'],'Stale or su
 assert.deepEqual(computeMovers(fixtures,{targetSession:'2026-10-28'}).map(x=>x.isin),['STALE'],'Explicit target date must select only matching session');
 assert.deepEqual(computeMovers(fixtures,{targetSession:'2026-10-30'}),[],'No matching completed session must produce no movers');
 console.log('Amsterdam daily movers freshness and suspension regression: OK');
+
+const historicalWithAdjustment=[{date:'2026-10-27',open:100,high:101,low:99,close:100,adjustedClose:92,volume:1000}];
+const recentWithUnknownAdjustment=[{date:'2026-10-27',open:100,high:103,low:99,close:102,adjustedClose:null,volume:1200}];
+const protectedMerge=mergeBars(historicalWithAdjustment,recentWithUnknownAdjustment.map(bar=>({
+ ...bar,adjustedClose:historicalWithAdjustment.find(old=>old.date===bar.date)?.adjustedClose??null
+})));
+assert.equal(protectedMerge[0].close,102,'Official refreshed closing price must be retained');
+assert.equal(protectedMerge[0].adjustedClose,92,'Unknown new adjustment must not erase existing archived adjustment');
+console.log('Amsterdam archived adjusted-close preservation regression: OK');
