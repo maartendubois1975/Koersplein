@@ -54,9 +54,10 @@ export function decodeEuronextBody(text){
  if(!html.length)throw Error('EURONEXT_TRANSPORT_NO_HTML');
  return html.join('\n');
 }
-export async function euronextDailySnapshot(i,date,signal){
+export async function euronextDailySnapshot(i,date,signal,adjusted='Y'){
+ if(!['Y','N'].includes(adjusted))throw Error('Invalid adjustment mode');
  const key=`${i.isin}-${euronextProviderMic(i.mic)}`,sourceUrl=ROOT+encodeURIComponent(key);
- const r=await fetch(sourceUrl,{method:'POST',signal,headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},body:new URLSearchParams({adjusted:'Y',startdate:date,enddate:date,nbSession:'100000'})});
+ const r=await fetch(sourceUrl,{method:'POST',signal,headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},body:new URLSearchParams({adjusted,startdate:date,enddate:date,nbSession:'100000'})});
  if(!r.ok)throw Error('Euronext HTTP '+r.status);
  return {sourceUrl,rows:parseEuronextHistoryRows(decodeEuronextBody(await r.text()))};
 }
