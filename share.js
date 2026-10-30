@@ -34,6 +34,31 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
   if(h.coverage?.recordCount!=null&&h.coverage.records==null)h.coverage.records=h.coverage.recordCount;
   const bars=validateHistoryDocument(h,{...share,isin:storageId,mic,symbol:share.symbol||share.ticker}),first=bars[0],last=bars.at(-1),currency=h.instrument?.currency||market.currency||'EUR';
   document.querySelector('#history-range').textContent=`${first.date} — ${last.date}`;renderHistoryChart(historyState,bars,{currency});
+  if(mic==='XAMS'){
+   // The diagnostic is optional. Its absence must never be interpreted as a clean series.
+   let quality=null;
+   try{
+    const audit=await load('research/output/amsterdam-period-quality.json');
+    quality=Array.isArray(audit.rows)?audit.rows.find(row=>row.isin===share.isin):null;
+   }catch{}
+   const warning=document.createElement('p');
+   warning.className='history-source';
+   warning.setAttribute('role','status');
+   const explain=()=>{
+    const selected=historyState.dataset.period||'MAX';
+    const periods={'1M':1,'3M':3,'6M':6,'1J':12,'3J':36,'5J':60,'10J':120};
+    const start=new Date(last.date+'T00:00:00Z');
+    if(periods[selected])start.setUTCMonth(start.getUTCMonth()-periods[selected]);
+    const from=selected==='MAX'?first.date:start.toISOString().slice(0,10);
+    const flagged=(quality?.issues||[]).filter(issue=>issue.date>=from&&issue.date<=last.date);
+    warning.textContent=!quality
+     ?'Historische koerscontrole niet beschikbaar. Getoonde bronkoersen zijn niet onafhankelijk geverifieerd voor rendementsonderzoek.'
+     :`Bronkoersen (geen gevalideerd totaalrendement). ${flagged.length} gemarkeerde historische afwijkingen in deze periode. Aandelensplitsingen, dividenden en oude bedrijfsidentiteiten zijn niet volledig geverifieerd; grafiek niet gebruiken als bewezen beleggingsrendement.`;
+   };
+   historyState.append(warning);
+   explain();
+   historyState.querySelector('.periods')?.addEventListener('click',()=>queueMicrotask(explain));
+  }
   const p=document.createElement('p');p.className='history-source';p.textContent=`${bars.length.toLocaleString('nl-NL')} gevalideerde dagrecords · ${first.date} t/m ${last.date}`;historyState.append(p);
   const previous=bars.length>1?bars.at(-2):null;
   const delta=previous?.close>0?(last.close/previous.close-1)*100:null;
