@@ -22,6 +22,12 @@ export function validateBars(bars) {
   }).sort((a, b) => a.date.localeCompare(b.date));
 }
 
+export function verifiedBackfillComplete(existing, fetchedMeta = {}) {
+  return existing?.coverage?.backfillComplete === true &&
+    existing?.provider?.metadata?.completenessEvidenceVerified === true &&
+    fetchedMeta.partialHistory !== true;
+}
+
 export function mergeBars(existing = [], incoming = []) {
   // A broken provider response must never overwrite a previously valid bar.
   // Validate incoming records before applying them, rather than dropping the
@@ -78,7 +84,7 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
   if (!provider) throw new Error(`Onbekende provider: ${instrument.provider}`);
   const fileUrl = new URL(`${instrument.isin}.json`, historyUrl);
   const existing = await readJson(fileUrl, null);
-  if (mode === 'backfill' && existing?.coverage?.backfillComplete && existing?.provider?.metadata?.completenessEvidenceVerified === true) {
+  if (mode === 'backfill' && verifiedBackfillComplete(existing)) {
     return { isin: instrument.isin, outcome: 'unchanged', reason: 'backfill-complete', providerRequest: false, records: existing.bars.length, firstDate: existing.coverage.firstDate, lastDate: existing.coverage.lastDate };
   }
   // Refresh the latest stored trading session as well: an intraday candle can
@@ -117,7 +123,7 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
     schemaVersion: 1,
     instrument: { isin: instrument.isin, name: instrument.name, symbol: instrument.symbol, mic: instrument.mic, market: instrument.market, currency: instrument.currency, identitySource: instrument.identitySource },
     provider: { id: usedProvider.id, name: usedProvider.name, symbol: usedProvider.id === 'euronext-live' ? instrument.isin+'-'+instrument.mic : instrument.providerSymbol, retrievedAt: new Date().toISOString(), requestUrl: fetched.requestUrl, metadata: { ...fetched.providerMeta, ...(instrument.mic === 'XAMS' && usedProvider.id === 'euronext-live' ? { adjustmentStatus: 'EURONEXT_ADJUSTED_Y_UNVERIFIED_SCOPE', adjustedCloseSource: null } : {}) }, licenseNote: 'Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd.' },
-    coverage: { firstDate: bars[0].date, lastDate: bars.at(-1).date, records: bars.length, volumeRecords, missingVolumeRecords: bars.length - volumeRecords, backfillComplete: existing?.coverage?.backfillComplete === true && existing?.provider?.metadata?.completenessEvidenceVerified === true && fetched.providerMeta?.partialHistory !== true },
+    coverage: { firstDate: bars[0].date, lastDate: bars.at(-1).date, records: bars.length, volumeRecords, missingVolumeRecords: bars.length - volumeRecords, backfillComplete: verifiedBackfillComplete(existing, fetched.providerMeta) },
     bars
   };
   if (!existing || JSON.stringify(existing.bars) !== JSON.stringify(bars)) await atomicWrite(fileUrl, document);
