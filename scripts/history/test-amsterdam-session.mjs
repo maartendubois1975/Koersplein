@@ -31,3 +31,12 @@ const protectedMerge=mergeBars(historicalWithAdjustment,recentWithUnknownAdjustm
 assert.equal(protectedMerge[0].close,102,'Official refreshed closing price must be retained');
 assert.equal(protectedMerge[0].adjustedClose,92,'Unknown new adjustment must not erase existing archived adjustment');
 console.log('Amsterdam archived adjusted-close preservation regression: OK');
+
+const safeOriginal=[{date:'2026-10-28',open:100,high:104,low:99,close:102,volume:300}];
+for(const broken of [
+ {date:'2026-10-28',open:100,high:99,low:98,close:105,volume:300},
+ {date:'2026-10-28',open:0,high:104,low:99,close:102,volume:300},
+ {date:'2026-10-28',open:100,high:104,low:103,close:102,volume:300}
+])assert.deepEqual(mergeBars(safeOriginal,[broken]),safeOriginal,'Invalid provider bar must never destroy archived valid session');
+assert.equal(mergeBars(safeOriginal,[{date:'2026-10-29',open:102,high:104,low:101,close:103,volume:200}]).length,2);
+console.log('Amsterdam invalid provider overwrite protection: OK');
