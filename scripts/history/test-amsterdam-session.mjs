@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import { mergeBars, computeMovers } from './engine.mjs';
+import { mergeBars, computeMovers, verifiedBackfillComplete } from './engine.mjs';
 
 const preliminary = [{ date: '2026-10-26', open: 100, high: 102, low: 99, close: 101, volume: 1000 }];
 const officialClose = [{ date: '2026-10-26', open: 100, high: 105, low: 99, close: 104, volume: 2200 }];
@@ -40,3 +40,9 @@ for(const broken of [
 ])assert.deepEqual(mergeBars(safeOriginal,[broken]),safeOriginal,'Invalid provider bar must never destroy archived valid session');
 assert.equal(mergeBars(safeOriginal,[{date:'2026-10-29',open:102,high:104,low:101,close:103,volume:200}]).length,2);
 console.log('Amsterdam invalid provider overwrite protection: OK');
+
+assert.equal(verifiedBackfillComplete({coverage:{backfillComplete:true},provider:{metadata:{}}}),false,'Legacy backfillComplete alone is not verified evidence');
+assert.equal(verifiedBackfillComplete({coverage:{backfillComplete:true},provider:{metadata:{completenessEvidenceVerified:true}}}),true);
+assert.equal(verifiedBackfillComplete({coverage:{backfillComplete:true},provider:{metadata:{completenessEvidenceVerified:true}}},{partialHistory:true}),false,'Partial provider response invalidates completeness');
+assert.equal(verifiedBackfillComplete(null),false);
+console.log('Amsterdam historical completeness provenance regression: OK');
