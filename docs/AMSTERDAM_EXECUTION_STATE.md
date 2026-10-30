@@ -28,3 +28,11 @@ Updated: 2026-10-30. This is a handoff, not a claim that the website is finished
 
 ## Completion criteria
 A block is complete only when implementation and relevant tests are verified, or an explicit external blocker prevents the remaining steps. Never call a commit or test trigger alone a complete delivery.
+
+## Work performed in this session (pending fresh CI)
+- Added date-scoped structural quality module and manifest builder: `scripts/research/amsterdam-period-quality.mjs`, `scripts/research/build-amsterdam-period-quality.mjs`.
+- Added fixture tests for clean sessions, jumps, gaps, duplicates, missing high/low, invalid calendar dates.
+- Integrated fixture/session tests and manifest generation into the Amsterdam staging workflow; quality manifest is uploaded with audit evidence.
+- This is a diagnostic only: a clean structural observation does not prove an economically valid adjusted-return series.
+- Latest changes have NOT yet been validated by a new complete workflow at the time of writing. Check latest run before marking tested.
+- Next: examine CI, repair errors, then integrate conservative period warnings into the Amsterdam chart UI and build point-in-time fixture research tests.
