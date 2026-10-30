@@ -23,8 +23,15 @@ export function validateBars(bars) {
 }
 
 export function mergeBars(existing = [], incoming = []) {
-  const byDate = new Map(existing.map((bar) => [bar.date, bar]));
-  for (const bar of incoming) byDate.set(bar.date, { ...byDate.get(bar.date), ...bar });
+  // A broken provider response must never overwrite a previously valid bar.
+  // Validate incoming records before applying them, rather than dropping the
+  // entire merged date after an invalid overwrite.
+  const byDate = new Map(validateBars(existing).map(bar => [bar.date, bar]));
+  for (const bar of incoming) {
+    if (!bar || typeof bar.date !== 'string') continue;
+    const merged = { ...byDate.get(bar.date), ...bar };
+    if (validateBars([merged]).length === 1) byDate.set(bar.date, merged);
+  }
   return validateBars([...byDate.values()]);
 }
 
