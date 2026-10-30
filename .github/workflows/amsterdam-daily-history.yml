@@ -74,7 +74,8 @@ jobs:
       - name: Audit historical price provenance before model research
         run: node scripts/research/amsterdam-data-provenance-audit.mjs
       - name: Audit Amsterdam history for suspicious corporate actions and gaps
-        run: node scripts/research/amsterdam-history-quality-audit.mjs
+        run: |
+          node scripts/research/amsterdam-history-quality-audit.mjs
           node scripts/research/amsterdam-consolidated-quality-gate.mjs
       - name: Publish audit evidence as downloadable GitHub Actions artifact
         if: always()
