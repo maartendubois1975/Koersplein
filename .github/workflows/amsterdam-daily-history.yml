@@ -31,6 +31,9 @@ jobs:
           node-version: '22'
       - name: Syntax check Amsterdam research programs before provider calls
         run: |
+          node --check scripts/research/amsterdam-period-quality.mjs
+          node --check scripts/research/build-amsterdam-period-quality.mjs
+          node --check scripts/research/test-amsterdam-period-quality.mjs
           node --check scripts/research/amsterdam-structural-integrity-audit.mjs
           node --check scripts/research/amsterdam-data-provenance-audit.mjs
           node --check scripts/research/amsterdam-history-quality-audit.mjs
@@ -38,12 +41,17 @@ jobs:
           node --check scripts/research/amsterdam-portfolio-diagnostic.mjs
           node --check scripts/research/amsterdam-portfolio-simulator.mjs
           node --check scripts/research/test-amsterdam-portfolio-simulator.mjs
+      - name: Test dated quality fixtures and Amsterdam session rules
+        run: |
+          npm run test:amsterdam-session
+          node scripts/research/test-amsterdam-period-quality.mjs
       - name: Audit committed Amsterdam baseline before provider refresh
         run: |
           node scripts/research/amsterdam-structural-integrity-audit.mjs
           node scripts/research/amsterdam-data-provenance-audit.mjs
           node scripts/research/amsterdam-history-quality-audit.mjs
           node scripts/research/amsterdam-consolidated-quality-gate.mjs
+          node scripts/research/build-amsterdam-period-quality.mjs
       - name: Preserve immutable baseline audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -54,6 +62,7 @@ jobs:
             research/output/amsterdam-history-quality-audit.json
             research/output/amsterdam-issuer-investigation-cases.json
             research/output/amsterdam-consolidated-quality-gate.json
+            research/output/amsterdam-period-quality.json
           retention-days: 30
       - name: Compare latest dates with official Euronext historical source
         if: github.event_name == 'push' || inputs.dry_run == true
@@ -77,6 +86,7 @@ jobs:
         run: |
           node scripts/research/amsterdam-history-quality-audit.mjs
           node scripts/research/amsterdam-consolidated-quality-gate.mjs
+          node scripts/research/build-amsterdam-period-quality.mjs
       - name: Publish audit evidence as downloadable GitHub Actions artifact
         if: always()
         uses: actions/upload-artifact@v4
