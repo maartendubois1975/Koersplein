@@ -12,3 +12,11 @@
 8. The assistant must proactively propose better approaches, challenge inefficient prior assumptions, and make technical decisions without making the owner invent the next steps.
 
 This file is guidance for repository work. It does not technically enforce chat behavior; each assistant session must still follow it.
+
+## Large-block delivery rule — 2026-10-30
+
+When the owner says "Verder" or "Doe", continue the largest coherent development block feasible in the current session. Do not end work after one small fix, one commit, or a green CI run. Inspect dependencies, implement related changes, run staging tests, repair failures, and report only after a substantive result or a genuine external blocker. A partial result must be identified as partial.
+
+At the start of each session read `docs/AMSTERDAM_EXECUTION_STATE.md`. At the end update its verified implementation status, tests, blockers and next coherent deliverable. Distinguish committed, tested and deployed work. No autonomous background execution is implied.
+
+Only work on `amsterdam-reset-20261027`. Never publish to production without explicit approval. Never fabricate market data or bypass financial-data verification. Unverified forecasts remain blocked; safe fixture-based research development may proceed.
