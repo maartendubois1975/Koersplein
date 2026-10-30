@@ -1,5 +1,15 @@
 import fs from 'node:fs/promises';
 
+// Fail closed: no research predictions from unverified adjusted-price histories,
+// current-only universes, or issuer lineages. A flag alone cannot override this.
+const gate=JSON.parse(await fs.readFile('research/output/amsterdam-consolidated-quality-gate.json','utf8').catch(()=>{throw Error('BACKTEST_BLOCKED: run consolidated quality gate first')}));
+if(gate.status!=='READY_FOR_SEPARATE_POINT_IN_TIME_BACKTEST_REVIEW'||
+   !Array.isArray(gate.rows)||gate.rows.length!==80||
+   gate.rows.some(row=>row.returnsAndPredictionAllowed!==true)){
+ throw Error('BACKTEST_BLOCKED_SOURCE_VERIFICATION_REQUIRED: do not generate model outputs from unverified Amsterdam history');
+}
+throw Error('BACKTEST_BLOCKED_HISTORICAL_UNIVERSE: historical constituents, delistings and issuer lineage require independent verification before prediction research');
+
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
 // Local verified Amsterdam history is the default; remote API is an optional fallback.
 const catalog=JSON.parse(await fs.readFile('data/euronext-amsterdam.json','utf8'));
