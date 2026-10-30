@@ -97,7 +97,8 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
   } else {
     fetched = await provider.fetchDaily(instrument, { startDate, endDate });
   }
-  const incoming = fetched.bars.map(bar => ({ ...bar, ...(bar.adjustedClose == null ? { adjustedClose: existing?.bars?.find(old => old.date === bar.date)?.adjustedClose ?? null } : {}) }));
+  const existingByDate = new Map((existing?.bars || []).map(bar => [bar.date, bar]));
+  const incoming = fetched.bars.map(bar => ({ ...bar, ...(bar.adjustedClose == null ? { adjustedClose: existingByDate.get(bar.date)?.adjustedClose ?? null } : {}) }));
   const bars = mergeBars(existing?.bars || [], incoming);
   // Euronext requests adjusted=Y; its adjustment scope is not verified.
   // Never erase historical adjustedClose values when refreshing a recent
