@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {assessPeriod} from './amsterdam-period-quality.mjs';
+const candle=(date,close)=>({date,open:close,high:close,low:close,close});
+const clean=assessPeriod([candle('2026-10-28',100),candle('2026-10-29',101)]);
+assert.equal(clean.issues.length,0);
+assert.equal(clean.cleanObservationDates.length,2);
+assert.match(clean.researchReturnStatus,/BLOCKED/);
+const suspicious=assessPeriod([candle('2026-01-01',100),candle('2026-02-15',250)]);
+assert.deepEqual(suspicious.issues.map(x=>x.kind),['LONG_GAP','UNVERIFIED_PRICE_JUMP']);
+assert.deepEqual(suspicious.cleanObservationDates,['2026-01-01']);
+const incomplete=assessPeriod([{date:'2026-10-29',open:1,close:1}]);
+assert.equal(incomplete.issues[0].kind,'MISSING_HIGH_LOW');
+const duplicate=assessPeriod([candle('2026-10-29',1),candle('2026-10-29',1)]);
+assert.equal(duplicate.issues[0].kind,'DUPLICATE_DATE');
+const invalid=assessPeriod([candle('2026-02-30',1),candle('2026-03-01',1)]);
+assert.equal(invalid.issues[0].kind,'INVALID_DATE');
+console.log('Amsterdam period quality fixtures passed');
