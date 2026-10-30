@@ -37,7 +37,7 @@ export function computeMovers(series, { targetSession = null } = {}) {
     return { instrument, provider, valid, latest: valid.at(-1) };
   });
   const session = targetSession || prepared.map(x => x.latest?.date).filter(Boolean).sort().at(-1);
-  if (!session || !/^\\d{4}-\\d{2}-\\d{2}$/.test(session)) return [];
+  if (!session || !/^\d{4}-\d{2}-\d{2}$/.test(session)) return [];
   return prepared.flatMap(({ instrument, provider, valid, latest }) => {
     if (valid.length < 2 || latest?.date !== session) return [];
     const previous = valid.at(-2);
