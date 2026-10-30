@@ -97,13 +97,12 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
   } else {
     fetched = await provider.fetchDaily(instrument, { startDate, endDate });
   }
-  const bars = mergeBars(existing?.bars || [], fetched.bars);
-  // Euronext requests adjusted=Y; the exact adjustment scope is unverified.
-  // Historical adjustedClose values in this archive lack verified provenance;
-  // never carry them forward as if they were established adjusted prices.
-  if (instrument.mic === 'XAMS' && usedProvider.id === 'euronext-live') {
-    for (const bar of bars) bar.adjustedClose = null;
-  }
+  const incoming = fetched.bars.map(bar => ({ ...bar, ...(bar.adjustedClose == null ? { adjustedClose: existing?.bars?.find(old => old.date === bar.date)?.adjustedClose ?? null } : {}) }));
+  const bars = mergeBars(existing?.bars || [], incoming);
+  // Euronext requests adjusted=Y; its adjustment scope is not verified.
+  // Never erase historical adjustedClose values when refreshing a recent
+  // session. Retained values remain UNVERIFIED and cannot feed returns/models.
+  // mergeBars preserves existing values for dates not present in the refresh.
   if (!bars.length) throw new Error(`Geen geldige dagkoersen voor ${instrument.isin}`);
   const volumeRecords = bars.filter((bar) => bar.volume !== null).length;
   const document = {
