@@ -36,3 +36,11 @@ A block is complete only when implementation and relevant tests are verified, or
 - This is a diagnostic only: a clean structural observation does not prove an economically valid adjusted-return series.
 - Latest changes have NOT yet been validated by a new complete workflow at the time of writing. Check latest run before marking tested.
 - Next: examine CI, repair errors, then integrate conservative period warnings into the Amsterdam chart UI and build point-in-time fixture research tests.
+
+## Session continuation — 2026-10-30
+- Verified workflow run 41013786049: job succeeded; prediction exams and publication steps were skipped. This does not establish trustworthy financial returns.
+- Reviewed workflow: no daily cron schedule; refresh is manually dispatched or triggered by a designated staging path. Automated daily collection is NOT operationally verified.
+- Chart disclosure committed in de3f988268f1fd0fc9a690929eb0fa4951c4f8cf (share.js): Amsterdam historical charts now warn that unadjusted/uncorroborated prices are not validated returns. Optional period-specific anomaly counts depend on a published quality manifest; when absent, a conservative warning remains.
+- IMPORTANT: the quality manifest currently writes to research/output, not a deployed data path. Do not claim period anomaly counts work in staging until a safe, versioned publication path is designed and tested.
+- This change has not yet been independently validated in a fresh CI run. No production deployment.
+- Next coherent delivery: version and safely expose diagnostic manifest for staging, add chart tests, establish a safe non-publishing scheduled ingestion plan, and validate together in one comprehensive staging run.
