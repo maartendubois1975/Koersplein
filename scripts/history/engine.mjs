@@ -86,7 +86,7 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
     fetched = await provider.fetchDaily(instrument, { startDate, endDate });
   }
   const bars = mergeBars(existing?.bars || [], fetched.bars);
-  // Euronext supplies raw closes, not corporate-action-adjusted closes.
+  // Euronext requests adjusted=Y; the exact adjustment scope is unverified.
   // Historical adjustedClose values in this archive lack verified provenance;
   // never carry them forward as if they were established adjusted prices.
   if (instrument.mic === 'XAMS' && usedProvider.id === 'euronext-live') {
@@ -97,7 +97,7 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
   const document = {
     schemaVersion: 1,
     instrument: { isin: instrument.isin, name: instrument.name, symbol: instrument.symbol, mic: instrument.mic, market: instrument.market, currency: instrument.currency, identitySource: instrument.identitySource },
-    provider: { id: usedProvider.id, name: usedProvider.name, symbol: usedProvider.id === 'euronext-live' ? instrument.isin+'-'+instrument.mic : instrument.providerSymbol, retrievedAt: new Date().toISOString(), requestUrl: fetched.requestUrl, metadata: { ...fetched.providerMeta, ...(instrument.mic === 'XAMS' && usedProvider.id === 'euronext-live' ? { adjustmentStatus: 'UNVERIFIED_RAW_CLOSE_ONLY', adjustedCloseSource: null } : {}) }, licenseNote: 'Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd.' },
+    provider: { id: usedProvider.id, name: usedProvider.name, symbol: usedProvider.id === 'euronext-live' ? instrument.isin+'-'+instrument.mic : instrument.providerSymbol, retrievedAt: new Date().toISOString(), requestUrl: fetched.requestUrl, metadata: { ...fetched.providerMeta, ...(instrument.mic === 'XAMS' && usedProvider.id === 'euronext-live' ? { adjustmentStatus: 'EURONEXT_ADJUSTED_Y_UNVERIFIED_SCOPE', adjustedCloseSource: null } : {}) }, licenseNote: 'Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd.' },
     coverage: { firstDate: bars[0].date, lastDate: bars.at(-1).date, records: bars.length, volumeRecords, missingVolumeRecords: bars.length - volumeRecords, backfillComplete: mode === 'backfill' || existing?.coverage?.backfillComplete === true },
     bars
   };
