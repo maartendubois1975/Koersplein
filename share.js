@@ -1,5 +1,6 @@
 import { renderHistoryChart, validateHistoryDocument } from './chart.js';
 import { manifestResolver } from './market-week-core.mjs';
+import { assessPeriod } from './scripts/research/amsterdam-period-quality.mjs';
 const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
 const params=new URLSearchParams(location.search),isin=params.get('isin'),requestedMic=params.get('mic'),requestedSymbol=params.get('symbol'),detail=document.querySelector('#share-detail'),historyState=document.querySelector('#history-state');
 const load=async url=>{const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error(`HTTP ${r.status}`);return r.json()};
@@ -35,12 +36,9 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
   const bars=validateHistoryDocument(h,{...share,isin:storageId,mic,symbol:share.symbol||share.ticker}),first=bars[0],last=bars.at(-1),currency=h.instrument?.currency||market.currency||'EUR';
   document.querySelector('#history-range').textContent=`${first.date} — ${last.date}`;renderHistoryChart(historyState,bars,{currency});
   if(mic==='XAMS'){
-   // The diagnostic is optional. Its absence must never be interpreted as a clean series.
-   let quality=null;
-   try{
-    const audit=await load('research/output/amsterdam-period-quality.json');
-    quality=Array.isArray(audit.rows)?audit.rows.find(row=>row.isin===share.isin):null;
-   }catch{}
+   // Assess the exact displayed bars; no stale or separately published audit file.
+   // A structural diagnostic is not independent price or total-return verification.
+   const quality=assessPeriod(bars);
    const warning=document.createElement('p');
    warning.className='history-source';
    warning.setAttribute('role','status');
@@ -51,9 +49,7 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
     if(periods[selected])start.setUTCMonth(start.getUTCMonth()-periods[selected]);
     const from=selected==='MAX'?first.date:start.toISOString().slice(0,10);
     const flagged=(quality?.issues||[]).filter(issue=>issue.date>=from&&issue.date<=last.date);
-    warning.textContent=!quality
-     ?'Historische koerscontrole niet beschikbaar. Getoonde bronkoersen zijn niet onafhankelijk geverifieerd voor rendementsonderzoek.'
-     :`Bronkoersen (geen gevalideerd totaalrendement). ${flagged.length} gemarkeerde historische afwijkingen in deze periode. Aandelensplitsingen, dividenden en oude bedrijfsidentiteiten zijn niet volledig geverifieerd; grafiek niet gebruiken als bewezen beleggingsrendement.`;
+    warning.textContent=`Bronkoersen (geen gevalideerd totaalrendement). ${flagged.length} structurele waarschuwingen in deze periode (grote sprongen, lange gaten of ongeldige records). Aandelensplitsingen, dividenden en oude bedrijfsidentiteiten zijn niet onafhankelijk geverifieerd; grafiek niet gebruiken als bewezen beleggingsrendement.`;
    };
    historyState.append(warning);
    explain();
