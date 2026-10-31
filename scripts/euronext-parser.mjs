@@ -5,8 +5,8 @@ export function parsePrice(value){
  if(!s||s==='-')return null;
  const comma=s.lastIndexOf(','),dot=s.lastIndexOf('.');
  if(comma>=0&&dot>=0)s=comma>dot?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,'');
- else if(comma>=0)s=/^\d{1,3}(,\d{3})+$/.test(s)?s.replace(/,/g,''):s.replace(',','.');
- else if(dot>=0&&/^\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,'');
+ else if(comma>=0)s=s.replace(',','.');
+ 
  if(!/^\d+(\.\d+)?$/.test(s))return null;
  const n=Number(s);return Number.isFinite(n)?n:null;
 }
