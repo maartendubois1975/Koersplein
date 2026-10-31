@@ -33,12 +33,24 @@ export function validateHistoryDocument(document, identity) {
   return bars;
 }
 
+export function periodStartDate(lastDate, period) {
+  if (!(period in PERIODS) || period === 'MAX') return null;
+  const d=new Date(lastDate+'T00:00:00Z');
+  if(Number.isNaN(d.getTime()))throw new Error('Ongeldige laatste koersdatum');
+  const originalDay=d.getUTCDate();
+  d.setUTCDate(1);
+  d.setUTCMonth(d.getUTCMonth()-PERIODS[period]);
+  const month=d.getUTCMonth();
+  d.setUTCMonth(month+1);
+  d.setUTCDate(0);
+  d.setUTCDate(Math.min(originalDay,d.getUTCDate()));
+  return d.toISOString().slice(0,10);
+}
+
 export function filterPeriod(bars, period) {
   if (!(period in PERIODS) || period === 'MAX') return bars;
-  const latest = new Date(`${bars.at(-1).date}T00:00:00Z`);
-  const threshold = new Date(latest);
-  threshold.setUTCMonth(threshold.getUTCMonth() - PERIODS[period]);
-  const result = bars.filter((bar) => bar.date >= threshold.toISOString().slice(0, 10));
+  const threshold = periodStartDate(bars.at(-1).date,period);
+  const result = bars.filter((bar) => bar.date >= threshold);
   return result.length > 1 ? result : bars.slice(-2);
 }
 
