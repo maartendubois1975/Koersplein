@@ -1,7 +1,7 @@
 // Network-only diagnostic. Never writes market data or changes the website.
 import {parseRows} from './euronext-parser.mjs';
 import {decodeEuronextBody} from './euronext-transport.mjs';
-const isin='NL0000852564',date='2026-10-29';
+const isin=process.env.PROBE_ISIN||'NL0000852564',date='2026-10-29';
 const url='https://live.euronext.com/en/ajax/getHistoricalPricePopup/'+isin+'-XAMS';
 let result={kind:'EURONEXT_READ_ONLY_PROBE',isin,date,status:'UNKNOWN'};
 try{
