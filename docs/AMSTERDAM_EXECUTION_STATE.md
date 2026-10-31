@@ -97,3 +97,12 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - The workflow currently has no schedule. GitHub cron executes from default branch; owner forbids main changes without approval. Do not claim automatic daily collection exists.
 - Existing 80 historical series and four previously lagging sessions are the last known baseline, not freshly revalidated prices. Historical corporate actions and licensing remain unverified.
 - No production changes, no forecasts, no claim that daily opening data is live. Pending: actual staging Actions run conclusion, provider freshness and official close reconciliation, Render staging branch alignment.
+
+## Integrated Amsterdam morning/close staging block — 2026-10-31
+- The owner reaffirmed: no micro-fix loops; complete coherent blocks. This instruction remains in AGENTS.md.
+- Rebuilt sessionReadiness (00a54a79056544714cf897feca621eac7396bae5): rejects impossible dates, duplicate identities, rejected archived bars, missing OHLC, and an empty/invalid universe. Expanded fixture tests (445df30d82100ad76b5c4f96499317e8cb874018).
+- Executed six equivalent pure-JavaScript session-readiness cases with Node 22 in the working container: all passed. This is a local functional test of the pure logic, not a checkout-wide integration test.
+- Added scripts/history/amsterdam-daily-run.mjs (7c175a9ec3834470477666103615dc94646cc880, f9ae9c3401431bd4f61d8096bf844d1f1070a32b): staging-only 80-stock update, per-instrument error capture, verified-bar diagnostics, phase label morning/close, JSON evidence report. No commit or publish from script.
+- Integrated workflow_dispatch phase input, full runner, syntax validation and report artifacts (efe23c408c6f87b4b2aedd792a062bc402eea0b4). A phase label is not independent proof that an official exchange close is final.
+- No GitHub cron is operational: staging workflow cannot be scheduled through GitHub's default-branch-only schedule without owner-approved main change or a separate authorized scheduler. Render workspace is not selected, so its cron cannot be configured.
+- Need observe actual Actions run ID and result before calling staging operational. No public website updates or live forecasts.
