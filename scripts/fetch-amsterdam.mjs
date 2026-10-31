@@ -5,7 +5,11 @@ import {decodeEuronextBody} from './euronext-transport.mjs';
 const endpoint='https://live.euronext.com/en/ajax/getHistoricalPricePopup/';
 export async function collect(manifest,date,request=fetch){
  const candidates=[],noTrade=[],missing=[],errors=[];
- for(const [isin,entry] of Object.entries(manifest.instruments)){
+ const instruments=Object.entries(manifest.instruments);
+ let next=0;
+ async function worker(){
+ while(next<instruments.length){
+  const [isin,entry]=instruments[next++];
   try{
    const url=endpoint+encodeURIComponent(isin+'-XAMS');
    const response=await request(url,{method:'POST',signal:AbortSignal.timeout(12000),headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},body:new URLSearchParams({adjusted:'N',startdate:date,enddate:date,nbSession:'100000'})});
@@ -21,6 +25,8 @@ export async function collect(manifest,date,request=fetch){
    candidates.push({...found,isin,symbol:entry.symbol,mic:'XAMS',source:'Euronext public historical table',retrievedAt:new Date().toISOString(),sourceUrl:url,sourceVerified:false,sessionClosedVerified:false});
   }catch(error){errors.push({isin,error:error.message})}
  }
+ }
+ await Promise.all(Array.from({length:Math.min(4,instruments.length)},()=>worker()));
  return {market:'XAMS',date,candidates,noTrade,missing,errors,approved:0};
 }
 if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href){
