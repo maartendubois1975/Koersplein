@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   update:
-    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/amsterdam-reset-20261027')
+    if: github.ref == 'refs/heads/amsterdam-reset-20261027' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -147,7 +147,7 @@ jobs:
           echo 'Audit outcome: ${{ job.status }}' >> "$GITHUB_STEP_SUMMARY"
           echo 'Dry run: ${{ inputs.dry_run }}' >> "$GITHUB_STEP_SUMMARY"
       - name: Block publishing historical files until source evidence is verified
-        if: github.event_name == 'workflow_dispatch' && inputs.dry_run == false
+        if: github.ref == 'refs/heads/amsterdam-reset-20261027' && github.event_name == 'workflow_dispatch' && inputs.dry_run == false
         run: |
           node --input-type=module <<'EOF'
           import fs from 'node:fs';
@@ -163,7 +163,7 @@ jobs:
           if(problems.length){console.error('Publication blocked: '+problems.join(', '));process.exit(1)}
           EOF
       - name: Commit only audited historical data
-        if: success() && steps.refresh.outcome == 'success' && github.event_name == 'workflow_dispatch' && inputs.dry_run == false
+        if: success() && github.ref == 'refs/heads/amsterdam-reset-20261027' && steps.refresh.outcome == 'success' && github.event_name == 'workflow_dispatch' && inputs.dry_run == false
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
