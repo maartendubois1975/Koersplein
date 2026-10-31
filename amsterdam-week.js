@@ -90,7 +90,7 @@ async function start(){
   const catalogResponse=await fetch('data/euronext-amsterdam.json',{cache:'no-store'});
   if(!catalogResponse.ok)throw Error('CATALOG_HTTP_'+catalogResponse.status);
   const catalog=await catalogResponse.json();
-  const api=String(window.KOERSPLEIN_MARKET?.api||'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/,'');
+  const api='https://amsterdam.local.invalid'; // URL used only to resolve local JSON filenames; fetch is intercepted below.
   const manifestResponse=await fetch('data/amsterdam-history-manifest.json',{cache:'no-store'});
   if(!manifestResponse.ok)throw Error('MANIFEST_HTTP_'+manifestResponse.status);
   const manifest=await manifestResponse.json();
