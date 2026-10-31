@@ -44,3 +44,13 @@ A block is complete only when implementation and relevant tests are verified, or
 - IMPORTANT: the quality manifest currently writes to research/output, not a deployed data path. Do not claim period anomaly counts work in staging until a safe, versioned publication path is designed and tested.
 - This change has not yet been independently validated in a fresh CI run. No production deployment.
 - Next coherent delivery: version and safely expose diagnostic manifest for staging, add chart tests, establish a safe non-publishing scheduled ingestion plan, and validate together in one comprehensive staging run.
+
+## Consolidated continuation — 2026-10-31
+- Researched chart rendering, normalization, and the existing staging test workflow together before changing code.
+- Commit 893ee400600f481bfca917f75874934d1482871f computes structural diagnostics from the exact Amsterdam chart bars rather than fetching an unavailable research/output HTTP artifact.
+- Commit 0291a20904e99bfa2b5623ce9dabf38576ae3713 fixes null/undefined/empty values being coerced to zero in chart.js; missing high/low/adjusted close/volume remain missing.
+- Commit a21cbea864af59627016c0b228b42a7c97c0dda2 adds fixture tests for chart-normalized missing fields and date-scoped structural diagnostics.
+- Commit abdcf0dbae39e22a762b231972579157295b2506 includes share.js and chart.js syntax checks in staging CI.
+- Commit 2b7aa082ba1670e4a9f41d24358e3b1c89f34a37 updates the staging-only trigger path for one comprehensive dry run. Workflow result NOT YET VERIFIED; do not claim tests passed.
+- No production publication or automatic daily scheduling has been implemented. Historical source lineage, five unmapped instruments, and return adjustment evidence remain open. Forecast publication remains blocked.
+- Next block: inspect triggered run results, repair failures, then investigate provider mappings and staging-only daily scheduling with explicit source freshness checks.
