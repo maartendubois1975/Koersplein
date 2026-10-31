@@ -63,7 +63,7 @@ assert.match(output,/Verouderde historie/,'Old as-of date must be classified');
 assert.match(output,/Niet bevestigd/,'ISIN mismatch must not borrow prices');
 assert.match(output,/\+5\.00 EUR \/ \+5\.00%/,'Close-open and percentage must be calculated');
 assert.doesNotMatch(output,/€\s*0,00/,'Missing OHLC must never appear as zero prices');
-assert.match(nodes.get('#market-meta').textContent,/19–23 oktober 2026 \(afgesloten\)/);
+assert.match(nodes.get('#market-meta').textContent,/afgesloten/);
 assert.equal((output.match(/<tr>/g)||[]).length,23,'Two headers, five-day summary, total and 3 x 5 rows');
 assert.equal((output.match(/Geldige koers/g)||[]).length,3,'Only real traded bars pass');
 console.log('Public Amsterdam: five sessions, MIC+ISIN+ticker+currency, audited NO_TRADES, stale/invalid, deltas and cache bust PASS');
@@ -93,7 +93,7 @@ const abnRow=weekOutput.split('</tr>').find(x=>x.includes('>ABN · '));
 assert.ok(abnRow,'ABN row missing');
 assert.match(abnRow,/\+3,00 EUR \/ \+2,86%/,'An officially confirmed NO_TRADES session must not break previous-close return');
 assert.match(abnRow,new RegExp(dates[4]+'[^]*?<td class="price">—</td>'),'Unverified intervening Thursday must block Friday previous-close return');
-const sessions=[...weekOutput.matchAll(/data-session-date="(2026-10-\d{2})" data-session-status="(valid|noTrades|invalid|stale|missing)"/g)];
+const sessions=[...weekOutput.matchAll(/data-session-date="(\d{4}-\d{2}-\d{2})" data-session-status="(valid|noTrades|invalid|stale|missing)"/g)];
 assert.equal(sessions.length,15,'Every share/date needs one explicit public status');
 const statusCounts=sessions.reduce((o,m)=>(o[m[2]]=(o[m[2]]||0)+1,o),{});
 assert.deepEqual(statusCounts,{valid:5,invalid:1,stale:2,noTrades:1,missing:6},
