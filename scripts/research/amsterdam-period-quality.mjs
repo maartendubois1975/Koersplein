@@ -31,3 +31,16 @@ export function assessPeriod(bars, {maxGapDays=30,jumpRatio=1.5}={}) {
     adjustmentStatus:'UNVERIFIED',totalReturnStatus:'UNVERIFIED',
     researchReturnStatus:'BLOCKED_PENDING_INDEPENDENT_CORPORATE_ACTION_AND_POINT_IN_TIME_UNIVERSE_EVIDENCE'};
 }
+
+export function latestCloseChange(bars, quality=assessPeriod(bars)) {
+  if (!Array.isArray(bars) || bars.length<2) return {percent:null,reason:'INSUFFICIENT_HISTORY'};
+  const ordered=[...bars].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const last=ordered.at(-1),prev=ordered.at(-2);
+  if (!Number.isFinite(Number(last.close)) || !Number.isFinite(Number(prev.close)) ||
+      last.close==null || prev.close==null || Number(last.close)<=0 || Number(prev.close)<=0)
+    return {percent:null,reason:'INVALID_CLOSE'};
+  const blockingKinds=new Set(['LONG_GAP','UNVERIFIED_PRICE_JUMP','INVALID_OHLC','INVALID_OPEN_CLOSE','MISSING_HIGH_LOW','DUPLICATE_DATE']);
+  const issue=quality.issues.find(item=>item.date===last.date&&blockingKinds.has(item.kind));
+  if (issue) return {percent:null,reason:issue.kind};
+  return {percent:(Number(last.close)/Number(prev.close)-1)*100,reason:null};
+}
