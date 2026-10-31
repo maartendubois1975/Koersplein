@@ -86,3 +86,14 @@ A block is complete only when implementation and relevant tests are verified, or
 - Commit 3df8204d98e65eb35fdecce1f932e8d59f09c437 adds invalid-date and OHLC fixtures to the Amsterdam session suite.
 - Commit 07fc5c7b3ae0a401309ca9b04f696301d6b16b3e applies the same strict date validation to chart.js history normalization.
 - No verified CI result yet; changes committed only to approved staging branch. No production deployment, no scheduled import. Existing historical data must still be audited independently; these checks prevent future malformed inputs but do not retroactively certify source prices.
+
+## Consolidated Amsterdam ingestion/readiness block — 2026-10-31
+Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c9469a2f0900f25f74b60000541b01b3f6f9a).
+- Implemented pure observed-session readiness classification for all 80 XAMS instruments (commit dda5b71057cc94ceeb664716fadb1a5d0f84346a). Distinguishes current, lagging, invalid and unavailable rather than treating a suspended instrument as automatic provider failure.
+- Rebuilt latest-session check to collect errors per instrument and emit research/output/amsterdam-session-readiness.json, with explicit source date and provenance (commit 05d33b494ad27d4f03b58da0b72d9b865619a63a).
+- Added deterministic fixture cases for complete, lagging, invalid, unavailable, and unexpected instrument count (commit 39d9c5212f646abfc83680ff632c7d0265330d07).
+- Integrated fixtures, syntax checks, readiness artifact and failure-on-provider-refresh into the staging workflow (commit 9acf8cb5575ee0555dc0b9da811c904f9d885dab).
+- Verified static module imports and workflow step wiring by re-reading all four GitHub files; all six wiring assertions passed. This is NOT an executed Node suite or CI run.
+- The workflow currently has no schedule. GitHub cron executes from default branch; owner forbids main changes without approval. Do not claim automatic daily collection exists.
+- Existing 80 historical series and four previously lagging sessions are the last known baseline, not freshly revalidated prices. Historical corporate actions and licensing remain unverified.
+- No production changes, no forecasts, no claim that daily opening data is live. Pending: actual staging Actions run conclusion, provider freshness and official close reconciliation, Render staging branch alignment.
