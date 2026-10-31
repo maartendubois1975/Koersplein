@@ -69,3 +69,4 @@ Staging quality manifest validation 2026-10-30.
 2026-10-31: Consolidated dry-run for null-safe chart prices, unverified latest return gate, month-end date clamping and regression fixtures; do not publish.
 2026-10-31: Verify staging-only branch guard and prior chart regressions together, dry run only, no publication.
 2026-10-31: Staging regression of independently tested latest-close safety gate; no publication.
+2026-10-31: Verify strict calendar-date and OHLC validation in ingestion and chart code; staging dry run, no publication.
