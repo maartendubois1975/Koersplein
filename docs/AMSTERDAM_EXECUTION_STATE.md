@@ -106,3 +106,10 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - Integrated workflow_dispatch phase input, full runner, syntax validation and report artifacts (efe23c408c6f87b4b2aedd792a062bc402eea0b4). A phase label is not independent proof that an official exchange close is final.
 - No GitHub cron is operational: staging workflow cannot be scheduled through GitHub's default-branch-only schedule without owner-approved main change or a separate authorized scheduler. Render workspace is not selected, so its cron cannot be configured.
 - Need observe actual Actions run ID and result before calling staging operational. No public website updates or live forecasts.
+
+## Amsterdam integrated safety follow-up — 2026-10-31
+- Audited the complete morning/close orchestrator, pure session readiness and staging workflow as a unit. The source catalog contains 80 XAMS provider mappings and 5 deliberate XPAR/XBRU references. Attempting to retrieve all 80 history files in one connector operation hit the tool-call limit; do not claim a fresh 80-series data audit.
+- Strengthened readiness identity uniqueness and exposed observed-session age (commit 605876d1f855aa5f3cd8f8e2e2a8f587b28b754b); added missing-ISIN regression (f60b8950da853f1077ed1450345b3bda5195dfb3).
+- Ran the available local Node 22 session-readiness fixtures in the working container; result: PASS, six scenarios. This local copy predates the latest added regression and is not a full repository CI result.
+- Strengthened manual staging publication guard to require all 80 records current and valid for the observed date, no provider failures, and no more than four days of session age (commit 1e882910ed966a91620d5ce64466b4d77f33cc5e). This is a necessary structural gate, not proof of market-close finality or data redistribution rights.
+- No daily cron is configured. No staging deployment verified; no production changes. Full CI status remains unverified because connector commit-status returns no workflow conclusion and GitHub Actions page is unavailable through web.
