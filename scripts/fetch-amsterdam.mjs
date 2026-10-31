@@ -1,3 +1,4 @@
+import {latestCandidateSession} from './amsterdam-session.mjs';
 // Read-only candidate collection. Never marks a quote approved.
 import {readFile,writeFile} from 'node:fs/promises';
 import {parseRows} from './euronext-parser.mjs';
@@ -31,7 +32,8 @@ export async function collect(manifest,date,request=fetch){
  return {market:'XAMS',date,candidates,noTrade,missing,errors,approved:0};
 }
 if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href){
- const [date,out]=process.argv.slice(2);
+ const [requestedDate,out]=process.argv.slice(2);
+ const date=requestedDate==='auto'?latestCandidateSession():requestedDate;
  if(!/^\d{4}-\d{2}-\d{2}$/.test(date||'')||!out)throw Error('Usage: node scripts/fetch-amsterdam.mjs YYYY-MM-DD output.json');
  const manifest=JSON.parse(await readFile(new URL('../data/amsterdam-history-manifest.json',import.meta.url),'utf8'));
  const result=await collect(manifest,date);
