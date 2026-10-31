@@ -1,5 +1,5 @@
 // Staging-only batch orchestrator. Never publishes or commits price files.
-import {loadCatalog,runBatch} from './engine.mjs';
+import {loadCatalog,runBatch,validateBars} from './engine.mjs';
 import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import {sessionReadiness} from './session-readiness.mjs';
 const args=process.argv.slice(2);
@@ -16,10 +16,10 @@ const rows=await Promise.all(instruments.map(async instrument=>{
   try{
     const file=new URL('../../data/history/'+instrument.isin+'.json',import.meta.url);
     const history=JSON.parse(await readFile(file,'utf8'));
-    const bars=history.bars||[],last=bars.at(-1);
+    const source=history.bars||[],bars=validateBars(source),last=bars.at(-1);
     return {isin:instrument.isin,symbol:instrument.symbol,latestDate:last?.date||null,
       open:last?.open??null,close:last?.close??null,records:bars.length,
-      provider:history.provider?.id||null,rejectedRecords:0};
+      provider:history.provider?.id||null,rejectedRecords:source.length-bars.length};
   }catch(error){return {isin:instrument.isin,symbol:instrument.symbol,latestDate:null,error:error.message};}
 }));
 const readiness=sessionReadiness(rows);
