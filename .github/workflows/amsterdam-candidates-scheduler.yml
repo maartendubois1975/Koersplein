@@ -1,0 +1,33 @@
+name: Amsterdam candidate collection (development only)
+on:
+  schedule:
+    - cron: '15 19 * * 1-5'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: amsterdam-candidates
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out isolated Amsterdam development branch
+        uses: actions/checkout@v4
+        with:
+          ref: amsterdam-clean-20261031
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Collect read-only Euronext candidates
+        run: node scripts/fetch-amsterdam.mjs auto amsterdam-candidates.json
+      - name: Preserve candidate report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-candidates-${{ github.run_id }}
+          path: amsterdam-candidates.json
+          if-no-files-found: warn
+          retention-days: 14
