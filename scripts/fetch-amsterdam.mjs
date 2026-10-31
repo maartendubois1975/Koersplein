@@ -4,7 +4,7 @@ import {parseRows} from './euronext-parser.mjs';
 import {decodeEuronextBody} from './euronext-transport.mjs';
 const endpoint='https://live.euronext.com/en/ajax/getHistoricalPricePopup/';
 export async function collect(manifest,date,request=fetch){
- const candidates=[],errors=[];
+ const candidates=[],noTrade=[],missing=[],errors=[];
  for(const [isin,entry] of Object.entries(manifest.instruments)){
   try{
    const url=endpoint+encodeURIComponent(isin+'-XAMS');
@@ -15,12 +15,13 @@ export async function collect(manifest,date,request=fetch){
    const matches=rows.filter(r=>r.date===date);
    if(matches.length>1)throw Error('DUPLICATE_SESSION');
    const found=matches[0];
-   if(!found)throw Error('NO_VERIFIED_TRADE');
+   if(!found){missing.push({isin,symbol:entry.symbol,date,status:'NO_SOURCE_ROW_LISTING_CHECK_REQUIRED'});continue;}
+   if(found.open===null&&found.high===null&&found.low===null&&Number.isFinite(found.close)&&found.close>0&&found.volume===0){noTrade.push({isin,symbol:entry.symbol,date,status:'ZERO_VOLUME_REFERENCE_UNVERIFIED',referenceClose:found.close});continue;}
    if(![found.open,found.high,found.low,found.close].every(n=>Number.isFinite(n)&&n>0)||found.low>Math.min(found.open,found.close)||found.high<Math.max(found.open,found.close)||!Number.isSafeInteger(found.volume)||found.volume<=0)throw Error('INVALID_OHLCV_OR_ZERO_VOLUME');
    candidates.push({...found,isin,symbol:entry.symbol,mic:'XAMS',source:'Euronext public historical table',retrievedAt:new Date().toISOString(),sourceUrl:url,sourceVerified:false,sessionClosedVerified:false});
   }catch(error){errors.push({isin,error:error.message})}
  }
- return {market:'XAMS',date,candidates,errors,approved:0};
+ return {market:'XAMS',date,candidates,noTrade,missing,errors,approved:0};
 }
 if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href){
  const [date,out]=process.argv.slice(2);
@@ -28,5 +29,5 @@ if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href){
  const manifest=JSON.parse(await readFile(new URL('../data/amsterdam-history-manifest.json',import.meta.url),'utf8'));
  const result=await collect(manifest,date);
  await writeFile(out,JSON.stringify(result,null,2)+'\n');
- console.log(JSON.stringify({candidates:result.candidates.length,errors:result.errors.length,approved:0}));
+ console.log(JSON.stringify({candidates:result.candidates.length,noTrade:result.noTrade.length,missing:result.missing.length,errors:result.errors.length,approved:0}));
 }
