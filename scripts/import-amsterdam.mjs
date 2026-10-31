@@ -11,6 +11,7 @@ if(payload.market!=='XAMS'||!Array.isArray(payload.rows))throw Error('Expected X
 if(Object.keys(manifest.instruments).length!==80)throw Error('Expected 80 mapped instruments');
 const seen=new Set(),decisions=[],staged=[];
 for(const row of payload.rows){
+ try {
  const key=row.isin+':'+row.date;
  if(seen.has(key))throw Error('Duplicate '+key);
  seen.add(key);
@@ -30,6 +31,10 @@ for(const row of payload.rows){
  const bars=[...doc.bars,bar];
  const updated={...doc,bars,coverage:{...doc.coverage,lastDate:row.date,records:bars.length,volumeRecords:bars.filter(b=>b.volume!=null).length,missingVolumeRecords:bars.filter(b=>b.volume==null).length},provider:{...doc.provider,metadata:{...doc.provider?.metadata,lastImportSource:row.source,lastImportSourceUrl:row.sourceUrl,lastImportRetrievedAt:row.retrievedAt}}};
  staged.push({path,updated});decisions.push({key,status:'APPROVED'});
+ } catch(error) {
+  if(!partial)throw error;
+  decisions.push({key:String(row?.isin||'UNKNOWN')+':'+String(row?.date||'UNKNOWN'),status:'REJECTED_INVALID_ROW',reason:error.message});
+ }
 }
 const summary={mode:apply?'APPLY':'DRY_RUN',partial,received:payload.rows.length,approved:staged.length,skipped:decisions.filter(d=>!['APPROVED','UNCHANGED'].includes(d.status)).length,decisions};
 if(apply){
