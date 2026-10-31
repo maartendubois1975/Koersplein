@@ -54,3 +54,10 @@ A block is complete only when implementation and relevant tests are verified, or
 - Commit 2b7aa082ba1670e4a9f41d24358e3b1c89f34a37 updates the staging-only trigger path for one comprehensive dry run. Workflow result NOT YET VERIFIED; do not claim tests passed.
 - No production publication or automatic daily scheduling has been implemented. Historical source lineage, five unmapped instruments, and return adjustment evidence remain open. Forecast publication remains blocked.
 - Next block: inspect triggered run results, repair failures, then investigate provider mappings and staging-only daily scheduling with explicit source freshness checks.
+
+## Cross-market reconciliation — 2026-10-31
+- Inspected all five entries previously labeled unresolved in data/amsterdam-import-status.json against the canonical catalog: AF and ENX and SGO are XPAR-primary; FAGR and ONWD are XBRU-primary. Each has displayPolicy cross-market-reference-only.
+- Commit ad40d10f96c21f67b04803474452c31ff8f06c70 separates five intentional cross-market references from zero missing Amsterdam target mappings; this does NOT verify that corresponding Paris/Brussels histories exist or are licensed for public display.
+- Active XAMS targets remain 80. Do not invent duplicate Amsterdam histories or report the five as repaired provider imports.
+- Workflow test triggered in previous block, but its current run ID/outcome has not been retrieved through available connector actions; do not assert a green test.
+- Next consolidated work: verify staging workflow outcome using GitHub Actions, test chart integration on deployed staging branch, investigate four lagging XAMS sessions and independently validate cross-market primary venue histories. No production changes.
