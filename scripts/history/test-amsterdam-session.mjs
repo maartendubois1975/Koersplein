@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import { mergeBars, computeMovers, verifiedBackfillComplete } from './engine.mjs';
+import { mergeBars, computeMovers, verifiedBackfillComplete, validateBars } from './engine.mjs';
 
 const preliminary = [{ date: '2026-10-26', open: 100, high: 102, low: 99, close: 101, volume: 1000 }];
 const officialClose = [{ date: '2026-10-26', open: 100, high: 105, low: 99, close: 104, volume: 2200 }];
@@ -46,3 +46,9 @@ assert.equal(verifiedBackfillComplete({coverage:{backfillComplete:true},provider
 assert.equal(verifiedBackfillComplete({coverage:{backfillComplete:true},provider:{metadata:{completenessEvidenceVerified:true}}},{partialHistory:true}),false,'Partial provider response invalidates completeness');
 assert.equal(verifiedBackfillComplete(null),false);
 console.log('Amsterdam historical completeness provenance regression: OK');
+
+assert.equal(validateBars([candle('2026-02-30',100)]).length,0);
+assert.equal(validateBars([candle('2026-13-01',100)]).length,0);
+assert.equal(validateBars([{...candle('2026-10-29',100),high:-1}]).length,0);
+assert.equal(validateBars([{...candle('2026-10-29',100),low:Infinity}]).length,0);
+console.log('Strict Amsterdam date and OHLC validation: OK');
