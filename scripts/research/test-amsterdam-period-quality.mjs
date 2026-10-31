@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {assessPeriod} from './amsterdam-period-quality.mjs';
+import {validateHistoryDocument,filterPeriod} from '../../chart.js';
 const candle=(date,close)=>({date,open:close,high:close,low:close,close});
 const clean=assessPeriod([candle('2026-10-28',100),candle('2026-10-29',101)]);
 assert.equal(clean.issues.length,0);
@@ -14,4 +15,18 @@ const duplicate=assessPeriod([candle('2026-10-29',1),candle('2026-10-29',1)]);
 assert.equal(duplicate.issues[0].kind,'DUPLICATE_DATE');
 const invalid=assessPeriod([candle('2026-02-30',1),candle('2026-03-01',1)]);
 assert.equal(invalid.issues[0].kind,'INVALID_DATE');
-console.log('Amsterdam period quality fixtures passed');
+// Browser-normalized bars must preserve missing source fields, never invent zero prices.
+const identity={isin:'NL0000000001',symbol:'TEST',mic:'XAMS'};
+const doc={schemaVersion:1,instrument:identity,coverage:{records:2,firstDate:'2026-10-28',lastDate:'2026-10-29'},bars:[
+ {date:'2026-10-28',open:100,close:100,high:null,low:null,adjustedClose:null},
+ {date:'2026-10-29',open:101,close:101,high:102,low:100}
+]};
+const browserBars=validateHistoryDocument(doc,identity);
+assert.equal(browserBars[0].high,null);
+assert.equal(browserBars[0].low,null);
+assert.equal(browserBars[0].adjustedClose,null);
+assert.equal(browserBars[0].volume,null);
+const browserQuality=assessPeriod(browserBars);
+assert.deepEqual(browserQuality.issues.map(x=>x.kind),['MISSING_HIGH_LOW']);
+assert.equal(filterPeriod(browserBars,'1M').length,2);
+console.log('Amsterdam period quality and browser normalization fixtures passed');
