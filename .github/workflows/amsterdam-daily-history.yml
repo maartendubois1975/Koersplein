@@ -7,6 +7,14 @@ on:
       - .github/amsterdam-dry-run-trigger.txt
   workflow_dispatch:
     inputs:
+      phase:
+        description: 'Collection phase; morning or close (neither certifies official closing)'
+        required: false
+        default: close
+        type: choice
+        options:
+          - morning
+          - close
       dry_run:
         description: 'Test provider import and audits without committing updated prices'
         required: false
@@ -31,6 +39,7 @@ jobs:
           node-version: '22'
       - name: Syntax check Amsterdam research programs before provider calls
         run: |
+          node --check scripts/history/amsterdam-daily-run.mjs
           node --check scripts/history/session-readiness.mjs
           node --check scripts/history/check-amsterdam-latest-session.mjs
           node --check scripts/history/test-session-readiness.mjs
@@ -79,7 +88,7 @@ jobs:
       - name: Refresh only mapped Amsterdam daily OHLC histories
         id: refresh
         continue-on-error: true
-        run: node scripts/history.mjs update --all --batch-size 8
+        run: node scripts/history/amsterdam-daily-run.mjs --phase '${{ inputs.phase || 'close' }}'
       - name: Validate all histories and Amsterdam browser integration
         run: npm test && npm run history:test
       - name: Test research-only Amsterdam portfolio simulator
@@ -104,6 +113,7 @@ jobs:
             research/output/amsterdam-history-quality-audit.json
             research/output/amsterdam-issuer-investigation-cases.json
             research/output/amsterdam-consolidated-quality-gate.json
+            research/output/amsterdam-daily-run.json
           if-no-files-found: warn
           retention-days: 30
       - name: Show prioritized issuer investigations in run summary
@@ -143,7 +153,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: amsterdam-session-readiness
-          path: research/output/amsterdam-session-readiness.json
+          path: |
+            research/output/amsterdam-session-readiness.json
+            research/output/amsterdam-daily-run.json
           if-no-files-found: warn
           retention-days: 30
       - name: Require a clean provider refresh before publishing
