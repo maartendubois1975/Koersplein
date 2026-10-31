@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "test": "node scripts/test-amsterdam-clean.mjs",
-    "history:test": "node scripts/test-amsterdam-clean.mjs"
+    "history:test": "node scripts/test-amsterdam-clean.mjs",
+    "backtest:research": "node scripts/backtest-amsterdam.mjs"
   },
   "engines": {
     "node": ">=22.5"
