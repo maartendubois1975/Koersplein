@@ -38,5 +38,5 @@ if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href){
  const manifest=JSON.parse(await readFile(new URL('../data/amsterdam-history-manifest.json',import.meta.url),'utf8'));
  const result=await collect(manifest,date);
  await writeFile(out,JSON.stringify(result,null,2)+'\n');
- console.log(JSON.stringify({candidates:result.candidates.length,noTrade:result.noTrade.length,missing:result.missing.length,errors:result.errors.length,approved:0}));
+ console.log(JSON.stringify({candidates:result.candidates.length,noTrade:result.noTrade.length,missing:result.missing.length,errors:result.errors.length,approved:0,total:result.candidates.length+result.noTrade.length+result.missing.length+result.errors.length}));
 }
