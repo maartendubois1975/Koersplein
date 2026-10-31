@@ -80,3 +80,9 @@ A block is complete only when implementation and relevant tests are verified, or
 - Commits f543d814a5ce47922a8cb9b5040e333b39a78c8b and d95917a9c8cfaa955fd9a37da80fccd7fd80c29d add normal, jump, gap, incomplete, insufficient-history fixtures and floating-point-safe assertion.
 - Unable to run local repository tests: local runtime cannot resolve github.com. GitHub connector commit status and PR-workflow lookup for earlier staging trigger returned no runs; neither proves the push workflow failed nor passed. CI must be checked directly in Actions.
 - All work is staging-only; production untouched. Next: inspect actual Actions run outcome and deployment branch, then resolve daily source freshness and schedule without allowing main publication.
+
+## 2026-10-31 ingestion integrity continuation
+- Direct code inspection found validateBars in scripts/history/engine.mjs accepted calendar-impossible dates matching YYYY-MM-DD and allowed negative/nonfinite high-low values to pass some checks. Commit 8c698ad4d45677be97d03793a861429aeaba0a2b rejects invalid dates and malformed high-low fields before storing or merging new bars.
+- Commit 3df8204d98e65eb35fdecce1f932e8d59f09c437 adds invalid-date and OHLC fixtures to the Amsterdam session suite.
+- Commit 07fc5c7b3ae0a401309ca9b04f696301d6b16b3e applies the same strict date validation to chart.js history normalization.
+- No verified CI result yet; changes committed only to approved staging branch. No production deployment, no scheduled import. Existing historical data must still be audited independently; these checks prevent future malformed inputs but do not retroactively certify source prices.
