@@ -29,3 +29,15 @@ Geen Cloudflare Worker, Atlas, Europese market-registry, externe API of tweede d
 `scripts/fetch-amsterdam.mjs` zet `sourceVerified:false` en `sessionClosedVerified:false`. Dit is **niet** het invoerformaat van de gecontroleerde import. Een afzonderlijke onafhankelijke bron- en sessiecontrole ontbreekt nog. Er wordt niets automatisch gepubliceerd en er is geen dagelijkse scheduler.
 
 `npm test` omvat ook vaste bronparser- en ophalertests met een gesimuleerde server, zodat netwerkuitval de bouwtest niet beïnvloedt.
+
+## Vast ontwikkelprotocol (31 oktober 2026)
+
+1. Werk per functioneel compleet blok; ontwerp, code, testfixtures en acceptatiecriteria horen bij elkaar. Voorkom losse cosmetische commits.
+2. Bouw en test eerst lokaal. Lever bij iedere overdracht een ZIP of patch plus testresultaat en de exacte bestandenlijst. Een lokale PASS is **geen** GitHub- of Render-PASS.
+3. Gebruik uitsluitend `amsterdam-clean-20261031` voor de Amsterdam-testomgeving. `main`/productie wordt nooit zonder expliciete toestemming aangepast.
+4. Publiceer via één gecontroleerde commit of pull request, met een vergelijking tegen de huidige branch-head; geen force-push. Controleer daarna de commit-SHA en alle gewijzigde bestanden.
+5. Render wordt pas na geslaagde repositorytests gedeployed. Controleer de buildlogs en status `live`. Meld een lopende build nooit als geslaagd.
+6. Bij een geweigerde schrijfactie: **stop die route**, bewaar het geteste ZIP/patch-blok, meld precies wat niet gepubliceerd is en gebruik de reguliere GitHub Codespaces/CLI-route wanneer beschikbaar. Geen herhaald proberen om veiligheidscontroles te omzeilen.
+7. Euronext-bronophaling blijft read-only totdat bronantwoorden, identiteit, handelsvolume, sessieafsluiting en herpublicatierechten onafhankelijk gecontroleerd zijn. Geen automatische import of scheduler op basis van alleen mocktests.
+
+**Rapportage per blok:** lokaal getest / GitHub-commit bevestigd / Render-tests geslaagd / website live / resterende blokkades. Deze statussen mogen nooit worden samengevoegd.
