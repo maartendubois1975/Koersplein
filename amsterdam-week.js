@@ -5,7 +5,18 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const fmt=(value,currency)=>{const n=positiveNumber(value);if(n===null)return '—';try{return new Intl.NumberFormat('nl-NL',{style:'currency',currency:currency||'EUR',minimumFractionDigits:2,maximumFractionDigits:4}).format(n)}catch{return new Intl.NumberFormat('nl-NL',{maximumFractionDigits:4}).format(n)}};
 const signed=(value,digits=2)=>new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:digits,maximumFractionDigits:digits}).format(value);
 const change=(open,close,currency)=>{const d=sessionChange(open,close);if(!d)return '—';return signed(d.absolute,2)+' '+esc(currency||'EUR')+' / '+signed(d.percent,2)+'%';};
-const days=AMSTERDAM_REFERENCE_WEEK;
+const amsterdamDate=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const latestClosedWeek=()=>{
+ const now=new Date(amsterdamDate()+'T12:00:00Z');
+ const weekday=now.getUTCDay();
+ const daysSinceMonday=(weekday+6)%7;
+ const monday=new Date(now);
+ monday.setUTCDate(monday.getUTCDate()-daysSinceMonday-(weekday>=1&&weekday<=5?7:0));
+ return Array.from({length:5},(_,i)=>{const d=new Date(monday);d.setUTCDate(d.getUTCDate()+i);return d.toISOString().slice(0,10);});
+};
+const days=latestClosedWeek();
+const weekLabel=days[0]+' t/m '+days.at(-1);
+const LOCAL_HISTORY_BASE='data/history/';
 // Previous *traded* close can cross a session only if the exchange explicitly
 // confirmed NO_TRADES. Never skip an invalid or unverified missing session:
 // doing so would fabricate an uninterrupted close-to-close return.
@@ -55,9 +66,12 @@ function render(){
   const source=row.error?row.error:row.provider||'—';
   return '<tr><td><a class="share-link" href="share.html?isin='+encodeURIComponent(row.share.isin)+'&mic=XAMS&symbol='+encodeURIComponent(row.share.symbol)+'">'+esc(row.share.name)+'</a><br><small>'+esc(row.share.symbol)+' · '+esc(row.share.isin)+'</small></td>'+cells+'<td class="price">'+weekly+'</td><td><small>'+esc(source)+'</small></td></tr>';
  }).join('');
- const totals=days.map(d=>{const valid=snapshot.coverage.perDay[d].valid,noTrade=snapshot.rows.filter(row=>isNoTrade(row,d)).length;return '<span>'+esc(d.slice(8))+' okt: '+valid+' koers · '+noTrade+' geen handel · '+(snapshot.coverage.catalog-valid-noTrade)+' open</span>'}).join(' · ');
+ const totals=days.map(d=>{const valid=snapshot.coverage.perDay[d].valid,noTrade=snapshot.rows.filter(row=>isNoTrade(row,d)).length;return '<span>'+esc(d.slice(5))+': '+valid+' koers · '+noTrade+' geen handel · '+(snapshot.coverage.catalog-valid-noTrade)+' open</span>'}).join(' · ');
  const statusCount=days.reduce((sum,d)=>sum+snapshot.rows.filter(row=>isNoTrade(row,d)).length,0);
  const explained=snapshot.rows.filter(row=>days.every(date=>row.bars.has(date)||isNoTrade(row,date))).length;
+ const latestDates=snapshot.rows.map(row=>row.lastStoredDate).filter(Boolean).sort();
+ const latest=latestDates.at(-1)||null;
+ const coverageNotice='<p><strong>Laatste opgeslagen koersdatum: '+esc(latest||'onbekend')+'</strong>. Dit is een historisch overzicht, geen realtime koersfeed. Koersen worden pas als beschikbaar getoond na broncontrole.</p>';
  const missingByDay=days.map(date=>{
   const reasons={};
   for(const row of snapshot.rows){
@@ -67,16 +81,17 @@ function render(){
   }
   return '<li><strong>'+esc(date)+'</strong>: '+Object.entries(reasons).map(([reason,count])=>esc(reason)+' '+count).join(' · ')+'</li>';
  }).join('');
- target.innerHTML='<p><strong>'+explained+' van '+snapshot.coverage.catalog+'</strong> aandelen hebben vijf verklaarde handelsdagen (echte koers of gecontroleerd geen handel). '+snapshot.coverage.validSessions+' geldige koersdagen · '+statusCount+' dagen zonder handel · '+(snapshot.coverage.expectedSessions-snapshot.coverage.validSessions-statusCount)+' nog niet verklaard. '+totals+'.</p><p>Dag ± = slot minus opening; Slot t.o.v. vorig slot = dagslot minus het laatst bevestigde eerdere slot; alleen officieel bevestigde dagen zonder handel mogen worden overgeslagen. Bij ongeldige of ontbrekende tussendagen tonen we geen rendement. Week ± = vrijdagslot minus maandagopening. Geen handel wordt uitsluitend getoond bij expliciete gedateerde beursstatus; een nulvolume-referentiekoers is nooit een echte openings- of slotkoers. Historische koersen; bron en handelsdatum staan vermeld. <a href="https://github.com/maartendubois1975/Koersplein/actions/runs/40196069402" rel="noopener">Bronstatus-audit 25 oktober</a>.</p><details><summary>Ontbrekende handelsdagen en technische oorzaken</summary><ul>'+missingByDay+'</ul><p>ZERO_VOLUME_REFERENCE_BAR is geen bewezen handel. NO_MATCHING_MIC_TICKER_HISTORY betekent dat geen veilig gekoppelde beursnotering is gevonden. NO_VALID_STORED_BAR betekent dat voor deze datum geen geldige koers is opgeslagen. Dit is geen bewijs van NO_TRADES.</p></details><div class="table-wrap" style="overflow-x:auto"><table><thead>'+head+'</thead><tbody>'+rows+'</tbody></table></div><p>Resultaten zijn afhankelijk van bronbeschikbaarheid en rechten op herpublicatie. Niet beschikbare of conflicterende koersen worden niet geschat.</p>';
+ target.innerHTML=coverageNotice+'<p><strong>'+explained+' van '+snapshot.coverage.catalog+'</strong> aandelen hebben vijf verklaarde handelsdagen (echte koers of gecontroleerd geen handel). '+snapshot.coverage.validSessions+' geldige koersdagen · '+statusCount+' dagen zonder handel · '+(snapshot.coverage.expectedSessions-snapshot.coverage.validSessions-statusCount)+' nog niet verklaard. '+totals+'.</p><p>Dag ± = slot minus opening; Slot t.o.v. vorig slot = dagslot minus het laatst bevestigde eerdere slot; alleen officieel bevestigde dagen zonder handel mogen worden overgeslagen. Bij ongeldige of ontbrekende tussendagen tonen we geen rendement. Week ± = vrijdagslot minus maandagopening. Geen handel wordt uitsluitend getoond bij expliciete gedateerde beursstatus; een nulvolume-referentiekoers is nooit een echte openings- of slotkoers. Historische koersen; bron en handelsdatum staan vermeld. <a href="https://github.com/maartendubois1975/Koersplein/actions/runs/40196069402" rel="noopener">Bronstatus-audit 25 oktober</a>.</p><details><summary>Ontbrekende handelsdagen en technische oorzaken</summary><ul>'+missingByDay+'</ul><p>ZERO_VOLUME_REFERENCE_BAR is geen bewezen handel. NO_MATCHING_MIC_TICKER_HISTORY betekent dat geen veilig gekoppelde beursnotering is gevonden. NO_VALID_STORED_BAR betekent dat voor deze datum geen geldige koers is opgeslagen. Dit is geen bewijs van NO_TRADES.</p></details><div class="table-wrap" style="overflow-x:auto"><table><thead>'+head+'</thead><tbody>'+rows+'</tbody></table></div><p>Resultaten zijn afhankelijk van bronbeschikbaarheid en rechten op herpublicatie. Niet beschikbare of conflicterende koersen worden niet geschat.</p>';
 }
 async function start(){
  if(!target)return;
  try{
+  const heading=document.getElementById('week-heading');if(heading)heading.textContent='Afgesloten handelsweek '+weekLabel;
   const catalogResponse=await fetch('data/euronext-amsterdam.json',{cache:'no-store'});
   if(!catalogResponse.ok)throw Error('CATALOG_HTTP_'+catalogResponse.status);
   const catalog=await catalogResponse.json();
   const api=String(window.KOERSPLEIN_MARKET?.api||'https://koersplein.maarten-dubois1975.workers.dev').replace(/\/$/,'');
-  const manifestResponse=await fetch(api+'/api/history/manifest.json',{cache:'no-store'});
+  const manifestResponse=await fetch('data/amsterdam-history-manifest.json',{cache:'no-store'});
   if(!manifestResponse.ok)throw Error('MANIFEST_HTTP_'+manifestResponse.status);
   const manifest=await manifestResponse.json();
   const shares=catalog.shares||[];
@@ -84,7 +99,7 @@ async function start(){
   try{const statusResponse=await fetch('data/amsterdam-no-trades-2026-10-19-23.json',{cache:'no-store'});if(statusResponse.ok)statusAudit=await statusResponse.json();}catch{statusAudit=null;}
   document.getElementById('share-count').textContent=shares.length;
   target.textContent='Vijf handelsdagen voor '+shares.length+' aandelen worden gecontroleerd…';
-  snapshot=await collectMarketWeek({catalog:shares,manifest,apiBase:api,mic:'XAMS',dates:days,concurrency:8});
+  snapshot=await collectMarketWeek({catalog:shares,manifest,apiBase:api,mic:'XAMS',dates:days,concurrency:8,fetchImpl:async (url,options)=>{const id=decodeURIComponent(url.split('/').at(-1));return fetch(LOCAL_HISTORY_BASE+encodeURIComponent(id)+'.json',options);}});
   render();
  }catch(e){target.textContent='Amsterdamse weekkoersen niet beschikbaar: '+e.message;}
 }

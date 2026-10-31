@@ -1,0 +1,86 @@
+{
+  "checkedAt": "2026-10-28",
+  "period": {
+    "from": "2026-10-01",
+    "to": "2026-10-28"
+  },
+  "source": "Euronext Live historical prices",
+  "caveat": "No bars returned is not evidence of delisting. Other-market listings are independently confirmed for at least Air France-KLM and Fagron.",
+  "entries": [
+    {
+      "symbol": "AF",
+      "isin": "FR001400J770",
+      "amsterdamMicsChecked": [
+        "XAMS",
+        "XAMC",
+        "TNLA"
+      ],
+      "amsterdamHistoryResult": "no-confirmed-traded-bars",
+      "verifiedHistoryMic": "XPAR",
+      "verifiedHistorySessions": 19,
+      "verifiedHistoryLastDate": "2026-10-27",
+      "verifiedHistoryLastVolume": 729902,
+      "decision": "retain-in-amsterdam-listing-catalog;exclude-from-verified-amsterdam-price-count;do-not-substitute-other-venue-price"
+    },
+    {
+      "symbol": "ENX",
+      "isin": "NL0006294274",
+      "amsterdamMicsChecked": [
+        "XAMS",
+        "XAMC",
+        "TNLA"
+      ],
+      "amsterdamHistoryResult": "no-confirmed-traded-bars",
+      "verifiedHistoryMic": "XPAR",
+      "verifiedHistorySessions": 19,
+      "verifiedHistoryLastDate": "2026-10-27",
+      "verifiedHistoryLastVolume": 208930,
+      "decision": "retain-in-amsterdam-listing-catalog;exclude-from-verified-amsterdam-price-count;do-not-substitute-other-venue-price"
+    },
+    {
+      "symbol": "FAGR",
+      "isin": "BE0003874915",
+      "amsterdamMicsChecked": [
+        "XAMS",
+        "XAMC",
+        "TNLA"
+      ],
+      "amsterdamHistoryResult": "no-confirmed-traded-bars",
+      "verifiedHistoryMic": "XBRU",
+      "verifiedHistorySessions": 19,
+      "verifiedHistoryLastDate": "2026-10-27",
+      "verifiedHistoryLastVolume": 88323,
+      "decision": "retain-in-amsterdam-listing-catalog;exclude-from-verified-amsterdam-price-count;do-not-substitute-other-venue-price"
+    },
+    {
+      "symbol": "ONWD",
+      "isin": "NL0015000HT4",
+      "amsterdamMicsChecked": [
+        "XAMS",
+        "XAMC",
+        "TNLA"
+      ],
+      "amsterdamHistoryResult": "no-confirmed-traded-bars",
+      "verifiedHistoryMic": "XBRU",
+      "verifiedHistorySessions": 19,
+      "verifiedHistoryLastDate": "2026-10-27",
+      "verifiedHistoryLastVolume": 411473,
+      "decision": "retain-in-amsterdam-listing-catalog;exclude-from-verified-amsterdam-price-count;do-not-substitute-other-venue-price"
+    },
+    {
+      "symbol": "SGO",
+      "isin": "FR0000125007",
+      "amsterdamMicsChecked": [
+        "XAMS",
+        "XAMC",
+        "TNLA"
+      ],
+      "amsterdamHistoryResult": "no-confirmed-traded-bars",
+      "verifiedHistoryMic": "XPAR",
+      "verifiedHistorySessions": 19,
+      "verifiedHistoryLastDate": "2026-10-27",
+      "verifiedHistoryLastVolume": 1081681,
+      "decision": "retain-in-amsterdam-listing-catalog;exclude-from-verified-amsterdam-price-count;do-not-substitute-other-venue-price"
+    }
+  ]
+}
