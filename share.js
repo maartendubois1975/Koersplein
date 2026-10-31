@@ -1,6 +1,6 @@
 import { renderHistoryChart, validateHistoryDocument, periodStartDate } from './chart.js';
 import { manifestResolver } from './market-week-core.mjs';
-import { assessPeriod } from './scripts/research/amsterdam-period-quality.mjs';
+import { assessPeriod, latestCloseChange } from './scripts/research/amsterdam-period-quality.mjs';
 const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
 const params=new URLSearchParams(location.search),isin=params.get('isin'),requestedMic=params.get('mic'),requestedSymbol=params.get('symbol'),detail=document.querySelector('#share-detail'),historyState=document.querySelector('#history-state');
 const load=async url=>{const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error(`HTTP ${r.status}`);return r.json()};
@@ -57,8 +57,9 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
   const p=document.createElement('p');p.className='history-source';p.textContent=`${bars.length.toLocaleString('nl-NL')} opgeslagen dagrecords (structurele broncontrole) · ${first.date} t/m ${last.date}`;historyState.append(p);
   const previous=bars.length>1?bars.at(-2):null;
   // Suppress a latest close-to-close percentage if a discontinuity is not verified.
-  const lastDiscontinuity=amsterdamQuality?.issues.some(issue=>issue.date===last.date&&['LONG_GAP','UNVERIFIED_PRICE_JUMP','INVALID_OHLC','INVALID_OPEN_CLOSE'].includes(issue.kind));
-  const delta=previous?.close>0&&!lastDiscontinuity?(last.close/previous.close-1)*100:null;
+  const change=mic==='XAMS'?latestCloseChange(bars,amsterdamQuality):{percent:previous?.close>0?(last.close/previous.close-1)*100:null,reason:null};
+  const lastDiscontinuity=Boolean(change.reason);
+  const delta=change.percent;
   const deltaText=delta===null?'—':new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:2,maximumFractionDigits:2}).format(delta)+'%';
   const deltaColor=delta===null?'':delta>=0?'#3fc98c':'#ee6677';
   detail.querySelector('.latest-price').innerHTML=`<span>Laatste slotkoers</span><strong>${Number(last.close).toLocaleString('nl-NL',{style:'currency',currency,minimumFractionDigits:2,maximumFractionDigits:2})}</strong><span style="color:${deltaColor};font-weight:700">${esc(deltaText)} t.o.v. vorig slot${lastDiscontinuity?' · koerssprong of historiegat niet geverifieerd':''}</span><small>${esc(last.date)} · historie vanaf ${esc(first.date)}</small>`;
