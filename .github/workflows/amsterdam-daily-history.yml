@@ -184,7 +184,12 @@ jobs:
           const structural=JSON.parse(fs.readFileSync(root+'amsterdam-structural-integrity-audit.json','utf8'));
           const quality=JSON.parse(fs.readFileSync(root+'amsterdam-history-quality-audit.json','utf8'));
           const provenance=JSON.parse(fs.readFileSync(root+'amsterdam-data-provenance-audit.json','utf8'));
+          const readiness=JSON.parse(fs.readFileSync(root+'amsterdam-session-readiness.json','utf8'));
+          const daily=JSON.parse(fs.readFileSync(root+'amsterdam-daily-run.json','utf8'));
           const problems=[];
+          if(!readiness.completeForObservedSession)problems.push('session-incomplete');
+          if(readiness.latestObservedDateAgeDays==null || readiness.latestObservedDateAgeDays>4)problems.push('session-stale');
+          if(daily.providerFailures?.length)problems.push('provider-failures='+daily.providerFailures.length);
           if(structural.issues?.length)problems.push('structural='+structural.issues.length);
           if(quality.reviewQueue?.length)problems.push('unverified-jumps='+quality.reviewQueue.length);
           if(provenance.summary?.unverifiedAdjustment)problems.push('unverified-adjustments='+provenance.summary.unverifiedAdjustment);
