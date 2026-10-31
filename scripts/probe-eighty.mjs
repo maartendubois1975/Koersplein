@@ -16,18 +16,18 @@ async function worker(){
    if(!response.ok){results[index]={symbol:item.symbol,status:'HTTP_'+response.status};continue}
    const rows=parseRows(decodeEuronextBody(await response.text())).filter(x=>x.date===date);
    const b=rows[0],valid=rows.length===1&&b&&[b.open,b.high,b.low,b.close].every(n=>Number.isFinite(n)&&n>0)&&b.low<=Math.min(b.open,b.close)&&b.high>=Math.max(b.open,b.close)&&Number.isSafeInteger(b.volume)&&b.volume>0;
-   const delisted=item.isin==='LU2290522684'&&date>='2026-10-23'&&rows.length===0;
+   const noRow=rows.length===0;
    const noTrade=rows.length===1&&b&&[b.open,b.high,b.low].every(x=>x===null)&&Number.isFinite(b.close)&&b.close>0&&b.volume===0;
-   const diagnostics=!valid&&!delisted&&!noTrade?{missing:!b,invalidPrice:!!b&&![b.open,b.high,b.low,b.close].every(n=>Number.isFinite(n)&&n>0),ohlcRange:!!b&&(b.low>Math.min(b.open,b.close)||b.high<Math.max(b.open,b.close)),invalidVolume:!!b&&(!Number.isSafeInteger(b.volume)||b.volume<=0),zeroVolume:!!b&&b.volume===0,parsed:b?{open:b.open,high:b.high,low:b.low,close:b.close,volume:b.volume}:null}:undefined;
-   results[index]={symbol:item.symbol,status:valid?'OHLCV_CANDIDATE_UNVERIFIED':delisted?'DELISTED_2026_10_23':noTrade?'NO_TRADE_REFERENCE_CLOSE_UNVERIFIED':'INVALID_OR_MISSING_OHLCV',rows:rows.length,...(diagnostics?{diagnostics}:{})};
+   const diagnostics=!valid&&!noRow&&!noTrade?{missing:!b,invalidPrice:!!b&&![b.open,b.high,b.low,b.close].every(n=>Number.isFinite(n)&&n>0),ohlcRange:!!b&&(b.low>Math.min(b.open,b.close)||b.high<Math.max(b.open,b.close)),invalidVolume:!!b&&(!Number.isSafeInteger(b.volume)||b.volume<=0),zeroVolume:!!b&&b.volume===0,parsed:b?{open:b.open,high:b.high,low:b.low,close:b.close,volume:b.volume}:null}:undefined;
+   results[index]={symbol:item.symbol,status:valid?'OHLCV_CANDIDATE_UNVERIFIED':noRow?'NO_SOURCE_ROW_REVIEW_REQUIRED':noTrade?'NO_TRADE_REFERENCE_CLOSE_UNVERIFIED':'INVALID_OR_MISSING_OHLCV',rows:rows.length,...(diagnostics?{diagnostics}:{})};
   }catch(e){results[index]={symbol:item.symbol,status:'SOURCE_ERROR',reason:e.message}}
  }
 }
 await Promise.all(Array.from({length:4},()=>worker()));
 const valid=results.filter(x=>x.status==='OHLCV_CANDIDATE_UNVERIFIED').length;
 const noTrade=results.filter(x=>x.status==='NO_TRADE_REFERENCE_CLOSE_UNVERIFIED').length;
-const delisted=results.filter(x=>x.status==='DELISTED_2026_10_23').length;
-const unresolved=instruments.length-valid-noTrade-delisted;
-console.log(JSON.stringify({kind:'EURONEXT_EIGHTY_READ_ONLY',date,total:instruments.length,valid,noTrade,delisted,unresolved,failed:unresolved,results,published:0}));
+const noRow=results.filter(x=>x.status==='NO_SOURCE_ROW_REVIEW_REQUIRED').length;
+const unresolved=instruments.length-valid-noTrade-noRow;
+console.log(JSON.stringify({kind:'EURONEXT_EIGHTY_READ_ONLY',date,total:instruments.length,valid,noTrade,noRow,unresolved,failed:unresolved,results,published:0}));
 
 if(unresolved!==0)process.exitCode=1;
