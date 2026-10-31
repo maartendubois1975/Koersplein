@@ -23,6 +23,10 @@ jobs:
           node-version: '22'
       - name: Collect read-only Euronext candidates
         run: node scripts/fetch-amsterdam.mjs auto amsterdam-candidates.json
+      - name: Check coverage for all 80 instruments
+        if: always()
+        run: |
+          if [ -f amsterdam-candidates.json ]; then node scripts/report-amsterdam.mjs amsterdam-candidates.json; fi
       - name: Preserve candidate report
         if: always()
         uses: actions/upload-artifact@v4
