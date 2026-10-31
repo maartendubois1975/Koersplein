@@ -12,9 +12,12 @@ export async function collect(manifest,date,request=fetch){
    const html=await response.text();
    if(html.trim().startsWith('{'))throw Error('ENCODED_RESPONSE_NOT_SUPPORTED');
    const rows=parseRows(html);
-   const found=rows.find(r=>r.date===date.split('-').reverse().join('/'));
+   const matches=rows.filter(r=>r.date===date);
+   if(matches.length>1)throw Error('DUPLICATE_SESSION');
+   const found=matches[0];
    if(!found)throw Error('NO_VERIFIED_TRADE');
-   candidates.push({...found,isin,symbol:entry.symbol,mic:'XAMS',sourceUrl:url,sourceVerified:false,sessionClosedVerified:false});
+   if(![found.open,found.high,found.low,found.close].every(n=>Number.isFinite(n)&&n>0)||found.low>Math.min(found.open,found.close)||found.high<Math.max(found.open,found.close)||!Number.isSafeInteger(found.volume)||found.volume<=0)throw Error('INVALID_OHLCV_OR_ZERO_VOLUME');
+   candidates.push({...found,isin,symbol:entry.symbol,mic:'XAMS',source:'Euronext public historical table',retrievedAt:new Date().toISOString(),sourceUrl:url,sourceVerified:false,sessionClosedVerified:false});
   }catch(error){errors.push({isin,error:error.message})}
  }
  return {market:'XAMS',date,candidates,errors,approved:0};
