@@ -1,6 +1,7 @@
 // Read-only candidate collection. Never marks a quote approved.
 import {readFile,writeFile} from 'node:fs/promises';
 import {parseRows} from './euronext-parser.mjs';
+import {decodeEuronextBody} from './euronext-transport.mjs';
 const endpoint='https://live.euronext.com/en/ajax/getHistoricalPricePopup/';
 export async function collect(manifest,date,request=fetch){
  const candidates=[],errors=[];
@@ -10,8 +11,7 @@ export async function collect(manifest,date,request=fetch){
    const response=await request(url,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},body:new URLSearchParams({adjusted:'N',startdate:date,enddate:date,nbSession:'100000'})});
    if(!response.ok)throw Error('HTTP '+response.status);
    const html=await response.text();
-   if(html.trim().startsWith('{'))throw Error('ENCODED_RESPONSE_NOT_SUPPORTED');
-   const rows=parseRows(html);
+   const rows=parseRows(decodeEuronextBody(html));
    const matches=rows.filter(r=>r.date===date);
    if(matches.length>1)throw Error('DUPLICATE_SESSION');
    const found=matches[0];
