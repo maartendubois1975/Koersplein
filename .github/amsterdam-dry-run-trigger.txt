@@ -66,3 +66,4 @@ Consolidated 80-stock readiness gate, full staged audit run.
 
 Staging quality manifest validation 2026-10-30.
 2026-10-31: Consolidated staging-only verification of chart quality from displayed bars, null-safe OHLC normalization, and regression fixtures; no price publication.
+2026-10-31: Consolidated dry-run for null-safe chart prices, unverified latest return gate, month-end date clamping and regression fixtures; do not publish.
