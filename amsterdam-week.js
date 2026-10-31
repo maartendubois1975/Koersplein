@@ -94,7 +94,7 @@ async function start(){
   const manifestResponse=await fetch('data/amsterdam-history-manifest.json',{cache:'no-store'});
   if(!manifestResponse.ok)throw Error('MANIFEST_HTTP_'+manifestResponse.status);
   const manifest=await manifestResponse.json();
-  const shares=catalog.shares||[];
+  const shares=(catalog.shares||[]).filter(share=>Object.hasOwn(manifest.instruments||{},share.isin));
   // A failed status snapshot must never hide validated traded prices.
   try{const statusResponse=await fetch('data/amsterdam-no-trades-2026-10-19-23.json',{cache:'no-store'});if(statusResponse.ok)statusAudit=await statusResponse.json();}catch{statusAudit=null;}
   document.getElementById('share-count').textContent=shares.length;
