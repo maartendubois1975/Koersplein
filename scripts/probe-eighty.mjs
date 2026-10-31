@@ -4,7 +4,9 @@ import {parseRows} from './euronext-parser.mjs';
 import {decodeEuronextBody} from './euronext-transport.mjs';
 const manifest=JSON.parse(await readFile(new URL('../data/amsterdam-history-manifest.json',import.meta.url),'utf8'));
 const instruments=Object.values(manifest.instruments);
-const date='2026-10-29',results=new Array(instruments.length);
+const date=process.argv[2]||'2026-10-29',results=new Array(instruments.length);
+if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)||new Date(date+'T00:00:00Z').toISOString().slice(0,10)!==date)throw Error('INVALID_DATE');
+if(instruments.length!==80||new Set(instruments.map(x=>x.isin)).size!==80)throw Error('EXPECTED_80_UNIQUE_INSTRUMENTS');
 let next=0;
 async function worker(){
  while(next<instruments.length){
@@ -21,3 +23,5 @@ async function worker(){
 await Promise.all(Array.from({length:4},()=>worker()));
 const valid=results.filter(x=>x.status==='OHLCV_CANDIDATE_UNVERIFIED').length;
 console.log(JSON.stringify({kind:'EURONEXT_EIGHTY_READ_ONLY',date,total:instruments.length,valid,failed:instruments.length-valid,results,published:0}));
+
+if(valid!==instruments.length)process.exitCode=1;
