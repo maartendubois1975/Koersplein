@@ -31,6 +31,8 @@ jobs:
           node-version: '22'
       - name: Syntax check Amsterdam research programs before provider calls
         run: |
+          node --check share.js
+          node --check chart.js
           node --check scripts/research/amsterdam-period-quality.mjs
           node --check scripts/research/build-amsterdam-period-quality.mjs
           node --check scripts/research/test-amsterdam-period-quality.mjs
