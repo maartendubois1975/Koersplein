@@ -27,6 +27,7 @@ export async function collect(manifest,date,request=fetch){
  }
  }
  await Promise.all(Array.from({length:Math.min(4,instruments.length)},()=>worker()));
+ for(const group of [candidates,noTrade,missing,errors])group.sort((a,b)=>a.isin.localeCompare(b.isin));
  return {market:'XAMS',date,candidates,noTrade,missing,errors,approved:0};
 }
 if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href){
