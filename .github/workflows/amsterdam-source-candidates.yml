@@ -4,7 +4,7 @@ on:
     inputs:
       session_date:
         description: 'Completed XAMS trading session (YYYY-MM-DD)'
-        required: true
+        required: false
         type: string
 permissions:
   contents: read
@@ -18,12 +18,12 @@ jobs:
         with:
           node-version: '22'
       - name: Fetch Euronext candidates without publishing
-        run: node scripts/fetch-amsterdam.mjs "${{ inputs.session_date }}" amsterdam-candidates.json
+        run: node scripts/fetch-amsterdam.mjs "${{ inputs.session_date || 'auto' }}" amsterdam-candidates.json
       - name: Save audit output
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: amsterdam-candidates-${{ inputs.session_date }}
+          name: amsterdam-candidates-${{ github.run_id }}
           path: amsterdam-candidates.json
           if-no-files-found: warn
           retention-days: 14
