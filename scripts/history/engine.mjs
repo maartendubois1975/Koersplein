@@ -10,10 +10,14 @@ const providers = createDefaultProviderRegistry();
 const readJson = async (url, fallback = null) => { try { return JSON.parse(await readFile(url, 'utf8')); } catch (error) { if (error.code === 'ENOENT') return fallback; throw error; } };
 const today = () => new Date().toISOString().slice(0, 10);
 
+const validSessionDate = date => typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(Date.parse(date)) && new Date(date + 'T00:00:00Z').toISOString().slice(0,10) === date;
+
 export function validateBars(bars) {
   const seen = new Set();
   return bars.filter((bar) => {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(bar.date) || seen.has(bar.date) || !Number.isFinite(bar.open) || bar.open <= 0 || !Number.isFinite(bar.close) || bar.close <= 0) return false;
+    if (!bar || !validSessionDate(bar.date) || seen.has(bar.date) || !Number.isFinite(bar.open) || bar.open <= 0 || !Number.isFinite(bar.close) || bar.close <= 0) return false;
+    if (bar.high != null && (!Number.isFinite(bar.high) || bar.high <= 0)) return false;
+    if (bar.low != null && (!Number.isFinite(bar.low) || bar.low <= 0)) return false;
     if (Number.isFinite(bar.high) && Number.isFinite(bar.low) && bar.high < bar.low) return false;
     if (Number.isFinite(bar.high) && (bar.high < bar.close || bar.high < bar.open)) return false;
     if (Number.isFinite(bar.low) && (bar.low > bar.close || bar.low > bar.open)) return false;
