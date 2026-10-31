@@ -1,7 +1,7 @@
 const DAY = 86_400_000;
 const PERIODS = { '1M': 1, '3M': 3, '6M': 6, '1J': 12, '3J': 36, '5J': 60, '10J': 120, MAX: null };
 
-const finite = (value) => Number.isFinite(Number(value));
+const finite = (value) => value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value));
 const money = (value, currency = 'EUR') => new Intl.NumberFormat('nl-NL', {
   style: 'currency', currency, minimumFractionDigits: 2, maximumFractionDigits: 2
 }).format(Number(value));
