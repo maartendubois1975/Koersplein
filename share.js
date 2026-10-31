@@ -5,13 +5,11 @@ const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replac
 const params=new URLSearchParams(location.search),isin=params.get('isin'),requestedMic=params.get('mic'),requestedSymbol=params.get('symbol'),detail=document.querySelector('#share-detail'),historyState=document.querySelector('#history-state');
 const load=async url=>{const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error(`HTTP ${r.status}`);return r.json()};
 const fail=m=>{historyState.className='history-empty';historyState.innerHTML=`<strong>Historie tijdelijk niet beschikbaar</strong><p>${esc(m)}.</p>`;document.querySelector('#history-range').textContent='—'};
-Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()=>({apiBaseUrl:''}))]).then(async([venues,runtime])=>{
- const venue=venues.venues.find(v=>v.id==='euronext');if(!venue)throw Error('Europese markten niet gevonden');
- let found=null;
- for(const market of venue.markets.filter(m=>m.status==='available'&&m.sharesData)){
-  try{const data=await load('data/'+market.sharesData),shares=Array.isArray(data)?data:(data.shares||[]),share=shares.find(x=>x.isin===isin&&(!requestedMic||String(x.mic||market.mic).toUpperCase()===requestedMic.toUpperCase())&&(!requestedSymbol||String(x.symbol||x.ticker).toUpperCase()===requestedSymbol.toUpperCase()));if(share){found={market,share};break}}catch{}
- }
- if(!found)throw Error('Aandeel niet gevonden');
+Promise.all([load('data/euronext-amsterdam.json'),load('data/runtime-config.json').catch(()=>({apiBaseUrl:''}))]).then(async([catalog,runtime])=>{
+ const shares=catalog.shares||[];
+ const share=shares.find(x=>x.isin===isin&&(!requestedMic||requestedMic==='XAMS')&&(!requestedSymbol||x.symbol===requestedSymbol));
+ if(!share)throw Error('Aandeel niet gevonden in Amsterdam');
+ const found={market:{mic:'XAMS',code:'amsterdam',name:'Amsterdam'},share};
  const {market,share}=found,mic=share.mic||market.mic;const legacyPages={amsterdam:'amsterdam.html',brussels:'brussel.html',paris:'parijs.html',milan:'milaan.html',oslo:'oslo.html',lisbon:'lissabon.html',zurich:'zurich.html',stockholm:'stockholm.html'};const back=legacyPages[market.id]||`market.html?market=${encodeURIComponent(market.slug||market.id)}`;
  document.title=`${share.name} — Koersplein`;document.querySelector('#crumb-share').textContent=share.name;
  const crumbs=document.querySelector('.breadcrumbs');const links=crumbs?.querySelectorAll('a');if(links?.[2]){links[2].href=back;links[2].textContent=market.name}
