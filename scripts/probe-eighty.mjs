@@ -5,7 +5,7 @@ import {decodeEuronextBody} from './euronext-transport.mjs';
 const manifest=JSON.parse(await readFile(new URL('../data/amsterdam-history-manifest.json',import.meta.url),'utf8'));
 const instruments=Object.values(manifest.instruments);
 const date=process.argv[2]||'2026-10-29',results=new Array(instruments.length);
-if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)||new Date(date+'T00:00:00Z').toISOString().slice(0,10)!==date)throw Error('INVALID_DATE');
+if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isFinite(Date.parse(date+'T00:00:00Z'))||new Date(date+'T00:00:00Z').toISOString().slice(0,10)!==date)throw Error('INVALID_DATE');
 if(instruments.length!==80||new Set(instruments.map(x=>x.isin)).size!==80)throw Error('EXPECTED_80_UNIQUE_INSTRUMENTS');
 let next=0;
 async function worker(){
