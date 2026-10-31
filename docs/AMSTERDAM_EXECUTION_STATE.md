@@ -73,3 +73,10 @@ A block is complete only when implementation and relevant tests are verified, or
 - Inspected full Amsterdam workflow and discovered that its job predicate also permitted manual dispatch on main. Commit 5b2333ba080ea0b6964461d1ab61a7249d1c1e9e restricts the entire job and both publication steps to the approved staging branch.
 - This change is committed, not independently CI-validated. No public deployment or schedule was created. Scheduling a staging-only workflow requires care because GitHub cron runs on the default branch.
 - Latest chart fixes remain unverified by an observed workflow result. The next block must retrieve an actual run outcome and fix failures before claiming readiness.
+
+## 2026-10-31 latest close return testability
+- Commit 21ca3619faa238a5358e92a789f89fc52828ca54 extracts a pure latestCloseChange gate from the structural diagnostics. Returns no percentage for missing bars, invalid closes, suspicious jump/gap, missing OHLC, or duplicate latest dates. This is not a verified adjusted-return calculation.
+- Commit b7a3977fc071a655c349fd7933fe16132ff59353 integrates the shared gate on the XAMS share page; other venues keep their existing logic.
+- Commits f543d814a5ce47922a8cb9b5040e333b39a78c8b and d95917a9c8cfaa955fd9a37da80fccd7fd80c29d add normal, jump, gap, incomplete, insufficient-history fixtures and floating-point-safe assertion.
+- Unable to run local repository tests: local runtime cannot resolve github.com. GitHub connector commit status and PR-workflow lookup for earlier staging trigger returned no runs; neither proves the push workflow failed nor passed. CI must be checked directly in Actions.
+- All work is staging-only; production untouched. Next: inspect actual Actions run outcome and deployment branch, then resolve daily source freshness and schedule without allowing main publication.
