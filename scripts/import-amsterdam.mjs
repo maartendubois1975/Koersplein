@@ -6,6 +6,7 @@ const input=process.argv[2];
 if(!input)throw Error('Usage: node scripts/import-amsterdam.mjs reviewed-snapshot.json [--apply]');
 const payload=JSON.parse(await readFile(resolve(input),'utf8'));
 const apply=process.argv.includes('--apply');
+const partial=process.argv.includes('--partial');
 if(payload.market!=='XAMS'||!Array.isArray(payload.rows))throw Error('Expected XAMS rows');
 if(Object.keys(manifest.instruments).length!==80)throw Error('Expected 80 mapped instruments');
 const seen=new Set(),decisions=[],staged=[];
@@ -30,9 +31,9 @@ for(const row of payload.rows){
  const updated={...doc,bars,coverage:{...doc.coverage,lastDate:row.date,records:bars.length,volumeRecords:bars.filter(b=>b.volume!=null).length,missingVolumeRecords:bars.filter(b=>b.volume==null).length},provider:{...doc.provider,metadata:{...doc.provider?.metadata,lastImportSource:row.source,lastImportSourceUrl:row.sourceUrl,lastImportRetrievedAt:row.retrievedAt}}};
  staged.push({path,updated});decisions.push({key,status:'APPROVED'});
 }
-const summary={mode:apply?'APPLY':'DRY_RUN',received:payload.rows.length,approved:staged.length,decisions};
+const summary={mode:apply?'APPLY':'DRY_RUN',partial,received:payload.rows.length,approved:staged.length,skipped:decisions.filter(d=>!['APPROVED','UNCHANGED'].includes(d.status)).length,decisions};
 if(apply){
- if(decisions.some(d=>!['APPROVED','UNCHANGED'].includes(d.status)))throw Error('Apply refused: unresolved conflicts');
+ if(!partial&&decisions.some(d=>!['APPROVED','UNCHANGED'].includes(d.status)))throw Error('Apply refused: unresolved conflicts');
  for(const {path,updated} of staged)await writeFile(path,JSON.stringify(updated,null,2)+'\n');
 }
 console.log(JSON.stringify(summary,null,2));
