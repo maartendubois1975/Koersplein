@@ -17,9 +17,10 @@ async function worker(){
    const rows=parseRows(decodeEuronextBody(await response.text())).filter(x=>x.date===date);
    const b=rows[0],valid=rows.length===1&&b&&[b.open,b.high,b.low,b.close].every(n=>Number.isFinite(n)&&n>0)&&b.low<=Math.min(b.open,b.close)&&b.high>=Math.max(b.open,b.close)&&Number.isSafeInteger(b.volume)&&b.volume>0;
    const noRow=rows.length===0;
+   const duplicate=rows.length>1;
    const noTrade=rows.length===1&&b&&[b.open,b.high,b.low].every(x=>x===null)&&Number.isFinite(b.close)&&b.close>0&&b.volume===0;
    const diagnostics=!valid&&!noRow&&!noTrade?{missing:!b,invalidPrice:!!b&&![b.open,b.high,b.low,b.close].every(n=>Number.isFinite(n)&&n>0),ohlcRange:!!b&&(b.low>Math.min(b.open,b.close)||b.high<Math.max(b.open,b.close)),invalidVolume:!!b&&(!Number.isSafeInteger(b.volume)||b.volume<=0),zeroVolume:!!b&&b.volume===0,parsed:b?{open:b.open,high:b.high,low:b.low,close:b.close,volume:b.volume}:null}:undefined;
-   results[index]={symbol:item.symbol,status:valid?'OHLCV_CANDIDATE_UNVERIFIED':noRow?'NO_SOURCE_ROW_REVIEW_REQUIRED':noTrade?'NO_TRADE_REFERENCE_CLOSE_UNVERIFIED':'INVALID_OR_MISSING_OHLCV',rows:rows.length,...(diagnostics?{diagnostics}:{})};
+   results[index]={symbol:item.symbol,status:valid?'OHLCV_CANDIDATE_UNVERIFIED':duplicate?'DUPLICATE_SESSION_REVIEW_REQUIRED':noRow?'NO_SOURCE_ROW_REVIEW_REQUIRED':noTrade?'NO_TRADE_REFERENCE_CLOSE_UNVERIFIED':'INVALID_OR_MISSING_OHLCV',rows:rows.length,...(diagnostics?{diagnostics}:{})};
   }catch(e){results[index]={symbol:item.symbol,status:'SOURCE_ERROR',reason:e.message}}
  }
 }
