@@ -6,28 +6,7 @@
   "importedInTest": 80,
   "validatedHistoricalSessions": 360883,
   "invalidCandlesAfterFiltering": 0,
-  "unresolved": [
-    {
-      "symbol": "AF",
-      "isin": "FR001400J770"
-    },
-    {
-      "symbol": "ENX",
-      "isin": "NL0006294274"
-    },
-    {
-      "symbol": "FAGR",
-      "isin": "BE0003874915"
-    },
-    {
-      "symbol": "ONWD",
-      "isin": "NL0015000HT4"
-    },
-    {
-      "symbol": "SGO",
-      "isin": "FR0000125007"
-    }
-  ],
+  "unresolved": [],
   "evidence": {
     "githubActionsRun": 40634598977,
     "verifiedAt": "2026-10-28",
@@ -36,5 +15,35 @@
   "publication": {
     "live": false,
     "reason": "Render test service tracks a different branch; test deployment and price-feed redistribution rights not yet confirmed"
-  }
+  },
+  "activeAmsterdamHistoryTargets": 80,
+  "crossMarketReferences": [
+    {
+      "symbol": "AF",
+      "isin": "FR001400J770",
+      "primaryMic": "XPAR"
+    },
+    {
+      "symbol": "ENX",
+      "isin": "NL0006294274",
+      "primaryMic": "XPAR"
+    },
+    {
+      "symbol": "FAGR",
+      "isin": "BE0003874915",
+      "primaryMic": "XBRU"
+    },
+    {
+      "symbol": "ONWD",
+      "isin": "NL0015000HT4",
+      "primaryMic": "XBRU"
+    },
+    {
+      "symbol": "SGO",
+      "isin": "FR0000125007",
+      "primaryMic": "XPAR"
+    }
+  ],
+  "crossMarketHistoryVerification": "NOT_YET_VERIFIED",
+  "statusNote": "80 Amsterdam history targets; 5 intentional primary-market references, not missing XAMS imports. Historical venue provenance and source freshness remain under review."
 }
