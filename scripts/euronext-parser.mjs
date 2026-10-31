@@ -10,6 +10,13 @@ export function parsePrice(value){
  if(!/^\d+(\.\d+)?$/.test(s))return null;
  const n=Number(s);return Number.isFinite(n)?n:null;
 }
+export function parseVolume(value){
+ let s=clean(value).replace(/[\s\u00a0\u202f]/g,'');
+ if(!s||s==='-')return null;
+ if(/^\d{1,3}([.,]\d{3})+$/.test(s))s=s.replace(/[.,]/g,'');
+ if(!/^\d+$/.test(s))return null;
+ const n=Number(s);return Number.isSafeInteger(n)?n:null;
+}
 export function parseRows(html){
  const rows=[...String(html).matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].map(tr=>[...tr[1].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map(x=>clean(x[1])));
  const header=rows.findIndex(r=>r.some(x=>/^date$/i.test(x)));
@@ -23,6 +30,6 @@ export function parseRows(html){
   if(!match)return null;
   const date=match[3]+'-'+match[2]+'-'+match[1];
   if(new Date(date+'T00:00:00Z').toISOString().slice(0,10)!==date)return null;
-  return {date,open:parsePrice(r[o]),high:parsePrice(r[h]),low:parsePrice(r[l]),close:parsePrice(r[c]),volume:parsePrice(r[v])};
+  return {date,open:parsePrice(r[o]),high:parsePrice(r[h]),low:parsePrice(r[l]),close:parsePrice(r[c]),volume:parseVolume(r[v])};
  }).filter(Boolean);
 }
