@@ -34,6 +34,11 @@ const parallel=await collect(parallelManifest,'2026-10-30',async()=>{
 assert.equal(parallel.candidates.length,8);
 assert.equal(peak,4,'exactly four concurrent workers');
 assert.equal(latestCandidateSession(new Date('2026-10-31T12:00:00Z')),'2026-10-30');
+assert.equal(latestCandidateSession(new Date('2026-03-27T18:30:00Z')),'2026-03-26');
+assert.equal(latestCandidateSession(new Date('2026-03-27T19:30:00Z')),'2026-03-27');
+assert.equal(latestCandidateSession(new Date('2026-03-30T18:30:00Z')),'2026-03-27');
+assert.equal(latestCandidateSession(new Date('2026-10-26T18:30:00Z')),'2026-10-23');
+assert.equal(latestCandidateSession(new Date('2026-10-26T19:30:00Z')),'2026-10-26');
 assert.equal(latestCandidateSession(new Date('2026-10-30T07:00:00Z')),'2026-10-29');
 assert.equal(latestCandidateSession(new Date('2026-10-30T20:00:00Z')),'2026-10-30');
 assert.equal(latestCandidateSession(new Date('2026-11-02T07:00:00Z')),'2026-10-30');
