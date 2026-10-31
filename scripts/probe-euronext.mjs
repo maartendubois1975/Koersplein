@@ -1,5 +1,6 @@
 // Network-only diagnostic. Never writes market data or changes the website.
 import {parseRows} from './euronext-parser.mjs';
+import {decodeEuronextBody} from './euronext-transport.mjs';
 const isin='NL0000852564',date='2026-10-29';
 const url='https://live.euronext.com/en/ajax/getHistoricalPricePopup/'+isin+'-XAMS';
 let result={kind:'EURONEXT_READ_ONLY_PROBE',isin,date,status:'UNKNOWN'};
@@ -10,7 +11,10 @@ try{
  result.contentType=response.headers.get('content-type')||'unknown';
  result.bytes=body.length;
  if(!response.ok)result.status='HTTP_REJECTED';
- else if(/^\s*[{[]/.test(body))result.status='STRUCTURED_OR_ENCODED_RESPONSE_REQUIRES_REVIEW';
+ else if(/^\s*[{[]/.test(body)){
+  try{const rows=parseRows(decodeEuronextBody(body));result.rows=rows.length;result.hasTargetDate=rows.some(x=>x.date===date);result.status='JSON_TRANSPORT_DECODED_UNVERIFIED'}
+  catch(e){result.status='JSON_DECODE_OR_PARSE_FAILED';result.reason=e.message}
+ }
  else if(!/<tr[\s>]/i.test(body))result.status='NO_HTML_TABLE';
  else{
   try{
