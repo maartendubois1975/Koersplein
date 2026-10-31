@@ -20,3 +20,14 @@ When the owner says "Verder" or "Doe", continue the largest coherent development
 At the start of each session read `docs/AMSTERDAM_EXECUTION_STATE.md`. At the end update its verified implementation status, tests, blockers and next coherent deliverable. Distinguish committed, tested and deployed work. No autonomous background execution is implied.
 
 Only work on `amsterdam-reset-20261027`. Never publish to production without explicit approval. Never fabricate market data or bypass financial-data verification. Unverified forecasts remain blocked; safe fixture-based research development may proceed.
+
+## Mandatory large-block execution protocol — reaffirmed 2026-10-31
+
+The owner explicitly rejects the pattern of a small code repair followed by a status reply and another "Verder" request. Treat "Verder", "Doe", and "voer het volgende blok uit" as authorization to complete the **largest cohesive deliverable**, not to perform a micro-fix.
+
+- Research and design the complete dependency chain first in the conversation. Define an end-to-end acceptance test and a rollback before editing.
+- Batch connected changes (ingestion, diagnostics, UI, tests, workflow, documentation) into one coherent delivery. Prefer a single atomic staging commit if tooling supports it; if the connector only supports individual file commits, complete the entire coherent block before reporting.
+- Do not use repeated edits to a CI trigger as a substitute for reading real workflow results. An attempted trigger is not a successful test. Record the actual run ID and conclusion or clearly identify the verification blocker.
+- No partial completion language that implies the site is operational. Separate committed code, locally tested fixtures, CI verified, staging deployed, and production deployed.
+- Do not ask the owner to say "Verder" after every minor repair. End only at a meaningful end-to-end milestone or a genuine externally imposed blocker, and say exactly what remains.
+- A staging-only GitHub workflow cannot be made a reliable daily cron by adding schedule to its nondefault branch; never silently modify main to work around this. Obtain explicit approval before any main-branch scheduling bridge.
