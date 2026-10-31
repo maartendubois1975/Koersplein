@@ -61,3 +61,10 @@ A block is complete only when implementation and relevant tests are verified, or
 - Active XAMS targets remain 80. Do not invent duplicate Amsterdam histories or report the five as repaired provider imports.
 - Workflow test triggered in previous block, but its current run ID/outcome has not been retrieved through available connector actions; do not assert a green test.
 - Next consolidated work: verify staging workflow outcome using GitHub Actions, test chart integration on deployed staging branch, investigate four lagging XAMS sessions and independently validate cross-market primary venue histories. No production changes.
+
+## 2026-10-31 chart correctness continuation
+- Investigated share.js and chart.js directly: the latest close-to-close percentage could be presented even when the last observation had an unverified >50% discontinuity or >30-day gap. Commit 45017cb9472b653e5191cb38e5054e1657c14e1c suppresses that percentage and displays the reason. This is a conservative structural gate, not corporate-action verification.
+- Found UTC setMonth overflow at month ends. Commit afadf940ada20602bf9dfa288b1c3235a0c0cf6c adds calendar-clamped periodStartDate; commit 7a649fb034e46ea66ea35611a833caadfa641210 shares this boundary between chart and warning counts.
+- Commit 26e2ed0c1023fc47d4e2aaec4fcc24ed56d9ecd0 adds month-end, leap-year and discontinuity fixture assertions.
+- All commits staging only. New fixtures not yet confirmed green in GitHub Actions; no deployment, no claim of complete Amsterdam.
+- Cross-market status: 80 XAMS histories and five references to XPAR/XBRU. Source lineage and actual cross-market history availability not independently verified.
