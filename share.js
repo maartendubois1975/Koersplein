@@ -9,8 +9,8 @@ Promise.all([load('data/euronext-amsterdam.json'),load('data/runtime-config.json
  const shares=catalog.shares||[];
  const share=shares.find(x=>x.isin===isin&&(!requestedMic||requestedMic==='XAMS')&&(!requestedSymbol||x.symbol===requestedSymbol));
  if(!share)throw Error('Aandeel niet gevonden in Amsterdam');
- const found={market:{mic:'XAMS',code:'amsterdam',name:'Amsterdam'},share};
- const {market,share}=found,mic=share.mic||market.mic;const legacyPages={amsterdam:'amsterdam.html',brussels:'brussel.html',paris:'parijs.html',milan:'milaan.html',oslo:'oslo.html',lisbon:'lissabon.html',zurich:'zurich.html',stockholm:'stockholm.html'};const back=legacyPages[market.id]||`market.html?market=${encodeURIComponent(market.slug||market.id)}`;
+ const market={id:'amsterdam',mic:'XAMS',name:'Amsterdam',currency:'EUR'};
+ const mic='XAMS',back='amsterdam.html';
  document.title=`${share.name} — Koersplein`;document.querySelector('#crumb-share').textContent=share.name;
  const crumbs=document.querySelector('.breadcrumbs');const links=crumbs?.querySelectorAll('a');if(links?.[2]){links[2].href=back;links[2].textContent=market.name}
  const backLink=document.querySelector('.back-link');backLink.href=back;backLink.textContent=`← ${market.name}`;
