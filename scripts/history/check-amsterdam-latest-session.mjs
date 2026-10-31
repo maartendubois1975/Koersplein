@@ -1,17 +1,33 @@
-import { readFile } from 'node:fs/promises';
-import { loadCatalog } from './engine.mjs';
-const root = new URL('../../data/', import.meta.url);
-const instruments = await loadCatalog();
-const rows = await Promise.all(instruments.map(async instrument => {
-  const history = JSON.parse(await readFile(new URL('history/' + instrument.isin + '.json', root), 'utf8'));
-  const bars = history.bars || [];
-  const latest = bars.at(-1);
-  return { symbol: instrument.symbol, isin: instrument.isin, latestDate: latest?.date || null, open: latest?.open ?? null, close: latest?.close ?? null, changePct: latest?.open > 0 ? +((latest.close / latest.open - 1) * 100).toFixed(4) : null, records: bars.length };
+import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { loadCatalog, validateBars } from './engine.mjs';
+import { sessionReadiness } from './session-readiness.mjs';
+const root=new URL('../../data/',import.meta.url);
+const instruments=await loadCatalog();
+const rows=await Promise.all(instruments.map(async instrument=>{
+  try {
+    const history=JSON.parse(await readFile(new URL('history/'+instrument.isin+'.json',root),'utf8'));
+    const source=history.bars||[];
+    const valid=validateBars(source);
+    const latest=valid.at(-1);
+    return {symbol:instrument.symbol,isin:instrument.isin,latestDate:latest?.date||null,
+      open:latest?.open??null,close:latest?.close??null,
+      changePct:latest?.open>0?+((latest.close/latest.open-1)*100).toFixed(4):null,
+      records:valid.length,rejectedRecords:source.length-valid.length,
+      provider:history.provider?.id||null};
+  } catch(error) {
+    return {symbol:instrument.symbol,isin:instrument.isin,latestDate:null,
+      open:null,close:null,changePct:null,records:0,error:String(error.message)};
+  }
 }));
-const dates = rows.map(x => x.latestDate).filter(Boolean);
-const newestDate = dates.sort().at(-1) || null;
-const missing = rows.filter(x => x.latestDate !== newestDate || x.open === null || x.close === null || x.changePct === null);
-const report = { newestDate, active: rows.length, current: rows.length - missing.length, lagging: missing, checked: rows };
-console.log('AMSTERDAM_LATEST_SESSION ' + JSON.stringify(report));
-if (rows.length !== 80) { console.error('Expected exactly 80 canonical Amsterdam price series'); process.exitCode = 1; }
-if (missing.length) console.warn('AMSTERDAM_LAGGING_SESSIONS ' + missing.length + ' instruments need investigation; a missing trade is not automatically a provider failure.');
+const report={generatedAt:new Date().toISOString(),...sessionReadiness(rows)};
+const output=new URL('../../research/output/amsterdam-session-readiness.json',import.meta.url);
+await mkdir(new URL('.',output),{recursive:true});
+await writeFile(output,JSON.stringify(report,null,2)+'\n');
+console.log('AMSTERDAM_LATEST_SESSION '+JSON.stringify({
+  newestDate:report.newestDate,expected:report.expectedCount,observed:report.observedCount,
+  current:report.currentCount,lagging:report.laggingCount,
+  invalid:report.invalidCount,unavailable:report.unavailableCount,
+  completeForObservedSession:report.completeForObservedSession
+}));
+if(!report.countMatches){console.error('Unexpected Amsterdam instrument count');process.exitCode=1;}
+if(!report.completeForObservedSession)console.warn('Amsterdam session incomplete: inspect research/output/amsterdam-session-readiness.json. Missing trading is not automatically provider failure.');
