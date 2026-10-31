@@ -1,0 +1,29 @@
+name: Amsterdam daily source candidates
+on:
+  workflow_dispatch:
+    inputs:
+      session_date:
+        description: 'Completed XAMS trading session (YYYY-MM-DD)'
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch Euronext candidates without publishing
+        run: node scripts/fetch-amsterdam.mjs "${{ inputs.session_date }}" amsterdam-candidates.json
+      - name: Save audit output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-candidates-${{ inputs.session_date }}
+          path: amsterdam-candidates.json
+          if-no-files-found: warn
+          retention-days: 14
