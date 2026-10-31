@@ -41,4 +41,8 @@ assert.doesNotMatch(detail,/apiBaseUrl|\\/api\\/history|brussel\\.html|parijs\\.
 assert.match(week,/filter\\(share=>Object\\.hasOwn\\(manifest\\.instruments/,'Show only mapped 80');
 assert.match(detail,/amsterdam-history-manifest\\.json/,'Detail must use canonical manifest');
 assert.match(detail,/data\\/history\\//,'Detail must use local history');
+const backtest=JSON.parse(execFileSync(process.execPath,[new URL('scripts/backtest-amsterdam.mjs',root).pathname],{encoding:'utf8',maxBuffer:1024*1024}));
+assert.equal(backtest.status,'RESEARCH_ONLY');
+assert.equal(backtest.results.length,6);
+assert.ok(backtest.results.every(x=>x.baselineSignals>0));
 console.log(JSON.stringify({status:'PASS',catalog:catalog.length,mapped:ids.length,historicalRecords:total,lastObservedDate:latest,scope:'STRUCTURAL_ONLY_NOT_LIVE_VERIFIED'}));
