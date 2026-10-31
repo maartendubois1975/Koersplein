@@ -3,10 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/test-amsterdam-clean.mjs && node scripts/test-import-amsterdam.mjs",
+    "test": "node scripts/test-amsterdam-clean.mjs && node scripts/test-import-amsterdam.mjs && node scripts/test-euronext-parser.mjs && node scripts/test-fetch-amsterdam.mjs",
     "history:test": "node scripts/test-amsterdam-clean.mjs",
     "backtest:research": "node scripts/backtest-amsterdam.mjs",
-    "import:dry-run": "node scripts/import-amsterdam.mjs"
+    "import:dry-run": "node scripts/import-amsterdam.mjs",
+    "fetch:candidates": "node scripts/fetch-amsterdam.mjs"
   },
   "engines": {
     "node": ">=22.5"
