@@ -68,3 +68,8 @@ A block is complete only when implementation and relevant tests are verified, or
 - Commit 26e2ed0c1023fc47d4e2aaec4fcc24ed56d9ecd0 adds month-end, leap-year and discontinuity fixture assertions.
 - All commits staging only. New fixtures not yet confirmed green in GitHub Actions; no deployment, no claim of complete Amsterdam.
 - Cross-market status: 80 XAMS histories and five references to XPAR/XBRU. Source lineage and actual cross-market history availability not independently verified.
+
+## 2026-10-31 staging safety
+- Inspected full Amsterdam workflow and discovered that its job predicate also permitted manual dispatch on main. Commit 5b2333ba080ea0b6964461d1ab61a7249d1c1e9e restricts the entire job and both publication steps to the approved staging branch.
+- This change is committed, not independently CI-validated. No public deployment or schedule was created. Scheduling a staging-only workflow requires care because GitHub cron runs on the default branch.
+- Latest chart fixes remain unverified by an observed workflow result. The next block must retrieve an actual run outcome and fix failures before claiming readiness.
