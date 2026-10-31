@@ -1,6 +1,8 @@
 name: Amsterdam daily source candidates
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '15 19 * * 1-5'
     inputs:
       session_date:
         description: 'Completed XAMS trading session (YYYY-MM-DD)'
