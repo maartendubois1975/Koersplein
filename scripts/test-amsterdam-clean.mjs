@@ -36,11 +36,11 @@ for(const script of scripts){
 }
 const week=await readFile(new URL('amsterdam-week.js',root),'utf8');
 const detail=await readFile(new URL('share.js',root),'utf8');
-assert.doesNotMatch(week,/workers\\.dev|cloudflare/i,'Amsterdam week must not use old Worker');
-assert.doesNotMatch(detail,/apiBaseUrl|\\/api\\/history|brussel\\.html|parijs\\.html/i,'Share page must not depend on Europe backend');
-assert.match(week,/filter\\(share=>Object\\.hasOwn\\(manifest\\.instruments/,'Show only mapped 80');
-assert.match(detail,/amsterdam-history-manifest\\.json/,'Detail must use canonical manifest');
-assert.match(detail,/data\\/history\\//,'Detail must use local history');
+assert.ok(!week.includes('workers.dev')&&!week.includes('cloudflare'),'No old Worker');
+for(const forbidden of ['apiBaseUrl','/api/history','brussel.html','parijs.html'])assert.ok(!detail.includes(forbidden),'Legacy dependency '+forbidden);
+assert.ok(week.includes('Object.hasOwn(manifest.instruments'),'Show only mapped 80');
+assert.ok(detail.includes('amsterdam-history-manifest.json'),'Canonical manifest');
+assert.ok(detail.includes('data/history/'),'Local history');
 const backtest=JSON.parse(execFileSync(process.execPath,[new URL('scripts/backtest-amsterdam.mjs',root).pathname],{encoding:'utf8',maxBuffer:1024*1024}));
 assert.equal(backtest.status,'RESEARCH_ONLY');
 assert.equal(backtest.results.length,6);
