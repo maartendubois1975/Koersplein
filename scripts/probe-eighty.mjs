@@ -16,7 +16,8 @@ async function worker(){
    if(!response.ok){results[index]={symbol:item.symbol,status:'HTTP_'+response.status};continue}
    const rows=parseRows(decodeEuronextBody(await response.text())).filter(x=>x.date===date);
    const b=rows[0],valid=rows.length===1&&b&&[b.open,b.high,b.low,b.close].every(n=>Number.isFinite(n)&&n>0)&&b.low<=Math.min(b.open,b.close)&&b.high>=Math.max(b.open,b.close)&&Number.isSafeInteger(b.volume)&&b.volume>0;
-   results[index]={symbol:item.symbol,status:valid?'OHLCV_CANDIDATE_UNVERIFIED':'INVALID_OR_MISSING_OHLCV',rows:rows.length};
+   const diagnostics=!valid?{missing:!b,invalidPrice:!!b&&![b.open,b.high,b.low,b.close].every(n=>Number.isFinite(n)&&n>0),ohlcRange:!!b&&(b.low>Math.min(b.open,b.close)||b.high<Math.max(b.open,b.close)),invalidVolume:!!b&&(!Number.isSafeInteger(b.volume)||b.volume<=0),zeroVolume:!!b&&b.volume===0}:undefined;
+   results[index]={symbol:item.symbol,status:valid?'OHLCV_CANDIDATE_UNVERIFIED':'INVALID_OR_MISSING_OHLCV',rows:rows.length,...(diagnostics?{diagnostics}:{})};
   }catch(e){results[index]={symbol:item.symbol,status:'SOURCE_ERROR',reason:e.message}}
  }
 }
