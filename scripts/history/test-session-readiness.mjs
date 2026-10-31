@@ -15,6 +15,7 @@ assert.equal(partial.laggingCount,1);
 assert.equal(partial.invalidCount,1);
 assert.equal(partial.unavailableCount,1);
 assert.equal(sessionReadiness([row('A','2026-10-30')],2).countMatches,false);
+assert.equal(sessionReadiness([{latestDate:'2026-10-30',open:100,close:101},row('B','2026-10-30')],2).identityUnique,false);
 assert.equal(sessionReadiness([],2).completeForObservedSession,false);
 assert.equal(sessionReadiness([row('A','2026-10-30'),row('A','2026-10-30')],2).identityUnique,false);
 assert.equal(sessionReadiness([{...row('A','2026-10-30'),rejectedRecords:1},row('B','2026-10-30')],2).invalidCount,1);
