@@ -19,6 +19,10 @@ jobs:
           node-version: '22'
       - name: Fetch Euronext candidates without publishing
         run: node scripts/fetch-amsterdam.mjs "${{ inputs.session_date || 'auto' }}" amsterdam-candidates.json
+      - name: Summarize all 80 source results
+        if: always()
+        run: |
+          if [ -f amsterdam-candidates.json ]; then node scripts/report-amsterdam.mjs amsterdam-candidates.json; fi
       - name: Save audit output
         if: always()
         uses: actions/upload-artifact@v4
