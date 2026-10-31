@@ -1,9 +1,16 @@
 import assert from 'node:assert/strict';
-import {parseRows,parsePrice} from './euronext-parser.mjs';
+import {parseRows,parsePrice,parseVolume} from './euronext-parser.mjs';
 assert.equal(parsePrice('12,34'),12.34);
 assert.equal(parsePrice('1.234,56'),1234.56);
 assert.equal(parsePrice('1,234.56'),1234.56);
 assert.equal(parsePrice('-'),null);
+assert.equal(parsePrice('1.234'),1.234);
+assert.equal(parsePrice('1,234'),1.234);
+assert.equal(parsePrice('0,012'),0.012);
+assert.equal(parseVolume('1.234'),1234);
+assert.equal(parseVolume('1,234'),1234);
+assert.equal(parseVolume('0'),0);
+assert.equal(parseVolume('1,5'),null);
 const html='<table><tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr><tr><td>30/10/2026</td><td>12,34</td><td>13,00</td><td>12,00</td><td>12,50</td><td>1200</td></tr></table>';
 const rows=parseRows(html);
 assert.equal(rows.length,1);
