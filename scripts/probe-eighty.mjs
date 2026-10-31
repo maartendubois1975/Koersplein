@@ -26,7 +26,7 @@ async function worker(){
 }
 await Promise.all(Array.from({length:4},()=>worker()));
 const valid=results.filter(x=>x.status==='OHLCV_CANDIDATE_UNVERIFIED').length;
-const noTrade=results.filter(x=>x.status==='NO_TRADE_REFERENCE_CLOSE_UNVERIFIED').length;
+const noTrade=results.filter(x=>x.status==='ZERO_VOLUME_REFERENCE_UNVERIFIED').length;
 const noRow=results.filter(x=>x.status==='NO_SOURCE_ROW_REVIEW_REQUIRED').length;
 const unresolved=instruments.length-valid-noTrade-noRow;
 console.log(JSON.stringify({kind:'EURONEXT_EIGHTY_READ_ONLY',date,total:instruments.length,valid,noTrade,noRow,unresolved,failed:unresolved,results,published:0}));
