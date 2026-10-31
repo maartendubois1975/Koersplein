@@ -21,3 +21,11 @@ Geen Cloudflare Worker, Atlas, Europese market-registry, externe API of tweede d
 3. Betrouwbare, kalendergebaseerde walk-forward-tests zonder look-ahead, met corporate actions en onafhankelijke bronnen, voordat een voorspelling op de publieke site komt.
 
 **Werkafspraak:** geen nieuwe Europa/Atlas/Worker-programmering in deze tak. Eén canonieke gegevensroute; bij uitbreidingen eerst deze README en de acceptatietest aanpassen. Oude ontwikkeltak blijft alleen als herstelarchief.
+
+## Bronophaler: uitsluitend kandidaten, geen automatische import
+
+`npm run fetch:candidates -- 2026-10-30 kandidaten.json` vraagt de openbare Euronext-tabel voor elk van de 80 ISINs op en bewaart kandidaten en fouten in een afzonderlijk JSON-bestand. De parser accepteert voorlopig uitsluitend direct leesbare HTML-tabellen; versleutelde antwoorden worden expliciet afgewezen. Deze beperking is bewust zichtbaar en mag niet worden verborgen met gefabriceerde koersen.
+
+`scripts/fetch-amsterdam.mjs` zet `sourceVerified:false` en `sessionClosedVerified:false`. Dit is **niet** het invoerformaat van de gecontroleerde import. Een afzonderlijke onafhankelijke bron- en sessiecontrole ontbreekt nog. Er wordt niets automatisch gepubliceerd en er is geen dagelijkse scheduler.
+
+`npm test` omvat ook vaste bronparser- en ophalertests met een gesimuleerde server, zodat netwerkuitval de bouwtest niet beïnvloedt.
