@@ -113,3 +113,12 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - Ran the available local Node 22 session-readiness fixtures in the working container; result: PASS, six scenarios. This local copy predates the latest added regression and is not a full repository CI result.
 - Strengthened manual staging publication guard to require all 80 records current and valid for the observed date, no provider failures, and no more than four days of session age (commit 1e882910ed966a91620d5ce64466b4d77f33cc5e). This is a necessary structural gate, not proof of market-close finality or data redistribution rights.
 - No daily cron is configured. No staging deployment verified; no production changes. Full CI status remains unverified because connector commit-status returns no workflow conclusion and GitHub Actions page is unavailable through web.
+
+## Full Amsterdam acceptance gate — 2026-10-31
+- Re-read current website, week renderer, share chart, data catalog, mapping and provider ingestion code together.
+- Confirmed by parsing repository JSON: Amsterdam catalog contains 85 entries; history manifest has 80 XAMS series and exactly five cross-market reference-only shares.
+- Added scripts/history/amsterdam-end-to-end-acceptance.mjs (0c8482f93f0e7cfdd21ff84bb099875fe4660d07). This reads all 80 actual committed history files in the Actions checkout, verifies identity, catalog, manifest, OHLC structural validity, coverage and Amsterdam page/chart integration, and writes a complete JSON acceptance report. It does not invent prices or certify source rights.
+- Made this gate mandatory in the staging workflow and included its report as an audit artifact (2addc9953dc937462fa01295d22bf508a54003b6).
+- Prior staging run 41013786049 was confirmed successful by reading its actual GitHub Actions jobs, but it PRECEDES the latest work and is NOT validation of this new gate.
+- Current-run validation and Render staging deployment are still unverified. Render account exposes one workspace named My Workspace, but connector requires owner confirmation before selecting it; no Render mutation performed.
+- Scheduling and final price publication remain blocked until an owner-authorized staging scheduler and source/legal verification are available. No production changes.
