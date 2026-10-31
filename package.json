@@ -3,9 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/test-amsterdam-clean.mjs",
+    "test": "node scripts/test-amsterdam-clean.mjs && node scripts/test-import-amsterdam.mjs",
     "history:test": "node scripts/test-amsterdam-clean.mjs",
-    "backtest:research": "node scripts/backtest-amsterdam.mjs"
+    "backtest:research": "node scripts/backtest-amsterdam.mjs",
+    "import:dry-run": "node scripts/import-amsterdam.mjs"
   },
   "engines": {
     "node": ">=22.5"
