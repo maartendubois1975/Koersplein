@@ -8,7 +8,7 @@ export async function collect(manifest,date,request=fetch){
  for(const [isin,entry] of Object.entries(manifest.instruments)){
   try{
    const url=endpoint+encodeURIComponent(isin+'-XAMS');
-   const response=await request(url,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},body:new URLSearchParams({adjusted:'N',startdate:date,enddate:date,nbSession:'100000'})});
+   const response=await request(url,{method:'POST',signal:AbortSignal.timeout(12000),headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},body:new URLSearchParams({adjusted:'N',startdate:date,enddate:date,nbSession:'100000'})});
    if(!response.ok)throw Error('HTTP '+response.status);
    const html=await response.text();
    const rows=parseRows(decodeEuronextBody(html));
