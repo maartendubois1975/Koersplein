@@ -21,4 +21,15 @@ assert.equal(noTrade.approved,0);
 const missing=await collect({instruments:{LU2290522684:{symbol:'INPST'}}},'2026-10-30',async()=>({ok:true,text:async()=>html.split('<tr><td>')[0]}));
 assert.equal(missing.missing.length,1);
 assert.equal(missing.candidates.length,0);
+const parallelManifest={instruments:{}};
+for(let i=0;i<8;i++)parallelManifest.instruments['TEST'+i]={symbol:'T'+i};
+let active=0,peak=0;
+const parallel=await collect(parallelManifest,'2026-10-30',async()=>{
+ active++;peak=Math.max(peak,active);
+ await new Promise(resolve=>setTimeout(resolve,5));
+ active--;
+ return {ok:true,text:async()=>html};
+});
+assert.equal(parallel.candidates.length,8);
+assert.equal(peak,4,'exactly four concurrent workers');
 console.log('PASS Euronext candidate collector: normal, zero-trade, missing, no auto approval');
