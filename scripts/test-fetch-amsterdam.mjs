@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {collect} from './fetch-amsterdam.mjs';
 const manifest={instruments:{NL0000852564:{symbol:'AALB'},NL0011540547:{symbol:'ABN'}}};
-const html='<tr><th>Date</th><th>Open</th><th>Close</th><th>Volume</th></tr><tr><td>30/10/2026</td><td>12,34</td><td>12,50</td><td>1200</td></tr>';
+const html='<tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr><tr><td>30/10/2026</td><td>12,34</td><td>13,00</td><td>12,00</td><td>12,50</td><td>1200</td></tr>';
 const request=async url=>({ok:true,text:async()=>url.includes('NL0000852564')?html:'{"ct":"encrypted"}'});
 const result=await collect(manifest,'2026-10-30',request);
 assert.equal(result.candidates.length,1);
@@ -10,4 +10,6 @@ assert.equal(result.approved,0);
 assert.equal(result.candidates[0].sourceVerified,false);
 assert.equal(result.candidates[0].sessionClosedVerified,false);
 assert.equal(result.candidates[0].open,12.34);
+assert.equal(result.candidates[0].high,13);
+assert.equal(result.candidates[0].low,12);
 console.log('PASS Euronext candidate collector: no auto approval');
