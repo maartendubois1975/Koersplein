@@ -24,4 +24,13 @@ for(const patch of [{volume:0,date:'2026-10-29'},{sourceVerified:false,date:'202
  await writeFile(input,JSON.stringify({market:'XAMS',rows:[{...row,...patch}]}));
  assert.notEqual(run(['--apply']).status,0,'reject bad input');
 }
+// In partial mode an unverified row must not prevent a different approved row.
+await writeFile(input,JSON.stringify({market:'XAMS',rows:[{...row,date:'2026-10-29',sourceVerified:false},{...row,date:'2026-10-30',close:11}]}));
+assert.notEqual(run(['--apply']).status,0,'strict mode refuses mixed batch');
+assert.equal(run(['--apply','--partial']).status,0,'partial mode imports approved row');
+const afterPartial=JSON.parse(await readFile(history));
+assert.equal(afterPartial.bars.length,3,'only one new approved bar');
+assert.equal(afterPartial.bars.at(-1).date,'2026-10-30');
+assert.equal(run(['--apply','--partial']).status,0,'partial mode remains idempotent');
+assert.equal(JSON.parse(await readFile(history)).bars.length,3);
 console.log('PASS import: dry-run, append, idempotence, zero-volume, unverified, identity, conflict');
