@@ -5,7 +5,7 @@ const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replac
 const params=new URLSearchParams(location.search),isin=params.get('isin'),requestedMic=params.get('mic'),requestedSymbol=params.get('symbol'),detail=document.querySelector('#share-detail'),historyState=document.querySelector('#history-state');
 const load=async url=>{const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error(`HTTP ${r.status}`);return r.json()};
 const fail=m=>{historyState.className='history-empty';historyState.innerHTML=`<strong>Historie tijdelijk niet beschikbaar</strong><p>${esc(m)}.</p>`;document.querySelector('#history-range').textContent='—'};
-Promise.all([load('data/euronext-amsterdam.json'),load('data/runtime-config.json').catch(()=>({apiBaseUrl:''}))]).then(async([catalog,runtime])=>{
+load('data/euronext-amsterdam.json').then(async catalog=>{
  const shares=catalog.shares||[];
  const share=shares.find(x=>x.isin===isin&&(!requestedMic||requestedMic==='XAMS')&&(!requestedSymbol||x.symbol===requestedSymbol));
  if(!share)throw Error('Aandeel niet gevonden in Amsterdam');
@@ -17,19 +17,10 @@ Promise.all([load('data/euronext-amsterdam.json'),load('data/runtime-config.json
  detail.innerHTML=`<div><p class="eyebrow">Europa · ${esc(market.name)} · ${esc(mic)}</p><h1>${esc(share.name)}</h1><div class="identity-line"><span class="ticker">${esc(share.symbol||share.ticker)}</span><span>${esc(share.isin)}</span><span>${esc(mic)}</span></div></div><div class="latest-price"><span>Laatste koers</span><strong>—</strong><small>Historie wordt geladen</small></div>`;
  try{
   let h,storageId;
-  if(mic==='XAMS'){
-   const manifest=await load('data/amsterdam-history-manifest.json');
-   storageId=manifestResolver(manifest,mic)(share);
-   if(!storageId)throw Error('Geen gevalideerde Amsterdamse koershistorie');
-   h=await load('data/history/'+encodeURIComponent(storageId)+'.json');
-  }else{
-   const api=String(runtime.apiBaseUrl||'').replace(/\/$/,'');
-   if(!api)throw Error('Koersplein API is niet geconfigureerd');
-   const manifest=await load(api+'/api/history/manifest.json');
-   storageId=manifestResolver(manifest,mic)(share);
-   if(!storageId)throw Error('Geen gevalideerde historie voor deze beursnotering');
-   h=await load(`${api}/api/history/${encodeURIComponent(storageId).replace(/%3A/gi,':')}`);
-  }
+  const manifest=await load('data/amsterdam-history-manifest.json');
+  storageId=manifestResolver(manifest,mic)(share);
+  if(!storageId)throw Error('Geen gevalideerde Amsterdamse koershistorie');
+  h=await load('data/history/'+encodeURIComponent(storageId)+'.json');
   if(h.coverage?.recordCount!=null&&h.coverage.records==null)h.coverage.records=h.coverage.recordCount;
   const bars=validateHistoryDocument(h,{...share,isin:storageId,mic,symbol:share.symbol||share.ticker}),first=bars[0],last=bars.at(-1),currency=h.instrument?.currency||market.currency||'EUR';
   document.querySelector('#history-range').textContent=`${first.date} — ${last.date}`;renderHistoryChart(historyState,bars,{currency});
