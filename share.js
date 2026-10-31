@@ -35,10 +35,12 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
   if(h.coverage?.recordCount!=null&&h.coverage.records==null)h.coverage.records=h.coverage.recordCount;
   const bars=validateHistoryDocument(h,{...share,isin:storageId,mic,symbol:share.symbol||share.ticker}),first=bars[0],last=bars.at(-1),currency=h.instrument?.currency||market.currency||'EUR';
   document.querySelector('#history-range').textContent=`${first.date} — ${last.date}`;renderHistoryChart(historyState,bars,{currency});
+  let amsterdamQuality=null;
   if(mic==='XAMS'){
    // Assess the exact displayed bars; no stale or separately published audit file.
    // A structural diagnostic is not independent price or total-return verification.
    const quality=assessPeriod(bars);
+   amsterdamQuality=quality;
    const warning=document.createElement('p');
    warning.className='history-source';
    warning.setAttribute('role','status');
@@ -55,11 +57,13 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
    explain();
    historyState.querySelector('.periods')?.addEventListener('click',()=>queueMicrotask(explain));
   }
-  const p=document.createElement('p');p.className='history-source';p.textContent=`${bars.length.toLocaleString('nl-NL')} gevalideerde dagrecords · ${first.date} t/m ${last.date}`;historyState.append(p);
+  const p=document.createElement('p');p.className='history-source';p.textContent=`${bars.length.toLocaleString('nl-NL')} opgeslagen dagrecords (structurele broncontrole) · ${first.date} t/m ${last.date}`;historyState.append(p);
   const previous=bars.length>1?bars.at(-2):null;
-  const delta=previous?.close>0?(last.close/previous.close-1)*100:null;
+  // Suppress a latest close-to-close percentage if a discontinuity is not verified.
+  const lastDiscontinuity=amsterdamQuality?.issues.some(issue=>issue.date===last.date&&['LONG_GAP','UNVERIFIED_PRICE_JUMP','INVALID_OHLC','INVALID_OPEN_CLOSE'].includes(issue.kind));
+  const delta=previous?.close>0&&!lastDiscontinuity?(last.close/previous.close-1)*100:null;
   const deltaText=delta===null?'—':new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:2,maximumFractionDigits:2}).format(delta)+'%';
   const deltaColor=delta===null?'':delta>=0?'#3fc98c':'#ee6677';
-  detail.querySelector('.latest-price').innerHTML=`<span>Laatste slotkoers</span><strong>${Number(last.close).toLocaleString('nl-NL',{style:'currency',currency,minimumFractionDigits:2,maximumFractionDigits:2})}</strong><span style="color:${deltaColor};font-weight:700">${esc(deltaText)} t.o.v. vorig slot</span><small>${esc(last.date)} · historie vanaf ${esc(first.date)}</small>`;
+  detail.querySelector('.latest-price').innerHTML=`<span>Laatste slotkoers</span><strong>${Number(last.close).toLocaleString('nl-NL',{style:'currency',currency,minimumFractionDigits:2,maximumFractionDigits:2})}</strong><span style="color:${deltaColor};font-weight:700">${esc(deltaText)} t.o.v. vorig slot${lastDiscontinuity?' · koerssprong of historiegat niet geverifieerd':''}</span><small>${esc(last.date)} · historie vanaf ${esc(first.date)}</small>`;
  }catch(e){fail(e.message)}
 }).catch(e=>{detail.innerHTML=`<div><p class="eyebrow">Niet beschikbaar</p><h1>${esc(e.message)}</h1></div>`;fail('Aandeelgegevens konden niet worden geladen')});
