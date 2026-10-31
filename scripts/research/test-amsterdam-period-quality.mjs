@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {assessPeriod} from './amsterdam-period-quality.mjs';
+import {assessPeriod,latestCloseChange} from './amsterdam-period-quality.mjs';
 import {validateHistoryDocument,filterPeriod,periodStartDate} from '../../chart.js';
 const candle=(date,close)=>({date,open:close,high:close,low:close,close});
 const clean=assessPeriod([candle('2026-10-28',100),candle('2026-10-29',101)]);
@@ -35,4 +35,9 @@ assert.equal(periodStartDate('2026-10-31','3M'),'2026-07-31');
 assert.equal(periodStartDate('2026-10-31','MAX'),null);
 const discontinuity=assessPeriod([candle('2026-10-01',100),candle('2026-10-30',201)]);
 assert.ok(discontinuity.issues.some(x=>x.kind==='UNVERIFIED_PRICE_JUMP'&&x.date==='2026-10-30'));
+assert.equal(latestCloseChange([candle('2026-10-28',100),candle('2026-10-29',102)]).percent,2);
+assert.equal(latestCloseChange([candle('2026-01-01',100),candle('2026-02-15',250)]).reason,'LONG_GAP');
+assert.equal(latestCloseChange([candle('2026-10-28',100),candle('2026-10-29',250)]).reason,'UNVERIFIED_PRICE_JUMP');
+assert.equal(latestCloseChange([candle('2026-10-28',100),{date:'2026-10-29',open:102,close:102}]).reason,'MISSING_HIGH_LOW');
+assert.equal(latestCloseChange([candle('2026-10-29',100)]).reason,'INSUFFICIENT_HISTORY');
 console.log('Amsterdam period quality, month-end charts and browser normalization fixtures passed');
