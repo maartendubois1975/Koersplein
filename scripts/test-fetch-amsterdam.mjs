@@ -1,3 +1,4 @@
+import {latestCandidateSession} from './amsterdam-session.mjs';
 import assert from 'node:assert/strict';
 import {collect} from './fetch-amsterdam.mjs';
 const manifest={instruments:{NL0000852564:{symbol:'AALB'},NL0011540547:{symbol:'ABN'}}};
@@ -32,4 +33,8 @@ const parallel=await collect(parallelManifest,'2026-10-30',async()=>{
 });
 assert.equal(parallel.candidates.length,8);
 assert.equal(peak,4,'exactly four concurrent workers');
+assert.equal(latestCandidateSession(new Date('2026-10-31T12:00:00Z')),'2026-10-30');
+assert.equal(latestCandidateSession(new Date('2026-10-30T07:00:00Z')),'2026-10-29');
+assert.equal(latestCandidateSession(new Date('2026-10-30T20:00:00Z')),'2026-10-30');
+assert.equal(latestCandidateSession(new Date('2026-11-02T07:00:00Z')),'2026-10-30');
 console.log('PASS Euronext candidate collector: normal, zero-trade, missing, no auto approval');
