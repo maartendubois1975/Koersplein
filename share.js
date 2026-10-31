@@ -1,4 +1,4 @@
-import { renderHistoryChart, validateHistoryDocument } from './chart.js';
+import { renderHistoryChart, validateHistoryDocument, periodStartDate } from './chart.js';
 import { manifestResolver } from './market-week-core.mjs';
 import { assessPeriod } from './scripts/research/amsterdam-period-quality.mjs';
 const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
@@ -46,10 +46,7 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
    warning.setAttribute('role','status');
    const explain=()=>{
     const selected=historyState.dataset.period||'MAX';
-    const periods={'1M':1,'3M':3,'6M':6,'1J':12,'3J':36,'5J':60,'10J':120};
-    const start=new Date(last.date+'T00:00:00Z');
-    if(periods[selected])start.setUTCMonth(start.getUTCMonth()-periods[selected]);
-    const from=selected==='MAX'?first.date:start.toISOString().slice(0,10);
+    const from=periodStartDate(last.date,selected)||first.date;
     const flagged=(quality?.issues||[]).filter(issue=>issue.date>=from&&issue.date<=last.date);
     warning.textContent=`Bronkoersen (geen gevalideerd totaalrendement). ${flagged.length} structurele waarschuwingen in deze periode (grote sprongen, lange gaten of ongeldige records). Aandelensplitsingen, dividenden en oude bedrijfsidentiteiten zijn niet onafhankelijk geverifieerd; grafiek niet gebruiken als bewezen beleggingsrendement.`;
    };
