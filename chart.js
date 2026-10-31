@@ -1,6 +1,7 @@
 const DAY = 86_400_000;
 const PERIODS = { '1M': 1, '3M': 3, '6M': 6, '1J': 12, '3J': 36, '5J': 60, '10J': 120, MAX: null };
 
+const validDate = date => typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(Date.parse(date)) && new Date(date+'T00:00:00Z').toISOString().slice(0,10) === date;
 const finite = (value) => value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value));
 const money = (value, currency = 'EUR') => new Intl.NumberFormat('nl-NL', {
   style: 'currency', currency, minimumFractionDigits: 2, maximumFractionDigits: 2
@@ -22,7 +23,7 @@ export function validateHistoryDocument(document, identity) {
     close: finite(bar.close) ? Number(bar.close) : null,
     adjustedClose: finite(bar.adjustedClose) ? Number(bar.adjustedClose) : null,
     volume: finite(bar.volume) ? Number(bar.volume) : null
-  })).filter((bar) => /^\d{4}-\d{2}-\d{2}$/.test(bar.date) && bar.close > 0)
+  })).filter((bar) => validDate(bar.date) && bar.close > 0)
     .sort((a, b) => a.date.localeCompare(b.date));
   for (const bar of bars) {
     if (seen.has(bar.date)) throw new Error('Dubbele handelsdag in historie');
