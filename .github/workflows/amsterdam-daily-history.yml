@@ -39,6 +39,7 @@ jobs:
           node-version: '22'
       - name: Syntax check Amsterdam research programs before provider calls
         run: |
+          node --check scripts/history/amsterdam-end-to-end-acceptance.mjs
           node --check scripts/history/amsterdam-daily-run.mjs
           node --check scripts/history/session-readiness.mjs
           node --check scripts/history/check-amsterdam-latest-session.mjs
@@ -67,6 +68,8 @@ jobs:
           node scripts/research/amsterdam-history-quality-audit.mjs
           node scripts/research/amsterdam-consolidated-quality-gate.mjs
           node scripts/research/build-amsterdam-period-quality.mjs
+      - name: Verify Amsterdam end-to-end catalog history and browser wiring
+        run: node scripts/history/amsterdam-end-to-end-acceptance.mjs
       - name: Preserve immutable baseline audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -78,6 +81,7 @@ jobs:
             research/output/amsterdam-issuer-investigation-cases.json
             research/output/amsterdam-consolidated-quality-gate.json
             research/output/amsterdam-period-quality.json
+            research/output/amsterdam-end-to-end-acceptance.json
           retention-days: 30
       - name: Compare latest dates with official Euronext historical source
         if: github.event_name == 'push' || inputs.dry_run == true
@@ -114,6 +118,7 @@ jobs:
             research/output/amsterdam-issuer-investigation-cases.json
             research/output/amsterdam-consolidated-quality-gate.json
             research/output/amsterdam-daily-run.json
+            research/output/amsterdam-end-to-end-acceptance.json
           if-no-files-found: warn
           retention-days: 30
       - name: Show prioritized issuer investigations in run summary
