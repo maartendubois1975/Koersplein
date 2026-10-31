@@ -18,7 +18,7 @@ assert.equal(noTrade.noTrade.length,1);
 assert.equal(noTrade.noTrade[0].referenceClose,2.15);
 assert.equal(noTrade.candidates.length,0);
 assert.equal(noTrade.approved,0);
-const missing=await collect({instruments:{LU2290522684:{symbol:'INPST'}}},'2026-10-30',async()=>({ok:true,text:async()=>html}));
+const missing=await collect({instruments:{LU2290522684:{symbol:'INPST'}}},'2026-10-30',async()=>({ok:true,text:async()=>html.split('<tr><td>')[0]}));
 assert.equal(missing.missing.length,1);
 assert.equal(missing.candidates.length,0);
 console.log('PASS Euronext candidate collector: normal, zero-trade, missing, no auto approval');
