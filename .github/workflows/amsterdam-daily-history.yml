@@ -31,6 +31,9 @@ jobs:
           node-version: '22'
       - name: Syntax check Amsterdam research programs before provider calls
         run: |
+          node --check scripts/history/session-readiness.mjs
+          node --check scripts/history/check-amsterdam-latest-session.mjs
+          node --check scripts/history/test-session-readiness.mjs
           node --check share.js
           node --check chart.js
           node --check scripts/research/amsterdam-period-quality.mjs
@@ -46,6 +49,7 @@ jobs:
       - name: Test dated quality fixtures and Amsterdam session rules
         run: |
           npm run test:amsterdam-session
+          node scripts/history/test-session-readiness.mjs
           node scripts/research/test-amsterdam-period-quality.mjs
       - name: Audit committed Amsterdam baseline before provider refresh
         run: |
@@ -134,10 +138,23 @@ jobs:
         run: node scripts/research/amsterdam-portfolio-diagnostic.mjs
       - name: Audit latest Amsterdam trading session and percentage changes
         run: node scripts/history/check-amsterdam-latest-session.mjs
+      - name: Upload session readiness evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-session-readiness
+          path: research/output/amsterdam-session-readiness.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Require a clean provider refresh before publishing
         if: github.event_name != 'push' && inputs.dry_run != true && steps.refresh.outcome != 'success'
         run: |
           echo 'Provider refresh had errors; refusing to publish any partial daily update.' >&2
+          exit 1
+      - name: Fail staging validation if provider refresh failed
+        if: steps.refresh.outcome != 'success'
+        run: |
+          echo 'Provider refresh failed; staging cannot be marked green.' >&2
           exit 1
       - name: Summarize provider refresh and public data checks
         if: always()
