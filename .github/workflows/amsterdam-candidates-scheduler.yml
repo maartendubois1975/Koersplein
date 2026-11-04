@@ -62,7 +62,7 @@ jobs:
               cp "$RUNNER_TEMP/amsterdam-summary.json" "reports/sessions/$session-summary.json"
             fi
           fi
-          git add reports/latest.json reports/summary-latest.json reports/sessions
+          git add reports/
           if ! git diff --cached --quiet; then
             git commit -m 'Update latest Amsterdam read-only candidate audit'
             git push origin HEAD:amsterdam-daily-reports
