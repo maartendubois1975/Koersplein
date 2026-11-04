@@ -24,5 +24,5 @@ for(const row of data.candidates){
   rows.push({...row,sourceVerified:true,sessionClosedVerified:true});
  }catch(error){rejected.push({key,reason:error.message});}
 }
-await writeFile(output,JSON.stringify({market:'XAMS',date:data.date,rows,rejected,verification:'direct-euronext-historical-table-after-session'},null,2)+'\\n');
+await writeFile(output,JSON.stringify({market:'XAMS',date:data.date,rows,rejected,verification:'direct-euronext-historical-table-after-session'},null,2)+'\n');
 console.log(JSON.stringify({date:data.date,accepted:rows.length,rejected:rejected.length,exceptions:rejected}));
