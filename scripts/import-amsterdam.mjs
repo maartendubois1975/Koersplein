@@ -24,7 +24,7 @@ for(const row of payload.rows){
  const doc=JSON.parse(await readFile(path,'utf8'));
  if(doc.instrument?.isin!==row.isin||doc.instrument?.mic!=='XAMS'||doc.instrument?.symbol!==row.symbol)throw Error('Stored identity mismatch '+key);
  const old=doc.bars.find(b=>b.date===row.date);
- if(old){decisions.push({key,status:old.open===row.open&&old.close===row.close&&old.volume===row.volume?'UNCHANGED':'CONFLICT_REVIEW_REQUIRED'});continue;}
+ if(old){decisions.push({key,status:old.open===row.open&&old.high===row.high&&old.low===row.low&&old.close===row.close&&old.volume===row.volume?'UNCHANGED':'CONFLICT_REVIEW_REQUIRED'});continue;}
  if(doc.bars.at(-1)?.date>=row.date){decisions.push({key,status:'HISTORICAL_GAP_REVIEW_REQUIRED'});continue;}
  if(row.sourceVerified!==true||row.sessionClosedVerified!==true){decisions.push({key,status:'UNVERIFIED_SOURCE_OR_SESSION'});continue;}
  const bar={date:row.date,open:row.open,high:row.high,low:row.low,close:row.close,volume:row.volume,adjustedClose:null};
