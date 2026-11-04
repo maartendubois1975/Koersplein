@@ -1,10 +1,9 @@
 import {readFile,writeFile} from 'node:fs/promises';
-import {pathToFileURL} from 'node:url';
 const [input,output]=process.argv.slice(2);
 if(!input||!output)throw Error('Usage: node scripts/verify-amsterdam.mjs candidates.json verified.json');
 const data=JSON.parse(await readFile(input,'utf8'));
 const manifest=JSON.parse(await readFile(new URL('../data/amsterdam-history-manifest.json',import.meta.url),'utf8'));
-if(data.market!=='XAMS'||!/^(\\d{4})-(\\d{2})-(\\d{2})$/.test(data.date)||!Array.isArray(data.candidates))throw Error('Invalid XAMS report');
+if(data.market!=='XAMS'||!/^(\d{4})-(\d{2})-(\d{2})$/.test(data.date)||!Array.isArray(data.candidates))throw Error('Invalid XAMS report');
 const date=new Date(data.date+'T00:00:00Z');
 if(!Number.isFinite(date.getTime())||date.toISOString().slice(0,10)!==data.date||[0,6].includes(date.getUTCDay()))throw Error('Invalid trading session');
 const now=new Date();
