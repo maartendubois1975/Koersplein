@@ -7,10 +7,12 @@ let oldest=null;
 for(const isin of Object.keys(manifest.instruments)){const h=JSON.parse(await readFile(new URL('../data/history/'+isin+'.json',import.meta.url),'utf8'));const d=h.coverage.lastDate;if(!oldest||d<oldest)oldest=d;}
 const end=latestCandidateSession(),days=[];
 for(let d=new Date(oldest+'T00:00:00Z');d.toISOString().slice(0,10)<end;){d.setUTCDate(d.getUTCDate()+1);if(d.getUTCDay()!==0&&d.getUTCDay()!==6)days.push(d.toISOString().slice(0,10));}
-if(days.length>30)throw Error('Backlog exceeds 30 sessions');
+const pendingSessions=days.length;
+// Process a bounded chronological batch; a long backlog must not stop all progress.
+const batch=days.slice(0,30);
 const run=(name,args)=>execFileSync(process.execPath,[new URL(name,import.meta.url).pathname,...args],{encoding:'utf8',maxBuffer:10485760});
 const report=[];
-for(const date of days){
+for(const date of batch){
  const raw=await collect(manifest,date);
  await writeFile('amsterdam-candidates.json',JSON.stringify(raw,null,2));
  // Coverage report is diagnostic: incomplete source coverage must not block valid stocks.
@@ -28,4 +30,4 @@ for(const date of days){
  report.push({date,valid:raw.candidates.length,errors:raw.errors.length,missing:raw.missing.length,imported:result.approved,skipped:result.skipped});
  console.log(JSON.stringify(report.at(-1)));
 }
-await writeFile('amsterdam-import.json',JSON.stringify({from:oldest,to:end,days:report},null,2));
+await writeFile('amsterdam-import.json',JSON.stringify({from:oldest,to:end,pendingSessions,processedSessions:report.length,remainingSessions:pendingSessions-report.length,days:report},null,2));
