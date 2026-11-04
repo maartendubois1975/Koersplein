@@ -7,7 +7,7 @@ let oldest=null;
 for(const isin of Object.keys(manifest.instruments)){const h=JSON.parse(await readFile(new URL('../data/history/'+isin+'.json',import.meta.url),'utf8'));const d=h.coverage.lastDate;if(!oldest||d<oldest)oldest=d;}
 const end=latestCandidateSession(),days=[];
 for(let d=new Date(oldest+'T00:00:00Z');d.toISOString().slice(0,10)<end;){d.setUTCDate(d.getUTCDate()+1);if(d.getUTCDay()!==0&&d.getUTCDay()!==6)days.push(d.toISOString().slice(0,10));}
-if(days.length>15)throw Error('Backlog exceeds 15 sessions');
+if(days.length>30)throw Error('Backlog exceeds 30 sessions');
 const run=(name,args)=>execFileSync(process.execPath,[new URL(name,import.meta.url).pathname,...args],{encoding:'utf8',maxBuffer:10485760});
 const report=[];
 for(const date of days){
