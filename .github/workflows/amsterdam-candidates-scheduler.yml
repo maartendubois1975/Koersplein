@@ -30,6 +30,25 @@ jobs:
             node scripts/report-amsterdam.mjs amsterdam-candidates.json > amsterdam-summary.json
             cat amsterdam-summary.json
           fi
+      - name: Verify Euronext source and completed trading session
+        if: always()
+        run: |
+          if [ -f amsterdam-candidates.json ]; then
+            node scripts/verify-amsterdam.mjs amsterdam-candidates.json amsterdam-verified.json
+          fi
+      - name: Import independently valid stocks into development history
+        if: always()
+        run: |
+          if [ ! -f amsterdam-verified.json ]; then exit 0; fi
+          node scripts/import-amsterdam.mjs amsterdam-verified.json --apply --partial > amsterdam-import.json
+          cat amsterdam-import.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/history/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Append verified Amsterdam daily OHLCV history'
+            git push origin HEAD:amsterdam-clean-20261031
+          fi
       - name: Preserve candidate report
         if: always()
         uses: actions/upload-artifact@v4
@@ -38,6 +57,8 @@ jobs:
           path: |
             amsterdam-candidates.json
             amsterdam-summary.json
+            amsterdam-verified.json
+            amsterdam-import.json
           if-no-files-found: warn
           retention-days: 14
       - name: Save latest raw report to isolated audit branch
