@@ -20,7 +20,7 @@ assert.equal(JSON.parse(await readFile(history)).bars.length,1,'dry run must not
 assert.equal(run(['--apply']).status,0,'apply');
 assert.equal(JSON.parse(await readFile(history)).bars.length,2,'must add bar');
 assert.equal(run(['--apply']).status,0,'repeat must be idempotent');
-for(const patch of [{volume:0,date:'2026-10-29'},{sourceVerified:false,date:'2026-10-29'},{symbol:'WRONG',date:'2026-10-29'},{date:'2026-10-28',close:9}]){
+for(const patch of [{volume:0,date:'2026-10-29'},{sourceVerified:false,date:'2026-10-29'},{symbol:'WRONG',date:'2026-10-29'},{date:'2026-10-28',close:9},{date:'2026-10-28',high:13},{date:'2026-10-28',low:8}]){
  await writeFile(input,JSON.stringify({market:'XAMS',rows:[{...row,...patch}]}));
  assert.notEqual(run(['--apply']).status,0,'reject bad input');
 }
@@ -34,4 +34,9 @@ assert.equal(afterPartial.bars.length,3,'only one new approved bar');
 assert.equal(afterPartial.bars.at(-1).date,'2026-10-30');
 assert.equal(run(['--apply','--partial']).status,0,'partial mode remains idempotent');
 assert.equal(JSON.parse(await readFile(history)).bars.length,3);
+await writeFile(input,JSON.stringify({market:'XAMS',rows:[{...row,date:'2026-10-29',open:10,high:12,low:9,close:11}]}));
+assert.equal(run(['--apply']).status,0,'verified historical gap backfill');
+const backfilled=JSON.parse(await readFile(history));
+assert.deepEqual(backfilled.bars.map(b=>b.date),['2026-10-27','2026-10-28','2026-10-29','2026-10-30']);
+assert.equal(backfilled.coverage.lastDate,'2026-10-30');
 console.log('PASS import: dry-run, append, idempotence, zero-volume, unverified, identity, conflict');
