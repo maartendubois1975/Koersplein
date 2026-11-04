@@ -30,12 +30,6 @@ jobs:
             node scripts/report-amsterdam.mjs amsterdam-candidates.json > amsterdam-summary.json
             cat amsterdam-summary.json
           fi
-      - name: Stage candidates for independent source review
-        if: always()
-        run: |
-          if [ -f amsterdam-candidates.json ]; then
-            node scripts/stage-amsterdam-review.mjs amsterdam-candidates.json amsterdam-review.json
-          fi
       - name: Preserve candidate report
         if: always()
         uses: actions/upload-artifact@v4
@@ -44,7 +38,6 @@ jobs:
           path: |
             amsterdam-candidates.json
             amsterdam-summary.json
-            amsterdam-review.json
           if-no-files-found: warn
           retention-days: 14
       - name: Save latest raw report to isolated audit branch
@@ -54,9 +47,6 @@ jobs:
           cp amsterdam-candidates.json "$RUNNER_TEMP/amsterdam-latest.json"
           if [ -f amsterdam-summary.json ]; then
             cp amsterdam-summary.json "$RUNNER_TEMP/amsterdam-summary.json"
-          fi
-          if [ -f amsterdam-review.json ]; then
-            cp amsterdam-review.json "$RUNNER_TEMP/amsterdam-review.json"
           fi
           git fetch origin amsterdam-daily-reports
           git checkout -B amsterdam-daily-reports origin/amsterdam-daily-reports
@@ -73,12 +63,6 @@ jobs:
             cp "$RUNNER_TEMP/amsterdam-summary.json" reports/summary-latest.json
             if [[ "$session" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
               cp "$RUNNER_TEMP/amsterdam-summary.json" "reports/sessions/$session-summary.json"
-            fi
-          fi
-          if [ -f "$RUNNER_TEMP/amsterdam-review.json" ]; then
-            cp "$RUNNER_TEMP/amsterdam-review.json" reports/review-latest.json
-            if [[ "$session" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
-              cp "$RUNNER_TEMP/amsterdam-review.json" "reports/sessions/$session-review.json"
             fi
           fi
           git add reports/
