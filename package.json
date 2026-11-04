@@ -3,13 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/test-amsterdam-clean.mjs && node scripts/test-import-amsterdam.mjs && node scripts/test-euronext-parser.mjs && node scripts/test-fetch-amsterdam.mjs && node scripts/test-report-amsterdam.mjs",
+    "test": "node scripts/test-amsterdam-clean.mjs && node scripts/test-import-amsterdam.mjs && node scripts/test-euronext-parser.mjs && node scripts/test-fetch-amsterdam.mjs && node scripts/test-report-amsterdam.mjs && node scripts/test-verify-amsterdam.mjs",
     "history:test": "node scripts/test-amsterdam-clean.mjs",
     "backtest:research": "node scripts/backtest-amsterdam.mjs",
     "import:dry-run": "node scripts/import-amsterdam.mjs",
     "fetch:candidates": "node scripts/fetch-amsterdam.mjs",
     "probe:euronext": "node scripts/probe-euronext.mjs",
-    "diagnostics:euronext": "node scripts/probe-euronext.mjs && node scripts/probe-eight.mjs"
+    "diagnostics:euronext": "node scripts/probe-euronext.mjs && node scripts/probe-eight.mjs",
+    "verify:candidates": "node scripts/verify-amsterdam.mjs"
   },
   "engines": {
     "node": ">=22.5"
