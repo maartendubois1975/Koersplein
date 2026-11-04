@@ -21,32 +21,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Collect read-only Euronext candidates
-        run: node scripts/fetch-amsterdam.mjs auto amsterdam-candidates.json
-      - name: Check coverage for all 80 instruments
-        if: always()
+      - name: Collect, verify and import missing Amsterdam sessions
         run: |
-          if [ -f amsterdam-candidates.json ]; then
-            node scripts/report-amsterdam.mjs amsterdam-candidates.json > amsterdam-summary.json
-            cat amsterdam-summary.json
-          fi
-      - name: Verify Euronext source and completed trading session
-        if: always()
-        run: |
-          if [ -f amsterdam-candidates.json ]; then
-            node scripts/verify-amsterdam.mjs amsterdam-candidates.json amsterdam-verified.json
-          fi
-      - name: Import independently valid stocks into development history
-        if: always()
-        run: |
-          if [ ! -f amsterdam-verified.json ]; then exit 0; fi
-          node scripts/import-amsterdam.mjs amsterdam-verified.json --apply --partial > amsterdam-import.json
-          cat amsterdam-import.json
+          node scripts/run-amsterdam-daily.mjs
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/history/
           if ! git diff --cached --quiet; then
-            git commit -m 'Append verified Amsterdam daily OHLCV history'
+            git commit -m 'Append verified Amsterdam historical sessions'
             git push origin HEAD:amsterdam-clean-20261031
           fi
       - name: Preserve candidate report
