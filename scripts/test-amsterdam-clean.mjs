@@ -30,7 +30,7 @@ for(const file of ['index.html','amsterdam.html','amsterdam-week.js','share.html
  const body=await readFile(new URL(file,root),'utf8');
  assert.ok(body.length>100,'Missing frontend '+file);
 }
-const scripts=['amsterdam-week.js','share.js','chart.js','market-week-core.mjs','scripts/research/amsterdam-period-quality.mjs','scripts/backtest-amsterdam.mjs'];
+const scripts=['amsterdam-week.js','share.js','chart.js','market-week-core.mjs','scripts/research/amsterdam-period-quality.mjs','scripts/backtest-amsterdam.mjs','scripts/run-amsterdam-daily.mjs','scripts/verify-amsterdam.mjs','scripts/import-amsterdam.mjs','scripts/amsterdam-session.mjs'];
 for(const script of scripts){
  execFileSync(process.execPath,['--check',new URL(script,root).pathname],{stdio:'pipe'});
 }
