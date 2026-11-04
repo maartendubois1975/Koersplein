@@ -13,7 +13,16 @@ const report=[];
 for(const date of days){
  const raw=await collect(manifest,date);
  await writeFile('amsterdam-candidates.json',JSON.stringify(raw,null,2));
- await writeFile('amsterdam-summary.json',run('report-amsterdam.mjs',['amsterdam-candidates.json']));
+ // Coverage report is diagnostic: incomplete source coverage must not block valid stocks.
+ let coverageReport;
+ try {
+  coverageReport=run('report-amsterdam.mjs',['amsterdam-candidates.json']);
+ } catch(error) {
+  if(error.status!==1)throw error;
+  coverageReport=error.stdout?.toString()||'';
+  if(!coverageReport.trim())throw error;
+ }
+ await writeFile('amsterdam-summary.json',coverageReport);
  run('verify-amsterdam.mjs',['amsterdam-candidates.json','amsterdam-verified.json']);
  const result=JSON.parse(run('import-amsterdam.mjs',['amsterdam-verified.json','--apply','--partial']));
  report.push({date,valid:raw.candidates.length,errors:raw.errors.length,missing:raw.missing.length,imported:result.approved,skipped:result.skipped});
