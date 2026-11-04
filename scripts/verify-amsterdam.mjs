@@ -7,7 +7,8 @@ if(data.market!=='XAMS'||!/^(\d{4})-(\d{2})-(\d{2})$/.test(data.date)||!Array.is
 const date=new Date(data.date+'T00:00:00Z');
 if(!Number.isFinite(date.getTime())||date.toISOString().slice(0,10)!==data.date||[0,6].includes(date.getUTCDay()))throw Error('Invalid trading session');
 const now=new Date();
-const amsterdamDate=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);
+const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now).map(p=>[p.type,p.value]));
+const amsterdamDate=parts.year+'-'+parts.month+'-'+parts.day;
 const amsterdamHour=Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Amsterdam',hour:'2-digit',hourCycle:'h23'}).format(now));
 if(data.date>amsterdamDate||(data.date===amsterdamDate&&amsterdamHour<20))throw Error('Session not completed');
 const rows=[],rejected=[],seen=new Set();
