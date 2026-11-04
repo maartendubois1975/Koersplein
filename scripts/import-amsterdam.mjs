@@ -25,11 +25,11 @@ for(const row of payload.rows){
  if(doc.instrument?.isin!==row.isin||doc.instrument?.mic!=='XAMS'||doc.instrument?.symbol!==row.symbol)throw Error('Stored identity mismatch '+key);
  const old=doc.bars.find(b=>b.date===row.date);
  if(old){decisions.push({key,status:old.open===row.open&&old.high===row.high&&old.low===row.low&&old.close===row.close&&old.volume===row.volume?'UNCHANGED':'CONFLICT_REVIEW_REQUIRED'});continue;}
- if(doc.bars.at(-1)?.date>=row.date){decisions.push({key,status:'HISTORICAL_GAP_REVIEW_REQUIRED'});continue;}
+ 
  if(row.sourceVerified!==true||row.sessionClosedVerified!==true){decisions.push({key,status:'UNVERIFIED_SOURCE_OR_SESSION'});continue;}
  const bar={date:row.date,open:row.open,high:row.high,low:row.low,close:row.close,volume:row.volume,adjustedClose:null};
- const bars=[...doc.bars,bar];
- const updated={...doc,bars,coverage:{...doc.coverage,lastDate:row.date,records:bars.length,volumeRecords:bars.filter(b=>b.volume!=null).length,missingVolumeRecords:bars.filter(b=>b.volume==null).length},provider:{...doc.provider,metadata:{...doc.provider?.metadata,lastImportSource:row.source,lastImportSourceUrl:row.sourceUrl,lastImportRetrievedAt:row.retrievedAt}}};
+ const bars=[...doc.bars,bar].sort((a,b)=>a.date.localeCompare(b.date));
+ const updated={...doc,bars,coverage:{...doc.coverage,lastDate:bars.at(-1).date,records:bars.length,volumeRecords:bars.filter(b=>b.volume!=null).length,missingVolumeRecords:bars.filter(b=>b.volume==null).length},provider:{...doc.provider,metadata:{...doc.provider?.metadata,lastImportSource:row.source,lastImportSourceUrl:row.sourceUrl,lastImportRetrievedAt:row.retrievedAt}}};
  staged.push({path,updated});decisions.push({key,status:'APPROVED'});
  } catch(error) {
   if(!partial)throw error;
