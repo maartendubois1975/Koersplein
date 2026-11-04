@@ -6,15 +6,8 @@ const fmt=(value,currency)=>{const n=positiveNumber(value);if(n===null)return 'â
 const signed=(value,digits=2)=>new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:digits,maximumFractionDigits:digits}).format(value);
 const change=(open,close,currency)=>{const d=sessionChange(open,close);if(!d)return 'â€”';return signed(d.absolute,2)+' '+esc(currency||'EUR')+' / '+signed(d.percent,2)+'%';};
 const amsterdamDate=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-const latestClosedWeek=()=>{
- const now=new Date(amsterdamDate()+'T12:00:00Z');
- const weekday=now.getUTCDay();
- const daysSinceMonday=(weekday+6)%7;
- const monday=new Date(now);
- monday.setUTCDate(monday.getUTCDate()-daysSinceMonday-(weekday>=1&&weekday<=5?7:0));
- return Array.from({length:5},(_,i)=>{const d=new Date(monday);d.setUTCDate(d.getUTCDate()+i);return d.toISOString().slice(0,10);});
-};
-const days=latestClosedWeek();
+const latestFiveSessions=()=>{const d=new Date(amsterdamDate()+'T00:00:00Z');const hour=Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Amsterdam',hour:'2-digit',hourCycle:'h23'}).format(new Date()));if(hour<20)d.setUTCDate(d.getUTCDate()-1);const result=[];while(result.length<5){if(d.getUTCDay()!==0&&d.getUTCDay()!==6)result.push(d.toISOString().slice(0,10));d.setUTCDate(d.getUTCDate()-1);}return result.reverse();};
+const days=latestFiveSessions();
 const weekLabel=days[0]+' t/m '+days.at(-1);
 const LOCAL_HISTORY_BASE='data/history/';
 // Previous *traded* close can cross a session only if the exchange explicitly
@@ -86,7 +79,7 @@ function render(){
 async function start(){
  if(!target)return;
  try{
-  const heading=document.getElementById('week-heading');if(heading)heading.textContent='Afgesloten handelsweek '+weekLabel;
+  const heading=document.getElementById('week-heading');if(heading)heading.textContent='Laatste vijf beursdagen '+weekLabel;
   const catalogResponse=await fetch('data/euronext-amsterdam.json',{cache:'no-store'});
   if(!catalogResponse.ok)throw Error('CATALOG_HTTP_'+catalogResponse.status);
   const catalog=await catalogResponse.json();
