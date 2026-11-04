@@ -1,7 +1,5 @@
 name: Amsterdam staging daily refresh
 on:
-  schedule:
-    - cron: '20 19 * * 1-5'
   workflow_dispatch:
 permissions:
   contents: write
