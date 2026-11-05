@@ -30,7 +30,7 @@ for(const file of ['index.html','amsterdam.html','amsterdam-week.js','share.html
  const body=await readFile(new URL(file,root),'utf8');
  assert.ok(body.length>100,'Missing frontend '+file);
 }
-const scripts=['amsterdam-week.js','share.js','chart.js','market-week-core.mjs','scripts/research/amsterdam-period-quality.mjs','scripts/backtest-amsterdam.mjs','scripts/run-amsterdam-daily.mjs','scripts/verify-amsterdam.mjs','scripts/import-amsterdam.mjs','scripts/amsterdam-session.mjs'];
+const scripts=['amsterdam-week.js','share.js','chart.js','market-week-core.mjs','scripts/research/amsterdam-period-quality.mjs','scripts/backtest-amsterdam.mjs','scripts/run-amsterdam-daily.mjs','scripts/verify-amsterdam.mjs','scripts/import-amsterdam.mjs','scripts/amsterdam-session.mjs','scripts/amsterdam-import-plan.mjs'];
 for(const script of scripts){
  execFileSync(process.execPath,['--check',new URL(script,root).pathname],{stdio:'pipe'});
 }
@@ -43,6 +43,7 @@ assert.ok(detail.includes('amsterdam-history-manifest.json'),'Canonical manifest
 assert.ok(detail.includes('data/history/'),'Local history');
 const backtest=JSON.parse(execFileSync(process.execPath,[new URL('scripts/backtest-amsterdam.mjs',root).pathname],{encoding:'utf8',maxBuffer:1024*1024}));
 assert.equal(backtest.status,'RESEARCH_ONLY');
-assert.equal(backtest.results.length,6);
+assert.equal(backtest.results.length,9);
 assert.ok(backtest.results.every(x=>x.baselineSignals>0));
+assert.deepEqual([...new Set(backtest.results.map(x=>x.threshold))].sort((a,b)=>a-b),[10,20,30]);
 console.log(JSON.stringify({status:'PASS',catalog:catalog.length,mapped:ids.length,historicalRecords:total,lastObservedDate:latest,scope:'STRUCTURAL_ONLY_NOT_LIVE_VERIFIED'}));
