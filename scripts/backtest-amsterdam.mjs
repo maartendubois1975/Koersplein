@@ -14,14 +14,15 @@ const minimumGapDays=21;
 for(const [id,instrument] of Object.entries(manifest.instruments)){
  const doc=await read('data/history/'+id+'.json');
  const bars=validateHistoryDocument(doc,{isin:id,symbol:instrument.symbol,mic:'XAMS'});
- // Last 30% of each instrument's eligible signal dates are a holdout.
- // The momentum rule is fixed beforehand; no threshold fitting on this holdout.
- const eligible=bars.length-252-252;
- if(eligible<40){skipped++;continue;}
+ // Momentum needs 126 prior trading bars; every outcome must mature before evaluation.
+ if(bars.length<190){skipped++;continue;}
  // One fixed calendar holdout prevents different instruments from testing different eras.
- const first=Math.max(252,bars.findIndex(b=>b.date>=holdoutStart));
- if(first<252||first>=bars.length-63){skipped++;continue;}
+ const firstIndex=bars.findIndex(b=>b.date>=holdoutStart);
+ if(firstIndex<0){skipped++;continue;}
+ const first=Math.max(126,firstIndex);
+ if(first>=bars.length-63){skipped++;continue;}
  for(const h of horizons){
+  if(first>=bars.length-h.days)continue;
   for(const t of thresholds)results.get(h.label+'|'+t).companies++;
   for(let i=first;i<bars.length-h.days;i+=Math.max(h.days,minimumGapDays)){
    const current=bars[i].close,old=bars[i-126].close,future=bars[i+h.days].close;
