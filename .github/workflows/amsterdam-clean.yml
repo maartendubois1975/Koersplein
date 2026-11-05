@@ -17,7 +17,9 @@ jobs:
           node-version: '22'
       - run: npm test
       - name: Evaluate Amsterdam holdout diagnostics
-        run: node scripts/backtest-amsterdam.mjs > amsterdam-backtest.json
+        run: |
+          node scripts/backtest-amsterdam.mjs > amsterdam-backtest.json
+          cat amsterdam-backtest.json
       - name: Publish research diagnostics
         uses: actions/upload-artifact@v4
         with:
