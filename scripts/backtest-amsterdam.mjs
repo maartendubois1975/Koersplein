@@ -8,7 +8,7 @@ const horizons=[{label:'3 maanden',days:63},{label:'6 maanden',days:126},{label:
 const thresholds=[0.10,0.20,0.30];
 const results=new Map();
 for(const h of horizons)for(const t of thresholds)results.set(h.label+'|'+t,{horizon:h.label,threshold:t*100,signals:0,hits:0,baselineSignals:0,baselineHits:0,companies:0});
-let skipped=0;
+let skipped=0;\nconst holdoutStart='2025-01-01';\nconst minimumGapDays=21;
 for(const [id,instrument] of Object.entries(manifest.instruments)){
  const doc=await read('data/history/'+id+'.json');
  const bars=validateHistoryDocument(doc,{isin:id,symbol:instrument.symbol,mic:'XAMS'});
@@ -16,13 +16,13 @@ for(const [id,instrument] of Object.entries(manifest.instruments)){
  // The momentum rule is fixed beforehand; no threshold fitting on this holdout.
  const eligible=bars.length-252-252;
  if(eligible<40){skipped++;continue;}
- const first=252+Math.floor(eligible*0.7);
+ // One fixed calendar holdout prevents different instruments from testing different eras.\n const first=Math.max(252,bars.findIndex(b=>b.date>=holdoutStart));\n if(first<252||first>=bars.length-63){skipped++;continue;}
  for(const h of horizons){
   for(const t of thresholds)results.get(h.label+'|'+t).companies++;
-  for(let i=first;i<bars.length-h.days;i+=21){
+  for(let i=first;i<bars.length-h.days;i+=Math.max(h.days,minimumGapDays)){
    const current=bars[i].close,old=bars[i-126].close,future=bars[i+h.days].close;
    if(!(current>0&&old>0&&future>0))continue;
-   const momentum=current/old-1;
+   // Raw OHLC can contain corporate actions; flag these results as diagnostic only.\n   const momentum=current/old-1;
    const forward=future/current-1;
    for(const t of thresholds){
     const r=results.get(h.label+'|'+t);
@@ -34,4 +34,4 @@ for(const [id,instrument] of Object.entries(manifest.instruments)){
  }
 }
 const rows=[...results.values()].map(r=>({...r,hitRate:r.signals?r.hits/r.signals:null,baselineRate:r.baselineSignals?r.baselineHits/r.baselineSignals:null,lift:r.signals&&r.baselineSignals?(r.hits/r.signals)/(r.baselineHits/r.baselineSignals||Infinity):null}));
-console.log(JSON.stringify({method:'FIXED_6M_MOMENTUM_10PCT',status:'RESEARCH_ONLY',caveats:['Daily bar counts approximate calendar horizons','Historical adjusted prices and corporate actions not independently verified','Overlapping observations; survivorship bias; no transaction costs','Not a trained predictive model and not investment advice'],skippedCompanies:skipped,results:rows},null,2));
+console.log(JSON.stringify({method:'FIXED_6M_MOMENTUM_10PCT',holdoutStart,signalSpacing:'NON_OVERLAPPING_PER_HORIZON',status:'RESEARCH_ONLY',caveats:['Daily bar counts approximate calendar horizons','Historical adjusted prices and corporate actions not independently verified','Signals spaced by horizon per instrument; cross-company correlations and survivorship bias remain; no transaction costs','Not a trained predictive model and not investment advice'],skippedCompanies:skipped,results:rows},null,2));
