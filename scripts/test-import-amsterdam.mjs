@@ -39,4 +39,12 @@ assert.equal(run(['--apply']).status,0,'verified historical gap backfill');
 const backfilled=JSON.parse(await readFile(history));
 assert.deepEqual(backfilled.bars.map(b=>b.date),['2026-10-27','2026-10-28','2026-10-29','2026-10-30']);
 assert.equal(backfilled.coverage.lastDate,'2026-10-30');
+// Two dates for one instrument in a single payload must both survive the write.
+await writeFile(input,JSON.stringify({market:'XAMS',rows:[{...row,date:'2026-11-02'},{...row,date:'2026-11-03'}]}));
+assert.equal(run(['--apply']).status,0,'multi-date batch applies');
+const multi=JSON.parse(await readFile(history));
+assert.deepEqual(multi.bars.slice(-2).map(b=>b.date),['2026-11-02','2026-11-03']);
+assert.equal(multi.coverage.lastDate,'2026-11-03');
+assert.equal(run(['--apply']).status,0,'multi-date batch idempotent');
+assert.equal(JSON.parse(await readFile(history)).bars.length,6);
 console.log('PASS import: dry-run, append, idempotence, zero-volume, unverified, identity, conflict');
