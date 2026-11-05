@@ -1,4 +1,4 @@
-import {AMSTERDAM_REFERENCE_WEEK,collectMarketWeek,sessionChange,positiveNumber,verifiedNoTradeStatus} from './market-week-core.mjs?v=20261026xams-retry1';
+import {collectMarketWeek,sessionChange,positiveNumber} from './market-week-core.mjs';
 const target=document.getElementById('week-prices-table');
 const search=document.getElementById('search');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -21,8 +21,9 @@ const previousVerifiedClose=(row,index)=>{
  }
  return null;
 };
-let snapshot=null,statusAudit=null;
-const isNoTrade=(row,date)=>!row.bars.has(date)&&verifiedNoTradeStatus(statusAudit,row.share,'XAMS',date,days);
+let snapshot=null;
+// No current official status feed is available. A missing bar is not proof of no trading.
+const isNoTrade=()=>false;
 // Identical five-state precedence to the generic Amsterdam renderer. A verified
 // NO_TRADES status may supersede a zero-volume reference bar, never a real trade.
 const dayStatus=(row,date)=>{
@@ -90,8 +91,6 @@ async function start(){
   if(!manifestResponse.ok)throw Error('MANIFEST_HTTP_'+manifestResponse.status);
   const manifest=await manifestResponse.json();
   const shares=(catalog.shares||[]).filter(share=>Object.hasOwn(manifest.instruments||{},share.isin));
-  // A failed status snapshot must never hide validated traded prices.
-  try{const statusResponse=await fetch('data/amsterdam-no-trades-2026-10-19-23.json',{cache:'no-store'});if(statusResponse.ok)statusAudit=await statusResponse.json();}catch{statusAudit=null;}
   document.getElementById('share-count').textContent=shares.length;
   target.textContent='Vijf handelsdagen voor '+shares.length+' aandelen worden gecontroleerd…';
   snapshot=await collectMarketWeek({catalog:shares,manifest,apiBase:api,mic:'XAMS',dates:days,concurrency:8,fetchImpl:async (url,options)=>{const id=decodeURIComponent(url.split('/').at(-1));return fetch(LOCAL_HISTORY_BASE+encodeURIComponent(id)+'.json',options);}});
