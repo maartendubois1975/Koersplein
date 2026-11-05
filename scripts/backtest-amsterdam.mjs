@@ -8,7 +8,9 @@ const horizons=[{label:'3 maanden',days:63},{label:'6 maanden',days:126},{label:
 const thresholds=[0.10,0.20,0.30];
 const results=new Map();
 for(const h of horizons)for(const t of thresholds)results.set(h.label+'|'+t,{horizon:h.label,threshold:t*100,signals:0,hits:0,baselineSignals:0,baselineHits:0,companies:0});
-let skipped=0;\nconst holdoutStart='2025-01-01';\nconst minimumGapDays=21;
+let skipped=0;
+const holdoutStart='2025-01-01';
+const minimumGapDays=21;
 for(const [id,instrument] of Object.entries(manifest.instruments)){
  const doc=await read('data/history/'+id+'.json');
  const bars=validateHistoryDocument(doc,{isin:id,symbol:instrument.symbol,mic:'XAMS'});
@@ -16,13 +18,16 @@ for(const [id,instrument] of Object.entries(manifest.instruments)){
  // The momentum rule is fixed beforehand; no threshold fitting on this holdout.
  const eligible=bars.length-252-252;
  if(eligible<40){skipped++;continue;}
- // One fixed calendar holdout prevents different instruments from testing different eras.\n const first=Math.max(252,bars.findIndex(b=>b.date>=holdoutStart));\n if(first<252||first>=bars.length-63){skipped++;continue;}
+ // One fixed calendar holdout prevents different instruments from testing different eras.
+ const first=Math.max(252,bars.findIndex(b=>b.date>=holdoutStart));
+ if(first<252||first>=bars.length-63){skipped++;continue;}
  for(const h of horizons){
   for(const t of thresholds)results.get(h.label+'|'+t).companies++;
   for(let i=first;i<bars.length-h.days;i+=Math.max(h.days,minimumGapDays)){
    const current=bars[i].close,old=bars[i-126].close,future=bars[i+h.days].close;
    if(!(current>0&&old>0&&future>0))continue;
-   // Raw OHLC can contain corporate actions; flag these results as diagnostic only.\n   const momentum=current/old-1;
+   // Raw OHLC can contain corporate actions; flag these results as diagnostic only.
+   const momentum=current/old-1;
    const forward=future/current-1;
    for(const t of thresholds){
     const r=results.get(h.label+'|'+t);
