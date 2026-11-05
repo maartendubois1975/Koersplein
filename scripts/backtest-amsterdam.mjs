@@ -5,7 +5,7 @@ import {validateHistoryDocument} from '../chart.js';
 const read=async path=>JSON.parse(await readFile(new URL('../'+path,import.meta.url),'utf8'));
 const manifest=await read('data/amsterdam-history-manifest.json');
 const horizons=[{label:'3 maanden',days:63},{label:'6 maanden',days:126},{label:'12 maanden',days:252}];
-const thresholds=[0.10,0.20];
+const thresholds=[0.10,0.20,0.30];
 const results=new Map();
 for(const h of horizons)for(const t of thresholds)results.set(h.label+'|'+t,{horizon:h.label,threshold:t*100,signals:0,hits:0,baselineSignals:0,baselineHits:0,companies:0});
 let skipped=0;
