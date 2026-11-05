@@ -23,15 +23,18 @@
       "partialHistory": false,
       "failedWindows": [],
       "adjustmentStatus": "UNVERIFIED_RAW_CLOSE_ONLY",
-      "adjustedCloseSource": null
+      "adjustedCloseSource": null,
+      "lastImportSource": "Euronext public historical table",
+      "lastImportSourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BMG0112X1056-XAMS",
+      "lastImportRetrievedAt": "2026-11-05T00:22:20.916Z"
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "1995-08-01",
-    "lastDate": "2026-10-29",
-    "records": 7939,
-    "volumeRecords": 7939,
+    "lastDate": "2026-11-04",
+    "records": 7943,
+    "volumeRecords": 7943,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -71486,6 +71489,42 @@
       "close": 7.472,
       "adjustedClose": null,
       "volume": 3863442
+    },
+    {
+      "date": "2026-10-30",
+      "open": 7.45,
+      "high": 7.45,
+      "low": 7.366,
+      "close": 7.394,
+      "volume": 4678221,
+      "adjustedClose": null
+    },
+    {
+      "date": "2026-11-02",
+      "open": 7.37,
+      "high": 7.452,
+      "low": 7.348,
+      "close": 7.416,
+      "volume": 4541526,
+      "adjustedClose": null
+    },
+    {
+      "date": "2026-11-03",
+      "open": 7.37,
+      "high": 7.464,
+      "low": 7.362,
+      "close": 7.42,
+      "volume": 2663340,
+      "adjustedClose": null
+    },
+    {
+      "date": "2026-11-04",
+      "open": 7.442,
+      "high": 7.644,
+      "low": 7.442,
+      "close": 7.622,
+      "volume": 6365673,
+      "adjustedClose": null
     }
   ]
 }

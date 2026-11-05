@@ -23,15 +23,18 @@
       "partialHistory": false,
       "failedWindows": [],
       "adjustmentStatus": "UNVERIFIED_RAW_CLOSE_ONLY",
-      "adjustedCloseSource": null
+      "adjustedCloseSource": null,
+      "lastImportSource": "Euronext public historical table",
+      "lastImportSourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/LU0569974404-XAMS",
+      "lastImportRetrievedAt": "2026-11-05T00:22:21.846Z"
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2011-01-26",
-    "lastDate": "2026-10-29",
-    "records": 4033,
-    "volumeRecords": 4033,
+    "lastDate": "2026-11-04",
+    "records": 4037,
+    "volumeRecords": 4037,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -36332,6 +36335,42 @@
       "close": 35.46,
       "adjustedClose": null,
       "volume": 119979
+    },
+    {
+      "date": "2026-10-30",
+      "open": 35.1,
+      "high": 35.26,
+      "low": 34.06,
+      "close": 34.06,
+      "volume": 172034,
+      "adjustedClose": null
+    },
+    {
+      "date": "2026-11-02",
+      "open": 34.2,
+      "high": 35.4,
+      "low": 34.08,
+      "close": 35.36,
+      "volume": 154353,
+      "adjustedClose": null
+    },
+    {
+      "date": "2026-11-03",
+      "open": 34.42,
+      "high": 35.46,
+      "low": 34.42,
+      "close": 34.62,
+      "volume": 85512,
+      "adjustedClose": null
+    },
+    {
+      "date": "2026-11-04",
+      "open": 34.6,
+      "high": 35.94,
+      "low": 34.52,
+      "close": 35.12,
+      "volume": 114136,
+      "adjustedClose": null
     }
   ]
 }
