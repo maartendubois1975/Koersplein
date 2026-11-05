@@ -16,3 +16,11 @@ jobs:
         with:
           node-version: '22'
       - run: npm test
+      - name: Evaluate Amsterdam holdout diagnostics
+        run: node scripts/backtest-amsterdam.mjs > amsterdam-backtest.json
+      - name: Publish research diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-backtest-${{ github.sha }}
+          path: amsterdam-backtest.json
+          retention-days: 14
