@@ -24,21 +24,17 @@ for(const patch of [{volume:0,date:'2026-10-29'},{sourceVerified:false,date:'202
  await writeFile(input,JSON.stringify({market:'XAMS',rows:[{...row,...patch}]}));
  assert.notEqual(run(['--apply']).status,0,'reject bad input');
 }
-// In partial mode an unverified row must not prevent a different approved row.
+// Invalid candidates must prevent the entire batch from being written, even in partial mode.
 await writeFile(input,JSON.stringify({market:'XAMS',rows:[{...row,date:'2026-10-29',sourceVerified:false},{...row,date:'2026-10-29',isin:'BAD_ISIN'},{...row,date:'2026-10-30',close:11}]}));
 assert.notEqual(run(['--apply']).status,0,'strict mode refuses mixed batch');
-assert.equal(run(['--apply','--partial']).status,0,'partial mode imports approved row despite invalid identity');
+assert.notEqual(run(['--apply','--partial']).status,0,'partial mode must also refuse unsafe writes');
 assert.match(run(['--partial']).stdout,/REJECTED_INVALID_ROW/,'invalid rows reported separately');
-const afterPartial=JSON.parse(await readFile(history));
-assert.equal(afterPartial.bars.length,3,'only one new approved bar');
-assert.equal(afterPartial.bars.at(-1).date,'2026-10-30');
-assert.equal(run(['--apply','--partial']).status,0,'partial mode remains idempotent');
-assert.equal(JSON.parse(await readFile(history)).bars.length,3);
+assert.equal(JSON.parse(await readFile(history)).bars.length,2,'mixed batch must not modify history');
 await writeFile(input,JSON.stringify({market:'XAMS',rows:[{...row,date:'2026-10-29',open:10,high:12,low:9,close:11}]}));
 assert.equal(run(['--apply']).status,0,'verified historical gap backfill');
 const backfilled=JSON.parse(await readFile(history));
-assert.deepEqual(backfilled.bars.map(b=>b.date),['2026-10-27','2026-10-28','2026-10-29','2026-10-30']);
-assert.equal(backfilled.coverage.lastDate,'2026-10-30');
+assert.deepEqual(backfilled.bars.map(b=>b.date),['2026-10-27','2026-10-28','2026-10-29']);
+assert.equal(backfilled.coverage.lastDate,'2026-10-29');
 // Two dates for one instrument in a single payload must both survive the write.
 await writeFile(input,JSON.stringify({market:'XAMS',rows:[{...row,date:'2026-11-02'},{...row,date:'2026-11-03'}]}));
 assert.equal(run(['--apply']).status,0,'multi-date batch applies');
@@ -46,5 +42,5 @@ const multi=JSON.parse(await readFile(history));
 assert.deepEqual(multi.bars.slice(-2).map(b=>b.date),['2026-11-02','2026-11-03']);
 assert.equal(multi.coverage.lastDate,'2026-11-03');
 assert.equal(run(['--apply']).status,0,'multi-date batch idempotent');
-assert.equal(JSON.parse(await readFile(history)).bars.length,6);
+assert.equal(JSON.parse(await readFile(history)).bars.length,5);
 console.log('PASS import: dry-run, append, idempotence, zero-volume, unverified, identity, conflict');
