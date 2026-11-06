@@ -1,0 +1,21 @@
+name: Amsterdam import safety tests
+on:
+  push:
+    branches:
+      - fix/amsterdam-import-safety-20261106
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  import-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run isolated import safety regressions
+        run: node --test scripts/test-amsterdam-import-safety.mjs
+      - name: Run existing project tests
+        run: npm test
