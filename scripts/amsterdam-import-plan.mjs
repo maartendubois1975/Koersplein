@@ -23,9 +23,10 @@ export function planAmsterdamImport(lastDates,end,{recentLimit=3,rotationDate=en
  // remains explicitly unverified and never becomes a fabricated OHLC bar.
  const dayNumber=Math.floor(parseDay(rotationDate).getTime()/86400000);
  const historical=backlog.length?[backlog[dayNumber%backlog.length]]:[];
- const sessions=[...new Set([...historical,...recent])].sort();
+ // Always process the newest sessions first; a failed backfill must not block freshness.
+ const sessions=[...new Set([...recent].reverse().concat(historical))];
  return {end,oldest:[...lastDates].sort()[0],pendingSessions:unique.length,
    sessions,deferredSessions:unique.length-sessions.length,
    recentSessions:recent.length,backfillSessions:historical.length,
-   policy:'RECENT_FIRST_ROTATING_BACKFILL'};
+   policy:'NEWEST_FIRST_ROTATING_BACKFILL'};
 }
