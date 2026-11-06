@@ -30,8 +30,10 @@ try{
   if(summary.market!=='XAMS'||summary.date!==date||summary.expected!==80||summary.accounted!==80||!summary.complete)throw Error('Invalid 80-instrument coverage '+date);
   await writeFile('amsterdam-summary.json',output);
   run('verify-amsterdam.mjs',['amsterdam-candidates.json','amsterdam-verified.json']);
+  const verified=JSON.parse(await readFile('amsterdam-verified.json','utf8'));
+  if(verified.rejected.length)throw Error('Amsterdam verification rejected '+verified.rejected.length+' candidates on '+date+': '+JSON.stringify(verified.rejected));
   const result=JSON.parse(run('import-amsterdam.mjs',['amsterdam-verified.json','--apply','--partial']));
-  report.push({date,candidates:raw.candidates.length,noTrade:raw.noTrade.length,missing:raw.missing.length,errors:raw.errors.length,imported:result.approved,skipped:result.skipped});
+  report.push({date,candidates:raw.candidates.length,noTrade:raw.noTrade.length,missing:raw.missing.length,errors:raw.errors.length,verified:verified.rows.length,imported:result.approved,skipped:result.skipped});
   console.log(JSON.stringify(report.at(-1)));
  }
 }finally{
