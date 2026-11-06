@@ -5,7 +5,7 @@ import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
 const importer=resolve('scripts/import-amsterdam.mjs');
-const isin='NL0000000001',symbol='TEST';
+const isin='NL9999999999',symbol='TEST';
 const baseRow={isin,symbol,mic:'XAMS',date:'2026-10-30',open:10,high:12,low:9,close:11,volume:100,source:'Euronext public historical table',sourceUrl:'https://example.test',retrievedAt:'2026-10-31T10:00:00Z',sourceVerified:true,sessionClosedVerified:true};
 async function fixture(rows){
  const dir=await mkdtemp(join(tmpdir(),'amsterdam-import-'));
