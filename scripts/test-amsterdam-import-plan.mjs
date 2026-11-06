@@ -5,16 +5,17 @@ assert.deepEqual(tradingSessionsAfter('2026-11-04','2026-11-04'),[]);
 assert.throws(()=>tradingSessionsAfter('2026-02-30','2026-03-01'));
 const last=Array(79).fill('2026-11-03').concat('2026-01-02');
 const p=planAmsterdamImport(last,'2026-11-04');
-assert.equal(p.sessions.at(-1),'2026-11-04');
+assert.equal(p.sessions[0],'2026-11-04');
 assert.equal(p.recentSessions,3);
 assert.equal(p.backfillSessions,1);
 assert.equal(p.sessions.length,4);
+assert.ok(p.sessions[0]>p.sessions[1],'newest sessions must be first');
 assert.ok(p.deferredSessions>0);
 const dates=new Set();
 for(let n=0;n<60;n++){
  const d=new Date(Date.UTC(2026,10,4+n)).toISOString().slice(0,10);
  const result=planAmsterdamImport(last,'2026-11-04',{rotationDate:d});
- dates.add(result.sessions[0]);
+ dates.add(result.sessions.at(-1));
 }
 assert.ok(dates.size>1,'historical backfill must rotate');
 assert.deepEqual(planAmsterdamImport(Array(80).fill('2026-11-04'),'2026-11-04').sessions,[]);
