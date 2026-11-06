@@ -26,15 +26,15 @@
       "adjustedCloseSource": null,
       "lastImportSource": "Euronext public historical table",
       "lastImportSourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0015000D50-XAMS",
-      "lastImportRetrievedAt": "2026-11-06T00:11:52.969Z"
+      "lastImportRetrievedAt": "2026-11-06T23:43:56.614Z"
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2021-06-11",
-    "lastDate": "2026-11-05",
-    "records": 1386,
-    "volumeRecords": 1386,
+    "lastDate": "2026-11-06",
+    "records": 1387,
+    "volumeRecords": 1387,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -12511,6 +12511,15 @@
       "low": 3.005,
       "close": 3.01,
       "volume": 34400,
+      "adjustedClose": null
+    },
+    {
+      "date": "2026-11-06",
+      "open": 3.01,
+      "high": 3.1,
+      "low": 2.9,
+      "close": 2.9,
+      "volume": 33078,
       "adjustedClose": null
     }
   ]
