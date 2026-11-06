@@ -47,16 +47,6 @@
       "market": "Euronext Amsterdam, Brussels"
     },
     {
-      "name": "AIR FRANCE -KLM",
-      "symbol": "AF",
-      "isin": "FR001400J770",
-      "market": "Euronext Paris, Amsterdam",
-      "historyStatus": "canonical-on-other-market",
-      "historyStatusNote": "One ISIN, one primary-market price series. See data/canonical-listings.json. Do not duplicate XPAR/XBRU prices as XAMS.",
-      "primaryMic": "XPAR",
-      "displayPolicy": "cross-market-reference-only"
-    },
-    {
       "name": "AJAX",
       "symbol": "AJAX",
       "isin": "NL0000018034",
@@ -237,26 +227,6 @@
       "market": "Euronext Amsterdam"
     },
     {
-      "name": "EURONEXT",
-      "symbol": "ENX",
-      "isin": "NL0006294274",
-      "market": "Euronext Paris, Amsterdam, Brussels",
-      "historyStatus": "canonical-on-other-market",
-      "historyStatusNote": "One ISIN, one primary-market price series. See data/canonical-listings.json. Do not duplicate XPAR/XBRU prices as XAMS.",
-      "primaryMic": "XPAR",
-      "displayPolicy": "cross-market-reference-only"
-    },
-    {
-      "name": "FAGRON",
-      "symbol": "FAGR",
-      "isin": "BE0003874915",
-      "market": "Euronext Brussels, Amsterdam",
-      "historyStatus": "canonical-on-other-market",
-      "historyStatusNote": "One ISIN, one primary-market price series. See data/canonical-listings.json. Do not duplicate XPAR/XBRU prices as XAMS.",
-      "primaryMic": "XBRU",
-      "displayPolicy": "cross-market-reference-only"
-    },
-    {
       "name": "FASTNED",
       "symbol": "FAST",
       "isin": "NL0013654809",
@@ -389,16 +359,6 @@
       "market": "Euronext Amsterdam"
     },
     {
-      "name": "ONWARD MEDICAL",
-      "symbol": "ONWD",
-      "isin": "NL0015000HT4",
-      "market": "Euronext Brussels, Amsterdam, Paris",
-      "historyStatus": "canonical-on-other-market",
-      "historyStatusNote": "One ISIN, one primary-market price series. See data/canonical-listings.json. Do not duplicate XPAR/XBRU prices as XAMS.",
-      "primaryMic": "XBRU",
-      "displayPolicy": "cross-market-reference-only"
-    },
-    {
       "name": "PHARMING GROUP",
       "symbol": "PHARM",
       "isin": "NL0010391025",
@@ -433,16 +393,6 @@
       "symbol": "REN",
       "isin": "GB00B2B0DG97",
       "market": "Euronext Amsterdam"
-    },
-    {
-      "name": "SAINT GOBAIN",
-      "symbol": "SGO",
-      "isin": "FR0000125007",
-      "market": "Euronext Paris, Amsterdam, Brussels",
-      "historyStatus": "canonical-on-other-market",
-      "historyStatusNote": "One ISIN, one primary-market price series. See data/canonical-listings.json. Do not duplicate XPAR/XBRU prices as XAMS.",
-      "primaryMic": "XPAR",
-      "displayPolicy": "cross-market-reference-only"
     },
     {
       "name": "SBM OFFSHORE",
@@ -535,6 +485,6 @@
       "market": "Euronext Amsterdam"
     }
   ],
-  "selectionUpdatedAt": "2026-10-27",
-  "selectionPolicy": "operating-company-working-universe; excludes passive holdings, investment vehicles, REITs and nonordinary instruments"
+  "selectionUpdatedAt": "2026-11-06",
+  "selectionPolicy": "80 primary-XAMS operating companies; cross-market primary XPAR/XBRU listings excluded"
 }
