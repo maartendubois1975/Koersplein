@@ -36,9 +36,12 @@ for(const row of payload.rows){
   decisions.push({key:String(row?.isin||'UNKNOWN')+':'+String(row?.date||'UNKNOWN'),status:'REJECTED_INVALID_ROW',reason:error.message});
  }
 }
-const summary={mode:apply?'APPLY':'DRY_RUN',partial,received:payload.rows.length,approved:decisions.filter(d=>d.status==='APPROVED').length,skipped:decisions.filter(d=>!['APPROVED','UNCHANGED'].includes(d.status)).length,decisions};
+const blockers=decisions.filter(d=>!['APPROVED','UNCHANGED'].includes(d.status));
+const summary={mode:apply?'APPLY':'DRY_RUN',partial,received:payload.rows.length,approved:decisions.filter(d=>d.status==='APPROVED').length,skipped:blockers.length,blocked:blockers.length>0,decisions};
 if(apply){
- if(!partial&&decisions.some(d=>!['APPROVED','UNCHANGED'].includes(d.status)))throw Error('Apply refused: unresolved conflicts');
+ // Never write a partial batch with invalid, conflicting or unverified candidates.
+ // Missing/no-trade instruments are absent from payload.rows and remain eligible for later recovery.
+ if(blockers.length)throw Error('Apply refused: '+JSON.stringify(blockers));
  for(const [path,updated] of staged)await writeFile(path,JSON.stringify(updated,null,2)+'\n');
 }
 console.log(JSON.stringify(summary,null,2));
