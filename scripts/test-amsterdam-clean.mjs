@@ -11,6 +11,10 @@ assert.equal(catalog.length,80);
 assert.ok(catalog.every(x=>!x.primaryMic||x.primaryMic==='XAMS'),'Amsterdam catalog must contain only primary XAMS listings');
 const ids=Object.keys(manifest.instruments);
 assert.equal(ids.length,80);
+assert.equal(new Set(catalog.map(x=>x.isin)).size,80,'No duplicate Amsterdam ISINs');
+assert.equal(new Set(catalog.map(x=>x.symbol)).size,80,'No duplicate Amsterdam tickers');
+assert.deepEqual(catalog.map(x=>x.isin).sort(),ids.sort(),'Catalog and history manifest must have exactly the same 80 ISINs');
+for(const excluded of ['FR001400J770','NL0006294274','BE0003874915','NL0015000HT4','FR0000125007'])assert.ok(!catalog.some(x=>x.isin===excluded),'Non-Amsterdam primary listing reintroduced: '+excluded);
 const resolve=manifestResolver(manifest,'XAMS');
 let total=0,latest=null;
 for(const id of ids){
