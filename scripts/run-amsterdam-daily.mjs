@@ -15,6 +15,7 @@ for(const isin of ids){
 const plan=planAmsterdamImport(lastDates,latestCandidateSession());
 const run=(name,args)=>execFileSync(process.execPath,[new URL(name,import.meta.url).pathname,...args],{encoding:'utf8',maxBuffer:10485760});
 const report=[];
+let failure=null;
 try{
  for(const date of plan.sessions){
   const raw=await collect(manifest,date);
@@ -40,6 +41,9 @@ try{
   report.push({date,candidates:raw.candidates.length,noTrade:raw.noTrade.length,missing:raw.missing.length,errors:raw.errors.length,verified:verified.rows.length,imported:result.approved,skipped:result.skipped});
   console.log(JSON.stringify(report.at(-1)));
  }
+}catch(error){
+ failure={message:error.message,processedSessions:report.length,nextSession:plan.sessions[report.length]||null};
+ throw error;
 }finally{
- await writeFile('amsterdam-import.json',JSON.stringify({...plan,processedSessions:report.length,days:report},null,2)+'\n');
+ await writeFile('amsterdam-import.json',JSON.stringify({...plan,status:failure?'FAILED':'COMPLETED',failure,processedSessions:report.length,days:report},null,2)+'\n');
 }
