@@ -18,6 +18,9 @@ const report=[];
 try{
  for(const date of plan.sessions){
   const raw=await collect(manifest,date);
+  // A report can account for all 80 ISINs even when the source has technical failures.
+  // Reject those failures before treating the session as importable.
+  if(!Array.isArray(raw.errors)||raw.errors.length>0)throw Error('Amsterdam source retrieval failed for '+date+': '+JSON.stringify(raw.errors));
   await writeFile('amsterdam-candidates.json',JSON.stringify(raw,null,2));
   let output;
   try{output=run('report-amsterdam.mjs',['amsterdam-candidates.json']);}
@@ -29,8 +32,6 @@ try{
   try{summary=JSON.parse(output);}catch{throw Error('Unparseable coverage report '+date);}
   if(summary.market!=='XAMS'||summary.date!==date||summary.expected!==80||summary.accounted!==80||!summary.complete)throw Error('Invalid 80-instrument coverage '+date);
   await writeFile('amsterdam-summary.json',output);
-  // Coverage accounting does not mean successful retrieval: technical errors must never count as a completed import.
-  if(!Array.isArray(raw.errors)||raw.errors.length>0)throw Error('Amsterdam source retrieval failed for '+date+': '+JSON.stringify(raw.errors));
   run('verify-amsterdam.mjs',['amsterdam-candidates.json','amsterdam-verified.json']);
   const verified=JSON.parse(await readFile('amsterdam-verified.json','utf8'));
   if(verified.market!=='XAMS'||verified.date!==date||!Array.isArray(verified.rows)||!Array.isArray(verified.rejected)||verified.rows.length!==raw.candidates.length)throw Error('Amsterdam verified row count or identity mismatch '+date);
