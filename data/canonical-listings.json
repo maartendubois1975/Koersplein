@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "policy": "one-ISIN-one-canonical-price-series",
+  "note": "This registry resolves cross-market price duplication; it does not assert that secondary exchange listings are delisted. Index memberships may reference the canonical record.",
+  "entries": [
+    {
+      "isin": "FR001400J770",
+      "symbol": "AF",
+      "primaryMic": "XPAR",
+      "primaryMarket": "Paris",
+      "otherMarketMics": [
+        "XAMS"
+      ],
+      "pricePolicy": "use-primary-market-only",
+      "verification": "Euronext historical traded daily bars verified 2026-10-01 to 2026-10-27",
+      "amsterdamDisplay": "reference-only"
+    },
+    {
+      "isin": "NL0006294274",
+      "symbol": "ENX",
+      "primaryMic": "XPAR",
+      "primaryMarket": "Paris",
+      "otherMarketMics": [
+        "XAMS"
+      ],
+      "pricePolicy": "use-primary-market-only",
+      "verification": "Euronext historical traded daily bars verified 2026-10-01 to 2026-10-27",
+      "amsterdamDisplay": "reference-only"
+    },
+    {
+      "isin": "BE0003874915",
+      "symbol": "FAGR",
+      "primaryMic": "XBRU",
+      "primaryMarket": "Brussels",
+      "otherMarketMics": [
+        "XAMS"
+      ],
+      "pricePolicy": "use-primary-market-only",
+      "verification": "Euronext historical traded daily bars verified 2026-10-01 to 2026-10-27",
+      "amsterdamDisplay": "reference-only"
+    },
+    {
+      "isin": "NL0015000HT4",
+      "symbol": "ONWD",
+      "primaryMic": "XBRU",
+      "primaryMarket": "Brussels",
+      "otherMarketMics": [
+        "XAMS"
+      ],
+      "pricePolicy": "use-primary-market-only",
+      "verification": "Euronext historical traded daily bars verified 2026-10-01 to 2026-10-27",
+      "amsterdamDisplay": "reference-only"
+    },
+    {
+      "isin": "FR0000125007",
+      "symbol": "SGO",
+      "primaryMic": "XPAR",
+      "primaryMarket": "Paris",
+      "otherMarketMics": [
+        "XAMS"
+      ],
+      "pricePolicy": "use-primary-market-only",
+      "verification": "Euronext historical traded daily bars verified 2026-10-01 to 2026-10-27",
+      "amsterdamDisplay": "reference-only"
+    }
+  ]
+}

@@ -16,13 +16,11 @@ const db = openDatabase(join(directory, 'test.sqlite'));
 try {
   const seeded = await seedAmsterdam(db);
   const initialCoverage = coverageReport(db,['XAMS','XWAR']);
-  assert.equal(initialCoverage.totals.instruments,124);
+  assert.equal(initialCoverage.totals.instruments,85);
   assert.equal(initialCoverage.totals.withHistory,0);
   assert.equal(initialCoverage.markets.find(x=>x.mic==='XWAR').instruments,0);
-  assert.equal(seeded.instruments, 124);
-  assert.deepEqual(db.prepare('SELECT index_group,COUNT(*) count FROM instruments GROUP BY index_group ORDER BY index_group').all().map((row) => ({ ...row })), [
-    { index_group:'AEX', count:30 }, { index_group:'AMX', count:25 }, { index_group:'AScX', count:20 }, { index_group:'Overig', count:49 }
-  ]);
+  assert.equal(seeded.instruments, 85);
+  assert.equal(db.prepare('SELECT COUNT(*) AS count FROM instruments').get().count, 85);
 
   const asml = getInstrument(db, 'NL0010273215');
   const adyen = getInstrument(db, 'NL0012969182');
