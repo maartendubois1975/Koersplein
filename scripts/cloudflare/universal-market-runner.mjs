@@ -3,7 +3,7 @@ import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
 import { FactoryApiClient } from './client.mjs';
 import { createDefaultProviderRegistry } from '../history/provider-registry.mjs';
 import {storageIdentityResolver,newListingStorageKey} from './storage-identity.mjs';
-import { partitionBars } from './history-format.mjs';
+import { writeCloudflareHistory } from './history-writer.mjs';
 
 const client=new FactoryApiClient();
 const sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
@@ -71,7 +71,7 @@ for(const item of instruments){
 }
 let complete=0,failed=[];
 const historyConcurrency=mic==='XETR'?10:(mic==='XBUL'?2:1);
-for(let ci=0;ci<candidates.length;ci+=historyConcurrency){await Promise.all(candidates.slice(ci,ci+historyConcurrency).map(async item=>{try{const {provider,result}=await registry.fetchDaily({...item,isin:item.officialIsin||item.isin},{startDate:'1990-01-01',endDate:today},item.provider||'yahoo-chart',{timeoutMs:60000});if(!result.bars.length)throw new Error('geen historie');for(const [period,bars] of partitionBars(result.bars))await client.putPartition(item.isin,period,{bars,provider:provider.id,appendOnly:true});await client.completeHistory(item.isin,{provider:provider.id});complete++;}catch(e){failed.push({isin:item.isin,symbol:item.symbol,mic:item.mic,error:e.message})}}));}
+for(let ci=0;ci<candidates.length;ci+=historyConcurrency){await Promise.all(candidates.slice(ci,ci+historyConcurrency).map(async item=>{try{const {provider,result}=await registry.fetchDaily({...item,isin:item.officialIsin||item.isin},{startDate:'1990-01-01',endDate:today},item.provider||'yahoo-chart',{timeoutMs:60000});if(!result.bars.length)throw new Error('geen historie');await writeCloudflareHistory(client,item.isin,result.bars,{provider:provider.id,appendOnly:true});complete++;}catch(e){failed.push({isin:item.isin,symbol:item.symbol,mic:item.mic,error:e.message})}}));}
 const attemptedIsins=candidates.map(x=>x.isin);
 let prior={};try{prior=JSON.parse(await fs.readFile('research/output/world-fill-batch.json','utf8'));}catch{}
 const priorAttempts=prior.market===mic?(prior.attemptedIsins||[]):[];
