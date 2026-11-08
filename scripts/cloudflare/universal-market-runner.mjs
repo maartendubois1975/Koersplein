@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
 import { FactoryApiClient } from './client.mjs';
 import { createDefaultProviderRegistry } from '../history/provider-registry.mjs';
 import {storageIdentityResolver,newListingStorageKey} from './storage-identity.mjs';
@@ -9,6 +10,7 @@ const sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.j
 const registry=createDefaultProviderRegistry();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const mic=process.env.MARKET_MIC||plan.markets.find(x=>x.state==='ACTIVE')?.mic||plan.markets[0]?.mic;
+assertWriterAuthorized({ writer: 'cloudflare-universal', market: mic });
 const m=plan.markets.find(x=>x.mic===mic);if(!m)throw new Error(`MARKET_MIC ${mic} niet in actief plan`);
 const sourcePlan=sourceRegistry.markets?.[mic];
 const path=`data/euronext-${m.code}.json`;
