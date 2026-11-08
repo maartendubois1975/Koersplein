@@ -6,13 +6,14 @@ import {storageIdentityResolver} from './storage-identity.mjs';
 import {latestClosedWeekday,isCompleteOhlcBar,isTradedOhlcvBar,mapConcurrent} from './europe-run-policy.mjs';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
-assertWriterAuthorized({ writer: 'cloudflare-daily', market: '*' });
 const client=new FactoryApiClient(),catalog=await client.catalog(),manifest=await client.historyManifest();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const parisPolicy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
 const shardCount=Number(process.env.EUROPE_SHARD_COUNT||1),shardIndex=Number(process.env.EUROPE_SHARD_INDEX||0),date=latestClosedWeekday();
+const targetMarkets=plan.markets.filter(x=>x.state==='COMPLETE').filter((_,i)=>i%shardCount===shardIndex);
+for (const market of targetMarkets) assertWriterAuthorized({ writer: 'cloudflare-daily', market: market.mic });
 const resolve=storageIdentityResolver(catalog.instruments||[]),results=[];
-for(const market of plan.markets.filter(x=>x.state==='COMPLETE').filter((_,i)=>i%shardCount===shardIndex)){
+for(const market of targetMarkets){
  const c=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
  await mapConcurrent(c.shares||c.instruments||[],2,async s=>{
   const instrument={...s,mic:s.mic||market.mic},key=resolve(instrument);
