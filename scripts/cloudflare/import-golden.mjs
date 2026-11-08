@@ -1,8 +1,10 @@
 import { readFile } from 'node:fs/promises';
+import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
 import { FactoryApiClient } from './client.mjs';
 import { cloudflareCatalog } from './catalog.mjs';
 import { partitionBars } from './history-format.mjs';
 
+assertWriterAuthorized({ writer: 'cloudflare-golden-import', market: 'XAMS' });
 const client = new FactoryApiClient();
 const catalog = await cloudflareCatalog();
 await client.seedCatalog(catalog);
