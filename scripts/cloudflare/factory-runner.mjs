@@ -1,4 +1,5 @@
 import { FactoryApiClient } from './client.mjs';
+import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
 import { createDefaultProviderRegistry } from '../history/provider-registry.mjs';
 import { partitionBars } from './history-format.mjs';
 import { latestClosedWeekday } from './europe-run-policy.mjs';
@@ -36,6 +37,7 @@ async function processItem(job, item) {
   return { recordsAdded: added, firstDate: coverage.first_date, lastDate: coverage.last_date };
 }
 
+assertWriterAuthorized({ writer: 'cloudflare-factory', market: 'XAMS' });
 const job = await client.job(jobId);
 if (!job) throw new Error(`Job ${jobId} bestaat niet`);
 let processedThisRun = 0;
