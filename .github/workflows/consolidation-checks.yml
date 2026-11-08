@@ -24,6 +24,7 @@ jobs:
           node --check scripts/cloudflare/reconcile-official-daily.mjs
           node --check scripts/cloudflare/import-golden.mjs
           node --check scripts/cloudflare/sync-plan.mjs
+          node --check scripts/cloudflare/paris-targeted-history-recovery.mjs
           node --check scripts/factory/jobs.mjs
           node --check scripts/factory/scheduler.mjs
           node scripts/audit/test-consolidation-config.mjs
