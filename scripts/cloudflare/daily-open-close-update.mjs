@@ -1,5 +1,5 @@
 import {fetchPublicHistoryManifest} from './public-history-manifest.mjs';
-import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
+import { authorizeMarketShard } from '../audit/authorize-market-shard.mjs';
 import fs from 'node:fs/promises';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {FactoryApiClient} from './client.mjs';
@@ -19,7 +19,7 @@ const parisRepair=process.env.PARIS_REPAIR_ONLY==='1';
 const parisPolicy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
 const targetMarkets=plan.markets.filter(x=>x.state==='COMPLETE').filter(x=>!parisRepair||x.mic==='XPAR').filter((_,index)=>index%shardCount===shardIndex);
 // Authorize every market before any cloud mutation; avoid partially updating a shard.
-for (const market of targetMarkets) assertWriterAuthorized({ writer: 'cloudflare-daily', market: market.mic });
+authorizeMarketShard(targetMarkets, { writer: 'cloudflare-daily' });
 const reportPath=`research/output/daily-open-close-update-${shardIndex}${process.env.GITHUB_RUN_ATTEMPT?'-attempt-'+process.env.GITHUB_RUN_ATTEMPT:''}.json`;
 await fs.mkdir('research/output',{recursive:true});
 async function checkpoint(){await fs.writeFile(reportPath,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,freshnessCutoff,mode:process.env.EUROPE_FULL_BACKFILL==='1'?(Number(process.env.GITHUB_RUN_ATTEMPT||1)>1?'REPAIR_REMAINING_LISTINGS':'FULL_APPEND_ONLY_HISTORY_AND_DAILY_TAIL'):'APPEND_ONLY_DAILY_AND_BOUNDED_MISSING',markets:results},null,2));}
