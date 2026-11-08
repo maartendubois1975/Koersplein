@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';
-import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
+import { authorizeMarketShard } from '../audit/authorize-market-shard.mjs';
 import {FactoryApiClient} from './client.mjs';
 import {writeCloudflareHistory} from './history-writer.mjs';
 import {storageIdentityResolver} from './storage-identity.mjs';
@@ -11,7 +11,7 @@ const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const parisPolicy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
 const shardCount=Number(process.env.EUROPE_SHARD_COUNT||1),shardIndex=Number(process.env.EUROPE_SHARD_INDEX||0),date=latestClosedWeekday();
 const targetMarkets=plan.markets.filter(x=>x.state==='COMPLETE').filter((_,i)=>i%shardCount===shardIndex);
-for (const market of targetMarkets) assertWriterAuthorized({ writer: 'cloudflare-daily', market: market.mic });
+authorizeMarketShard(targetMarkets, { writer: 'cloudflare-daily' });
 const resolve=storageIdentityResolver(catalog.instruments||[]),results=[];
 for(const market of targetMarkets){
  const c=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
