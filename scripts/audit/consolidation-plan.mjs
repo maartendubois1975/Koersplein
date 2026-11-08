@@ -6,7 +6,6 @@ export const WRITERS = Object.freeze({
   'cloudflare-factory': './scripts/cloudflare/factory-runner.mjs',
   'cloudflare-universal': './scripts/cloudflare/universal-market-runner.mjs',
   'cloudflare-daily': './scripts/cloudflare/daily-open-close-update.mjs',
-  'cloudflare-official-reconcile': './scripts/cloudflare/reconcile-official-daily.mjs',
   'cloudflare-golden-import': './scripts/cloudflare/import-golden.mjs',
   'cloudflare-paris-recovery': './scripts/cloudflare/paris-targeted-history-recovery.mjs',
   'cloudflare-catalog-sync': './scripts/cloudflare/sync-plan.mjs'
