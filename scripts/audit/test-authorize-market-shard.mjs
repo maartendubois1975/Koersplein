@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import { authorizeMarketShard } from './authorize-market-shard.mjs';
+const routes=[{environment:'staging',dataset:'historicalOhlc',market:'XAMS',writer:'cloudflare-daily',enabled:true},{environment:'staging',dataset:'historicalOhlc',market:'XBRU',writer:'cloudflare-daily',enabled:true}];
+const config={schemaVersion:1,activation:'enabled',routes};
+assert.deepEqual(authorizeMarketShard([{mic:'XAMS'},{mic:'XBRU'},{mic:'XAMS'}],{writer:'cloudflare-daily',config,activation:'enabled'}),['XAMS','XBRU']);
+assert.throws(()=>authorizeMarketShard([{mic:'XAMS'},{mic:'XPAR'}],{writer:'cloudflare-daily',config,activation:'enabled'}),/not authorized/);
+assert.throws(()=>authorizeMarketShard([{mic:'XAMS'}],{writer:'cloudflare-daily',config,activation:'disabled'}),/disabled/);
+assert.throws(()=>authorizeMarketShard([],{writer:'cloudflare-daily',config,activation:'enabled'}),/Empty/);
+assert.throws(()=>authorizeMarketShard([{mic:''}],{writer:'cloudflare-daily',config,activation:'enabled'}),/Invalid/);
+console.log('Atomic market shard authorization tests passed');
