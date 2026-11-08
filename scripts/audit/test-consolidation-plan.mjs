@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { WRITERS, planConsolidatedRun, assertConsolidatedRun } from './consolidation-plan.mjs';
-assert.equal(Object.keys(WRITERS).length,8);
+assert.equal(Object.keys(WRITERS).length,7);
 const base={schemaVersion:1,activation:'enabled',routes:[{environment:'staging',dataset:'historicalOhlc',market:'XAMS',writer:'local-history',enabled:true}]};
 const plan=planConsolidatedRun({writer:'local-history',market:'XAMS',config:base});
 assert.equal(plan.authorized,true);
