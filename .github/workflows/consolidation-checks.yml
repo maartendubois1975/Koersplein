@@ -29,5 +29,6 @@ jobs:
           node scripts/audit/test-consolidation-config.mjs
           node scripts/audit/test-writer-ownership.mjs
           node scripts/audit/test-assert-writer-authorized.mjs
+          node scripts/cloudflare/test-history-writer.mjs
       - name: Existing application tests
         run: npm test && npm run history:test
