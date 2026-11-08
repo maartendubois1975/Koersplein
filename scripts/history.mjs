@@ -1,4 +1,5 @@
 import { readdir } from 'node:fs/promises';
+import { assertWriterAuthorized } from './audit/assert-writer-authorized.mjs';
 import { computeMovers, historyUrl, loadCatalog, readJson, runBatch } from './history/engine.mjs';
 
 const [command = 'status', ...args] = process.argv.slice(2);
@@ -22,6 +23,7 @@ const select = () => {
 };
 
 if (command === 'backfill' || command === 'update') {
+  assertWriterAuthorized({ writer: 'local-history', market: 'XAMS' });
   const results = await runBatch(select(), { mode: command, batchSize });
   for (const result of results) console.log(JSON.stringify(result));
   if (results.some((item) => item.outcome === 'error')) process.exitCode = 1;
