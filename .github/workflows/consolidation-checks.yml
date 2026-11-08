@@ -1,0 +1,27 @@
+name: Consolidation safety checks
+on:
+  push:
+    branches:
+      - consolidation-single-pipeline-20261108
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and ownership tests
+        run: |
+          node --check scripts/history.mjs
+          node --check scripts/cloudflare/factory-runner.mjs
+          node --check scripts/cloudflare/universal-market-runner.mjs
+          node scripts/audit/test-consolidation-config.mjs
+          node scripts/audit/test-writer-ownership.mjs
+          node scripts/audit/test-assert-writer-authorized.mjs
+      - name: Existing application tests
+        run: npm test && npm run history:test
