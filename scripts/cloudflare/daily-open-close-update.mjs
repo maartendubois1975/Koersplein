@@ -10,7 +10,6 @@ import {writeCloudflareHistory} from './history-writer.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
 import {verifiedSwissPriorityKey,selectEuropeMissingBackfill} from './europe-missing-backfill-priority.mjs';
-assertWriterAuthorized({ writer: 'cloudflare-daily', market: '*' });
 const client=new FactoryApiClient(),providers=createDefaultProviderRegistry();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8')),sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
 const results=[];
@@ -19,6 +18,8 @@ if(!Number.isInteger(shardCount)||shardCount<1||!Number.isInteger(shardIndex)||s
 const parisRepair=process.env.PARIS_REPAIR_ONLY==='1';
 const parisPolicy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
 const targetMarkets=plan.markets.filter(x=>x.state==='COMPLETE').filter(x=>!parisRepair||x.mic==='XPAR').filter((_,index)=>index%shardCount===shardIndex);
+// Authorize every market before any cloud mutation; avoid partially updating a shard.
+for (const market of targetMarkets) assertWriterAuthorized({ writer: 'cloudflare-daily', market: market.mic });
 const reportPath=`research/output/daily-open-close-update-${shardIndex}${process.env.GITHUB_RUN_ATTEMPT?'-attempt-'+process.env.GITHUB_RUN_ATTEMPT:''}.json`;
 await fs.mkdir('research/output',{recursive:true});
 async function checkpoint(){await fs.writeFile(reportPath,JSON.stringify({generatedAt:new Date().toISOString(),shardIndex,shardCount,freshnessCutoff,mode:process.env.EUROPE_FULL_BACKFILL==='1'?(Number(process.env.GITHUB_RUN_ATTEMPT||1)>1?'REPAIR_REMAINING_LISTINGS':'FULL_APPEND_ONLY_HISTORY_AND_DAILY_TAIL'):'APPEND_ONLY_DAILY_AND_BOUNDED_MISSING',markets:results},null,2));}
