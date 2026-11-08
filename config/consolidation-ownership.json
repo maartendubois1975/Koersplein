@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "status": "planned-not-active",
+  "canonicalBranch": "consolidation-single-pipeline-20261108",
+  "productionBranch": "main",
+  "productionDeployAllowed": false,
+  "datasetOwners": {
+    "marketCatalog": {"writer": "to-be-selected-after-runtime-audit"},
+    "dailyOhlc": {"writer": "to-be-selected-after-runtime-audit"},
+    "historicalOhlc": {"writer": "to-be-selected-after-runtime-audit"},
+    "predictions": {"writer": "to-be-selected-after-runtime-audit"}
+  },
+  "currentRenderServices": [
+    {"name":"koersplein","branch":"main","role":"production","autoDeploy":false},
+    {"name":"koersplein-test","branch":"codex/koersplein-home-history","role":"test","autoDeploy":false},
+    {"name":"koersplein-amsterdam-test","branch":"amsterdam-reset-20261027","role":"test","autoDeploy":false},
+    {"name":"koersplein-amsterdam-schoon","branch":"amsterdam-clean-20261031","role":"test","autoDeploy":false},
+    {"name":"koersplein-xams-80-audit","branch":"amsterdam-clean-20261031","role":"audit","autoDeploy":false}
+  ]
+}
