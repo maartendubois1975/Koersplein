@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
 import {FactoryApiClient} from './client.mjs';
+import {writeCloudflareHistory} from './history-writer.mjs';
 import {storageIdentityResolver} from './storage-identity.mjs';
 import {latestClosedWeekday,isCompleteOhlcBar,isTradedOhlcvBar,mapConcurrent} from './europe-run-policy.mjs';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
@@ -21,8 +22,7 @@ for(const market of plan.markets.filter(x=>x.state==='COMPLETE').filter((_,i)=>i
    if(!status)return;
    if(status.status==='TRADED'){
     if(!isCompleteOhlcBar(status.bar)||!isTradedOhlcvBar(status.bar))throw Error('OFFICIAL_PARTIAL_OR_INVALID_OHLC '+instrument.isin);
-    await client.putPartition(key,date.slice(0,4),{bars:[status.bar],provider:status.provider,appendOnly:true});
-    await client.completeHistory(key,{provider:status.provider});
+    await writeCloudflareHistory(client,key,[status.bar],{provider:status.provider,appendOnly:true});
    }
    results.push({market:market.mic,storageKey:key,...status});
   }catch(e){results.push({market:market.mic,storageKey:key,isin:s.isin,error:e.message});}
