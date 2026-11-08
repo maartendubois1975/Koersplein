@@ -20,6 +20,12 @@ jobs:
           node --check scripts/history.mjs
           node --check scripts/cloudflare/factory-runner.mjs
           node --check scripts/cloudflare/universal-market-runner.mjs
+          node --check scripts/cloudflare/daily-open-close-update.mjs
+          node --check scripts/cloudflare/reconcile-official-daily.mjs
+          node --check scripts/cloudflare/import-golden.mjs
+          node --check scripts/cloudflare/sync-plan.mjs
+          node --check scripts/factory/jobs.mjs
+          node --check scripts/factory/scheduler.mjs
           node scripts/audit/test-consolidation-config.mjs
           node scripts/audit/test-writer-ownership.mjs
           node scripts/audit/test-assert-writer-authorized.mjs
