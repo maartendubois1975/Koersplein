@@ -1,10 +1,10 @@
 /**
- * Pure ownership validation. This module never starts jobs or writes data.
- * A dataset may have exactly one enabled writer in a given environment.
+ * Pure ownership validation: one enabled writer per dataset and market.
+ * A wildcard market overlaps every specific market in the same environment/dataset.
  */
 export function validateWriterOwnership(routes) {
   if (!Array.isArray(routes)) throw new TypeError('routes must be an array');
-  const seen = new Map();
+  const active = [];
   for (const route of routes) {
     if (!route || typeof route !== 'object') throw new TypeError('invalid route');
     const { environment, dataset, market, writer, enabled } = route;
@@ -13,11 +13,9 @@ export function validateWriterOwnership(routes) {
     }
     if (typeof enabled !== 'boolean') throw new Error('enabled must be boolean');
     if (!enabled) continue;
-    const key = [environment, dataset, market].join('::');
-    if (seen.has(key)) {
-      throw new Error('Multiple enabled writers for ' + key + ': ' + seen.get(key) + ', ' + writer);
-    }
-    seen.set(key, writer);
+    const collision = active.find(r => r.environment === environment && r.dataset === dataset && (r.market === market || r.market === '*' || market === '*'));
+    if (collision) throw new Error('Multiple enabled writers for ' + [environment,dataset,market].join('::') + ': ' + collision.writer + ', ' + writer);
+    active.push(route);
   }
-  return { valid: true, activeRoutes: seen.size };
+  return { valid: true, activeRoutes: active.length };
 }
