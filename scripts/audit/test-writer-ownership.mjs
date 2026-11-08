@@ -8,4 +8,6 @@ assert.throws(() => validateWriterOwnership([a, { ...a, writer: 'legacy' }]), /M
 assert.deepEqual(validateWriterOwnership([a, { ...a, market: 'XBRU' }]), { valid: true, activeRoutes: 2 });
 assert.deepEqual(validateWriterOwnership([{ ...a, environment: 'production' }, a]), { valid: true, activeRoutes: 2 });
 assert.throws(() => validateWriterOwnership([{ ...a, market: '' }]), /requires/);
+assert.throws(() => validateWriterOwnership([a, { ...a, market: '*', writer: 'all-markets' }]), /Multiple enabled writers/);
+assert.throws(() => validateWriterOwnership([{ ...a, market: '*', writer: 'all-markets' }, a]), /Multiple enabled writers/);
 console.log('Writer ownership tests passed');
