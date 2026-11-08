@@ -1,7 +1,7 @@
 import { FactoryApiClient } from './client.mjs';
 import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
 import { createDefaultProviderRegistry } from '../history/provider-registry.mjs';
-import { partitionBars } from './history-format.mjs';
+import { writeCloudflareHistory } from './history-writer.mjs';
 import { latestClosedWeekday } from './europe-run-policy.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((item) => item.replace(/^--/, '').split('=')));
@@ -31,9 +31,7 @@ async function processItem(job, item) {
   const startDate = item.last_date ? addDay(item.last_date) : '1990-01-01';
   if (startDate > freshnessCutoff) return { recordsAdded: 0, firstDate: item.first_date, lastDate: item.last_date };
   const { provider, result } = await registry.fetchDaily(base, { startDate, endDate: freshnessCutoff }, base.provider);
-  let added = 0;
-  for (const [period, bars] of partitionBars(result.bars)) { await client.putPartition(item.isin, period, { bars, provider: provider.id, appendOnly: item.mic === 'XAMS' }); added += bars.length; }
-  const coverage = await client.completeHistory(item.isin, { provider: provider.id });
+  const { recordsAdded: added, coverage } = await writeCloudflareHistory(client, item.isin, result.bars, { provider: provider.id, appendOnly: item.mic === 'XAMS' });
   return { recordsAdded: added, firstDate: coverage.first_date, lastDate: coverage.last_date };
 }
 
