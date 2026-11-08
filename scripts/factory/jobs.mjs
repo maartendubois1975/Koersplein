@@ -1,5 +1,4 @@
 import { randomUUID } from 'node:crypto';
-import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
 import { createDefaultProviderRegistry } from '../history/provider-registry.mjs';
 import { getInstrument } from './catalog.mjs';
 import { refreshHistoryStatus, storeBars } from './history-store.mjs';
@@ -67,7 +66,6 @@ async function processItem(db, job, item, registry) {
 }
 
 export async function runJob(db, jobId, { registry = createDefaultProviderRegistry(), batchSize = Number(process.env.KOERSPLEIN_JOB_BATCH_SIZE || 5) } = {}) {
-  assertWriterAuthorized({ writer: 'local-factory', market: 'XAMS' });
   let job = db.prepare('SELECT * FROM jobs WHERE id=?').get(jobId);
   if (!job) throw new Error(`Job ${jobId} bestaat niet`);
   if (terminal.has(job.status)) return job;
