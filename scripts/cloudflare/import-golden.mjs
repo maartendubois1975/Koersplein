@@ -5,6 +5,7 @@ import { cloudflareCatalog } from './catalog.mjs';
 import { writeCloudflareHistory } from './history-writer.mjs';
 
 assertWriterAuthorized({ writer: 'cloudflare-golden-import', market: 'XAMS' });
+assertWriterAuthorized({ writer: 'cloudflare-golden-import', dataset: 'marketCatalog', market: 'XAMS' });
 const client = new FactoryApiClient();
 const catalog = await cloudflareCatalog();
 await client.seedCatalog(catalog);
