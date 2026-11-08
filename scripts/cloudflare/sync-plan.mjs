@@ -1,4 +1,5 @@
 import { FactoryApiClient } from './client.mjs';
+import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
 import { cloudflareCatalog } from './catalog.mjs';
 
 export function planCatalogSync(expected, live, batchSize = 50) {
@@ -37,6 +38,7 @@ if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).
   if (!apply) {
     console.log('Alleen controle uitgevoerd. Gebruik --apply om ontbrekende aandelen in kleine batches te registreren.');
   } else {
+    assertWriterAuthorized({ writer: 'cloudflare-catalog-sync', dataset: 'marketCatalog', market: '*' });
     for (let i=0;i<plan.batches.length;i++) {
       await client.seedCatalog(plan.batches[i]);
       console.log(`Batch ${i+1}/${plan.batches.length} verwerkt`);
