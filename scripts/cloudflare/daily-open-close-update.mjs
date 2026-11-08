@@ -6,7 +6,7 @@ import {FactoryApiClient} from './client.mjs';
 import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
 import {storageIdentityResolver,newListingStorageKey} from './storage-identity.mjs';
 import {latestClosedWeekday,previousClosedWeekday,isVerifiedNoTradeGap,isCompleteOhlcBar,isTradedOhlcvBar,validBars,inspectDailyBarIntegrity,mapConcurrent} from './europe-run-policy.mjs';
-import {partitionBars} from './history-format.mjs';
+import {writeCloudflareHistory} from './history-writer.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
 import {verifiedSwissPriorityKey,selectEuropeMissingBackfill} from './europe-missing-backfill-priority.mjs';
@@ -103,8 +103,7 @@ for(const market of targetMarkets){
     const previous=previousClosedWeekday(freshnessCutoff);
     if(isVerifiedNoTradeGap(status,beforeDate,freshnessCutoff)){noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,...status});return;}
     if(status?.status==='TRADED'&&isCompleteOhlcBar(status.bar)&&isTradedOhlcvBar(status.bar)&&beforeDate===previous){
-     await client.putPartition(storageIsin,freshnessCutoff.slice(0,4),{bars:[status.bar],provider:status.provider,appendOnly:true});
-     await client.completeHistory(storageIsin,{provider:status.provider});advanced++;return;
+     await writeCloudflareHistory(client,storageIsin,[status.bar],{provider:status.provider,appendOnly:true});advanced++;return;
     }
    }
 
@@ -125,8 +124,7 @@ for(const market of targetMarkets){
     return bars.length>0&&(fullBackfill||bars.at(-1).date>beforeDate);
    }});
    const bars=validBars(result,range);
-   for(const [period,part] of partitionBars(bars))await client.putPartition(storageIsin,period,{bars:part,provider:provider.id,appendOnly:true});
-   if(bars.length)await client.completeHistory(storageIsin,{provider:provider.id});
+   await writeCloudflareHistory(client,storageIsin,bars,{provider:provider.id,appendOnly:true});
    let afterDate=[beforeDate,bars.at(-1)?.date].filter(Boolean).sort().at(-1);
    // A historical response may stop early. Preserve it, then try all usable
    // providers for the remaining daily tail instead of declaring it current.
@@ -135,15 +133,14 @@ for(const market of targetMarkets){
     try{
      const tail=await providers.fetchDaily(instrument,tailRange,primary,{timeoutMs:20000,allowedProviderIds,acceptResult:(r,attemptedProvider)=>checkedSourceBars(r,attemptedProvider,tailRange).length>0});
      const tailBars=validBars(tail.result,tailRange);
-     for(const [period,part] of partitionBars(tailBars))await client.putPartition(storageIsin,period,{bars:part,provider:tail.provider.id,appendOnly:true});
-     if(tailBars.length){await client.completeHistory(storageIsin,{provider:tail.provider.id});afterDate=tailBars.at(-1).date;}
+     await writeCloudflareHistory(client,storageIsin,tailBars,{provider:tail.provider.id,appendOnly:true});
+     if(tailBars.length){afterDate=tailBars.at(-1).date;}
     }catch(e){failed.push({isin:s.isin,symbol:s.symbol||s.ticker,category:failureCategory(e.message),error:e.message});}
    }
    if(afterDate&&afterDate<freshnessCutoff){
     const status=await officialDailyStatus(instrument,freshnessCutoff);
     if(status?.status==='TRADED'&&isCompleteOhlcBar(status.bar)&&isTradedOhlcvBar(status.bar)){
-     await client.putPartition(storageIsin,freshnessCutoff.slice(0,4),{bars:[status.bar],provider:status.provider,appendOnly:true});
-     await client.completeHistory(storageIsin,{provider:status.provider});afterDate=freshnessCutoff;
+     await writeCloudflareHistory(client,storageIsin,[status.bar],{provider:status.provider,appendOnly:true});afterDate=freshnessCutoff;
      failed=failed.filter(x=>x.isin!==s.isin);
     }else if(isVerifiedNoTradeGap(status,afterDate,freshnessCutoff)){
      noTrades.push({isin:s.isin,symbol:s.symbol||s.ticker,...status});failed=failed.filter(x=>x.isin!==s.isin);return;
