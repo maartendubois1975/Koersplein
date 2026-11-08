@@ -1,8 +1,10 @@
 import { createJob, runJob } from './jobs.mjs';
+import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
 
 const scheduleKey = (date) => `DAILY_UPDATE:XAMS:${date}`;
 
 export async function triggerDailySchedule(db, { date = new Date().toISOString().slice(0, 10), requestedBy = 'scheduler' } = {}) {
+  assertWriterAuthorized({ writer: 'local-factory', market: 'XAMS' });
   const key = scheduleKey(date);
   const previous = db.prepare('SELECT job_id FROM scheduler_runs WHERE schedule_key=?').get(key);
   if (previous) return { created: false, jobId: previous.job_id };
