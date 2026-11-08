@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import { assertWriterAuthorized } from './assert-writer-authorized.mjs';
+const routes = [{environment:'staging',dataset:'historicalOhlc',market:'XAMS',writer:'local-history',enabled:true}];
+const config = {schemaVersion:1,activation:'enabled',routes};
+const args = {writer:'local-history',market:'XAMS',environment:'staging',config,activation:'enabled'};
+assert.equal(assertWriterAuthorized(args), true);
+assert.throws(() => assertWriterAuthorized({...args,activation:undefined}), /disabled/);
+assert.throws(() => assertWriterAuthorized({...args,config:{...config,activation:'disabled'}}), /disabled/);
+assert.throws(() => assertWriterAuthorized({...args,writer:'cloudflare-factory'}), /not authorized/);
+assert.throws(() => assertWriterAuthorized({...args,market:'XBRU'}), /not authorized/);
+assert.throws(() => assertWriterAuthorized({...args,config:{...config,routes:[...routes,{...routes[0],writer:'other'}]}}), /Multiple enabled writers/);
+console.log('Writer authorization tests passed');
