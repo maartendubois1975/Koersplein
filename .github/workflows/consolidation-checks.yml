@@ -32,6 +32,7 @@ jobs:
           node scripts/audit/test-assert-writer-authorized.mjs
           node scripts/cloudflare/test-history-writer.mjs
           node scripts/audit/test-consolidation-plan.mjs
+          node scripts/audit/test-authorize-market-shard.mjs
           node scripts/audit/consolidation-cli.mjs --writer=cloudflare-universal --market=XAMS
       - name: Existing application tests
         run: npm test && npm run history:test
