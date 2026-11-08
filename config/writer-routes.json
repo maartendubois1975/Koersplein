@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "activation": "disabled",
+  "description": "No live writer enabled until runtime/Cloudflare audit and acceptance tests",
+  "routes": [
+    {
+      "environment": "staging",
+      "dataset": "historicalOhlc",
+      "market": "XAMS",
+      "writer": "local-history",
+      "enabled": false
+    },
+    {
+      "environment": "staging",
+      "dataset": "historicalOhlc",
+      "market": "XAMS",
+      "writer": "cloudflare-factory",
+      "enabled": false
+    },
+    {
+      "environment": "staging",
+      "dataset": "historicalOhlc",
+      "market": "*",
+      "writer": "cloudflare-universal",
+      "enabled": false
+    }
+  ]
+}
