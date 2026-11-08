@@ -1,4 +1,5 @@
 import {fetchPublicHistoryManifest} from './public-history-manifest.mjs';
+import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
 import fs from 'node:fs/promises';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {FactoryApiClient} from './client.mjs';
@@ -9,6 +10,7 @@ import {partitionBars} from './history-format.mjs';
 import {parisHistoryEligible} from './paris-history-eligibility.mjs';
 import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
 import {verifiedSwissPriorityKey,selectEuropeMissingBackfill} from './europe-missing-backfill-priority.mjs';
+assertWriterAuthorized({ writer: 'cloudflare-daily', market: '*' });
 const client=new FactoryApiClient(),providers=createDefaultProviderRegistry();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8')),sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
 const results=[];
