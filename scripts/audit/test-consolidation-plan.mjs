@@ -6,7 +6,7 @@ const plan=planConsolidatedRun({writer:'local-history',market:'XAMS',config:base
 assert.equal(plan.authorized,true);
 assert.equal(plan.status,'dry-run');
 assert.equal(plan.command,'./scripts/history.mjs');
-assertConsolidatedRun(plan,base);
+assert.throws(()=>assertConsolidatedRun(plan,base),/disabled/);
 assert.equal(planConsolidatedRun({writer:'cloudflare-universal',market:'XAMS',config:base}).authorized,false);
 assert.throws(()=>planConsolidatedRun({writer:'unknown',market:'XAMS',config:base}),/Unknown/);
 assert.throws(()=>planConsolidatedRun({writer:'local-history',market:'',config:base}),/MIC/);
