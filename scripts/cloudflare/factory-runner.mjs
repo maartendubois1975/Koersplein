@@ -3,6 +3,7 @@ import { assertWriterAuthorized } from '../audit/assert-writer-authorized.mjs';
 import { createDefaultProviderRegistry } from '../history/provider-registry.mjs';
 import { writeCloudflareHistory } from './history-writer.mjs';
 import { latestClosedWeekday } from './europe-run-policy.mjs';
+import { assertFactoryMarket, factoryCoverage } from './factory-policy.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((item) => item.replace(/^--/, '').split('=')));
 const jobId = args['job-id'] || process.env.KOERSPLEIN_JOB_ID;
@@ -30,13 +31,13 @@ async function processItem(job, item) {
   if (job.type === 'HISTORY_BACKFILL' && item.history_status === 'COMPLETE') return { recordsAdded: 0, firstDate: item.first_date, lastDate: item.last_date };
   // This legacy factory uses Yahoo's .AS suffix and is Amsterdam-only.
   // Never silently fetch another exchange under an Amsterdam symbol.
-  if (item.mic !== 'XAMS') throw new Error('Factory runner only supports XAMS; use universal-market-runner for ' + item.mic);
+  assertFactoryMarket(item.mic);
   assertWriterAuthorized({ writer: 'cloudflare-factory', market: item.mic });
   const startDate = item.last_date ? addDay(item.last_date) : '1990-01-01';
   if (startDate > freshnessCutoff) return { recordsAdded: 0, firstDate: item.first_date, lastDate: item.last_date };
   const { provider, result } = await registry.fetchDaily(base, { startDate, endDate: freshnessCutoff }, base.provider);
   const { recordsAdded: added, coverage } = await writeCloudflareHistory(client, item.isin, result.bars, { provider: provider.id, appendOnly: item.mic === 'XAMS' });
-  return { recordsAdded: added, firstDate: coverage?.first_date || item.first_date, lastDate: coverage?.last_date || item.last_date };
+  return { recordsAdded: added, ...factoryCoverage(coverage, item) };
 }
 
 const job = await client.job(jobId);
