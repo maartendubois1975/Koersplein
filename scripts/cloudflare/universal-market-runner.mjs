@@ -11,6 +11,8 @@ const registry=createDefaultProviderRegistry();
 const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));
 const mic=process.env.MARKET_MIC||plan.markets.find(x=>x.state==='ACTIVE')?.mic||plan.markets[0]?.mic;
 assertWriterAuthorized({ writer: 'cloudflare-universal', market: mic });
+// This runner can seed the catalog as well as history: authorize both datasets up front.
+if (process.env.SEED_CATALOG !== '0') assertWriterAuthorized({ writer: 'cloudflare-universal', dataset: 'marketCatalog', market: mic });
 const m=plan.markets.find(x=>x.mic===mic);if(!m)throw new Error(`MARKET_MIC ${mic} niet in actief plan`);
 const sourcePlan=sourceRegistry.markets?.[mic];
 const path=`data/euronext-${m.code}.json`;
