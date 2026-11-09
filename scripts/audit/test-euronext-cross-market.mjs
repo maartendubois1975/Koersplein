@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { compareMarkets } from './euronext-cross-market.mjs';
+import { compareMarkets } from './euronext-catalog-integrity.mjs';
 const a={isin:'NL0000852564',symbol:'AALB',name:'Aalberts'};
 const b={isin:'BE0974293251',symbol:'ABI',name:'AB InBev'};
 const d=(label,shares)=>({label,document:{shares}});
