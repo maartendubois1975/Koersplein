@@ -35,6 +35,8 @@ jobs:
           node scripts/audit/test-consolidation-integration.mjs
           node scripts/history/test-session-readiness.mjs
           node scripts/audit/test-euronext-catalog-integrity.mjs
+          node scripts/audit/test-euronext-cross-market.mjs
+          node scripts/audit/euronext-cross-market.mjs data/euronext-amsterdam.json data/euronext-brussels.json
           node scripts/audit/euronext-catalog-integrity.mjs data/euronext-amsterdam.json data/euronext-brussels.json
           node scripts/audit/test-consolidation-plan.mjs
           node scripts/audit/test-authorize-market-shard.mjs
