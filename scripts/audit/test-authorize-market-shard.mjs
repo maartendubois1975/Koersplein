@@ -7,4 +7,7 @@ assert.throws(()=>authorizeMarketShard([{mic:'XAMS'},{mic:'XPAR'}],{writer:'clou
 assert.throws(()=>authorizeMarketShard([{mic:'XAMS'}],{writer:'cloudflare-daily',config,activation:'disabled'}),/disabled/);
 assert.throws(()=>authorizeMarketShard([],{writer:'cloudflare-daily',config,activation:'enabled'}),/Empty/);
 assert.throws(()=>authorizeMarketShard([{mic:''}],{writer:'cloudflare-daily',config,activation:'enabled'}),/Invalid/);
+assert.throws(()=>authorizeMarketShard([{mic:'XAMS'}],{writer:'cloudflare-daily',dataset:'marketCatalog',config,activation:'enabled'}),/not authorized/);
+const withCatalog={...config,routes:[...routes,{environment:'staging',dataset:'marketCatalog',market:'XAMS',writer:'cloudflare-daily',enabled:true}]};
+assert.deepEqual(authorizeMarketShard([{mic:'XAMS'}],{writer:'cloudflare-daily',dataset:'marketCatalog',config:withCatalog,activation:'enabled'}),['XAMS']);
 console.log('Atomic market shard authorization tests passed');
