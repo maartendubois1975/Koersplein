@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import { sessionReadiness } from './session-readiness.mjs';
+const row=(isin,date='2026-11-06')=>({isin,latestDate:date,open:100,close:101,rejectedRecords:0});
+const good=sessionReadiness([row('NL0000852564'),row('NL0011540547')],2);
+assert.equal(good.completeForObservedSession,true);
+assert.equal(good.scope,'XAMS_OBSERVED_SESSION_NOT_OFFICIAL_CLOSE');
+assert.equal(sessionReadiness([row('NL0000852564'),row('NL0000852564')],2).identityUnique,false);
+assert.equal(sessionReadiness([row('NL0000852564'),row('NL0011540547','2026-11-05')],2).laggingCount,1);
+assert.equal(sessionReadiness([row('NL0000852564'),{...row('NL0011540547'),close:0}],2).invalidCount,1);
+assert.equal(sessionReadiness([row('NL0000852564')],2).countMatches,false);
+assert.throws(()=>sessionReadiness([],0),/Invalid session universe/);
+console.log('Amsterdam session readiness tests passed');
