@@ -39,5 +39,19 @@ jobs:
           node scripts/audit/test-consolidation-plan.mjs
           node scripts/audit/test-authorize-market-shard.mjs
           node scripts/audit/consolidation-cli.mjs --writer=cloudflare-universal --market=XAMS
+      - name: Full repository architecture inventory (read-only)
+        run: node scripts/audit/codebase-audit.mjs
+        continue-on-error: true
+      - name: Preserve architecture inventory and audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-architecture-audit
+          path: |
+            research/output/audit/full-architecture-inventory.json
+            research/output/audit/dependency-inventory.json
+            research/output/audit/codebase-audit.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Existing application tests
         run: npm test && npm run history:test
