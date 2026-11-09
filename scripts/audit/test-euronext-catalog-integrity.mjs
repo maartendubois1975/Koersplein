@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import { inspectCatalog } from './euronext-catalog-integrity.mjs';
+const make=(shares)=>({mic:'XAMS',shares});
+const a={isin:'NL0000852564',symbol:'AALB',name:'Aalberts'};
+assert.deepEqual(inspectCatalog(make([a])).errors,[]);
+assert.equal(inspectCatalog(make([a,a])).errors[0].kind,'duplicate-listing');
+assert.equal(inspectCatalog(make([a,{...a,symbol:'AALB2'}])).warnings[0].kind,'multiple-listings-same-isin');
+assert.equal(inspectCatalog(make([{...a,isin:'bad'}])).errors[0].kind,'invalid-isin');
+assert.equal(inspectCatalog(make([{...a,symbol:''}])).errors[0].kind,'missing-symbol');
+assert.throws(()=>inspectCatalog({mic:'XAMS'}),/shares/);
+console.log('Euronext catalog integrity tests passed');
