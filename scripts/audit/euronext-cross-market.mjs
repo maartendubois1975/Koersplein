@@ -19,7 +19,7 @@ export function compareMarkets(documents) {
  }
  const overlaps=[...byIsin].filter(([,rows])=>new Set(rows.map(r=>r.market)).size>1)
    .map(([isin,listings])=>({isin,listings})).sort((a,b)=>a.isin.localeCompare(b.isin));
- const symbolCollisions=[...bySymbol].filter(([,rows])=>new Set(rows.map(r.isin)).size>1)
+ const symbolCollisions=[...bySymbol].filter(([,rows])=>new Set(rows.map(r=>r.isin)).size>1)
    .map(([symbol,listings])=>({symbol,listings})).sort((a,b)=>a.symbol.localeCompare(b.symbol));
  return {markets:catalogs.map(x=>({market:x.label,...x.summary})),crossMarketSameIsin:overlaps,symbolCollisions,automaticExclusions:0};
 }
