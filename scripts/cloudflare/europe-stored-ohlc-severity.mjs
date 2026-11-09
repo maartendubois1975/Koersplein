@@ -1,13 +1,12 @@
 import {parseOhlcPrice} from './europe-run-policy.mjs';
-import {canonicalStoredOhlcSignature} from './europe-ohlc-defects.mjs';
+import {canonicalStoredOhlcSignature,OHLC_PRICE_FIELDS} from './europe-ohlc-defects.mjs';
 // Read-only severity audit of the *stored* historical OHLC snapshots.
 // This does not infer a correct price, authorize a replacement, or write bars.
-const FIELDS=['open','high','low','close'];
 const BUCKETS=['UNDER_1_BPS','FROM_1_TO_10_BPS','FROM_10_TO_100_BPS','FROM_100_TO_1000_BPS','AT_LEAST_1000_BPS','INVALID_OR_MISSING_FIELDS','FLAGGED_WITHOUT_VIOLATION'];
 function emptyCounts(){return Object.fromEntries(BUCKETS.map(key=>[key,0]));}
 export function storedOhlcViolationSeverity(bar){
- const prices=bar&&Object.fromEntries(FIELDS.map(key=>[key,parseOhlcPrice(bar[key])]));
- if(!prices||FIELDS.some(key=>prices[key]===null))return {bucket:'INVALID_OR_MISSING_FIELDS',violationBps:null,readOnly:true};
+ const prices=bar&&Object.fromEntries(OHLC_PRICE_FIELDS.map(key=>[key,parseOhlcPrice(bar[key])]));
+ if(!prices||OHLC_PRICE_FIELDS.some(key=>prices[key]===null))return {bucket:'INVALID_OR_MISSING_FIELDS',violationBps:null,readOnly:true};
  const {open,high,low,close}=prices;
  const top=Math.max(open,close),bottom=Math.min(open,close);
  const deficitHigh=Math.max(0,(top-high)/top*10000);
