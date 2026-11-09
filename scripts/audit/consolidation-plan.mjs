@@ -17,7 +17,7 @@ export function planConsolidatedRun({ writer, market, environment = 'staging', d
   const manifest = config || JSON.parse(readFileSync(new URL('../../config/writer-routes.json', import.meta.url), 'utf8'));
   const inferredDataset = dataset || (writer === 'cloudflare-catalog-sync' ? 'marketCatalog' : 'historicalOhlc');
   const authorized = manifest.routes.filter(r => r.enabled && r.environment === environment && r.dataset === inferredDataset && (r.market === market || r.market === '*'));
-  return { writer, market, environment, dataset: inferredDataset, command: WRITERS[writer], authorized: authorized.length === 1 && authorized[0].writer === writer, activation: manifest.activation, status: 'dry-run' };
+  return { writer, market, environment, dataset: inferredDataset, command: WRITERS[writer], authorized: manifest.activation === 'enabled' && authorized.length === 1 && authorized[0].writer === writer, activation: manifest.activation, status: 'dry-run' };
 }
 
 export function assertConsolidatedRun(plan, config) {
