@@ -34,3 +34,29 @@ Datum: 2026-11-09. GitHub Git-tree en compare API; geen productie- of branchwijz
 
 ## Acceptatiestatus bouwblok 1
 **Inventaris en basiskeuze: gereed.** Code-overname en volledige branchconvergentie: **niet gereed**. Geen onveilige merge of automatische verwijdering uitgevoerd.
+
+## Aanvulling: volledige codebasiscontrole 9 november 2026
+
+De actuele consolidatiebranch bevat **505 getrackte bestanden** (de bovenstaande 507 is een oudere momentopname). De audit in GitHub Actions, run **42568849502** (commit `5811d77a`), is **geslaagd** met 0 errors. De resultaten zijn:
+
+| Auditklasse | Bestanden | Betekenis |
+|---|---:|---|
+| KEEP_ENTRYPOINT | 45 | Vanuit package scripts of workflows als startpunt herkend |
+| REVIEW_REFERENCED_CODE | 136 | Statische tekstverwijzingen gevonden; niet automatisch bewijs van runtimegebruik |
+| REVIEW_UNREFERENCED_CANDIDATE | 123 | Geen herkende statische verwijzing; **niet verwijderen zonder dynamische/externe referenties te toetsen** |
+| PRESERVE_DATA | 67 | Data en historische onderzoeksresultaten behouden |
+| REVIEW_FRONTEND | 34 | Frontend-contract controleren |
+| REVIEW_DOCUMENTATION | 41 | Documentatie beoordelen |
+| REVIEW_ASSET_OR_CONFIG | 56 | Assets en configuratie beoordelen |
+| REVIEW_SCHEDULER | 3 | Workflow- en schrijfdoelen controleren |
+
+Auditdekkingsgetallen: 321 JavaScript-bestanden, 116 JSON-bestanden en 3 workflows; 0 fouten. Overblijvende waarschuwingen: verouderd brondiversiteitsbewijs voor XOSL en twee workflow-startpunten op andere branches. Die twee scripts zijn **handmatig via de GitHub-API bevestigd**: `scripts/run-amsterdam-daily.mjs` op `amsterdam-clean-20261031`, en `scripts/history/audit-amsterdam-import.mjs` op `amsterdam-reset-20261027`. Het feit dat ze bestaan, bevestigt nog niet dat de workflows operationeel correct zijn.
+
+### Werkelijke uitvoeringsketens en saneringsgrenzen
+
+- **Amsterdam-kandidaten:** workflow `amsterdam-candidates-scheduler.yml` is op werkdagen gepland, checkt `amsterdam-clean-20261031` uit, voert `scripts/run-amsterdam-daily.mjs` uit en schrijft eventueel naar die branch.
+- **Amsterdam-staging:** workflow `amsterdam-staging-schedule.yml` heeft alleen handmatige dispatch, checkt `amsterdam-reset-20261027` uit, voert `scripts/history.mjs update --all --batch-size 8` en `scripts/history/audit-amsterdam-import.mjs` uit, en probeert daarna eventueel een fast-forward naar `codex/koersplein-home-history`. Niet gelijkstellen aan de kandidatenworkflow.
+- **Cloudflare-universeel:** `scripts/cloudflare/universal-market-runner.mjs` importeert `history/provider-registry.mjs`, `cloudflare/client.mjs`, `cloudflare/storage-identity.mjs` en `cloudflare/history-writer.mjs`. Voor mutaties vereist het een expliciete autorisatie via `scripts/audit/assert-writer-authorized.mjs`. De nieuwe consolidatieroutes staan nog **disabled**.
+- **Diagnose/herstel:** `europe-recovery-queue.mjs` gebruikt `europe-failure-diagnosis.mjs`; `europe-stored-ohlc-severity.mjs` gebruikt `europe-ohlc-defects.mjs` en `europe-run-policy.mjs`. Deze bestanden zijn dus **geen geïsoleerde, bewezen overbodige scripts**.
+
+**Besluit:** geen van de 123 kandidaten automatisch verwijderen. Eerst per subsystem imports, dynamische aanroepen, workflow-entrypoints en externe Render/Cloudflare-schrijvers verifiëren. De scan is een volledige *statische inventarisatie*, niet een volledige inhoudelijke beoordeling van alle 505 bestanden of een live E2E-test.
