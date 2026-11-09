@@ -129,5 +129,34 @@ for(const f of sourceEntries){
 }
 await fs.mkdir('research/output/audit',{recursive:true});
 await fs.writeFile('research/output/audit/dependency-inventory.json',JSON.stringify({generatedAt:new Date().toISOString(),scannedScripts:sourceEntries.length,candidates:unreferencedScriptCandidates,warning:'Candidates are NOT confirmed unused; dynamic imports, external callers and scheduled invocations require manual review.'},null,2));
+// Full per-file architecture inventory. These are evidence-based review states,
+// not claims that dynamic runtime dependencies have been disproved.
+const {createHash}=await import('node:crypto');
+const textReferences=referenceBodies;
+const entrypoints=new Set();
+for(const [name,command] of Object.entries(packageJson.scripts||{}))
+ for(const m of command.matchAll(/\\bnode\\s+(scripts\\/[^\\s;&|]+)/g))entrypoints.add(m[1]);
+for(const entry of textReferences.filter(x=>x.path.startsWith('.github/workflows/')))
+ for(const m of entry.body.matchAll(/\\bnode\\s+(scripts\\/[^\\s;&|]+)/g))entrypoints.add(m[1]);
+const manifest=[];
+for(const file of files){
+ const rel=path.relative(root,file).split(path.sep).join('/');
+ const stat=await fs.stat(file);
+ const bytes=await fs.readFile(file);
+ const isCode=/\\.(?:mjs|js)$/.test(rel);
+ const isData=rel.startsWith('data/')||rel.startsWith('research/output/');
+ const isWorkflow=rel.startsWith('.github/workflows/');
+ const isFrontend=/\\.(?:html|css)$/.test(rel)||(!rel.includes('/')&&rel.endsWith('.js'));
+ const isDoc=/\\.(?:md|txt)$/.test(rel);
+ const referencedBy=isCode?textReferences.filter(x=>x.path!==rel&&(x.body.includes(rel)||x.body.includes(path.basename(rel)))).map(x=>x.path):[];
+ const entrypoint=entrypoints.has(rel);
+ const status=isData?'PRESERVE_DATA':isWorkflow?'REVIEW_SCHEDULER':isFrontend?'REVIEW_FRONTEND':isDoc?'REVIEW_DOCUMENTATION':isCode?(entrypoint?'KEEP_ENTRYPOINT':referencedBy.length?'REVIEW_REFERENCED_CODE':'REVIEW_UNREFERENCED_CANDIDATE'):'REVIEW_ASSET_OR_CONFIG';
+ manifest.push({path:rel,bytes:stat.size,sha256:createHash('sha256').update(bytes).digest('hex'),status,entrypoint,referenceCount:referencedBy.length,referencedBy:referencedBy.slice(0,12),needsManualReview:!['PRESERVE_DATA','KEEP_ENTRYPOINT'].includes(status)});
+}
+manifest.sort((a,b)=>a.path.localeCompare(b.path));
+const summary={generatedAt:new Date().toISOString(),files:manifest.length,byStatus:Object.fromEntries([...new Set(manifest.map(x=>x.status))].map(status=>[status,manifest.filter(x=>x.status===status).length])),warning:'Static references are incomplete for dynamic imports, external Render/Cloudflare triggers, and non-repository consumers. REVIEW is not permission to delete.',filesInventory:manifest};
+await fs.mkdir('research/output/audit',{recursive:true});
+await fs.writeFile('research/output/audit/full-architecture-inventory.json',JSON.stringify(summary,null,2)+'\\n');
+console.log('ARCHITECTURE_INVENTORY '+JSON.stringify({files:summary.files,byStatus:summary.byStatus}));
 const report={generatedAt:new Date().toISOString(),stats,errors:issues.filter(x=>x.severity==='ERROR').length,warnings:issues.filter(x=>x.severity==='WARN').length,info:issues.filter(x=>x.severity==='INFO').length,issues};
 await fs.mkdir('research/output/audit',{recursive:true});await fs.writeFile('research/output/audit/codebase-audit.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));if(report.errors)process.exitCode=2;
