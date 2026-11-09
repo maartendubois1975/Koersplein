@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import { compareMarkets } from './euronext-cross-market.mjs';
+const a={isin:'NL0000852564',symbol:'AALB',name:'Aalberts'};
+const b={isin:'BE0974293251',symbol:'ABI',name:'AB InBev'};
+const d=(label,shares)=>({label,document:{shares}});
+const result=compareMarkets([d('XAMS',[a,b]),d('XBRU',[{...a,symbol:'AALB2'},{...b,symbol:'AALB'}])]);
+assert.equal(result.crossMarketSameIsin.length,2);
+assert.equal(result.symbolCollisions.length,1);
+assert.equal(result.symbolCollisions[0].symbol,'AALB');
+assert.equal(result.automaticExclusions,0);
+assert.equal(compareMarkets([d('XAMS',[a]),d('XBRU',[b])]).crossMarketSameIsin.length,0);
+console.log('Cross-market catalog identity tests passed');
