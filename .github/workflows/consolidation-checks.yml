@@ -41,7 +41,6 @@ jobs:
           node scripts/audit/consolidation-cli.mjs --writer=cloudflare-universal --market=XAMS
       - name: Full repository architecture inventory (read-only)
         run: node scripts/audit/codebase-audit.mjs
-        continue-on-error: true
       - name: Preserve architecture inventory and audit evidence
         if: always()
         uses: actions/upload-artifact@v4
