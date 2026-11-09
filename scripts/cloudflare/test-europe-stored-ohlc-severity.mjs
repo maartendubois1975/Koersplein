@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
 import {storedOhlcViolationSeverity,summarizeStoredOhlcSeverity} from './europe-stored-ohlc-severity.mjs';
+import {OHLC_PRICE_FIELDS} from './europe-ohlc-defects.mjs';
+assert.deepEqual(OHLC_PRICE_FIELDS,['open','high','low','close']);
+assert.equal(Object.isFrozen(OHLC_PRICE_FIELDS),true,'Canonical OHLC price fields cannot be mutated');
 const bar={open:100,high:110,low:90,close:105};
 assert.equal(storedOhlcViolationSeverity({...bar,high:104.99999}).bucket,'UNDER_1_BPS');
 assert.equal(storedOhlcViolationSeverity({...bar,high:104.95}).bucket,'FROM_1_TO_10_BPS');
