@@ -103,7 +103,7 @@ for(const f of files.filter(x=>path.relative(root,x).split(path.sep).join('/').s
   if(!currentPaths.has(target)){
    // A workflow that explicitly checks out another branch must be validated
    // against that branch, not falsely treated as a missing local entrypoint.
-   const foreignCheckout=(body.match(/ref:\\s*(amsterdam-clean-20261031|amsterdam-reset-20261027|codex\\/koersplein-home-history)/)||[])[1];
+   const foreignCheckout=['amsterdam-clean-20261031','amsterdam-reset-20261027','codex/koersplein-home-history'].find(ref=>body.includes('ref: '+ref));
    issues.push({severity:foreignCheckout?'WARN':'ERROR',type:foreignCheckout?'FOREIGN_BRANCH_WORKFLOW_ENTRYPOINT_UNVERIFIED':'MISSING_WORKFLOW_ENTRYPOINT',file:rel,detail:target+(foreignCheckout?' (checkout '+foreignCheckout+')':'')});
   }
  }
