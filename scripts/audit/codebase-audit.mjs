@@ -100,12 +100,17 @@ for(const f of files.filter(x=>path.relative(root,x).split(path.sep).join('/').s
  for(const match of body.matchAll(/(?:^|\s)node\s+(?!--)(scripts\/[^\s;&|"'#]+)/gm)){
   const target=match[1];
   if(target.includes('$')||target.includes('*'))continue;
-  if(!currentPaths.has(target))issues.push({severity:'ERROR',type:'MISSING_WORKFLOW_ENTRYPOINT',file:rel,detail:target});
+  if(!currentPaths.has(target)){
+   // A workflow that explicitly checks out another branch must be validated
+   // against that branch, not falsely treated as a missing local entrypoint.
+   const foreignCheckout=(body.match(/ref:\\s*(amsterdam-clean-20261031|amsterdam-reset-20261027|codex\\/koersplein-home-history)/)||[])[1];
+   issues.push({severity:foreignCheckout?'WARN':'ERROR',type:foreignCheckout?'FOREIGN_BRANCH_WORKFLOW_ENTRYPOINT_UNVERIFIED':'MISSING_WORKFLOW_ENTRYPOINT',file:rel,detail:target+(foreignCheckout?' (checkout '+foreignCheckout+')':'')});
+  }
  }
 }
 
 // Fail on byte-identical executable source copies; do not delete historical research data.
-const executableSources=files.filter(f=>/\\.(?:mjs|js)$/.test(f));
+const executableSources=files.filter(f=>/\.(?:mjs|js)$/.test(f));
 const exactSourceCopies=new Map();
 for(const file of executableSources){
  const rel=path.relative(root,file).split(path.sep).join('/');
@@ -116,14 +121,14 @@ for(const file of executableSources){
  else exactSourceCopies.set(body,rel);
 }
 // Conservative inventory: identify potentially unreferenced scripts without deleting dynamic entrypoints.
-const sourceEntries=files.filter(f=>path.relative(root,f).split(path.sep).join('/').startsWith('scripts/')&&/\\.(?:mjs|js)$/.test(f));
-const referenceFiles=files.filter(f=>/\\.(?:mjs|js|json|ya?ml|html|md)$/.test(f)&&!path.relative(root,f).split(path.sep).join('/').startsWith('research/output/'));
+const sourceEntries=files.filter(f=>path.relative(root,f).split(path.sep).join('/').startsWith('scripts/')&&/\.(?:mjs|js)$/.test(f));
+const referenceFiles=files.filter(f=>/\.(?:mjs|js|json|ya?ml|html|md)$/.test(f)&&!path.relative(root,f).split(path.sep).join('/').startsWith('research/output/'));
 const referenceBodies=await Promise.all(referenceFiles.map(async f=>({path:path.relative(root,f).split(path.sep).join('/'),body:await fs.readFile(f,'utf8')})));
 const unreferencedScriptCandidates=[];
 for(const f of sourceEntries){
  const rel=path.relative(root,f).split(path.sep).join('/');
  if(['server.mjs','cli.mjs','index.mjs'].includes(path.basename(rel))||path.basename(rel).startsWith('test')||path.basename(rel).includes('.test.'))continue;
- const filename=path.basename(rel),withoutExtension=rel.replace(/\\.(?:mjs|js)$/,'');
+ const filename=path.basename(rel),withoutExtension=rel.replace(/\.(?:mjs|js)$/,'');
  const referenced=referenceBodies.some(entry=>entry.path!==rel&&(entry.body.includes(rel)||entry.body.includes(withoutExtension)||entry.body.includes(filename)));
  if(!referenced)unreferencedScriptCandidates.push(rel);
 }
