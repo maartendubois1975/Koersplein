@@ -1,7 +1,7 @@
 // Evidence-only diagnostics for already stored OHLC records. No price repair,
 // interpolation, history mutation, or assumption that a missing high/low means no trade.
 import {parseOhlcPrice} from './europe-run-policy.mjs';
-const FIELDS=['open','high','low','close'];
+export const OHLC_PRICE_FIELDS=Object.freeze(['open','high','low','close']);
 const isValidDate=value=>{
  if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;
  const date=new Date(value+'T00:00:00Z');
@@ -12,7 +12,7 @@ export function describeOhlcDefects(bar){
  const defects=[];
  if(!isValidDate(bar.date))defects.push('INVALID_DATE');
  const prices={};
- for(const field of FIELDS){
+ for(const field of OHLC_PRICE_FIELDS){
   const raw=bar[field];
   if(raw===null||raw===undefined||raw===''){
    defects.push('MISSING_'+field.toUpperCase());
@@ -45,7 +45,7 @@ export function countOhlcDefects(missing){
 // type/value identity and are never treated as validated price evidence.
 export function canonicalStoredOhlcSignature(bar){
  if(!bar||typeof bar!=='object')return JSON.stringify(bar??null);
- return JSON.stringify(FIELDS.map(key=>{
+ return JSON.stringify(OHLC_PRICE_FIELDS.map(key=>{
    const value=bar[key];
    if(value===null||value===undefined||value==='')return null;
    const number=parseOhlcPrice(value);
