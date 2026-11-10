@@ -19,7 +19,10 @@ globalThis.location={search:'?market=amsterdam'};
 const today=new Date(new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())+'T12:00:00Z');
 const weekday=today.getUTCDay(),monday=new Date(today);
 monday.setUTCDate(monday.getUTCDate()-((weekday+6)%7)-(weekday>=1&&weekday<=5?7:0));
-const dates=Array.from({length:5},(_,i)=>{const d=new Date(monday);d.setUTCDate(d.getUTCDate()+i);return d.toISOString().slice(0,10)});
+const rollingDates=Array.from({length:5},(_,i)=>{const d=new Date(monday);d.setUTCDate(d.getUTCDate()+i);return d.toISOString().slice(0,10)});
+// The generic market page intentionally renders the audited October reference week.
+// Its fixture must use that same week, not the rolling week of the detail page.
+let dates=['2026-10-19','2026-10-20','2026-10-21','2026-10-22','2026-10-23'];
 const shares=[
  {isin:'NL0000852564',symbol:'AALB',name:'Aalberts'},
  {isin:'NL0011540547',symbol:'ABN',name:'ABN AMRO'},
@@ -68,8 +71,16 @@ assert.equal((output.match(/<tr>/g)||[]).length,23,'Two headers, five-day summar
 assert.equal((output.match(/Geldige koers/g)||[]).length,3,'Only real traded bars pass');
 console.log('Public Amsterdam: five sessions, MIC+ISIN+ticker+currency, audited NO_TRADES, stale/invalid, deltas and cache bust PASS');
 
-// The separate amsterdam.html renderer must use the same five-state rules,
-// and close-to-previous-close must NOT be the overnight opening gap.
+// The separate amsterdam.html renderer uses the latest completed week.
+// Rebuild its synthetic fixtures for that week, without changing the October audit.
+dates=rollingDates;
+status.week=rollingDates;
+status.noTrades={NL0011540547:[dates[1]]};
+histories['XAMS:NL0011540547'].bars=[bar(dates[0]),bar(dates[1],0),bar(dates[4])];
+histories['XAMS:NL0011540547'].coverage.lastDate=dates[4];
+histories['XAMS:NL0010273215'].bars=dates.map(date=>bar(date));
+histories['XAMS:NL0010273215'].coverage.lastDate=dates[4];
+// Close-to-previous-close must NOT be the overnight opening gap.
 histories['XAMS:NL0000852564'].bars=[
  bar(dates[0]),{...bar(dates[1]),open:102,close:108},bar(dates[2],0)
 ];
