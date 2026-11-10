@@ -1,0 +1,24 @@
+name: XAMS isolated regression checks
+on:
+  pull_request:
+    branches:
+      - amsterdam-reset-20261027
+    paths:
+      - 'scripts/cloudflare/test-xams-market-page.mjs'
+      - '.github/workflows/xams-regression-check.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run Amsterdam page regression
+        run: node scripts/cloudflare/test-xams-market-page.mjs
+      - name: Run full test suite
+        run: npm test && npm run history:test
