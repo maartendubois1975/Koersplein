@@ -5,6 +5,9 @@ on:
       - amsterdam-reset-20261027
     paths:
       - 'scripts/cloudflare/test-xams-market-page.mjs'
+      - 'scripts/validate.mjs'
+      - 'data/euronext-amsterdam.json'
+      - 'data/history-instruments.json'
       - '.github/workflows/xams-regression-check.yml'
   workflow_dispatch:
 permissions:
