@@ -1,5 +1,10 @@
 name: Amsterdam staging daily refresh
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/amsterdam-staging-schedule.yml
   schedule:
     # GitHub scheduled workflows run only from the default branch.
     # 18:40 UTC = 19:40 CET / 20:40 CEST, after the XAMS closing session.
