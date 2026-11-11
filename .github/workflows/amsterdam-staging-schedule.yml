@@ -1,10 +1,14 @@
 name: Amsterdam staging daily refresh
 on:
+  schedule:
+    # GitHub scheduled workflows run only from the default branch.
+    # 18:40 UTC = 19:40 CET / 20:40 CEST, after the XAMS closing session.
+    - cron: '40 18 * * 1-5'
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: koersplein-amsterdam-staging-scheduled
+  group: amsterdam-daily-history
   cancel-in-progress: false
 jobs:
   refresh-staging:
@@ -21,10 +25,16 @@ jobs:
           node-version: '22'
       - name: Fetch official Euronext daily bars with verified fallback
         run: node scripts/history.mjs update --all --batch-size 8
-      - name: Validate Amsterdam history and public market integration
-        run: npm test && npm run history:test
-      - name: Refresh audited Amsterdam coverage report
-        run: node scripts/history/audit-amsterdam-import.mjs
+      - name: Validate the complete 80-company history and public market integration
+        run: |
+          node scripts/cloudflare/test-xams-market-page.mjs
+          npm test
+          npm run history:test
+          node scripts/history/amsterdam-end-to-end-acceptance.mjs
+      - name: Check all 80 identities and stored OHLC before staging publication
+        run: |
+          node scripts/history/audit-amsterdam-import.mjs
+          node scripts/history/check-amsterdam-latest-session.mjs
       - name: Persist validated data only to staging
         run: |
           test "$(git branch --show-current)" = "amsterdam-reset-20261027"
