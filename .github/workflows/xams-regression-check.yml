@@ -8,6 +8,7 @@ on:
       - 'scripts/validate.mjs'
       - 'scripts/factory/test.mjs'
       - 'scripts/history/test-amsterdam-public-integration.mjs'
+      - 'scripts/history/amsterdam-end-to-end-acceptance.mjs'
       - 'data/euronext-amsterdam.json'
       - 'data/history-instruments.json'
       - '.github/workflows/xams-regression-check.yml'
@@ -27,3 +28,5 @@ jobs:
         run: node scripts/cloudflare/test-xams-market-page.mjs
       - name: Run full test suite
         run: npm test && npm run history:test
+      - name: Verify full Amsterdam catalog to browser acceptance
+        run: node scripts/history/amsterdam-end-to-end-acceptance.mjs
