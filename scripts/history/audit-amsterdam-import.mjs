@@ -3,8 +3,13 @@ const base = new URL('../../data/', import.meta.url);
 const catalog = JSON.parse(await readFile(new URL('euronext-amsterdam.json', base), 'utf8'));
 const mapping = JSON.parse(await readFile(new URL('history-instruments.json', base), 'utf8'));
 const files = (await readdir(new URL('history/', base))).filter(n => /^[A-Z0-9]{12}\.json$/.test(n));
+const selected = new Set(catalog.shares.map(s => s.isin));
+const mapped = new Set(mapping.providerMappings.map(m => m.isin));
+const extraMappings = [...mapped].filter(isin => !selected.has(isin));
+const unmapped = [...selected].filter(isin => !mapped.has(isin));
+const extraFiles = files.filter(file => !selected.has(file.slice(0,12)));
 const instruments = [];
-for (const file of files) {
+for (const file of files.filter(file => selected.has(file.slice(0,12)))) {
  const data = JSON.parse(await readFile(new URL('history/' + file, base), 'utf8'));
  const bars = data.bars || [];
  const latest = bars.at(-1);
@@ -16,7 +21,7 @@ for (const file of files) {
  instruments.push({isin:data.instrument.isin,symbol:data.instrument.symbol,records:bars.length,firstDate:bars[0]?.date||null,lastDate:latest?.date||null,invalid,uniqueDates:unique,latestDay});
 }
 const missing = catalog.shares.filter(s => !instruments.some(x=>x.isin===s.isin)).map(s=>({isin:s.isin,symbol:s.symbol}));
-const result = {generatedAt:new Date().toISOString(),catalog:catalog.shares.length,mapped:mapping.providerMappings.length,imported:instruments.length,records:instruments.reduce((n,x)=>n+x.records,0),invalid:instruments.reduce((n,x)=>n+x.invalid,0),missing,instruments:instruments.sort((a,b)=>a.symbol.localeCompare(b.symbol))};
+const result = {generatedAt:new Date().toISOString(),catalog:catalog.shares.length,mapped:mapping.providerMappings.length,imported:instruments.length,extraMappings,unmapped,extraFiles,records:instruments.reduce((n,x)=>n+x.records,0),invalid:instruments.reduce((n,x)=>n+x.invalid,0),missing,instruments:instruments.sort((a,b)=>a.symbol.localeCompare(b.symbol))};
 await writeFile(new URL('amsterdam-import-audit.json',base),JSON.stringify(result,null,2)+'\n');
 console.log('AMSTERDAM_AUDIT',JSON.stringify({catalog:result.catalog,mapped:result.mapped,imported:result.imported,records:result.records,invalid:result.invalid,missing:result.missing}));
-if (result.invalid || instruments.some(x=>!x.uniqueDates)) process.exitCode=1;
+if (result.invalid || instruments.some(x=>!x.uniqueDates) || result.missing.length || unmapped.length || extraMappings.length || result.catalog!==80 || instruments.length!==80) process.exitCode=1;
