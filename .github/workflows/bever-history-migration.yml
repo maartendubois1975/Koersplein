@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '22'
       - name: Fetch actual BEVER OHLC from provider (never synthesize prices)
-        run: node scripts/history.mjs update --isin NL0000285278 --batch-size 1
+        run: node scripts/history.mjs backfill --isin NL0000285278 --batch-size 1
       - name: Verify BEVER OHLC file and distinct trading dates
         run: |
           node --input-type=module <<'EOF'
@@ -30,6 +30,7 @@ jobs:
           const b=h.bars||[];
           if(h.instrument?.isin!=='NL0000285278'||b.length<2||new Set(b.map(x=>x.date)).size!==b.length)throw Error('Bever OHLC history unavailable or invalid');
           if(b.some(x=>!(x.open>0&&x.close>0)))throw Error('Invalid Bever price');
+          if(b[0].date>'2025-01-01')throw Error('Bever historical backfill too short');
           console.log('BEVER validated rows:',b.length,'last trading day:',b.at(-1).date);
           EOF
       - name: Remove delisted INPST from active data only after BEVER verified
