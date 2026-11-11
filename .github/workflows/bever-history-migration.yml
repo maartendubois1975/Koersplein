@@ -41,6 +41,17 @@ jobs:
           npm test
           npm run history:test
           node scripts/history/amsterdam-end-to-end-acceptance.mjs
+      - name: Preserve diagnostic evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bever-migration-diagnostics
+          if-no-files-found: warn
+          path: |
+            data/history/NL0000285278.json
+            data/history/status.json
+            data/amsterdam-import-audit.json
+            research/output/amsterdam-session-readiness.json
       - name: Commit migration only after all checks pass
         run: |
           git config user.name 'github-actions[bot]'
