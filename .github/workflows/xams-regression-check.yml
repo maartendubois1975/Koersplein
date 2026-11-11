@@ -20,6 +20,7 @@ on:
       - 'data/amsterdam-history-manifest.json'
       - 'data/history/**'
       - '.github/workflows/xams-regression-check.yml'
+      - '.github/workflows/amsterdam-daily-history.yml'
   workflow_dispatch:
 permissions:
   contents: read
