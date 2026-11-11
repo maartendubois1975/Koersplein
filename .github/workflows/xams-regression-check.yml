@@ -49,7 +49,9 @@ jobs:
           npm test
           npm run history:test
       - name: Verify the complete catalog to stored-history to browser chain
-        run: node scripts/history/amsterdam-end-to-end-acceptance.mjs
+        run: |
+          node scripts/history/amsterdam-end-to-end-acceptance.mjs
+          node scripts/history/audit-amsterdam-import.mjs
       - name: Verify daily session readiness rules and inspect latest stored session
         run: |
           node scripts/history/test-session-readiness.mjs
