@@ -26,15 +26,15 @@
       "adjustedCloseSource": null,
       "lastImportSource": "Euronext public historical table",
       "lastImportSourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000852531-XAMS",
-      "lastImportRetrievedAt": "2026-11-06T23:43:55.556Z"
+      "lastImportRetrievedAt": "2026-11-11T00:01:06.634Z"
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2000-01-03",
-    "lastDate": "2026-11-06",
-    "records": 6810,
-    "volumeRecords": 6810,
+    "lastDate": "2026-11-10",
+    "records": 6812,
+    "volumeRecords": 6812,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -61327,6 +61327,24 @@
       "low": 18.48,
       "close": 18.62,
       "volume": 15101,
+      "adjustedClose": null
+    },
+    {
+      "date": "2026-11-09",
+      "open": 18.94,
+      "high": 19.34,
+      "low": 18.74,
+      "close": 19.24,
+      "volume": 35069,
+      "adjustedClose": null
+    },
+    {
+      "date": "2026-11-10",
+      "open": 19,
+      "high": 19,
+      "low": 17.18,
+      "close": 17.3,
+      "volume": 224360,
       "adjustedClose": null
     }
   ]
