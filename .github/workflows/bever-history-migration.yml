@@ -38,6 +38,12 @@ jobs:
       - name: Validate entire 80-company universe and regenerate audit
         run: |
           node scripts/history/audit-amsterdam-import.mjs
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          const audit=JSON.parse(fs.readFileSync('data/amsterdam-import-audit.json','utf8'));
+          if(audit.catalog!==80||audit.mapped!==80||audit.imported!==80||audit.invalid!==0||audit.missing.length||audit.extraFiles.length||audit.extraMappings.length||audit.unmapped.length)throw Error('Amsterdam universe not exactly 80 clean active instruments');
+          if(!audit.instruments.some(x=>x.isin==='NL0000285278')||audit.instruments.some(x=>x.isin==='LU2290522684'))throw Error('Bever/InPost active universe migration not complete');
+          EOF
           npm test
           npm run history:test
           node scripts/history/amsterdam-end-to-end-acceptance.mjs
