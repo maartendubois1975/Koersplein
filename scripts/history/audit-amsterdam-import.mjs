@@ -3,6 +3,11 @@ const base = new URL('../../data/', import.meta.url);
 const catalog = JSON.parse(await readFile(new URL('euronext-amsterdam.json', base), 'utf8'));
 const mapping = JSON.parse(await readFile(new URL('history-instruments.json', base), 'utf8'));
 const files = (await readdir(new URL('history/', base))).filter(n => /^[A-Z0-9]{12}\.json$/.test(n));
+const selected = new Set(catalog.shares.map(s => s.isin));
+const mapped = new Set(mapping.providerMappings.map(m => m.isin));
+const extraMappings = [...mapped].filter(isin => !selected.has(isin));
+const unmapped = [...selected].filter(isin => !mapped.has(isin));
+const extraFiles = files.filter(file => !selected.has(file.slice(0,12)));
 const instruments = [];
 for (const file of files.filter(file => selected.has(file.slice(0,12)))) {
  const data = JSON.parse(await readFile(new URL('history/' + file, base), 'utf8'));
