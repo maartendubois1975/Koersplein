@@ -58,6 +58,7 @@ jobs:
           node --check scripts/research/test-amsterdam-portfolio-simulator.mjs
       - name: Test dated quality fixtures and Amsterdam session rules
         run: |
+          node scripts/cloudflare/test-xams-market-page.mjs
           npm run test:amsterdam-session
           node scripts/history/test-session-readiness.mjs
           node scripts/research/test-amsterdam-period-quality.mjs
@@ -86,15 +87,15 @@ jobs:
       - name: Compare latest dates with official Euronext historical source
         if: github.event_name == 'push' || inputs.dry_run == true
         run: node scripts/history/diagnose-amsterdam-freshness.mjs
-      - name: Check five dual-listed instruments across official venues
-        if: github.event_name == 'push'
-        run: node scripts/history/diagnose-five-amsterdam.mjs
       - name: Refresh only mapped Amsterdam daily OHLC histories
         id: refresh
         continue-on-error: true
         run: node scripts/history/amsterdam-daily-run.mjs --phase '${{ inputs.phase || 'close' }}'
-      - name: Validate all histories and Amsterdam browser integration
-        run: npm test && npm run history:test
+      - name: Validate all 80 histories, the Amsterdam browser and end-to-end identity
+        run: |
+          npm test
+          npm run history:test
+          node scripts/history/amsterdam-end-to-end-acceptance.mjs
       - name: Test research-only Amsterdam portfolio simulator
         run: node scripts/research/test-amsterdam-portfolio-simulator.mjs
       - name: Audit raw Amsterdam OHLC structural integrity
@@ -119,6 +120,7 @@ jobs:
             research/output/amsterdam-consolidated-quality-gate.json
             research/output/amsterdam-daily-run.json
             research/output/amsterdam-end-to-end-acceptance.json
+            research/output/amsterdam-session-readiness.json
           if-no-files-found: warn
           retention-days: 30
       - name: Show prioritized issuer investigations in run summary
@@ -153,6 +155,23 @@ jobs:
         run: node scripts/research/amsterdam-portfolio-diagnostic.mjs
       - name: Audit latest Amsterdam trading session and percentage changes
         run: node scripts/history/check-amsterdam-latest-session.mjs
+      - name: Record provider freshness and data-readiness warnings
+        if: always()
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          const file='research/output/amsterdam-session-readiness.json';
+          if (!fs.existsSync(file)) { console.log('No readiness report available'); process.exit(0); }
+          const r=JSON.parse(fs.readFileSync(file,'utf8'));
+          const lines=['### Amsterdam data readiness', '', '| Metric | Value |','|---|---|',
+            `| Catalog and stored histories | ${r.observedCount}/${r.expectedCount} |`,
+            `| Newest observed session | ${r.newestDate || 'none'} |`,
+            `| Instruments on newest observed session | ${r.currentCount} |`,
+            `| Lagging / invalid / unavailable | ${r.laggingCount} / ${r.invalidCount} / ${r.unavailableCount} |`,
+            `| Official close verified | No |`,
+            '', 'Passing syntax and structural checks does not certify current provider data or prediction readiness.'];
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,lines.join('\\n')+'\\n');
+          EOF
       - name: Upload session readiness evidence
         if: always()
         uses: actions/upload-artifact@v4
