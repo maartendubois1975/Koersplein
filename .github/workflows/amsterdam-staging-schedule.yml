@@ -53,4 +53,3 @@ jobs:
           echo 'Amsterdam history has been committed to amsterdam-reset-20261027 only.' >> "$GITHUB_STEP_SUMMARY"
           echo 'No automatic promotion of the full development branch to the legacy Render test branch.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Render auto-deploy is disabled; deploy the dedicated Amsterdam test service separately after validation.' >> "$GITHUB_STEP_SUMMARY"
-          fi
