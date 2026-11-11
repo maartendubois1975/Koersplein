@@ -13,7 +13,7 @@
     "id": "euronext-live",
     "name": "Euronext Live historical prices",
     "symbol": "LU1598757687-XAMS",
-    "retrievedAt": "2026-10-29T23:20:44.905Z",
+    "retrievedAt": "2026-11-11T05:04:12.681Z",
     "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/LU1598757687-XAMS",
     "metadata": {
       "mic": "XAMS",
@@ -22,16 +22,16 @@
       "windowPolicy": "<=700d chunks",
       "partialHistory": false,
       "failedWindows": [],
-      "adjustmentStatus": "UNVERIFIED_RAW_CLOSE_ONLY",
+      "adjustmentStatus": "EURONEXT_ADJUSTED_Y_UNVERIFIED_SCOPE",
       "adjustedCloseSource": null
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2005-07-25",
-    "lastDate": "2026-10-29",
-    "records": 5428,
-    "volumeRecords": 5428,
+    "lastDate": "2026-11-10",
+    "records": 5436,
+    "volumeRecords": 5436,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -48887,6 +48887,78 @@
       "close": 54.78,
       "adjustedClose": null,
       "volume": 1172848
+    },
+    {
+      "date": "2026-10-30",
+      "open": 54.06,
+      "high": 54.44,
+      "low": 53.28,
+      "close": 53.6,
+      "adjustedClose": null,
+      "volume": 1585528
+    },
+    {
+      "date": "2026-11-02",
+      "open": 53.78,
+      "high": 55.74,
+      "low": 53.62,
+      "close": 55.5,
+      "adjustedClose": null,
+      "volume": 1235463
+    },
+    {
+      "date": "2026-11-03",
+      "open": 54.08,
+      "high": 55.96,
+      "low": 53.46,
+      "close": 54.16,
+      "adjustedClose": null,
+      "volume": 1269003
+    },
+    {
+      "date": "2026-11-04",
+      "open": 54.4,
+      "high": 56.94,
+      "low": 54.1,
+      "close": 55.12,
+      "adjustedClose": null,
+      "volume": 1878368
+    },
+    {
+      "date": "2026-11-05",
+      "open": 57.08,
+      "high": 58.78,
+      "low": 52.76,
+      "close": 54.5,
+      "adjustedClose": null,
+      "volume": 2850273
+    },
+    {
+      "date": "2026-11-06",
+      "open": 53.02,
+      "high": 56.58,
+      "low": 52.94,
+      "close": 54.82,
+      "adjustedClose": null,
+      "volume": 1788430
+    },
+    {
+      "date": "2026-11-09",
+      "open": 55.12,
+      "high": 57.3,
+      "low": 54.9,
+      "close": 56.84,
+      "adjustedClose": null,
+      "volume": 1541255
+    },
+    {
+      "date": "2026-11-10",
+      "open": 57.68,
+      "high": 59.12,
+      "low": 57.38,
+      "close": 58.52,
+      "adjustedClose": null,
+      "volume": 1940021
     }
   ]
 }
