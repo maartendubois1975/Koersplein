@@ -35,6 +35,17 @@ jobs:
         run: |
           node scripts/history/audit-amsterdam-import.mjs
           node scripts/history/check-amsterdam-latest-session.mjs
+      - name: Reject stale or structurally invalid Amsterdam refresh
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          const r=JSON.parse(fs.readFileSync('research/output/amsterdam-session-readiness.json','utf8'));
+          const problems=[];
+          if(!r.countMatches || !r.identityUnique || r.invalidCount || r.unavailableCount) problems.push('invalid-or-missing-instruments');
+          if(r.latestObservedDateAgeDays==null || r.latestObservedDateAgeDays>4 || r.latestObservedDateAgeDays<0) problems.push('stale-or-future-session');
+          if(problems.length){console.error('Refusing scheduled staging publication: '+problems.join(', '));process.exit(1)}
+          console.log('Staging freshness checked; this does not certify official closing or provenance.');
+          EOF
       - name: Persist validated data only to staging
         run: |
           test "$(git branch --show-current)" = "amsterdam-reset-20261027"
