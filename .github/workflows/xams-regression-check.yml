@@ -6,6 +6,8 @@ on:
     paths:
       - 'scripts/cloudflare/test-xams-market-page.mjs'
       - 'scripts/validate.mjs'
+      - 'scripts/factory/test.mjs'
+      - 'scripts/history/test-amsterdam-public-integration.mjs'
       - 'data/euronext-amsterdam.json'
       - 'data/history-instruments.json'
       - '.github/workflows/xams-regression-check.yml'
