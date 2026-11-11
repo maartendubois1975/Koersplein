@@ -10,18 +10,21 @@ const manifest=await read('data/amsterdam-history-manifest.json');
 const mappings=await loadCatalog();
 const pages=await Promise.all(['amsterdam.html','amsterdam-week.js','share.js','chart.js'].map(path=>readFile(new URL(path,root),'utf8')));
 const issues=[];
-if(catalog.shares.length!==85)issues.push({kind:'CATALOG_COUNT',actual:catalog.shares.length});
-if(mappings.length!==80)issues.push({kind:'MAPPING_COUNT',actual:mappings.length});
-if(Object.keys(manifest.instruments||{}).length!==80)issues.push({kind:'MANIFEST_COUNT',actual:Object.keys(manifest.instruments||{}).length});
+if(catalog.shares.length!==80)issues.push({kind:'CATALOG_COUNT',actual:catalog.shares.length});
+if(mappings.length!==catalog.shares.length)issues.push({kind:'MAPPING_COUNT',actual:mappings.length});
+if(Object.keys(manifest.instruments||{}).length!==catalog.shares.length)issues.push({kind:'MANIFEST_COUNT',actual:Object.keys(manifest.instruments||{}).length});
 const mapped=new Set(mappings.map(x=>x.isin));
 if(mapped.size!==mappings.length)issues.push({kind:'DUPLICATE_MAPPING'});
+const selected=new Set(catalog.shares.map(x=>x.isin));
+for(const isin of selected)if(!mapped.has(isin))issues.push({kind:'UNMAPPED_AMSTERDAM_SHARE',isin});
+for(const isin of mapped)if(!selected.has(isin))issues.push({kind:'EXTRA_AMSTERDAM_MAPPING',isin});
 for(const instrument of mappings) {
  const entry=manifest.instruments?.[instrument.isin];
  if(!entry||entry.mic!=='XAMS'||entry.symbol!==instrument.symbol||entry.currency!==instrument.currency)
    issues.push({kind:'MANIFEST_IDENTITY',isin:instrument.isin});
 }
 const reference=catalog.shares.filter(x=>x.historyStatus==='canonical-on-other-market');
-if(reference.length!==5)issues.push({kind:'REFERENCE_COUNT',actual:reference.length});
+if(reference.length!==0)issues.push({kind:'NON_PRIMARY_LISTING_IN_AMSTERDAM',actual:reference.length});
 for(const x of reference)if(mapped.has(x.isin))issues.push({kind:'REFERENCE_DUPLICATE',isin:x.isin});
 const rows=await Promise.all(mappings.map(async instrument=>{
  try{
