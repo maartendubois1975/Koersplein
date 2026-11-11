@@ -4,29 +4,74 @@ on:
     branches:
       - amsterdam-reset-20261027
     paths:
-      - 'scripts/cloudflare/test-xams-market-page.mjs'
+      - 'scripts/cloudflare/**'
+      - 'scripts/factory/**'
+      - 'scripts/history/**'
+      - 'scripts/research/amsterdam-**'
       - 'scripts/validate.mjs'
-      - 'scripts/factory/test.mjs'
-      - 'scripts/history/test-amsterdam-public-integration.mjs'
-      - 'scripts/history/amsterdam-end-to-end-acceptance.mjs'
+      - 'scripts/test.mjs'
+      - 'market-week-core.mjs'
+      - 'amsterdam-week.js'
+      - 'amsterdam.html'
+      - 'chart.js'
+      - 'share.js'
       - 'data/euronext-amsterdam.json'
       - 'data/history-instruments.json'
+      - 'data/amsterdam-history-manifest.json'
+      - 'data/history/**'
       - '.github/workflows/xams-regression-check.yml'
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: xams-regression-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
   regression:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run Amsterdam page regression
-        run: node scripts/cloudflare/test-xams-market-page.mjs
-      - name: Run full test suite
-        run: npm test && npm run history:test
-      - name: Verify full Amsterdam catalog to browser acceptance
+      - name: Check the daily importer and quality-gate syntax without calling providers
+        run: |
+          node --check scripts/history/engine.mjs
+          node --check scripts/history/amsterdam-daily-run.mjs
+          node --check scripts/history/session-readiness.mjs
+          node --check scripts/history/check-amsterdam-latest-session.mjs
+          node --check scripts/history/amsterdam-end-to-end-acceptance.mjs
+      - name: Validate 80 primary listings and the full regression suite
+        run: |
+          node scripts/cloudflare/test-xams-market-page.mjs
+          npm test
+          npm run history:test
+      - name: Verify the complete catalog to stored-history to browser chain
         run: node scripts/history/amsterdam-end-to-end-acceptance.mjs
+      - name: Verify daily session readiness rules and inspect latest stored session
+        run: |
+          node scripts/history/test-session-readiness.mjs
+          node scripts/history/check-amsterdam-latest-session.mjs
+      - name: Audit all 80 histories, source provenance and prediction eligibility
+        run: |
+          node scripts/research/amsterdam-structural-integrity-audit.mjs
+          node scripts/research/amsterdam-data-provenance-audit.mjs
+          node scripts/research/amsterdam-history-quality-audit.mjs
+          node scripts/research/amsterdam-consolidated-quality-gate.mjs
+          node scripts/research/build-amsterdam-period-quality.mjs
+      - name: Publish evidence for review without writing data or deploying
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xams-staging-readonly-audit
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            research/output/amsterdam-end-to-end-acceptance.json
+            research/output/amsterdam-session-readiness.json
+            research/output/amsterdam-structural-integrity-audit.json
+            research/output/amsterdam-data-provenance-audit.json
+            research/output/amsterdam-history-quality-audit.json
+            research/output/amsterdam-consolidated-quality-gate.json
+            research/output/amsterdam-period-quality.json
