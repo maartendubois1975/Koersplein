@@ -32,7 +32,7 @@ for(const venue of legacyVenues){
  if(!fileSet.has(page)){missing.push({page,target:'required legacy redirect'});continue;}
  const html=await fs.readFile(path.join(root,page),'utf8');
  if(!html.includes('market.html?market=')){missing.push({page,target:'canonical market.html redirect'});}
- if(/<script\\b[^>]*\\bsrc=/.test(html)){missing.push({page,target:'legacy venue script must not load'});}
+ if(/<script\b[^>]*\bsrc=/.test(html)){missing.push({page,target:'legacy venue script must not load'});}
 }
 for(const obsolete of ['market.js','brussel.js','parijs.js','milaan.js','oslo.js','amsterdam-week.js']){
  if(fileSet.has(obsolete))missing.push({page:obsolete,target:'obsolete venue-specific renderer must be removed'});
