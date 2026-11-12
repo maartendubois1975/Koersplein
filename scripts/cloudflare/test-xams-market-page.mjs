@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 const html=await readFile(new URL('../../market.html',import.meta.url),'utf8');
 const amsterdamHtml=await readFile(new URL('../../amsterdam.html',import.meta.url),'utf8');
-assert.match(amsterdamHtml,/amsterdam-week\.js\?v=20261028rolling1/,'Amsterdam detail page must load the fixed previous-close renderer');
+assert.match(amsterdamHtml,/market\.html\?market=amsterdam/,'Legacy Amsterdam URL must redirect to canonical market page');
+assert.doesNotMatch(amsterdamHtml,/amsterdam-week\.js/,'Legacy page must not run a duplicate renderer');
 const plan=JSON.parse(await readFile(new URL('../../data/world-fill-plan.json',import.meta.url),'utf8'));
 assert.equal(plan.markets.find(x=>x.mic==='XAMS')?.state,'INCOMPLETE',
  'XAMS must not claim COMPLETE while the fixed 2026-10-19..23 week still has 47 unresolved sessions');
@@ -70,45 +71,4 @@ assert.equal((output.match(/<tr>/g)||[]).length,23,'Two headers, five-day summar
 assert.equal((output.match(/Geldige koers/g)||[]).length,3,'Only real traded bars pass');
 console.log('Public Amsterdam: five sessions, MIC+ISIN+ticker+currency, audited NO_TRADES, stale/invalid, deltas and cache bust PASS');
 
-// The separate amsterdam.html renderer uses the latest completed week.
-// Rebuild its synthetic fixtures for that week, without changing the October audit.
-dates=rollingDates;
-status.week=rollingDates;
-status.noTrades={NL0011540547:[dates[1]]};
-histories['XAMS:NL0011540547'].bars=[bar(dates[0]),bar(dates[1],0),bar(dates[4])];
-histories['XAMS:NL0011540547'].coverage.lastDate=dates[4];
-histories['XAMS:NL0010273215'].bars=dates.map(date=>bar(date));
-histories['XAMS:NL0010273215'].coverage.lastDate=dates[4];
-// Close-to-previous-close must NOT be the overnight opening gap.
-histories['XAMS:NL0000852564'].bars=[
- bar(dates[0]),{...bar(dates[1]),open:102,close:108},bar(dates[2],0)
-];
-// ABN has a verified NO_TRADES Tuesday followed by a real Wednesday trade.
-// Wednesday's previous close is Monday's close, not Tuesday's nonexistent close.
-histories['XAMS:NL0011540547'].bars.push({...bar(dates[2]),open:100,close:108});
-const weekTarget={innerHTML:'',textContent:''};
-const weekCount={textContent:''};
-const weekSearch={value:'',addEventListener(){}};
-globalThis.document={getElementById:id=>({
- 'week-prices-table':weekTarget,'share-count':weekCount,search:weekSearch
-}[id]||null)};
-globalThis.window={KOERSPLEIN_MARKET:{mic:'XAMS',api:'https://koersplein.maarten-dubois1975.workers.dev'}};
-await import('../../amsterdam-week.js?test=xams-five-state-parity');
-for(let i=0;i<100&&!weekTarget.innerHTML.includes('<table>');i++)
- await new Promise(resolve=>setTimeout(resolve,20));
-const weekOutput=weekTarget.innerHTML;
-assert.match(weekOutput,/Slot t\.o\.v\. vorig slot/,'The second delta must be close-to-previous-close');
-assert.match(weekOutput,/\+3,00 EUR \/ \+2,86%/,'Close 108 versus previous close 105 is +3 (+2.86%), not the opening gap');
-const abnRow=weekOutput.split('</tr>').find(x=>x.includes('>ABN · '));
-assert.ok(abnRow,'ABN row missing');
-assert.match(abnRow,/\+3,00 EUR \/ \+2,86%/,'An officially confirmed NO_TRADES session must not break previous-close return');
-assert.match(abnRow,new RegExp(dates[4]+'[^]*?<td class="price">—</td>'),'Unverified intervening Thursday must block Friday previous-close return');
-const sessions=[...weekOutput.matchAll(/data-session-date="(\d{4}-\d{2}-\d{2})" data-session-status="(valid|noTrades|invalid|stale|missing)"/g)];
-assert.equal(sessions.length,15,'Every share/date needs one explicit public status');
-const statusCounts=sessions.reduce((o,m)=>(o[m[2]]=(o[m[2]]||0)+1,o),{});
-assert.deepEqual(statusCounts,{valid:5,invalid:1,stale:2,noTrades:1,missing:6},
- 'Public status partition must match the generic renderer for the same fixture');
-for(const statusLabel of ['Ongeldige koers','Verouderde historie','Niet bevestigd','Geen handel'])
- assert.ok(weekOutput.includes(statusLabel),'Explicit missing-session classification: '+statusLabel);
-assert.doesNotMatch(weekOutput,/€\s*0,00/,'Missing sessions must not be zero-priced');
-console.log('Amsterdam detail page: five explicit session states, previous-close through official NO_TRADES only, no synthetic prices PASS');
+console.log('Amsterdam has one canonical market renderer; legacy URL redirects without loading a second data pipeline PASS');

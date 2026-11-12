@@ -135,3 +135,9 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - Official no-trade audit remains fixed to October 2026 and cannot be reused to certify another week; obsolete non-catalog candidates removed, no new NO_TRADES assertions.
 - The fixed October reference fixture remains for historical regression; live rolling week is not silently treated as fully observed.
 - These edits require full staging validation before declaring deployed.
+
+## 2026-11-12 canonical single Amsterdam page (pending staging verification)
+- Canonical Amsterdam page: `market.html?market=amsterdam` with `generic-market.js`.
+- All homepage Amsterdam links now target the canonical URL. `amsterdam.html` is a backward-compatible redirect, not a second market page or data pipeline.
+- Retire `amsterdam-week.js` entirely; the old dual-renderer fixture is replaced with a redirect assertion. Other markets retain the shared generic page.
+- Rollback: revert this atomic commit on the development branch if regression fails. Production untouched.
