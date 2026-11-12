@@ -49,7 +49,7 @@ for(const source of inspectFiles){
  const body=await fs.readFile(path.join(root,source),'utf8');
  for(const candidate of inactiveRootJs){
   if(source===candidate)continue;
-  const escaped=candidate.replace(/[.*+?^$\{\}()|[\]\\]/g,'\\const inactiveRootJs=allRootJs.filter(p=>!visited.has(p));');
+  const escaped=candidate.replaceAll('.', '\\.');
   if(new RegExp('(^|[^A-Za-z0-9_.-])'+escaped+'(?=$|[^A-Za-z0-9_.-])').test(body))
    references[candidate].push(source);
  }
