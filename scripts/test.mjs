@@ -30,6 +30,10 @@ const [html, app, detail, contracts, detailScript, chartScript, css] = await Pro
   readFile(new URL('../chart.js', import.meta.url), 'utf8'),
   readFile(new URL('../styles.css', import.meta.url), 'utf8')
 ]);
+for(const [page,code] of Object.entries({"brussel.html":"brussels","parijs.html":"paris","milaan.html":"milan","oslo.html":"oslo","lissabon.html":"lisbon","zurich.html":"zurich","stockholm.html":"stockholm"})) {
+ const html=await readFile(new URL('../'+page,import.meta.url),'utf8');
+ assert.ok(html.includes('market.html?market='+code)&&!html.includes('src="market.js'),page+' must redirect to shared renderer');
+}
 const weekPage = await readFile(new URL('../amsterdam.html', import.meta.url), 'utf8');
 const marketScript = await readFile(new URL('../generic-market.js', import.meta.url), 'utf8');
 const weekCore = await readFile(new URL('../market-week-core.mjs', import.meta.url), 'utf8');

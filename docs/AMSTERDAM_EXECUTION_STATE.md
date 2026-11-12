@@ -154,3 +154,9 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - The daily history workflow is dispatch-only and deliberately blocks publishing when source, adjustments, session completeness and provenance gates fail. Do not bypass those controls or claim fully automatic verified prices.
 - Homepage now describes a rolling completed week, not the old October regression fixture; Amsterdam share breadcrumbs return to the canonical market page. Regression coverage added.
 - Remaining blockers before production: complete legacy page migration/deduplication, official market-data publication evidence, live browser verification and a safe daily publishing policy. Never claim those solved by a green build.
+
+## 2026-11-12 consolidated legacy-market page migration
+- Seven old country-specific HTML market renderers replaced with lightweight backward-compatible redirects to the shared `market.html` and `generic-market.js` architecture. Amsterdam already redirected.
+- Share-page breadcrumbs now always target the canonical market route. Tests verify all seven old URLs do not run `market.js`.
+- The legacy `market.js` source is retained until the repository-wide reference and consumer audit proves it is safe to delete; no unsupported claims of deletion.
+- No production changes, price modifications, or workflow scheduling changes. Independent market-data provenance and publication permissions remain outstanding.
