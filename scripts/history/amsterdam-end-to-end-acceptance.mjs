@@ -8,7 +8,7 @@ const read=async path=>JSON.parse(await readFile(new URL(path,root),'utf8'));
 const catalog=await read('data/euronext-amsterdam.json');
 const manifest=await read('data/amsterdam-history-manifest.json');
 const mappings=await loadCatalog();
-const pages=await Promise.all(['amsterdam.html','amsterdam-week.js','share.js','chart.js'].map(path=>readFile(new URL(path,root),'utf8')));
+const pages=await Promise.all(['amsterdam.html','generic-market.js','share.js','chart.js','index.html','market.html'].map(path=>readFile(new URL(path,root),'utf8')));
 const issues=[];
 if(catalog.shares.length!==80)issues.push({kind:'CATALOG_COUNT',actual:catalog.shares.length});
 if(mappings.length!==catalog.shares.length)issues.push({kind:'MAPPING_COUNT',actual:mappings.length});
@@ -43,8 +43,10 @@ const rows=await Promise.all(mappings.map(async instrument=>{
   return {isin:instrument.isin,symbol:instrument.symbol,error:String(error.message),latestDate:null};
  }
 }));
-if(!pages[0].includes('amsterdam-week.js'))issues.push({kind:'AMSTERDAM_PAGE_SCRIPT'});
-if(!pages[1].includes('collectMarketWeek'))issues.push({kind:'WEEK_RENDERER_INTEGRATION'});
+if(!pages[0].includes('market.html?market=amsterdam')||pages[0].includes('amsterdam-week.js'))issues.push({kind:'LEGACY_AMSTERDAM_REDIRECT'});
+if(!pages[1].includes('collectMarketWeek')||!pages[1].includes('lastCompletedAmsterdamWeek'))issues.push({kind:'CANONICAL_MARKET_RENDERER'});
+if(!pages[4].includes('market.html?market=amsterdam')||pages[4].includes('href="amsterdam.html"'))issues.push({kind:'HOMEPAGE_LEGACY_LINK'});
+if(!pages[5].includes('generic-market.js'))issues.push({kind:'MARKET_PAGE_SCRIPT'});
 if(!pages[2].includes('validateHistoryDocument'))issues.push({kind:'SHARE_PAGE_HISTORY'});
 if(!pages[3].includes('export function validateHistoryDocument'))issues.push({kind:'CHART_VALIDATION'});
 const readiness=sessionReadiness(rows);
