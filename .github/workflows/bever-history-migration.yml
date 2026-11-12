@@ -1,0 +1,110 @@
+name: Bever Amsterdam history migration (isolated PR)
+on:
+  push:
+    branches:
+      - fix/xams-replace-delisted-inpost-with-bever
+    paths:
+      - .github/workflows/bever-history-migration.yml
+      - scripts/history/test-amsterdam-public-integration.mjs
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch actual BEVER OHLC from provider (never synthesize prices)
+        run: node scripts/history.mjs backfill --isin NL0000285278 --batch-size 1
+      - name: Verify BEVER OHLC file and distinct trading dates
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          const f='data/history/NL0000285278.json';
+          const h=JSON.parse(fs.readFileSync(f,'utf8'));
+          const b=h.bars||[];
+          if(h.instrument?.isin!=='NL0000285278'||b.length<2||new Set(b.map(x=>x.date)).size!==b.length)throw Error('Bever OHLC history unavailable or invalid');
+          if(b.some(x=>!(x.open>0&&x.close>0)))throw Error('Invalid Bever price');
+          if(b[0].date>'2025-01-01')throw Error('Bever historical backfill too short');
+          console.log('BEVER validated rows:',b.length,'last trading day:',b.at(-1).date);
+          EOF
+      - name: Remove delisted INPST from active data only after BEVER verified
+        run: git rm data/history/LU2290522684.json
+      - name: Synchronize public history manifest from verified active mappings
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          const catalog=JSON.parse(fs.readFileSync('data/history-instruments.json','utf8'));
+          const manifestPath='data/amsterdam-history-manifest.json';
+          const manifest=JSON.parse(fs.readFileSync(manifestPath,'utf8'));
+          const entries=catalog.providerMappings;
+          if(entries.length!==80||new Set(entries.map(x=>x.isin)).size!==80)throw Error('Not exactly 80 unique mappings');
+          const next={};
+          for(const x of entries){
+            if(!x.isin||!x.symbol||!x.currency)throw Error('Incomplete active mapping '+x.isin);
+            next[x.isin]={isin:x.isin,mic:'XAMS',symbol:x.symbol,currency:x.currency,name:x.name};
+          }
+          if(!next.NL0000285278||next.LU2290522684)throw Error('Bever/InPost identity migration incomplete');
+          manifest.instruments=next;
+          fs.writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\n');
+          EOF
+      - name: Validate entire 80-company universe and regenerate audit
+        run: |
+          node scripts/history/audit-amsterdam-import.mjs
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          const audit=JSON.parse(fs.readFileSync('data/amsterdam-import-audit.json','utf8'));
+          if(audit.catalog!==80||audit.mapped!==80||audit.imported!==80||audit.invalid!==0||audit.missing.length||audit.extraFiles.length||audit.extraMappings.length||audit.unmapped.length)throw Error('Amsterdam universe not exactly 80 clean active instruments');
+          if(!audit.instruments.some(x=>x.isin==='NL0000285278')||audit.instruments.some(x=>x.isin==='LU2290522684'))throw Error('Bever/InPost active universe migration not complete');
+          EOF
+          npm test
+          npm run history:test
+          node scripts/history/amsterdam-end-to-end-acceptance.mjs
+      - name: Preserve diagnostic evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bever-migration-diagnostics
+          if-no-files-found: warn
+          path: |
+            data/history/NL0000285278.json
+            data/history/status.json
+            data/amsterdam-import-audit.json
+            research/output/amsterdam-session-readiness.json
+      - name: Commit migration only after all checks pass
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          # Historical OHLC is ignored by default; force-stage only the verified BEVER file.
+          git add -f -- data/history/NL0000285278.json
+          git add -- data/amsterdam-import-audit.json data/amsterdam-history-manifest.json
+          # The retired InPost file is removed by git rm earlier in this job.
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          const catalog=JSON.parse(fs.readFileSync('data/euronext-amsterdam.json','utf8'));
+          const manifest=JSON.parse(fs.readFileSync('data/amsterdam-history-manifest.json','utf8'));
+          const mappings=JSON.parse(fs.readFileSync('data/history-instruments.json','utf8'));
+          const ids=new Set(catalog.shares.map(x=>x.isin));
+          if(ids.size!==80||mappings.providerMappings.length!==80||Object.keys(manifest.instruments).length!==80)throw Error('Active universe not exactly 80');
+          for(const x of catalog.shares){
+            const m=mappings.providerMappings.find(y=>y.isin===x.isin);
+            const p=manifest.instruments[x.isin];
+            if(!m||!p||m.symbol!==x.symbol||p.symbol!==x.symbol||p.mic!=='XAMS'||p.currency!==m.currency)throw Error('Identity drift '+x.isin);
+          }
+          if(!ids.has('NL0000285278')||ids.has('LU2290522684'))throw Error('Active universe replacement invalid');
+          EOF
+          git diff --cached --name-status
+          git diff --cached --quiet && { echo 'Migration produced no staged changes' >&2; exit 1; }
+          git commit -m 'data(xams): complete validated Bever history replacement'
+          # Confirm that the committed candidate contains real Bever bars and excludes InPost.
+          git cat-file -e HEAD:data/history/NL0000285278.json
+          if git cat-file -e HEAD:data/history/LU2290522684.json 2>/dev/null; then
+            echo 'Delisted InPost still present in active history' >&2; exit 1
+          fi
+          git push origin HEAD:fix/xams-replace-delisted-inpost-with-bever
