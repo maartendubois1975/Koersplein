@@ -51,6 +51,11 @@ jobs:
           if(problems.length){console.error('Refusing scheduled staging publication: '+problems.join(', '));process.exit(1)}
           console.log('Staging freshness checked; this does not certify official closing or provenance.');
           EOF
+      - name: Audit source provenance and corporate-action anomalies before any write
+        run: |
+          node scripts/research/amsterdam-data-provenance-audit.mjs
+          node scripts/research/amsterdam-history-quality-audit.mjs
+          node scripts/research/amsterdam-consolidated-quality-gate.mjs
       - name: Persist validated data only to staging
         run: |
           test "$(git branch --show-current)" = "amsterdam-reset-20261027"
