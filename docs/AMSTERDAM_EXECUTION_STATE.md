@@ -167,3 +167,8 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 ## 2026-11-12 removal of duplicate market renderer
 - Following migration of seven legacy venue HTML pages to canonical redirects and a successful staging build, removed unused root `market.js`. Added regression assertion that this duplicate renderer cannot return. Canonical implementation remains `generic-market.js` via `market.html`.
 - Data provenance, automatic refresh schedule and full browser validation are still separate launch gates; no fabricated data or bypass of source controls.
+
+## 2026-11-12 scheduled diagnostic gate
+- The Amsterdam daily history workflow now declares a weekday 18:15 UTC schedule for diagnostics, baseline checks, provider refresh in temporary CI workspace and downloadable audit evidence. This is NOT a publishing schedule.
+- GitHub Actions scheduled workflows only run from the repository default branch; because this workflow currently lives on `amsterdam-reset-20261027`, the schedule is NOT active until an explicitly reviewed workflow is present on the default branch. No claims of automatic updates before that condition is met.
+- Production remains unchanged; audited price publication continues to require explicit dispatch and independent provenance/readiness gates.

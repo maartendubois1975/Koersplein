@@ -1,5 +1,8 @@
 name: Amsterdam daily history refresh (staging)
 on:
+  schedule:
+    # Amsterdam close diagnostics on weekdays; UTC time is deliberately after CET/CEST close.
+    - cron: '15 18 * * 1-5'
   push:
     branches:
       - amsterdam-reset-20261027
@@ -27,7 +30,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   update:
-    if: github.ref == 'refs/heads/amsterdam-reset-20261027' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')
+    if: github.ref == 'refs/heads/amsterdam-reset-20261027' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event_name == 'schedule')
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -87,7 +90,7 @@ jobs:
             research/output/amsterdam-end-to-end-acceptance.json
           retention-days: 30
       - name: Compare latest dates with official Euronext historical source
-        if: github.event_name == 'push' || inputs.dry_run == true
+        if: github.event_name == 'push' || github.event_name == 'schedule' || inputs.dry_run == true
         run: node scripts/history/diagnose-amsterdam-freshness.mjs
       - name: Refresh only mapped Amsterdam daily OHLC histories
         id: refresh
@@ -185,7 +188,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
       - name: Require a clean provider refresh before publishing
-        if: github.event_name != 'push' && inputs.dry_run != true && steps.refresh.outcome != 'success'
+        if: github.event_name == 'workflow_dispatch' && inputs.dry_run == false && steps.refresh.outcome != 'success'
         run: |
           echo 'Provider refresh had errors; refusing to publish any partial daily update.' >&2
           exit 1
