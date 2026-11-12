@@ -160,3 +160,6 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - Share-page breadcrumbs now always target the canonical market route. Tests verify all seven old URLs do not run `market.js`.
 - The legacy `market.js` source is retained until the repository-wide reference and consumer audit proves it is safe to delete; no unsupported claims of deletion.
 - No production changes, price modifications, or workflow scheduling changes. Independent market-data provenance and publication permissions remain outstanding.
+
+## 2026-11-12 canonical-market regression alignment
+- First staging build of the seven-market redirect migration failed because the previous test still expected the retired Amsterdam-only breadcrumb special case. The shared breadcrumb contract is now tested instead; the new build must pass before considering the migration deployed.

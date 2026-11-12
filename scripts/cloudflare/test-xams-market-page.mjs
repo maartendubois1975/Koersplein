@@ -8,7 +8,7 @@ assert.doesNotMatch(amsterdamHtml,/amsterdam-week\.js/,'Legacy page must not run
 const homepage=await readFile(new URL('../../index.html',import.meta.url),'utf8');
 const shareScript=await readFile(new URL('../../share.js',import.meta.url),'utf8');
 assert.doesNotMatch(homepage,/Bekijk de handelsweek 19–23 oktober 2026/,'Homepage must not present a frozen reference week as current');
-assert.match(shareScript,/market\.id==='amsterdam'\?'market\.html\?market=amsterdam'/,'Amsterdam detail back-link must use the single canonical market page');
+assert.match(shareScript,/const back=`market\.html\?market=\$\{encodeURIComponent\(market\.id\)\}`/,'All detail breadcrumbs must use the single canonical market renderer');
 const plan=JSON.parse(await readFile(new URL('../../data/world-fill-plan.json',import.meta.url),'utf8'));
 assert.equal(plan.markets.find(x=>x.mic==='XAMS')?.state,'INCOMPLETE',
  'XAMS must not claim COMPLETE while the fixed 2026-10-19..23 week still has 47 unresolved sessions');
