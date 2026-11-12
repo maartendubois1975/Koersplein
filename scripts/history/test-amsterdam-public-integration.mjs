@@ -24,5 +24,14 @@ assert.equal(report.catalog,80);
 assert.equal(report.mapped,report.catalog);
 assert.equal(report.filesLoaded,report.catalog);
 assert.equal(report.errors.length,0,'Every mapped history must pass public MIC/ticker/ISIN/currency checks');
-assert.equal(report.sharesWithReferenceWeekPrices,80,'Every one of the 80 mapped Amsterdam shares must have real week prices');
-assert.ok(report.validWeekSessions>=390,'At least 390 of 400 possible verified Amsterdam sessions must be present in the reference week');
+// A mapped and validated history can have zero observed trades in a fixed week.
+// Never manufacture candles or treat an absent candle as a confirmed NO_TRADES session.
+const withoutReferenceWeek=snapshot.rows.filter(x=>x.bars.size===0);
+assert.deepEqual(withoutReferenceWeek.map(x=>x.share.isin),['NL0000285278'],
+  'Only the explicitly reviewed thinly-traded Bever series may lack reference-week observations');
+const bever=await read('data/history/NL0000285278.json');
+assert.equal(bever.instrument?.isin,'NL0000285278');
+assert.ok(bever.bars.length>=2,'Bever must have independently stored historical candles');
+assert.equal(new Set(bever.bars.map(x=>x.date)).size,bever.bars.length,'Bever dates must be unique');
+assert.equal(report.sharesWithReferenceWeekPrices,79,'All other 79 instruments require real reference-week observations');
+assert.ok(report.validWeekSessions>=389,'At least 389 of 400 possible observed sessions must be present; missing candles remain missing');
