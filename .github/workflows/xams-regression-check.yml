@@ -36,6 +36,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Enforce canonical Amsterdam identity contract before regression tests
+        run: node scripts/history/verify-amsterdam-identity.mjs
       - name: Check the daily importer and quality-gate syntax without calling providers
         run: |
           node --check scripts/history/engine.mjs

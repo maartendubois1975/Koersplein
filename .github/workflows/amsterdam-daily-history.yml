@@ -37,6 +37,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Enforce canonical Amsterdam identity contract before provider calls
+        run: node scripts/history/verify-amsterdam-identity.mjs
       - name: Syntax check Amsterdam research programs before provider calls
         run: |
           node --check scripts/history/amsterdam-end-to-end-acceptance.mjs

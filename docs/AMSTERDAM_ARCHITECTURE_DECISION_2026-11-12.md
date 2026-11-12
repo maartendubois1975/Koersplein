@@ -48,3 +48,10 @@ Scope: approved staging branch `amsterdam-reset-20261027`; no production change.
 ## Reporting contract
 
 Use explicit statuses: researched, planned, committed, CI verified, staging deployed, live verified. This document is **researched/planned**, not implemented or deployed.
+
+## Implementation progress — canonical identity guard
+
+- A read-only invariant gate was added: `scripts/history/verify-amsterdam-identity.mjs`.
+- Both staging daily workflow and isolated PR regression workflow execute it **before** provider refresh or other regression tests.
+- The gate rejects catalog/mapping/manifest identity drift, duplicate tickers/ISINs, missing provenance and inactive public entries. It does not manufacture or certify OHLC.
+- The Bever migration itself remains unmerged and requires its own complete candidate dataset, correct handling of ignored history and verified CI. This commit does not claim that migration or staging deployment is complete.
