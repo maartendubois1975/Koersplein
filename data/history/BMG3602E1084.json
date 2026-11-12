@@ -26,15 +26,15 @@
       "adjustedCloseSource": null,
       "lastImportSource": "Euronext public historical table",
       "lastImportSourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BMG3602E1084-XAMS",
-      "lastImportRetrievedAt": "2026-11-11T00:01:05.663Z"
+      "lastImportRetrievedAt": "2026-11-12T01:30:12.602Z"
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2015-07-10",
-    "lastDate": "2026-11-10",
-    "records": 2901,
-    "volumeRecords": 2901,
+    "lastDate": "2026-11-11",
+    "records": 2902,
+    "volumeRecords": 2902,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -26146,6 +26146,15 @@
       "low": 22.66,
       "close": 22.76,
       "volume": 111048,
+      "adjustedClose": null
+    },
+    {
+      "date": "2026-11-11",
+      "open": 22.5,
+      "high": 22.54,
+      "low": 21.76,
+      "close": 22.48,
+      "volume": 468610,
       "adjustedClose": null
     }
   ]
