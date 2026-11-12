@@ -128,3 +128,10 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - Build: 80/80 histories, 363439 rows, zero invalid bars and zero structural issues. Three lagging relative to newest observed session; this is not proof of missing trades.
 - Detailed evidence, remaining session classification and browser blockers: `docs/AMSTERDAM_FINAL_VERIFICATION_2026-11-12.md`.
 - Do not declare visual UI, official market-data correctness, licensing or prediction readiness verified.
+
+## 2026-11-12 consolidated UI source contract (pending CI)
+- Both Amsterdam market renderers now select the same latest completed Europe/Amsterdam week through `lastCompletedAmsterdamWeek` in `market-week-core.mjs`.
+- Both Amsterdam market renderers use the committed local manifest and stored histories; no divergent external Worker history for the XAMS listing page.
+- Official no-trade audit remains fixed to October 2026 and cannot be reused to certify another week; obsolete non-catalog candidates removed, no new NO_TRADES assertions.
+- The fixed October reference fixture remains for historical regression; live rolling week is not silently treated as fully observed.
+- These edits require full staging validation before declaring deployed.

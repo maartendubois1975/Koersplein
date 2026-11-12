@@ -1,20 +1,11 @@
-import {AMSTERDAM_REFERENCE_WEEK,collectMarketWeek,sessionChange,positiveNumber,verifiedNoTradeStatus} from './market-week-core.mjs?v=20261026xams-retry1';
+import {lastCompletedAmsterdamWeek,collectMarketWeek,sessionChange,positiveNumber,verifiedNoTradeStatus} from './market-week-core.mjs?v=20261026xams-retry1';
 const target=document.getElementById('week-prices-table');
 const search=document.getElementById('search');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=(value,currency)=>{const n=positiveNumber(value);if(n===null)return '—';try{return new Intl.NumberFormat('nl-NL',{style:'currency',currency:currency||'EUR',minimumFractionDigits:2,maximumFractionDigits:4}).format(n)}catch{return new Intl.NumberFormat('nl-NL',{maximumFractionDigits:4}).format(n)}};
 const signed=(value,digits=2)=>new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:digits,maximumFractionDigits:digits}).format(value);
 const change=(open,close,currency)=>{const d=sessionChange(open,close);if(!d)return '—';return signed(d.absolute,2)+' '+esc(currency||'EUR')+' / '+signed(d.percent,2)+'%';};
-const amsterdamDate=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-const latestClosedWeek=()=>{
- const now=new Date(amsterdamDate()+'T12:00:00Z');
- const weekday=now.getUTCDay();
- const daysSinceMonday=(weekday+6)%7;
- const monday=new Date(now);
- monday.setUTCDate(monday.getUTCDate()-daysSinceMonday-(weekday>=1&&weekday<=5?7:0));
- return Array.from({length:5},(_,i)=>{const d=new Date(monday);d.setUTCDate(d.getUTCDate()+i);return d.toISOString().slice(0,10);});
-};
-const days=latestClosedWeek();
+const days=lastCompletedAmsterdamWeek();
 const weekLabel=days[0]+' t/m '+days.at(-1);
 const LOCAL_HISTORY_BASE='data/history/';
 // Previous *traded* close can cross a session only if the exchange explicitly
