@@ -122,3 +122,9 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - Prior staging run 41013786049 was confirmed successful by reading its actual GitHub Actions jobs, but it PRECEDES the latest work and is NOT validation of this new gate.
 - Current-run validation and Render staging deployment are still unverified. Render account exposes one workspace named My Workspace, but connector requires owner confirmation before selecting it; no Render mutation performed.
 - Scheduling and final price publication remain blocked until an owner-authorized staging scheduler and source/legal verification are available. No production changes.
+
+## Verified 2026-11-12 integrated staging checkpoint
+- PR #216 merged at `32f0dd9`; combined CI run 43159399123 succeeded and Render deployment `dep-dbqkka56e07s73fggksg` is live.
+- Build: 80/80 histories, 363439 rows, zero invalid bars and zero structural issues. Three lagging relative to newest observed session; this is not proof of missing trades.
+- Detailed evidence, remaining session classification and browser blockers: `docs/AMSTERDAM_FINAL_VERIFICATION_2026-11-12.md`.
+- Do not declare visual UI, official market-data correctness, licensing or prediction readiness verified.
