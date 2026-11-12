@@ -34,6 +34,7 @@ for(const [page,code] of Object.entries({"brussel.html":"brussels","parijs.html"
  const html=await readFile(new URL('../'+page,import.meta.url),'utf8');
  assert.ok(html.includes('market.html?market='+code)&&!html.includes('src="market.js'),page+' must redirect to shared renderer');
 }
+await assert.rejects(readFile(new URL('../market.js',import.meta.url),'utf8'),{code:'ENOENT'},'Unused legacy market renderer must be deleted');
 const weekPage = await readFile(new URL('../amsterdam.html', import.meta.url), 'utf8');
 const marketScript = await readFile(new URL('../generic-market.js', import.meta.url), 'utf8');
 const weekCore = await readFile(new URL('../market-week-core.mjs', import.meta.url), 'utf8');

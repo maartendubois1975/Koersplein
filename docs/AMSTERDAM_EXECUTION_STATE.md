@@ -163,3 +163,7 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 
 ## 2026-11-12 canonical-market regression alignment
 - First staging build of the seven-market redirect migration failed because the previous test still expected the retired Amsterdam-only breadcrumb special case. The shared breadcrumb contract is now tested instead; the new build must pass before considering the migration deployed.
+
+## 2026-11-12 removal of duplicate market renderer
+- Following migration of seven legacy venue HTML pages to canonical redirects and a successful staging build, removed unused root `market.js`. Added regression assertion that this duplicate renderer cannot return. Canonical implementation remains `generic-market.js` via `market.html`.
+- Data provenance, automatic refresh schedule and full browser validation are still separate launch gates; no fabricated data or bypass of source controls.
