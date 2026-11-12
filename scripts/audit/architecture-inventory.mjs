@@ -34,7 +34,7 @@ for(const venue of legacyVenues){
  if(!html.includes('market.html?market=')){missing.push({page,target:'canonical market.html redirect'});}
  if(/<script\b[^>]*\bsrc=/.test(html)){missing.push({page,target:'legacy venue script must not load'});}
 }
-for(const obsolete of ['market.js','brussel.js','parijs.js','milaan.js','oslo.js','amsterdam-week.js']){
+for(const obsolete of ['market.js','brussel.js','parijs.js','milaan.js','oslo.js','amsterdam-week.js','home-brussels.js','home-history.js','opportunity-learning.js','top5-markets.js']){
  if(fileSet.has(obsolete))missing.push({page:obsolete,target:'obsolete venue-specific renderer must be removed'});
 }
 const allRootJs=files.filter(p=>!p.includes('/')&&/\.m?js$/.test(p));
