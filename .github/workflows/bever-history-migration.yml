@@ -35,6 +35,24 @@ jobs:
           EOF
       - name: Remove delisted INPST from active data only after BEVER verified
         run: git rm data/history/LU2290522684.json
+      - name: Synchronize public history manifest from verified active mappings
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          const catalog=JSON.parse(fs.readFileSync('data/history-instruments.json','utf8'));
+          const manifestPath='data/amsterdam-history-manifest.json';
+          const manifest=JSON.parse(fs.readFileSync(manifestPath,'utf8'));
+          const entries=catalog.providerMappings;
+          if(entries.length!==80||new Set(entries.map(x=>x.isin)).size!==80)throw Error('Not exactly 80 unique mappings');
+          const next={};
+          for(const x of entries){
+            if(!x.isin||!x.symbol||!x.currency)throw Error('Incomplete active mapping '+x.isin);
+            next[x.isin]={isin:x.isin,mic:'XAMS',symbol:x.symbol,currency:x.currency,name:x.name};
+          }
+          if(!next.NL0000285278||next.LU2290522684)throw Error('Bever/InPost identity migration incomplete');
+          manifest.instruments=next;
+          fs.writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\\n');
+          EOF
       - name: Validate entire 80-company universe and regenerate audit
         run: |
           node scripts/history/audit-amsterdam-import.mjs
@@ -62,6 +80,6 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/history/NL0000285278.json data/amsterdam-import-audit.json
+          git add data/history/NL0000285278.json data/amsterdam-import-audit.json data/amsterdam-history-manifest.json
           git commit -m 'data(xams): complete validated Bever history replacement'
           git push origin HEAD:fix/xams-replace-delisted-inpost-with-bever
