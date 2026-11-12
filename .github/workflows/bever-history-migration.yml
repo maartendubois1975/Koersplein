@@ -5,6 +5,7 @@ on:
       - fix/xams-replace-delisted-inpost-with-bever
     paths:
       - .github/workflows/bever-history-migration.yml
+      - scripts/history/test-amsterdam-public-integration.mjs
   workflow_dispatch:
 permissions:
   contents: write
