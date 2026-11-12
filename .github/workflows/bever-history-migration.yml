@@ -51,7 +51,7 @@ jobs:
           }
           if(!next.NL0000285278||next.LU2290522684)throw Error('Bever/InPost identity migration incomplete');
           manifest.instruments=next;
-          fs.writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\\n');
+          fs.writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\n');
           EOF
       - name: Validate entire 80-company universe and regenerate audit
         run: |
