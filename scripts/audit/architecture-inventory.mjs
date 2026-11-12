@@ -25,6 +25,18 @@ while(queue.length){const p=queue.pop();if(visited.has(p))continue;visited.add(p
   else if(!visited.has(target))queue.push(target);
  }
 }
+// Enforce one canonical venue renderer, while preserving old URLs as redirects.
+const legacyVenues=['amsterdam','brussel','parijs','milaan','oslo','lissabon','zurich','stockholm'];
+for(const venue of legacyVenues){
+ const page=venue+'.html';
+ if(!fileSet.has(page)){missing.push({page,target:'required legacy redirect'});continue;}
+ const html=await fs.readFile(path.join(root,page),'utf8');
+ if(!html.includes('market.html?market=')){missing.push({page,target:'canonical market.html redirect'});}
+ if(/<script\\b[^>]*\\bsrc=/.test(html)){missing.push({page,target:'legacy venue script must not load'});}
+}
+for(const obsolete of ['market.js','brussel.js','parijs.js','milaan.js','oslo.js','amsterdam-week.js']){
+ if(fileSet.has(obsolete))missing.push({page:obsolete,target:'obsolete venue-specific renderer must be removed'});
+}
 const allRootJs=files.filter(p=>!p.includes('/')&&/\.m?js$/.test(p));
 const inactiveRootJs=allRootJs.filter(p=>!visited.has(p));
 const workflowPaths=files.filter(p=>/^\.github\/workflows\/.*\.ya?ml$/.test(p));
