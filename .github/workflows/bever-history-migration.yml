@@ -81,6 +81,30 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/history/NL0000285278.json data/amsterdam-import-audit.json data/amsterdam-history-manifest.json
+          # Historical OHLC is ignored by default; force-stage only the verified BEVER file.
+          git add -f -- data/history/NL0000285278.json
+          git add -- data/amsterdam-import-audit.json data/amsterdam-history-manifest.json
+          # The retired InPost file is removed by git rm earlier in this job.
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          const catalog=JSON.parse(fs.readFileSync('data/euronext-amsterdam.json','utf8'));
+          const manifest=JSON.parse(fs.readFileSync('data/amsterdam-history-manifest.json','utf8'));
+          const mappings=JSON.parse(fs.readFileSync('data/history-instruments.json','utf8'));
+          const ids=new Set(catalog.shares.map(x=>x.isin));
+          if(ids.size!==80||mappings.providerMappings.length!==80||Object.keys(manifest.instruments).length!==80)throw Error('Active universe not exactly 80');
+          for(const x of catalog.shares){
+            const m=mappings.providerMappings.find(y=>y.isin===x.isin);
+            const p=manifest.instruments[x.isin];
+            if(!m||!p||m.symbol!==x.symbol||p.symbol!==x.symbol||p.mic!=='XAMS'||p.currency!==m.currency)throw Error('Identity drift '+x.isin);
+          }
+          if(!ids.has('NL0000285278')||ids.has('LU2290522684'))throw Error('Active universe replacement invalid');
+          EOF
+          git diff --cached --name-status
+          git diff --cached --quiet && { echo 'Migration produced no staged changes' >&2; exit 1; }
           git commit -m 'data(xams): complete validated Bever history replacement'
+          # Confirm that the committed candidate contains real Bever bars and excludes InPost.
+          git cat-file -e HEAD:data/history/NL0000285278.json
+          if git cat-file -e HEAD:data/history/LU2290522684.json 2>/dev/null; then
+            echo 'Delisted InPost still present in active history' >&2; exit 1
+          fi
           git push origin HEAD:fix/xams-replace-delisted-inpost-with-bever
