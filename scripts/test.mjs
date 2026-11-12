@@ -31,12 +31,12 @@ const [html, app, detail, contracts, detailScript, chartScript, css] = await Pro
   readFile(new URL('../styles.css', import.meta.url), 'utf8')
 ]);
 const weekPage = await readFile(new URL('../amsterdam.html', import.meta.url), 'utf8');
-const weekScript = await readFile(new URL('../amsterdam-week.js', import.meta.url), 'utf8');
+const marketScript = await readFile(new URL('../generic-market.js', import.meta.url), 'utf8');
 const weekCore = await readFile(new URL('../market-week-core.mjs', import.meta.url), 'utf8');
-assert.ok(html.includes('Openings- en slotkoersen') && html.includes('amsterdam.html'), 'Homepage must focus on open and close');
+assert.ok(html.includes('Openings- en slotkoersen') && html.includes('market.html?market=amsterdam'), 'Homepage must focus on open and close');
 assert.ok(html.includes('home-markets.js') && !html.includes('top5-markets.js') && !html.includes('opportunity-form'), 'Homepage must not run prediction or ranking engines');
-assert.ok(weekPage.includes('2026') && weekPage.includes('week-prices-table') && weekPage.includes('type="module"'), 'Amsterdam must expose the five-session table');
-assert.ok(weekScript.includes('collectMarketWeek') && weekScript.includes('sessionChange') && weekCore.includes('manifestResolver'), 'Amsterdam must use MIC-safe canonical history and calculate daily changes');
+assert.ok(weekPage.includes('market.html?market=amsterdam') && !weekPage.includes('amsterdam-week.js'), 'Amsterdam must expose the five-session table');
+assert.ok(marketScript.includes('collectMarketWeek') && marketScript.includes('sessionChange') && weekCore.includes('manifestResolver'), 'Amsterdam must use MIC-safe canonical history and calculate daily changes');
 assert.ok(detail.includes('Dagelijkse koersgegevens') && !detail.includes('Kans- en risicoanalyse'));
 assert.ok(detail.includes('Opening, slot en verloop') && !detail.includes('model-contract'));
 assert.ok(detail.includes('history-state') && detailScript.includes('/api/history/') && detailScript.includes('runtime.apiBaseUrl') && detailScript.includes('renderHistoryChart'));
