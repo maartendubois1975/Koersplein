@@ -31,3 +31,23 @@ The owner explicitly rejects the pattern of a small code repair followed by a st
 - No partial completion language that implies the site is operational. Separate committed code, locally tested fixtures, CI verified, staging deployed, and production deployed.
 - Do not ask the owner to say "Verder" after every minor repair. End only at a meaningful end-to-end milestone or a genuine externally imposed blocker, and say exactly what remains.
 - A staging-only GitHub workflow cannot be made a reliable daily cron by adding schedule to its nondefault branch; never silently modify main to work around this. Obtain explicit approval before any main-branch scheduling bridge.
+
+
+## Permanente ontwikkelinstructie — bevestigd 2026-11-12
+
+Deze instructie geldt voor heel Koersplein: Amsterdam, Brussel en alle toekomstige beurzen. De hoofdarchitect, ontwikkelaar en kwaliteitsbewaker geeft betrouwbaarheid, eenvoud en onderhoudbaarheid voorrang boven snelle codewijzigingen.
+
+1. **Eerst onderzoeken, dan programmeren.** Inspecteer vóór elke wijziging de volledige relevante keten: architectuur, bestaande code en afhankelijkheden, databronnen, imports, opslag, API's, frontend, tests, GitHub Actions en Render. Leg de impact vast voordat je code aanpast.
+2. **Bestaande code verbeteren, niet opstapelen.** Zoek eerst naar bestaande implementaties. Hergebruik, consolideer of vervang die; introduceer geen parallelle herstelroute of dubbele configuratie. Verwijder aantoonbaar overbodige code alleen inclusief veilige verwijzing- en regressiecontrole.
+3. **Eén centrale bron van waarheid.** Voor Amsterdam is de gevalideerde lijst van 80 bedrijven leidend voor mappings, koershistorie, manifesten, API en website. Genereer afgeleide artefacten automatisch en controleer identiteiten en aantallen. Pas dit principe ook op andere beurzen toe.
+4. **Eerst het complete wijzigingsplan.** Beschrijf doel, geraakte bestanden en functies, te vervangen/verwijderen code, keteneffecten, uitzonderingen, faalscenario's, acceptatiecriteria en rollback vóór implementatie.
+5. **Samenhangende bouwblokken.** Werk uitsluitend op een goedgekeurde geïsoleerde ontwikkeltak, met een samenhangende set wijzigingen en een complete validatie. Bij falen eerst de oorzaak en volledige impact onderzoeken; geen reeks blinde reparatiecommits.
+6. **Tests toetsen de werkelijkheid.** Gebruik uitsluitend echte, controleerbare financiële gegevens. Verzin geen OHLC, transacties of handelsdagen. Maak expliciet onderscheid tussen ontbrekende data, geen handel, leveranciersfouten en codefouten. Versoepel een test nooit alleen om groen te worden; motiveer en verifieer elke inhoudelijke wijziging.
+7. **Verplichte eindcontrole.** Controleer bestaande regressies, de volledige bron-tot-website-keten, datakwaliteit en volledigheid, andere modules, dubbele/ongebruikte code, automatische imports en overeenstemming GitHub–Render. Een mislukte verplichte controle blokkeert samenvoegen en publicatie.
+8. **Bescherm werkende onderdelen.** Productie nooit wijzigen zonder expliciete toestemming. Bewaar een aantoonbaar werkende versie en rollbackmogelijkheid.
+9. **Beslissingen blijvend documenteren.** Leg architectuur, bron-van-waarheid, kwaliteitscriteria en belangrijke ontwerpkeuzes in de repository vast; lees deze instructie en relevante documentatie opnieuw aan het begin van elke ontwikkelsessie.
+10. **Alleen controleerbare resultaten rapporteren.** Scheid onderzocht, aangepast, getest, samengevoegd en gepubliceerd. Noem een onderdeel pas afgerond na geslaagde end-to-end-acceptatie.
+
+**Hoofdregel:** structureel oplossen vóór snel repareren. Bij terugkerende problemen de onderliggende oorzaak onderzoeken en wegnemen, niet alleen het symptoom.
+
+**Handhaving:** dit document is een gedrags- en ontwerpcontract, geen automatische garantie. Technische handhaving vereist afzonderlijke CI-kwaliteitscontroles, branch protection, reproduceerbare tests en gecontroleerde deploys. Claim niet dat die bestaan zonder verificatie.
