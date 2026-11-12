@@ -39,9 +39,26 @@ for(const obsolete of ['market.js','brussel.js','parijs.js','milaan.js','oslo.js
 }
 const allRootJs=files.filter(p=>!p.includes('/')&&/\.m?js$/.test(p));
 const inactiveRootJs=allRootJs.filter(p=>!visited.has(p));
+// Repository-wide text references include jobs, test suites, documentation and workflows.
+// This is a conservative deletion guard: a matching basename can be a false positive,
+// but absence from both browser reachability and repo references is useful evidence.
+const inspectFiles=files.filter(p=>/\.(?:js|mjs|html|json|yml|yaml|md|css)$/.test(p)&&!p.startsWith('data/history/')&&!p.startsWith('research/output/')&&!p.startsWith('data/euronext-'));
+const references={};
+for(const candidate of inactiveRootJs)references[candidate]=[];
+for(const source of inspectFiles){
+ const body=await fs.readFile(path.join(root,source),'utf8');
+ for(const candidate of inactiveRootJs){
+  if(source===candidate)continue;
+  const escaped=candidate.replace(/[.*+?^$\{\}()|[\]\\]/g,'\\const inactiveRootJs=allRootJs.filter(p=>!visited.has(p));');
+  if(new RegExp('(^|[^A-Za-z0-9_.-])'+escaped+'(?=$|[^A-Za-z0-9_.-])').test(body))
+   references[candidate].push(source);
+ }
+}
+const deletionCandidates=inactiveRootJs.filter(p=>references[p].length===0);
+
 const workflowPaths=files.filter(p=>/^\.github\/workflows\/.*\.ya?ml$/.test(p));
 const workflows=await Promise.all(workflowPaths.map(async p=>{const s=await fs.readFile(path.join(root,p),'utf8');return {path:p,scheduled:/^  schedule:/m.test(s),writes:/contents:\s*write/.test(s),targetsDevelopment:/amsterdam-reset-20261027/.test(s)};}));
-const report={schemaVersion:1,files:files.length,pages:activePages.length,activeScripts:[...visited].sort(),inactiveRootJs,redirects,missing,workflows,notes:['Inactive root scripts are candidates only: CLI, tests, or dynamic loading can reference them.','GitHub scheduled workflows execute only from default branch.','Do not remove financial data or provenance evidence based on static reachability.']};
+const report={schemaVersion:1,files:files.length,pages:activePages.length,activeScripts:[...visited].sort(),inactiveRootJs,rootScriptReferences:references,deletionCandidates,redirects,missing,workflows,notes:['Inactive root scripts are candidates only: CLI, tests, or dynamic loading can reference them.','GitHub scheduled workflows execute only from default branch.','Do not remove financial data or provenance evidence based on static reachability.']};
 await fs.mkdir(path.join(root,'research/output'),{recursive:true});
 await fs.writeFile(path.join(root,'research/output/architecture-inventory.json'),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify({files:report.files,pages:report.pages,activeScripts:report.activeScripts.length,inactiveRootJs,missing,workflows},null,2));
