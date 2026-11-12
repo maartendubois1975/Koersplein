@@ -61,5 +61,5 @@ const workflows=await Promise.all(workflowPaths.map(async p=>{const s=await fs.r
 const report={schemaVersion:1,files:files.length,pages:activePages.length,activeScripts:[...visited].sort(),inactiveRootJs,rootScriptReferences:references,deletionCandidates,redirects,missing,workflows,notes:['Inactive root scripts are candidates only: CLI, tests, or dynamic loading can reference them.','GitHub scheduled workflows execute only from default branch.','Do not remove financial data or provenance evidence based on static reachability.']};
 await fs.mkdir(path.join(root,'research/output'),{recursive:true});
 await fs.writeFile(path.join(root,'research/output/architecture-inventory.json'),JSON.stringify(report,null,2)+'\n');
-console.log(JSON.stringify({files:report.files,pages:report.pages,activeScripts:report.activeScripts.length,inactiveRootJs,missing,workflows},null,2));
+console.log(JSON.stringify({files:report.files,pages:report.pages,activeScripts:report.activeScripts.length,inactiveRootJs,rootScriptReferences:references,deletionCandidates,missing,workflows},null,2));
 if(missing.length)process.exitCode=1;
