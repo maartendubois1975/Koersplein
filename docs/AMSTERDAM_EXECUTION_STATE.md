@@ -147,3 +147,10 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - Keep the exact week used for loading as part of the immutable display snapshot, avoiding a week mismatch if the date changes during loading.
 - Extend regression tests for Friday/weekend/Monday Amsterdam calendar boundaries and for history-chart navigation.
 - Do not change market prices, fill missing candles or assert verified no-trade without official evidence.
+
+## 2026-11-12 full-site architecture investigation and consolidated navigation correction
+- Repository tree: 638 entries, 329 JavaScript modules/scripts, 14 HTML documents. Multiple legacy country pages still use `market.js`; removing it would break non-Amsterdam pages. Do not delete it without migrating those pages.
+- The production Render service `koersplein` is tied to `main`; the tested staging service is tied to `amsterdam-reset-20261027`. Production is not updated by staging deployments.
+- The daily history workflow is dispatch-only and deliberately blocks publishing when source, adjustments, session completeness and provenance gates fail. Do not bypass those controls or claim fully automatic verified prices.
+- Homepage now describes a rolling completed week, not the old October regression fixture; Amsterdam share breadcrumbs return to the canonical market page. Regression coverage added.
+- Remaining blockers before production: complete legacy page migration/deduplication, official market-data publication evidence, live browser verification and a safe daily publishing policy. Never claim those solved by a green build.
