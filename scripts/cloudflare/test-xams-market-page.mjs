@@ -58,6 +58,7 @@ for(let i=0;i<100;i++){
  await new Promise(resolve=>setTimeout(resolve,20));
 }
 assert.match(output,/Amsterdam · vijf afgesloten handelsdagen/,'Public XAMS page must render all five days');
+assert.match(output,/share\.html\?isin=NL0000852564&amp;mic=XAMS|share\.html\?isin=NL0000852564&mic=XAMS/,'Amsterdam company must link to its validated history chart');
 assert.match(output,/Geen handel \(officieel\)/,'Audited NO_TRADES must be visible');
 assert.match(output,new RegExp('<tr><td>'+dates[1]+'</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>'),
  'Official NO_TRADES must override invalid zero-volume reference bars, while other invalid bars remain quarantined');

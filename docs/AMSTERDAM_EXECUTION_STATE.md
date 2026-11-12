@@ -141,3 +141,9 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - All homepage Amsterdam links now target the canonical URL. `amsterdam.html` is a backward-compatible redirect, not a second market page or data pipeline.
 - Retire `amsterdam-week.js` entirely; the old dual-renderer fixture is replaced with a redirect assertion. Other markets retain the shared generic page.
 - Rollback: revert this atomic commit on the development branch if regression fails. Production untouched.
+
+## 2026-11-12 consolidated navigation, calendar and regression block (staging validation pending)
+- Preserve the single canonical market renderer and route every Amsterdam share name directly to `share.html` with ISIN, MIC and ticker.
+- Keep the exact week used for loading as part of the immutable display snapshot, avoiding a week mismatch if the date changes during loading.
+- Extend regression tests for Friday/weekend/Monday Amsterdam calendar boundaries and for history-chart navigation.
+- Do not change market prices, fill missing candles or assert verified no-trade without official evidence.
