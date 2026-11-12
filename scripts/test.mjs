@@ -21,9 +21,8 @@ assert.equal(movers.length, 1);
 assert.ok(Math.abs(movers[0].changePercent - 2.941176470588225) < 1e-9);
 assert.equal(movers[0].tradingDate, '2026-09-11');
 
-const [html, app, detail, contracts, detailScript, chartScript, css] = await Promise.all([
+const [html, detail, contracts, detailScript, chartScript, css] = await Promise.all([
   readFile(new URL('../index.html', import.meta.url), 'utf8'),
-  readFile(new URL('../app.js', import.meta.url), 'utf8'),
   readFile(new URL('../share.html', import.meta.url), 'utf8'),
   readFile(new URL('../data/home-contracts.json', import.meta.url), 'utf8'),
   readFile(new URL('../share.js', import.meta.url), 'utf8'),
