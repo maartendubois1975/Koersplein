@@ -21,22 +21,28 @@ const endDate=new Date().toISOString().slice(0,10);
 const startDate=new Date(Date.now()-30*86400000).toISOString().slice(0,10);
 const providers=[new YahooChartProvider(),new EuronextLiveProvider()];
 const report=[];
+const investigations=[];
 for(const {instrument,latest,readError} of selected){
+  const observations=[];
   for(const provider of providers){
     try{
       const result=await provider.fetchDaily(instrument,{startDate,endDate});
       const dates=result.bars.map(x=>x.date).sort();
-      report.push({symbol:instrument.symbol,isin:instrument.isin,storedLatest:latest,readError,
+      const observation={symbol:instrument.symbol,isin:instrument.isin,storedLatest:latest,readError,
         provider:provider.id,latest:dates.at(-1)||null,days:dates.slice(-6),
-        count:dates.length,partialHistory:result.providerMeta?.partialHistory||false});
+        count:dates.length,partialHistory:result.providerMeta?.partialHistory||false};
+      report.push(observation);
+      observations.push(observation);
     }catch(error){
-      report.push({symbol:instrument.symbol,isin:instrument.isin,storedLatest:latest,readError,
-        provider:provider.id,error:String(error.message).slice(0,240)});
+      const observation={symbol:instrument.symbol,isin:instrument.isin,storedLatest:latest,readError,
+        provider:provider.id,error:String(error.message).slice(0,240)};
+      report.push(observation);
+      observations.push(observation);
     }
   }
 }
 console.log('AMSTERDAM_FRESHNESS_DIAGNOSTIC '+JSON.stringify({
   startDate,endDate,newestStoredDate:newestDate,catalogCount:catalog.length,
   laggingStored:stored.filter(x=>x.latest!==newestDate).map(x=>({symbol:x.instrument.symbol,isin:x.instrument.isin,latest:x.latest,readError:x.readError})),
-  selectedCount:selected.length,report
+  selectedCount:selected.length,investigations,report
 }));
