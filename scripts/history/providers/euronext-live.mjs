@@ -36,7 +36,7 @@ export const parseEuronextHistoryRows=html=>{
  const di=idx('date'),oi=idx('open'),hi=idx('high'),li=idx('low'),ci=idx('close');
  const vi=h.findIndex(x=>x.includes('number of shares')||x==='volume'||/^vol\.?$/i.test(x.trim())||x.includes('traded volume')||x.includes('quantity traded'));
  if(di<0||oi<0||ci<0)return[];
- return rows.slice(header+1).map(row=>({date:iso(row[di]),open:num(row[oi]),high:num(row[hi]),low:num(row[li]),close:num(row[ci]),adjustedClose:num(row[ci]),volume:vi>=0?num(row[vi]):null})).filter(x=>x.date&&x.close!==null&&x.close>0);
+ return rows.slice(header+1).map(row=>({date:iso(row[di]),open:num(row[oi]),high:num(row[hi]),low:num(row[li]),close:num(row[ci]),adjustedClose:null,volume:vi>=0?num(row[vi]):null})).filter(x=>x.date&&x.close!==null&&x.close>0);
 };
 // Euronext's public AJAX client uses this published transport format and
 // default passphrase (ajax_secure/js/ajax-secure.js); this is not an account credential.
@@ -54,9 +54,10 @@ export function decodeEuronextBody(text){
  if(!html.length)throw Error('EURONEXT_TRANSPORT_NO_HTML');
  return html.join('\n');
 }
-export async function euronextDailySnapshot(i,date,signal){
+export async function euronextDailySnapshot(i,date,signal,adjusted='Y'){
+ if(!['Y','N'].includes(adjusted))throw Error('Invalid adjustment mode');
  const key=`${i.isin}-${euronextProviderMic(i.mic)}`,sourceUrl=ROOT+encodeURIComponent(key);
- const r=await fetch(sourceUrl,{method:'POST',signal,headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},body:new URLSearchParams({adjusted:'Y',startdate:date,enddate:date,nbSession:'100000'})});
+ const r=await fetch(sourceUrl,{method:'POST',signal,headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},body:new URLSearchParams({adjusted,startdate:date,enddate:date,nbSession:'100000'})});
  if(!r.ok)throw Error('Euronext HTTP '+r.status);
  return {sourceUrl,rows:parseEuronextHistoryRows(decodeEuronextBody(await r.text()))};
 }

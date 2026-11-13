@@ -1,0 +1,174 @@
+# Amsterdam — execution handoff
+
+Updated: 2026-10-30. This is a handoff, not a claim that the website is finished.
+
+## Fixed owner instructions
+- Work in the largest feasible coherent block; no one-fix-then-report pattern.
+- Continue implementation, test, and repair before reporting.
+- Staging branch only: `amsterdam-reset-20261027`; no production changes without approval.
+- Never fabricate OHLC, corporate-action adjustments, historical constituents, or returns.
+- Keep prediction publication blocked until provenance and point-in-time verification pass.
+- Treat green CI as code validation, not as financial-data validation.
+
+## Last verified evidence
+- GitHub Actions run 41013085992 completed successfully on commit f8ff955d72320c9c7094960e0d3814a4af18b045.
+- That run validated ingestion, browser integration, portfolio simulator and audits; research exam steps were skipped.
+- This run does NOT cover subsequent commits, including changes to backfill-completeness evidence and the machine1 gate.
+- Previously observed: 80 history instruments, about 361,114 daily bars; four lagging latest sessions (Almunda Pro, InPost, MotorK, Porceleyne Fles). Do not infer that a lag is a provider fault.
+- Historical source and adjustment scope remain unverified; corporate actions, old constituents, delistings and issuer lineage require investigation.
+- README contains older architecture/counts and should not be treated as a current verified status source.
+
+## Next largest executable block
+1. Inspect latest staging workflow and rerun complete tests on the latest staging head; repair any failures.
+2. Build a date-scoped, evidence-based historical quality manifest per instrument (gaps, jumps, source, missing OHLC, adjustment status) without fabricating repairs.
+3. Integrate the manifest with chart labeling and safe research-data selection; preserve separate source-price, adjusted and total-return semantics.
+4. Build fixture-driven point-in-time forecasting tests for 3/6/12-month horizons and 10/20/30 percent targets, with purged chronological folds and no future leakage. Do not promote live predictions.
+5. Validate Amsterdam market UI, daily opening/closing changes, charts and freshness against staging.
+6. Update this file with commits, exact test run, actual blockers and next deliverable.
+
+## Completion criteria
+A block is complete only when implementation and relevant tests are verified, or an explicit external blocker prevents the remaining steps. Never call a commit or test trigger alone a complete delivery.
+
+## Work performed in this session (pending fresh CI)
+- Added date-scoped structural quality module and manifest builder: `scripts/research/amsterdam-period-quality.mjs`, `scripts/research/build-amsterdam-period-quality.mjs`.
+- Added fixture tests for clean sessions, jumps, gaps, duplicates, missing high/low, invalid calendar dates.
+- Integrated fixture/session tests and manifest generation into the Amsterdam staging workflow; quality manifest is uploaded with audit evidence.
+- This is a diagnostic only: a clean structural observation does not prove an economically valid adjusted-return series.
+- Latest changes have NOT yet been validated by a new complete workflow at the time of writing. Check latest run before marking tested.
+- Next: examine CI, repair errors, then integrate conservative period warnings into the Amsterdam chart UI and build point-in-time fixture research tests.
+
+## Session continuation — 2026-10-30
+- Verified workflow run 41013786049: job succeeded; prediction exams and publication steps were skipped. This does not establish trustworthy financial returns.
+- Reviewed workflow: no daily cron schedule; refresh is manually dispatched or triggered by a designated staging path. Automated daily collection is NOT operationally verified.
+- Chart disclosure committed in de3f988268f1fd0fc9a690929eb0fa4951c4f8cf (share.js): Amsterdam historical charts now warn that unadjusted/uncorroborated prices are not validated returns. Optional period-specific anomaly counts depend on a published quality manifest; when absent, a conservative warning remains.
+- IMPORTANT: the quality manifest currently writes to research/output, not a deployed data path. Do not claim period anomaly counts work in staging until a safe, versioned publication path is designed and tested.
+- This change has not yet been independently validated in a fresh CI run. No production deployment.
+- Next coherent delivery: version and safely expose diagnostic manifest for staging, add chart tests, establish a safe non-publishing scheduled ingestion plan, and validate together in one comprehensive staging run.
+
+## Consolidated continuation — 2026-10-31
+- Researched chart rendering, normalization, and the existing staging test workflow together before changing code.
+- Commit 893ee400600f481bfca917f75874934d1482871f computes structural diagnostics from the exact Amsterdam chart bars rather than fetching an unavailable research/output HTTP artifact.
+- Commit 0291a20904e99bfa2b5623ce9dabf38576ae3713 fixes null/undefined/empty values being coerced to zero in chart.js; missing high/low/adjusted close/volume remain missing.
+- Commit a21cbea864af59627016c0b228b42a7c97c0dda2 adds fixture tests for chart-normalized missing fields and date-scoped structural diagnostics.
+- Commit abdcf0dbae39e22a762b231972579157295b2506 includes share.js and chart.js syntax checks in staging CI.
+- Commit 2b7aa082ba1670e4a9f41d24358e3b1c89f34a37 updates the staging-only trigger path for one comprehensive dry run. Workflow result NOT YET VERIFIED; do not claim tests passed.
+- No production publication or automatic daily scheduling has been implemented. Historical source lineage, five unmapped instruments, and return adjustment evidence remain open. Forecast publication remains blocked.
+- Next block: inspect triggered run results, repair failures, then investigate provider mappings and staging-only daily scheduling with explicit source freshness checks.
+
+## Cross-market reconciliation — 2026-10-31
+- Inspected all five entries previously labeled unresolved in data/amsterdam-import-status.json against the canonical catalog: AF and ENX and SGO are XPAR-primary; FAGR and ONWD are XBRU-primary. Each has displayPolicy cross-market-reference-only.
+- Commit ad40d10f96c21f67b04803474452c31ff8f06c70 separates five intentional cross-market references from zero missing Amsterdam target mappings; this does NOT verify that corresponding Paris/Brussels histories exist or are licensed for public display.
+- Active XAMS targets remain 80. Do not invent duplicate Amsterdam histories or report the five as repaired provider imports.
+- Workflow test triggered in previous block, but its current run ID/outcome has not been retrieved through available connector actions; do not assert a green test.
+- Next consolidated work: verify staging workflow outcome using GitHub Actions, test chart integration on deployed staging branch, investigate four lagging XAMS sessions and independently validate cross-market primary venue histories. No production changes.
+
+## 2026-10-31 chart correctness continuation
+- Investigated share.js and chart.js directly: the latest close-to-close percentage could be presented even when the last observation had an unverified >50% discontinuity or >30-day gap. Commit 45017cb9472b653e5191cb38e5054e1657c14e1c suppresses that percentage and displays the reason. This is a conservative structural gate, not corporate-action verification.
+- Found UTC setMonth overflow at month ends. Commit afadf940ada20602bf9dfa288b1c3235a0c0cf6c adds calendar-clamped periodStartDate; commit 7a649fb034e46ea66ea35611a833caadfa641210 shares this boundary between chart and warning counts.
+- Commit 26e2ed0c1023fc47d4e2aaec4fcc24ed56d9ecd0 adds month-end, leap-year and discontinuity fixture assertions.
+- All commits staging only. New fixtures not yet confirmed green in GitHub Actions; no deployment, no claim of complete Amsterdam.
+- Cross-market status: 80 XAMS histories and five references to XPAR/XBRU. Source lineage and actual cross-market history availability not independently verified.
+
+## 2026-10-31 staging safety
+- Inspected full Amsterdam workflow and discovered that its job predicate also permitted manual dispatch on main. Commit 5b2333ba080ea0b6964461d1ab61a7249d1c1e9e restricts the entire job and both publication steps to the approved staging branch.
+- This change is committed, not independently CI-validated. No public deployment or schedule was created. Scheduling a staging-only workflow requires care because GitHub cron runs on the default branch.
+- Latest chart fixes remain unverified by an observed workflow result. The next block must retrieve an actual run outcome and fix failures before claiming readiness.
+
+## 2026-10-31 latest close return testability
+- Commit 21ca3619faa238a5358e92a789f89fc52828ca54 extracts a pure latestCloseChange gate from the structural diagnostics. Returns no percentage for missing bars, invalid closes, suspicious jump/gap, missing OHLC, or duplicate latest dates. This is not a verified adjusted-return calculation.
+- Commit b7a3977fc071a655c349fd7933fe16132ff59353 integrates the shared gate on the XAMS share page; other venues keep their existing logic.
+- Commits f543d814a5ce47922a8cb9b5040e333b39a78c8b and d95917a9c8cfaa955fd9a37da80fccd7fd80c29d add normal, jump, gap, incomplete, insufficient-history fixtures and floating-point-safe assertion.
+- Unable to run local repository tests: local runtime cannot resolve github.com. GitHub connector commit status and PR-workflow lookup for earlier staging trigger returned no runs; neither proves the push workflow failed nor passed. CI must be checked directly in Actions.
+- All work is staging-only; production untouched. Next: inspect actual Actions run outcome and deployment branch, then resolve daily source freshness and schedule without allowing main publication.
+
+## 2026-10-31 ingestion integrity continuation
+- Direct code inspection found validateBars in scripts/history/engine.mjs accepted calendar-impossible dates matching YYYY-MM-DD and allowed negative/nonfinite high-low values to pass some checks. Commit 8c698ad4d45677be97d03793a861429aeaba0a2b rejects invalid dates and malformed high-low fields before storing or merging new bars.
+- Commit 3df8204d98e65eb35fdecce1f932e8d59f09c437 adds invalid-date and OHLC fixtures to the Amsterdam session suite.
+- Commit 07fc5c7b3ae0a401309ca9b04f696301d6b16b3e applies the same strict date validation to chart.js history normalization.
+- No verified CI result yet; changes committed only to approved staging branch. No production deployment, no scheduled import. Existing historical data must still be audited independently; these checks prevent future malformed inputs but do not retroactively certify source prices.
+
+## Consolidated Amsterdam ingestion/readiness block — 2026-10-31
+Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c9469a2f0900f25f74b60000541b01b3f6f9a).
+- Implemented pure observed-session readiness classification for all 80 XAMS instruments (commit dda5b71057cc94ceeb664716fadb1a5d0f84346a). Distinguishes current, lagging, invalid and unavailable rather than treating a suspended instrument as automatic provider failure.
+- Rebuilt latest-session check to collect errors per instrument and emit research/output/amsterdam-session-readiness.json, with explicit source date and provenance (commit 05d33b494ad27d4f03b58da0b72d9b865619a63a).
+- Added deterministic fixture cases for complete, lagging, invalid, unavailable, and unexpected instrument count (commit 39d9c5212f646abfc83680ff632c7d0265330d07).
+- Integrated fixtures, syntax checks, readiness artifact and failure-on-provider-refresh into the staging workflow (commit 9acf8cb5575ee0555dc0b9da811c904f9d885dab).
+- Verified static module imports and workflow step wiring by re-reading all four GitHub files; all six wiring assertions passed. This is NOT an executed Node suite or CI run.
+- The workflow currently has no schedule. GitHub cron executes from default branch; owner forbids main changes without approval. Do not claim automatic daily collection exists.
+- Existing 80 historical series and four previously lagging sessions are the last known baseline, not freshly revalidated prices. Historical corporate actions and licensing remain unverified.
+- No production changes, no forecasts, no claim that daily opening data is live. Pending: actual staging Actions run conclusion, provider freshness and official close reconciliation, Render staging branch alignment.
+
+## Integrated Amsterdam morning/close staging block — 2026-10-31
+- The owner reaffirmed: no micro-fix loops; complete coherent blocks. This instruction remains in AGENTS.md.
+- Rebuilt sessionReadiness (00a54a79056544714cf897feca621eac7396bae5): rejects impossible dates, duplicate identities, rejected archived bars, missing OHLC, and an empty/invalid universe. Expanded fixture tests (445df30d82100ad76b5c4f96499317e8cb874018).
+- Executed six equivalent pure-JavaScript session-readiness cases with Node 22 in the working container: all passed. This is a local functional test of the pure logic, not a checkout-wide integration test.
+- Added scripts/history/amsterdam-daily-run.mjs (7c175a9ec3834470477666103615dc94646cc880, f9ae9c3401431bd4f61d8096bf844d1f1070a32b): staging-only 80-stock update, per-instrument error capture, verified-bar diagnostics, phase label morning/close, JSON evidence report. No commit or publish from script.
+- Integrated workflow_dispatch phase input, full runner, syntax validation and report artifacts (efe23c408c6f87b4b2aedd792a062bc402eea0b4). A phase label is not independent proof that an official exchange close is final.
+- No GitHub cron is operational: staging workflow cannot be scheduled through GitHub's default-branch-only schedule without owner-approved main change or a separate authorized scheduler. Render workspace is not selected, so its cron cannot be configured.
+- Need observe actual Actions run ID and result before calling staging operational. No public website updates or live forecasts.
+
+## Amsterdam integrated safety follow-up — 2026-10-31
+- Audited the complete morning/close orchestrator, pure session readiness and staging workflow as a unit. The source catalog contains 80 XAMS provider mappings and 5 deliberate XPAR/XBRU references. Attempting to retrieve all 80 history files in one connector operation hit the tool-call limit; do not claim a fresh 80-series data audit.
+- Strengthened readiness identity uniqueness and exposed observed-session age (commit 605876d1f855aa5f3cd8f8e2e2a8f587b28b754b); added missing-ISIN regression (f60b8950da853f1077ed1450345b3bda5195dfb3).
+- Ran the available local Node 22 session-readiness fixtures in the working container; result: PASS, six scenarios. This local copy predates the latest added regression and is not a full repository CI result.
+- Strengthened manual staging publication guard to require all 80 records current and valid for the observed date, no provider failures, and no more than four days of session age (commit 1e882910ed966a91620d5ce64466b4d77f33cc5e). This is a necessary structural gate, not proof of market-close finality or data redistribution rights.
+- No daily cron is configured. No staging deployment verified; no production changes. Full CI status remains unverified because connector commit-status returns no workflow conclusion and GitHub Actions page is unavailable through web.
+
+## Full Amsterdam acceptance gate — 2026-10-31
+- Re-read current website, week renderer, share chart, data catalog, mapping and provider ingestion code together.
+- Confirmed by parsing repository JSON: Amsterdam catalog contains 85 entries; history manifest has 80 XAMS series and exactly five cross-market reference-only shares.
+- Added scripts/history/amsterdam-end-to-end-acceptance.mjs (0c8482f93f0e7cfdd21ff84bb099875fe4660d07). This reads all 80 actual committed history files in the Actions checkout, verifies identity, catalog, manifest, OHLC structural validity, coverage and Amsterdam page/chart integration, and writes a complete JSON acceptance report. It does not invent prices or certify source rights.
+- Made this gate mandatory in the staging workflow and included its report as an audit artifact (2addc9953dc937462fa01295d22bf508a54003b6).
+- Prior staging run 41013786049 was confirmed successful by reading its actual GitHub Actions jobs, but it PRECEDES the latest work and is NOT validation of this new gate.
+- Current-run validation and Render staging deployment are still unverified. Render account exposes one workspace named My Workspace, but connector requires owner confirmation before selecting it; no Render mutation performed.
+- Scheduling and final price publication remain blocked until an owner-authorized staging scheduler and source/legal verification are available. No production changes.
+
+## Verified 2026-11-12 integrated staging checkpoint
+- PR #216 merged at `32f0dd9`; combined CI run 43159399123 succeeded and Render deployment `dep-dbqkka56e07s73fggksg` is live.
+- Build: 80/80 histories, 363439 rows, zero invalid bars and zero structural issues. Three lagging relative to newest observed session; this is not proof of missing trades.
+- Detailed evidence, remaining session classification and browser blockers: `docs/AMSTERDAM_FINAL_VERIFICATION_2026-11-12.md`.
+- Do not declare visual UI, official market-data correctness, licensing or prediction readiness verified.
+
+## 2026-11-12 consolidated UI source contract (pending CI)
+- Both Amsterdam market renderers now select the same latest completed Europe/Amsterdam week through `lastCompletedAmsterdamWeek` in `market-week-core.mjs`.
+- Both Amsterdam market renderers use the committed local manifest and stored histories; no divergent external Worker history for the XAMS listing page.
+- Official no-trade audit remains fixed to October 2026 and cannot be reused to certify another week; obsolete non-catalog candidates removed, no new NO_TRADES assertions.
+- The fixed October reference fixture remains for historical regression; live rolling week is not silently treated as fully observed.
+- These edits require full staging validation before declaring deployed.
+
+## 2026-11-12 canonical single Amsterdam page (pending staging verification)
+- Canonical Amsterdam page: `market.html?market=amsterdam` with `generic-market.js`.
+- All homepage Amsterdam links now target the canonical URL. `amsterdam.html` is a backward-compatible redirect, not a second market page or data pipeline.
+- Retire `amsterdam-week.js` entirely; the old dual-renderer fixture is replaced with a redirect assertion. Other markets retain the shared generic page.
+- Rollback: revert this atomic commit on the development branch if regression fails. Production untouched.
+
+## 2026-11-12 consolidated navigation, calendar and regression block (staging validation pending)
+- Preserve the single canonical market renderer and route every Amsterdam share name directly to `share.html` with ISIN, MIC and ticker.
+- Keep the exact week used for loading as part of the immutable display snapshot, avoiding a week mismatch if the date changes during loading.
+- Extend regression tests for Friday/weekend/Monday Amsterdam calendar boundaries and for history-chart navigation.
+- Do not change market prices, fill missing candles or assert verified no-trade without official evidence.
+
+## 2026-11-12 full-site architecture investigation and consolidated navigation correction
+- Repository tree: 638 entries, 329 JavaScript modules/scripts, 14 HTML documents. Multiple legacy country pages still use `market.js`; removing it would break non-Amsterdam pages. Do not delete it without migrating those pages.
+- The production Render service `koersplein` is tied to `main`; the tested staging service is tied to `amsterdam-reset-20261027`. Production is not updated by staging deployments.
+- The daily history workflow is dispatch-only and deliberately blocks publishing when source, adjustments, session completeness and provenance gates fail. Do not bypass those controls or claim fully automatic verified prices.
+- Homepage now describes a rolling completed week, not the old October regression fixture; Amsterdam share breadcrumbs return to the canonical market page. Regression coverage added.
+- Remaining blockers before production: complete legacy page migration/deduplication, official market-data publication evidence, live browser verification and a safe daily publishing policy. Never claim those solved by a green build.
+
+## 2026-11-12 consolidated legacy-market page migration
+- Seven old country-specific HTML market renderers replaced with lightweight backward-compatible redirects to the shared `market.html` and `generic-market.js` architecture. Amsterdam already redirected.
+- Share-page breadcrumbs now always target the canonical market route. Tests verify all seven old URLs do not run `market.js`.
+- The legacy `market.js` source is retained until the repository-wide reference and consumer audit proves it is safe to delete; no unsupported claims of deletion.
+- No production changes, price modifications, or workflow scheduling changes. Independent market-data provenance and publication permissions remain outstanding.
+
+## 2026-11-12 canonical-market regression alignment
+- First staging build of the seven-market redirect migration failed because the previous test still expected the retired Amsterdam-only breadcrumb special case. The shared breadcrumb contract is now tested instead; the new build must pass before considering the migration deployed.
+
+## 2026-11-12 removal of duplicate market renderer
+- Following migration of seven legacy venue HTML pages to canonical redirects and a successful staging build, removed unused root `market.js`. Added regression assertion that this duplicate renderer cannot return. Canonical implementation remains `generic-market.js` via `market.html`.
+- Data provenance, automatic refresh schedule and full browser validation are still separate launch gates; no fabricated data or bypass of source controls.
+
+## 2026-11-12 scheduled diagnostic gate
+- The Amsterdam daily history workflow now declares a weekday 18:15 UTC schedule for diagnostics, baseline checks, provider refresh in temporary CI workspace and downloadable audit evidence. This is NOT a publishing schedule.
+- GitHub Actions scheduled workflows only run from the repository default branch; because this workflow currently lives on `amsterdam-reset-20261027`, the schedule is NOT active until an explicitly reviewed workflow is present on the default branch. No claims of automatic updates before that condition is met.
+- Production remains unchanged; audited price publication continues to require explicit dispatch and independent provenance/readiness gates.

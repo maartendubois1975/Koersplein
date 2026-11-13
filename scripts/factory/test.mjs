@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { coverageReport } from '../audit/europe-history-coverage.mjs';
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdtemp, rm, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { openDatabase } from './db.mjs';
@@ -11,18 +11,19 @@ import { ProviderRegistry } from '../history/provider-registry.mjs';
 import { calculateMovers } from './movers.mjs';
 import { createSession, readSession, validCredentials } from './auth.mjs';
 
+const selectedCatalog = JSON.parse(await readFile(new URL('../../data/euronext-amsterdam.json', import.meta.url), 'utf8'));
+const expectedAmsterdamCount = selectedCatalog.shares.length;
+assert.equal(expectedAmsterdamCount, 80, 'Amsterdam bevat exact 80 hoofdnoteringen');
 const directory = await mkdtemp(join(tmpdir(), 'koersplein-factory-'));
 const db = openDatabase(join(directory, 'test.sqlite'));
 try {
   const seeded = await seedAmsterdam(db);
   const initialCoverage = coverageReport(db,['XAMS','XWAR']);
-  assert.equal(initialCoverage.totals.instruments,124);
+  assert.equal(initialCoverage.totals.instruments,expectedAmsterdamCount);
   assert.equal(initialCoverage.totals.withHistory,0);
   assert.equal(initialCoverage.markets.find(x=>x.mic==='XWAR').instruments,0);
-  assert.equal(seeded.instruments, 124);
-  assert.deepEqual(db.prepare('SELECT index_group,COUNT(*) count FROM instruments GROUP BY index_group ORDER BY index_group').all().map((row) => ({ ...row })), [
-    { index_group:'AEX', count:30 }, { index_group:'AMX', count:25 }, { index_group:'AScX', count:20 }, { index_group:'Overig', count:49 }
-  ]);
+  assert.equal(seeded.instruments, expectedAmsterdamCount);
+  assert.equal(db.prepare('SELECT COUNT(*) AS count FROM instruments').get().count, expectedAmsterdamCount);
 
   const asml = getInstrument(db, 'NL0010273215');
   const adyen = getInstrument(db, 'NL0012969182');
@@ -80,7 +81,7 @@ try {
   const token = createSession('maarten');
   assert.equal(readSession(`kp_admin=${token}`).username, 'maarten');
   assert.equal(readSession(`kp_admin=${token}x`), null);
-  console.log('Factorytests groen: schema, 124 instrumenten, idempotentie, jobs, resume, auth en veilige movers-empty-state.');
+  console.log('Factorytests groen: schema, 80 Amsterdamse instrumenten, idempotentie, jobs, resume, auth en veilige movers-empty-state.');
 } finally {
   db.close();
   await rm(directory, { recursive:true, force:true });
