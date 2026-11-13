@@ -1,0 +1,80 @@
+name: Amsterdam staging daily import
+on:
+  schedule:
+    - cron: '15 18 * * 1-5'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: amsterdam-staging-import
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: amsterdam-reset-20261027
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify canonical Amsterdam source of truth
+        run: |
+          node scripts/history/verify-amsterdam-identity.mjs
+          npm run history:test
+          node scripts/history/amsterdam-end-to-end-acceptance.mjs
+      - name: Refresh all 80 Amsterdam histories
+        run: node scripts/history/amsterdam-daily-run.mjs --phase close
+      - name: Verify updated Amsterdam data and public integration
+        run: |
+          node scripts/history/verify-amsterdam-identity.mjs
+          npm run history:test
+          node scripts/history/amsterdam-end-to-end-acceptance.mjs
+          node scripts/history/check-amsterdam-latest-session.mjs
+      - name: Validate preservation of historical sessions
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          import {execFileSync} from 'node:child_process';
+          import {loadCatalog,validateBars} from './scripts/history/engine.mjs';
+          const instruments=await loadCatalog();
+          if(instruments.length!==80)throw Error('Expected exactly 80 Amsterdam instruments');
+          const allowed=new Map(instruments.map(x=>['data/history/'+x.isin+'.json',x]));
+          const changed=execFileSync('git',['diff','--name-only','--','data/history'],{encoding:'utf8'}).trim().split('\n').filter(Boolean);
+          for(const file of changed){
+            const instrument=allowed.get(file);
+            if(!instrument)throw Error('Unexpected modified history: '+file);
+            const previous=JSON.parse(execFileSync('git',['show','HEAD:'+file],{encoding:'utf8'}));
+            const current=JSON.parse(fs.readFileSync(file,'utf8'));
+            if(current.instrument?.isin!==instrument.isin||current.instrument?.mic!=='XAMS')throw Error('Invalid identity: '+file);
+            const before=validateBars(previous.bars||[]);
+            const after=validateBars(current.bars||[]);
+            if(before.length!==previous.bars.length||after.length!==current.bars.length)throw Error('Invalid OHLC: '+file);
+            if(after.length<before.length)throw Error('History reduced: '+file);
+            const dates=new Set(after.map(x=>x.date));
+            for(const bar of before)if(!dates.has(bar.date))throw Error('Existing session removed: '+file+' '+bar.date);
+          }
+          console.log('Validated Amsterdam histories: '+changed.length+' changed');
+          EOF
+      - name: Persist only validated Amsterdam candles to staging branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/history/*.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: scheduled validated Amsterdam daily refresh'
+            git push origin HEAD:amsterdam-reset-20261027
+          fi
+      - name: Archive Amsterdam diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-staging-daily-evidence
+          path: |
+            research/output/amsterdam-daily-run.json
+            research/output/amsterdam-session-readiness.json
+            research/output/amsterdam-end-to-end-acceptance.json
+          if-no-files-found: warn
+          retention-days: 30
