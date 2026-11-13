@@ -107,9 +107,32 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
       fetched = await official.fetchDaily(instrument, { startDate, endDate });
       if (fetched.providerMeta?.partialHistory) throw new Error('Incomplete official Euronext window');
       usedProvider = official;
+      // A successful official HTTP response may still omit recent executed
+      // sessions. Compare the independently verified fallback before deciding
+      // that the instrument is current; never replace newer official data
+      // with an older secondary feed.
+      try {
+        const secondary = await provider.fetchDaily(instrument, { startDate, endDate });
+        const officialLatest = validateBars(fetched.bars).at(-1)?.date || null;
+        const secondaryLatest = validateBars(secondary.bars).at(-1)?.date || null;
+        if (secondaryLatest && (!officialLatest || secondaryLatest > officialLatest)) {
+          fetched = {
+            ...secondary,
+            providerMeta: { ...secondary.providerMeta,
+              officialLatestObserved: officialLatest,
+              sourceSelectionReason: 'SECONDARY_HAS_NEWER_EXECUTED_SESSION' }
+          };
+          usedProvider = provider;
+        }
+      } catch (secondaryError) {
+        // Official data remains usable if the independent fallback fails.
+        fetched.providerMeta = { ...fetched.providerMeta,
+          secondaryComparisonError: secondaryError.message };
+      }
     } catch (officialError) {
       fetched = await provider.fetchDaily(instrument, { startDate, endDate });
       fetched.providerMeta = { ...fetched.providerMeta, officialFallbackReason: officialError.message };
+      usedProvider = provider;
     }
   } else {
     fetched = await provider.fetchDaily(instrument, { startDate, endDate });
