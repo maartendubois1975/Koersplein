@@ -66,7 +66,7 @@ jobs:
           const instruments=await loadCatalog();
           if(instruments.length!==80)throw Error('Expected 80 Amsterdam instruments');
           const allowed=new Map(instruments.map(x=>['data/history/'+x.isin+'.json',x]));
-          const changed=execFileSync('git',['diff','--name-only','--','data/history'],{encoding:'utf8'}).trim().split('\n').filter(Boolean);
+          const changed=execFileSync('git',['diff','--name-only','--','data/history'],{encoding:'utf8'}).trim().split('\n').filter(Boolean).filter(file=>file!=='data/history/status.json');
           for(const file of changed){
             const instrument=allowed.get(file);
             if(!instrument)throw Error('Unexpected history file: '+file);
@@ -86,8 +86,14 @@ jobs:
           test "$(git branch --show-current)" = "amsterdam-reset-20261027"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -f data/history/*.json
-          git add data/amsterdam-import-audit.json
+          node --input-type=module <<'EOF'
+          import {execFileSync} from 'node:child_process';
+          import {loadCatalog} from './scripts/history/engine.mjs';
+          const instruments=await loadCatalog();
+          if(instruments.length!==80)throw Error('Expected 80 Amsterdam equities');
+          const paths=instruments.map(x=>'data/history/'+x.isin+'.json');
+          execFileSync('git',['add','-f','--',...paths],{stdio:'inherit'});
+          EOF
           if git diff --cached --quiet; then
             echo 'No new validated daily prices'
           else
