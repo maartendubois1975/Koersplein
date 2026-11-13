@@ -10,17 +10,20 @@
     "identitySource": "https://live.euronext.com/nl/product/equities/NL0000285278-XAMS"
   },
   "provider": {
-    "id": "yahoo-chart",
-    "name": "Yahoo Finance chart feed",
-    "symbol": "BEVER.AS",
-    "retrievedAt": "2026-11-12T05:07:14.507Z",
-    "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BEVER.AS?period1=631152000&period2=1794527999&interval=1d&events=div%2Csplits",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "NL0000285278-XAMS",
+    "retrievedAt": "2026-11-13T05:45:48.984Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000285278-XAMS",
     "metadata": {
-      "exchangeName": "AMS",
-      "fullExchangeName": "Amsterdam",
-      "currency": "EUR",
-      "symbol": "BEVER.AS",
-      "timezone": "Europe/Amsterdam"
+      "mic": "XAMS",
+      "isin": "NL0000285278",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": [],
+      "adjustmentStatus": "EURONEXT_ADJUSTED_Y_UNVERIFIED_SCOPE",
+      "adjustedCloseSource": null
     },
     "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
@@ -27935,10 +27938,10 @@
     },
     {
       "date": "2026-11-04",
-      "open": 2.5999999046325684,
-      "high": 2.5999999046325684,
-      "low": 2.5999999046325684,
-      "close": 2.5999999046325684,
+      "open": 2.6,
+      "high": 2.6,
+      "low": 2.6,
+      "close": 2.6,
       "adjustedClose": 2.5999999046325684,
       "volume": 100
     }
