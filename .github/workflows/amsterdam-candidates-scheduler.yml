@@ -1,7 +1,5 @@
 name: Amsterdam candidate collection (development only)
 on:
-  schedule:
-    - cron: '15 19 * * 1-5'
   workflow_dispatch:
 permissions:
   contents: write
