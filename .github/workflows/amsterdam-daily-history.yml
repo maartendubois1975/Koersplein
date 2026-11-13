@@ -44,6 +44,7 @@ jobs:
         run: node scripts/history/verify-amsterdam-identity.mjs
       - name: Syntax check Amsterdam research programs before provider calls
         run: |
+          node --check scripts/history/diagnose-amsterdam-freshness.mjs
           node --check scripts/history/amsterdam-end-to-end-acceptance.mjs
           node --check scripts/history/amsterdam-daily-run.mjs
           node --check scripts/history/session-readiness.mjs
@@ -126,6 +127,7 @@ jobs:
             research/output/amsterdam-daily-run.json
             research/output/amsterdam-end-to-end-acceptance.json
             research/output/amsterdam-session-readiness.json
+            research/output/amsterdam-freshness-diagnostic.json
           if-no-files-found: warn
           retention-days: 30
       - name: Show prioritized issuer investigations in run summary
