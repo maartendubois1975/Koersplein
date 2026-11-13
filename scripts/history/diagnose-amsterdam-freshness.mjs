@@ -1,19 +1,42 @@
-import {loadCatalog} from './engine.mjs';
+import {readFile} from 'node:fs/promises';
+import {loadCatalog, validateBars, historyUrl} from './engine.mjs';
 import {YahooChartProvider} from './providers/yahoo-chart.mjs';
 import {EuronextLiveProvider} from './providers/euronext-live.mjs';
-const symbols=new Set(['AALB','ADYEN','ASML','ABN','AMUND','MTRK','PORF','INPST']);
-const selected=(await loadCatalog()).filter(x=>symbols.has(x.symbol));
+
+// Diagnose the current catalog, not a historical hard-coded list that can
+// contain delisted instruments or omit newly lagging Amsterdam shares.
+const catalog=await loadCatalog();
+const stored=await Promise.all(catalog.map(async instrument=>{
+  try {
+    const document=JSON.parse(await readFile(new URL(instrument.isin+'.json',historyUrl),'utf8'));
+    return {instrument,latest:validateBars(document.bars||[]).at(-1)?.date||null};
+  } catch(error) {
+    return {instrument,latest:null,readError:String(error.message)};
+  }
+}));
+const newestDate=stored.map(x=>x.latest).filter(Boolean).sort().at(-1)||null;
+const baseline=new Set(['AALB','ADYEN','ASML','ABN','AMUND','MTRK']);
+const selected=stored.filter(x=>x.latest!==newestDate||baseline.has(x.instrument.symbol));
 const endDate=new Date().toISOString().slice(0,10);
-const startDate=new Date(Date.now()-9*86400000).toISOString().slice(0,10);
+const startDate=new Date(Date.now()-30*86400000).toISOString().slice(0,10);
 const providers=[new YahooChartProvider(),new EuronextLiveProvider()];
 const report=[];
-for(const instrument of selected){
- for(const provider of providers){
-  try{
-   const result=await provider.fetchDaily(instrument,{startDate,endDate});
-   const dates=result.bars.map(x=>x.date).sort();
-   report.push({symbol:instrument.symbol,isin:instrument.isin,provider:provider.id,latest:dates.at(-1)||null,days:dates.slice(-6),count:dates.length,partialHistory:result.providerMeta?.partialHistory||false});
-  }catch(error){report.push({symbol:instrument.symbol,isin:instrument.isin,provider:provider.id,error:String(error.message).slice(0,240)});}
- }
+for(const {instrument,latest,readError} of selected){
+  for(const provider of providers){
+    try{
+      const result=await provider.fetchDaily(instrument,{startDate,endDate});
+      const dates=result.bars.map(x=>x.date).sort();
+      report.push({symbol:instrument.symbol,isin:instrument.isin,storedLatest:latest,readError,
+        provider:provider.id,latest:dates.at(-1)||null,days:dates.slice(-6),
+        count:dates.length,partialHistory:result.providerMeta?.partialHistory||false});
+    }catch(error){
+      report.push({symbol:instrument.symbol,isin:instrument.isin,storedLatest:latest,readError,
+        provider:provider.id,error:String(error.message).slice(0,240)});
+    }
+  }
 }
-console.log('AMSTERDAM_FRESHNESS_DIAGNOSTIC '+JSON.stringify({startDate,endDate,report}));
+console.log('AMSTERDAM_FRESHNESS_DIAGNOSTIC '+JSON.stringify({
+  startDate,endDate,newestStoredDate:newestDate,catalogCount:catalog.length,
+  laggingStored:stored.filter(x=>x.latest!==newestDate).map(x=>({symbol:x.instrument.symbol,isin:x.instrument.isin,latest:x.latest,readError:x.readError})),
+  selectedCount:selected.length,report
+}));
