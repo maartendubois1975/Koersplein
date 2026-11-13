@@ -533,9 +533,10 @@
         ]
       },
       "companyOnlyReview": {
-        "decision": "manual_due_diligence_required",
-        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
-        "evidenceStatus": "unverified"
+        "decision": "exclude_pending_trading_resumption",
+        "reason": "FSMA suspension 2026-05-26; Euronext marks SUSPENDED",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://live.euronext.com/en/product/equities/be0974280126-xbru"
       }
     },
     {
@@ -727,9 +728,10 @@
         ]
       },
       "companyOnlyReview": {
-        "decision": "manual_due_diligence_required",
-        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
-        "evidenceStatus": "unverified"
+        "decision": "exclude_pending_trading_resumption",
+        "reason": "FSMA trading suspension 2026-02-11; current resumption not verified",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://www.fsma.be/en/news/press-release-suspension-trading-celyad-oncology"
       }
     },
     {
@@ -1913,9 +1915,10 @@
         "flags": []
       },
       "companyOnlyReview": {
-        "decision": "candidate_company_not_final",
-        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
-        "evidenceStatus": "unverified"
+        "decision": "manual_primary_venue_review",
+        "reason": "2025 Euronext Brussels ordinary-share listing complements pre-existing Nasdaq ADS listing; home market classification requires explicit policy decision",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://www.euronext.com/sites/default/files/2025-11/2025.11.20_Materialise_PR_ENX.pdf"
       }
     },
     {
@@ -2206,8 +2209,9 @@
       },
       "companyOnlyReview": {
         "decision": "manual_due_diligence_required",
-        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
-        "evidenceStatus": "unverified"
+        "reason": "Euronext reported June suspension but 2026-11-10 quote exists; verify restored trading and issuer business before acceptance",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://live.euronext.com/fr/markets/brussels/equities/euronext/list?page=0"
       }
     },
     {
@@ -2303,9 +2307,10 @@
         "flags": []
       },
       "companyOnlyReview": {
-        "decision": "manual_due_diligence_required",
-        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
-        "evidenceStatus": "unverified"
+        "decision": "candidate_company_not_final",
+        "reason": "Official November 2026 Euronext regulated-market quote indicates trading; operational company verification remains",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://live.euronext.com/fr/markets/brussels/equities/euronext/list?page=0"
       }
     },
     {
@@ -2352,8 +2357,9 @@
       },
       "companyOnlyReview": {
         "decision": "manual_due_diligence_required",
-        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
-        "evidenceStatus": "unverified"
+        "reason": "Official November 2026 quote exists, but issuer operations and corporate continuity not yet verified",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://live.euronext.com/fr/markets/brussels/equities/euronext/list?page=0"
       }
     },
     {
@@ -2423,9 +2429,10 @@
         "flags": []
       },
       "companyOnlyReview": {
-        "decision": "candidate_company_not_final",
-        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
-        "evidenceStatus": "unverified"
+        "decision": "manual_due_diligence_required",
+        "reason": "Temporary June 2026 suspension; current Euronext quote exists in November; do not infer delisting",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://live.euronext.com/fr/markets/brussels/equities/euronext/list?page=0"
       }
     },
     {
@@ -2569,9 +2576,10 @@
         "flags": []
       },
       "companyOnlyReview": {
-        "decision": "candidate_company_not_final",
-        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
-        "evidenceStatus": "unverified"
+        "decision": "manual_due_diligence_required",
+        "reason": "Delisting announced 2025 but 2026-11 official Euronext page still displayed trading; must verify effective date",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://live.euronext.com/fr/markets/brussels/equities/euronext/list?page=0"
       }
     },
     {
@@ -3297,7 +3305,7 @@
   ],
   "researchCheckpoint": {
     "date": "2026-11-13",
-    "status": "preliminary_triage_only_not_final",
+    "status": "individual_review_in_progress_not_final",
     "officialEvidence": [
       "https://live.euronext.com/en/markets/brussels/equities/list",
       "https://live.euronext.com/fr/markets/brussels/equities/euronext/list",
@@ -3319,7 +3327,37 @@
         "Common Stock",
         "Real estate certificates"
       ]
-    }
+    },
+    "latestEvidenceDate": "2026-11-13",
+    "reconciledImportantCases": [
+      "BIOS",
+      "CYAD",
+      "NYR",
+      "MTLS",
+      "ROU",
+      "QRF",
+      "OPTI",
+      "OXUR"
+    ],
+    "methodologyCorrection": "Do not equate a 2026 trading suspension with permanent delisting, nor a Belgian company domicile with Brussels primary listing. Do not equate an Euronext multi-market venue string with primary venue.",
+    "sources": [
+      {
+        "url": "https://www.fsma.be/en/shareholding",
+        "role": "issuer cross-check"
+      },
+      {
+        "url": "https://live.euronext.com/en/markets/brussels/equities/euronext/list",
+        "role": "regulated market and security types"
+      },
+      {
+        "url": "https://live.euronext.com/en/markets/brussels/equities/growth/list",
+        "role": "growth segment"
+      },
+      {
+        "url": "https://live.euronext.com/en/markets/brussels/equities/access/list",
+        "role": "access segment"
+      }
+    ]
   },
   "companyOnlyPolicy": "Include only actively operating companies and genuine listed holding/REIT entities with Brussels as primary listing. Exclude certificates, ETFs, funds without qualifying corporate issuer, shells, defunct issuers, and foreign-primary cross listings. No definitive inclusion from a name alone."
 }
