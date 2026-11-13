@@ -808,9 +808,10 @@
         "multipleVenues": false,
         "companyCandidate": false,
         "evidenceLevel": "preliminary_name_and_venue_only",
-        "decision": "hold_for_individual_verification",
+        "decision": "exclude_from_common_stock_pending_official_type_confirmation",
         "flags": [
-          "certificate_or_nonordinary_security_review"
+          "certificate_or_nonordinary_security_review",
+          "real_estate_certificate_not_operating_company_equity"
         ]
       }
     },
@@ -829,9 +830,10 @@
         "multipleVenues": false,
         "companyCandidate": false,
         "evidenceLevel": "preliminary_name_and_venue_only",
-        "decision": "hold_for_individual_verification",
+        "decision": "exclude_from_common_stock_pending_official_type_confirmation",
         "flags": [
-          "certificate_or_nonordinary_security_review"
+          "certificate_or_nonordinary_security_review",
+          "real_estate_certificate_not_operating_company_equity"
         ]
       }
     },
@@ -2606,9 +2608,10 @@
         "multipleVenues": false,
         "companyCandidate": false,
         "evidenceLevel": "preliminary_name_and_venue_only",
-        "decision": "hold_for_individual_verification",
+        "decision": "exclude_from_common_stock_pending_official_type_confirmation",
         "flags": [
-          "certificate_or_nonordinary_security_review"
+          "certificate_or_nonordinary_security_review",
+          "real_estate_certificate_not_operating_company_equity"
         ]
       }
     }
@@ -2623,6 +2626,18 @@
       "https://markets.euronext.com/en/intframe/spi-messages/past?field_spimess_message_type_target_id=24&page=%2C3"
     ],
     "warning": "Official regulated market page showed 116 entries on 2026-11-10 while September snapshot contains 133 across segments. Counts are not directly comparable. No definitive company eligibility or delisting conclusion without issuer-by-issuer evidence.",
-    "nextRequired": "Review all 133 issuer identities, legal status, trading status, primary venue, security type against current official records."
+    "nextRequired": "Review all 133 issuer identities, legal status, trading status, primary venue, security type against current official records.",
+    "currentOfficialSnapshot": {
+      "date": "2026-11-13",
+      "url": "https://live.euronext.com/fr/markets/brussels/equities/list?page=0",
+      "displayedTotal": 131,
+      "priorSnapshotCount": 133,
+      "delta": -2,
+      "verification": "Official page shows 131 listings on 2026-11-13; identity of two differences not yet verified. Do not remove candidates based on aggregate counts.",
+      "officialTypeCategories": [
+        "Common Stock",
+        "Real estate certificates"
+      ]
+    }
   }
 }
