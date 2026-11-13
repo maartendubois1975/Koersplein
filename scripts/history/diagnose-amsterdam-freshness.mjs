@@ -1,4 +1,4 @@
-import {readFile} from 'node:fs/promises';
+import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import {loadCatalog, validateBars, historyUrl} from './engine.mjs';
 import {YahooChartProvider} from './providers/yahoo-chart.mjs';
 import {EuronextLiveProvider} from './providers/euronext-live.mjs';
@@ -54,8 +54,18 @@ for(const {instrument,latest,readError} of selected){
     fallbackLatest:fallback?.latest||null,officialError:official?.error||null,
     fallbackError:fallback?.error||null});
 }
-console.log('AMSTERDAM_FRESHNESS_DIAGNOSTIC '+JSON.stringify({
-  startDate,endDate,newestStoredDate:newestDate,catalogCount:catalog.length,
-  laggingStored:stored.filter(x=>x.latest!==newestDate).map(x=>({symbol:x.instrument.symbol,isin:x.instrument.isin,latest:x.latest,readError:x.readError})),
+const diagnostic={
+  generatedAt:new Date().toISOString(),startDate,endDate,newestStoredDate:newestDate,
+  catalogCount:catalog.length,
+  laggingStored:stored.filter(x=>x.latest!==newestDate).map(x=>({
+    symbol:x.instrument.symbol,isin:x.instrument.isin,latest:x.latest,readError:x.readError
+  })),
   selectedCount:selected.length,investigations,report
+};
+const output=new URL('../../research/output/amsterdam-freshness-diagnostic.json',import.meta.url);
+await mkdir(new URL('.',output),{recursive:true});
+await writeFile(output,JSON.stringify(diagnostic,null,2)+'\\n');
+console.log('AMSTERDAM_FRESHNESS_DIAGNOSTIC '+JSON.stringify({
+  catalogCount:diagnostic.catalogCount,selectedCount:diagnostic.selectedCount,
+  investigations:diagnostic.investigations
 }));
