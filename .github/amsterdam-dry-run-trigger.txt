@@ -76,3 +76,4 @@ Staging quality manifest validation 2026-10-30.
 
 2026-11-11: Trigger one staging-only live provider refresh and full 80-company audit after restoring the weekday schedule; no price commit or production publication.
 2026-11-13: Run complete Amsterdam staging dry-run with classified 80-instrument source freshness evidence; never commit refreshed prices or deploy production.
+2026-11-13: Re-run 80-instrument staging-only import after fixing Euronext successful-but-stale response selection; no history commit.
