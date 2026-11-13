@@ -70,7 +70,7 @@ jobs:
           for(const file of changed){
             const instrument=allowed.get(file);
             if(!instrument)throw Error('Unexpected history file: '+file);
-            const previous=JSON.parse(execFileSync('git',['show','HEAD:'+file],{encoding:'utf8'}));
+            const previous=JSON.parse(execFileSync('git',['show','HEAD:'+file],{encoding:'utf8',maxBuffer:64*1024*1024}));
             const current=JSON.parse(fs.readFileSync(file,'utf8'));
             if(current.instrument?.isin!==instrument.isin||current.instrument?.mic!=='XAMS')throw Error('Identity mismatch: '+file);
             const before=validateBars(previous.bars||[]),after=validateBars(current.bars||[]);
