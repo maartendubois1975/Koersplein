@@ -206,6 +206,43 @@ jobs:
           echo 'Provider outcome: ${{ steps.refresh.outcome }}' >> "$GITHUB_STEP_SUMMARY"
           echo 'Audit outcome: ${{ job.status }}' >> "$GITHUB_STEP_SUMMARY"
           echo 'Dry run: ${{ inputs.dry_run }}' >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit validated daily Amsterdam candles on scheduled runs
+        if: success() && github.ref == 'refs/heads/amsterdam-reset-20261027' && github.event_name == 'schedule' && steps.refresh.outcome == 'success'
+        run: |
+          node scripts/history/verify-amsterdam-identity.mjs
+          node scripts/history/audit-amsterdam-import.mjs
+          node scripts/history/amsterdam-end-to-end-acceptance.mjs
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          import {execFileSync} from 'node:child_process';
+          import {loadCatalog,validateBars} from './scripts/history/engine.mjs';
+          const instruments=await loadCatalog();
+          if(instruments.length!==80)throw Error('Unexpected Amsterdam catalog count');
+          const permitted=new Set(instruments.map(x=>'data/history/'+x.isin+'.json'));
+          const changed=execFileSync('git',['diff','--name-only','--','data/history'],{encoding:'utf8'}).trim().split('\\n').filter(Boolean);
+          for(const file of changed){
+            if(!permitted.has(file))throw Error('Unexpected history file changed: '+file);
+            const old=JSON.parse(execFileSync('git',['show','HEAD:'+file],{encoding:'utf8'}));
+            const next=JSON.parse(fs.readFileSync(file,'utf8'));
+            const instrument=instruments.find(x=>file.endsWith('/'+x.isin+'.json'));
+            if(next.instrument?.isin!==instrument.isin||next.instrument?.mic!=='XAMS')throw Error('Identity changed: '+file);
+            const before=validateBars(old.bars||[]),after=validateBars(next.bars||[]);
+            if(before.length!==(old.bars||[]).length||after.length!==(next.bars||[]).length)throw Error('Invalid candles: '+file);
+            if(after.length<before.length)throw Error('History shrank: '+file);
+            const byDate=new Map(after.map(x=>[x.date,x]));
+            for(const bar of before)if(!byDate.has(bar.date))throw Error('Historical session deleted: '+file+' '+bar.date);
+          }
+          console.log('AMSTERDAM_SCHEDULED_PERSISTENCE_VALIDATED '+JSON.stringify({changed:changed.length,catalog:instruments.length}));
+          EOF
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/history/*.json
+          if git diff --cached --quiet; then
+            echo 'No validated daily candle changes to commit'
+          else
+            git commit -m 'data: persist validated Amsterdam daily trading candles'
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi
       - name: Block publishing historical files until source evidence is verified
         if: github.ref == 'refs/heads/amsterdam-reset-20261027' && github.event_name == 'workflow_dispatch' && inputs.dry_run == false
         run: |
