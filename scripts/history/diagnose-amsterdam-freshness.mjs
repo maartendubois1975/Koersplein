@@ -40,6 +40,19 @@ for(const {instrument,latest,readError} of selected){
       observations.push(observation);
     }
   }
+  const official=observations.find(x=>x.provider==='euronext-live');
+  const fallback=observations.find(x=>x.provider==='yahoo-chart');
+  const latestSource=[official?.latest,fallback?.latest].filter(Boolean).sort().at(-1)||null;
+  const isLagging=latest!==newestDate;
+  // Missing a daily trade does not itself prove an import failure.
+  const classification=!isLagging?'REFERENCE_ONLY':
+    latestSource&&(!latest||latestSource>latest)?'NEWER_SOURCE_TRADE_AVAILABLE':
+    official?.error&&fallback?.error?'BOTH_SOURCES_FAILED':
+    'NO_NEWER_EXECUTED_TRADE_CONFIRMED';
+  investigations.push({symbol:instrument.symbol,isin:instrument.isin,storedLatest:latest,
+    latestSource,classification,officialLatest:official?.latest||null,
+    fallbackLatest:fallback?.latest||null,officialError:official?.error||null,
+    fallbackError:fallback?.error||null});
 }
 console.log('AMSTERDAM_FRESHNESS_DIAGNOSTIC '+JSON.stringify({
   startDate,endDate,newestStoredDate:newestDate,catalogCount:catalog.length,
