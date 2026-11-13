@@ -1,8 +1,5 @@
 name: Amsterdam daily history refresh (staging)
 on:
-  schedule:
-    # Amsterdam close diagnostics on weekdays; UTC time is deliberately after CET/CEST close.
-    - cron: '15 18 * * 1-5'
   push:
     branches:
       - amsterdam-reset-20261027
