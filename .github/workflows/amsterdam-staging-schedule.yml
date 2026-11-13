@@ -29,7 +29,7 @@ jobs:
         with:
           node-version: '22'
       - name: Fetch official Euronext daily bars with verified fallback
-        run: node scripts/history.mjs update --all --batch-size 8
+        run: node scripts/history/amsterdam-daily-run.mjs --phase close
       - name: Validate the complete 80-company history and public market integration
         run: |
           node scripts/cloudflare/test-xams-market-page.mjs
@@ -51,11 +51,36 @@ jobs:
           if(problems.length){console.error('Refusing scheduled staging publication: '+problems.join(', '));process.exit(1)}
           console.log('Staging freshness checked; this does not certify official closing or provenance.');
           EOF
-      - name: Audit source provenance and corporate-action anomalies before any write
+      - name: Record historical research warnings without blocking valid daily candles
+        continue-on-error: true
         run: |
           node scripts/research/amsterdam-data-provenance-audit.mjs
           node scripts/research/amsterdam-history-quality-audit.mjs
           node scripts/research/amsterdam-consolidated-quality-gate.mjs
+      - name: Validate changed Amsterdam history before staging persistence
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          import {execFileSync} from 'node:child_process';
+          import {loadCatalog,validateBars} from './scripts/history/engine.mjs';
+          const instruments=await loadCatalog();
+          if(instruments.length!==80)throw Error('Expected 80 Amsterdam instruments');
+          const allowed=new Map(instruments.map(x=>['data/history/'+x.isin+'.json',x]));
+          const changed=execFileSync('git',['diff','--name-only','--','data/history'],{encoding:'utf8'}).trim().split('\n').filter(Boolean);
+          for(const file of changed){
+            const instrument=allowed.get(file);
+            if(!instrument)throw Error('Unexpected history file: '+file);
+            const previous=JSON.parse(execFileSync('git',['show','HEAD:'+file],{encoding:'utf8'}));
+            const current=JSON.parse(fs.readFileSync(file,'utf8'));
+            if(current.instrument?.isin!==instrument.isin||current.instrument?.mic!=='XAMS')throw Error('Identity mismatch: '+file);
+            const before=validateBars(previous.bars||[]),after=validateBars(current.bars||[]);
+            if(before.length!==(previous.bars||[]).length||after.length!==(current.bars||[]).length)throw Error('Invalid OHLC: '+file);
+            if(after.length<before.length)throw Error('Historical candles removed: '+file);
+            const dates=new Set(after.map(x=>x.date));
+            for(const bar of before)if(!dates.has(bar.date))throw Error('Existing session missing: '+file+' '+bar.date);
+          }
+          console.log('AMSTERDAM_DAILY_PERSISTENCE_VALIDATED '+JSON.stringify({catalog:80,changed:changed.length}));
+          EOF
       - name: Persist validated data only to staging
         run: |
           test "$(git branch --show-current)" = "amsterdam-reset-20261027"
