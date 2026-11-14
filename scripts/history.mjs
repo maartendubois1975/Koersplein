@@ -8,7 +8,7 @@ const requestedIsins = args.flatMap((value, index) => args[index - 1] === '--isi
 const batchSize = Number(option('--batch-size', process.env.KOERSPLEIN_BATCH_SIZE || 2));
 if (!Number.isInteger(batchSize) || batchSize < 1 || batchSize > 50) throw new Error('Batchgrootte moet tussen 1 en 50 liggen.');
 
-const catalog = await loadCatalog();
+const catalog = await loadCatalog(option('--market', 'XAMS'));
 const select = () => {
   if (has('--all')) {
     if (command === 'backfill' && process.env.KOERSPLEIN_ALLOW_FULL_BACKFILL !== 'yes') throw new Error('Volledige backfill geblokkeerd. Stel KOERSPLEIN_ALLOW_FULL_BACKFILL=yes bewust in.');
