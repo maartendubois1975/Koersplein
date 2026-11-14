@@ -1,0 +1,64 @@
+name: Brussels historical backfill
+on:
+  push:
+    branches: [brussels-reset-20261114]
+    paths: ['.github/workflows/brussels-backfill.yml']
+permissions:
+  contents: write
+concurrency:
+  group: brussels-backfill
+  cancel-in-progress: false
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: brussels-reset-20261114
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate existing Amsterdam and Brussels identities
+        run: |
+          npm test
+          npm run history:test
+          node --input-type=module -e "import {loadCatalog} from './scripts/history/engine.mjs'; const a=await loadCatalog(), b=await loadCatalog('XBRU'); if(a.length!==80||b.length!==105||b.some(x=>a.some(y=>y.isin===x.isin)))process.exit(1)"
+      - name: Import all Brussels instruments
+        env:
+          KOERSPLEIN_ALLOW_FULL_BACKFILL: 'yes'
+        run: |
+          set +e
+          node scripts/history.mjs backfill --market XBRU --all --batch-size 8 > /tmp/brussels-import.jsonl 2>&1
+          code=$?
+          cat /tmp/brussels-import.jsonl
+          exit "$code"
+      - name: Validate and persist only Brussels histories
+        run: |
+          node --input-type=module <<'JS'
+          import {loadCatalog,validateBars} from './scripts/history/engine.mjs';
+          import {readFile,writeFile} from 'node:fs/promises';
+          const catalog=await loadCatalog('XBRU');
+          const paths=[];
+          for(const i of catalog){
+            const p='data/history/'+i.isin+'.json';
+            const d=JSON.parse(await readFile(p,'utf8'));
+            if(d.instrument.isin!==i.isin||d.instrument.mic!==i.mic||d.provider.id!=='euronext-live'||d.provider.metadata.partialHistory!==false||!d.bars.length||validateBars(d.bars).length!==d.bars.length)throw Error('Invalid history '+i.isin);
+            paths.push(p);
+          }
+          await writeFile('/tmp/brussels-paths',paths.join('\n')+'\n');
+          console.log('BRUSSELS_VALIDATED',paths.length);
+          JS
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --pathspec-from-file=/tmp/brussels-paths
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: validated Brussels historical prices'
+            git push origin HEAD:brussels-reset-20261114
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brussels-backfill-report
+          path: /tmp/brussels-import.jsonl
+          if-no-files-found: ignore
