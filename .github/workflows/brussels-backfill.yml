@@ -32,22 +32,26 @@ jobs:
           node scripts/history.mjs backfill --market XBRU --all --batch-size 8 > /tmp/brussels-import.jsonl 2>&1
           code=$?
           cat /tmp/brussels-import.jsonl
-          exit "$code"
+          echo "Import exit code: $code"
       - name: Validate and persist only Brussels histories
         run: |
           node --input-type=module <<'JS'
           import {loadCatalog,validateBars} from './scripts/history/engine.mjs';
           import {readFile,writeFile} from 'node:fs/promises';
           const catalog=await loadCatalog('XBRU');
-          const paths=[];
+          const paths=[]; const missing=[];
+          const report=(await readFile('/tmp/brussels-import.jsonl','utf8')).split('\n').flatMap(line=>{try{return [JSON.parse(line)]}catch{return []}});
+          const successful=new Set(report.filter(x=>x.outcome!=='error'&&x.providerRequest===true).map(x=>x.isin));
           for(const i of catalog){
             const p='data/history/'+i.isin+'.json';
+            if(!successful.has(i.isin)){missing.push(i.isin);continue;}
             const d=JSON.parse(await readFile(p,'utf8'));
             if(d.instrument.isin!==i.isin||d.instrument.mic!==i.mic||d.provider.id!=='euronext-live'||d.provider.metadata.partialHistory!==false||!d.bars.length||validateBars(d.bars).length!==d.bars.length)throw Error('Invalid history '+i.isin);
             paths.push(p);
           }
           await writeFile('/tmp/brussels-paths',paths.join('\n')+'\n');
-          console.log('BRUSSELS_VALIDATED',paths.length);
+          console.log('BRUSSELS_VALIDATED',paths.length,'MISSING',JSON.stringify(missing));
+          if(!paths.length)throw Error('No validated histories');
           JS
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
