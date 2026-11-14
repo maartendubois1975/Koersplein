@@ -73,7 +73,15 @@ async function atomicWrite(url, value) {
   await rename(temp, url);
 }
 
-export async function loadCatalog() {
+export async function loadCatalog(mic = 'XAMS') {
+  if (mic === 'XBRU') {
+    const [catalog, amsterdam] = await Promise.all([readJson(new URL('euronext-brussels.json', dataUrl)), readJson(new URL('euronext-amsterdam.json', dataUrl))]);
+    const shares = catalog.shares;
+    const protectedIds = new Set(amsterdam.shares.map(x => x.isin));
+    if (shares.length !== 105 || new Set(shares.map(x => x.isin)).size !== 105 || shares.some(x => x.selection !== 'approved' || protectedIds.has(x.isin))) throw new Error('Brussels catalog identity validation failed');
+    return shares.map(x => ({...x, mic: x.primaryMic, country: 'België', currency: 'EUR', provider: 'euronext-live', providerSymbol: x.isin+'-'+x.primaryMic, identitySource: x.evidence[0]}));
+  }
+  if (mic !== 'XAMS') throw new Error('Unsupported history market: '+mic);
   const [shares, mappings] = await Promise.all([readJson(new URL('euronext-amsterdam.json', dataUrl)), readJson(new URL('history-instruments.json', dataUrl))]);
   const byIsin = new Map(shares.shares.map((share) => [share.isin, share]));
   return mappings.providerMappings.filter((mapping) => !['unverified-amsterdam-trading', 'canonical-on-other-market'].includes(byIsin.get(mapping.isin)?.historyStatus)).map((mapping) => {
@@ -88,6 +96,7 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
   if (!provider) throw new Error(`Onbekende provider: ${instrument.provider}`);
   const fileUrl = new URL(`${instrument.isin}.json`, historyUrl);
   const existing = await readJson(fileUrl, null);
+  if (existing && (existing.instrument?.isin !== instrument.isin || existing.instrument?.mic !== instrument.mic)) throw new Error('Existing history belongs to a different instrument/venue: '+instrument.isin);
   if (mode === 'backfill' && verifiedBackfillComplete(existing)) {
     return { isin: instrument.isin, outcome: 'unchanged', reason: 'backfill-complete', providerRequest: false, records: existing.bars.length, firstDate: existing.coverage.firstDate, lastDate: existing.coverage.lastDate };
   }
