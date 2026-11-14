@@ -56,6 +56,7 @@ jobs:
       - name: Record historical research warnings without blocking valid daily candles
         continue-on-error: true
         run: |
+          node scripts/research/amsterdam-structural-integrity-audit.mjs
           node scripts/research/amsterdam-data-provenance-audit.mjs
           node scripts/research/amsterdam-history-quality-audit.mjs
           node scripts/research/amsterdam-consolidated-quality-gate.mjs
@@ -112,6 +113,11 @@ jobs:
             research/output/amsterdam-session-readiness.json
             research/output/amsterdam-freshness-diagnostic.json
             data/amsterdam-import-audit.json
+            research/output/amsterdam-structural-integrity-audit.json
+            research/output/amsterdam-data-provenance-audit.json
+            research/output/amsterdam-history-quality-audit.json
+            research/output/amsterdam-issuer-investigation-cases.json
+            research/output/amsterdam-consolidated-quality-gate.json
           if-no-files-found: warn
           retention-days: 30
       - name: Record staging deployment boundary
