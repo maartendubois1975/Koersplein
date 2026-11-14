@@ -1,0 +1,49 @@
+name: Brussels existing history read-only audit
+on:
+  push:
+    branches: [brussels-reset-20261114]
+    paths: [.github/workflows/brussels-existing-history-audit.yml]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Inspect existing public history without writes
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs/promises';
+          import {validateBars,loadCatalog} from './scripts/history/engine.mjs';
+          const base='https://koersplein.maarten-dubois1975.workers.dev';
+          const catalog=await loadCatalog('XBRU');
+          const get=async path=>{const r=await fetch(base+path,{signal:AbortSignal.timeout(25000),headers:{accept:'application/json'}});if(!r.ok)throw Error('HTTP '+r.status);return r.json()};
+          const m=await get('/api/history/manifest.json');
+          const entries=Object.entries(m.instruments||{});
+          if(!entries.length)throw Error('Empty manifest');
+          const rows=[];
+          for(const i of catalog){
+            const matches=entries.filter(([key,v])=>key===i.isin||v?.isin===i.isin||key.endsWith(':'+i.isin));
+            const row={isin:i.isin,symbol:i.symbol,mic:i.mic,matches:matches.map(([key,v])=>({key,mic:v?.mic,isin:v?.isin}))};
+            try{
+              if(matches.length!==1)throw Error('manifest matches '+matches.length);
+              const [key,v]=matches[0];
+              const h=await get('/api/history/'+encodeURIComponent(key).replace(/%3A/gi,':'));
+              const b=validateBars(h.bars||[]);
+              Object.assign(row,{actual:h.instrument,provider:h.provider,records:b.length,rejected:(h.bars||[]).length-b.length,first:b[0]?.date,last:b.at(-1)?.date,identityMatch:h.instrument?.isin===i.isin&&h.instrument?.mic===i.mic&&h.instrument?.currency==='EUR'});
+            }catch(e){row.error=e.message}
+            rows.push(row);console.log('BRUSSELS_EXISTING '+JSON.stringify(row));
+            await new Promise(r=>setTimeout(r,200));
+          }
+          await fs.writeFile('/tmp/brussels-existing-history.json',JSON.stringify(rows,null,2));
+          console.log('SUMMARY '+JSON.stringify({total:rows.length,withBars:rows.filter(x=>x.records>0).length,identityMatched:rows.filter(x=>x.identityMatch&&x.records>0&&!x.rejected).length,errors:rows.filter(x=>x.error).length}));
+          EOF
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brussels-existing-history-audit
+          path: /tmp/brussels-existing-history.json
