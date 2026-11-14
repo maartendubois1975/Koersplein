@@ -63,7 +63,7 @@ export async function euronextDailySnapshot(i,date,signal,adjusted='Y'){
 }
 export class EuronextLiveProvider{
  id=PROVIDER_ID;name='Euronext Live historical prices';requiresApiKey=false;
- supports(i){return ['XAMS','XBRU','XDUB','XMSM','XESM','XATL','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin)}
+ supports(i){return ['XAMS','XBRU','ALXB','MLXB','XDUB','XMSM','XESM','XATL','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin)}
  async fetchDaily(i,{startDate,endDate,signal}={}){
   const mic=euronextProviderMic(i.mic||i.market),key=`${i.isin}-${mic}`,all=[];
   const failedWindows=[];
