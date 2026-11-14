@@ -147,6 +147,7 @@ export async function syncInstrument(instrument, { mode = 'backfill' } = {}) {
     fetched = await provider.fetchDaily(instrument, { startDate, endDate });
   }
   const existingByDate = new Map((existing?.bars || []).map(bar => [bar.date, bar]));
+  if (['XBRU','ALXB','MLXB'].includes(instrument.mic) && (fetched.providerMeta?.isin !== instrument.isin || fetched.providerMeta?.mic !== instrument.mic || fetched.providerMeta?.partialHistory)) throw new Error('Brussels source identity or completeness window failed: '+instrument.isin);
   const incoming = fetched.bars.map(bar => ({ ...bar, ...(bar.adjustedClose == null ? { adjustedClose: existingByDate.get(bar.date)?.adjustedClose ?? null } : {}) }));
   const bars = mergeBars(existing?.bars || [], incoming);
   // Euronext requests adjusted=Y; its adjustment scope is not verified.
