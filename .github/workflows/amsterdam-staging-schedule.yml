@@ -40,6 +40,8 @@ jobs:
         run: |
           node scripts/history/audit-amsterdam-import.mjs
           node scripts/history/check-amsterdam-latest-session.mjs
+      - name: Diagnose lagging Amsterdam instruments against source feeds
+        run: node scripts/history/diagnose-amsterdam-freshness.mjs
       - name: Reject stale or structurally invalid Amsterdam refresh
         run: |
           node --input-type=module <<'EOF'
@@ -100,6 +102,18 @@ jobs:
             git commit -m 'data: refresh validated Amsterdam daily history (staging)'
             git push origin HEAD:amsterdam-reset-20261027
           fi
+      - name: Preserve Amsterdam validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsterdam-validation-${{ github.run_id }}
+          path: |
+            research/output/amsterdam-daily-run.json
+            research/output/amsterdam-session-readiness.json
+            research/output/amsterdam-freshness-diagnostic.json
+            data/amsterdam-import-audit.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Record staging deployment boundary
         run: |
           echo 'Amsterdam history has been committed to amsterdam-reset-20261027 only.' >> "$GITHUB_STEP_SUMMARY"
