@@ -30,11 +30,14 @@ jobs:
             const matches=entries.filter(([key,v])=>key===i.isin||v?.isin===i.isin||key.endsWith(':'+i.isin));
             const row={isin:i.isin,symbol:i.symbol,mic:i.mic,matches:matches.map(([key,v])=>({key,mic:v?.mic,isin:v?.isin}))};
             try{
-              if(matches.length!==1)throw Error('manifest matches '+matches.length);
-              const [key,v]=matches[0];
+              const exact=matches.filter(([key,v])=>key===i.mic+':'+i.isin&&v?.mic===i.mic);
+              const legacy=matches.filter(([key,v])=>key==='XBRU:'+i.isin&&v?.mic==='XBRU');
+              const candidates=exact.length?exact:legacy;
+              if(candidates.length!==1)throw Error('venue-specific matches '+candidates.length);
+              const [key,v]=candidates[0];
               const h=await get('/api/history/'+encodeURIComponent(key).replace(/%3A/gi,':'));
               const b=validateBars(h.bars||[]);
-              Object.assign(row,{actual:h.instrument,provider:h.provider,records:b.length,rejected:(h.bars||[]).length-b.length,first:b[0]?.date,last:b.at(-1)?.date,identityMatch:h.instrument?.isin===i.isin&&h.instrument?.mic===i.mic&&h.instrument?.currency==='EUR'});
+              Object.assign(row,{actual:h.instrument,provider:h.provider,records:b.length,rejected:(h.bars||[]).length-b.length,first:b[0]?.date,last:b.at(-1)?.date,identityMatch:[i.isin,key].includes(h.instrument?.isin)&&h.instrument?.mic===i.mic&&h.instrument?.currency==='EUR'&&String(h.instrument?.symbol||h.instrument?.ticker||'').toUpperCase()===i.symbol.toUpperCase(),legacyVenue:h.instrument?.mic==='XBRU'&&i.mic!=='XBRU'});
             }catch(e){row.error=e.message}
             rows.push(row);console.log('BRUSSELS_EXISTING '+JSON.stringify(row));
             await new Promise(r=>setTimeout(r,200));
