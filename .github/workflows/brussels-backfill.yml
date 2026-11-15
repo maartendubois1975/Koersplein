@@ -49,7 +49,28 @@ jobs:
             const p='data/history/'+i.isin+'.json';
             const result={isin:i.isin,symbol:i.symbol,mic:i.mic};
             try{
-              if(!row?.records)throw Error('No audited source history');
+              // Existing verified files and absent legacy histories use the same
+              // engine; never make recovery of one company depend on another.
+              let staged=null;
+              try{staged=JSON.parse(await fs.readFile(p,'utf8'))}catch(e){if(e.code!=='ENOENT')throw e}
+              if(staged||!row?.records){
+                if(staged&&(staged.instrument?.isin!==i.isin||staged.instrument?.mic!==i.mic||validateBars(staged.bars).length!==staged.bars.length))throw Error('Existing staged history requires quarantine');
+                const mode=staged?'update':'backfill';
+                let failure;
+                for(let attempt=0;attempt<3;attempt++){
+                  try{result.refresh=await syncInstrument(i,{mode});failure=null;break}catch(e){failure=e;await new Promise(r=>setTimeout(r,1000*(attempt+1)))}
+                }
+                if(failure)throw failure;
+                const after=JSON.parse(await fs.readFile(p,'utf8'));
+                const dates=new Set(after.bars.map(x=>x.date));
+                if(after.instrument.isin!==i.isin||after.instrument.mic!==i.mic||!after.bars.length||validateBars(after.bars).length!==after.bars.length||staged?.bars.some(x=>!dates.has(x.date)))throw Error('Persistence guard');
+                result.records=after.bars.length;result.last=after.bars.at(-1).date;
+                paths.push(p);
+                results.push(result);console.log('BRUSSELS_RECOVERY '+JSON.stringify(result));
+                await fs.writeFile('/tmp/brussels-recovery-result.json',JSON.stringify(results,null,2));
+                await fs.writeFile('/tmp/brussels-paths',paths.join('\n')+'\n');
+                continue;
+              }
               let h;
               if(row.identityMatch&&!row.rejected)h=JSON.parse(await fs.readFile('/tmp/brussels-audit/brussels-recovery/'+i.isin+'.json','utf8'));
               else {
