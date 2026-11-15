@@ -8,7 +8,7 @@ permissions:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -18,6 +18,7 @@ jobs:
         run: |
           node --input-type=module <<'EOF'
           import fs from 'node:fs/promises';
+          await fs.mkdir('/tmp/brussels-recovery',{recursive:true});
           import {validateBars,loadCatalog} from './scripts/history/engine.mjs';
           const base='https://koersplein.maarten-dubois1975.workers.dev';
           const catalog=await loadCatalog('XBRU');
@@ -28,6 +29,7 @@ jobs:
           const rows=[];
           for(const i of catalog){
             const matches=entries.filter(([key,v])=>key===i.isin||v?.isin===i.isin||key.endsWith(':'+i.isin));
+            let snapshot;
             const row={isin:i.isin,symbol:i.symbol,mic:i.mic,matches:matches.map(([key,v])=>({key,mic:v?.mic,isin:v?.isin}))};
             try{
               const exact=matches.filter(([key,v])=>key===i.mic+':'+i.isin&&v?.mic===i.mic);
@@ -36,10 +38,15 @@ jobs:
               if(candidates.length!==1)throw Error('venue-specific matches '+candidates.length);
               const [key,v]=candidates[0];
               const h=await get('/api/history/'+encodeURIComponent(key).replace(/%3A/gi,':'));
+              snapshot=h;
               const b=validateBars(h.bars||[]);
               Object.assign(row,{actual:h.instrument,provider:h.provider,records:b.length,rejected:(h.bars||[]).length-b.length,first:b[0]?.date,last:b.at(-1)?.date,identityMatch:[i.isin,key].includes(h.instrument?.isin)&&h.instrument?.mic===i.mic&&h.instrument?.currency==='EUR'&&String(h.instrument?.symbol||h.instrument?.ticker||'').toUpperCase()===i.symbol.toUpperCase(),legacyVenue:h.instrument?.mic==='XBRU'&&i.mic!=='XBRU'});
             }catch(e){row.error=e.message}
-            rows.push(row);console.log('BRUSSELS_EXISTING '+JSON.stringify(row));
+            if(row.identityMatch&&row.records>0&&!row.rejected){
+              // Raw source snapshot is an artifact, not a published or normalized history file.
+              try{await fs.writeFile('/tmp/brussels-recovery/'+i.isin+'.json',JSON.stringify(snapshot));}catch(e){row.snapshotError=e.message;}
+            }
+            rows.push(row);await fs.writeFile('/tmp/brussels-existing-history.json',JSON.stringify(rows,null,2));console.log('BRUSSELS_EXISTING '+JSON.stringify(row));
             await new Promise(r=>setTimeout(r,200));
           }
           await fs.writeFile('/tmp/brussels-existing-history.json',JSON.stringify(rows,null,2));
@@ -49,4 +56,7 @@ jobs:
         if: always()
         with:
           name: brussels-existing-history-audit
-          path: /tmp/brussels-existing-history.json
+          path: |
+            /tmp/brussels-existing-history.json
+            /tmp/brussels-recovery/
+          retention-days: 30
