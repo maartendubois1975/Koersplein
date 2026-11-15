@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { transaction } from './db.mjs';
 import { getInstrument } from './catalog.mjs';
-import { validateBars } from '../history/bars.mjs';
+import { validateBars, verifiedBackfillComplete } from '../history/bars.mjs';
 
 export function refreshHistoryStatus(db, instrumentId, { provider = null, error = null, status = null } = {}) {
   const aggregate = db.prepare(`SELECT MIN(trading_date) firstDate, MAX(trading_date) lastDate, COUNT(*) records,
@@ -44,7 +44,7 @@ export async function importHistoryDocument(db, document) {
     sourceName: document.provider.name,
     retrievedAt: document.provider.retrievedAt,
     technicalTestSource: true
-  }, { complete:document.coverage?.backfillComplete === true });
+  }, { complete:verifiedBackfillComplete(document) });
 }
 
 export async function importGoldenHistory(db, sourceDir) {
