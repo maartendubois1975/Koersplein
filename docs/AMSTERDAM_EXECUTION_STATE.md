@@ -172,3 +172,13 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - The Amsterdam daily history workflow now declares a weekday 18:15 UTC schedule for diagnostics, baseline checks, provider refresh in temporary CI workspace and downloadable audit evidence. This is NOT a publishing schedule.
 - GitHub Actions scheduled workflows only run from the repository default branch; because this workflow currently lives on `amsterdam-reset-20261027`, the schedule is NOT active until an explicitly reviewed workflow is present on the default branch. No claims of automatic updates before that condition is met.
 - Production remains unchanged; audited price publication continues to require explicit dispatch and independent provenance/readiness gates.
+
+## 2026-11-15 — company-register/provider/history consolidation
+
+- Consolidated implementation on `amsterdam-reset-20261027`, based on `dcc59552`; exact owner-approved 80 XAMS and 105 Brussels identities are protected by reviewed identity digests.
+- Removed automatic directory replacement; central approved-only provider routing now serves ingestion consumers; timed/untimed response validation is shared. Status opens the database read-only, and the generic history validator has no status-write side effect.
+- Historical primitives and their tests are market-neutral; retained Amsterdam-specific manifest/public-integration guards. All archived history bytes are preserved.
+- All-105 Brussels read-only source comparison and the two older-history checks are documented in `docs/REGISTER_HISTORY_CONSOLIDATION_2026-11-15.md`; seven differing OHLC sessions and variable Euronext coverage prevent automatic fallback promotion.
+- Local regression evidence and exact command outcomes: `research/output/consolidation-regression-summary.json`. No claim of fresh GitHub CI, Render alignment, deployment or complete market-data correctness.
+- Next coherent deliverable: review the seven Brussels source discrepancies and establish a verified per-company historical mapping/backfill contract before any Brussels import or publication. Do not repeat issuer-selection research or delete archived histories.
+- Rollback: revert this single consolidation commit on the development branch. No production changes or database migrations.

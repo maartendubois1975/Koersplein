@@ -21,4 +21,4 @@ assert.equal(sessionReadiness([row('A','2026-10-30'),row('A','2026-10-30')],2).i
 assert.equal(sessionReadiness([{...row('A','2026-10-30'),rejectedRecords:1},row('B','2026-10-30')],2).invalidCount,1);
 assert.equal(sessionReadiness([row('A','2026-02-30'),row('B','2026-10-30')],2).invalidCount,1);
 assert.throws(()=>sessionReadiness([],0),/Invalid session universe/);
-console.log('Amsterdam observed-session readiness fixtures passed');
+console.log('Market-neutral observed-session readiness fixtures passed');

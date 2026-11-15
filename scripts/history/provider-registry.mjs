@@ -40,41 +40,25 @@ export class ProviderRegistry {
     const failures = [];
     for (const provider of eligible) {
       try {
-        if (!(timeoutMs > 0)) {
-          const result=await provider.fetchDaily(instrument,range);
-          if(!Array.isArray(result?.bars)||!result.bars.length){
-            // Only an explicit evidence-only caller may inspect empty source
-            // responses. Default production routing still rejects them before
-            // the acceptResult callback; no synthetic/no-trade bar is created.
-            if(inspectEmptyResult&&acceptResult)await acceptResult(result,provider);
-            throw Error('Provider returned no daily bars');
-          }
-          if(acceptResult&&!(await acceptResult(result,provider)))throw Error('Provider returned no usable bars in requested range');
-          return {provider,result};
-        }
-        const controller = new AbortController();
+        const controller = timeoutMs > 0 ? new AbortController() : null;
         let timer;
+        let result;
         try {
-          const timeout = new Promise((_, reject) => {
-            timer = setTimeout(() => {
-              controller.abort();
-              reject(new Error('Provider timeout after '+timeoutMs+'ms'));
-            }, timeoutMs);
-          });
-          const result = await Promise.race([provider.fetchDaily(instrument, {...range, signal: controller.signal}), timeout]);
-          if(!Array.isArray(result?.bars)||!result.bars.length){
-            // Only an explicit evidence-only caller may inspect empty source
-            // responses. Default production routing still rejects them before
-            // the acceptResult callback; no synthetic/no-trade bar is created.
-            if(inspectEmptyResult&&acceptResult)await acceptResult(result,provider);
-            throw Error('Provider returned no daily bars');
-          }
-          if(acceptResult&&!(await acceptResult(result,provider)))throw Error('Provider returned no usable bars in requested range');
-          return { provider, result };
+          const request = provider.fetchDaily(instrument, controller ? { ...range, signal: controller.signal } : range);
+          result = controller ? await Promise.race([request, new Promise((_, reject) => {
+            timer = setTimeout(() => { controller.abort(); reject(Error('Provider timeout after '+timeoutMs+'ms')); }, timeoutMs);
+          })]) : await request;
         } finally {
           clearTimeout(timer);
-          controller.abort();
+          controller?.abort();
         }
+        if (!Array.isArray(result?.bars) || !result.bars.length) {
+          if (inspectEmptyResult && acceptResult) await acceptResult(result, provider);
+          throw Error('Provider returned no daily bars');
+        }
+        if (acceptResult && !(await acceptResult(result, provider))) throw Error('Provider returned no usable bars in requested range');
+        if (failures.length) result.providerMeta = { ...result.providerMeta, precedingProviderFailures: [...failures] };
+        return { provider, result };
       } catch (error) {
         failures.push(`${provider.id}: ${error.message}`);
       }

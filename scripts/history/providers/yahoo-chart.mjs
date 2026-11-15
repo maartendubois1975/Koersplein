@@ -4,6 +4,8 @@ const API_ROOT = 'https://query1.finance.yahoo.com/v8/finance/chart';
 const MARKET_RULES = {
   XAMS: { suffix: '.AS', exchanges: ['ams', 'aex', 'amsterdam'] },
   XBRU: { suffix: '.BR', exchanges: ['bru', 'brussels', 'brussel'] },
+  ALXB: { suffix: '.BR', exchanges: ['bru', 'brussels', 'brussel'] },
+  MLXB: { suffix: '.BR', exchanges: ['bru', 'brussels', 'brussel'] },
   XDUB: { suffix: '.IR', exchanges: ['ise', 'dublin', 'euronext dublin'] },
   XMSM: { suffix: '.IR', exchanges: ['ise', 'dublin', 'euronext dublin'] },
   XESM: { suffix: '.IR', exchanges: ['ise', 'dublin', 'euronext growth dublin'] },

@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "policy": "APPROVED_COMPANIES_ONLY_NO_AUTOMATIC_DIRECTORY_REPLACEMENT",
+  "markets": {
+    "XAMS": {
+      "file": "euronext-amsterdam.json",
+      "expectedCount": 80,
+      "identitySha256": "3f91b8dbbafe20801b9b19a748eba07aac22645485dac547eb5a7b542670a714"
+    },
+    "XBRU": {
+      "file": "euronext-brussels.json",
+      "expectedCount": 105,
+      "identitySha256": "89b4e4135430a61477a26772d4d3a226c901c666bfb9a0686111999374e50468"
+    }
+  }
+}

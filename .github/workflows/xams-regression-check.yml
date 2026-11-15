@@ -1,4 +1,4 @@
-name: XAMS isolated regression checks
+name: Company registers and history isolated regression checks
 on:
   pull_request:
     branches:
@@ -14,6 +14,10 @@ on:
       - 'amsterdam.html'
       - 'chart.js'
       - 'share.js'
+      - 'package.json'
+      - 'data/euronext-brussels.json'
+      - 'data/company-register-contracts.json'
+      - 'data/market-source-registry.json'
       - 'data/euronext-amsterdam.json'
       - 'data/history-instruments.json'
       - 'data/amsterdam-history-manifest.json'

@@ -8,11 +8,15 @@ const migrationsDir = join(here, 'migrations');
 
 export function databasePath() {
   const dataDir = resolve(process.env.KOERSPLEIN_DATA_DIR || join(here, '../../var'));
-  mkdirSync(dataDir, { recursive: true });
   return process.env.KOERSPLEIN_DATABASE_PATH || join(dataDir, 'koersplein.sqlite');
 }
 
-export function openDatabase(path = databasePath()) {
+export function openDatabase(path = databasePath(), { readOnly = false } = {}) {
+  if (readOnly) {
+    const db = new DatabaseSync(path, { readOnly: true });
+    db.exec('PRAGMA query_only = ON; PRAGMA busy_timeout = 5000;');
+    return db;
+  }
   mkdirSync(dirname(path), { recursive: true });
   const db = new DatabaseSync(path);
   db.exec('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;');

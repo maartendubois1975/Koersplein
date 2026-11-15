@@ -49,7 +49,7 @@ if(!pages[4].includes('market.html?market=amsterdam')||pages[4].includes('href="
 if(!pages[5].includes('generic-market.js'))issues.push({kind:'MARKET_PAGE_SCRIPT'});
 if(!pages[2].includes('validateHistoryDocument'))issues.push({kind:'SHARE_PAGE_HISTORY'});
 if(!pages[3].includes('export function validateHistoryDocument'))issues.push({kind:'CHART_VALIDATION'});
-const readiness=sessionReadiness(rows);
+const readiness=sessionReadiness(rows,catalog.shares.length);
 const report={schemaVersion:1,generatedAt:new Date().toISOString(),
  scope:'STAGING_OFFLINE_ACCEPTANCE_NO_LIVE_DATA_VERIFICATION',
  catalogCount:catalog.shares.length,mappedCount:mappings.length,

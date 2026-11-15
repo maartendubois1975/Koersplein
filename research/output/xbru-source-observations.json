@@ -1,0 +1,4870 @@
+{
+  "generatedAt": "2026-11-15T12:21:26.497Z",
+  "mic": "XBRU",
+  "range": {
+    "startDate": "2026-10-16",
+    "endDate": "2026-11-15"
+  },
+  "readOnly": true,
+  "policy": "OBSERVATIONS_ONLY_NOT_PROVIDER_APPROVAL_OR_NO_TRADE_PROOF",
+  "expected": 105,
+  "observations": [
+    {
+      "isin": "BE0003008019",
+      "symbol": "BNB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BNB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "BNB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003008019-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003008019",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003470755",
+      "symbol": "SOLB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SOLB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "SOLB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003470755-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003470755",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003519270",
+      "symbol": "COBH",
+      "mic": "ALXB",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 10,
+          "firstDate": "2026-10-19",
+          "lastDate": "2026-11-06",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/COBH.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "COBH.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 10,
+          "firstDate": "2026-10-19",
+          "lastDate": "2026-11-06",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003519270-ALXB",
+          "providerMetadata": {
+            "mic": "ALXB",
+            "isin": "BE0003519270",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 10,
+        "matchingOhlc": 10,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003545531",
+      "symbol": "SOLV",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SOLV.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "SOLV.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003545531: euronext-live: Geen verhandelde Euronext koershistorie voor BE0003545531-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003555639",
+      "symbol": "TESB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/TESB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "TESB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003555639-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003555639",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003565737",
+      "symbol": "KBC",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/KBC.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "KBC.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003565737-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003565737",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 20,
+        "differences": [
+          {
+            "date": "2026-10-29",
+            "fields": [
+              "high"
+            ]
+          }
+        ],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003592038",
+      "symbol": "COMB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/COMB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "COMB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003592038-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003592038",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 20,
+        "differences": [
+          {
+            "date": "2026-10-30",
+            "fields": [
+              "open"
+            ]
+          }
+        ],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003599108",
+      "symbol": "IMMO",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/IMMO.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "IMMO.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003599108-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003599108",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003602134",
+      "symbol": "MOUR",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/MOUR.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "MOUR.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003602134-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003602134",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003604155",
+      "symbol": "LOTB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/LOTB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "LOTB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003604155-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003604155",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003656676",
+      "symbol": "RECT",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/RECT.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "RECT.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003656676-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003656676",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003680916",
+      "symbol": "MLNEU",
+      "mic": "MLXB",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003680916: yahoo-chart: Provider returned no daily bars"
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003680916: euronext-live: Geen verhandelde Euronext koershistorie voor BE0003680916-MLXB; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003696102",
+      "symbol": "ACCB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ACCB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ACCB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003696102-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003696102",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003699130",
+      "symbol": "GIMB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/GIMB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "GIMB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003699130-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003699130",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003717312",
+      "symbol": "SOF",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SOF.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "SOF.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003717312-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003717312",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003720340",
+      "symbol": "RET",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/RET.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "RET.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003720340-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003720340",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003724383",
+      "symbol": "WEHB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/WEHB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "WEHB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003724383-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003724383",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003731453",
+      "symbol": "MIKO",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/MIKO.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "MIKO.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003731453-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003731453",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003734481",
+      "symbol": "WEB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/WEB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "WEB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003734481: euronext-live: Geen verhandelde Euronext koershistorie voor BE0003734481-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003735496",
+      "symbol": "OBEL",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/OBEL.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "OBEL.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003735496-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003735496",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 20,
+        "differences": [
+          {
+            "date": "2026-11-06",
+            "fields": [
+              "open"
+            ]
+          }
+        ],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003739530",
+      "symbol": "UCB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/UCB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "UCB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003739530-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003739530",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003741551",
+      "symbol": "ROU",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 15,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ROU.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ROU.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 15,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003741551-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003741551",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 15,
+        "matchingOhlc": 15,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003752665",
+      "symbol": "FOU",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 13,
+          "firstDate": "2026-10-19",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/FOU.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "FOU.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 13,
+          "firstDate": "2026-10-19",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003752665-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003752665",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 13,
+        "matchingOhlc": 13,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003754687",
+      "symbol": "VASTB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/VASTB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "VASTB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003754687: euronext-live: Geen verhandelde Euronext koershistorie voor BE0003754687-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003755692",
+      "symbol": "AGFB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AGFB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "AGFB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003755692-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003755692",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003764785",
+      "symbol": "ACKB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ACKB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ACKB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003764785-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003764785",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003766806",
+      "symbol": "IBAB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/IBAB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "IBAB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003766806-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003766806",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003770840",
+      "symbol": "NEXTA",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/NEXTA.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "NEXTA.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003770840-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003770840",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003773877",
+      "symbol": "SOFT",
+      "mic": "ALXB",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 9,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-12",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SOFT.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "SOFT.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 9,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-12",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003773877-ALXB",
+          "providerMetadata": {
+            "mic": "ALXB",
+            "isin": "BE0003773877",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 9,
+        "matchingOhlc": 9,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003789063",
+      "symbol": "DECB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/DECB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "DECB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003789063-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003789063",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003797140",
+      "symbol": "GBLB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/GBLB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "GBLB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003797140-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003797140",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003798155",
+      "symbol": "SPA",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 16,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SPA.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "SPA.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 16,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003798155-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003798155",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 16,
+        "matchingOhlc": 16,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003808251",
+      "symbol": "EXM",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 20,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/EXM.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "EXM.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003808251-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003808251",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 20,
+        "matchingOhlc": 20,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003810273",
+      "symbol": "PROX",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/PROX.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "PROX.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003810273: euronext-live: Geen verhandelde Euronext koershistorie voor BE0003810273-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003816338",
+      "symbol": "CMBT",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/CMBT.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "CMBT.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003816338-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003816338",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 20,
+        "differences": [
+          {
+            "date": "2026-11-10",
+            "fields": [
+              "low"
+            ]
+          }
+        ],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003820371",
+      "symbol": "EVS",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/EVS.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "EVS.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003820371-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003820371",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003822393",
+      "symbol": "ELI",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ELI.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ELI.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003822393-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003822393",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003823409",
+      "symbol": "TUB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/TUB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "TUB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003823409-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003823409",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003825420",
+      "symbol": "CAMB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/CAMB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "CAMB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003825420: euronext-live: Geen verhandelde Euronext koershistorie voor BE0003825420-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003832491",
+      "symbol": "NEWT",
+      "mic": "MLXB",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 2,
+          "firstDate": "2026-11-03",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/NEWT.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "NEWT.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 2,
+          "firstDate": "2026-11-03",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003832491-MLXB",
+          "providerMetadata": {
+            "mic": "MLXB",
+            "isin": "BE0003832491",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 2,
+        "matchingOhlc": 2,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003837540",
+      "symbol": "ATEB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ATEB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ATEB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003837540-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003837540",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003839561",
+      "symbol": "VAN",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/VAN.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "VAN.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003839561-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003839561",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003841583",
+      "symbol": "REAL",
+      "mic": "MLXB",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 3,
+          "firstDate": "2026-10-26",
+          "lastDate": "2026-11-02",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/REAL.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "REAL.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 3,
+          "firstDate": "2026-10-26",
+          "lastDate": "2026-11-02",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003841583-MLXB",
+          "providerMetadata": {
+            "mic": "MLXB",
+            "isin": "BE0003841583",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 3,
+        "matchingOhlc": 3,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003847648",
+      "symbol": "FLSP",
+      "mic": "MLXB",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003847648: yahoo-chart: Provider returned no daily bars"
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003847648: euronext-live: Geen verhandelde Euronext koershistorie voor BE0003847648-MLXB; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003851681",
+      "symbol": "AED",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AED.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "AED.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003851681-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003851681",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003853703",
+      "symbol": "MONT",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/MONT.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "MONT.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003853703-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003853703",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003856730",
+      "symbol": "ASCE",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ASCE.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ASCE.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003856730-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003856730",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003858751",
+      "symbol": "JEN",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/JEN.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "JEN.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003858751: euronext-live: Geen verhandelde Euronext koershistorie voor BE0003858751-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003867844",
+      "symbol": "KBCA",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/KBCA.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "KBCA.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003867844-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003867844",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003870871",
+      "symbol": "BANI",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BANI.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "BANI.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003870871: euronext-live: Geen verhandelde Euronext koershistorie voor BE0003870871-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003874915",
+      "symbol": "FAGR",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/FAGR.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "FAGR.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003874915-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003874915",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003878957",
+      "symbol": "VGP",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/VGP.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "VGP.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003878957-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003878957",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003883031",
+      "symbol": "CFEB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/CFEB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "CFEB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003883031-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0003883031",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003893139",
+      "symbol": "IMMOU",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/IMMOU.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "IMMOU.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003893139: euronext-live: Geen verhandelde Euronext koershistorie voor BE0003893139-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0003898187",
+      "symbol": "SIP",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SIP.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "SIP.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0003898187: euronext-live: Geen verhandelde Euronext koershistorie voor BE0003898187-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0165385973",
+      "symbol": "MELE",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/MELE.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "MELE.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0165385973-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0165385973",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974256852",
+      "symbol": "COLR",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/COLR.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "COLR.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974256852-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974256852",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974258874",
+      "symbol": "BEKB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BEKB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "BEKB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974258874-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974258874",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974259880",
+      "symbol": "DIE",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/DIE.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "DIE.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974259880-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974259880",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974260896",
+      "symbol": "CYAD",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/CYAD.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "CYAD.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974260896-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974260896",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974263924",
+      "symbol": "TEXF",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/TEXF.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "TEXF.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974263924-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974263924",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974264930",
+      "symbol": "AGS",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AGS.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "AGS.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0974264930: euronext-live: Geen verhandelde Euronext koershistorie voor BE0974264930-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974265945",
+      "symbol": "FLUX",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/FLUX.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "FLUX.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974265945-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974265945",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974268972",
+      "symbol": "BPOST",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BPOST.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "BPOST.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974268972-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974268972",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974271034",
+      "symbol": "VIO",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/VIO.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "VIO.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974271034-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974271034",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974272040",
+      "symbol": "QRF",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/QRF.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "QRF.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974272040-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974272040",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974273055",
+      "symbol": "CPINV",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/CPINV.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "CPINV.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974273055-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974273055",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974274061",
+      "symbol": "KIN",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/KIN.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "KIN.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974274061-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974274061",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974276082",
+      "symbol": "ONTEX",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ONTEX.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ONTEX.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0974276082: euronext-live: Geen verhandelde Euronext koershistorie voor BE0974276082-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974278104",
+      "symbol": "ABO",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ABO.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ABO.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974278104-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974278104",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974282148",
+      "symbol": "TINC",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/TINC.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "TINC.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974282148-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974282148",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974288202",
+      "symbol": "XIOR",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/XIOR.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "XIOR.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974288202-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974288202",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974293251",
+      "symbol": "ABI",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ABI.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ABI.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974293251-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974293251",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974298300",
+      "symbol": "CAND",
+      "mic": "ALXB",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 1,
+          "firstDate": "2026-10-19",
+          "lastDate": "2026-10-19",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/CAND.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "CAND.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 1,
+          "firstDate": "2026-10-19",
+          "lastDate": "2026-10-19",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974298300-ALXB",
+          "providerMetadata": {
+            "mic": "ALXB",
+            "isin": "BE0974298300",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 1,
+        "matchingOhlc": 1,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974303357",
+      "symbol": "CENER",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/CENER.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "CENER.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974303357-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974303357",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974313455",
+      "symbol": "ECONB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ECONB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ECONB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974313455-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974313455",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974314461",
+      "symbol": "BELYS",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 20,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BELYS.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "BELYS.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 20,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974314461-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974314461",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 20,
+        "matchingOhlc": 20,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974320526",
+      "symbol": "UMI",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/UMI.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "UMI.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974320526-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974320526",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974338700",
+      "symbol": "TITC",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/TITC.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "TITC.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974338700-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974338700",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 20,
+        "differences": [
+          {
+            "date": "2026-11-04",
+            "fields": [
+              "high"
+            ]
+          }
+        ],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974349814",
+      "symbol": "WDP",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/WDP.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "WDP.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974349814-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974349814",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 20,
+        "differences": [
+          {
+            "date": "2026-11-10",
+            "fields": [
+              "low"
+            ]
+          }
+        ],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974358906",
+      "symbol": "NYXH",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/NYXH.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "NYXH.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0974358906: euronext-live: Geen verhandelde Euronext koershistorie voor BE0974358906-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974362940",
+      "symbol": "BAR",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BAR.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "BAR.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974362940-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974362940",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974363955",
+      "symbol": "HYL",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/HYL.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "HYL.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974363955-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974363955",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974370026",
+      "symbol": "MLTV",
+      "mic": "MLXB",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 8,
+          "firstDate": "2026-10-20",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/MLTV.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "MLTV.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 8,
+          "firstDate": "2026-10-20",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974370026-MLXB",
+          "providerMetadata": {
+            "mic": "MLXB",
+            "isin": "BE0974370026",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 8,
+        "matchingOhlc": 8,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974371032",
+      "symbol": "BANQ",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BANQ.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "BANQ.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974371032-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974371032",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974374069",
+      "symbol": "INCLU",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/INCLU.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "INCLU.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974374069-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974374069",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974380124",
+      "symbol": "EKOP",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/EKOP.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "EKOP.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974380124-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974380124",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974386188",
+      "symbol": "BTLS",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BTLS.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "BTLS.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974386188-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974386188",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974400328",
+      "symbol": "AZE",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AZE.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "AZE.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974400328-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974400328",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974401334",
+      "symbol": "ROCK",
+      "mic": "ALXB",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 7,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-12",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ROCK.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ROCK.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 7,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-12",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974401334-ALXB",
+          "providerMetadata": {
+            "mic": "ALXB",
+            "isin": "BE0974401334",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 7,
+        "matchingOhlc": 7,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974409410",
+      "symbol": "HOMI",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/HOMI.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "HOMI.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974409410-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974409410",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974413453",
+      "symbol": "DEME",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/DEME.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "DEME.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0974413453: euronext-live: Geen verhandelde Euronext koershistorie voor BE0974413453-XBRU; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974464977",
+      "symbol": "SYENS",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SYENS.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "SYENS.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974464977-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974464977",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974487192",
+      "symbol": "OXUR",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 20,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/OXUR.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "OXUR.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 20,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974487192-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974487192",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 20,
+        "matchingOhlc": 20,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974496284",
+      "symbol": "OPTI",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/OPTI.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "OPTI.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974496284-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974496284",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974497290",
+      "symbol": "ALEMS",
+      "mic": "ALXB",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 13,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ALEMS.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ALEMS.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 13,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974497290-ALXB",
+          "providerMetadata": {
+            "mic": "ALXB",
+            "isin": "BE0974497290",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 13,
+        "matchingOhlc": 13,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974499312",
+      "symbol": "ENRGY",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ENRGY.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ENRGY.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974499312-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974499312",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974501331",
+      "symbol": "MTLS",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/MTLS.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "MTLS.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974501331-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974501331",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974502347",
+      "symbol": "FLOB",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/FLOB.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "FLOB.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974502347-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "BE0974502347",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "BE0974503352",
+      "symbol": "MONNI",
+      "mic": "ALXB",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 11,
+          "firstDate": "2026-10-19",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/MONNI.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "MONNI.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "REQUEST_FAILED",
+          "error": "Alle providers faalden voor BE0974503352: euronext-live: Geen verhandelde Euronext koershistorie voor BE0974503352-ALXB; mislukte vensters: 0"
+        }
+      ],
+      "comparison": {
+        "overlap": 0,
+        "matchingOhlc": 0,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "GB00BYN5BY03",
+      "symbol": "HYSG",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/HYSG.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "HYSG.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB00BYN5BY03-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "GB00BYN5BY03",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "GG00BQZCBZ44",
+      "symbol": "SHUR",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SHUR.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "SHUR.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GG00BQZCBZ44-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "GG00BQZCBZ44",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "IL0010830391",
+      "symbol": "PAY",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 17,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/PAY.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "PAY.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 17,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IL0010830391-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "IL0010830391",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 17,
+        "matchingOhlc": 17,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "NL0010832176",
+      "symbol": "ARGX",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ARGX.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ARGX.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0010832176-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "NL0010832176",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 20,
+        "differences": [
+          {
+            "date": "2026-11-09",
+            "fields": [
+              "high"
+            ]
+          }
+        ],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    },
+    {
+      "isin": "NL0015000HT4",
+      "symbol": "ONWD",
+      "mic": "XBRU",
+      "sources": [
+        {
+          "provider": "yahoo-chart",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ONWD.BR?period1=1792108800&period2=1794787199&interval=1d&events=div%2Csplits",
+          "providerMetadata": {
+            "exchangeName": "BRU",
+            "fullExchangeName": "Brussels",
+            "currency": "EUR",
+            "symbol": "ONWD.BR",
+            "timezone": "Europe/Brussels"
+          }
+        },
+        {
+          "provider": "euronext-live",
+          "status": "OBSERVED_TRADED_BARS",
+          "bars": 21,
+          "firstDate": "2026-10-16",
+          "lastDate": "2026-11-13",
+          "conflicts": [],
+          "partialHistory": false,
+          "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0015000HT4-XBRU",
+          "providerMetadata": {
+            "mic": "XBRU",
+            "isin": "NL0015000HT4",
+            "source": "Euronext Live",
+            "windowPolicy": "<=700d chunks",
+            "partialHistory": false,
+            "failedWindows": []
+          }
+        }
+      ],
+      "comparison": {
+        "overlap": 21,
+        "matchingOhlc": 21,
+        "differences": [],
+        "meaning": "Price agreement is not independent corporate-action or licensing verification"
+      }
+    }
+  ]
+}

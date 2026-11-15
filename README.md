@@ -32,21 +32,20 @@ npm run dev
 npm test
 ```
 
-Open http://localhost:4173. De validator controleert de 124 aandelen, unieke ISIN's, indexgroottes 30/25/20/49, marktstructuur, veilige lege UI-statussen en de twee gecontroleerde historiekoppelingen. De test controleert daarnaast de keuzeknoppen, zoekvelden, detailroute, historievalidatie, foutfilter, moversberekening en idempotente merge.
+Open http://localhost:4173. De validator controleert de 80 geselecteerde Amsterdamse bedrijven en 105 Brusselse bedrijven, unieke identiteiten, marktstructuur, veilige lege UI-statussen en de twee gecontroleerde historiekoppelingen. De test controleert daarnaast de keuzeknoppen, zoekvelden, detailroute, historievalidatie, foutfilter, moversberekening en idempotente merge.
 
 ## Amsterdam-data en indices
 
 - `data/markets.json`: uitbreidbare Euronext-markten.
 - `data/regions.json`: uitbreidbare wereldregio's.
-- `data/euronext-amsterdam.json`: 124 bestaande Amsterdamse noteringen; ongewijzigd behouden.
+- `data/euronext-amsterdam.json`: 80 goedgekeurde Amsterdamse ondernemingen; beschermd door een identiteitscontract.
 - `data/euronext-amsterdam-indices.json`: officiële Euronext-samenstellingen, gekoppeld op ISIN.
 
 Niet-ingedeelde Amsterdamse ISIN's vallen automatisch onder Overig. De officiële naam van de kleine index is **AMS Next 20**; de UI toont daarnaast de herkenbare naam **AScX**.
 
-De aandelenlijst wordt gecontroleerd vernieuwd met:
+De goedgekeurde bedrijvenlijsten worden uitsluitend na inhoudelijke beoordeling gewijzigd. Controleer ze met:
 
 ```bash
-npm run update:amsterdam
 npm run validate
 ```
 
@@ -62,7 +61,7 @@ De drie actuele indexpagina's staan per index in het databestand. Werk bij een h
 - provider, providersymbool, ophaaldatum, requestmetadata en licentienotitie;
 - eerste datum, laatste datum en record-/volumedekking.
 
-Opslag is idempotent op handelsdatum. Een voltooide backfill krijgt `backfillComplete`; een herhaalde backfill is daarna een echte no-op zonder providerrequest. Een update begint na de laatst opgeslagen dag, bestaande historie wordt niet verwijderd bij een bronfout en fouten worden per instrument in `data/history/status.json` vastgelegd. Batchgrootte is configureerbaar met `--batch-size` of `KOERSPLEIN_BATCH_SIZE`.
+Opslag is idempotent op handelsdatum. Een voltooide backfill krijgt `backfillComplete`; een herhaalde backfill is daarna een echte no-op zonder providerrequest. Een lokale JSON-update controleert ook de laatst opgeslagen dag, bestaande historie wordt niet verwijderd bij een bronfout en fouten worden per instrument in `data/history/status.json` vastgelegd. Batchgrootte is configureerbaar met `--batch-size` of `KOERSPLEIN_BATCH_SIZE`.
 
 ### Providerkeuze
 

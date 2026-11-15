@@ -19,7 +19,7 @@ const rows=await Promise.all(instruments.map(async instrument=>{
       open:null,close:null,changePct:null,records:0,error:String(error.message)};
   }
 }));
-const report={generatedAt:new Date().toISOString(),...sessionReadiness(rows)};
+const report={generatedAt:new Date().toISOString(),...sessionReadiness(rows,instruments.length)};
 const output=new URL('../../research/output/amsterdam-session-readiness.json',import.meta.url);
 await mkdir(new URL('.',output),{recursive:true});
 await writeFile(output,JSON.stringify(report,null,2)+'\n');

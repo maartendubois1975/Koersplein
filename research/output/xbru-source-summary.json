@@ -1,0 +1,80 @@
+{
+  "companies": 105,
+  "readOnly": true,
+  "recentWindow": {
+    "startDate": "2026-10-16",
+    "endDate": "2026-11-15"
+  },
+  "sourceCounts": {
+    "yahoo-chart:OBSERVED_TRADED_BARS": 103,
+    "euronext-live:OBSERVED_TRADED_BARS": 89,
+    "euronext-live:REQUEST_FAILED": 16,
+    "yahoo-chart:REQUEST_FAILED": 2
+  },
+  "comparedCompanies": 89,
+  "overlappingSessions": 1728,
+  "matchingOhlcSessions": 1721,
+  "differingSessions": [
+    {
+      "isin": "BE0003565737",
+      "symbol": "KBC",
+      "date": "2026-10-29",
+      "fields": [
+        "high"
+      ]
+    },
+    {
+      "isin": "BE0003592038",
+      "symbol": "COMB",
+      "date": "2026-10-30",
+      "fields": [
+        "open"
+      ]
+    },
+    {
+      "isin": "BE0003735496",
+      "symbol": "OBEL",
+      "date": "2026-11-06",
+      "fields": [
+        "open"
+      ]
+    },
+    {
+      "isin": "BE0003816338",
+      "symbol": "CMBT",
+      "date": "2026-11-10",
+      "fields": [
+        "low"
+      ]
+    },
+    {
+      "isin": "BE0974338700",
+      "symbol": "TITC",
+      "date": "2026-11-04",
+      "fields": [
+        "high"
+      ]
+    },
+    {
+      "isin": "BE0974349814",
+      "symbol": "WDP",
+      "date": "2026-11-10",
+      "fields": [
+        "low"
+      ]
+    },
+    {
+      "isin": "NL0010832176",
+      "symbol": "ARGX",
+      "date": "2026-11-09",
+      "fields": [
+        "high"
+      ]
+    }
+  ],
+  "firstPass": {
+    "yahooRecent": 103,
+    "euronextRecent": 95,
+    "note": "Initial pass summary only; full second-pass evidence is stored separately. Counts differ between source responses; not approval."
+  }
+}

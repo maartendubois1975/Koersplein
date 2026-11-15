@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { companyContracts, loadCompanyCatalog } from '../history/company-register.mjs';
 
 const root = new URL('../../', import.meta.url);
 const readJson = async name => JSON.parse(await readFile(new URL(`data/${name}`, root), 'utf8'));
@@ -22,7 +23,7 @@ export async function cloudflareCatalog() {
   };
   const globalIdentity = new Set();
   for (const market of venue.markets.filter(item => item.status === 'available')) {
-    const catalog = await readJson(market.sharesData);
+    const catalog = companyContracts[market.mic] ? await loadCompanyCatalog(market.mic) : await readJson(market.sharesData);
     if (catalog.mic !== market.mic || !Array.isArray(catalog.shares)) {
       throw new Error(`Ongeldige beurscatalogus ${market.mic}`);
     }

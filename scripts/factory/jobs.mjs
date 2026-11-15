@@ -3,6 +3,8 @@ import { createDefaultProviderRegistry } from '../history/provider-registry.mjs'
 import { getInstrument } from './catalog.mjs';
 import { refreshHistoryStatus, storeBars } from './history-store.mjs';
 import { transaction } from './db.mjs';
+import { validateBars } from '../history/bars.mjs';
+import { fetchConfiguredHistory } from '../history/source-policy.mjs';
 
 export const JOB_TYPES = Object.freeze(['HISTORY_BACKFILL', 'DAILY_UPDATE', 'REPAIR_MISSING', 'VALIDATE_HISTORY', 'CHECK_AMSTERDAM']);
 const terminal = new Set(['COMPLETED', 'COMPLETED_WITH_ERRORS', 'CANCELLED']);
@@ -34,17 +36,11 @@ export function createJob(db, type, { mic = 'XAMS', requestedBy = 'system', inst
 export function validateInstrumentHistory(db, instrument) {
   const rows = db.prepare(`SELECT trading_date, open, high, low, close FROM daily_prices
     WHERE instrument_id=? ORDER BY trading_date`).all(instrument.id);
-  const errors = [];
-  let previous = null;
-  for (const row of rows) {
-    if (previous && row.trading_date <= previous) errors.push(`Datumvolgorde bij ${row.trading_date}`);
-    if (!Number.isFinite(row.close) || row.close <= 0) errors.push(`Ongeldige slotkoers ${row.trading_date}`);
-    for (const field of ['open', 'high', 'low']) if (row[field] !== null && (!Number.isFinite(row[field]) || row[field] < 0)) errors.push(`Ongeldige ${field} ${row.trading_date}`);
-    if (row.high !== null && row.low !== null && row.high < row.low) errors.push(`Hoog lager dan laag ${row.trading_date}`);
-    previous = row.trading_date;
-  }
-  const status = refreshHistoryStatus(db, instrument.id, { error: errors.length ? errors.slice(0, 10).join('; ') : null });
-  return { records: rows.length, firstDate: status.firstDate, lastDate: status.lastDate, errors };
+  const bars = rows.map(row => ({ ...row, date: row.trading_date }));
+  const valid = validateBars(bars);
+  const errors = valid.length === bars.length ? [] : ['Ongeldige of dubbele historische dagkoersen'];
+  return { records: rows.length, firstDate: rows[0]?.trading_date || null,
+    lastDate: rows.at(-1)?.trading_date || null, errors };
 }
 
 async function processItem(db, job, item, registry) {
@@ -59,7 +55,7 @@ async function processItem(db, job, item, registry) {
   const startDate = status?.last_available_date ? nextDate(status.last_available_date) : '1900-01-01';
   const endDate = today();
   if (startDate > endDate) return { records: status.record_count, firstDate: status.first_available_date, lastDate: status.last_available_date, added: 0, providerRequest: false };
-  const { provider, result } = await registry.fetchDaily(instrument, { startDate, endDate }, status?.provider);
+  const { provider, result } = await fetchConfiguredHistory(registry, instrument, { startDate, endDate }, { mode: job.type === 'HISTORY_BACKFILL' ? 'backfill' : 'update' });
   if (!result.bars?.length && !status?.record_count) throw new Error(`Geen dagkoersen gevonden voor ${instrument.isin}`);
   const stored = storeBars(db, instrument, result.bars, provider.id, { providerMeta: result.providerMeta, requestUrl: result.requestUrl, technicalTestSource: provider.id === 'yahoo-chart' }, { complete:job.type === 'HISTORY_BACKFILL' || status?.status === 'COMPLETE' });
   return { records: stored.records, firstDate: stored.firstDate, lastDate: stored.lastDate, added: stored.added, providerRequest: true };

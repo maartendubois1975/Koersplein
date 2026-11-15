@@ -1,0 +1,402 @@
+{
+  "scope": "LOCAL_REGRESSION_NOT_DEPLOYED",
+  "tests": [
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "npm run history:test",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "npm run research:paris:test",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/history/verify-amsterdam-identity.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/history/amsterdam-end-to-end-acceptance.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-bse-sofia.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-client-retries.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-euronext-number-format.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-failure-diagnosis.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-missing-backfill-priority.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-ohlc-defects.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-ohlc-integrity.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-ohlc-source-evidence.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-provider-routing.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-recovery-queue.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-recovery.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-reporting.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-run-policy.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-session-deltas.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-source-blockers.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-source-coverage-evidence.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-stored-ohlc-severity.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-summary-integration.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-europe-summary.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-github-oidc.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-import-session-boundary.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-london-yahoo-currency.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-market-week-core.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-mse-archive-evidence.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-mse-official-no-trade.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-nasdaq-baltic-provider.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-official-daily-status.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-openfigi-reference-evidence.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-openfigi-yahoo-evidence.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-paris-history-eligibility.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-production-worker-preflight.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-public-history-manifest.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-six-ipo-symbol-evidence.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-six-sponsored-reference.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-storage-identity.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-swiss-yahoo-identity.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-worker-append.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-xams-market-page.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-zse-archival-400.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node scripts/cloudflare/test-zse-cancellation.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/cloudflare/catalog.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/cloudflare/daily-open-close-update.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/cloudflare/europe-ohlc-source-evidence.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/cloudflare/factory-runner.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/cloudflare/paris-targeted-history-recovery.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/cloudflare/test-europe-provider-routing.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/cloudflare/test-import-session-boundary.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/cloudflare/test-six-sponsored-reference.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/cloudflare/test.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/cloudflare/universal-market-runner.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/cloudflare/universal-source-audit.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/factory/catalog.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/factory/cli.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/factory/db.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/factory/history-store.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/factory/jobs.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/factory/test.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/amsterdam-daily-run.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/amsterdam-end-to-end-acceptance.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/bars.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/check-amsterdam-latest-session.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/company-register.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/engine.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/probe-company-sources.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/provider-registry.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/providers/euronext-live.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/providers/yahoo-chart.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/session-readiness.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/source-policy.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/test-consolidation.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/test-history-core.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/history/test-session-readiness.mjs",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "command": "node --check scripts/validate.mjs",
+      "exitCode": 0,
+      "error": null
+    }
+  ],
+  "commands": 78,
+  "passed": 78,
+  "historyFilesCompared": 81,
+  "changedHistory": [],
+  "success": true,
+  "archivedHistoryBaselineSha256": "8f85de32cd740e882f418309156e6564c7a1f20d799bf6b99ca13fb27ac1b229",
+  "archivedHistoryAfterSha256": "8f85de32cd740e882f418309156e6564c7a1f20d799bf6b99ca13fb27ac1b229"
+}

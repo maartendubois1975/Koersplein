@@ -22,7 +22,7 @@ const rows=await Promise.all(instruments.map(async instrument=>{
       provider:history.provider?.id||null,rejectedRecords:source.length-bars.length};
   }catch(error){return {isin:instrument.isin,symbol:instrument.symbol,latestDate:null,error:error.message};}
 }));
-const readiness=sessionReadiness(rows);
+const readiness=sessionReadiness(rows,instruments.length);
 const failed=outcomes.filter(x=>x.outcome==='error');
 const report={schemaVersion:1,phase,startedAt,completedAt:new Date().toISOString(),
   publishing:'DISABLED_STAGING_ONLY',providerFailures:failed,readiness,

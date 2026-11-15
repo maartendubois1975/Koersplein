@@ -58,7 +58,7 @@ try {
   db.prepare('DELETE FROM daily_prices WHERE trading_date=?').run(today);
   refreshHistoryStatus(db, asml.id);
   refreshHistoryStatus(db, adyen.id);
-  const isolatingProvider = { id:'fixture', supports:() => true, async fetchDaily(instrument) {
+  const isolatingProvider = { id:'euronext-live', supports:() => true, async fetchDaily(instrument) {
     if (instrument.isin === adyen.isin) throw new Error('geïsoleerde testfout');
     return { bars:[bars[1]], providerMeta:{ fixture:true } };
   } };

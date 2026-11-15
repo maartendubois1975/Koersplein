@@ -1,7 +1,7 @@
 // Pure staging diagnostics: newest provider date is not proof of official closing.
 const validDate = date => typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date) &&
   !Number.isNaN(Date.parse(date)) && new Date(date+'T00:00:00Z').toISOString().slice(0,10) === date;
-export function sessionReadiness(rows,expectedCount=80) {
+export function sessionReadiness(rows,expectedCount) {
   if (!Array.isArray(rows) || !Number.isInteger(expectedCount) || expectedCount<1)
     throw new Error('Invalid session universe');
   const validRows=rows.filter(row=>row && validDate(row.latestDate));
@@ -21,7 +21,7 @@ export function sessionReadiness(rows,expectedCount=80) {
   const identityUnique=identities.length===rows.length && new Set(identities).size===rows.length;
   const countMatches=rows.length===expectedCount;
   return {
-    schemaVersion:2,scope:'XAMS_OBSERVED_SESSION_NOT_OFFICIAL_CLOSE',
+    schemaVersion:2,scope:'OBSERVED_SESSION_NOT_OFFICIAL_CLOSE',
     expectedCount,observedCount:rows.length,newestDate,
     currentCount:current.length,laggingCount:lagging.length,
     invalidCount:invalid.length,unavailableCount:unavailable.length,

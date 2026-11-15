@@ -1,8 +1,10 @@
 import { readFile } from 'node:fs/promises';
+import { loadCompanyCatalog } from './history/company-register.mjs';
+await loadCompanyCatalog('XBRU');
 
 const readJson = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const [sharesData, mappings] = await Promise.all([
-  readJson('../data/euronext-amsterdam.json'),
+  loadCompanyCatalog('XAMS'),
   readJson('../data/history-instruments.json')
 ]);
 
