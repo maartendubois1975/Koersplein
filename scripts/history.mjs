@@ -10,11 +10,10 @@ if (!Number.isInteger(batchSize) || batchSize < 1 || batchSize > 50) throw new E
 
 const catalog = await loadCatalog(option('--market', 'XAMS'));
 const select = () => {
-  if (has('--all')) {
+  if (has('--all') || !requestedIsins.length) {
     if (command === 'backfill' && process.env.KOERSPLEIN_ALLOW_FULL_BACKFILL !== 'yes') throw new Error('Volledige backfill geblokkeerd. Stel KOERSPLEIN_ALLOW_FULL_BACKFILL=yes bewust in.');
     return catalog;
   }
-  if (!requestedIsins.length) return catalog;
   const selected = catalog.filter((item) => requestedIsins.includes(item.isin));
   const missing = requestedIsins.filter((isin) => !selected.some((item) => item.isin === isin));
   if (missing.length) throw new Error(`Geen gecontroleerde providerkoppeling voor: ${missing.join(', ')}`);
@@ -27,11 +26,13 @@ if (command === 'backfill' || command === 'update') {
   if (results.some((item) => item.outcome === 'error')) process.exitCode = 1;
 } else if (command === 'status') {
   const status = await readJson(new URL('status.json', historyUrl), { instruments: {} });
-  console.log(JSON.stringify(status, null, 2));
+  const allowed = new Set(catalog.map(x => x.isin));
+  console.log(JSON.stringify({ ...status, instruments: Object.fromEntries(Object.entries(status.instruments || {}).filter(([isin]) => allowed.has(isin))) }, null, 2));
 } else if (command === 'movers') {
-  const files = (await readdir(historyUrl)).filter((name) => /^\w{12}\.json$/.test(name));
+  const allowed = new Set(catalog.map(x => `${x.isin}.json`));
+  const files = (await readdir(historyUrl)).filter(name => allowed.has(name));
   const series = await Promise.all(files.map(async (name) => { const data = await readJson(new URL(name, historyUrl)); return { instrument: data.instrument, bars: data.bars, provider: data.provider.id }; }));
-  console.log(JSON.stringify({ scope: 'configured-test-universe', generatedAt: new Date().toISOString(), movers: computeMovers(series) }, null, 2));
+  console.log(JSON.stringify({ scope: option('--market', 'XAMS'), generatedAt: new Date().toISOString(), movers: computeMovers(series) }, null, 2));
 } else {
   throw new Error('Gebruik: backfill, update, status of movers.');
 }
