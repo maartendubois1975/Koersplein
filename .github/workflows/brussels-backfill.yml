@@ -1,15 +1,16 @@
-name: Brussels historical backfill
+name: Brussels historical recovery
 on:
   push:
     branches: [brussels-reset-20261114]
-    paths: ['.github/workflows/brussels-backfill.yml']
+    paths: [.github/workflows/brussels-backfill.yml]
 permissions:
   contents: write
+  actions: read
 concurrency:
   group: brussels-backfill
   cancel-in-progress: false
 jobs:
-  backfill:
+  recover:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
@@ -19,50 +20,73 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate existing Amsterdam and Brussels identities
+      - run: npm test && npm run history:test
+      - uses: actions/download-artifact@v4
+        with:
+          name: brussels-existing-history-audit
+          run-id: '43682166286'
+          github-token: ${{ github.token }}
+          path: /tmp/brussels-audit
+      - name: Recover audited history and refresh official sessions
         run: |
-          npm test
-          npm run history:test
-          node --input-type=module -e "import {loadCatalog} from './scripts/history/engine.mjs'; const a=await loadCatalog(), b=await loadCatalog('XBRU'); if(a.length!==80||b.length!==105||b.some(x=>a.some(y=>y.isin===x.isin)))process.exit(1)"
-      - name: Import all Brussels instruments
-        env:
-          KOERSPLEIN_ALLOW_FULL_BACKFILL: 'yes'
-        run: |
-          set +e
-          node scripts/history.mjs backfill --market XBRU --all --batch-size 8 > /tmp/brussels-import.jsonl 2>&1
-          code=$?
-          cat /tmp/brussels-import.jsonl
-          echo "Import exit code: $code"
-      - name: Validate and persist only Brussels histories
-        run: |
-          node --input-type=module <<'JS'
-          import {loadCatalog,validateBars} from './scripts/history/engine.mjs';
-          import {readFile,writeFile} from 'node:fs/promises';
-          const catalog=await loadCatalog('XBRU');
-          const paths=[]; const missing=[];
-          const report=(await readFile('/tmp/brussels-import.jsonl','utf8')).split('\n').flatMap(line=>{try{return [JSON.parse(line)]}catch{return []}});
-          const successful=new Set(report.filter(x=>x.outcome!=='error'&&x.providerRequest===true).map(x=>x.isin));
-          for(const i of catalog){
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs/promises';
+          import {loadCatalog,validateBars,syncInstrument} from './scripts/history/engine.mjs';
+          const a=await loadCatalog(), b=await loadCatalog('XBRU');
+          if(a.length!==80||b.length!==105||b.some(x=>a.some(y=>y.isin===x.isin)))throw Error('Catalog guard');
+          const audit=JSON.parse(await fs.readFile('/tmp/brussels-audit/brussels-existing-history.json','utf8'));
+          if(audit.length!==105)throw Error('Incomplete audit');
+          const results=[],paths=[];
+          await fs.mkdir('/tmp/brussels-quarantine',{recursive:true});
+          await fs.mkdir('data/history',{recursive:true});
+          for(const i of b){
+            const row=audit.find(x=>x.isin===i.isin);
             const p='data/history/'+i.isin+'.json';
-            if(!successful.has(i.isin)){missing.push(i.isin);continue;}
-            const d=JSON.parse(await readFile(p,'utf8'));
-            if(d.instrument.isin!==i.isin||d.instrument.mic!==i.mic||d.provider.id!=='euronext-live'||d.provider.metadata.partialHistory!==false||!d.bars.length||validateBars(d.bars).length!==d.bars.length)throw Error('Invalid history '+i.isin);
-            paths.push(p);
+            const result={isin:i.isin,symbol:i.symbol,mic:i.mic};
+            try{
+              if(!row?.identityMatch||row.rejected||!row.records)throw Error('Requires source-level exception review');
+              const h=JSON.parse(await fs.readFile('/tmp/brussels-audit/brussels-recovery/'+i.isin+'.json','utf8'));
+              const bars=validateBars(h.bars||[]);
+              if(h.instrument?.isin!==i.mic+':'+i.isin&&h.instrument?.isin!==i.isin)throw Error('ISIN mismatch');
+              if(h.instrument?.mic!==i.mic||h.instrument?.currency!=='EUR'||h.instrument?.symbol!==i.symbol||bars.length!==row.records||bars.length!==h.bars.length)throw Error('Snapshot mismatch');
+              if(bars.some(x=>x.date>new Date().toISOString().slice(0,10)))throw Error('Future record');
+              let existing;
+              try{existing=JSON.parse(await fs.readFile(p,'utf8'))}catch(e){if(e.code!=='ENOENT')throw e}
+              if(!existing){
+                const volumeRecords=bars.filter(x=>Number.isFinite(x.volume)).length;
+                await fs.writeFile(p,JSON.stringify({schemaVersion:1,instrument:{isin:i.isin,name:i.name,symbol:i.symbol,mic:i.mic,market:i.market,currency:'EUR',identitySource:i.identitySource},provider:{id:'legacy-cloudflare',name:'Recovered historical source',metadata:{originalProvider:h.provider,sourceKey:h.instrument.isin,adjustmentStatus:'UNVERIFIED',completenessEvidenceVerified:false}},coverage:{firstDate:bars[0].date,lastDate:bars.at(-1).date,records:bars.length,volumeRecords,missingVolumeRecords:bars.length-volumeRecords,backfillComplete:false},bars},null,2)+'\n');
+              }
+              const before=JSON.parse(await fs.readFile(p,'utf8'));
+              try{result.refresh=await syncInstrument(i,{mode:'update'})}catch(e){result.refreshError=e.message}
+              const after=JSON.parse(await fs.readFile(p,'utf8'));
+              const dates=new Set(after.bars.map(x=>x.date));
+              if(after.instrument.isin!==i.isin||after.instrument.mic!==i.mic||validateBars(after.bars).length!==after.bars.length||before.bars.some(x=>!dates.has(x.date)))throw Error('Persistence guard');
+              result.records=after.bars.length;result.last=after.bars.at(-1).date;
+              paths.push(p);
+            }catch(e){result.error=e.message}
+            results.push(result);console.log('BRUSSELS_RECOVERY '+JSON.stringify(result));
+            await fs.writeFile('/tmp/brussels-recovery-result.json',JSON.stringify(results,null,2));
+            await fs.writeFile('/tmp/brussels-paths',paths.join('\n')+'\n');
+            await new Promise(r=>setTimeout(r,500));
           }
-          await writeFile('/tmp/brussels-paths',paths.join('\n')+'\n');
-          console.log('BRUSSELS_VALIDATED',paths.length,'MISSING',JSON.stringify(missing));
-          if(!paths.length)throw Error('No validated histories');
-          JS
+          console.log('RECOVERY_SUMMARY '+JSON.stringify({total:results.length,saved:paths.length,refreshErrors:results.filter(x=>x.refreshError).length,pending:results.filter(x=>x.error).length}));
+          EOF
+      - name: Persist verified recovery to isolated branch
+        run: |
+          test "$(git branch --show-current)" = brussels-reset-20261114
+          test -s /tmp/brussels-paths
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add --pathspec-from-file=/tmp/brussels-paths
+          git add -f --pathspec-from-file=/tmp/brussels-paths
           if ! git diff --cached --quiet; then
-            git commit -m 'data: validated Brussels historical prices'
+            git commit -m 'data: recover structurally verified Brussels history (staging only)'
             git push origin HEAD:brussels-reset-20261114
           fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: brussels-backfill-report
-          path: /tmp/brussels-import.jsonl
-          if-no-files-found: ignore
+          name: brussels-recovery-results
+          path: |
+            /tmp/brussels-recovery-result.json
+            /tmp/brussels-paths
+          retention-days: 30
