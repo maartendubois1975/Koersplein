@@ -52,12 +52,13 @@ async function processItem(db, job, item, registry) {
   }
   const status = db.prepare('SELECT * FROM history_status WHERE instrument_id=?').get(instrument.id);
   if (job.type === 'HISTORY_BACKFILL' && status?.status === 'COMPLETE') return { records: status.record_count, firstDate: status.first_available_date, lastDate: status.last_available_date, added: 0, providerRequest: false };
-  const startDate = status?.last_available_date ? nextDate(status.last_available_date) : '1900-01-01';
+  const historical = ['HISTORY_BACKFILL','REPAIR_MISSING'].includes(job.type);
+  const startDate = historical ? (instrument.listing_date || '1990-01-01') : status?.last_available_date ? nextDate(status.last_available_date) : '1990-01-01';
   const endDate = today();
   if (startDate > endDate) return { records: status.record_count, firstDate: status.first_available_date, lastDate: status.last_available_date, added: 0, providerRequest: false };
-  const { provider, result } = await fetchConfiguredHistory(registry, instrument, { startDate, endDate }, { mode: job.type === 'HISTORY_BACKFILL' ? 'backfill' : 'update' });
+  const { provider, result } = await fetchConfiguredHistory(registry, instrument, { startDate, endDate }, { mode: historical ? 'backfill' : 'update' });
   if (!result.bars?.length && !status?.record_count) throw new Error(`Geen dagkoersen gevonden voor ${instrument.isin}`);
-  const stored = storeBars(db, instrument, result.bars, provider.id, { providerMeta: result.providerMeta, requestUrl: result.requestUrl, technicalTestSource: provider.id === 'yahoo-chart' }, { complete:job.type === 'HISTORY_BACKFILL' || status?.status === 'COMPLETE' });
+  const stored = storeBars(db, instrument, result.bars, provider.id, { providerMeta: result.providerMeta, requestUrl: result.requestUrl, technicalTestSource: provider.id === 'yahoo-chart' }, { complete:false });
   return { records: stored.records, firstDate: stored.firstDate, lastDate: stored.lastDate, added: stored.added, providerRequest: true };
 }
 
