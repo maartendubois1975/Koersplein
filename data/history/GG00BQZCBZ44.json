@@ -10,25 +10,26 @@
     "identitySource": "https://live.euronext.com/en/product/equities/GG00BQZCBZ44-XBRU"
   },
   "provider": {
-    "id": "legacy-cloudflare",
-    "name": "Recovered historical source",
+    "id": "euronext-live",
+    "name": "Euronext Live historical prices",
+    "symbol": "GG00BQZCBZ44-XBRU",
+    "retrievedAt": "2026-11-15T06:07:56.452Z",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GG00BQZCBZ44-XBRU",
     "metadata": {
-      "originalProvider": {
-        "name": "euronext-live",
-        "role": "technical-adapter",
-        "retrievedAt": "2026-10-17 08:33:08",
-        "licenseNote": "Provider- en herdistributierechten moeten voor productie afzonderlijk worden vastgesteld."
-      },
-      "sourceKey": "XBRU:GG00BQZCBZ44",
-      "adjustmentStatus": "UNVERIFIED",
-      "completenessEvidenceVerified": false
-    }
+      "mic": "XBRU",
+      "isin": "GG00BQZCBZ44",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
+    },
+    "licenseNote": "Publieke testfeed; commerciële herdistributierechten moeten vóór productie afzonderlijk worden vastgelegd."
   },
   "coverage": {
     "firstDate": "2018-10-15",
-    "lastDate": "2026-10-26",
-    "records": 2056,
-    "volumeRecords": 2056,
+    "lastDate": "2026-11-13",
+    "records": 2070,
+    "volumeRecords": 2070,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -18536,6 +18537,132 @@
       "close": 24.45,
       "volume": 52783,
       "adjustedClose": 24.45
+    },
+    {
+      "date": "2026-10-27",
+      "open": 24.45,
+      "high": 24.45,
+      "low": 24.1,
+      "close": 24.1,
+      "adjustedClose": null,
+      "volume": 47452
+    },
+    {
+      "date": "2026-10-28",
+      "open": 24.15,
+      "high": 24.4,
+      "low": 24,
+      "close": 24,
+      "adjustedClose": null,
+      "volume": 38552
+    },
+    {
+      "date": "2026-10-29",
+      "open": 24.1,
+      "high": 24.45,
+      "low": 23.95,
+      "close": 23.95,
+      "adjustedClose": null,
+      "volume": 58427
+    },
+    {
+      "date": "2026-10-30",
+      "open": 24,
+      "high": 24.7,
+      "low": 24,
+      "close": 24.7,
+      "adjustedClose": null,
+      "volume": 55086
+    },
+    {
+      "date": "2026-11-02",
+      "open": 24.6,
+      "high": 25.35,
+      "low": 24.6,
+      "close": 25.35,
+      "adjustedClose": null,
+      "volume": 53361
+    },
+    {
+      "date": "2026-11-03",
+      "open": 25.3,
+      "high": 25.3,
+      "low": 24.55,
+      "close": 24.75,
+      "adjustedClose": null,
+      "volume": 58050
+    },
+    {
+      "date": "2026-11-04",
+      "open": 24.75,
+      "high": 25.3,
+      "low": 24.55,
+      "close": 25.1,
+      "adjustedClose": null,
+      "volume": 60427
+    },
+    {
+      "date": "2026-11-05",
+      "open": 25.4,
+      "high": 25.85,
+      "low": 25.25,
+      "close": 25.5,
+      "adjustedClose": null,
+      "volume": 54405
+    },
+    {
+      "date": "2026-11-06",
+      "open": 25.25,
+      "high": 25.55,
+      "low": 24.9,
+      "close": 25.55,
+      "adjustedClose": null,
+      "volume": 60082
+    },
+    {
+      "date": "2026-11-09",
+      "open": 25.5,
+      "high": 25.7,
+      "low": 25.25,
+      "close": 25.6,
+      "adjustedClose": null,
+      "volume": 98736
+    },
+    {
+      "date": "2026-11-10",
+      "open": 25.75,
+      "high": 26.1,
+      "low": 25.65,
+      "close": 25.75,
+      "adjustedClose": null,
+      "volume": 95347
+    },
+    {
+      "date": "2026-11-11",
+      "open": 25.65,
+      "high": 26.4,
+      "low": 25.55,
+      "close": 26.15,
+      "adjustedClose": null,
+      "volume": 65624
+    },
+    {
+      "date": "2026-11-12",
+      "open": 26.4,
+      "high": 26.55,
+      "low": 25.9,
+      "close": 25.9,
+      "adjustedClose": null,
+      "volume": 54735
+    },
+    {
+      "date": "2026-11-13",
+      "open": 25.85,
+      "high": 26,
+      "low": 25.6,
+      "close": 25.65,
+      "adjustedClose": null,
+      "volume": 55657
     }
   ]
 }
