@@ -37,6 +37,11 @@ jobs:
           const audit=JSON.parse(await fs.readFile('/tmp/brussels-audit/brussels-existing-history.json','utf8'));
           if(audit.length!==105)throw Error('Incomplete audit');
           const results=[],paths=[];
+          const base='https://koersplein.maarten-dubois1975.workers.dev';
+          const {EuronextLiveProvider}=await import('./scripts/history/providers/euronext-live.mjs');
+          const official=new EuronextLiveProvider();
+          const get=async path=>{const r=await fetch(base+path,{signal:AbortSignal.timeout(45000)});if(!r.ok)throw Error('HTTP '+r.status);return r.json()};
+          const today=new Date().toISOString().slice(0,10);
           await fs.mkdir('/tmp/brussels-quarantine',{recursive:true});
           await fs.mkdir('data/history',{recursive:true});
           for(const i of b){
@@ -44,20 +49,41 @@ jobs:
             const p='data/history/'+i.isin+'.json';
             const result={isin:i.isin,symbol:i.symbol,mic:i.mic};
             try{
-              if(!row?.identityMatch||row.rejected||!row.records)throw Error('Requires source-level exception review');
-              const h=JSON.parse(await fs.readFile('/tmp/brussels-audit/brussels-recovery/'+i.isin+'.json','utf8'));
-              const bars=validateBars(h.bars||[]);
+              if(!row?.records)throw Error('No audited source history');
+              let h;
+              if(row.identityMatch&&!row.rejected)h=JSON.parse(await fs.readFile('/tmp/brussels-audit/brussels-recovery/'+i.isin+'.json','utf8'));
+              else {
+                const key=row.matches.find(x=>x.key===i.mic+':'+i.isin)?.key||row.matches.find(x=>x.key==='XBRU:'+i.isin)?.key;
+                if(!key)throw Error('No exact or legacy Brussels source key');
+                h=await get('/api/history/'+key);
+                await fs.writeFile('/tmp/brussels-quarantine/'+i.isin+'.json',JSON.stringify(h));
+                if(!row.identityMatch)throw Error('Legacy segment identity requires independent historical venue evidence; source preserved');
+              }
+              let bars=validateBars(h.bars||[]);
+              if(row.rejected){
+                const groups=new Map();for(const x of h.bars){const date=x?.date||'INVALID_DATE';if(!groups.has(date))groups.set(date,[]);groups.get(date).push(x)}
+                const bad=[...groups].filter(([date,x])=>x.length!==1||validateBars(x).length!==1);
+                const corrections=[];let unresolved=[];
+                for(const [date,raw] of bad){
+                  try{if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(date))throw Error('Invalid date');const f=await official.fetchDaily(i,{startDate:date,endDate:date,signal:AbortSignal.timeout(25000)});if(f.providerMeta.partialHistory||f.providerMeta.isin!==i.isin||f.providerMeta.mic!==i.mic)throw Error('Unverified response');const b=validateBars(f.bars).find(x=>x.date===date);if(!b)throw Error('No verified traded bar');corrections.push(b)}catch(e){unresolved.push({date,error:e.message})}
+                }
+                result.exceptions={bad:bad.map(x=>x[0]),corrected:corrections.map(x=>x.date),unresolved};
+                if(unresolved.length)throw Error('Historical exceptions unresolved; originals preserved');
+                const badDates=new Set(bad.map(x=>x[0]));bars=validateBars([...bars.filter(x=>!badDates.has(x.date)),...corrections]);
+              }
               if(h.instrument?.isin!==i.mic+':'+i.isin&&h.instrument?.isin!==i.isin)throw Error('ISIN mismatch');
-              if(h.instrument?.mic!==i.mic||h.instrument?.currency!=='EUR'||h.instrument?.symbol!==i.symbol||bars.length!==row.records||bars.length!==h.bars.length)throw Error('Snapshot mismatch');
+              if(h.instrument?.mic!==i.mic||h.instrument?.currency!=='EUR'||h.instrument?.symbol!==i.symbol||(!row.rejected&&(bars.length!==row.records||bars.length!==h.bars.length)))throw Error('Snapshot mismatch');
               if(bars.some(x=>x.date>new Date().toISOString().slice(0,10)))throw Error('Future record');
               let existing;
               try{existing=JSON.parse(await fs.readFile(p,'utf8'))}catch(e){if(e.code!=='ENOENT')throw e}
               if(!existing){
                 const volumeRecords=bars.filter(x=>Number.isFinite(x.volume)).length;
-                await fs.writeFile(p,JSON.stringify({schemaVersion:1,instrument:{isin:i.isin,name:i.name,symbol:i.symbol,mic:i.mic,market:i.market,currency:'EUR',identitySource:i.identitySource},provider:{id:'legacy-cloudflare',name:'Recovered historical source',metadata:{originalProvider:h.provider,sourceKey:h.instrument.isin,adjustmentStatus:'UNVERIFIED',completenessEvidenceVerified:false}},coverage:{firstDate:bars[0].date,lastDate:bars.at(-1).date,records:bars.length,volumeRecords,missingVolumeRecords:bars.length-volumeRecords,backfillComplete:false},bars},null,2)+'\n');
+                await fs.writeFile(p,JSON.stringify({schemaVersion:1,instrument:{isin:i.isin,name:i.name,symbol:i.symbol,mic:i.mic,market:i.market,currency:'EUR',identitySource:i.identitySource},provider:{id:'legacy-cloudflare',name:'Recovered historical source',metadata:{originalProvider:h.provider,sourceKey:h.instrument.isin,corrections:result.exceptions||null,adjustmentStatus:'UNVERIFIED',completenessEvidenceVerified:false}},coverage:{firstDate:bars[0].date,lastDate:bars.at(-1).date,records:bars.length,volumeRecords,missingVolumeRecords:bars.length-volumeRecords,backfillComplete:false},bars},null,2)+'\n');
               }
               const before=JSON.parse(await fs.readFile(p,'utf8'));
-              try{result.refresh=await syncInstrument(i,{mode:'update'})}catch(e){result.refreshError=e.message}
+              for(let attempt=0;attempt<3;attempt++){
+                try{result.refresh=await syncInstrument(i,{mode:'update'});delete result.refreshError;break}catch(e){result.refreshError=e.message;await new Promise(r=>setTimeout(r,1000*(attempt+1)))}
+              }
               const after=JSON.parse(await fs.readFile(p,'utf8'));
               const dates=new Set(after.bars.map(x=>x.date));
               if(after.instrument.isin!==i.isin||after.instrument.mic!==i.mic||validateBars(after.bars).length!==after.bars.length||before.bars.some(x=>!dates.has(x.date)))throw Error('Persistence guard');
@@ -89,4 +115,5 @@ jobs:
           path: |
             /tmp/brussels-recovery-result.json
             /tmp/brussels-paths
+            /tmp/brussels-quarantine/
           retention-days: 30
