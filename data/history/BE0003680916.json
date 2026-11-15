@@ -13,7 +13,7 @@
     "id": "euronext-live",
     "name": "Euronext Live historical prices",
     "symbol": "BE0003680916-MLXB",
-    "retrievedAt": "2026-11-15T18:07:30.240Z",
+    "retrievedAt": "2026-11-15T18:30:14.360Z",
     "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003680916-MLXB",
     "metadata": {
       "mic": "MLXB",
@@ -27,9 +27,9 @@
   },
   "coverage": {
     "firstDate": "2024-12-09",
-    "lastDate": "2026-06-18",
-    "records": 33,
-    "volumeRecords": 33,
+    "lastDate": "2026-09-16",
+    "records": 42,
+    "volumeRecords": 42,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -330,6 +330,87 @@
       "close": 11.3,
       "adjustedClose": null,
       "volume": 930
+    },
+    {
+      "date": "2026-06-23",
+      "open": 11.3,
+      "high": 11.3,
+      "low": 11.3,
+      "close": 11.3,
+      "adjustedClose": null,
+      "volume": 402
+    },
+    {
+      "date": "2026-08-24",
+      "open": 10.2,
+      "high": 10.2,
+      "low": 10.2,
+      "close": 10.2,
+      "adjustedClose": null,
+      "volume": 5
+    },
+    {
+      "date": "2026-09-02",
+      "open": 11.3,
+      "high": 11.3,
+      "low": 11.3,
+      "close": 11.3,
+      "adjustedClose": null,
+      "volume": 22
+    },
+    {
+      "date": "2026-09-03",
+      "open": 10.4,
+      "high": 10.4,
+      "low": 10.4,
+      "close": 10.4,
+      "adjustedClose": null,
+      "volume": 1325
+    },
+    {
+      "date": "2026-09-04",
+      "open": 9.7,
+      "high": 9.7,
+      "low": 9.7,
+      "close": 9.7,
+      "adjustedClose": null,
+      "volume": 5
+    },
+    {
+      "date": "2026-09-09",
+      "open": 10.6,
+      "high": 10.6,
+      "low": 10.6,
+      "close": 10.6,
+      "adjustedClose": null,
+      "volume": 3
+    },
+    {
+      "date": "2026-09-10",
+      "open": 11.2,
+      "high": 11.2,
+      "low": 11.2,
+      "close": 11.2,
+      "adjustedClose": null,
+      "volume": 5
+    },
+    {
+      "date": "2026-09-14",
+      "open": 11.3,
+      "high": 11.3,
+      "low": 11.3,
+      "close": 11.3,
+      "adjustedClose": null,
+      "volume": 5
+    },
+    {
+      "date": "2026-09-16",
+      "open": 11.3,
+      "high": 11.3,
+      "low": 11.3,
+      "close": 11.3,
+      "adjustedClose": null,
+      "volume": 4
     }
   ]
 }
