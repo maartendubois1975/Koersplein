@@ -101,7 +101,10 @@ jobs:
                   try{if(!/^\d{4}-\d{2}-\d{2}$/.test(date))throw Error('Invalid date');const f=await official.fetchDaily(i,{startDate:date,endDate:date,signal:AbortSignal.timeout(25000)});if(f.providerMeta.partialHistory||f.providerMeta.isin!==i.isin||f.providerMeta.mic!==i.mic)throw Error('Unverified response');const b=validateBars(f.bars).find(x=>x.date===date);if(!b)throw Error('No verified traded bar');corrections.push(b)}catch(e){unresolved.push({date,error:e.message})}
                 }
                 result.exceptions={bad:bad.map(x=>x[0]),corrected:corrections.map(x=>x.date),unresolved};
-                if(unresolved.length)throw Error('Historical exceptions unresolved; originals preserved');
+                // Preserve the raw snapshot in quarantine; publish only verified bars.
+                // Unresolved dates remain explicit gaps, never synthetic prices.
+                result.unresolvedHistoricalDates=unresolved.map(x=>x.date);
+                if(unresolved.length)await fs.writeFile('/tmp/brussels-quarantine/'+i.isin+'.json',JSON.stringify(h));
                 const badDates=new Set(bad.map(x=>x[0]));bars=validateBars([...bars.filter(x=>!badDates.has(x.date)),...corrections]);
               }
               if(h.instrument?.isin!==i.mic+':'+i.isin&&h.instrument?.isin!==i.isin)throw Error('ISIN mismatch');
@@ -128,7 +131,7 @@ jobs:
             await fs.writeFile('/tmp/brussels-paths',paths.join('\n')+'\n');
             await new Promise(r=>setTimeout(r,500));
           }
-          console.log('RECOVERY_SUMMARY '+JSON.stringify({total:results.length,saved:paths.length,refreshErrors:results.filter(x=>x.refreshError).length,pending:results.filter(x=>x.error).length}));
+          console.log('RECOVERY_SUMMARY '+JSON.stringify({total:results.length,saved:paths.length,refreshErrors:results.filter(x=>x.refreshError).length,pending:results.filter(x=>x.error).length,withHistoricalExceptions:results.filter(x=>x.unresolvedHistoricalDates?.length).length}));
           EOF
       - name: Persist verified recovery to isolated branch
         run: |
