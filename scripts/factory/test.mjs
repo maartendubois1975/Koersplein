@@ -42,6 +42,7 @@ try {
   storeBars(db, adyen, bars.map((bar) => ({ ...bar, close:bar.close * 2, high:bar.high * 2, low:bar.low * 2, open:bar.open * 2, adjustedClose:bar.adjustedClose * 2 })), 'fixture');
   assert.equal(historyManifest(db).instruments[asml.isin].records, 2);
   assert.equal(historyDocument(db, asml.isin).bars.length, 2);
+  assert.equal(historyDocument(db, asml.isin).coverage.backfillComplete, false, 'bars alone do not prove complete history');
 
   const validation = createJob(db, 'VALIDATE_HISTORY', { requestedBy:'test', instrumentIds:[asml.id, adyen.id] });
   const validationResult = await runJob(db, validation.id);
