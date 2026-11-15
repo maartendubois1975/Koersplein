@@ -78,7 +78,19 @@ jobs:
                 if(!key)throw Error('No exact or legacy Brussels source key');
                 h=await get('/api/history/'+key);
                 await fs.writeFile('/tmp/brussels-quarantine/'+i.isin+'.json',JSON.stringify(h));
-                if(!row.identityMatch)throw Error('Legacy segment identity requires independent historical venue evidence; source preserved');
+                if(!row.identityMatch){
+                  // Do not relabel legacy venue data. Request a separate official
+                  // history for the approved segment, leaving the legacy snapshot intact.
+                  result.refresh=await syncInstrument(i,{mode:'backfill'});
+                  const fresh=JSON.parse(await fs.readFile(p,'utf8'));
+                  if(fresh.instrument.isin!==i.isin||fresh.instrument.mic!==i.mic||!fresh.bars.length||validateBars(fresh.bars).length!==fresh.bars.length)throw Error('Official segment history validation failed');
+                  result.records=fresh.bars.length;result.last=fresh.bars.at(-1).date;
+                  paths.push(p);
+                  results.push(result);console.log('BRUSSELS_RECOVERY '+JSON.stringify(result));
+                  await fs.writeFile('/tmp/brussels-recovery-result.json',JSON.stringify(results,null,2));
+                  await fs.writeFile('/tmp/brussels-paths',paths.join('\n')+'\n');
+                  continue;
+                }
               }
               let bars=validateBars(h.bars||[]);
               if(row.rejected){
@@ -86,7 +98,7 @@ jobs:
                 const bad=[...groups].filter(([date,x])=>x.length!==1||validateBars(x).length!==1);
                 const corrections=[];let unresolved=[];
                 for(const [date,raw] of bad){
-                  try{if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(date))throw Error('Invalid date');const f=await official.fetchDaily(i,{startDate:date,endDate:date,signal:AbortSignal.timeout(25000)});if(f.providerMeta.partialHistory||f.providerMeta.isin!==i.isin||f.providerMeta.mic!==i.mic)throw Error('Unverified response');const b=validateBars(f.bars).find(x=>x.date===date);if(!b)throw Error('No verified traded bar');corrections.push(b)}catch(e){unresolved.push({date,error:e.message})}
+                  try{if(!/^\d{4}-\d{2}-\d{2}$/.test(date))throw Error('Invalid date');const f=await official.fetchDaily(i,{startDate:date,endDate:date,signal:AbortSignal.timeout(25000)});if(f.providerMeta.partialHistory||f.providerMeta.isin!==i.isin||f.providerMeta.mic!==i.mic)throw Error('Unverified response');const b=validateBars(f.bars).find(x=>x.date===date);if(!b)throw Error('No verified traded bar');corrections.push(b)}catch(e){unresolved.push({date,error:e.message})}
                 }
                 result.exceptions={bad:bad.map(x=>x[0]),corrected:corrections.map(x=>x.date),unresolved};
                 if(unresolved.length)throw Error('Historical exceptions unresolved; originals preserved');
