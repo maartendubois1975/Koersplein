@@ -5,7 +5,7 @@ on:
     paths: [.github/workflows/approved-daily-session.yml]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   daily:
     runs-on: ubuntu-latest
@@ -26,3 +26,22 @@ jobs:
         with:
           name: daily-session-${{ matrix.mic }}
           path: research/output/daily-session-*.json
+  publish-test-data:
+    needs: daily
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/paris-reset-20261116'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: paris-reset-20261116
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: daily-session-*
+          merge-multiple: true
+          path: data
+      - run: |
+          node --input-type=module -e "import fs from 'node:fs'; for(const [mic,n] of Object.entries({XAMS:80,XBRU:105,XPAR:664})){const d=JSON.parse(fs.readFileSync('data/daily-session-'+mic+'.json'));if(d.market!==mic||d.results.length!==n)throw Error('Incorrect snapshot '+mic)}"
+          git config user.name "Koersplein staging"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/daily-session-XAMS.json data/daily-session-XBRU.json data/daily-session-XPAR.json
+          if ! git diff --cached --quiet; then git commit -m "Publish verified session snapshots on Paris test branch"; git push origin HEAD:paris-reset-20261116; fi

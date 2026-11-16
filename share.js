@@ -1,3 +1,4 @@
+import {approvedMarkets,browserCatalog,dailyRow} from './daily-session-view.mjs';
 import { renderHistoryChart, validateHistoryDocument, periodStartDate } from './chart.js';
 import { manifestResolver } from './market-week-core.mjs';
 import { assessPeriod, latestCloseChange } from './scripts/research/amsterdam-period-quality.mjs';
@@ -9,14 +10,16 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
  const venue=venues.venues.find(v=>v.id==='euronext');if(!venue)throw Error('Europese markten niet gevonden');
  let found=null;
  for(const market of venue.markets.filter(m=>m.status==='available'&&m.sharesData)){
-  try{const data=await load('data/'+market.sharesData),shares=Array.isArray(data)?data:(data.shares||[]),share=shares.find(x=>x.isin===isin&&(!requestedMic||String(x.mic||market.mic).toUpperCase()===requestedMic.toUpperCase())&&(!requestedSymbol||String(x.symbol||x.ticker).toUpperCase()===requestedSymbol.toUpperCase()));if(share){found={market,share};break}}catch{}
+  try{const data=await browserCatalog(market.mic,'data/'+market.sharesData,load),shares=Array.isArray(data)?data:(data.shares||[]),share=shares.find(x=>x.isin===isin&&(!requestedMic||String(x.primaryMic||x.mic||market.mic).toUpperCase()===requestedMic.toUpperCase())&&(!requestedSymbol||String(x.symbol||x.ticker).toUpperCase()===requestedSymbol.toUpperCase()));if(share){found={market,share};break}}catch{}
  }
  if(!found)throw Error('Aandeel niet gevonden');
- const {market,share}=found,mic=share.mic||market.mic;const legacyPages={amsterdam:'amsterdam.html',brussels:'brussel.html',paris:'parijs.html',milan:'milaan.html',oslo:'oslo.html',lisbon:'lissabon.html',zurich:'zurich.html',stockholm:'stockholm.html'};const back=`market.html?market=${encodeURIComponent(market.id)}`;
+ const {market,share}=found,mic=share.primaryMic||share.mic||market.mic;const legacyPages={amsterdam:'amsterdam.html',brussels:'brussel.html',paris:'parijs.html',milan:'milaan.html',oslo:'oslo.html',lisbon:'lissabon.html',zurich:'zurich.html',stockholm:'stockholm.html'};const back=`market.html?market=${encodeURIComponent(market.id)}`;
  document.title=`${share.name} — Koersplein`;document.querySelector('#crumb-share').textContent=share.name;
  const crumbs=document.querySelector('.breadcrumbs');const links=crumbs?.querySelectorAll('a');if(links?.[2]){links[2].href=back;links[2].textContent=market.name}
  const backLink=document.querySelector('.back-link');backLink.href=back;backLink.textContent=`← ${market.name}`;
  detail.innerHTML=`<div><p class="eyebrow">Europa · ${esc(market.name)} · ${esc(mic)}</p><h1>${esc(share.name)}</h1><div class="identity-line"><span class="ticker">${esc(share.symbol||share.ticker)}</span><span>${esc(share.isin)}</span><span>${esc(mic)}</span></div></div><div class="latest-price"><span>Laatste koers</span><strong>—</strong><small>Historie wordt geladen</small></div>`;
+ let current=null;
+ if(approvedMarkets.has(market.mic)){try{const snap=await load('data/daily-session-'+market.mic+'.json');current=dailyRow(snap,share,market.mic);if(current){const fmt=n=>n.toLocaleString('nl-NL',{style:'currency',currency:share.currency||market.currency||'EUR'});detail.querySelector('.latest-price').innerHTML='<span>Opening / slot</span><strong>'+fmt(current.open)+' / '+fmt(current.close)+'</strong><small>'+esc(current.date)+'</small>';}}catch{}}
  try{
   let h,storageId;
   if(mic==='XAMS'){
@@ -62,6 +65,6 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
   const delta=change.percent;
   const deltaText=delta===null?'—':new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:2,maximumFractionDigits:2}).format(delta)+'%';
   const deltaColor=delta===null?'':delta>=0?'#3fc98c':'#ee6677';
-  detail.querySelector('.latest-price').innerHTML=`<span>Laatste slotkoers</span><strong>${Number(last.close).toLocaleString('nl-NL',{style:'currency',currency,minimumFractionDigits:2,maximumFractionDigits:2})}</strong><span style="color:${deltaColor};font-weight:700">${esc(deltaText)} t.o.v. vorig slot${lastDiscontinuity?' · koerssprong of historiegat niet geverifieerd':''}</span><small>${esc(last.date)} · historie vanaf ${esc(first.date)}</small>`;
- }catch(e){fail(e.message)}
+  if(!current)detail.querySelector('.latest-price').innerHTML=`<span>Laatste slotkoers</span><strong>${Number(last.close).toLocaleString('nl-NL',{style:'currency',currency,minimumFractionDigits:2,maximumFractionDigits:2})}</strong><span style="color:${deltaColor};font-weight:700">${esc(deltaText)} t.o.v. vorig slot${lastDiscontinuity?' · koerssprong of historiegat niet geverifieerd':''}</span><small>${esc(last.date)} · historie vanaf ${esc(first.date)}</small>`;
+ }catch(e){fail(e.message+'; geen beleggingsadvies zonder voldoende betrouwbare historie')}
 }).catch(e=>{detail.innerHTML=`<div><p class="eyebrow">Niet beschikbaar</p><h1>${esc(e.message)}</h1></div>`;fail('Aandeelgegevens konden niet worden geladen')});
