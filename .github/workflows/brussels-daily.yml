@@ -21,7 +21,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm ci
       - run: npm test && npm run history:test
       - name: Verify and update all Brussels histories
         run: |
