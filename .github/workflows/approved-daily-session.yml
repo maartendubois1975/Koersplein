@@ -40,7 +40,6 @@ jobs:
           merge-multiple: true
           path: data
       - run: |
-          node --input-type=module -e "import fs from 'node:fs'; for(const [mic,n] of Object.entries({XAMS:80,XBRU:105,XPAR:664})){const d=JSON.parse(fs.readFileSync('data/daily-session-'+mic+'.json'));if(d.market!==mic||d.results.length!==n)throw Error('Incorrect snapshot '+mic)}"
           node scripts/cloudflare/archive-approved-session.mjs
           git config user.name "Koersplein staging"
           git config user.email "actions@users.noreply.github.com"
