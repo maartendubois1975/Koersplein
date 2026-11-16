@@ -1,0 +1,28 @@
+name: Approved companies daily session staging
+on:
+  push:
+    branches: [paris-reset-20261116]
+    paths: [.github/workflows/approved-daily-session.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        mic: [XAMS, XBRU, XPAR]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/cloudflare/approved-daily-session.mjs
+        env:
+          MARKET_MIC: ${{ matrix.mic }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: daily-session-${{ matrix.mic }}
+          path: research/output/daily-session-*.json
