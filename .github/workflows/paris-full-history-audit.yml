@@ -1,0 +1,28 @@
+name: Paris full historical series audit
+on:
+  push:
+    branches: [paris-reset-20261116]
+    paths: [.github/workflows/paris-full-history-audit.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          name: paris-storage-plan
+          run-id: 43815423212
+          github-token: ${{ github.token }}
+          path: research/output
+      - run: node scripts/cloudflare/paris-full-history-audit.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paris-full-history-audit
+          path: research/output/paris-full-history-audit.json
