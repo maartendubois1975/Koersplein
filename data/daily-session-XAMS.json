@@ -177,8 +177,7 @@
         "volume": 471812
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB00BNTJ3546-XAMS",
-      "officialError": null
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB00BNTJ3546-XAMS"
     },
     {
       "isin": "GB00BP6MXD84",
@@ -196,7 +195,8 @@
         "volume": 4379553
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB00BP6MXD84-XAMS"
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB00BP6MXD84-XAMS",
+      "officialError": null
     },
     {
       "isin": "GB00BQQFX454",
@@ -250,7 +250,8 @@
         "volume": 101261
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/LU0569974404-XAMS"
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/LU0569974404-XAMS",
+      "officialError": null
     },
     {
       "isin": "LU1598757687",
@@ -422,7 +423,8 @@
         "volume": 284536
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000337319-XAMS"
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000337319-XAMS",
+      "officialError": null
     },
     {
       "isin": "NL0000345577",
@@ -458,7 +460,8 @@
         "volume": 1809
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000345627-XAMS"
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000345627-XAMS",
+      "officialError": null
     },
     {
       "isin": "NL0000360618",
@@ -576,7 +579,8 @@
         "volume": 43708
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000817179-XAMS"
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000817179-XAMS",
+      "officialError": null
     },
     {
       "isin": "NL0000852523",
@@ -612,7 +616,8 @@
         "volume": 22428
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000852531-XAMS"
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000852531-XAMS",
+      "officialError": null
     },
     {
       "isin": "NL0000852564",
@@ -684,8 +689,7 @@
         "volume": 25661
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0009269109-XAMS",
-      "officialError": null
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0009269109-XAMS"
     },
     {
       "isin": "NL0009391242",
@@ -731,15 +735,16 @@
       "status": "TRADED",
       "bar": {
         "date": "2026-11-13",
-        "open": 0.8195,
-        "high": 0.821,
-        "low": 0.8115,
-        "close": 0.821,
-        "adjustedClose": null,
+        "open": 0.8195000290870667,
+        "high": 0.8209999799728394,
+        "low": 0.8115000128746033,
+        "close": 0.8209999799728394,
+        "adjustedClose": 0.8209999799728394,
         "volume": 880858
       },
-      "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0009739416-XAMS"
+      "provider": "yahoo-chart",
+      "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/PNL.AS?period1=1794528000&period2=1794614399&interval=1d&events=div%2Csplits",
+      "officialError": null
     },
     {
       "isin": "NL0010273215",
@@ -839,16 +844,15 @@
       "status": "TRADED",
       "bar": {
         "date": "2026-11-13",
-        "open": 0.949999988079071,
-        "high": 0.949999988079071,
-        "low": 0.8999999761581421,
-        "close": 0.8999999761581421,
-        "adjustedClose": 0.8999999761581421,
+        "open": 0.95,
+        "high": 0.95,
+        "low": 0.9,
+        "close": 0.9,
+        "adjustedClose": null,
         "volume": 285
       },
-      "provider": "yahoo-chart",
-      "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AMUND.AS?period1=1794528000&period2=1794614399&interval=1d&events=div%2Csplits",
-      "officialError": null
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0010696704-XAMS"
     },
     {
       "isin": "NL0010773842",
@@ -866,8 +870,7 @@
         "volume": 554000
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0010773842-XAMS",
-      "officialError": null
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0010773842-XAMS"
     },
     {
       "isin": "NL0010776944",
@@ -921,7 +924,8 @@
         "volume": 1153598
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0011540547-XAMS"
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0011540547-XAMS",
+      "officialError": null
     },
     {
       "isin": "NL0011660485",
@@ -1029,8 +1033,7 @@
         "volume": 456983
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0011872643-XAMS",
-      "officialError": null
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0011872643-XAMS"
     },
     {
       "isin": "NL0011872650",
@@ -1084,8 +1087,7 @@
         "volume": 13437
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0012747059-XAMS",
-      "officialError": null
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0012747059-XAMS"
     },
     {
       "isin": "NL0012817175",
@@ -1193,7 +1195,8 @@
         "volume": 17515
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0013654809-XAMS"
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0013654809-XAMS",
+      "officialError": null
     },
     {
       "isin": "NL00150000S7",
@@ -1221,8 +1224,7 @@
         "volume": 45923
       },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL00150002Q7-XAMS",
-      "officialError": null
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL00150002Q7-XAMS"
     },
     {
       "isin": "NL00150003E1",
