@@ -1,0 +1,28 @@
+name: Paris historical recovery evidence
+on:
+  push:
+    branches: [paris-reset-20261116]
+    paths: [.github/workflows/paris-recovery-evidence.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          name: paris-storage-plan
+          run-id: 43815423212
+          github-token: ${{ github.token }}
+          path: research/output
+      - run: node scripts/cloudflare/paris-recovery-evidence.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paris-recovery-evidence
+          path: research/output/paris-recovery-evidence.json
