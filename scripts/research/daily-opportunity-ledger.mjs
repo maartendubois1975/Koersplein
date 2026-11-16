@@ -1,4 +1,6 @@
 import fs from 'node:fs/promises';
+import {validateBars} from '../history/bars.mjs';
+import {loadCompanyCatalog} from '../history/company-register.mjs';
 
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
 if(!API) throw Error('KOERSPLEIN_API_URL ontbreekt');
@@ -12,16 +14,18 @@ const files={XAMS:'data/euronext-amsterdam.json',XBRU:'data/euronext-brussels.js
 const currency={XAMS:'EUR',XBRU:'EUR'};
 const histCache=new Map();
 
-async function hist(isin){
-  if(histCache.has(isin)) return histCache.get(isin);
+async function hist(isin,expected=null){
+  const cacheKey=isin+'|'+(expected?.mic||'')+'|'+(expected?.symbol||'');
+  if(histCache.has(cacheKey)) return histCache.get(cacheKey);
   const r=await fetch(`${API}/api/history/${encodeURIComponent(isin)}`);
   if(!r.ok) throw Error(`history ${r.status}`);
   const x=await r.json();
-  const bars=(Array.isArray(x)?x:(x.bars||x.records||x.history||[]))
-    .filter(b=>b?.date&&Number.isFinite(+b.close))
+  if(expected&&(!x.instrument||x.instrument.isin!==isin||x.instrument.mic!==expected.mic||String(x.instrument.symbol||x.instrument.ticker)!==expected.symbol))throw Error('History identity mismatch');
+  const bars=validateBars(Array.isArray(x)?x:(x.bars||x.records||x.history||[]))
+    .filter(b=>Number.isFinite(b.high)&&Number.isFinite(b.low)&&b.volume>0)
     .map(b=>({date:b.date,close:+b.close}))
     .sort((a,b)=>a.date.localeCompare(b.date));
-  histCache.set(isin,bars);
+  histCache.set(cacheKey,bars);
   return bars;
 }
 const pct=(a,b)=>a&&b?b/a-1:0;
@@ -34,13 +38,13 @@ try{ledger=JSON.parse(await fs.readFile('data/opportunity-ledger.json','utf8'))}
 
 const candidatesByMarket=new Map();
 for(const m of active){
-  const raw=JSON.parse(await fs.readFile(files[m.mic],'utf8'));
+  const raw=await loadCompanyCatalog(m.mic);
   const ins=raw.shares||raw.instruments||raw;
   const rows=[];
   let failed=0;
   for(const x of ins){
     try{
-      const b=await hist(x.isin),i=b.length-1;
+      const b=await hist(x.isin,{mic:x.primaryMic||x.mic||m.mic,symbol:x.symbol||x.ticker}),i=b.length-1;
       if(i<252) continue;
       const c=b[i].close,r=[];
       for(let j=i-125;j<=i;j++) r.push(pct(b[j-1].close,b[j].close));
@@ -84,7 +88,7 @@ for(const m of active){
   if(ledger.some(x=>x.referenceDate===runReferenceDate&&x.market===m.mic)) continue;
   const sameDate=pack.rows.filter(r=>r.date===runReferenceDate);
   const coverage=sameDate.length/Math.max(1,pack.universeCount);
-  if(coverage<0.90) throw Error(`Onvoldoende dekking ${m.mic} op ${runReferenceDate}: ${sameDate.length}/${pack.universeCount}`);
+  if(coverage<0.90){console.warn('ADVICE_WITHHELD_LOW_COVERAGE',m.mic,coverage);continue;}
   let q=sameDate.find(r=>!usedIsins.has(r.x.isin));
   if(!q) q=sameDate[0];
   if(!q) continue;
