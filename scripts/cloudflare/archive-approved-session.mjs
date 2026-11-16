@@ -1,11 +1,12 @@
 import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
-import {loadCompanyCatalog} from '../history/company-register.mjs';
+import {loadCompanyCatalog,companyContracts} from '../history/company-register.mjs';
 import {dailyRow} from '../../daily-session-view.mjs';
-const markets={XAMS:80,XBRU:105,XPAR:664};
+const markets=Object.keys(companyContracts);
 let session;
-for(const [mic,n] of Object.entries(markets)){
+for(const mic of markets){
  const catalog=await loadCompanyCatalog(mic);
+ const n=catalog.shares.length;
  const snap=JSON.parse(await fs.readFile('data/daily-session-'+mic+'.json','utf8'));
  assert.equal(snap.market,mic);assert.equal(snap.results.length,n);
  assert.equal(new Set(snap.results.map(r=>r.isin)).size,n);
