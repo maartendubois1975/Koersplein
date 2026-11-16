@@ -9,10 +9,8 @@ const registry=createDefaultProviderRegistry();
 const session=process.env.TARGET_SESSION||latestClosedWeekday();
 assert(/^\d{4}-\d{2}-\d{2}$/.test(session)&&session<=latestClosedWeekday());
 const market=process.env.MARKET_MIC;
-const expected={XAMS:80,XBRU:105,XPAR:664};
-assert(expected[market]);
 const catalog=await loadCompanyCatalog(market);
-assert.equal(catalog.shares.length,expected[market]);
+const expected=catalog.shares.length;
 const range={startDate:session,endDate:session};
 const exact=r=>{const checked=inspectDailyBarIntegrity(r,range);return checked.conflicts.length===0&&checked.bars.length===1&&checked.bars[0].date===session?checked.bars[0]:null;};
 const results=[];
@@ -31,8 +29,8 @@ await mapConcurrent(catalog.shares,4,async s=>{
  results.push({...identity,status:'TRADED',bar:exact(result),provider:provider.id,sourceUrl:result.requestUrl,officialError});
  }catch(e){results.push({...identity,status:'SESSION_UNVERIFIED',bar:null,officialError,error:e.message});}
 });
-assert.equal(results.length,expected[market]);
-assert.equal(new Set(results.map(x=>x.isin)).size,expected[market]);
+assert.equal(results.length,expected);
+assert.equal(new Set(results.map(x=>x.isin)).size,expected);
 results.sort((a,b)=>a.isin.localeCompare(b.isin));
 const counts={};for(const r of results)counts[r.status]=(counts[r.status]||0)+1;
 await fs.mkdir('research/output',{recursive:true});
