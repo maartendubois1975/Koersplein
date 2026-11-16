@@ -1,0 +1,19 @@
+name: Paris register integration checks
+on:
+  push:
+    branches: [paris-reset-20261116]
+    paths: [.github/workflows/paris-register-check.yml]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/research/export-paris-company-review.mjs --check
+      - run: node scripts/history/test-paris-register.mjs
+      - run: npm run history:core:test
+      - run: npm test

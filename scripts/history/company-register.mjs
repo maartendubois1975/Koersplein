@@ -19,5 +19,7 @@ export function validateCompanyCatalog(catalog, contract = companyContracts[cata
 export async function loadCompanyCatalog(mic) {
   const contract = companyContracts[mic];
   if (!contract) throw Error(`No approved company contract: ${mic}`);
-  return validateCompanyCatalog(await read(contract.file), contract);
+  const input = await read(contract.file);
+  const catalog = mic === 'XPAR' ? { ...input, exchange: 'Euronext Paris', mic } : input;
+  return validateCompanyCatalog(catalog, contract);
 }
