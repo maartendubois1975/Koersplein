@@ -40,7 +40,11 @@ jobs:
         if: always()
         run: |
           cp data/euronext-paris.json /tmp/paris-baseline.json
-          node scripts/cloudflare/fetch-paris-catalog.mjs
+          for attempt in 1 2 3 4 5; do
+            if node scripts/cloudflare/fetch-paris-catalog.mjs; then break; fi
+            if [ "$attempt" = 5 ]; then exit 1; fi
+            sleep $((attempt * 20))
+          done
           cp data/euronext-paris.json /tmp/paris-audit/fresh-directory.json
           cp /tmp/paris-baseline.json data/euronext-paris.json
           node scripts/cloudflare/paris-inventory-compare.mjs /tmp/paris-audit/fresh-directory.json
