@@ -55,6 +55,15 @@ jobs:
           const byId=new Map(storage.rows.map(x=>[x.isin,x]));
           const rows=fresh.shares.map(x=>({...x,priorNonEquity:excluded.has(x.isin),history:byId.get(x.isin)||null,decision:'REQUIRES_ISSUER_AND_PRIMARY_VENUE_EVIDENCE'}));
           await fs.writeFile('/tmp/paris-audit/review-queue.json',JSON.stringify(rows,null,2));
+          const protectedIds=new Map();
+          for(const file of ['data/euronext-amsterdam.json','data/euronext-brussels.json']){
+            const d=JSON.parse(await fs.readFile(file));
+            for(const i of d.shares||[])protectedIds.set(i.isin,{market:file,isin:i.isin,name:i.name});
+          }
+          const decisions=rows.map(x=>({...x,decision:protectedIds.has(x.isin)?'EXCLUDE_APPROVED_OTHER_MARKET':x.priorNonEquity?'RECHECK_PRIOR_NON_EQUITY':/(?:^|\s)(BSA|BS|DS|WARRANT|RIGHTS)(?:\s|$)/i.test(x.name)?'REVIEW_NON_EQUITY': 'REQUIRES_ISSUER_AND_PRIMARY_VENUE_EVIDENCE',otherMarket:protectedIds.get(x.isin)||null}));
+          const counts={};for(const x of decisions)counts[x.decision]=(counts[x.decision]||0)+1;
+          await fs.writeFile('/tmp/paris-audit/classification.json',JSON.stringify({counts,decisions},null,2));
+          console.log('PARIS_CLASSIFICATION '+JSON.stringify({counts,otherMarket:decisions.filter(x=>x.otherMarket).map(x=>({name:x.name,isin:x.isin,market:x.otherMarket.market})),newIsinCandidates:diff.added.filter(x=>diff.removed.some(y=>y.symbol===x.symbol)).map(x=>({new:x,old:diff.removed.filter(y=>y.symbol===x.symbol)}))}));
           console.log('PARIS_CHANGES '+JSON.stringify({added:diff.added,removed:diff.removed,changed:diff.changed,priorNonEquity:rows.filter(x=>x.priorNonEquity).length,missingHistory:rows.filter(x=>!x.history?.records).map(x=>({isin:x.isin,symbol:x.symbol,mic:x.mic}))}));
           EOF
       - uses: actions/upload-artifact@v4
