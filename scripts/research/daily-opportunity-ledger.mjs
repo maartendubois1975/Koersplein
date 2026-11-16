@@ -1,17 +1,15 @@
 import fs from 'node:fs/promises';
 import {validateBars} from '../history/bars.mjs';
-import {loadCompanyCatalog} from '../history/company-register.mjs';
+import {loadCompanyCatalog,companyContracts} from '../history/company-register.mjs';
 
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
 if(!API) throw Error('KOERSPLEIN_API_URL ontbreekt');
 
 const config=JSON.parse(await fs.readFile('data/markets.json','utf8'));
 const marketList=Array.isArray(config)?config:Array.isArray(config.markets)?config.markets:(config.venues||[]).flatMap(v=>v.markets||[]);
-const active=marketList.filter(x=>x.available===true||String(x.status).toLowerCase()==='available'||x.status==='ACTIVE').filter(x=>['XAMS','XBRU'].includes(x.mic));
+const active=marketList.filter(x=>x.available===true||String(x.status).toLowerCase()==='available'||x.status==='ACTIVE').filter(x=>Object.hasOwn(companyContracts,x.mic));
 if(!active.length) throw Error('Geen actieve markten gevonden');
 
-const files={XAMS:'data/euronext-amsterdam.json',XBRU:'data/euronext-brussels.json'};
-const currency={XAMS:'EUR',XBRU:'EUR'};
 const histCache=new Map();
 
 async function hist(isin,expected=null){
@@ -34,7 +32,7 @@ const sd=a=>{if(a.length<2)return 0;const m=mean(a);return Math.sqrt(mean(a.map(
 const round=(n,d=8)=>Number(Number(n).toFixed(d));
 
 let ledger=[];
-try{ledger=JSON.parse(await fs.readFile('data/opportunity-ledger.json','utf8'))}catch{}
+try{ledger=JSON.parse(await fs.readFile('data/opportunity-ledger.json','utf8'))}catch(e){if(e.code!=='ENOENT')throw e;}
 
 const candidatesByMarket=new Map();
 for(const m of active){
@@ -67,7 +65,7 @@ for(const m of active){
         breakout:features.m6+features.drawdown52w+.2*features.recovery52w
       };
       rows.push({x,date:b[i].date,close:c,features,scores,componentRanks:{},consensusRank:0});
-    }catch{failed++}
+    }catch(e){failed++;console.warn('HISTORY_FAILED',m.mic,x.isin,e.message)}
   }
   for(const key of ['momentum','balanced','acceleration','breakout']){
     [...rows].sort((a,b)=>b.scores[key]-a.scores[key]).forEach((r,i)=>{r.componentRanks[key]=i+1;r.consensusRank+=i+1});
@@ -97,7 +95,7 @@ for(const m of active){
     selectionDate:runReferenceDate,
     market:m.mic,
     venue:m.name||m.mic,
-    currency:currency[m.mic]||null,
+    currency:q.x.currency||m.currency||null,
     targetPct:30,
     horizonMonths:3,
     status:'OPEN',
@@ -139,7 +137,7 @@ for(const p of ledger){
 
 await fs.writeFile('data/opportunity-ledger.json',JSON.stringify(ledger,null,2));
 const latestByMarket={};
-for(const mic of ['XAMS','XBRU']){
+for(const mic of Object.keys(companyContracts)){
   const xs=ledger.filter(x=>x.market===mic).sort((a,b)=>String(b.selectionDate||b.referenceDate).localeCompare(String(a.selectionDate||a.referenceDate)));
   if(xs[0]) latestByMarket[mic]=xs[0];
 }
