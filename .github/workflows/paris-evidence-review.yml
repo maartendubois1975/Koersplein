@@ -1,0 +1,38 @@
+name: Paris evidence decision audit
+on:
+  push:
+    branches: [paris-reset-20261116]
+    paths: [.github/workflows/paris-evidence-review.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: paris-inventory-evidence
+          run-id: 43809738322
+          github-token: ${{ github.token }}
+          path: evidence
+      - name: Review evidence without changing catalog
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs/promises';
+          const e=JSON.parse(await fs.readFile('evidence/issuer-evidence.json'));
+          const c=JSON.parse(await fs.readFile('evidence/classification.json'));
+          const map=new Map(e.map(x=>[x.isin+'|'+x.mic,x]));
+          const rows=c.decisions.map(i=>{
+            const x=map.get(i.isin+'|'+i.mic);
+            return {isin:i.isin,mic:i.mic,name:i.name,decision:i.decision,identity:x?.identityPresent||false,title:x?.title,evidence:x?.evidence||[],url:x?.url};
+          });
+          const counts={};for(const x of rows)for(const t of x.evidence)counts[t]=(counts[t]||0)+1;
+          console.log('EVIDENCE_PATTERNS '+JSON.stringify(Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,50)));
+          for(const x of rows)console.log('PARIS_ROW '+JSON.stringify(x));
+          await fs.writeFile('evidence/decision-review.json',JSON.stringify(rows,null,2));
+          EOF
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paris-decision-review
+          path: evidence/decision-review.json
