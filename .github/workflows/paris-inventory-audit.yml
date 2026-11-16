@@ -1,0 +1,52 @@
+name: Paris read-only inventory and storage audit
+on:
+  push:
+    branches: [paris-reset-20261116]
+    paths: [.github/workflows/paris-inventory-audit.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    if: github.ref == 'refs/heads/paris-reset-20261116'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Audit actual historical manifest
+        run: |
+          mkdir -p /tmp/paris-audit
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs/promises';
+          const old=JSON.parse(await fs.readFile('data/euronext-paris.json','utf8'));
+          const r=await fetch('https://koersplein.maarten-dubois1975.workers.dev/api/history/manifest.json',{signal:AbortSignal.timeout(60000)});
+          if(!r.ok)throw Error('Manifest HTTP '+r.status);
+          const m=await r.json();
+          if(!m.instruments||typeof m.instruments!=='object')throw Error('Missing manifest instruments');
+          const rows=old.shares.map(i=>{
+            const exact=m.instruments[i.mic+':'+i.isin];
+            const legacy=m.instruments[i.isin]||m.instruments['XPAR:'+i.isin];
+            const v=exact||legacy;
+            return {...i,key:exact?i.mic+':'+i.isin:legacy?(m.instruments[i.isin]?i.isin:'XPAR:'+i.isin):null,identity:exact?'EXACT_KEY':legacy?'LEGACY_KEY_REQUIRES_VERIFICATION':'MISSING',records:Number(v?.recordCount||v?.records||0),first:v?.firstDate||null,last:v?.lastDate||null};
+          });
+          const summary={total:rows.length,withHistory:rows.filter(x=>x.records>0).length,exactWithHistory:rows.filter(x=>x.records>0&&x.identity==='EXACT_KEY').length,legacyWithHistory:rows.filter(x=>x.records>0&&x.identity!=='EXACT_KEY').length,records:rows.reduce((n,x)=>n+x.records,0)};
+          await fs.writeFile('/tmp/paris-audit/storage.json',JSON.stringify({summary,rows},null,2));
+          console.log('PARIS_STORAGE_SUMMARY '+JSON.stringify(summary));
+          EOF
+      - name: Fetch official directory without changing repository
+        if: always()
+        run: |
+          cp data/euronext-paris.json /tmp/paris-baseline.json
+          node scripts/cloudflare/fetch-paris-catalog.mjs
+          cp data/euronext-paris.json /tmp/paris-audit/fresh-directory.json
+          cp /tmp/paris-baseline.json data/euronext-paris.json
+          node scripts/cloudflare/paris-inventory-compare.mjs /tmp/paris-audit/fresh-directory.json
+          cp research/output/paris-inventory-diff.json /tmp/paris-audit/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: paris-inventory-evidence
+          path: /tmp/paris-audit/
