@@ -45,6 +45,18 @@ jobs:
           cp /tmp/paris-baseline.json data/euronext-paris.json
           node scripts/cloudflare/paris-inventory-compare.mjs /tmp/paris-audit/fresh-directory.json
           cp research/output/paris-inventory-diff.json /tmp/paris-audit/
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs/promises';
+          const diff=JSON.parse(await fs.readFile('/tmp/paris-audit/paris-inventory-diff.json'));
+          const storage=JSON.parse(await fs.readFile('/tmp/paris-audit/storage.json'));
+          const fresh=JSON.parse(await fs.readFile('/tmp/paris-audit/fresh-directory.json'));
+          const prior=JSON.parse(await fs.readFile('research/output/paris/validation-summary.json'));
+          const excluded=new Set(prior.excludedNonEquity.map(x=>x.isin));
+          const byId=new Map(storage.rows.map(x=>[x.isin,x]));
+          const rows=fresh.shares.map(x=>({...x,priorNonEquity:excluded.has(x.isin),history:byId.get(x.isin)||null,decision:'REQUIRES_ISSUER_AND_PRIMARY_VENUE_EVIDENCE'}));
+          await fs.writeFile('/tmp/paris-audit/review-queue.json',JSON.stringify(rows,null,2));
+          console.log('PARIS_CHANGES '+JSON.stringify({added:diff.added,removed:diff.removed,changed:diff.changed,priorNonEquity:rows.filter(x=>x.priorNonEquity).length,missingHistory:rows.filter(x=>!x.history?.records).map(x=>({isin:x.isin,symbol:x.symbol,mic:x.mic}))}));
+          EOF
       - uses: actions/upload-artifact@v4
         if: always()
         with:
