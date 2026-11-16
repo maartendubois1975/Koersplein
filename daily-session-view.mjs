@@ -3,7 +3,7 @@ export async function browserCatalog(mic,fallback,load){
  if(!approvedMarkets.has(mic))return load(fallback);
  const contracts=await load('data/company-register-contracts.json');
  const contract=contracts.markets[mic];
- const catalog=await load(new URL('data/'+contract.file,document.baseURI).href);
+ const catalog=await load('data/'+contract.file);
  if(catalog.shares.length!==contract.expectedCount)throw Error('Bedrijvenregister onvolledig');
  return catalog;
 }

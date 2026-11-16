@@ -20,7 +20,7 @@ globalThis.document={querySelector(selector){
  if(!nodes.has(selector))nodes.set(selector,{value:'',textContent:'',innerHTML:'',addEventListener(){}});
  return nodes.get(selector);
 }};
-globalThis.location={search:'?market=amsterdam'};
+globalThis.location={search:'?market=amsterdam&view=week'};
 const today=new Date(new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())+'T12:00:00Z');
 const weekday=today.getUTCDay(),monday=new Date(today);
 monday.setUTCDate(monday.getUTCDate()-((weekday+6)%7)-(weekday>=1&&weekday<=5?7:0));
@@ -45,6 +45,7 @@ globalThis.fetch=async url=>{
  const path=String(url);
  let data;
  if(path.endsWith('data/world-fill-plan.json'))data={markets:[{code:'amsterdam',mic:'XAMS',name:'Amsterdam',country:'NL',currency:'EUR'}]};
+ else if(path.endsWith('data/company-register-contracts.json'))data={markets:{XAMS:{file:'euronext-amsterdam.json',expectedCount:shares.length}}};
  else if(path.endsWith('data/euronext-amsterdam.json'))data={shares};
  else if(path.endsWith('data/amsterdam-no-trades-2026-10-19-23.json'))data=status;
  else if(path.endsWith('/api/history/manifest.json'))data=manifest;
