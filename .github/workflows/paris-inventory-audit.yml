@@ -10,7 +10,7 @@ jobs:
   audit:
     if: github.ref == 'refs/heads/paris-reset-20261116'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -65,6 +65,41 @@ jobs:
           await fs.writeFile('/tmp/paris-audit/classification.json',JSON.stringify({counts,decisions},null,2));
           console.log('PARIS_CLASSIFICATION '+JSON.stringify({counts,otherMarket:decisions.filter(x=>x.otherMarket).map(x=>({name:x.name,isin:x.isin,market:x.otherMarket.market})),newIsinCandidates:diff.added.filter(x=>diff.removed.some(y=>y.symbol===x.symbol)).map(x=>({new:x,old:diff.removed.filter(y=>y.symbol===x.symbol)}))}));
           console.log('PARIS_CHANGES '+JSON.stringify({added:diff.added,removed:diff.removed,changed:diff.changed,priorNonEquity:rows.filter(x=>x.priorNonEquity).length,missingHistory:rows.filter(x=>!x.history?.records).map(x=>({isin:x.isin,symbol:x.symbol,mic:x.mic}))}));
+          EOF
+      - name: Gather official issuer and instrument evidence for the entire review queue
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs/promises';
+          const {decisions}=JSON.parse(await fs.readFile('/tmp/paris-audit/classification.json'));
+          const results=[];
+          const clean=s=>s.replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();
+          async function inspect(i){
+            const url='https://live.euronext.com/en/product/equities/'+i.isin+'-'+i.mic;
+            const row={isin:i.isin,mic:i.mic,name:i.name,decision:i.decision,url};
+            try{
+              const r=await fetch(url,{signal:AbortSignal.timeout(20000),headers:{'user-agent':'Koersplein research/1.0'}});
+              if(!r.ok)throw Error('HTTP '+r.status);
+              const html=await r.text();
+              row.finalUrl=r.url;
+              row.identityPresent=html.includes(i.isin);
+              row.title=clean(html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]||'');
+              const evidence=[];
+              for(const m of html.matchAll(/<(?:tr|dt|li)[\s>][\s\S]*?<\/(?:tr|dt|li)>/gi)){
+                const t=clean(m[0]);
+                if(t.length<700&&/primary (?:market|listing)|main listing|instrument type|security type|trading status|listing date|issuer name|market of reference|delisted|suspended|ordinary shares|subscription rights/i.test(t))evidence.push(t);
+              }
+              row.evidence=[...new Set(evidence)].slice(0,35);
+              row.status=row.identityPresent?'IDENTITY_PRESENT_REVIEW_EVIDENCE':'IDENTITY_NOT_CONFIRMED';
+            }catch(e){row.status='REQUEST_FAILED';row.error=e.message}
+            return row;
+          }
+          for(let n=0;n<decisions.length;n+=4){
+            results.push(...await Promise.all(decisions.slice(n,n+4).map(inspect)));
+            await fs.writeFile('/tmp/paris-audit/issuer-evidence.json',JSON.stringify(results,null,2));
+            await new Promise(r=>setTimeout(r,500));
+          }
+          const counts={};for(const x of results)counts[x.status]=(counts[x.status]||0)+1;
+          console.log('PARIS_ISSUER_EVIDENCE '+JSON.stringify({total:results.length,counts,withEvidence:results.filter(x=>x.evidence?.length).length}));
           EOF
       - uses: actions/upload-artifact@v4
         if: always()
