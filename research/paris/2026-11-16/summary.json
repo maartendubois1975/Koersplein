@@ -1,0 +1,94 @@
+{
+  "asOf": "2026-11-16",
+  "totalReviewed": 769,
+  "decisions": {
+    "EXCLUDE": 88,
+    "INCLUDE": 664,
+    "PENDING": 17
+  },
+  "bySegment": {
+    "XPAR": {
+      "EXCLUDE": 37,
+      "INCLUDE": 295,
+      "PENDING": 5
+    },
+    "ALXP": {
+      "EXCLUDE": 44,
+      "INCLUDE": 246,
+      "PENDING": 3
+    },
+    "XMLI": {
+      "EXCLUDE": 7,
+      "INCLUDE": 123,
+      "PENDING": 9
+    }
+  },
+  "reasons": {
+    "APPROVED_OTHER_MARKET": 10,
+    "DEPOSITARY_RECEIPT": 1,
+    "DISSOLVED_NO_ACTIVITY": 1,
+    "DUPLICATE_SHARE_CLASS": 2,
+    "EQUITY_CERTIFICATE": 15,
+    "EVIDENCE_INSUFFICIENT": 2,
+    "ISSUER_DIRECTORY_CONFLICT": 1,
+    "JUDICIAL_LIQUIDATION": 2,
+    "LIQUIDATION_AND_PRIMARY_REVIEW": 1,
+    "LIQUIDATION_CONFLICT": 1,
+    "LONG_SUSPENSION_ACTIVITY_REVIEW": 2,
+    "MULTIPLE_PRIMARY_CANDIDATES": 2,
+    "NEW_PARIS_IPO": 2,
+    "OTC_AND_PARIS_PRIMARY_UNPROVEN": 1,
+    "OTHER_PRIMARY_MARKET": 15,
+    "PARIS_PRIMARY_OPERATING_COMPANY": 3,
+    "PARIS_PRIMARY_SUPPORTED": 659,
+    "RIGHT_OR_WARRANT": 42,
+    "SIMULTANEOUS_DUAL_LISTING_PRIMARY_UNPROVEN": 1,
+    "STALE_TRADE_ACTIVITY_REVIEW": 5,
+    "SUSPENSION_ACTIVITY_REVIEW": 1
+  },
+  "includedHistory": {
+    "ISIN_SUCCESSOR_NO_CURRENT_STORAGE_IDENTITY": 2,
+    "LEGACY_IDENTITY_QUARANTINE": 17,
+    "MANIFEST_EXACT_IDENTITY_UNAUDITED_BARS": 632,
+    "NO_CURRENT_IDENTITY_IN_MANIFEST": 13
+  },
+  "includedHistoryRecordsReported": 3036634,
+  "allCurrentHistory": {
+    "ISIN_SUCCESSOR_NO_CURRENT_STORAGE_IDENTITY": 2,
+    "LEGACY_IDENTITY_QUARANTINE": 27,
+    "MANIFEST_EXACT_IDENTITY_UNAUDITED_BARS": 708,
+    "NO_CURRENT_IDENTITY_IN_MANIFEST": 32
+  },
+  "individualEvidence": {
+    "productIdentity": 750,
+    "factsheetIdentity": 727,
+    "businessProfile": 694,
+    "quoteIdentity": 727
+  },
+  "sourceRunIds": [
+    43809738322,
+    43810891249
+  ],
+  "legacyAudit": {
+    "total": 28,
+    "micMismatch": 27,
+    "invalidSingleBar": 18
+  },
+  "lineage": [
+    {
+      "oldIsin": "FR0014011O84",
+      "newIsin": "FR001401B5X2",
+      "effectiveDate": "2026-11-10",
+      "oldSharesPerNewShare": 10000,
+      "postEffectiveRowsStillUnderOldIsin": 0
+    },
+    {
+      "oldIsin": "FR0010380626",
+      "newIsin": "FR001401AOZ5",
+      "effectiveDate": "2026-10-15",
+      "oldSharesPerNewShare": 100,
+      "postEffectiveRowsStillUnderOldIsin": 8
+    }
+  ],
+  "limits": "Waar geen expliciet MoR-veld beschikbaar is, is hoofdmarkt een onderbouwde onderzoeksconclusie. Gelijktijdige of tegenstrijdige hoofdnoteringen staan apart. PROFILE_ONLY is geen afzonderlijke controle van het handelsregister."
+}

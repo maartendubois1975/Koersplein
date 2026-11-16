@@ -1,0 +1,62 @@
+{
+  "asOf": "2026-11-16",
+  "baseCommit": "9b9e20eb521972c2256559150eb5967dec535aea",
+  "result": "PASS",
+  "checks": [
+    {
+      "command": "node scripts/research/export-paris-company-review.mjs --check",
+      "result": "PASS",
+      "scope": "all 769 decisions, identity and company uniqueness, exact segment totals, derived files, 28 actual bar counts, 2 lineage boundaries, 80/105 protection"
+    },
+    {
+      "command": "npm run history:core:test",
+      "result": "PASS",
+      "scope": "history core, observed-session readiness and consolidation regressions"
+    }
+  ],
+  "unchangedRuntimeFiles": [
+    {
+      "file": "data/euronext-amsterdam.json",
+      "sha256": "57f0ab26aad82ad7a40f7891208f892e46b5e227de1685c69736ffdafab457b7",
+      "unchangedFromBaseCommit": true
+    },
+    {
+      "file": "data/euronext-brussels.json",
+      "sha256": "5671bbb427a8372895176f5d0bb3a6425b9e92a11b2c17d2b715230ed68e30e2",
+      "unchangedFromBaseCommit": true
+    },
+    {
+      "file": "data/euronext-paris.json",
+      "sha256": "44016632f33ff9f21e77dd6f9a18c2cb51643f56f577e84e64a22a32025fb71a",
+      "unchangedFromBaseCommit": true
+    },
+    {
+      "file": "data/company-register-contracts.json",
+      "sha256": "3500ee187feb99dd312cc2e0d6604aa99f17b6898f6bc03720a5593a48fb203d",
+      "unchangedFromBaseCommit": true
+    }
+  ],
+  "trackedFileDiffBeforeResearchAdditions": [],
+  "historicalDataFilesChanged": 0,
+  "databaseWrites": 0,
+  "deployments": 0,
+  "newGitHubActionsRunsTriggered": 0,
+  "originalArtifacts": [
+    {
+      "file": "research/paris/2026-11-16/evidence/inventory-run-43809738322.zip",
+      "sha256": "3542992de343367a3637f0efc1aa6c03ffb2c773f4b68cdd594e9f91ea22eb59",
+      "zipIntegrity": "PASS"
+    },
+    {
+      "file": "research/paris/2026-11-16/evidence/decision-run-43810891249.zip",
+      "sha256": "5c4270527664909109f16336329ceb3993e3478ad2259c278d2af3bd1e585535",
+      "zipIntegrity": "PASS"
+    }
+  ],
+  "limits": [
+    "Manifest records are reported counts, not a full 3.3-million-bar price audit.",
+    "Research includes primary-market inferences explicitly marked per row.",
+    "17 unresolved cases remain outside the included selection.",
+    "No Render alignment, staging website or daily import acceptance performed."
+  ]
+}
