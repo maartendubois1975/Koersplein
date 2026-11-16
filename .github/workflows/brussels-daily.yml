@@ -1,0 +1,83 @@
+name: Brussels daily staging import
+on:
+  push:
+    branches: [brussels-reset-20261114]
+    paths: [.github/workflows/brussels-daily.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: brussels-backfill
+  cancel-in-progress: false
+jobs:
+  update:
+    if: github.ref == 'refs/heads/brussels-reset-20261114'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: brussels-reset-20261114
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test && npm run history:test
+      - name: Verify and update all Brussels histories
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs/promises';
+          import {loadCatalog, syncInstrument, validateBars} from './scripts/history/engine.mjs';
+          const catalog=await loadCatalog('XBRU');
+          const amsterdam=await loadCatalog('XAMS');
+          if(catalog.length!==105||amsterdam.length!==80)throw Error('Catalog guard');
+          const protectedIds=new Set(amsterdam.map(i=>i.isin));
+          const results=[],paths=[];
+          const target=new Date().toISOString().slice(0,10);
+          for(const i of catalog){
+            const p='data/history/'+i.isin+'.json';
+            const row={isin:i.isin,symbol:i.symbol,mic:i.mic};
+            let raw;
+            try{
+              if(protectedIds.has(i.isin))throw Error('Amsterdam protection');
+              raw=await fs.readFile(p,'utf8');
+              const before=JSON.parse(raw);
+              const check=d=>d.instrument.isin===i.isin&&d.instrument.mic===i.mic&&d.instrument.currency==='EUR'&&d.bars.length>0&&validateBars(d.bars).length===d.bars.length&&d.bars.every(x=>x.date<=target);
+              if(!check(before))throw Error('Existing history invalid');
+              let error;
+              for(let n=0;n<3;n++){
+                try{row.refresh=await syncInstrument(i,{mode:'update'});error=null;break}
+                catch(e){error=e;await new Promise(r=>setTimeout(r,1000*(n+1)))}
+              }
+              if(error)throw error;
+              const after=JSON.parse(await fs.readFile(p,'utf8'));
+              const dates=new Set(after.bars.map(x=>x.date));
+              if(!check(after)||before.bars.some(x=>!dates.has(x.date)))throw Error('History preservation guard');
+              row.records=after.bars.length;row.last=after.bars.at(-1).date;
+              paths.push(p);
+            }catch(e){row.error=e.message;if(raw!==undefined&&!protectedIds.has(i.isin))await fs.writeFile(p,raw)}
+            results.push(row);
+            console.log('BRUSSELS_DAILY '+JSON.stringify(row));
+          }
+          const latest=results.map(x=>x.last).filter(Boolean).sort().at(-1);
+          const summary={total:catalog.length,verified:paths.length,errors:results.filter(x=>x.error),latestObserved:latest,older:results.filter(x=>x.last&&x.last<latest),records:results.reduce((n,x)=>n+(x.records||0),0)};
+          await fs.writeFile('/tmp/brussels-daily.json',JSON.stringify({summary,results},null,2));
+          await fs.writeFile('/tmp/brussels-daily-paths',paths.join('\n')+'\n');
+          console.log('BRUSSELS_DAILY_SUMMARY '+JSON.stringify(summary));
+          if(paths.length!==105)process.exitCode=1;
+          EOF
+      - name: Persist only Brussels data
+        run: |
+          test "$(git branch --show-current)" = brussels-reset-20261114
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f --pathspec-from-file=/tmp/brussels-daily-paths
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: verified Brussels daily update (staging only)'
+            git push origin HEAD:brussels-reset-20261114
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brussels-daily-verification
+          path: /tmp/brussels-daily.json
