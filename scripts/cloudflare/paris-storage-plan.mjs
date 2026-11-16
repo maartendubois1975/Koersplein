@@ -1,0 +1,27 @@
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import {loadCompanyCatalog} from '../history/company-register.mjs';
+import {providerRoute} from '../history/source-policy.mjs';
+import {newListingStorageKey} from './storage-identity.mjs';
+const ledger=JSON.parse(await fs.readFile('research/paris/2026-11-16/company-decisions.json','utf8'));
+const catalog=await loadCompanyCatalog('XPAR');
+const approved=new Map(ledger.rows.filter(x=>x.decision==='INCLUDE').map(x=>[x.isin,x]));
+const response=await fetch('https://koersplein.maarten-dubois1975.workers.dev/api/history/manifest.json',{signal:AbortSignal.timeout(60000)});
+if(!response.ok)throw Error('Manifest HTTP '+response.status);
+const {instruments}=await response.json();
+assert(instruments&&typeof instruments==='object');
+const rows=catalog.shares.map(s=>{
+ const row=approved.get(s.isin);assert(row&&row.mic===s.mic);
+ const canonical=newListingStorageKey(s,'XPAR');
+ const candidates=[canonical,s.isin].filter(k=>instruments[k]);
+ const keys=candidates.filter(k=>{const r=instruments[k];return (r.mic===s.mic||k===canonical&&!r.mic)&&(!r.ticker||r.ticker===s.symbol)&&(!r.symbol||r.symbol===s.symbol)});
+ const status=row.history.status;
+ const quarantined=status.includes('QUARANTINE')||status.includes('SUCCESSOR');
+ const action=quarantined?'REVIEW_IDENTITY':keys.length===1?'AUDIT_EXISTING':candidates.length?'REVIEW_IDENTITY':'BACKFILL_NEW';
+ return {isin:s.isin,mic:s.mic,symbol:s.symbol,canonical,keys,candidates,action,researchStatus:status,records:keys.length===1?(instruments[keys[0]].records||instruments[keys[0]].recordCount||0):0,route:providerRoute(s)};
+});
+assert.equal(rows.length,664);
+const counts={};for(const r of rows)counts[r.action]=(counts[r.action]||0)+1;
+await fs.mkdir('research/output',{recursive:true});
+await fs.writeFile('research/output/paris-storage-plan.json',JSON.stringify({generatedAt:new Date().toISOString(),readOnly:true,counts,rows},null,2)+'\n');
+console.log('PARIS_STORAGE_PLAN '+JSON.stringify(counts));
