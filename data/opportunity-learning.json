@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-25T21:54:20.928Z",
-  "referenceDate": "2026-09-16",
+  "generatedAt": "2026-11-17T16:20:24.396Z",
+  "referenceDate": "2026-11-16",
   "purpose": "Bevries iedere voorspelling vooraf, volg de uitkomst en leer van raak en mis.",
   "target": "+30% binnen 3 maanden",
   "latestByMarket": {
@@ -10,7 +10,7 @@
       "venue": "Amsterdam",
       "targetPct": 30,
       "horizonMonths": 3,
-      "status": "OPEN",
+      "status": "EVALUATION_UNVERIFIED",
       "frozen": true,
       "modelVersion": "consensus-price-v1",
       "name": "FAGRON",
@@ -18,7 +18,10 @@
       "isin": "BE0003874915",
       "referenceDate": "2026-09-16",
       "referenceClose": 22.049999237060547,
-      "consensusRank": 4
+      "consensusRank": 4,
+      "legacyUnverified": true,
+      "evaluationError": "PREDICTION_OUTSIDE_APPROVED_REGISTER",
+      "result30": null
     },
     "XBRU": {
       "selectionDate": "2026-09-17",
@@ -26,7 +29,7 @@
       "venue": "Brussel",
       "targetPct": 30,
       "horizonMonths": 3,
-      "status": "OPEN",
+      "status": "EVALUATION_UNVERIFIED",
       "frozen": true,
       "modelVersion": "consensus-price-v1",
       "name": "FAGRON",
@@ -34,12 +37,15 @@
       "isin": "BE0003874915",
       "referenceDate": "2026-09-16",
       "referenceClose": 22.049999237060547,
-      "consensusRank": 5
+      "consensusRank": 5,
+      "legacyUnverified": true,
+      "evaluationError": "FROZEN_REFERENCE_PRICE_MISMATCH",
+      "result30": null
     }
   },
   "scoreboard": {
     "totalPredictions": 2,
-    "open": 2,
+    "open": 0,
     "closed": 0,
     "hits30": 0,
     "misses30": 0,

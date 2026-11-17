@@ -5,7 +5,7 @@
     "venue": "Amsterdam",
     "targetPct": 30,
     "horizonMonths": 3,
-    "status": "OPEN",
+    "status": "EVALUATION_UNVERIFIED",
     "frozen": true,
     "modelVersion": "consensus-price-v1",
     "name": "FAGRON",
@@ -13,7 +13,10 @@
     "isin": "BE0003874915",
     "referenceDate": "2026-09-16",
     "referenceClose": 22.049999237060547,
-    "consensusRank": 4
+    "consensusRank": 4,
+    "legacyUnverified": true,
+    "evaluationError": "PREDICTION_OUTSIDE_APPROVED_REGISTER",
+    "result30": null
   },
   {
     "selectionDate": "2026-09-17",
@@ -21,7 +24,7 @@
     "venue": "Brussel",
     "targetPct": 30,
     "horizonMonths": 3,
-    "status": "OPEN",
+    "status": "EVALUATION_UNVERIFIED",
     "frozen": true,
     "modelVersion": "consensus-price-v1",
     "name": "FAGRON",
@@ -29,6 +32,9 @@
     "isin": "BE0003874915",
     "referenceDate": "2026-09-16",
     "referenceClose": 22.049999237060547,
-    "consensusRank": 5
+    "consensusRank": 5,
+    "legacyUnverified": true,
+    "evaluationError": "FROZEN_REFERENCE_PRICE_MISMATCH",
+    "result30": null
   }
 ]
