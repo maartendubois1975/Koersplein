@@ -20,6 +20,15 @@ export async function loadCompanyCatalog(mic) {
   const contract = companyContracts[mic];
   if (!contract) throw Error(`No approved company contract: ${mic}`);
   const input = await read(contract.file);
-  const catalog = mic === 'XPAR' ? { ...input, exchange: 'Euronext Paris', mic } : input;
+  const catalog = { ...input, mic };
   return validateCompanyCatalog(catalog, contract);
+}
+export async function approvedCompanyUniverse() {
+  const markets=await Promise.all(Object.keys(companyContracts).map(loadCompanyCatalog));
+  const ids=new Set();
+  for(const market of markets)for(const share of market.shares){
+    if(ids.has(share.isin))throw Error('Duplicate approved company across markets: '+share.isin);
+    ids.add(share.isin);
+  }
+  return markets;
 }

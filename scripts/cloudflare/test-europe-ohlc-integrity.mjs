@@ -36,18 +36,13 @@ assert.equal(isVerifiedNoTradeGap({...noTrade,status:'TRADED'},'2026-10-21','202
 assert.equal(isVerifiedNoTradeGap({...noTrade,date:'2026-10-21'},'2026-10-21','2026-10-22'),false);
 
 const audit=await fs.readFile('scripts/cloudflare/audit-daily-open-close.mjs','utf8');
-const daily=await fs.readFile('scripts/cloudflare/daily-open-close-update.mjs','utf8');
-const official=await fs.readFile('scripts/cloudflare/reconcile-official-daily.mjs','utf8');
-for(const [name,content] of [['audit',audit],['daily',daily],['official',official]])assert.match(content,/isCompleteOhlcBar/,'OHLC gate missing in '+name);
+const daily=await fs.readFile('scripts/cloudflare/approved-daily-session.mjs','utf8');
+assert.match(audit,/isCompleteOhlcBar/);
+assert.match(daily,/inspectDailyBarIntegrity/);
 assert.match(audit,/isVerifiedNoTradeGap/);
 assert.match(audit,/latestAuditBar\(bars,cutoff\)/,'Audit must inspect latest completed session, not an intraday bar');
 assert.deepEqual(latestAuditBar([{...good,date:'2026-10-23'},good,{...good,high:null}],'2026-10-22'),good,'Cutoff and complete duplicate take precedence');
 assert.deepEqual(latestAuditBar([{...good,high:null},good],'2026-10-22'),good,'Complete duplicate wins regardless of storage order');
-assert.match(daily,/isVerifiedNoTradeGap/);
-assert.match(daily,/market\.mic==='XAMS'/,'XAMS metadata-current shortcut must validate actual stored session');
-assert.match(daily,/STORED_LATEST_SESSION_NOT_TRADED/,'Do not call zero-volume reference candles current');
-assert.match(daily,/isTradedOhlcvBar\(status\.bar\)/,'Official append requires executed volume');
-assert.match(official,/OFFICIAL_PARTIAL_OR_INVALID_OHLC/);
 const queue=await fs.readFile('scripts/cloudflare/europe-recovery-queue.mjs','utf8');
 assert.match(queue,/REPAIR_INCOMPLETE_OHLC/);
 assert.match(queue,/officialNoTradeReported/);

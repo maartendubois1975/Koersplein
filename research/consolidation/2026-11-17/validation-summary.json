@@ -1,0 +1,142 @@
+{
+  "date": "2026-11-17",
+  "branch": "consolidation-20261116",
+  "baseCommit": "43999b80d0dabc36c93d6bd2939c8cc5484a0596",
+  "approvedCompanies": {
+    "XAMS": 80,
+    "XBRU": 105,
+    "XPAR": 664
+  },
+  "tests": [
+    {
+      "command": "npm test",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run history:test",
+      "result": "PASS",
+      "knownHistoricalReferenceWeekMissingSessions": 11
+    },
+    {
+      "command": "npm run test:consolidation",
+      "result": "PASS",
+      "coverage": [
+        "849 approved identities",
+        "per-market source failure isolation",
+        "append-only conflict protection",
+        "idempotent archive replay",
+        "full prospective ledger execution with blocked unverified histories",
+        "immutable prior prediction fields",
+        "calendar horizon month-end and leap-day boundaries",
+        "late actual +30% rise excluded",
+        "canonical renderer 80/105/664 rows"
+      ]
+    },
+    {
+      "command": "node scripts/research/export-paris-company-review.mjs --check",
+      "result": "PASS"
+    },
+    {
+      "command": "node scripts/history/test-paris-register.mjs",
+      "result": "PASS"
+    },
+    {
+      "command": "YAML parsing and bash -n on every workflow run step",
+      "result": "PASS"
+    },
+    {
+      "command": "Local HTTP server: homepage, .mjs MIME, URL-decoded stored history path",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run audit:codebase",
+      "result": "PASS",
+      "errors": 0,
+      "existingWarnings": [
+        "XOSL SOURCE_DIVERSITY_LEGACY_EVIDENCE"
+      ]
+    }
+  ],
+  "researchSuites": [
+    {
+      "test": "scripts/research/test-block3-integrity.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-fetch-gpw-evidence.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-analytics.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-sector-classification.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-plus30-chain-scanner.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-reconcile-isin.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-six-official-symbol-evidence.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-block1-complete.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-import-isin-evidence.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-block5-learning.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-block6-live.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-amsterdam-portfolio-simulator.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-block4-exam.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-machine-specialists.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-block2-machines.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-six-ipo-current-identity.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-amsterdam-period-quality.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-opportunity-boundaries.mjs",
+      "exitCode": 0
+    },
+    {
+      "test": "scripts/research/test-learning.mjs",
+      "exitCode": 0
+    }
+  ],
+  "visualBrowserValidation": "Not completed: native Chromium socket creation prohibited; canonical renderer executed in DOM harness and HTTP assets checked",
+  "renderLiveConfiguration": "Not verified: no selected Render workspace",
+  "unattendedSchedule": "Not active: development workflow_dispatch only; default branch unchanged",
+  "productionWrites": 0
+}

@@ -1,49 +1,47 @@
 import fs from 'node:fs/promises';
-import {validateBars} from '../history/bars.mjs';
+import {loadApprovedHistory} from './market-history-source.mjs';
+import {latestClosedWeekday,mapConcurrent} from '../cloudflare/europe-run-policy.mjs';
+import {validSessionDate} from '../../daily-session-view.mjs';
+import {assessPeriod} from './amsterdam-period-quality.mjs';
+import {evaluateOpportunity} from './exam-outcomes-core.mjs';
+import {sealOpportunity,verifyOpportunity} from './prediction-ledger-core.mjs';
 import {loadCompanyCatalog,companyContracts} from '../history/company-register.mjs';
 
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
-if(!API) throw Error('KOERSPLEIN_API_URL ontbreekt');
 
-const config=JSON.parse(await fs.readFile('data/markets.json','utf8'));
-const marketList=Array.isArray(config)?config:Array.isArray(config.markets)?config.markets:(config.venues||[]).flatMap(v=>v.markets||[]);
-const active=marketList.filter(x=>x.available===true||String(x.status).toLowerCase()==='available'||x.status==='ACTIVE').filter(x=>Object.hasOwn(companyContracts,x.mic));
-if(!active.length) throw Error('Geen actieve markten gevonden');
 
+const active=await Promise.all(Object.keys(companyContracts).map(async mic=>{const catalog=await loadCompanyCatalog(mic);return {mic,name:catalog.exchange||mic,catalog};}));
+const runReferenceDate=process.env.TARGET_SESSION||latestClosedWeekday();
+if(!validSessionDate(runReferenceDate)||runReferenceDate>latestClosedWeekday()||[0,6].includes(new Date(runReferenceDate+'T12:00:00Z').getUTCDay()))throw Error('INVALID_RESEARCH_REFERENCE_SESSION');
+const diagnostics=[];
 const histCache=new Map();
-
-async function hist(isin,expected=null){
-  const cacheKey=isin+'|'+(expected?.mic||'')+'|'+(expected?.symbol||'');
-  if(histCache.has(cacheKey)) return histCache.get(cacheKey);
-  const r=await fetch(`${API}/api/history/${encodeURIComponent(isin)}`);
-  if(!r.ok) throw Error(`history ${r.status}`);
-  const x=await r.json();
-  if(expected&&(!x.instrument||x.instrument.isin!==isin||x.instrument.mic!==expected.mic||String(x.instrument.symbol||x.instrument.ticker)!==expected.symbol))throw Error('History identity mismatch');
-  const bars=validateBars(Array.isArray(x)?x:(x.bars||x.records||x.history||[]))
-    .filter(b=>Number.isFinite(b.high)&&Number.isFinite(b.low)&&b.volume>0)
-    .map(b=>({date:b.date,close:+b.close}))
-    .sort((a,b)=>a.date.localeCompare(b.date));
-  histCache.set(cacheKey,bars);
-  return bars;
+async function hist(share,market,{prediction=false}={}){
+ const key=(share.primaryMic||share.mic||market)+':'+share.isin+':'+prediction;
+ if(!histCache.has(key))histCache.set(key,loadApprovedHistory(share,market,{api:API,cutoff:runReferenceDate,requirePredictionEvidence:prediction}));
+ return histCache.get(key);
 }
 const pct=(a,b)=>a&&b?b/a-1:0;
 const mean=a=>a.length?a.reduce((s,x)=>s+x,0)/a.length:0;
 const sd=a=>{if(a.length<2)return 0;const m=mean(a);return Math.sqrt(mean(a.map(x=>(x-m)**2)))};
 const round=(n,d=8)=>Number(Number(n).toFixed(d));
 
+await fs.mkdir('research/output',{recursive:true});
 let ledger=[];
 try{ledger=JSON.parse(await fs.readFile('data/opportunity-ledger.json','utf8'))}catch(e){if(e.code!=='ENOENT')throw e;}
 
 const candidatesByMarket=new Map();
 for(const m of active){
-  const raw=await loadCompanyCatalog(m.mic);
+  const raw=m.catalog;
   const ins=raw.shares||raw.instruments||raw;
   const rows=[];
   let failed=0;
-  for(const x of ins){
+  await mapConcurrent(ins,6,async x=>{
     try{
-      const b=await hist(x.isin,{mic:x.primaryMic||x.mic||m.mic,symbol:x.symbol||x.ticker}),i=b.length-1;
-      if(i<252) continue;
+      const b=await hist(x,m.mic,{prediction:true}),i=b.length-1;
+      if(b[i]?.date!==runReferenceDate){diagnostics.push({market:m.mic,isin:x.isin,status:'STALE_HISTORY',lastDate:b[i]?.date});return;}
+      if(i<252){diagnostics.push({market:m.mic,isin:x.isin,status:'INSUFFICIENT_HISTORY',records:b.length});return;}
+      const quality=assessPeriod(b.slice(i-252));
+      if(quality.issues.length){diagnostics.push({market:m.mic,isin:x.isin,status:'HISTORY_QUALITY_BLOCKED',issues:quality.issues});return;}
       const c=b[i].close,r=[];
       for(let j=i-125;j<=i;j++) r.push(pct(b[j-1].close,b[j].close));
       const w=b.slice(i-252,i+1).map(v=>v.close);
@@ -65,8 +63,9 @@ for(const m of active){
         breakout:features.m6+features.drawdown52w+.2*features.recovery52w
       };
       rows.push({x,date:b[i].date,close:c,features,scores,componentRanks:{},consensusRank:0});
-    }catch(e){failed++;console.warn('HISTORY_FAILED',m.mic,x.isin,e.message)}
-  }
+    }catch(e){failed++;diagnostics.push({market:m.mic,isin:x.isin,status:'HISTORY_FAILED',error:e.message});console.warn('HISTORY_FAILED',m.mic,x.isin,e.message)}
+  });
+  rows.sort((a,b)=>a.x.isin.localeCompare(b.x.isin));
   for(const key of ['momentum','balanced','acceleration','breakout']){
     [...rows].sort((a,b)=>b.scores[key]-a.scores[key]).forEach((r,i)=>{r.componentRanks[key]=i+1;r.consensusRank+=i+1});
   }
@@ -74,19 +73,15 @@ for(const m of active){
   candidatesByMarket.set(m.mic,{market:m,rows,universeCount:ins.length,eligibleCount:rows.length,failedCount:failed});
 }
 
-const latestReferenceDates=[...candidatesByMarket.values()].map(v=>v.rows[0]?.date).filter(Boolean).sort();
-const runReferenceDate=latestReferenceDates.at(-1);
-if(!runReferenceDate) throw Error('Geen geldige referentiedatum gevonden');
-
 const usedIsins=new Set();
 const newSelections=[];
 for(const m of active){
   const pack=candidatesByMarket.get(m.mic);
   if(!pack) continue;
+  if(runReferenceDate!==latestClosedWeekday()){diagnostics.push({market:m.mic,status:'HISTORICAL_REFERENCE_NO_NEW_PREDICTIONS'});continue;}
   if(ledger.some(x=>x.referenceDate===runReferenceDate&&x.market===m.mic)) continue;
   const sameDate=pack.rows.filter(r=>r.date===runReferenceDate);
   const coverage=sameDate.length/Math.max(1,pack.universeCount);
-  if(coverage<0.90){console.warn('ADVICE_WITHHELD_LOW_COVERAGE',m.mic,coverage);continue;}
   let q=sameDate.find(r=>!usedIsins.has(r.x.isin));
   if(!q) q=sameDate[0];
   if(!q) continue;
@@ -95,11 +90,12 @@ for(const m of active){
     selectionDate:runReferenceDate,
     market:m.mic,
     venue:m.name||m.mic,
-    currency:q.x.currency||m.currency||null,
+    currency:q.x.currency||m.catalog.currency||'EUR',
     targetPct:30,
     horizonMonths:3,
     status:'OPEN',
     frozen:true,
+    createdAt:new Date().toISOString(),
     modelVersion:'consensus-price-v2-auditable',
     name:q.x.name||q.x.company||q.x.symbol||q.x.isin,
     ticker:q.x.ticker||q.x.symbol||null,
@@ -112,36 +108,30 @@ for(const m of active){
     features:Object.fromEntries(Object.entries(q.features).map(([k,v])=>[k,round(v)])),
     audit:{universeCount:pack.universeCount,eligibleCount:sameDate.length,failedCount:pack.failedCount,coveragePct:round(coverage*100,4)}
   };
-  ledger.push(selection);
-  newSelections.push(selection);
+  const sealed=sealOpportunity(selection);ledger.push(sealed);
+  newSelections.push(sealed);
 }
 
 for(const p of ledger){
   try{
-    const b=await hist(p.isin),after=b.filter(x=>x.date>p.referenceDate);
-    if(!after.length) continue;
-    const latest=after.at(-1);
-    p.latestDate=latest.date;p.latestClose=latest.close;p.currentReturn=latest.close/p.referenceClose-1;
-    p.maxReturn=Math.max(...after.map(x=>x.close/p.referenceClose-1));
-    let peak=p.referenceClose,maxDD=0;
-    for(const x of after){peak=Math.max(peak,x.close);maxDD=Math.min(maxDD,x.close/peak-1)}
-    p.maxDrawdown=maxDD;
-    for(const level of [10,20,30]){
-      const hit=after.find(x=>x.close>=p.referenceClose*(1+level/100));
-      if(hit){p[`hit${level}`]=true;p[`hit${level}Date`]=hit.date}
-    }
-    const end=new Date(p.referenceDate+'T00:00:00Z');end.setUTCMonth(end.getUTCMonth()+3);
-    if(new Date(latest.date+'T00:00:00Z')>=end){p.status='CLOSED';p.result30=!!p.hit30}
-  }catch{}
+    if(p.recordHash)verifyOpportunity(p);
+    else {p.legacyUnverified=true;diagnostics.push({market:p.market,isin:p.isin,status:'LEGACY_PREDICTION_NOT_PRESEALED'});}
+    const market=active.find(x=>x.mic===p.market),share=market?.catalog.shares.find(x=>x.isin===p.isin);
+    if(!share)throw Error('PREDICTION_OUTSIDE_APPROVED_REGISTER');
+    const bars=await hist(share,p.market);
+    if(p.evaluationVersion!=='bounded-calendar-v1'&&p.latestDate)p.previousEvaluation={latestDate:p.latestDate,latestClose:p.latestClose,result30:p.result30,hit30:p.hit30,hit30Date:p.hit30Date,maxReturn:p.maxReturn};
+    Object.assign(p,evaluateOpportunity(p,bars,{asOf:runReferenceDate}));delete p.evaluationError;
+  }catch(error){p.evaluationError=error.message;p.status='EVALUATION_UNVERIFIED';p.result30=null;diagnostics.push({market:p.market,isin:p.isin,status:'EVALUATION_FAILED',error:error.message});}
 }
 
+await fs.writeFile('research/output/daily-opportunity-diagnostics.json',JSON.stringify({referenceDate:runReferenceDate,diagnostics},null,2)+'\n');
 await fs.writeFile('data/opportunity-ledger.json',JSON.stringify(ledger,null,2));
 const latestByMarket={};
 for(const mic of Object.keys(companyContracts)){
   const xs=ledger.filter(x=>x.market===mic).sort((a,b)=>String(b.selectionDate||b.referenceDate).localeCompare(String(a.selectionDate||a.referenceDate)));
   if(xs[0]) latestByMarket[mic]=xs[0];
 }
-const closed=ledger.filter(x=>x.status==='CLOSED');
+const closed=ledger.filter(x=>x.status==='CLOSED'&&x.recordHash&&!x.legacyUnverified&&!x.evaluationError);
 const hits30=closed.filter(x=>x.result30===true).length;
 const misses30=closed.filter(x=>x.result30===false).length;
 const learning={

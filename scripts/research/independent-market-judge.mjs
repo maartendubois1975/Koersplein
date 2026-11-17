@@ -1,3 +1,4 @@
+import {horizonEndDate} from './exam-outcomes-core.mjs';
 import fs from 'node:fs/promises';
 import {chronologicalExamFolds,benchmarkScores,rankingMetrics} from './historical-exam-core.mjs';
 const mic=process.env.MARKET_MIC;if(!mic)throw Error('MARKET_MIC ontbreekt');
@@ -7,7 +8,7 @@ const rows=raw.split(/\r?\n/).filter(Boolean).map(x=>JSON.parse(x));
 const report={generatedAt:new Date().toISOString(),market:mic,judge:'M03_INDEPENDENT_BASELINE_DIAGNOSTIC',status:'NOT_VALIDATED',observations:rows.length,horizons:{},limitations:['Only M01 baseline predictions exist; not an 11-machine competition','No immutable precommitted forecasts verified','No independent untouched holdout promotion authorized','Provisional symbol identities excluded from validation metrics; historical universe membership remains unverified']};
 for(const h of [3,6,12,24]){
  const k=`${h}m`;
- const eligible=rows.filter(r=>Number.isFinite(r.predictions?.[k])&&Number.isFinite(r.realized?.[k])&&Date.parse(r.predictionDate)<Date.now()-h*30.4375*86400000);
+ const eligible=rows.filter(r=>Number.isFinite(r.predictions?.[k])&&Number.isFinite(r.realized?.[k])&&horizonEndDate(r.predictionDate,h)<=new Date().toISOString().slice(0,10));
  const verified=eligible.filter(r=>r.provisionalIdentity!==true);
  const provisional=eligible.length-verified.length;
  const exam=chronologicalExamFolds(verified,{horizonMonths:h,embargoMonths:h,holdoutMonths:24});

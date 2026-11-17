@@ -9,7 +9,7 @@ try{const p=JSON.parse(await fs.readFile(path.join(root,'data/world-fill-plan.js
 try{const p=JSON.parse(await fs.readFile(path.join(root,'data/world-fill-plan.json'),'utf8')),r=JSON.parse(await fs.readFile(path.join(root,'data/market-source-registry.json'),'utf8'));for(const m of p.markets||[]){const s=r.markets?.[m.mic];if(m.state==='COMPLETE'&&s?.catalogFingerprint){try{const cat=JSON.parse(await fs.readFile(path.join(root,`data/euronext-${m.code}.json`),'utf8'));if(cat.fingerprint&&cat.fingerprint!==s.catalogFingerprint)issues.push({severity:'ERROR',type:'COMPLETE_FINGERPRINT_DRIFT',file:'data/world-fill-plan.json',detail:m.mic});}catch{}}if(s?.status==='APPROVED'&&Number(s.discovery?.sourceCountTested||0)<2&&['XMIL','XOSL'].includes(m.mic))issues.push({severity:'WARN',type:'SOURCE_DIVERSITY_LEGACY_EVIDENCE',file:'data/market-source-registry.json',detail:m.mic});}}catch(e){issues.push({severity:'ERROR',type:'CANONICAL_STATE_AUDIT_FAILED',file:'data/world-fill-plan.json',detail:e.message});}
 // Active development branch has exactly two intentionally retained workflows.
 // Do not require retired main-branch workflows in a development-branch audit.
-const requiredWorkflows=new Set(['amsterdam-daily-history.yml','xams-regression-check.yml']);
+const requiredWorkflows=new Set(['approved-daily-session.yml','approved-regression-check.yml']);
 const presentWorkflows=files.filter(f=>path.relative(root,f).replaceAll('\\','/').startsWith('.github/workflows/')&&/\.ya?ml$/.test(f)).map(f=>path.basename(f));
 for(const name of presentWorkflows){
  if(!requiredWorkflows.has(name))issues.push({severity:'ERROR',type:'UNAPPROVED_WORKFLOW_PRESENT',file:'.github/workflows/'+name});
@@ -19,10 +19,10 @@ for(const name of requiredWorkflows){
 }
 // Prevent removed archive and retired workflow triggers from being reintroduced.
 const retiredAuditTriggerPaths=['scripts/archive/**','data/atlas-archive/**','.github/workflows/paris-*.yml','.github/workflows/world-fill-controller.yml','.github/workflows/market-handoff-controller.yml'];
-for(const f of files.filter(x=>path.relative(root,x).replaceAll('\\\\','/').startsWith('.github/workflows/')&&/\\.ya?ml$/.test(x))){
+for(const f of files.filter(x=>path.relative(root,x).replaceAll('\\\\','/').startsWith('.github/workflows/')&&/\.ya?ml$/.test(x))){
  const rel=path.relative(root,f).replaceAll('\\\\','/'),body=await fs.readFile(f,'utf8');
  for(const retired of retiredAuditTriggerPaths){
-  if(body.split('\\n').some(line=>line.trim().replace(/^[-\\s'\\\"]+|['\\\"]+$/g,'')===retired))issues.push({severity:'ERROR',type:'RETIRED_WORKFLOW_TRIGGER',file:rel,detail:retired});
+  if(body.split('\n').some(line=>line.trim().replace(/^[-\s'"]+|['"]+$/g,'')===retired))issues.push({severity:'ERROR',type:'RETIRED_WORKFLOW_TRIGGER',file:rel,detail:retired});
  }
 }
 const obsoleteTriggers=files.filter(x=>{const rel=path.relative(root,x).replaceAll('\\','/');return rel.startsWith('.research-triggers/')||/\.trigger$/.test(rel)||rel==='.source-first-trigger'});
@@ -112,7 +112,7 @@ for(const f of files.filter(x=>path.relative(root,x).split(path.sep).join('/').s
 }
 
 // Fail on byte-identical executable source copies; do not delete historical research data.
-const executableSources=files.filter(f=>/\\.(?:mjs|js)$/.test(f));
+const executableSources=files.filter(f=>/\.(?:mjs|js)$/.test(f));
 const exactSourceCopies=new Map();
 for(const file of executableSources){
  const rel=path.relative(root,file).split(path.sep).join('/');
@@ -123,14 +123,14 @@ for(const file of executableSources){
  else exactSourceCopies.set(body,rel);
 }
 // Conservative inventory: identify potentially unreferenced scripts without deleting dynamic entrypoints.
-const sourceEntries=files.filter(f=>path.relative(root,f).split(path.sep).join('/').startsWith('scripts/')&&/\\.(?:mjs|js)$/.test(f));
-const referenceFiles=files.filter(f=>/\\.(?:mjs|js|json|ya?ml|html|md)$/.test(f)&&!path.relative(root,f).split(path.sep).join('/').startsWith('research/output/'));
+const sourceEntries=files.filter(f=>path.relative(root,f).split(path.sep).join('/').startsWith('scripts/')&&/\.(?:mjs|js)$/.test(f));
+const referenceFiles=files.filter(f=>/\.(?:mjs|js|json|ya?ml|html|md)$/.test(f)&&!path.relative(root,f).split(path.sep).join('/').startsWith('research/output/'));
 const referenceBodies=await Promise.all(referenceFiles.map(async f=>({path:path.relative(root,f).split(path.sep).join('/'),body:await fs.readFile(f,'utf8')})));
 const unreferencedScriptCandidates=[];
 for(const f of sourceEntries){
  const rel=path.relative(root,f).split(path.sep).join('/');
  if(['server.mjs','cli.mjs','index.mjs'].includes(path.basename(rel))||path.basename(rel).startsWith('test')||path.basename(rel).includes('.test.'))continue;
- const filename=path.basename(rel),withoutExtension=rel.replace(/\\.(?:mjs|js)$/,'');
+ const filename=path.basename(rel),withoutExtension=rel.replace(/\.(?:mjs|js)$/,'');
  const referenced=referenceBodies.some(entry=>entry.path!==rel&&(entry.body.includes(rel)||entry.body.includes(withoutExtension)||entry.body.includes(filename)));
  if(!referenced)unreferencedScriptCandidates.push(rel);
 }

@@ -1,38 +1,45 @@
 import fs from 'node:fs/promises';
-import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
 import {loadCompanyCatalog} from '../history/company-register.mjs';
 import {createDefaultProviderRegistry} from '../history/provider-registry.mjs';
 import {providerRoute} from '../history/source-policy.mjs';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {latestClosedWeekday,inspectDailyBarIntegrity,mapConcurrent} from './europe-run-policy.mjs';
-const registry=createDefaultProviderRegistry();
-const session=process.env.TARGET_SESSION||latestClosedWeekday();
-assert(/^\d{4}-\d{2}-\d{2}$/.test(session)&&session<=latestClosedWeekday());
-const market=process.env.MARKET_MIC;
-const catalog=await loadCompanyCatalog(market);
-const expected=catalog.shares.length;
-const range={startDate:session,endDate:session};
-const exact=r=>{const checked=inspectDailyBarIntegrity(r,range);return checked.conflicts.length===0&&checked.bars.length===1&&checked.bars[0].date===session?checked.bars[0]:null;};
-const results=[];
-await mapConcurrent(catalog.shares,4,async s=>{
- const instrument={...s,mic:s.primaryMic||s.mic||market,officialIsin:s.isin,ticker:s.symbol,currency:s.currency||'EUR'};
- const identity={isin:s.isin,mic:instrument.mic,symbol:s.symbol,name:s.name};
- let officialError=null;
- try{
- const official=await officialDailyStatus(instrument,session);
- const bar=official?.status==='TRADED'&&exact({bars:[official.bar]});
- if(bar){results.push({...identity,status:'TRADED',bar,provider:official.provider,sourceUrl:official.sourceUrl});return;}
- }catch(e){officialError=e.message;}
- try{
- const route=providerRoute(instrument,{mode:'update'});
- const {provider,result}=await registry.fetchDaily(instrument,range,route.primary,{allowedProviderIds:route.allowedProviderIds,timeoutMs:20000,acceptResult:r=>r.providerMeta?.partialHistory!==true&&Boolean(exact(r))});
- results.push({...identity,status:'TRADED',bar:exact(result),provider:provider.id,sourceUrl:result.requestUrl,officialError});
- }catch(e){results.push({...identity,status:'SESSION_UNVERIFIED',bar:null,officialError,error:e.message});}
-});
-assert.equal(results.length,expected);
-assert.equal(new Set(results.map(x=>x.isin)).size,expected);
-results.sort((a,b)=>a.isin.localeCompare(b.isin));
-const counts={};for(const r of results)counts[r.status]=(counts[r.status]||0)+1;
-await fs.mkdir('research/output',{recursive:true});
-await fs.writeFile('research/output/daily-session-'+market+'.json',JSON.stringify({market,session,counts,readOnly:true,results},null,2)+'\n');
-console.log('DAILY_SESSION '+JSON.stringify({market,session,counts}));
+import {listingIdentity,validSessionDate} from '../../daily-session-view.mjs';
+
+export async function collectApprovedSession({market,session=latestClosedWeekday(),now=new Date(),catalog,registry=createDefaultProviderRegistry(),official=officialDailyStatus,concurrency=4}={}){
+ if(!validSessionDate(session)||session>latestClosedWeekday(now)||[0,6].includes(new Date(session+'T12:00:00Z').getUTCDay()))throw Error('Invalid or unclosed target session '+session);
+ catalog??=await loadCompanyCatalog(market);
+ const range={startDate:session,endDate:session};
+ const exact=result=>{const check=inspectDailyBarIntegrity(result,range);return !check.conflicts.length&&check.bars.length===1?check.bars[0]:null;};
+ const results=[];
+ await mapConcurrent(catalog.shares,concurrency,async share=>{
+  const {storageKey,...identity}=listingIdentity(share,market);
+  const instrument={...share,...identity,officialIsin:share.isin,ticker:identity.symbol,currency:share.currency||catalog.currency||'EUR'};
+  let officialError=null;
+  try{
+   const status=await official(instrument,session);
+   if(status?.date===session&&['NO_TRADES','MARKET_CLOSED'].includes(status.status)){
+    results.push({...identity,status:status.status,bar:null,provider:status.provider,sourceUrl:status.sourceUrl,evidence:status});return;
+   }
+   const bar=status?.status==='TRADED'&&exact({bars:[status.bar]});
+   if(bar){results.push({...identity,status:'TRADED',bar,provider:status.provider,sourceUrl:status.sourceUrl});return;}
+  }catch(error){officialError=error.message;}
+  try{
+   const route=providerRoute(instrument,{mode:'update'});
+   const {provider,result}=await registry.fetchDaily(instrument,range,route.primary,{allowedProviderIds:route.allowedProviderIds,timeoutMs:20000,acceptResult:r=>r.providerMeta?.partialHistory!==true&&Boolean(exact(r))});
+   results.push({...identity,status:'TRADED',bar:exact(result),provider:provider.id,sourceUrl:result.requestUrl,officialError});
+  }catch(error){results.push({...identity,status:'SESSION_UNVERIFIED',bar:null,officialError,error:error.message});}
+ });
+ if(results.length!==catalog.shares.length||new Set(results.map(x=>x.isin)).size!==catalog.shares.length)throw Error('Incomplete session universe '+market);
+ results.sort((a,b)=>a.isin.localeCompare(b.isin));
+ const counts={};for(const row of results)counts[row.status]=(counts[row.status]||0)+1;
+ return {market,session,counts,readOnly:true,generatedAt:now.toISOString(),results};
+}
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
+ const snapshot=await collectApprovedSession({market:process.env.MARKET_MIC,session:process.env.TARGET_SESSION||latestClosedWeekday()});
+ await fs.mkdir('research/output',{recursive:true});
+ await fs.writeFile('research/output/daily-session-'+snapshot.market+'.json',JSON.stringify(snapshot,null,2)+'\n');
+ console.log('DAILY_SESSION '+JSON.stringify({market:snapshot.market,session:snapshot.session,counts:snapshot.counts}));
+ if(snapshot.counts.SESSION_UNVERIFIED===snapshot.results.length)process.exitCode=1;
+}

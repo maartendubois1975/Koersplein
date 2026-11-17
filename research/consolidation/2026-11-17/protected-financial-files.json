@@ -1,0 +1,990 @@
+{
+  "scope": "Every tracked data/ and research/ file is byte-identical to the starting branch index",
+  "count": 246,
+  "files": [
+    {
+      "path": "data/amsterdam-five-venue-evidence.json",
+      "gitBlobSha": "3a2f646e8612f1ef51e637f86c2e14f7a712562d"
+    },
+    {
+      "path": "data/amsterdam-history-manifest.json",
+      "gitBlobSha": "874e7727c2ff9af8892b8fbb6f9b59c69227ddf1"
+    },
+    {
+      "path": "data/amsterdam-import-audit.json",
+      "gitBlobSha": "659096500b590130c6c07f4dc35c82b91dc0b983"
+    },
+    {
+      "path": "data/amsterdam-import-status.json",
+      "gitBlobSha": "e279ca2ec1985ef1982bf79376184297b5d47495"
+    },
+    {
+      "path": "data/amsterdam-no-trades-2026-10-19-23.json",
+      "gitBlobSha": "dbdc1f674ca4e31b6ce353a8a02d4c970394f161"
+    },
+    {
+      "path": "data/amsterdam-seven-session-research.json",
+      "gitBlobSha": "fc398b671370dc2371c372d6f785d0ac0c55a1cd"
+    },
+    {
+      "path": "data/canonical-listings.json",
+      "gitBlobSha": "cbefbcc749a6a40080a2832f01c1802bdda279ce"
+    },
+    {
+      "path": "data/chat-publication-request.json",
+      "gitBlobSha": "77c5b0920d3ecae94199ba9b223cbee60c591e44"
+    },
+    {
+      "path": "data/company-register-contracts.json",
+      "gitBlobSha": "fef3d8fec8c640abb3830ae76907adff6f709957"
+    },
+    {
+      "path": "data/daily-session-XAMS.json",
+      "gitBlobSha": "9becbedc0dc91610af90862145867d0a918dce9d"
+    },
+    {
+      "path": "data/daily-session-XBRU.json",
+      "gitBlobSha": "6ded336b3f8906acce7f84e373b020eb75cfef16"
+    },
+    {
+      "path": "data/daily-session-XPAR.json",
+      "gitBlobSha": "009ea8129a4eb30c9e0e98d3ffb5ab19c829c7eb"
+    },
+    {
+      "path": "data/daily-sessions/XAMS/2026-11-13.json",
+      "gitBlobSha": "9becbedc0dc91610af90862145867d0a918dce9d"
+    },
+    {
+      "path": "data/daily-sessions/XBRU/2026-11-13.json",
+      "gitBlobSha": "6ded336b3f8906acce7f84e373b020eb75cfef16"
+    },
+    {
+      "path": "data/daily-sessions/XPAR/2026-11-13.json",
+      "gitBlobSha": "009ea8129a4eb30c9e0e98d3ffb5ab19c829c7eb"
+    },
+    {
+      "path": "data/euronext-amsterdam-indices.json",
+      "gitBlobSha": "3a096c72911b4c2a7604c3d6c309a5c4cf5cda85"
+    },
+    {
+      "path": "data/euronext-amsterdam.json",
+      "gitBlobSha": "9759d1ed1a66bd04f1dcfb0a5d236006543da4fd"
+    },
+    {
+      "path": "data/euronext-athens.json",
+      "gitBlobSha": "0c6f2327c8525b0f13b1945eb518ac6640cdd73e"
+    },
+    {
+      "path": "data/euronext-bratislava.json",
+      "gitBlobSha": "3bd482518d38a60791d05ca18ffbc9ece492cdfa"
+    },
+    {
+      "path": "data/euronext-brussels-indices.json",
+      "gitBlobSha": "250a41bab94ec74c4b53be06e82bf03b0306f546"
+    },
+    {
+      "path": "data/euronext-brussels.json",
+      "gitBlobSha": "342f12570d41a4fc0906da46dbc084fcd7f340f3"
+    },
+    {
+      "path": "data/euronext-bucharest.json",
+      "gitBlobSha": "bc96f629ac59d1c8298a0c8a5ecc6bedd2fff3c7"
+    },
+    {
+      "path": "data/euronext-budapest.json",
+      "gitBlobSha": "80347a3ebda41408248ed2a25ec8ea39f2a66543"
+    },
+    {
+      "path": "data/euronext-copenhagen.json",
+      "gitBlobSha": "779af892648efd679942ba535533eadfe832f006"
+    },
+    {
+      "path": "data/euronext-cyprus.json",
+      "gitBlobSha": "a5e2488d6883679a46b526fd1e494ee05171c9a2"
+    },
+    {
+      "path": "data/euronext-dublin.json",
+      "gitBlobSha": "33fada5d0d48ce453fa2e49b3d0d420b9bfe0196"
+    },
+    {
+      "path": "data/euronext-frankfurt.json",
+      "gitBlobSha": "706dae8419566a264c6a26dfe8fcbb13b82f2483"
+    },
+    {
+      "path": "data/euronext-helsinki.json",
+      "gitBlobSha": "21b3b3460c8f2b9c226ab521d31d98a22ffa1b57"
+    },
+    {
+      "path": "data/euronext-lisbon.json",
+      "gitBlobSha": "54503d20fe1c53bc13c254d6aaf08079e6c3da2c"
+    },
+    {
+      "path": "data/euronext-ljubljana.json",
+      "gitBlobSha": "13d1495d4bbe498af02b6610c6e1d101feb69e42"
+    },
+    {
+      "path": "data/euronext-london.json",
+      "gitBlobSha": "8bddd64ff91787074a48646221105368fa26336c"
+    },
+    {
+      "path": "data/euronext-luxembourg.json",
+      "gitBlobSha": "a3e386f818413ecc36b3370f394c4ea25c36d57d"
+    },
+    {
+      "path": "data/euronext-madrid.json",
+      "gitBlobSha": "8016d7bc2af7a060ea4c2ef738a8cafc0f7c2923"
+    },
+    {
+      "path": "data/euronext-malta.json",
+      "gitBlobSha": "a0a7a675051d8008a64867ca448e58fd0f7ac78d"
+    },
+    {
+      "path": "data/euronext-milan.json",
+      "gitBlobSha": "10e5e9a10a8dd5e8812b2e8f42061a63b3b5398a"
+    },
+    {
+      "path": "data/euronext-oslo.json",
+      "gitBlobSha": "7e384d011fc6099524b0f8fe11cbcfe527987a53"
+    },
+    {
+      "path": "data/euronext-paris.json",
+      "gitBlobSha": "1288ef3c416cb79d65bc44839b80e8364d2a3825"
+    },
+    {
+      "path": "data/euronext-prague.json",
+      "gitBlobSha": "7711811d6ebc53365d87284bb678caa2d3d9133b"
+    },
+    {
+      "path": "data/euronext-reykjavik.json",
+      "gitBlobSha": "4915162e45f7199bf8da7e28a412c5862b17cb21"
+    },
+    {
+      "path": "data/euronext-riga.json",
+      "gitBlobSha": "c6a015029b89301ad0d261fbe13fa271c3833074"
+    },
+    {
+      "path": "data/euronext-sofia.json",
+      "gitBlobSha": "fffe73f7823de313e9c9e3291f92dff5c8be1e8c"
+    },
+    {
+      "path": "data/euronext-stockholm.json",
+      "gitBlobSha": "2add16189fd2796f6b99032c6291ba8e72238dca"
+    },
+    {
+      "path": "data/euronext-tallinn.json",
+      "gitBlobSha": "41607640a7f22ac80daf073fdf2019fcf7ba9648"
+    },
+    {
+      "path": "data/euronext-vienna.json",
+      "gitBlobSha": "e24952e00c0ec4d41866313cd67fdab1684b75c9"
+    },
+    {
+      "path": "data/euronext-vilnius.json",
+      "gitBlobSha": "b46c6cf5483f30a724d5379c8cdcf16d073776f3"
+    },
+    {
+      "path": "data/euronext-warsaw.json",
+      "gitBlobSha": "de8fbe8c5abaddca1d6e4dc162ea315faa51e915"
+    },
+    {
+      "path": "data/euronext-zagreb.json",
+      "gitBlobSha": "0fc4be492c5ec04d7514b1e92c658370329d81b6"
+    },
+    {
+      "path": "data/euronext-zurich.json",
+      "gitBlobSha": "6ea10e06436cc4837cba27598e12852a7b0cbe4c"
+    },
+    {
+      "path": "data/europe-health.json",
+      "gitBlobSha": "10e139a9c4a440ff39e9be098832a8ec6b02f392"
+    },
+    {
+      "path": "data/history-instruments.json",
+      "gitBlobSha": "a19955c7151bd55c3ae5c3befb1458c6201987fc"
+    },
+    {
+      "path": "data/history/BE0003818359.json",
+      "gitBlobSha": "cb9520399ce96a1f50db5f376df6527aa0663376"
+    },
+    {
+      "path": "data/history/BMG0112X1056.json",
+      "gitBlobSha": "9cf5d4dc0b3b81f17b073ad207f221c01853e29e"
+    },
+    {
+      "path": "data/history/BMG3602E1084.json",
+      "gitBlobSha": "461de0faa1a03ecd42766ad38502c1cea896b012"
+    },
+    {
+      "path": "data/history/CH1216478797.json",
+      "gitBlobSha": "5b54fdb607513a79f9607e2dfc7a1cc3f7dd628e"
+    },
+    {
+      "path": "data/history/CY0200751713.json",
+      "gitBlobSha": "df13ecea55bff2f020595003f47db19f4d7daf69"
+    },
+    {
+      "path": "data/history/GB00B2B0DG97.json",
+      "gitBlobSha": "bb580982c7db2c1aaaefff9a26e9b9bfd86b1126"
+    },
+    {
+      "path": "data/history/GB00BDCPN049.json",
+      "gitBlobSha": "16ec7849e9827d3dbd669e02336aa8af4499af8b"
+    },
+    {
+      "path": "data/history/GB00BMXH3352.json",
+      "gitBlobSha": "8f19a0066ed673ed604707084afa21f7a8b504a4"
+    },
+    {
+      "path": "data/history/GB00BN0VZ646.json",
+      "gitBlobSha": "3b3d1f3b1e8f9ec7dd38b08d426f75abd85dbc4b"
+    },
+    {
+      "path": "data/history/GB00BNTJ3546.json",
+      "gitBlobSha": "dd9f269a5aa8338830d5b801daf8595e648e263b"
+    },
+    {
+      "path": "data/history/GB00BP6MXD84.json",
+      "gitBlobSha": "5ed64b05bbdc4bf107fc3c9628ecc31d83197961"
+    },
+    {
+      "path": "data/history/GB00BQQFX454.json",
+      "gitBlobSha": "f01a29e28a48072e642834c9f41ae48f6ab1894c"
+    },
+    {
+      "path": "data/history/GB00BVZK7T90.json",
+      "gitBlobSha": "82dcfe4aea380916660a445ffa52f479d0950273"
+    },
+    {
+      "path": "data/history/LU0569974404.json",
+      "gitBlobSha": "d0872923b456cb82098c8fdddddfcd0aa58e9657"
+    },
+    {
+      "path": "data/history/LU1598757687.json",
+      "gitBlobSha": "a0cb13b0a8a3100459d5a123e0c54540ccf39e4b"
+    },
+    {
+      "path": "data/history/NL0000009082.json",
+      "gitBlobSha": "03324642b938f6fdaec3257065720d56cec8b706"
+    },
+    {
+      "path": "data/history/NL0000009165.json",
+      "gitBlobSha": "3df4b825ffca572c93f51dc4c3381c09b5e860de"
+    },
+    {
+      "path": "data/history/NL0000009538.json",
+      "gitBlobSha": "fb90abf1c7623c1a7e0318b8c662d48879e74b6c"
+    },
+    {
+      "path": "data/history/NL0000018034.json",
+      "gitBlobSha": "d81b003d69e48f2455c9231127ffb1293fafba93"
+    },
+    {
+      "path": "data/history/NL0000285278.json",
+      "gitBlobSha": "fc25af847fa6c2caef379a717dc1e4b58b6e79e4"
+    },
+    {
+      "path": "data/history/NL0000302636.json",
+      "gitBlobSha": "520287bb4c691c2d38c7c44c5f179881f5f95703"
+    },
+    {
+      "path": "data/history/NL0000313286.json",
+      "gitBlobSha": "ad135751047f8e3ed9b289d4b195e9434be4af4e"
+    },
+    {
+      "path": "data/history/NL0000334118.json",
+      "gitBlobSha": "4586c5cd70058d3309870fb202a46cb37389c7d2"
+    },
+    {
+      "path": "data/history/NL0000337319.json",
+      "gitBlobSha": "3c7b6a88c970bc9ef37b1316d4109fa8c6da7e66"
+    },
+    {
+      "path": "data/history/NL0000345577.json",
+      "gitBlobSha": "a2f63b9338ca6deab1aa76590e3873640bc98258"
+    },
+    {
+      "path": "data/history/NL0000345627.json",
+      "gitBlobSha": "7b6ec2c5d2773c510ff00601d278af1120b5fa20"
+    },
+    {
+      "path": "data/history/NL0000360618.json",
+      "gitBlobSha": "f82d4c0c4960903fe9821b79f5aface29030c214"
+    },
+    {
+      "path": "data/history/NL0000371243.json",
+      "gitBlobSha": "4e3d3e99f1863e6ef75c84f182acaa51f9cb2f94"
+    },
+    {
+      "path": "data/history/NL0000378669.json",
+      "gitBlobSha": "89b2e11be34befd06c79b621eca1967c9ca2b838"
+    },
+    {
+      "path": "data/history/NL0000379121.json",
+      "gitBlobSha": "bc9959e01563e02da5f3b048be487dcbf97462cd"
+    },
+    {
+      "path": "data/history/NL0000395903.json",
+      "gitBlobSha": "624d4f271b08842711d61ee3417f83fc5d9cd8e8"
+    },
+    {
+      "path": "data/history/NL0000440311.json",
+      "gitBlobSha": "c6f376b04e240511b6292cbd47beda47d5870bee"
+    },
+    {
+      "path": "data/history/NL0000817179.json",
+      "gitBlobSha": "95fa7b759f2d2be61fb28595965e7b4e05883615"
+    },
+    {
+      "path": "data/history/NL0000852523.json",
+      "gitBlobSha": "140dd5ae08636d54dd1bfb6c358430515799e8b8"
+    },
+    {
+      "path": "data/history/NL0000852531.json",
+      "gitBlobSha": "6bb60c0a4d2c3e84535ba72c517f302a68dda546"
+    },
+    {
+      "path": "data/history/NL0000852564.json",
+      "gitBlobSha": "f48c588457daeb063538966f9ebaa904cc5bbca9"
+    },
+    {
+      "path": "data/history/NL0000888691.json",
+      "gitBlobSha": "6d3acc5148117738ac99176f9d245c24b17625d8"
+    },
+    {
+      "path": "data/history/NL0006237562.json",
+      "gitBlobSha": "859452c52a4ffd1053a36d5c8f55003c7b65de31"
+    },
+    {
+      "path": "data/history/NL0009269109.json",
+      "gitBlobSha": "97bbdb1559b44ba9bf4dac6900efbd3dd01076d5"
+    },
+    {
+      "path": "data/history/NL0009391242.json",
+      "gitBlobSha": "9b4da40352af6d3aeb7215f2656a93a697542156"
+    },
+    {
+      "path": "data/history/NL0009432491.json",
+      "gitBlobSha": "8202399130b6c19f55fb85708f77be4643ae00ba"
+    },
+    {
+      "path": "data/history/NL0009739416.json",
+      "gitBlobSha": "c119ff410c9ccd1d060d422232fbabe49c8e3f64"
+    },
+    {
+      "path": "data/history/NL0010273215.json",
+      "gitBlobSha": "9104cd5b1ffeb0e9a880def6998badd863cacc25"
+    },
+    {
+      "path": "data/history/NL0010391025.json",
+      "gitBlobSha": "3e0deb69fe769bf7911838dba8568024b5a6abbd"
+    },
+    {
+      "path": "data/history/NL0010407946.json",
+      "gitBlobSha": "4e15f0c3fac67c559bdac20164f1b7587f314ffd"
+    },
+    {
+      "path": "data/history/NL0010558797.json",
+      "gitBlobSha": "10a01b99ce88ba697d81bcd5d185f2e504c3a373"
+    },
+    {
+      "path": "data/history/NL0010583399.json",
+      "gitBlobSha": "5a919912c46159f0aa65eef79262f4cf131dbd3e"
+    },
+    {
+      "path": "data/history/NL0010696704.json",
+      "gitBlobSha": "d58a6f32dffc28de4766e22a68aee6cb7b98ef80"
+    },
+    {
+      "path": "data/history/NL0010773842.json",
+      "gitBlobSha": "1fd05df1c22e1ed47f086f39793659cd64ea4fb0"
+    },
+    {
+      "path": "data/history/NL0010776944.json",
+      "gitBlobSha": "0e574baee1f94e5fce03ab9fef842869289562ab"
+    },
+    {
+      "path": "data/history/NL0010801007.json",
+      "gitBlobSha": "70043c9934c5bde96b9e607757a8f6c85e4525ac"
+    },
+    {
+      "path": "data/history/NL0011540547.json",
+      "gitBlobSha": "8fd183fb8cae5464be226d1e5b7f1e4d581a908e"
+    },
+    {
+      "path": "data/history/NL0011660485.json",
+      "gitBlobSha": "d17894fc0ea0fc920609725d2376bc54c9723974"
+    },
+    {
+      "path": "data/history/NL0011794037.json",
+      "gitBlobSha": "15ecc82211d8b59848c6f2f5cd950580f4e537ad"
+    },
+    {
+      "path": "data/history/NL0011821202.json",
+      "gitBlobSha": "9ecc103716084d919be23dfcc8bb10d87324b1f3"
+    },
+    {
+      "path": "data/history/NL0011821392.json",
+      "gitBlobSha": "72b4203d23a14cfc500942156a7c3cf6967929f2"
+    },
+    {
+      "path": "data/history/NL0011832811.json",
+      "gitBlobSha": "abe893d16604554921a064ec83403a31694f1271"
+    },
+    {
+      "path": "data/history/NL0011872643.json",
+      "gitBlobSha": "b7243bd70b1685119087a49639a9f835618a8c5a"
+    },
+    {
+      "path": "data/history/NL0011872650.json",
+      "gitBlobSha": "8cc8dd431f8f0e400a6dc1d21b3cb6f353719315"
+    },
+    {
+      "path": "data/history/NL0012194724.json",
+      "gitBlobSha": "b5b727ce09e0265f670fb532c792d300f5412ac9"
+    },
+    {
+      "path": "data/history/NL0012747059.json",
+      "gitBlobSha": "22d2d7a1913920efaa5f57e11e8b6879a394b423"
+    },
+    {
+      "path": "data/history/NL0012817175.json",
+      "gitBlobSha": "849aee9d6eff1ae5ff53827511645feaf3455e6b"
+    },
+    {
+      "path": "data/history/NL0012866412.json",
+      "gitBlobSha": "f6bc22d46b3c1c424881154d0fda1e81d5e3f057"
+    },
+    {
+      "path": "data/history/NL0012969182.json",
+      "gitBlobSha": "c45e12c92270a59ae2cac1b6059a1a3b9e012ff5"
+    },
+    {
+      "path": "data/history/NL0013267909.json",
+      "gitBlobSha": "af0000303052e88d93095b5231da2d84d7440179"
+    },
+    {
+      "path": "data/history/NL0013332471.json",
+      "gitBlobSha": "6c2623c59fcd0bf763308ba6c7e814717d6ab1e2"
+    },
+    {
+      "path": "data/history/NL0013654809.json",
+      "gitBlobSha": "6f55de4cdd6413bcc87e660e185442457bf406af"
+    },
+    {
+      "path": "data/history/NL00150000S7.json",
+      "gitBlobSha": "d8107cc46bd9408e57929e11f1f0a07a4598ab8c"
+    },
+    {
+      "path": "data/history/NL00150002Q7.json",
+      "gitBlobSha": "bdca0b0e3fc3e28897294123ad9ddea566b0c201"
+    },
+    {
+      "path": "data/history/NL00150003E1.json",
+      "gitBlobSha": "3a58767eb16417ac2d7c1d970ba132f348a13f21"
+    },
+    {
+      "path": "data/history/NL00150006Z9.json",
+      "gitBlobSha": "74a16a80bb06fbf047d525cad2a24fd4633232d9"
+    },
+    {
+      "path": "data/history/NL0015000D50.json",
+      "gitBlobSha": "0857193905f59db871264d2894b31bb369b8fb2a"
+    },
+    {
+      "path": "data/history/NL0015000GX8.json",
+      "gitBlobSha": "1a966de80f82ce7708c82c761c6c10f69658ddbf"
+    },
+    {
+      "path": "data/history/NL0015000IY2.json",
+      "gitBlobSha": "dc3478b176363d112a36bfa1049187a8e980eac1"
+    },
+    {
+      "path": "data/history/NL0015000X07.json",
+      "gitBlobSha": "f6554f5890306d2ca4996951afa4d97d716737d3"
+    },
+    {
+      "path": "data/history/NL0015002AG2.json",
+      "gitBlobSha": "18296dede954ecd404c0f4d97f51dd0c45680e92"
+    },
+    {
+      "path": "data/history/NL0015002IE0.json",
+      "gitBlobSha": "33244529f49f0acd0362c5a6e2b6d163cec1061f"
+    },
+    {
+      "path": "data/history/NL0015002K83.json",
+      "gitBlobSha": "fbad95059dfb285db6d835e250d9fdbbb1b7479e"
+    },
+    {
+      "path": "data/history/NL0015002MS2.json",
+      "gitBlobSha": "dadb362314e15743a081e739e351c1354b2aaac0"
+    },
+    {
+      "path": "data/history/NL0015073TS8.json",
+      "gitBlobSha": "0d0c6b9a7a73f80d0e855a36b9005d9c3d5af030"
+    },
+    {
+      "path": "data/history/status.json",
+      "gitBlobSha": "8a10804592dab41a3a84772c93c4923e52e478a1"
+    },
+    {
+      "path": "data/home-contracts.json",
+      "gitBlobSha": "d70fea70b010fb0ef93681e4f4c100e48c3bd6ea"
+    },
+    {
+      "path": "data/machine-pipeline.json",
+      "gitBlobSha": "1aa99a935687cd21ac330b4aa72474b5b981d139"
+    },
+    {
+      "path": "data/madrid-official-equity-seed.json",
+      "gitBlobSha": "526854e6f71262324de17c3ea90544cbca4975ab"
+    },
+    {
+      "path": "data/market-source-registry.json",
+      "gitBlobSha": "faa3938e19dcb33403850b1cf5e54783ef76f9e6"
+    },
+    {
+      "path": "data/markets.json",
+      "gitBlobSha": "274af0710160c63a0c8c92e0800cc7ddbf8ac5e5"
+    },
+    {
+      "path": "data/opportunity-latest.json",
+      "gitBlobSha": "2747e14238d6ef45cd8b8d475a2880dbfb1f4c7d"
+    },
+    {
+      "path": "data/opportunity-learning.json",
+      "gitBlobSha": "7818b27634e4c64a7b9271535630cf289f3df22e"
+    },
+    {
+      "path": "data/opportunity-ledger.json",
+      "gitBlobSha": "ee3c73626026f6dc58f960595e1d9f38b18f3aaa"
+    },
+    {
+      "path": "data/opportunity-targets.json",
+      "gitBlobSha": "78c4431cbd81fb9c466b7a796262f0aed11456dc"
+    },
+    {
+      "path": "data/regions.json",
+      "gitBlobSha": "3e92a7b790ae68fba35e52dd8996404b2c8572a3"
+    },
+    {
+      "path": "data/research-director.json",
+      "gitBlobSha": "40eb7f7600f846b57ab3a36303916485409329f9"
+    },
+    {
+      "path": "data/research-experiments.json",
+      "gitBlobSha": "e9d11570d75b64a6983f8587b6484ad0a6ab17ff"
+    },
+    {
+      "path": "data/research-lab/archive.json",
+      "gitBlobSha": "2699dc28388005b53e2b499f97aa40b53b283368"
+    },
+    {
+      "path": "data/research-lab/director-state.json",
+      "gitBlobSha": "dadb593c376d4eaf13fb09ab5c2c4f4c28e39e83"
+    },
+    {
+      "path": "data/research-lab/latest.json",
+      "gitBlobSha": "5938ea7cc44f9c706608269d87e305910c2c01f3"
+    },
+    {
+      "path": "data/research-targets.json",
+      "gitBlobSha": "7736aa155ecd9d1a3be4bfc5b5ceec28861a6bd9"
+    },
+    {
+      "path": "data/research/paris-events-v1.json",
+      "gitBlobSha": "4bce40e7e1e7fdd252ff95f232629d6b2e28b535"
+    },
+    {
+      "path": "data/runtime-config.json",
+      "gitBlobSha": "045d0591a0f248eb9d983b4fe146b1696c397c75"
+    },
+    {
+      "path": "data/sector-classification.json",
+      "gitBlobSha": "fec610e998f4bda873f7d6ea400bbbb39d68c807"
+    },
+    {
+      "path": "data/source-evidence/bse-official-2026-10-17.json",
+      "gitBlobSha": "2b29aac4e1e4e59fa9fea4de619b8e5336be6a0c"
+    },
+    {
+      "path": "data/stockholm-official-equity-seed.json",
+      "gitBlobSha": "9988f1d9e405175a88a1d5cd89bcc54ce6e2d05e"
+    },
+    {
+      "path": "data/top5-three-month.json",
+      "gitBlobSha": "1816cdcb032b4f8e9909dc83d4f3a208aca2435c"
+    },
+    {
+      "path": "data/world-fill-plan.json",
+      "gitBlobSha": "c946627554810745028d40301f338b23a4168ecf"
+    },
+    {
+      "path": "data/world-markets.json",
+      "gitBlobSha": "81a499107d2f9e43b1c9d811f14745f04af6a899"
+    },
+    {
+      "path": "research/BLOK1-PIT-STATUS.md",
+      "gitBlobSha": "e207c3c31e27ab953f1b64984f81d16f7d9e1598"
+    },
+    {
+      "path": "research/BLOKKEN-2-3-STATUS.md",
+      "gitBlobSha": "0b007ba79d2e9bf074e7d004ffb5bcb8aac8c876"
+    },
+    {
+      "path": "research/BLOKKEN-4-5-6-STATUS.md",
+      "gitBlobSha": "d4652b7454d7f8993023f77ac0b34e90663278c8"
+    },
+    {
+      "path": "research/BLOKKEN11-14-STATUS.md",
+      "gitBlobSha": "32782e8b1d769ba92f418383332824a3d34260af"
+    },
+    {
+      "path": "research/BLOKKEN7-10-STATUS.md",
+      "gitBlobSha": "cc2927ab0964652044eba3bf2b291c2a7742fa2c"
+    },
+    {
+      "path": "research/EXECUTION-1-3-STATUS.md",
+      "gitBlobSha": "faf7ba340cd6e4713b8ddd5b74abd5c3a7354782"
+    },
+    {
+      "path": "research/EXECUTION-4-6-STATUS.md",
+      "gitBlobSha": "80904d378961844fda413d8cb5375d0c0c41c7fc"
+    },
+    {
+      "path": "research/MACHINE2-DEEP-RESEARCH.md",
+      "gitBlobSha": "ab81e0e2bbdef8622a228fe37f6601d44aa6fed1"
+    },
+    {
+      "path": "research/MACHINE2-FEEDING-STATUS.md",
+      "gitBlobSha": "98cb8333187f7a8b5ba924d2f8534ceac343d5a9"
+    },
+    {
+      "path": "research/MASTERARCHITECTUUR.md",
+      "gitBlobSha": "05faec03811ae35cda0db9a005eed8b3c45e4239"
+    },
+    {
+      "path": "research/README.md",
+      "gitBlobSha": "9711b585cc1f514921b40dcf4b44aa104b3d55b4"
+    },
+    {
+      "path": "research/VULLING-1-3-STATUS.md",
+      "gitBlobSha": "41c7dafb9bbe36ec664220768b296ca735fe1203"
+    },
+    {
+      "path": "research/amsterdam-evidence-triage-2026-10-30.md",
+      "gitBlobSha": "1c2d3efc05bd33747e3677acaf33fa481a1a4de8"
+    },
+    {
+      "path": "research/amsterdam-fill-plan-v1.json",
+      "gitBlobSha": "f80b89c54d847bd6a8ad8f3ebb1fbbadf3b11f1c"
+    },
+    {
+      "path": "research/block1-data-layer-v1.json",
+      "gitBlobSha": "b0024430a78dbcc664550bef2743dc7e3b741180"
+    },
+    {
+      "path": "research/block10-hypothesis-contract.json",
+      "gitBlobSha": "be380b17f9bdbfd9a3ee30ff409442893e7bd511"
+    },
+    {
+      "path": "research/block11-validation-contract.json",
+      "gitBlobSha": "e8c2a7d831f40abea2b8e58321387bd13d85105a"
+    },
+    {
+      "path": "research/block12-model-competition.json",
+      "gitBlobSha": "178d6efa4a800f728060a395cf75dd8d6ff35a3e"
+    },
+    {
+      "path": "research/block13-portfolio-contract.json",
+      "gitBlobSha": "7b8c01082a9904237949b329f10f0dee533aedc8"
+    },
+    {
+      "path": "research/block14-learning-audit-contract.json",
+      "gitBlobSha": "d2de12314916e21cb1945bf510a4ba0f32894c37"
+    },
+    {
+      "path": "research/block3-integrity-v1.json",
+      "gitBlobSha": "643740a2079587b05949d847351221a0d0c33a01"
+    },
+    {
+      "path": "research/block4-expectations-contract.json",
+      "gitBlobSha": "50e1509b681c6aaafb58d7daca022d2709f6b89b"
+    },
+    {
+      "path": "research/block4-historical-exam-v1.json",
+      "gitBlobSha": "14e43f7051de6623c5c7aa3d380e4a0c7e62e8b4"
+    },
+    {
+      "path": "research/block5-macro-contract.json",
+      "gitBlobSha": "42e24332409e9901c88f225d7faad5d287aa34fe"
+    },
+    {
+      "path": "research/block6-live-v1.json",
+      "gitBlobSha": "f3628642e5196b98add10f82f19565e2c143d98a"
+    },
+    {
+      "path": "research/block6-relative-network-contract.json",
+      "gitBlobSha": "d464d4e2bc4f4d5b15a89b94d110694793593f2f"
+    },
+    {
+      "path": "research/block7-events-contract.json",
+      "gitBlobSha": "6a2085f1c17bbf2a297a02e567e8be6e573aa66a"
+    },
+    {
+      "path": "research/block8-machine1-contract.json",
+      "gitBlobSha": "1d47c9c7a5e3c5bbd0611c3ef8bb28a862bfdb4e"
+    },
+    {
+      "path": "research/block9-machine2-forensic-contract.json",
+      "gitBlobSha": "a2457dd1438526beb1681f03ae2e902d87ec51ce"
+    },
+    {
+      "path": "research/brussels-candidate-review-2026-11-13.json",
+      "gitBlobSha": "a40062b6b98a497f25a29a1134a5973a49a20661"
+    },
+    {
+      "path": "research/brussels-company-only-full-triage-2026-11-13.json",
+      "gitBlobSha": "2be9b518470dc6f347783987c99731930f769a0d"
+    },
+    {
+      "path": "research/europe-120-official-data-request.csv",
+      "gitBlobSha": "90165797f325172a2c812e2ae148aed77c5e9580"
+    },
+    {
+      "path": "research/europe-120-official-data-request.md",
+      "gitBlobSha": "adecb9fed18a1e77843ff0009b4db94ec8d2bddb"
+    },
+    {
+      "path": "research/europe-exchange-first-source-decision.md",
+      "gitBlobSha": "7025b2d155c6facc59abe71e6eab2bb3ca1a0bb8"
+    },
+    {
+      "path": "research/europe-missing-120-README.md",
+      "gitBlobSha": "bf644e2481548c4c445c782b83a086acf8cb1283"
+    },
+    {
+      "path": "research/europe-missing-120-dossier.csv",
+      "gitBlobSha": "3f8c204339c45f3eeede5951e283a754f775c462"
+    },
+    {
+      "path": "research/europe-programming-audit-2026-10-23.md",
+      "gitBlobSha": "235ddcd00748bba1c8ec10344ecd4901037cd3df"
+    },
+    {
+      "path": "research/europe-provider-failure-triage-2026-10-22.md",
+      "gitBlobSha": "e778002c5bb0c46411a0a074eb64565fd75d8497"
+    },
+    {
+      "path": "research/europe-recovery-execution-2026-10-23.md",
+      "gitBlobSha": "8305a3b2333bb6df1a4652dbfba2c910a1715d90"
+    },
+    {
+      "path": "research/europe-recovery-priority.json",
+      "gitBlobSha": "a3fffdfc1ffc5aa09c6dc8e835e57a79b60a2e94"
+    },
+    {
+      "path": "research/europe-source-blockers.json",
+      "gitBlobSha": "8a00b2618518c4f769b8a4ed9da50676d66291ef"
+    },
+    {
+      "path": "research/europe-source-rights-decision-2026-10-23.md",
+      "gitBlobSha": "ea15d14840e295e3f611844cedd4bbf663d8ccaa"
+    },
+    {
+      "path": "research/execution-phase-1-3.json",
+      "gitBlobSha": "3224d5f6eb68c78f30ed3ae46304553c53fe0666"
+    },
+    {
+      "path": "research/execution-phase-4-6.json",
+      "gitBlobSha": "453586efc38cb44cf0ec9ca86ac56c86e8d65b18"
+    },
+    {
+      "path": "research/experiments.json",
+      "gitBlobSha": "d6714d70123cb348bc3974b2a57d2ba7ede3b03a"
+    },
+    {
+      "path": "research/fundamentals-contract-v1.json",
+      "gitBlobSha": "f5aca6eebb256309e7c439c21eef4ff5d3ac30c0"
+    },
+    {
+      "path": "research/fundamentals-sources-v1.json",
+      "gitBlobSha": "fe93296fa9193bd15769b418a646aff27e85b714"
+    },
+    {
+      "path": "research/hypotheses.json",
+      "gitBlobSha": "5dddb35d31cec807ab540d33a24c93244eeb7025"
+    },
+    {
+      "path": "research/library.json",
+      "gitBlobSha": "18682640d4196e59e629b38af978f55cfe2e8363"
+    },
+    {
+      "path": "research/machine-arena-europe-v1.json",
+      "gitBlobSha": "72b8cfa94eb6fce8d6699d246e7dd0b0ed9419de"
+    },
+    {
+      "path": "research/machine2-company-sources.json",
+      "gitBlobSha": "7e7c6655ead6b1eb54b0bff8eac1da258d3bd857"
+    },
+    {
+      "path": "research/machine2-feeding-plan.json",
+      "gitBlobSha": "c76577c5095bfa9395936b9ca432b177ab4bdc90"
+    },
+    {
+      "path": "research/machine2-providers.json",
+      "gitBlobSha": "b6de82772313a78e92012a29879aeb3cfff25504"
+    },
+    {
+      "path": "research/machine2-source-policy-v3.json",
+      "gitBlobSha": "7eacf5211074404687609a7a225886cec915e5d4"
+    },
+    {
+      "path": "research/machine2-source-registry.json",
+      "gitBlobSha": "6fb5e2ae6f300bb1a0b8f920adf633b942f0db0e"
+    },
+    {
+      "path": "research/machine2-sources.json",
+      "gitBlobSha": "0d337a8b13f3ddf0a731c11d555f27bd923aded0"
+    },
+    {
+      "path": "research/market-influence-test-machine.md",
+      "gitBlobSha": "865f9bfa857b9cda71e0cb82722d4768009b296e"
+    },
+    {
+      "path": "research/output/amsterdam-end-to-end-acceptance.json",
+      "gitBlobSha": "1ca241153ec7b6c1d2f549fe8dc928827d55a7db"
+    },
+    {
+      "path": "research/output/architecture-inventory.json",
+      "gitBlobSha": "6be32da847a14e2191919433cf92038b885f261a"
+    },
+    {
+      "path": "research/output/consolidation-regression-summary.json",
+      "gitBlobSha": "d00a4922409f13698ac41a0f3c4fffa9b7ff4aef"
+    },
+    {
+      "path": "research/output/final-arena/amsterdam-brussels.json",
+      "gitBlobSha": "725658fc1fa12972dd090e31b2c346e9c83df9a6"
+    },
+    {
+      "path": "research/output/hindsight/amsterdam-brussels.json",
+      "gitBlobSha": "235d0b86ef3f0cc8ea93eefad65e9a86c8644b0a"
+    },
+    {
+      "path": "research/output/paris/free-source-dossier.json",
+      "gitBlobSha": "674ffd2c2004f08fea0bb1797e004bf6bbaa512b"
+    },
+    {
+      "path": "research/output/paris/instrument-classification.json",
+      "gitBlobSha": "da4d1d936d128db184ce9f9eab14238aed33b601"
+    },
+    {
+      "path": "research/output/paris/repair-invalid-summary.json",
+      "gitBlobSha": "3162b2b45fc1b82063e00704c3a4ad197cf87896"
+    },
+    {
+      "path": "research/output/paris/validation-summary.json",
+      "gitBlobSha": "dd71fa490945df650cc34ee0466255287a977459"
+    },
+    {
+      "path": "research/output/xbru-missing-recent-source-check.json",
+      "gitBlobSha": "d06f802aeb81b2f5b33e0b024e870bcf2b8d5659"
+    },
+    {
+      "path": "research/output/xbru-source-observations.json",
+      "gitBlobSha": "3b54c89b43cbbec6501cb85a77bbc2e595d96c8f"
+    },
+    {
+      "path": "research/output/xbru-source-summary.json",
+      "gitBlobSha": "909a8e17386c2ba9620d29ce70352c9861adfd2d"
+    },
+    {
+      "path": "research/paris-inventory-audit-2026-10-21.md",
+      "gitBlobSha": "e9e92d487c220d9799973de76631f271f5cf689a"
+    },
+    {
+      "path": "research/paris/2026-11-16/HANDOFF.md",
+      "gitBlobSha": "e02576ada5bd5dd36a1eb6d48dc3a5a576c0f1cc"
+    },
+    {
+      "path": "research/paris/2026-11-16/README.md",
+      "gitBlobSha": "4dfc408425789f8e76aa31462f0210c7274cfa12"
+    },
+    {
+      "path": "research/paris/2026-11-16/all-listings.csv",
+      "gitBlobSha": "c59d34e80f82b9325be80d08eed6e92dc1fd2e7d"
+    },
+    {
+      "path": "research/paris/2026-11-16/approved-research-catalog.json",
+      "gitBlobSha": "80d7cabaee72f2e2dc4e65b0889afb96ff9875b4"
+    },
+    {
+      "path": "research/paris/2026-11-16/company-decisions.json",
+      "gitBlobSha": "c66b8b1c130620d99c3eefb6571a8b66190cb9cd"
+    },
+    {
+      "path": "research/paris/2026-11-16/evidence/decision-run-43810891249.zip",
+      "gitBlobSha": "9ec6247873a9592cb9b237047e0d2e01dc3b1f8c"
+    },
+    {
+      "path": "research/paris/2026-11-16/evidence/individual-evidence.json.gz",
+      "gitBlobSha": "1404ad8f31444bad597ef06f75fe6984a53a9827"
+    },
+    {
+      "path": "research/paris/2026-11-16/evidence/inventory-run-43809738322.zip",
+      "gitBlobSha": "a2df21390e637265c47e4394a7aa74a75ff0fb99"
+    },
+    {
+      "path": "research/paris/2026-11-16/evidence/official-directory-769.csv",
+      "gitBlobSha": "36ed35a7bb4ac9db2d5a6227bda8575a6d0b0578"
+    },
+    {
+      "path": "research/paris/2026-11-16/evidence/official-directory-with-currency-lines-771.csv",
+      "gitBlobSha": "1100abe32a7d4d5799c55da4b4bbb0a76d1d8b91"
+    },
+    {
+      "path": "research/paris/2026-11-16/evidence/paris-manifest-snapshot.json.gz",
+      "gitBlobSha": "84b9b5121e9f41ef935fd1efc14c08752d165fac"
+    },
+    {
+      "path": "research/paris/2026-11-16/excluded-listings.csv",
+      "gitBlobSha": "3c6788af30f256dc88bd83a86fe34474eb12f900"
+    },
+    {
+      "path": "research/paris/2026-11-16/included-companies.csv",
+      "gitBlobSha": "0edeba928b47ce0634fad1504d3fe757d1132700"
+    },
+    {
+      "path": "research/paris/2026-11-16/pending-cases.csv",
+      "gitBlobSha": "cb9edf648f8e1d92c36e113b9af113285ddbf619"
+    },
+    {
+      "path": "research/paris/2026-11-16/summary.json",
+      "gitBlobSha": "6e0b26463ee41a500f5dac7860b4408cdb82013a"
+    },
+    {
+      "path": "research/paris/2026-11-16/validation.json",
+      "gitBlobSha": "d4a04deb8b7ba758c8c3e9c7b93f8d79a6301560"
+    },
+    {
+      "path": "research/pit-contract-v1.json",
+      "gitBlobSha": "ccb321a471913412df4c235f86b78f8cfc276939"
+    },
+    {
+      "path": "research/postmortems.json",
+      "gitBlobSha": "33a1f1baa4e5fe28f5d8d0e2e8fd2dcbc3750ab6"
+    },
+    {
+      "path": "research/schema/hypothesis.schema.json",
+      "gitBlobSha": "176dd0b31715e9e6ae70b00cc946341a4fefbf3c"
+    },
+    {
+      "path": "research/universe-contract-v1.json",
+      "gitBlobSha": "276de37cc73a49b3a392dccf2f68f663ab6a885e"
+    },
+    {
+      "path": "research/universe-sources-v1.json",
+      "gitBlobSha": "662ed9dfcd6f98612ca3f5d76a58682ed953665d"
+    }
+  ]
+}

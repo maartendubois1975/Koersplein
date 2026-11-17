@@ -1,0 +1,329 @@
+{
+  "baseCommit": "43999b80d0dabc36c93d6bd2939c8cc5484a0596",
+  "changedFiles": 70,
+  "deletedFiles": 30,
+  "addedFiles": 14,
+  "modifiedFiles": 26,
+  "executableAndConfigLineDelta": -736,
+  "files": [
+    {
+      "path": ".github/workflows/approved-daily-session.yml",
+      "change": "MODIFY",
+      "newGitBlobSha": "dcebc0d0a11d89409681187b59b03f1dadadce69"
+    },
+    {
+      "path": ".github/workflows/approved-regression-check.yml",
+      "change": "ADD",
+      "newGitBlobSha": "516763e620ddcd274efc14b07dd05a204974a7bc"
+    },
+    {
+      "path": ".github/workflows/paris-evidence-review.yml",
+      "change": "DELETE"
+    },
+    {
+      "path": ".github/workflows/paris-full-history-audit.yml",
+      "change": "DELETE"
+    },
+    {
+      "path": ".github/workflows/paris-inventory-audit.yml",
+      "change": "DELETE"
+    },
+    {
+      "path": ".github/workflows/paris-recovery-evidence.yml",
+      "change": "DELETE"
+    },
+    {
+      "path": ".github/workflows/paris-register-check.yml",
+      "change": "DELETE"
+    },
+    {
+      "path": ".github/workflows/paris-stage-recovery.yml",
+      "change": "DELETE"
+    },
+    {
+      "path": ".github/workflows/paris-storage-plan.yml",
+      "change": "DELETE"
+    },
+    {
+      "path": ".github/workflows/xams-regression-check.yml",
+      "change": "DELETE"
+    },
+    {
+      "path": "config/paris-follow-policy.json",
+      "change": "DELETE"
+    },
+    {
+      "path": "config/research/paris-v1.json",
+      "change": "DELETE"
+    },
+    {
+      "path": "daily-session-view.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "8397bdab1f1203fb10e8974a2dc165a1d920bb37"
+    },
+    {
+      "path": "docs/AMSTERDAM_EXECUTION_STATE.md",
+      "change": "MODIFY",
+      "newGitBlobSha": "856f37fc42f49d27b80f9ef2875f12059e2116cd"
+    },
+    {
+      "path": "docs/CLEAN_ARCHITECTURE.md",
+      "change": "MODIFY",
+      "newGitBlobSha": "c49e2a5ab07696dd22e6ed61908de20e566885a7"
+    },
+    {
+      "path": "docs/CONSOLIDATION_2026-11-17.md",
+      "change": "ADD",
+      "newGitBlobSha": "cfd95ab58f98e3d3a1703d3c329ffeeeffb4a105"
+    },
+    {
+      "path": "package.json",
+      "change": "MODIFY",
+      "newGitBlobSha": "8d5e0dee0d59cda2c4737210b7b9174fa828e22b"
+    },
+    {
+      "path": "research/consolidation/2026-11-17/architecture-inventory.json",
+      "change": "ADD",
+      "newGitBlobSha": "2768ecf10f41c8f0495e00ffa9fdca5ddf04a569"
+    },
+    {
+      "path": "research/consolidation/2026-11-17/codebase-audit.json",
+      "change": "ADD",
+      "newGitBlobSha": "463137fa12d8b8d7b0391fd02a6b8423f00b7a89"
+    },
+    {
+      "path": "research/consolidation/2026-11-17/daily-session-XAMS.json.gz",
+      "change": "ADD",
+      "newGitBlobSha": "e78b9df40dd62cbccbf34fb81ebafefc3bcd783a"
+    },
+    {
+      "path": "research/consolidation/2026-11-17/daily-session-XBRU.json.gz",
+      "change": "ADD",
+      "newGitBlobSha": "55c0d817ed531d4c6c011f40292fc71ff62220d0"
+    },
+    {
+      "path": "research/consolidation/2026-11-17/daily-session-XPAR.json.gz",
+      "change": "ADD",
+      "newGitBlobSha": "79ad6ff3ce937fd16ef6ac4b94081eb0b6c692ba"
+    },
+    {
+      "path": "research/consolidation/2026-11-17/live-session-verification.json",
+      "change": "ADD",
+      "newGitBlobSha": "c80786b8f0eadedb113834cd68f1a9215ee04a28"
+    },
+    {
+      "path": "research/consolidation/2026-11-17/protected-financial-files.json",
+      "change": "ADD",
+      "newGitBlobSha": "58fe5bada317e6e5f7cc8240e9c6c081f3f612b5"
+    },
+    {
+      "path": "research/consolidation/2026-11-17/validation-summary.json",
+      "change": "ADD",
+      "newGitBlobSha": "8aaa8b7c84d8a574810f78ed3fb929edc310f945"
+    },
+    {
+      "path": "scripts/audit/architecture-inventory.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "8cfe801166a2a36428e343bebd57b1fbb80b3923"
+    },
+    {
+      "path": "scripts/audit/codebase-audit.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "9d6c91f934ebdfa82b0550ad9e51815e9b6763f1"
+    },
+    {
+      "path": "scripts/cloudflare/approved-daily-session.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "8cfc535283498d46f48b8176f6ebf7dec802c195"
+    },
+    {
+      "path": "scripts/cloudflare/archive-approved-session.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "c7c77182120b16ae6ffa6fab1d5803e8a988a16a"
+    },
+    {
+      "path": "scripts/cloudflare/audit-daily-open-close.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "0dcc165bc45530d9741a9978d9a1d822ce102ccd"
+    },
+    {
+      "path": "scripts/cloudflare/daily-open-close-update.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/cloudflare/paris-active-universe.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/cloudflare/paris-history-eligibility.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/cloudflare/paris-targeted-history-recovery.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/cloudflare/reconcile-official-daily.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/cloudflare/test-europe-missing-backfill-priority.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "ae8fcf456345100b15db8d64da9ea29d2a5dca70"
+    },
+    {
+      "path": "scripts/cloudflare/test-europe-ohlc-integrity.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "823879c217e6a60e8218f57f7251c4c46f9d15d0"
+    },
+    {
+      "path": "scripts/cloudflare/test-europe-provider-routing.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "284284eb455814ebf88c087a9aad212cbf482209"
+    },
+    {
+      "path": "scripts/cloudflare/test-import-session-boundary.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "2968c7788cb5f33bf3e9bf65e7bcb2351ea65df3"
+    },
+    {
+      "path": "scripts/cloudflare/test-paris-history-eligibility.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/cloudflare/universal-market-runner.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/history.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "e1cbe25cd1b45314242bb5f2d29395233b735df2"
+    },
+    {
+      "path": "scripts/history/amsterdam-daily-run.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/history/company-register.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "1e335c08ce7a1e420a545006ff3bc0a0d6672dea"
+    },
+    {
+      "path": "scripts/history/test-approved-market-view.mjs",
+      "change": "ADD",
+      "newGitBlobSha": "b357451f02db647ee9e64504dc31e771dbfc17cf"
+    },
+    {
+      "path": "scripts/history/test-approved-pipeline.mjs",
+      "change": "ADD",
+      "newGitBlobSha": "033bfd2a71858144743d79e81539904a43899a34"
+    },
+    {
+      "path": "scripts/research/amsterdam-machine1.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/research/analytics.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "87470d644a7903f3d74e4fa77d6f45bd469861c1"
+    },
+    {
+      "path": "scripts/research/brussels-machine1.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/research/build-paris-snapshot.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/research/daily-opportunity-ledger.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "f999a7df399a7e39a5a2d38a6dc649eb400fe1ec"
+    },
+    {
+      "path": "scripts/research/exam-outcomes-core.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "c2d5a9ad73f5b573f4ac910a79a258de57e558bf"
+    },
+    {
+      "path": "scripts/research/independent-market-judge.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "7b69eb1326f130f6678dca658bdfd03a132e01c7"
+    },
+    {
+      "path": "scripts/research/market-history-source.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "c1744f7f68966087dc3a4fac5adc771262614b44"
+    },
+    {
+      "path": "scripts/research/paris-input.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/research/paris-machine1.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/research/paris-pipeline.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/research/paris-universe.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/research/prediction-ledger-core.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "8465c33a98eb7b0595f40922042ca76dfa85b470"
+    },
+    {
+      "path": "scripts/research/research-quality.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "ad1552b4b81edf77f43cd381bc8a21f9721153e7"
+    },
+    {
+      "path": "scripts/research/run-paris-core.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/research/run-paris-full.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/research/test-opportunity-boundaries.mjs",
+      "change": "ADD",
+      "newGitBlobSha": "66f86b8bcaa865515db19076284cd11b1ada1f85"
+    },
+    {
+      "path": "scripts/research/test-paris-input.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/research/test-paris-pipeline.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/research/test-paris-universe.mjs",
+      "change": "DELETE"
+    },
+    {
+      "path": "scripts/research/universal-market-machine1.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "f783dee047e3012c5eba4fb09e4b14ecba29ae72"
+    },
+    {
+      "path": "scripts/server.mjs",
+      "change": "MODIFY",
+      "newGitBlobSha": "1e70318a557f63a022d6252b9ce1199c1809006c"
+    },
+    {
+      "path": "share.js",
+      "change": "MODIFY",
+      "newGitBlobSha": "c56c3140ba297c4996c6cd104c0ffd21f67ff1f0"
+    },
+    {
+      "path": "research/consolidation/2026-11-17/changed-files.json",
+      "change": "ADD"
+    }
+  ]
+}

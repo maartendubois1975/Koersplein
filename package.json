@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node scripts/server.mjs",
     "validate": "node scripts/validate.mjs",
-    "test": "npm run audit:architecture && node scripts/validate.mjs && node scripts/test.mjs && node scripts/factory/test.mjs && node scripts/cloudflare/test.mjs && node scripts/cloudflare/test-market-week-core.mjs && node scripts/cloudflare/test-xams-market-page.mjs",
+    "test": "npm run audit:architecture && node scripts/validate.mjs && node scripts/test.mjs && node scripts/factory/test.mjs && node scripts/cloudflare/test.mjs && node scripts/cloudflare/test-market-week-core.mjs && node scripts/cloudflare/test-xams-market-page.mjs && npm run test:consolidation",
     "history:test": "node --check scripts/history/diagnose-amsterdam-freshness.mjs && npm run history:core:test && node scripts/history/audit-amsterdam-import.mjs && node scripts/history/test-amsterdam-public-integration.mjs",
     "history:update": "node scripts/history.mjs update --all",
     "history:status": "node scripts/history.mjs status",
@@ -20,12 +20,6 @@
     "cloudflare:test": "node scripts/cloudflare/test.mjs",
     "cloudflare:seed": "node scripts/cloudflare/seed-catalog.mjs",
     "cloudflare:import-golden": "node scripts/cloudflare/import-golden.mjs",
-    "research:paris:plan": "node scripts/research/paris-pipeline.mjs",
-    "research:paris:run": "node scripts/research/paris-pipeline.mjs --execute",
-    "research:paris:test": "node scripts/research/test-paris-pipeline.mjs && node scripts/research/test-paris-input.mjs && node scripts/research/test-analytics.mjs && node scripts/research/test-learning.mjs && node scripts/research/test-block1-complete.mjs && node scripts/research/test-paris-universe.mjs",
-    "research:paris:core": "node scripts/research/run-paris-core.mjs",
-    "research:paris:full": "node scripts/research/run-paris-full.mjs",
-    "research:paris:events": "node scripts/research/fetch-paris-macro.mjs",
     "audit:codebase": "node scripts/audit/codebase-audit.mjs",
     "history:coverage": "node scripts/audit/europe-history-coverage.mjs",
     "cloudflare:audit-live": "node scripts/cloudflare/audit-live.mjs",
@@ -34,7 +28,12 @@
     "isin:gpw": "node scripts/research/fetch-gpw-evidence.mjs",
     "amsterdam:discover": "node scripts/history/discover-amsterdam.mjs",
     "audit:architecture": "node scripts/audit/architecture-inventory.mjs",
-    "history:core:test": "node scripts/history/test-history-core.mjs && node scripts/history/test-session-readiness.mjs && node scripts/history/test-consolidation.mjs"
+    "history:core:test": "node scripts/history/test-history-core.mjs && node scripts/history/test-session-readiness.mjs && node scripts/history/test-consolidation.mjs",
+    "daily:collect": "node scripts/cloudflare/approved-daily-session.mjs",
+    "daily:archive": "node scripts/cloudflare/archive-approved-session.mjs",
+    "research:daily": "node scripts/research/daily-opportunity-ledger.mjs",
+    "research:market": "node scripts/research/universal-market-machine1.mjs",
+    "test:consolidation": "node scripts/history/test-approved-pipeline.mjs && node scripts/research/test-opportunity-boundaries.mjs && node scripts/history/test-approved-market-view.mjs"
   },
   "engines": {
     "node": ">=22.5"

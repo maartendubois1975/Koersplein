@@ -57,7 +57,7 @@ for(const source of inspectFiles){
 const deletionCandidates=inactiveRootJs.filter(p=>references[p].length===0);
 
 const workflowPaths=files.filter(p=>/^\.github\/workflows\/.*\.ya?ml$/.test(p));
-const workflows=await Promise.all(workflowPaths.map(async p=>{const s=await fs.readFile(path.join(root,p),'utf8');return {path:p,scheduled:/^  schedule:/m.test(s),writes:/contents:\s*write/.test(s),targetsDevelopment:/amsterdam-reset-20261027/.test(s)};}));
+const workflows=await Promise.all(workflowPaths.map(async p=>{const s=await fs.readFile(path.join(root,p),'utf8');return {path:p,scheduled:/^  schedule:/m.test(s),writes:/contents:\s*write/.test(s),targetsDevelopment:/refs\/heads\/consolidation-20261116/.test(s)};}));
 const report={schemaVersion:1,files:files.length,pages:activePages.length,activeScripts:[...visited].sort(),inactiveRootJs,rootScriptReferences:references,deletionCandidates,redirects,missing,workflows,notes:['Inactive root scripts are candidates only: CLI, tests, or dynamic loading can reference them.','GitHub scheduled workflows execute only from default branch.','Do not remove financial data or provenance evidence based on static reachability.']};
 await fs.mkdir(path.join(root,'research/output'),{recursive:true});
 await fs.writeFile(path.join(root,'research/output/architecture-inventory.json'),JSON.stringify(report,null,2)+'\n');

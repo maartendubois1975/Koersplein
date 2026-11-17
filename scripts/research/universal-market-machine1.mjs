@@ -1,27 +1,30 @@
+import {assessPeriod} from './amsterdam-period-quality.mjs';
 import fs from 'node:fs/promises';
 import {pricePatternFeatures,anomalySignals,loserGuard} from './machine-specialists-core.mjs';
 import {classificationFor} from './sector-classification-core.mjs';
-import {loadMarketBars} from './market-history-source.mjs';
+import {loadApprovedHistory} from './market-history-source.mjs';
+import {loadCompanyCatalog} from '../history/company-register.mjs';
+import {horizonEndDate} from './exam-outcomes-core.mjs';
+import {latestClosedWeekday} from '../cloudflare/europe-run-policy.mjs';
 
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
-if(!API) throw new Error('KOERSPLEIN_API_URL ontbreekt');
-const plan=JSON.parse(await fs.readFile('data/world-fill-plan.json','utf8'));const mic=process.env.MARKET_MIC;if(!mic)throw new Error('MARKET_MIC ontbreekt');const market=plan.markets.find(x=>x.mic===mic);if(!market||market.state!=='COMPLETE')throw new Error(`Markt ${mic} is niet COMPLETE`);const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));const instruments=Array.isArray(catalog)?catalog:(catalog.instruments||catalog.shares||[]);
+const mic=process.env.MARKET_MIC;if(!mic)throw new Error('MARKET_MIC ontbreekt');const catalog=await loadCompanyCatalog(mic);const market={name:catalog.exchange||mic};const instruments=catalog.shares;
 const pct=(a,b)=>a&&b?(b/a-1):null;
 const monthKey=d=>d.slice(0,7);
-const addMonths=(date,n)=>{const d=new Date(date+'T00:00:00Z');d.setUTCMonth(d.getUTCMonth()+n);return d.toISOString().slice(0,10)};
-const nearest=(bars,date)=>bars.find(b=>b.date>=date)||null;
-const history=async isin=>{const r=await fetch(`${API}/api/history/${encodeURIComponent(isin)}`);if(!r.ok)throw new Error(`history ${r.status}`);return r.json()};
+const addMonths=horizonEndDate;
+const nearest=(bars,date)=>bars.at(-1)?.date>=date?bars.findLast(b=>b.date<=date):null;
 const getBars=x=>Array.isArray(x)?x:(x.bars||x.records||x.history||[]);
 const results=[];let failed=0,skippedMissingIsin=0,insufficientHistory=0,usableInstruments=0;const historyCoverage=[];
 for(const item of instruments){
  const hasIsin=typeof item.isin==='string'&&Boolean(item.isin.trim());
  if(!hasIsin)skippedMissingIsin++;
  try{
-  const loaded=await loadMarketBars(item,mic,history);const identity=loaded.identityKey;const bars=getBars(loaded.bars).filter(b=>b?.date&&Number.isFinite(Number(b.close))).map(b=>({...b,close:Number(b.close)})).sort((a,b)=>a.date.localeCompare(b.date));
+  const loaded={bars:await loadApprovedHistory(item,mic,{api:API,cutoff:process.env.TARGET_SESSION||latestClosedWeekday(),requirePredictionEvidence:true}),identityKey:(item.primaryMic||item.mic||mic)+':'+item.isin,isin:item.isin,provisionalIdentity:false,source:'APPROVED_IDENTITY_HISTORY'};const identity=loaded.identityKey;const bars=getBars(loaded.bars).filter(b=>b?.date&&Number.isFinite(Number(b.close))).map(b=>({...b,close:Number(b.close)})).sort((a,b)=>a.date.localeCompare(b.date));
   if(bars.length<260){insufficientHistory++;historyCoverage.push({identity,status:'INSUFFICIENT_HISTORY',provisionalIdentity:loaded.provisionalIdentity,source:loaded.source,bars:bars.length,firstDate:bars[0]?.date||null,lastDate:bars.at(-1)?.date||null});continue;}
   usableInstruments++;historyCoverage.push({identity,status:'HISTORY_AVAILABLE',provisionalIdentity:loaded.provisionalIdentity,source:loaded.source,bars:bars.length,firstDate:bars[0]?.date||null,lastDate:bars.at(-1)?.date||null});
   const monthly=[];let last='';for(const b of bars){const k=monthKey(b.date);if(k!==last){monthly.push(b);last=k;}else monthly[monthly.length-1]=b;}
   for(let i=12;i<monthly.length;i++){
+   if(assessPeriod(bars.filter(b=>b.date<=monthly[i].date).slice(-253)).issues.length)continue;
    const now=monthly[i], m3=monthly[Math.max(0,i-3)],m6=monthly[Math.max(0,i-6)],m12=monthly[Math.max(0,i-12)];
    const signals={momentum3m:pct(m3.close,now.close),momentum6m:pct(m6.close,now.close),momentum12m:pct(m12.close,now.close)};
    const barIndex=bars.findIndex(b=>b.date===now.date);const pattern=barIndex>=252?pricePatternFeatures(bars,barIndex):null;const anomaly=anomalySignals(pattern);const riskGuard=loserGuard(pattern);const classification=hasIsin?classificationFor(item.isin,now.date):null;
@@ -34,8 +37,8 @@ for(const item of instruments){
  }catch(e){failed++;historyCoverage.push({identity:item.isin||item.providerSymbol||null,status:'HISTORY_FETCH_ERROR',error:e.message});console.error(JSON.stringify({identity:item.isin||item.providerSymbol||null,error:e.message}));}
 }
 await fs.mkdir(`research/output/${mic}`,{recursive:true});
-const summary={generatedAt:new Date().toISOString(),market:mic,marketName:market.name,mode:'BLIND_WALK_FORWARD',modelVersion:'machine1-11-specialists-v3',instruments:instruments.length,observations:results.length,failed,skippedMissingIsin,insufficientHistory,usableInstruments,historyCoverageFile:'machine1-history-coverage.json',coverageStatus:results.length>0?'OBSERVATIONS_PRESENT':'NO_OBSERVATIONS',strictPointInTime:true,provisionalSymbolIdentitiesNotValidated:true,note:'Eerste nulmeting op uitsluitend historische prijsinformatie; ontbrekende signaalfamilies zijn expliciet gemarkeerd en krijgen geen fictieve waarden.'};
-await fs.writeFile(`research/output/${mic}/machine1-history-coverage.json`,JSON.stringify({market:mic,source:'KOERSPLEIN_HISTORY_API_OR_PROVISIONAL_SYMBOL',generatedAt:new Date().toISOString(),catalogInstruments:instruments.length,missingIsin:skippedMissingIsin,usableInstruments,insufficientHistory,failed,records:historyCoverage},null,2));
+const summary={generatedAt:new Date().toISOString(),market:mic,marketName:market.name,mode:'BLIND_WALK_FORWARD',modelVersion:'machine1-11-specialists-v3',instruments:instruments.length,observations:results.length,failed,skippedMissingIsin,insufficientHistory,usableInstruments,historyCoverageFile:'machine1-history-coverage.json',coverageStatus:results.length>0?'OBSERVATIONS_PRESENT':'NO_OBSERVATIONS',strictPointInTime:false,pointInTimePriceFeatures:true,historicalUniverseStatus:'CURRENT_APPROVED_REGISTER_NOT_POINT_IN_TIME',performanceClaimsAllowed:false,approvedRegisterIdentities:true,note:'Eerste nulmeting op uitsluitend historische prijsinformatie; ontbrekende signaalfamilies zijn expliciet gemarkeerd en krijgen geen fictieve waarden.'};
+await fs.writeFile(`research/output/${mic}/machine1-history-coverage.json`,JSON.stringify({market:mic,source:'APPROVED_EXCHANGE_SCOPED_HISTORY',generatedAt:new Date().toISOString(),catalogInstruments:instruments.length,missingIsin:skippedMissingIsin,usableInstruments,insufficientHistory,failed,records:historyCoverage},null,2));
 await fs.writeFile(`research/output/${mic}/machine1-summary.json`,JSON.stringify(summary,null,2));
 await fs.writeFile(`research/output/${mic}/machine1-results.jsonl`,results.map(x=>JSON.stringify(x)).join('\n')+'\n');
 console.log(JSON.stringify(summary,null,2));

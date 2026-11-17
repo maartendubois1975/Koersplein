@@ -26,14 +26,7 @@ assert.deepEqual(calls,[]);
 console.log('Europe provider routing: approved fallback, rejected fallback, and empty allowlist PASS');
 
 import fs from 'node:fs/promises';
-const policy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
-const updateScript=await fs.readFile('scripts/cloudflare/daily-open-close-update.mjs','utf8');
-assert.equal(policy.mode,'existing-history-only');
-assert.match(updateScript,/parisHistoryEligible\(share,marketMic,parisPolicy,manifest,resolveExisting\)/);
-assert.match(updateScript,/const shares=allShares\.filter\(share=>!isInactiveParis\(share,market\.mic\)\)/);
-assert.match(updateScript,/const fullRequested=process\.env\.EUROPE_FULL_BACKFILL==='1';/);
-console.log('Paris existing-history-only and explicit full-backfill guard PASS');
-
+const updateScript=await fs.readFile('scripts/cloudflare/approved-daily-session.mjs','utf8');
 const sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
 const {providerRoute}=await import('../history/source-policy.mjs');
 const approvedFor=mic=>providerRoute({mic},{sourceRegistry}).allowedProviderIds;
@@ -48,7 +41,7 @@ const baltic=new NasdaqBalticProvider();
 for(const mic of ['XTAL','XLIT','XRIS'])assert.equal(baltic.supports({mic,isin:'EE3100008996'}),true, 'Official Nasdaq Baltic provider must support '+mic);
 assert.equal(baltic.supports({mic:'XLON',isin:'EE3100008996'}),false);
 
-assert.match(updateScript,/providerRoute\(\{mic:market\.mic\},\{mode:'update',sourceRegistry\}\)/,'Daily import must use the central approved-only route');
+assert.match(updateScript,/providerRoute\(instrument,\{mode:'update'\}\)/,'Daily import must use central approved-only routing');
 console.log('Registered approved fallback routes for Paris, Switzerland, London and Sofia PASS');
 
 const yahooChart=await fs.readFile('scripts/history/providers/yahoo-chart.mjs','utf8');

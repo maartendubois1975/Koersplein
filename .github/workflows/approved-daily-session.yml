@@ -1,19 +1,41 @@
-name: Approved companies daily session staging
+name: Approved European companies daily session
 on:
-  push:
-    branches: [paris-reset-20261116]
-    paths: [.github/workflows/approved-daily-session.yml]
   workflow_dispatch:
+    inputs:
+      session:
+        description: 'Completed session YYYY-MM-DD; empty selects the latest closed weekday'
+        required: false
+        type: string
 permissions:
-  contents: write
+  contents: read
+concurrency:
+  group: approved-daily-session-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
+  register:
+    if: github.ref == 'refs/heads/consolidation-20261116'
+    runs-on: ubuntu-latest
+    outputs:
+      markets: ${{ steps.register.outputs.markets }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: register
+        run: |
+          node --input-type=module <<'JS' >> "$GITHUB_OUTPUT"
+          import {approvedCompanyUniverse} from './scripts/history/company-register.mjs';
+          console.log('markets='+JSON.stringify((await approvedCompanyUniverse()).map(m=>m.mic)));
+          JS
   daily:
+    needs: register
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
-        mic: [XAMS, XBRU, XPAR]
+        mic: ${{ fromJSON(needs.register.outputs.markets) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -22,26 +44,77 @@ jobs:
       - run: node scripts/cloudflare/approved-daily-session.mjs
         env:
           MARKET_MIC: ${{ matrix.mic }}
+          TARGET_SESSION: ${{ inputs.session }}
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: daily-session-${{ matrix.mic }}
-          path: research/output/daily-session-*.json
-  publish-test-data:
-    needs: daily
+          path: research/output/daily-session-${{ matrix.mic }}.json
+          if-no-files-found: warn
+  archive-development:
+    needs: [register, daily]
+    if: always() && needs.register.result == 'success' && github.ref == 'refs/heads/consolidation-20261116'
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/paris-reset-20261116'
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: paris-reset-20261116
+          ref: consolidation-20261116
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - uses: actions/download-artifact@v4
         with:
           pattern: daily-session-*
           merge-multiple: true
-          path: data
-      - run: |
-          node scripts/cloudflare/archive-approved-session.mjs
-          git config user.name "Koersplein staging"
+          path: research/output
+      - run: node scripts/cloudflare/archive-approved-session.mjs
+      - name: Preserve successful markets on the development branch
+        run: |
+          git config user.name "Koersplein development"
           git config user.email "actions@users.noreply.github.com"
-          git add data/daily-session-XAMS.json data/daily-session-XBRU.json data/daily-session-XPAR.json data/daily-sessions
-          if ! git diff --cached --quiet; then git commit -m "Publish verified session snapshots on Paris test branch"; git push origin HEAD:paris-reset-20261116; fi
+          git add data/daily-session-*.json data/daily-sessions
+          git add -f data/history
+          if ! git diff --cached --quiet; then
+            git commit -m "Archive approved European completed sessions"
+            git push origin HEAD:consolidation-20261116
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: approved-session-archive-report
+          path: research/output/approved-session-archive-report.json
+  research-development:
+    needs: archive-development
+    if: always() && needs.archive-development.result == 'success' && github.ref == 'refs/heads/consolidation-20261116'
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: consolidation-20261116
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Evaluate frozen predictions and select only provenance-verified histories
+        run: node scripts/research/daily-opportunity-ledger.mjs
+        env:
+          KOERSPLEIN_API_URL: ${{ vars.KOERSPLEIN_API_URL }}
+          TARGET_SESSION: ${{ inputs.session }}
+      - name: Save research results after prices have already been preserved
+        run: |
+          git config user.name "Koersplein development"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/opportunity-ledger.json data/opportunity-latest.json data/opportunity-learning.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Evaluate frozen approved-company research predictions"
+            git push origin HEAD:consolidation-20261116
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daily-opportunity-diagnostics
+          path: research/output/daily-opportunity-diagnostics.json

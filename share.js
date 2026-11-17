@@ -1,4 +1,4 @@
-import {approvedMarkets,browserCatalog,dailyRow} from './daily-session-view.mjs';
+import {approvedMarkets,browserCatalog,dailyRow,dailyHistoryPath} from './daily-session-view.mjs';
 import { renderHistoryChart, validateHistoryDocument, periodStartDate } from './chart.js';
 import { manifestResolver } from './market-week-core.mjs';
 import { assessPeriod, latestCloseChange } from './scripts/research/amsterdam-period-quality.mjs';
@@ -10,10 +10,10 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
  const venue=venues.venues.find(v=>v.id==='euronext');if(!venue)throw Error('Europese markten niet gevonden');
  let found=null;
  for(const market of venue.markets.filter(m=>m.status==='available'&&m.sharesData)){
-  try{const data=await browserCatalog(market.mic,'data/'+market.sharesData,load),shares=Array.isArray(data)?data:(data.shares||[]),share=shares.find(x=>x.isin===isin&&(!requestedMic||String(x.primaryMic||x.mic||market.mic).toUpperCase()===requestedMic.toUpperCase())&&(!requestedSymbol||String(x.symbol||x.ticker).toUpperCase()===requestedSymbol.toUpperCase()));if(share){found={market,share};break}}catch{}
+  try{const data=await browserCatalog(market.mic,'data/'+market.sharesData,load),shares=Array.isArray(data)?data:(data.shares||[]),share=shares.find(x=>x.isin===isin&&(!requestedMic||String(x.primaryMic||x.mic||market.mic).toUpperCase()===requestedMic.toUpperCase())&&(!requestedSymbol||String(x.symbol||x.ticker).toUpperCase()===requestedSymbol.toUpperCase()));if(share){found={market,share};break}}catch(error){console.warn('CATALOG_UNAVAILABLE',market.mic,error.message);}
  }
  if(!found)throw Error('Aandeel niet gevonden');
- const {market,share}=found,mic=share.primaryMic||share.mic||market.mic;const legacyPages={amsterdam:'amsterdam.html',brussels:'brussel.html',paris:'parijs.html',milan:'milaan.html',oslo:'oslo.html',lisbon:'lissabon.html',zurich:'zurich.html',stockholm:'stockholm.html'};const back=`market.html?market=${encodeURIComponent(market.id)}`;
+ const {market,share}=found,mic=share.primaryMic||share.mic||market.mic;const back=`market.html?market=${encodeURIComponent(market.id)}`;
  document.title=`${share.name} — Koersplein`;document.querySelector('#crumb-share').textContent=share.name;
  const crumbs=document.querySelector('.breadcrumbs');const links=crumbs?.querySelectorAll('a');if(links?.[2]){links[2].href=back;links[2].textContent=market.name}
  const backLink=document.querySelector('.back-link');backLink.href=back;backLink.textContent=`← ${market.name}`;
@@ -21,25 +21,41 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
  let current=null;
  if(approvedMarkets.has(market.mic)){try{const snap=await load('data/daily-session-'+market.mic+'.json');current=dailyRow(snap,share,market.mic);if(current){const fmt=n=>n.toLocaleString('nl-NL',{style:'currency',currency:share.currency||market.currency||'EUR'});detail.querySelector('.latest-price').innerHTML='<span>Opening / slot</span><strong>'+fmt(current.open)+' / '+fmt(current.close)+'</strong><small>'+esc(current.date)+'</small>';}}catch{}}
  try{
-  let h,storageId;
-  if(mic==='XAMS'){
-   const manifest=await load('data/amsterdam-history-manifest.json');
-   storageId=manifestResolver(manifest,mic)(share);
-   if(!storageId)throw Error('Geen gevalideerde Amsterdamse koershistorie');
-   h=await load('data/history/'+encodeURIComponent(storageId)+'.json');
-  }else{
-   const api=String(runtime.apiBaseUrl||'').replace(/\/$/,'');
-   if(!api)throw Error('Koersplein API is niet geconfigureerd');
-   const manifest=await load(api+'/api/history/manifest.json');
-   storageId=manifestResolver(manifest,mic)(share);
-   if(!storageId)throw Error('Geen gevalideerde historie voor deze beursnotering');
-   h=await load(`${api}/api/history/${encodeURIComponent(storageId).replace(/%3A/gi,':')}`);
+  let h,storageId,dailyHistory=null;
+  try{dailyHistory=await load(dailyHistoryPath(share,market.mic));}catch(error){if(!String(error.message).includes('HTTP 404'))throw error;}
+  try{
+   if(mic==='XAMS'){
+    const manifest=await load('data/amsterdam-history-manifest.json');
+    storageId=manifestResolver(manifest,mic)(share);
+    if(!storageId)throw Error('Geen gevalideerde historische opslagidentiteit');
+    h=await load('data/history/'+encodeURIComponent(storageId)+'.json');
+   }else{
+    const api=String(runtime.apiBaseUrl||'').replace(/\/$/,'');
+    if(!api)throw Error('Koersplein API is niet geconfigureerd');
+    const manifest=await load(api+'/api/history/manifest.json');
+    storageId=manifestResolver(manifest,mic)(share);
+    if(!storageId)throw Error('Geen gevalideerde historie voor deze beursnotering');
+    h=await load(`${api}/api/history/${encodeURIComponent(storageId).replace(/%3A/gi,':')}`);
+   }
+  }catch(error){
+   if(!dailyHistory)throw error;
+   console.warn('LEGACY_HISTORY_UNAVAILABLE',error.message);h=dailyHistory;storageId=share.isin;
+  }
+  if(dailyHistory&&h!==dailyHistory){
+   // Merge the new daily tail with the verified legacy identity; a short tail must not hide old history.
+   if(h.coverage?.recordCount!=null&&h.coverage.records==null)h.coverage.records=h.coverage.recordCount;
+   const oldBars=validateHistoryDocument(h,{...share,isin:storageId,mic,symbol:share.symbol||share.ticker});
+   const tail=validateHistoryDocument(dailyHistory,{...share,mic,symbol:share.symbol||share.ticker});
+   const byDate=new Map(oldBars.map(bar=>[bar.date,bar]));
+   for(const bar of tail){const old=byDate.get(bar.date);if(old&&['open','high','low','close','volume'].some(k=>old[k]!==bar[k]))throw Error('Historische bronnen spreken elkaar tegen op '+bar.date);if(!old)byDate.set(bar.date,bar);}
+   const merged=[...byDate.values()].sort((a,b)=>a.date.localeCompare(b.date));
+   h={...h,bars:merged,coverage:{...h.coverage,records:merged.length,firstDate:merged[0].date,lastDate:merged.at(-1).date}};
   }
   if(h.coverage?.recordCount!=null&&h.coverage.records==null)h.coverage.records=h.coverage.recordCount;
   const bars=validateHistoryDocument(h,{...share,isin:storageId,mic,symbol:share.symbol||share.ticker}),first=bars[0],last=bars.at(-1),currency=h.instrument?.currency||market.currency||'EUR';
   document.querySelector('#history-range').textContent=`${first.date} — ${last.date}`;renderHistoryChart(historyState,bars,{currency});
   let amsterdamQuality=null;
-  if(mic==='XAMS'){
+  {
    // Assess the exact displayed bars; no stale or separately published audit file.
    // A structural diagnostic is not independent price or total-return verification.
    const quality=assessPeriod(bars);
@@ -60,7 +76,7 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
   const p=document.createElement('p');p.className='history-source';p.textContent=`${bars.length.toLocaleString('nl-NL')} opgeslagen dagrecords (structurele broncontrole) · ${first.date} t/m ${last.date}`;historyState.append(p);
   const previous=bars.length>1?bars.at(-2):null;
   // Suppress a latest close-to-close percentage if a discontinuity is not verified.
-  const change=mic==='XAMS'?latestCloseChange(bars,amsterdamQuality):{percent:previous?.close>0?(last.close/previous.close-1)*100:null,reason:null};
+  const change=latestCloseChange(bars,amsterdamQuality);
   const lastDiscontinuity=Boolean(change.reason);
   const delta=change.percent;
   const deltaText=delta===null?'—':new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:2,maximumFractionDigits:2}).format(delta)+'%';

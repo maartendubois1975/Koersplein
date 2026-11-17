@@ -4,7 +4,7 @@ import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {isVerifiedNoTradeDespiteZeroVolumeReference} from './compare-europe-session-deltas.mjs';
 import {latestClosedWeekday,isCompleteOhlcBar,isTradedOhlcvBar,isVerifiedNoTradeGap,auditBarIssue,latestAuditBar,mapConcurrent,selectEuropeAuditHistoryPeriods} from './europe-run-policy.mjs';
 import {storageIdentityResolver} from './storage-identity.mjs';
-import {parisHistoryEligible} from './paris-history-eligibility.mjs';
+import {companyContracts,loadCompanyCatalog} from '../history/company-register.mjs';
 import {describeOhlcDefects,countOhlcDefects,recentOhlcDebt,inspectStoredOhlcDateConflicts} from './europe-ohlc-defects.mjs';
 import { FactoryApiClient } from './client.mjs';
 
@@ -15,15 +15,14 @@ if(!Number.isInteger(shardCount)||shardCount<1||!Number.isInteger(shardIndex)||s
 const complete=plan.markets.filter(x=>x.state==='COMPLETE').filter((_,index)=>index%shardCount===shardIndex);
 const out=[];
 const storedCatalog=await client.catalog();
-const parisPolicy=JSON.parse(await fs.readFile('config/paris-follow-policy.json','utf8'));
 const manifest=await fetchPublicHistoryManifest(client.baseUrl,{shardIndex});
 const cutoff=latestClosedWeekday();
 for(const market of complete){
-  const file=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
+  const file=companyContracts[market.mic]?await loadCompanyCatalog(market.mic):JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
   const allShares=file.shares||file.instruments||[];
   const resolveStorage=storageIdentityResolver(storedCatalog.instruments||[],market.mic);
-  const shares=allShares.filter(s=>parisHistoryEligible(s,market.mic,parisPolicy,manifest,resolveStorage));
-  const inactiveParis=allShares.length-shares.length;
+  const shares=allShares;
+  const inactiveParis=0;
   let ok=0,missing=[],skipped=0,noTrades=[];
   let recentInvalidOhlcDays=0,recentInvalidOhlcInstruments=0,storedOhlcConflictDates=0;
   const recentOhlcDebtExamples=[];

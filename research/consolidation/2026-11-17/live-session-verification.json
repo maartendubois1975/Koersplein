@@ -1,0 +1,1117 @@
+{
+  "generatedAt": "2026-11-17T05:14:45.629Z",
+  "session": "2026-11-16",
+  "scope": "Read-only live collection; archive/replay executed only in disposable storage, no financial data published",
+  "markets": [
+    {
+      "market": "XAMS",
+      "session": "2026-11-16",
+      "counts": {
+        "TRADED": 78,
+        "SESSION_UNVERIFIED": 2
+      },
+      "historyDocuments": 78,
+      "probeScope": "DEFAULT_OFFICIAL_AND_APPROVED_FALLBACKS",
+      "rawEvidence": "daily-session-XAMS.json.gz",
+      "rawSha256": "3485a77d8c5cdb8ec91a37cc27b22d4d469eff035705e4d328607305c36c50b5",
+      "unverified": [
+        {
+          "isin": "NL0000285278",
+          "mic": "XAMS",
+          "symbol": "BEVER",
+          "error": "Alle providers faalden voor NL0000285278: euronext-live: Geen verhandelde Euronext koershistorie voor NL0000285278-XAMS; mislukte vensters: 0; yahoo-chart: Provider returned no daily bars",
+          "officialError": null
+        },
+        {
+          "isin": "NL0000378669",
+          "mic": "XAMS",
+          "symbol": "PORF",
+          "error": "Alle providers faalden voor NL0000378669: euronext-live: Geen verhandelde Euronext koershistorie voor NL0000378669-XAMS; mislukte vensters: 0; yahoo-chart: Provider returned no daily bars",
+          "officialError": null
+        }
+      ]
+    },
+    {
+      "market": "XBRU",
+      "session": "2026-11-16",
+      "counts": {
+        "TRADED": 97,
+        "SESSION_UNVERIFIED": 8
+      },
+      "historyDocuments": 97,
+      "probeScope": "DEFAULT_OFFICIAL_AND_APPROVED_FALLBACKS",
+      "rawEvidence": "daily-session-XBRU.json.gz",
+      "rawSha256": "211685e5b9d86e92ab133553fbd2986b6c54f7a06387c2a30bf56473bdd95d56",
+      "unverified": [
+        {
+          "isin": "BE0003680916",
+          "mic": "MLXB",
+          "symbol": "MLNEU",
+          "error": "Alle providers faalden voor BE0003680916: yahoo-chart: Provider returned no daily bars",
+          "officialError": null
+        },
+        {
+          "isin": "BE0003752665",
+          "mic": "XBRU",
+          "symbol": "FOU",
+          "error": "Alle providers faalden voor BE0003752665: yahoo-chart: Provider returned no daily bars",
+          "officialError": null
+        },
+        {
+          "isin": "BE0003832491",
+          "mic": "MLXB",
+          "symbol": "NEWT",
+          "error": "Alle providers faalden voor BE0003832491: yahoo-chart: Provider returned no daily bars",
+          "officialError": null
+        },
+        {
+          "isin": "BE0003841583",
+          "mic": "MLXB",
+          "symbol": "REAL",
+          "error": "Alle providers faalden voor BE0003841583: yahoo-chart: Provider returned no daily bars",
+          "officialError": null
+        },
+        {
+          "isin": "BE0003847648",
+          "mic": "MLXB",
+          "symbol": "FLSP",
+          "error": "Alle providers faalden voor BE0003847648: yahoo-chart: Provider returned no daily bars",
+          "officialError": null
+        },
+        {
+          "isin": "BE0974298300",
+          "mic": "ALXB",
+          "symbol": "CAND",
+          "error": "Alle providers faalden voor BE0974298300: yahoo-chart: Provider returned no daily bars",
+          "officialError": null
+        },
+        {
+          "isin": "BE0974370026",
+          "mic": "MLXB",
+          "symbol": "MLTV",
+          "error": "Alle providers faalden voor BE0974370026: yahoo-chart: Provider returned no daily bars",
+          "officialError": null
+        },
+        {
+          "isin": "BE0974502347",
+          "mic": "XBRU",
+          "symbol": "FLOB",
+          "error": "Alle providers faalden voor BE0974502347: yahoo-chart: Provider returned no daily bars",
+          "officialError": null
+        }
+      ]
+    },
+    {
+      "market": "XPAR",
+      "session": "2026-11-16",
+      "counts": {
+        "TRADED": 522,
+        "SESSION_UNVERIFIED": 142
+      },
+      "historyDocuments": 522,
+      "probeScope": "OFFICIAL_EURONEXT_ONLY",
+      "rawEvidence": "daily-session-XPAR.json.gz",
+      "rawSha256": "ceadba08847bf4abc86660b7cc3e2687d5e52fd5b1590f347e43f614c1861598",
+      "unverified": [
+        {
+          "isin": "BE0974269012",
+          "mic": "XPAR",
+          "symbol": "ALDV",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "BE0974299316",
+          "mic": "ALXP",
+          "symbol": "ALINV",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "BE6252013725",
+          "mic": "XMLI",
+          "symbol": "MLMFI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "BE6333353298",
+          "mic": "XMLI",
+          "symbol": "MLBON",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "CH0008175645",
+          "mic": "XPAR",
+          "symbol": "TVRB",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "CH0120879058",
+          "mic": "XMLI",
+          "symbol": "MLFIR",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "CH1148983609",
+          "mic": "XMLI",
+          "symbol": "MLBBO",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "CI0000053161",
+          "mic": "XPAR",
+          "symbol": "FORE",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105362000",
+          "mic": "XMLI",
+          "symbol": "MLBAR",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105417002",
+          "mic": "XMLI",
+          "symbol": "MLIPO",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105447009",
+          "mic": "XMLI",
+          "symbol": "MLMAQ",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105473005",
+          "mic": "XMLI",
+          "symbol": "MLISP",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105478004",
+          "mic": "XMLI",
+          "symbol": "MLAGP",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105479002",
+          "mic": "XMLI",
+          "symbol": "MLINT",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105486007",
+          "mic": "XMLI",
+          "symbol": "MLARO",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105490009",
+          "mic": "XMLI",
+          "symbol": "MLORB",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105492005",
+          "mic": "XMLI",
+          "symbol": "MLVRF",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105498002",
+          "mic": "XMLI",
+          "symbol": "MLHAY",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105511002",
+          "mic": "XMLI",
+          "symbol": "MLINM",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105534004",
+          "mic": "XMLI",
+          "symbol": "MLORQ",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105537007",
+          "mic": "XMLI",
+          "symbol": "MLNDG",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105549002",
+          "mic": "XMLI",
+          "symbol": "MLMTP",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105550000",
+          "mic": "XMLI",
+          "symbol": "MLJDL",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105551008",
+          "mic": "XMLI",
+          "symbol": "MLABC",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105553004",
+          "mic": "XMLI",
+          "symbol": "MLECE",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105559001",
+          "mic": "XMLI",
+          "symbol": "MLMIV",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105586004",
+          "mic": "XMLI",
+          "symbol": "MLCAN",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105590006",
+          "mic": "XMLI",
+          "symbol": "MLIFS",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105592002",
+          "mic": "XMLI",
+          "symbol": "MLSCI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105601001",
+          "mic": "XMLI",
+          "symbol": "MLARI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105623005",
+          "mic": "XMLI",
+          "symbol": "MLVRE",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105651006",
+          "mic": "XMLI",
+          "symbol": "MLSAG",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105660007",
+          "mic": "XMLI",
+          "symbol": "MLCOE",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105661005",
+          "mic": "XMLI",
+          "symbol": "MLARE",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105664009",
+          "mic": "XMLI",
+          "symbol": "MLHBP",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105697009",
+          "mic": "XMLI",
+          "symbol": "MLMUT",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105698007",
+          "mic": "XMLI",
+          "symbol": "MLKPS",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105719001",
+          "mic": "XMLI",
+          "symbol": "MLBIO",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105726006",
+          "mic": "XMLI",
+          "symbol": "MLERH",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105740007",
+          "mic": "XMLI",
+          "symbol": "MLWRS",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105748000",
+          "mic": "XMLI",
+          "symbol": "MLURC",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105851002",
+          "mic": "XMLI",
+          "symbol": "MLSPI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105908000",
+          "mic": "XMLI",
+          "symbol": "MLINA",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105910006",
+          "mic": "XMLI",
+          "symbol": "MLSJA",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105962007",
+          "mic": "XMLI",
+          "symbol": "MLVIC",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105964003",
+          "mic": "XMLI",
+          "symbol": "MLESV",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0105977005",
+          "mic": "XMLI",
+          "symbol": "MLMED",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0106008008",
+          "mic": "XMLI",
+          "symbol": "MLBIM",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0106042007",
+          "mic": "XMLI",
+          "symbol": "MLHA2",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "ES0106046008",
+          "mic": "XMLI",
+          "symbol": "MLEXX",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000035719",
+          "mic": "XPAR",
+          "symbol": "EEM",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000037475",
+          "mic": "XPAR",
+          "symbol": "CFI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000037871",
+          "mic": "XMLI",
+          "symbol": "MLCFD",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000038184",
+          "mic": "XPAR",
+          "symbol": "FIPP",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000050395",
+          "mic": "XPAR",
+          "symbol": "CROS",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000051302",
+          "mic": "XMLI",
+          "symbol": "MLHBB",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000053415",
+          "mic": "XMLI",
+          "symbol": "MLGAI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000053738",
+          "mic": "XMLI",
+          "symbol": "MLHOT",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000053944",
+          "mic": "XPAR",
+          "symbol": "SPEL",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000054371",
+          "mic": "XMLI",
+          "symbol": "MLSRP",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000060907",
+          "mic": "XPAR",
+          "symbol": "CHSR",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000061376",
+          "mic": "XMLI",
+          "symbol": "MLPRI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000061475",
+          "mic": "XPAR",
+          "symbol": "EFI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000062150",
+          "mic": "XPAR",
+          "symbol": "BLEE",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000063976",
+          "mic": "XMLI",
+          "symbol": "MLSTR",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000064735",
+          "mic": "XMLI",
+          "symbol": "MLHYD",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000064958",
+          "mic": "XPAR",
+          "symbol": "ITXT",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000065393",
+          "mic": "XPAR",
+          "symbol": "COUR",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000065773",
+          "mic": "XMLI",
+          "symbol": "MLIMP",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000065930",
+          "mic": "XPAR",
+          "symbol": "LEBL",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000066961",
+          "mic": "ALXP",
+          "symbol": "ALDBL",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000076952",
+          "mic": "XPAR",
+          "symbol": "ARTO",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000076960",
+          "mic": "XMLI",
+          "symbol": "MLGRC",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000077828",
+          "mic": "XMLI",
+          "symbol": "MLCNT",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000077885",
+          "mic": "XMLI",
+          "symbol": "MLDAM",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000079691",
+          "mic": "XMLI",
+          "symbol": "MLIDS",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000185464",
+          "mic": "XMLI",
+          "symbol": "MLNOV",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0000185480",
+          "mic": "XMLI",
+          "symbol": "MLPHW",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0004010338",
+          "mic": "XPAR",
+          "symbol": "GJAJ",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0004030708",
+          "mic": "ALXP",
+          "symbol": "ALDUB",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0004155208",
+          "mic": "XMLI",
+          "symbol": "MLLOI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0004174712",
+          "mic": "XMLI",
+          "symbol": "MLONL",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0004998318",
+          "mic": "XMLI",
+          "symbol": "MLOTT",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0005057635",
+          "mic": "XMLI",
+          "symbol": "MLARD",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0005854700",
+          "mic": "ALXP",
+          "symbol": "ALI2S",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0006205019",
+          "mic": "XMLI",
+          "symbol": "MLCAC",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0006563904",
+          "mic": "XMLI",
+          "symbol": "MLHIN",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0006859039",
+          "mic": "XMLI",
+          "symbol": "MLIPP",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0007200100",
+          "mic": "XMLI",
+          "symbol": "MLEDR",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010086371",
+          "mic": "XMLI",
+          "symbol": "MLIML",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010106039",
+          "mic": "XMLI",
+          "symbol": "MLONE",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010204453",
+          "mic": "ALXP",
+          "symbol": "ALMGI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010312181",
+          "mic": "XMLI",
+          "symbol": "MLHPE",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010337865",
+          "mic": "ALXP",
+          "symbol": "ALUPG",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010447086",
+          "mic": "XMLI",
+          "symbol": "MLCHE",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010688465",
+          "mic": "XMLI",
+          "symbol": "MLWEA",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010768770",
+          "mic": "XMLI",
+          "symbol": "MLWEY",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010882886",
+          "mic": "ALXP",
+          "symbol": "ALEFA",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010908723",
+          "mic": "ALXP",
+          "symbol": "ALINT",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010959684",
+          "mic": "XMLI",
+          "symbol": "MLCLP",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010972091",
+          "mic": "XMLI",
+          "symbol": "MLCMI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0010979377",
+          "mic": "XMLI",
+          "symbol": "MLACT",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0011076595",
+          "mic": "XMLI",
+          "symbol": "MLVST",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0011092089",
+          "mic": "XMLI",
+          "symbol": "MLCLI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0011100759",
+          "mic": "XMLI",
+          "symbol": "MLGAL",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0011131788",
+          "mic": "XMLI",
+          "symbol": "MLSML",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0011532225",
+          "mic": "ALXP",
+          "symbol": "ALVGO",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0011605617",
+          "mic": "XMLI",
+          "symbol": "MLVIN",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0011776889",
+          "mic": "XMLI",
+          "symbol": "MLUMG",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0011908045",
+          "mic": "XMLI",
+          "symbol": "MLAGI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0012300424",
+          "mic": "XMLI",
+          "symbol": "MLFDV",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0012336691",
+          "mic": "XMLI",
+          "symbol": "MLHCF",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0012968485",
+          "mic": "XMLI",
+          "symbol": "MLAEM",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0013060100",
+          "mic": "ALXP",
+          "symbol": "ALIMR",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0013230067",
+          "mic": "XMLI",
+          "symbol": "MLFNP",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0013256518",
+          "mic": "ALXP",
+          "symbol": "ALECR",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0013257409",
+          "mic": "ALXP",
+          "symbol": "ALCOF",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0013406881",
+          "mic": "XMLI",
+          "symbol": "MLCMG",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0014001PV6",
+          "mic": "XPAR",
+          "symbol": "NR21",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0014003FN0",
+          "mic": "XMLI",
+          "symbol": "MLVIE",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR00140062B9",
+          "mic": "ALXP",
+          "symbol": "ALTOO",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR001400GO75",
+          "mic": "ALXP",
+          "symbol": "ALFLO",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR001400QW73",
+          "mic": "XMLI",
+          "symbol": "MLIME",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR001400SUB7",
+          "mic": "XPAR",
+          "symbol": "CBDG",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR001400WXE7",
+          "mic": "ALXP",
+          "symbol": "ALPG",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR001400ZU25",
+          "mic": "ALXP",
+          "symbol": "ALSAF",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0014010YR7",
+          "mic": "ALXP",
+          "symbol": "ALVER",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0014011SJ4",
+          "mic": "XMLI",
+          "symbol": "MLPRE",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "FR0014013HG9",
+          "mic": "ALXP",
+          "symbol": "ALUCI",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "GB00BJ9M4V82",
+          "mic": "XMLI",
+          "symbol": "MLALE",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "HK0000038783",
+          "mic": "XMLI",
+          "symbol": "MLEAS",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "IT0004812258",
+          "mic": "XMLI",
+          "symbol": "MLAZL",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "IT0005324105",
+          "mic": "XMLI",
+          "symbol": "MLLAB",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "IT0005336521",
+          "mic": "XMLI",
+          "symbol": "MLITN",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "IT0005391161",
+          "mic": "XMLI",
+          "symbol": "MLIRF",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "IT0005460081",
+          "mic": "ALXP",
+          "symbol": "ALREB",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "IT0005613739",
+          "mic": "XMLI",
+          "symbol": "MLGL",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "MC0010000826",
+          "mic": "XMLI",
+          "symbol": "MLCFM",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "NL0010273694",
+          "mic": "XMLI",
+          "symbol": "MLAAH",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "PTAZR0AM0006",
+          "mic": "XMLI",
+          "symbol": "MLAAT",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "PTGVE1AM0017",
+          "mic": "XMLI",
+          "symbol": "MLGEQ",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        },
+        {
+          "isin": "SN0000033192",
+          "mic": "XPAR",
+          "symbol": "FOAF",
+          "error": "Read-only official-source probe; secondary providers not invoked",
+          "officialError": null
+        }
+      ]
+    }
+  ],
+  "historyDocuments": 697,
+  "archiveConflicts": [],
+  "idempotentReplay": true,
+  "productionWrites": 0
+}

@@ -9,3 +9,11 @@ export function makeLedgerRecord(prediction,{dataSnapshotId,modelArtifactId,code
 export function verifyLedger(records){const ids=new Set(),hashes=new Set();for(const r of records){if(!r.immutable)throw Error('LEDGER_MUTABLE_RECORD');if(ids.has(r.predictionId))throw Error('LEDGER_DUPLICATE_PREDICTION_ID');ids.add(r.predictionId);const {recordHash,immutable,...core}=r;if(hash(core)!==recordHash)throw Error('LEDGER_HASH_MISMATCH_'+r.predictionId);if(hashes.has(recordHash))throw Error('LEDGER_DUPLICATE_HASH');hashes.add(recordHash);}return true;}
 export async function appendLedger(path,record){let rows=[];try{rows=(await fs.readFile(path,'utf8')).split(/\r?\n/).filter(Boolean).map(JSON.parse)}catch(e){if(e.code!=='ENOENT')throw e}if(rows.some(x=>x.predictionId===record.predictionId))throw Error('IMMUTABLE_LEDGER_ALREADY_CONTAINS_'+record.predictionId);verifyLedger([...rows,record]);await fs.mkdir(path.split('/').slice(0,-1).join('/'),{recursive:true});await fs.appendFile(path,JSON.stringify(record)+'\n');return record;}
 export function freezeSnapshot(kind,payload,{asOfTime,sourceIds=[]}={}){if(!kind||!asOfTime)throw Error('SNAPSHOT_IDENTITY_REQUIRED');const body={kind,asOfTime:new Date(asOfTime).toISOString(),sourceIds:[...sourceIds].sort(),payloadHash:hash(payload)};return{...body,snapshotId:hash(body),immutable:true};}
+
+const opportunityFields=['selectionDate','market','venue','currency','targetPct','horizonMonths','frozen','modelVersion','name','ticker','isin','referenceDate','referenceClose','consensusRank','componentRanks','componentScores','features','audit','createdAt'];
+export const opportunityCore=p=>Object.fromEntries(opportunityFields.filter(k=>p[k]!==undefined).map(k=>[k,p[k]]));
+export function sealOpportunity(prediction){return {...prediction,recordHash:hash(opportunityCore(prediction)),immutable:true};}
+export function verifyOpportunity(prediction){
+ if(!prediction.recordHash)throw Error('OPPORTUNITY_NOT_SEALED');
+ if(hash(opportunityCore(prediction))!==prediction.recordHash)throw Error('FROZEN_OPPORTUNITY_CHANGED');return true;
+}

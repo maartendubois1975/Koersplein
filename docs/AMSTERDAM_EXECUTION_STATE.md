@@ -182,3 +182,12 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - Local regression evidence and exact command outcomes: `research/output/consolidation-regression-summary.json`. No claim of fresh GitHub CI, Render alignment, deployment or complete market-data correctness.
 - Next coherent deliverable: review the seven Brussels source discrepancies and establish a verified per-company historical mapping/backfill contract before any Brussels import or publication. Do not repeat issuer-selection research or delete archived histories.
 - Rollback: revert this single consolidation commit on the development branch. No production changes or database migrations.
+
+## 2026-11-17 — European development consolidation
+
+- Work remains on `consolidation-20261116`, based on `43999b80`; the four preexisting consolidation changes were retained and extended.
+- The central register preserves 80 XAMS, 105 XBRU and 664 XPAR companies. Daily processing is independent of prediction history eligibility.
+- Retired duplicate daily writers, Amsterdam-only daily orchestration, raw-catalog universal writer, market-specific Machine 1 runners and seven historical Paris Actions wrappers. Source evidence, approved identities, stored historical files and historical research outputs are preserved.
+- Universal daily collection/archive and prospective research now share identities, strict OHLC validation, immutable reference fields and bounded calendar horizons. Historical source completeness and adjustment-provenance gates remain in place.
+- Evidence, exact file list, local regression results and operational limits: `docs/CONSOLIDATION_2026-11-17.md` and `research/consolidation/2026-11-17/`.
+- No production write/deployment, no claim of active unattended scheduling or verified Render configuration. Existing legacy history problems are quarantined rather than rewritten.
