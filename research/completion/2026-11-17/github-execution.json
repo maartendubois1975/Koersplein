@@ -1,0 +1,118 @@
+{
+  "observedOn": "2026-11-17",
+  "branch": "consolidation-20261116",
+  "codeCommit": "c5eef04dd8a48b63d80cd8a192223afb98cd6c71",
+  "archiveCommit": "a2497b89319796e11cebf7ffdc331ca48ca9d1de",
+  "researchCommit": "49b40166ad1979850af44fd5f3fbd3734c27a47d",
+  "dailyRun": {
+    "id": 44123968285,
+    "jobs": [
+      {
+        "id": 134182562996,
+        "name": "register",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 134182828644,
+        "name": "daily (XBRU, 2026-11-16)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 134182828653,
+        "name": "daily (XPAR, 2026-11-16)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 134182828695,
+        "name": "daily (XAMS, 2026-11-16)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 134184392986,
+        "name": "archive-development",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 134184672236,
+        "name": "research-development",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 134184936549,
+        "name": "deploy-test",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "regressionRun": {
+    "id": 44123969001,
+    "conclusion": "success"
+  },
+  "rawFreshCollection": {
+    "XAMS": {
+      "TRADED": 78,
+      "NO_TRADES": 1,
+      "SESSION_UNVERIFIED": 1
+    },
+    "XBRU": {
+      "TRADED": 97,
+      "SESSION_UNVERIFIED": 8
+    },
+    "XPAR": {
+      "TRADED": 523,
+      "NO_TRADES": 125,
+      "SESSION_UNVERIFIED": 16
+    }
+  },
+  "storedAfterEvidencePreservation": {
+    "XAMS": {
+      "TRADED": 78,
+      "NO_TRADES": 2
+    },
+    "XBRU": {
+      "TRADED": 97,
+      "NO_TRADES": 4,
+      "SESSION_UNVERIFIED": 4
+    },
+    "XPAR": {
+      "TRADED": 523,
+      "NO_TRADES": 132,
+      "SESSION_UNVERIFIED": 9
+    }
+  },
+  "historyDocumentsAdded": 698,
+  "archiveErrors": [],
+  "conflicts": [
+    {
+      "isin": "BE0003773877",
+      "name": "Softimat SA",
+      "field": "volume",
+      "stored": 165,
+      "incoming": 2500,
+      "OHLC": "unchanged",
+      "decision": "Original preserved; provider revision separately recorded"
+    }
+  ],
+  "prediction": {
+    "newSelections": 0,
+    "blockedHistories": 849,
+    "legacyPredictionsUnverified": 2,
+    "diagnosticsFile": "github-daily-opportunity-diagnostics.json"
+  },
+  "deployment": {
+    "status": "BLOCKED_CREDENTIAL_ABSENT",
+    "serviceId": "srv-dajuqaek1f9s739gu8kg",
+    "liveCommit": "a99377c1d1e8684a374e580ab7484901e47223f1",
+    "liveDeploy": "dep-dbtunmp42hec73b2gi3g",
+    "finalBrowserHomeParisCount": 770
+  },
+  "automaticDailySchedule": "NOT_ACTIVE_ON_DEVELOPMENT_BRANCH",
+  "productionChanges": 0
+}

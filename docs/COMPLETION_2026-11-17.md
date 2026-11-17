@@ -1,6 +1,6 @@
 # Koersplein — afronding Amsterdam, Brussel en Parijs
 
-Werkbranch: `consolidation-20261116`, voortbouwend op `a99377c1d1e8684a374e580ab7484901e47223f1`. Main en productie worden niet beschreven of gedeployed.
+Werkbranch: `consolidation-20261116`, voortbouwend op `a99377c1d1e8684a374e580ab7484901e47223f1`. Main en productie zijn niet gewijzigd of gedeployed.
 
 ## 1. Bedrijvenregisters
 
@@ -43,7 +43,7 @@ Een optionele laatste stap in dezelfde workflow kan via een reeds aanwezige `REN
 
 ## 5. Historische opslag
 
-De bestaande Amsterdamse geschiedenisbestanden, Parijse dossiers en eerdere consolidatiebewijzen zijn bytegelijk behouden. De echte archiver heeft 698 nieuwe beurs+ISIN-documenten met de bevestigde dag van 16 november aangemaakt in de ontwikkelwerkruimte en de sessiebestanden bijgewerkt. Deze nieuwe documenten worden door de GitHub-archiver in de ontwikkelbranch vastgelegd. De langere oude Cloudflare-reeksen zijn niet verplaatst of herschreven.
+De bestaande Amsterdamse geschiedenisbestanden, Parijse dossiers en eerdere consolidatiebewijzen zijn bytegelijk behouden. De echte archiver heeft 698 nieuwe beurs+ISIN-documenten met de bevestigde dag van 16 november aangemaakt in de ontwikkelwerkruimte en de sessiebestanden bijgewerkt. Deze 698 nieuwe documenten zijn daadwerkelijk door de GitHub-archiver in commit `a2497b8` op de ontwikkelbranch vastgelegd. De live herverzameling bracht voor Softimat alleen een gewijzigde Yahoo-volumeobservatie (165 versus 2.500) mee; OHLC is identiek. Het oorspronkelijke record is behouden en de nieuwe observatie staat afzonderlijk in `github-fresh-XBRU.json`. De langere oude Cloudflare-reeksen zijn niet verplaatst of herschreven.
 
 De 28 oude Parijse opslagidentiteiten, bekende verkeerde MIC’s, gewijzigde ISIN-aansluitingen en brondefecten blijven afzonderlijke dossiers. Er worden geen vermoedelijke koerscorrecties automatisch toegepast. Alle gegevens hebben dezelfde instrumentidentiteit; een korte dagstaart mag een langere toegankelijke historie niet verdringen.
 
@@ -63,7 +63,11 @@ De centrale onderzoekslogica en immutable voorspellingsvelden blijven bestaan. H
 - Volledige 849-bedrijvenketen met 698 echte koersdagen in tijdelijke opslag uitgevoerd en herhaald. Geen gewijzigde koersbytes bij herhaling; eerdere bewezen sessiestatussen overleven een herhaling met zwakkere broninformatie.
 - Testdeployment: juiste service en exacte commit, ontbreken van credentials en weigering van productie getest met infrastructuurfixtures. Dit is geen bewijs van een live deployment.
 
-GitHub-run-ID’s, conclusies en eventuele deploymentstatus worden na uitvoering afzonderlijk vastgelegd. Alleen werkelijk waargenomen resultaten gelden als operationeel bewijs.
+De volledige GitHub-regressierun [44123969001](https://github.com/maartendubois1975/Koersplein/actions/runs/44123969001) is geslaagd. De echte dagelijkse keten [44123968285](https://github.com/maartendubois1975/Koersplein/actions/runs/44123968285) is eveneens geslaagd: register, alle drie de live marktjobs, opslag, onderzoek en finale datavalidatie. De laatste stap rapporteert **BLOCKED_CREDENTIAL_ABSENT**: er is geen Render-secret beschikbaar. De groene workflow betekent dus uitdrukkelijk geen succesvolle publicatie.
+
+De verse herverzameling gaf 698 TRADED, 126 NO_TRADES en 25 SESSION_UNVERIFIED. Door behoud van eerder in dit blok officieel bewezen sessiestatussen is de definitieve opslag 698/138/13, zoals in de tabel. De nieuwe bronwaarnemingen worden niet als vervanging van sterker eerder bewijs gebruikt. Alle job-ID’s, aantallen en de afzonderlijke volumeafwijking staan in `research/completion/2026-11-17/github-execution.json`.
+
+De echte voorspellingsrun heeft **nul nieuwe selecties** gepubliceerd. Alle 849 historische invoeren missen nog de vereiste volledige herkomst-/kwaliteitsbewijzen en zijn expliciet geweigerd; dit is geen werkende adviesdekking. Twee oude, niet vooraf verzegelde voorspellingen blijven EVALUATION_UNVERIFIED: één staat buiten het goedgekeurde marktregister, één heeft een afwijkende referentiekoers. De volledige diagnoses zijn duurzaam opgeslagen in `github-daily-opportunity-diagnostics.json`.
 
 ## 8. Echte testwebsite
 
@@ -78,7 +82,17 @@ Render bevestigde live deploy `dep-dbtunmp42hec73b2gi3g` op commit a99377c. De d
 
 De oorzaak van de laatste twee is concreet onderzocht: de historische API antwoordt HTTP 200, maar geeft voor Origin `https://koersplein-test.onrender.com` geen `Access-Control-Allow-Origin`. De bestaande Worker staat alleen de ingestelde productie-origin toe. De browser mag die externe historie daarom niet lezen. De productie-Worker of diens CORS-beveiliging is niet gewijzigd. Een toekomstige toegestane test-API/origin moet deze koppeling oplossen; een geslaagde frontendtest of nieuwe dagelijkse koers bewijst geen toegang tot de diepe Cloudflare-historie.
 
+De finale Render-controle bevestigt dat de live versie ongewijzigd commit `a99377c` is. Ook de echte browser toont nog het oude startpagina-aantal Parijs 770. De nieuwe correctie en de gegevens van 16 november zijn dus gebouwd en op GitHub getest/opgeslagen, maar nog niet op de publieke testwebsite bewezen.
+
 ## 9. Commits en opslag
+
+Commits in dit afrondingsblok:
+
+- `c5eef04dd8a48b63d80cd8a192223afb98cd6c71`: centrale bronbewijslogica, kalender, ISIN-event, weergave, tests en individuele dossiers.
+- `a2497b89319796e11cebf7ffdc331ca48ca9d1de`: echte GitHub-opslag van 698 dagelijkse historiedocumenten en zes sessiesnapshots.
+- `49b40166ad1979850af44fd5f3fbd3734c27a47d`: echte uitvoering van de beveiligde voorspellingsketen.
+
+De exacte 46 bron-/test-/dossierbestanden van de codecommit staan in `research/completion/2026-11-17/changed-files.json`. In dit vervolgblok zijn geen extra scripts verwijderd: de vorige consolidatie had reeds 30 verouderde bestanden verwijderd. Er is geen nieuwe parallelle importmachine toegevoegd.
 
 Alle bron-, test-, workflow-, sessie- en onderzoekswijzigingen blijven op `consolidation-20261116`. De vorige consolidatie is niet teruggedraaid. De centrale dagelijkse workflow bewaart eventuele vervolgdata uitsluitend op dezelfde branch. Een exacte bestandslijst en de uiteindelijke commit- en run-ID’s horen bij het opleveringsbewijs.
 
@@ -91,3 +105,28 @@ Alle bron-, test-, workflow-, sessie- en onderzoekswijzigingen blijven op `conso
 5. Historische kwaliteits- en point-in-time bewijzen blijven nodig vóór modelpromotie. Bronkoersen zijn geen bewezen totaalrendement.
 
 De centrale architectuur is herbruikbaar voor de volgende Europese beurs: goedgekeurd register/identiteitscontract, gevalideerde bronroute en officieel onderhouden kalender aansluiten. Geen nieuwe beursgebonden importmachine toevoegen.
+
+## Kopieerbare overdracht voor de bestaande Koersplein-chat
+
+```text
+KOERSPLEIN — OVERDRACHT 17 NOVEMBER 2026
+Repository maartendubois1975/Koersplein; werk uitsluitend op consolidation-20261116.
+Behoud de consolidatie a99377c en de nieuwe codecommit c5eef04. Geen productie/main wijzigen.
+Goedgekeurd register ongewijzigd: Amsterdam 80, Brussel 105, Parijs 664 = 849.
+152 onopgeloste gevallen afzonderlijk onderzocht met opgeslagen officiële bronresponsen.
+Dag 16 november: Amsterdam 78 TRADED/2 NO_TRADES/0 onzeker; Brussel 97/4/4; Parijs 523/132/9.
+Totaal 698 echte koersdagen, 138 bewezen geen handel, 13 onbevestigd; geen fictieve OHLC.
+GitHub echte volledige keten 44123968285: geslaagd. Opslagcommit a2497b8, onderzoekscommit 49b4016.
+GitHub volledige regressie 44123969001: geslaagd. Ook npm test/history:test, 19 onderzoekstests en codeaudit geslaagd.
+698 canonieke dagelijkse historiedocumenten opgeslagen; bestaande historie/Paris-dossiers beschermd.
+Softimat: Yahoo herzag alleen volume van 165 naar 2500, OHLC identiek; origineel behouden, conflict geregistreerd.
+Toosla FR00140062B9 -> FR001401B9V8 per 17 november (3334:1). Oude identiteit vanaf ingang in quarantaine; geen automatische serieverbinding.
+Voorspellingsrun: nul nieuwe selecties; 849 invoeren hebben nog onvoldoende bewezen historische provenance. Twee oude voorspellingen blijven onbevestigd.
+Testsite daadwerkelijk onderzocht: 80/105/664 bedrijven, zoeken/navigatie goed; ASML-historiegrafiek zichtbaar, ABO/2CRSI externe historie geblokkeerd door ontbrekende CORS-toestemming voor test-origin.
+Render live nog a99377c, testservice srv-dajuqaek1f9s739gu8kg gekoppeld aan codex/koersplein-home-history, auto-deploy uit.
+Testdeployment in echte workflow geprobeerd: BLOCKED_CREDENTIAL_ABSENT (RENDER_API_KEY niet aanwezig). Geen nieuwe versie live.
+Geen universele dagelijkse cron actief op ontwikkelbranch: GitHub schedule draait alleen defaultbranch. Oude main-Amsterdamplanning is alleen gelezen en niet gewijzigd.
+Resterende technische afronding: toegestane deploymenttoegang/testservice koppelen; veilige toegang tot diepe historie voor test-origin; expliciet toegestane overgang van oude main-planning naar de ene centrale workflow; historische provenance per serie vrijgeven; 13 onzekere statussen en Toosla-opvolgerserie individueel afhandelen.
+Dossier: docs/COMPLETION_2026-11-17.md; research/completion/2026-11-17/ bevat individuele beslissingen, bronarchief, GitHub-uitvoering, regressies en bestandsmanifest.
+Geen tweede importmachine bouwen, geen historiedata vervangen en geen advies uit korte of onbevestigde reeksen.
+```
