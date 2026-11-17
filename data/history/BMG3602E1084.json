@@ -13,7 +13,7 @@
     "id": "euronext-live",
     "name": "Euronext Live historical prices",
     "symbol": "BMG3602E1084-XAMS",
-    "retrievedAt": "2026-11-13T23:52:57.138Z",
+    "retrievedAt": "2026-11-17T02:06:39.371Z",
     "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BMG3602E1084-XAMS",
     "metadata": {
       "mic": "XAMS",
@@ -29,9 +29,9 @@
   },
   "coverage": {
     "firstDate": "2015-07-10",
-    "lastDate": "2026-11-13",
-    "records": 2904,
-    "volumeRecords": 2904,
+    "lastDate": "2026-11-16",
+    "records": 2905,
+    "volumeRecords": 2905,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -26171,6 +26171,15 @@
       "close": 22.86,
       "adjustedClose": null,
       "volume": 88912
+    },
+    {
+      "date": "2026-11-16",
+      "open": 22.86,
+      "high": 22.9,
+      "low": 22.72,
+      "close": 22.76,
+      "adjustedClose": null,
+      "volume": 99871
     }
   ]
 }
