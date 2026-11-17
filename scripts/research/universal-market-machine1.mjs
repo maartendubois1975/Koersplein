@@ -5,7 +5,7 @@ import {classificationFor} from './sector-classification-core.mjs';
 import {loadApprovedHistory} from './market-history-source.mjs';
 import {loadCompanyCatalog} from '../history/company-register.mjs';
 import {horizonEndDate} from './exam-outcomes-core.mjs';
-import {latestClosedWeekday} from '../cloudflare/europe-run-policy.mjs';
+import {latestClosedSession} from '../history/trading-calendar.mjs';
 
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
 const mic=process.env.MARKET_MIC;if(!mic)throw new Error('MARKET_MIC ontbreekt');const catalog=await loadCompanyCatalog(mic);const market={name:catalog.exchange||mic};const instruments=catalog.shares;
@@ -19,7 +19,7 @@ for(const item of instruments){
  const hasIsin=typeof item.isin==='string'&&Boolean(item.isin.trim());
  if(!hasIsin)skippedMissingIsin++;
  try{
-  const loaded={bars:await loadApprovedHistory(item,mic,{api:API,cutoff:process.env.TARGET_SESSION||latestClosedWeekday(),requirePredictionEvidence:true}),identityKey:(item.primaryMic||item.mic||mic)+':'+item.isin,isin:item.isin,provisionalIdentity:false,source:'APPROVED_IDENTITY_HISTORY'};const identity=loaded.identityKey;const bars=getBars(loaded.bars).filter(b=>b?.date&&Number.isFinite(Number(b.close))).map(b=>({...b,close:Number(b.close)})).sort((a,b)=>a.date.localeCompare(b.date));
+  const loaded={bars:await loadApprovedHistory(item,mic,{api:API,cutoff:process.env.TARGET_SESSION||latestClosedSession(mic),requirePredictionEvidence:true}),identityKey:(item.primaryMic||item.mic||mic)+':'+item.isin,isin:item.isin,provisionalIdentity:false,source:'APPROVED_IDENTITY_HISTORY'};const identity=loaded.identityKey;const bars=getBars(loaded.bars).filter(b=>b?.date&&Number.isFinite(Number(b.close))).map(b=>({...b,close:Number(b.close)})).sort((a,b)=>a.date.localeCompare(b.date));
   if(bars.length<260){insufficientHistory++;historyCoverage.push({identity,status:'INSUFFICIENT_HISTORY',provisionalIdentity:loaded.provisionalIdentity,source:loaded.source,bars:bars.length,firstDate:bars[0]?.date||null,lastDate:bars.at(-1)?.date||null});continue;}
   usableInstruments++;historyCoverage.push({identity,status:'HISTORY_AVAILABLE',provisionalIdentity:loaded.provisionalIdentity,source:loaded.source,bars:bars.length,firstDate:bars[0]?.date||null,lastDate:bars.at(-1)?.date||null});
   const monthly=[];let last='';for(const b of bars){const k=monthKey(b.date);if(k!==last){monthly.push(b);last=k;}else monthly[monthly.length-1]=b;}

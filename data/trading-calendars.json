@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "source": "https://www.euronext.com/en/trading/trading-hours-holidays",
+  "verifiedAt": "2026-11-17",
+  "markets": {"XAMS":"euronext-cash","XBRU":"euronext-cash","XPAR":"euronext-cash"},
+  "calendars": {
+    "euronext-cash": {
+      "timezone": "Europe/Paris",
+      "finalizedAfter": "18:15",
+      "note": "Conservative collection boundary after closing auctions, trading-at-last and valuation publication. Half days also use this boundary until the importer runs later in the evening.",
+      "years": {
+        "2026": {"closed":["2026-01-01","2026-04-03","2026-04-06","2026-05-01","2026-12-25"],"halfDays":["2026-12-24","2026-12-31"]},
+        "2027": {"closed":["2027-01-01","2027-03-26","2027-03-29"],"halfDays":["2027-12-24","2027-12-31"]}
+      }
+    }
+  }
+}

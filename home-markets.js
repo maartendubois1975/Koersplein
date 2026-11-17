@@ -1,8 +1,9 @@
+import {browserCatalog} from './daily-session-view.mjs';
 const q=s=>document.querySelector(s);const countries={NL:'Nederland',BE:'België',FR:'Frankrijk',IT:'Italië',NO:'Noorwegen',PT:'Portugal',CH:'Zwitserland',ES:'Spanje',SE:'Zweden',DK:'Denemarken',FI:'Finland',IS:'IJsland',GR:'Griekenland',PL:'Polen',AT:'Oostenrijk',CZ:'Tsjechië',HU:'Hongarije'};const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');async function load(u){const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);return r.json()}async function run(){
  const plan=await load('data/world-fill-plan.json');
  const markets=plan.markets||[];
  const counts=await Promise.all(markets.map(async m=>{
-  try{const d=await load('data/euronext-'+m.code+'.json');return Array.isArray(d)?d.length:(d.shares||[]).length}
+  try{const d=await browserCatalog(m.mic,'data/euronext-'+m.code+'.json',load);return Array.isArray(d)?d.length:(d.shares||[]).length}
   catch{return null}
  }));
  // Catalog availability and verified five-day price completeness are separate.

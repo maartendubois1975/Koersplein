@@ -1,0 +1,2003 @@
+{
+  "session": "2026-11-16",
+  "checked": 152,
+  "counts": {
+    "OFFICIAL_NO_TRADES": 138,
+    "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION": 9,
+    "APPROVED_FALLBACK_TRADED": 1,
+    "NO_EXECUTED_PRICE_EVIDENCE": 4
+  },
+  "rows": [
+    {
+      "symbol": "CAND",
+      "isin": "BE0974298300",
+      "mic": "ALXB",
+      "market": "XBRU",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-19",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ALINV",
+      "isin": "BE0974299316",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-09",
+        "tradingState": "RESERVED",
+        "haltReason": "4"
+      }
+    },
+    {
+      "symbol": "ALDBL",
+      "isin": "FR0000066961",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-17",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ALDUB",
+      "isin": "FR0004030708",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "CON",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ALI2S",
+      "isin": "FR0005854700",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ALMGI",
+      "isin": "FR0010204453",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-12",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ALUPG",
+      "isin": "FR0010337865",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-12",
+        "tradingState": "CON",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ALEFA",
+      "isin": "FR0010882886",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-30",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ALINT",
+      "isin": "FR0010908723",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-30",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      }
+    },
+    {
+      "symbol": "ALVGO",
+      "isin": "FR0011532225",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-17",
+        "tradingState": "RESERVED",
+        "haltReason": "4"
+      }
+    },
+    {
+      "symbol": "ALIMR",
+      "isin": "FR0013060100",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-09",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ALECR",
+      "isin": "FR0013256518",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-17",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ALCOF",
+      "isin": "FR0013257409",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-09",
+        "tradingState": "CON",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ALTOO",
+      "isin": "FR00140062B9",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "APPROVED_FALLBACK_TRADED",
+      "currentQuoteState": {
+        "identityMatch": false,
+        "lastTradeDate": null,
+        "tradingState": null,
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ALFLO",
+      "isin": "FR001400GO75",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-12",
+        "tradingState": "RESERVED",
+        "haltReason": "4"
+      }
+    },
+    {
+      "symbol": "ALPG",
+      "isin": "FR001400WXE7",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-29",
+        "tradingState": "CON",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ALSAF",
+      "isin": "FR001400ZU25",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-06-30",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      }
+    },
+    {
+      "symbol": "ALVER",
+      "isin": "FR0014010YR7",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-01-23",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      },
+      "yahooError": "Yahoo HTTP 404 voor ALVER.PA"
+    },
+    {
+      "symbol": "ALUCI",
+      "isin": "FR0014013HG9",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-09",
+        "tradingState": "RESERVED",
+        "haltReason": "4"
+      }
+    },
+    {
+      "symbol": "ALREB",
+      "isin": "IT0005460081",
+      "mic": "ALXP",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-08-07",
+        "tradingState": "CON",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLNEU",
+      "isin": "BE0003680916",
+      "mic": "MLXB",
+      "market": "XBRU",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-09-16",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "NEWT",
+      "isin": "BE0003832491",
+      "mic": "MLXB",
+      "market": "XBRU",
+      "resolution": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-17",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "REAL",
+      "isin": "BE0003841583",
+      "mic": "MLXB",
+      "market": "XBRU",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-02",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "FLSP",
+      "isin": "BE0003847648",
+      "mic": "MLXB",
+      "market": "XBRU",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-15",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLTV",
+      "isin": "BE0974370026",
+      "mic": "MLXB",
+      "market": "XBRU",
+      "resolution": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-17",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "BEVER",
+      "isin": "NL0000285278",
+      "mic": "XAMS",
+      "market": "XAMS",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-04",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "PORF",
+      "isin": "NL0000378669",
+      "mic": "XAMS",
+      "market": "XAMS",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-09",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "FOU",
+      "isin": "BE0003752665",
+      "mic": "XBRU",
+      "market": "XBRU",
+      "resolution": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-17",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "FLOB",
+      "isin": "BE0974502347",
+      "mic": "XBRU",
+      "market": "XBRU",
+      "resolution": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-17",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLMFI",
+      "isin": "BE6252013725",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2024-02-29",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      }
+    },
+    {
+      "symbol": "MLBON",
+      "isin": "BE6333353298",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-12",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLFIR",
+      "isin": "CH0120879058",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-06-10",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLBBO",
+      "isin": "CH1148983609",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-09-07",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      }
+    },
+    {
+      "symbol": "MLBAR",
+      "isin": "ES0105362000",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2018-09-18",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLIPO",
+      "isin": "ES0105417002",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2019-08-05",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLMAQ",
+      "isin": "ES0105447009",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2020-01-27",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLISP",
+      "isin": "ES0105473005",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2020-04-06",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLAGP",
+      "isin": "ES0105478004",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2024-05-16",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLINT",
+      "isin": "ES0105479002",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2022-05-20",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLARO",
+      "isin": "ES0105486007",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2020-08-16",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLORB",
+      "isin": "ES0105490009",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2020-07-30",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLVRF",
+      "isin": "ES0105492005",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2020-07-30",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLHAY",
+      "isin": "ES0105498002",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2020-09-30",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLINM",
+      "isin": "ES0105511002",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2021-04-08",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLORQ",
+      "isin": "ES0105534004",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-04",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLNDG",
+      "isin": "ES0105537007",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2021-04-16",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLMTP",
+      "isin": "ES0105549002",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-14",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLJDL",
+      "isin": "ES0105550000",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2021-06-29",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLABC",
+      "isin": "ES0105551008",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2021-08-31",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLECE",
+      "isin": "ES0105553004",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2021-07-29",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLMIV",
+      "isin": "ES0105559001",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2021-07-02",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLCAN",
+      "isin": "ES0105586004",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2021-08-11",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLIFS",
+      "isin": "ES0105590006",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-02-18",
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Yahoo HTTP 404 voor MLIFS.PA"
+    },
+    {
+      "symbol": "MLSCI",
+      "isin": "ES0105592002",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2025-08-19",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      }
+    },
+    {
+      "symbol": "MLARI",
+      "isin": "ES0105601001",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2021-09-17",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLVRE",
+      "isin": "ES0105623005",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2021-12-16",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLSAG",
+      "isin": "ES0105651006",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2022-06-14",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLCOE",
+      "isin": "ES0105660007",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2022-11-17",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLARE",
+      "isin": "ES0105661005",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2022-11-17",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLHBP",
+      "isin": "ES0105664009",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLMUT",
+      "isin": "ES0105697009",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-09-14",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      }
+    },
+    {
+      "symbol": "MLKPS",
+      "isin": "ES0105698007",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2023-03-29",
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Yahoo HTTP 404 voor MLKPS.PA"
+    },
+    {
+      "symbol": "MLBIO",
+      "isin": "ES0105719001",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2024-02-22",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      }
+    },
+    {
+      "symbol": "MLERH",
+      "isin": "ES0105726006",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-04",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLWRS",
+      "isin": "ES0105740007",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2025-09-19",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLURC",
+      "isin": "ES0105748000",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2024-02-22",
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Yahoo HTTP 404 voor MLURC.PA"
+    },
+    {
+      "symbol": "MLSPI",
+      "isin": "ES0105851002",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2025-01-21",
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Yahoo HTTP 404 voor MLSPI.PA"
+    },
+    {
+      "symbol": "MLINA",
+      "isin": "ES0105908000",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-27",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLSJA",
+      "isin": "ES0105910006",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "NO_EXECUTED_PRICE_EVIDENCE",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": null,
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Yahoo HTTP 404 voor MLSJA.PA"
+    },
+    {
+      "symbol": "MLVIC",
+      "isin": "ES0105962007",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2025-11-10",
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Yahoo HTTP 404 voor MLVIC.PA"
+    },
+    {
+      "symbol": "MLESV",
+      "isin": "ES0105964003",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2025-12-18",
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Yahoo HTTP 404 voor MLESV.PA"
+    },
+    {
+      "symbol": "MLMED",
+      "isin": "ES0105977005",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-03-30",
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Providervaluta wijkt af voor ES0105977005: verwacht EUR, ontvangen onbekend"
+    },
+    {
+      "symbol": "MLBIM",
+      "isin": "ES0106008008",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-03-09",
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Yahoo HTTP 404 voor MLBIM.PA"
+    },
+    {
+      "symbol": "MLHA2",
+      "isin": "ES0106042007",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "NO_EXECUTED_PRICE_EVIDENCE",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": null,
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Yahoo HTTP 404 voor MLHA2.PA"
+    },
+    {
+      "symbol": "MLEXX",
+      "isin": "ES0106046008",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-07-14",
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Providervaluta wijkt af voor ES0106046008: verwacht EUR, ontvangen onbekend"
+    },
+    {
+      "symbol": "MLCFD",
+      "isin": "FR0000037871",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-10",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLHBB",
+      "isin": "FR0000051302",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-02",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLGAI",
+      "isin": "FR0000053415",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-27",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLHOT",
+      "isin": "FR0000053738",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-05",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLSRP",
+      "isin": "FR0000054371",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-12",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLPRI",
+      "isin": "FR0000061376",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-30",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLSTR",
+      "isin": "FR0000063976",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLHYD",
+      "isin": "FR0000064735",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-08",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLIMP",
+      "isin": "FR0000065773",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-02",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLGRC",
+      "isin": "FR0000076960",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-23",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLCNT",
+      "isin": "FR0000077828",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-04-28",
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Yahoo HTTP 404 voor MLCNT.PA"
+    },
+    {
+      "symbol": "MLDAM",
+      "isin": "FR0000077885",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-21",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLIDS",
+      "isin": "FR0000079691",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLNOV",
+      "isin": "FR0000185464",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-04",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLPHW",
+      "isin": "FR0000185480",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-17",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLLOI",
+      "isin": "FR0004155208",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLONL",
+      "isin": "FR0004174712",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-09-08",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLOTT",
+      "isin": "FR0004998318",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-04",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLARD",
+      "isin": "FR0005057635",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-08-14",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLCAC",
+      "isin": "FR0006205019",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-06",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLHIN",
+      "isin": "FR0006563904",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-08",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      }
+    },
+    {
+      "symbol": "MLIPP",
+      "isin": "FR0006859039",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-30",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLEDR",
+      "isin": "FR0007200100",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-06",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLIML",
+      "isin": "FR0010086371",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-04",
+        "tradingState": "RESERVED",
+        "haltReason": "4"
+      }
+    },
+    {
+      "symbol": "MLONE",
+      "isin": "FR0010106039",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-10",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLHPE",
+      "isin": "FR0010312181",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-23",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLCHE",
+      "isin": "FR0010447086",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-11",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLWEA",
+      "isin": "FR0010688465",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "RESERVED",
+        "haltReason": "4"
+      }
+    },
+    {
+      "symbol": "MLWEY",
+      "isin": "FR0010768770",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-12",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLCLP",
+      "isin": "FR0010959684",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "RESERVED",
+        "haltReason": "4"
+      }
+    },
+    {
+      "symbol": "MLCMI",
+      "isin": "FR0010972091",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-11",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLACT",
+      "isin": "FR0010979377",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-17",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLVST",
+      "isin": "FR0011076595",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-09-09",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLCLI",
+      "isin": "FR0011092089",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-07-08",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLGAL",
+      "isin": "FR0011100759",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-11",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLSML",
+      "isin": "FR0011131788",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-11",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLVIN",
+      "isin": "FR0011605617",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-15",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLUMG",
+      "isin": "FR0011776889",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-30",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLAGI",
+      "isin": "FR0011908045",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-19",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      }
+    },
+    {
+      "symbol": "MLFDV",
+      "isin": "FR0012300424",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-09-09",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLHCF",
+      "isin": "FR0012336691",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-21",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLAEM",
+      "isin": "FR0012968485",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLFNP",
+      "isin": "FR0013230067",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-11",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLCMG",
+      "isin": "FR0013406881",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-29",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLVIE",
+      "isin": "FR0014003FN0",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-08-17",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLIME",
+      "isin": "FR001400QW73",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "NO_EXECUTED_PRICE_EVIDENCE",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": null,
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Yahoo HTTP 404 voor MLIME.PA"
+    },
+    {
+      "symbol": "MLPRE",
+      "isin": "FR0014011SJ4",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-08-07",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLALE",
+      "isin": "GB00BJ9M4V82",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2024-10-02",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      }
+    },
+    {
+      "symbol": "MLEAS",
+      "isin": "HK0000038783",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2025-01-06",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      }
+    },
+    {
+      "symbol": "MLAZL",
+      "isin": "IT0004812258",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2024-03-06",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLLAB",
+      "isin": "IT0005324105",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-23",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLITN",
+      "isin": "IT0005336521",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-01-22",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLIRF",
+      "isin": "IT0005391161",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-09-09",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLGL",
+      "isin": "IT0005613739",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "NO_EXECUTED_PRICE_EVIDENCE",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": null,
+        "tradingState": "TAL",
+        "haltReason": null
+      },
+      "yahooError": "Yahoo HTTP 404 voor MLGL.PA"
+    },
+    {
+      "symbol": "MLCFM",
+      "isin": "MC0010000826",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLAAH",
+      "isin": "NL0010273694",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-15",
+        "tradingState": "SUSPENDED",
+        "haltReason": "15"
+      }
+    },
+    {
+      "symbol": "MLAAT",
+      "isin": "PTAZR0AM0006",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-12",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "MLGEQ",
+      "isin": "PTGVE1AM0017",
+      "mic": "XMLI",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-03",
+        "tradingState": "RESERVED",
+        "haltReason": "4"
+      }
+    },
+    {
+      "symbol": "ALDV",
+      "isin": "BE0974269012",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-27",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "TVRB",
+      "isin": "CH0008175645",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-12",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "FORE",
+      "isin": "CI0000053161",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-09-28",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "EEM",
+      "isin": "FR0000035719",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-03",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "CFI",
+      "isin": "FR0000037475",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "FIPP",
+      "isin": "FR0000038184",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "CON",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "CROS",
+      "isin": "FR0000050395",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-12",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "SPEL",
+      "isin": "FR0000053944",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "CHSR",
+      "isin": "FR0000060907",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-19",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "EFI",
+      "isin": "FR0000061475",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-12",
+        "tradingState": "RESERVED",
+        "haltReason": "4"
+      }
+    },
+    {
+      "symbol": "BLEE",
+      "isin": "FR0000062150",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-29",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ITXT",
+      "isin": "FR0000064958",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-10-27",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "COUR",
+      "isin": "FR0000065393",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-04",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "LEBL",
+      "isin": "FR0000065930",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-05",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "ARTO",
+      "isin": "FR0000076952",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "GJAJ",
+      "isin": "FR0004010338",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-10",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "NR21",
+      "isin": "FR0014001PV6",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-05",
+        "tradingState": "CON",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "CBDG",
+      "isin": "FR001400SUB7",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-11-13",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    },
+    {
+      "symbol": "FOAF",
+      "isin": "SN0000033192",
+      "mic": "XPAR",
+      "market": "XPAR",
+      "resolution": "OFFICIAL_NO_TRADES",
+      "currentQuoteState": {
+        "identityMatch": true,
+        "lastTradeDate": "2026-09-10",
+        "tradingState": "TAL",
+        "haltReason": null
+      }
+    }
+  ]
+}

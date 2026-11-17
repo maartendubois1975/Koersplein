@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "events": [
+    {
+      "name": "TOOSLA",
+      "mic": "ALXP",
+      "symbol": "ALTOO",
+      "oldIsin": "FR00140062B9",
+      "newIsin": "FR001401B9V8",
+      "effectiveDate": "2026-11-17",
+      "oldSharesPerNewShare": 3334,
+      "policy": "QUARANTINE_OLD_IDENTITY_FROM_EFFECTIVE_DATE_NO_AUTOMATIC_PRICE_JOIN",
+      "sources": [
+        "https://www.toosla-bourse.com/informations-financieres/informations-reglementees?ID=ACTUS-0-100453",
+        "https://live.euronext.com/en/ajax/getDetailedQuote/FR001401B9V8-ALXP"
+      ],
+      "note": "Approved company membership remains unchanged. Successor admission is proven; returned successor quote still contains pre-effective old-price observations. Verify the new series separately before mapping it or calculating returns."
+    }
+  ]
+}

@@ -191,3 +191,12 @@ Owner's no-micro-fix agreement has been strengthened in AGENTS.md (commit 881c94
 - Universal daily collection/archive and prospective research now share identities, strict OHLC validation, immutable reference fields and bounded calendar horizons. Historical source completeness and adjustment-provenance gates remain in place.
 - Evidence, exact file list, local regression results and operational limits: `docs/CONSOLIDATION_2026-11-17.md` and `research/consolidation/2026-11-17/`.
 - No production write/deployment, no claim of active unattended scheduling or verified Render configuration. Existing legacy history problems are quarantined rather than rewritten.
+
+## 2026-11-17 — completion of approved daily-session evidence
+
+- Continued from a99377c on consolidation-20261116; exact 80/105/664 company contracts retained.
+- Investigated all 152 unresolved sessions with real official header/history evidence and approved Yahoo routes. Complete evidence chain: 698 executed OHLC sessions, 138 corroborated no-trade sessions, 13 unproven session statuses.
+- Added maintained exchange calendar/DST guards, official last-trade corroboration, visible daily statuses, preserved proved no-trade statuses on weaker reimports, and corporate-action quarantine for Toosla from 17 November.
+- Corrected the homepage’s raw Paris count (770) to the approved catalog (664). No production Worker/CORS or main-branch scheduling changes.
+- Live browser verified lists, searches and ASML graph. Brussels/Paris deep-history reads are blocked by the Worker’s production-only CORS configuration; no claim that fixture tests solve that connection.
+- Full report and measured operational limits: docs/COMPLETION_2026-11-17.md and research/completion/2026-11-17/. Await recorded GitHub execution/deployment result before claiming the new build live or cron active.

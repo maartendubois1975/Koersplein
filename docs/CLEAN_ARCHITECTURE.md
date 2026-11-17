@@ -18,9 +18,11 @@
 Run `npm run audit:architecture` and `npm test` before removing any page or script. An unreferenced root script is a *candidate*, not proof of dead code: dynamic loading, CLI jobs, scheduled workflows and tests may reference it. Delete only after searching every runtime, workflow and test dependency. Preserve rollback by committing changes on the development branch and validating staging before any production release.
 
 ## Known operational divergence
-The consolidation branch contains one manually dispatchable daily workflow and one read-only regression workflow. Both target development; no deployment step is present. GitHub cron executes from the default branch, so this branch alone does not activate an unattended daily schedule. Default-branch workflows and existing external automations are outside this change. No production changes are authorized. Live Render branch/autodeploy configuration has not been verified because no Render workspace was selected.
+The consolidation branch contains one manually dispatchable daily workflow and one read-only regression workflow. Both target development; no deployment step is present. GitHub cron executes from the default branch, so this branch alone does not activate an unattended daily schedule. Default-branch workflows and existing external automations are outside this change. No production changes are authorized. Live Render inspection confirmed the test service still targets codex/koersplein-home-history with auto-deploy off; a manual a99377c deploy is live. Test-origin reads of the existing history API are blocked by production-only CORS. These are separate operational boundaries, not passing-code claims.
 
 ## Block 1 acceptance
 A repository-wide file inventory and dependency graph must be generated, candidates must be reviewed for runtime and workflow use, redundant files must be removed, all tests must pass, and staging must deploy successfully. The inventory alone is not completion. Preserve the original production deployment until a separately approved release.
 
 Current implementation and measured limitations: `docs/CONSOLIDATION_2026-11-17.md`.
+
+Completion evidence and current operational limits: `docs/COMPLETION_2026-11-17.md`.

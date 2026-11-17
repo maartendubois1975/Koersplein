@@ -10,6 +10,6 @@ assert.ok(!/ref:\s*main\b/.test(workflow));
 // into immutable daily OHLC. Both the ordinary fetch and historical tail
 // are bounded by the last completed-session cutoff, not today's date.
 const {collectApprovedSession}=await import('./approved-daily-session.mjs');
-await assert.rejects(()=>collectApprovedSession({market:'TEST',session:'2026-10-23',now:new Date('2026-10-23T10:00:00Z'),catalog:{shares:[]}}),/unclosed/);
-await assert.rejects(()=>collectApprovedSession({market:'TEST',session:'2026-02-30',catalog:{shares:[]}}),/Invalid/);
+await assert.rejects(()=>collectApprovedSession({market:'XAMS',session:'2026-10-23',now:new Date('2026-10-23T10:00:00Z'),catalog:{shares:[]}}),/unclosed/);
+await assert.rejects(()=>collectApprovedSession({market:'XAMS',session:'2026-02-30',catalog:{shares:[]}}),/Invalid/);
 console.log('Universal EOD importer rejects future and impossible sessions PASS');

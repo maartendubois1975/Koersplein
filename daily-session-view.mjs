@@ -24,3 +24,16 @@ export function dailyRow(snapshot,share,mic){
  if(row?.status!=='TRADED'||!b||b.date!==snapshot.session||![b.open,b.high,b.low,b.close,b.volume].every(x=>Number.isFinite(x)&&x>0)||b.high<Math.max(b.open,b.close)||b.low>Math.min(b.open,b.close)||b.high<b.low)return null;
  return b;
 }
+export function dailyState(snapshot,share,mic){
+ if(!validSessionDate(snapshot?.session)||snapshot.market!==mic)return null;
+ const row=snapshot.results?.find(r=>r.isin===share.isin&&r.symbol===(share.symbol||share.ticker)&&r.mic===(share.primaryMic||share.mic||mic));
+ if(!row)return null;
+ return {...row,status:row.status==='TRADED'&&!dailyRow(snapshot,share,mic)?'SESSION_UNVERIFIED':row.status,date:snapshot.session};
+}
+export function dailyStateLabel(row){
+ if(row?.status==='TRADED')return 'Geldige koers';
+ if(row?.status==='NO_TRADES')return 'Geen handel (officieel)';
+ if(row?.status==='MARKET_CLOSED')return 'Beurs gesloten';
+ if(row?.reasonCode==='IDENTITY_CHANGED')return 'ISIN gewijzigd — verificatie nodig';
+ return 'Koers niet bevestigd';
+}

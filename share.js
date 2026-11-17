@@ -1,4 +1,4 @@
-import {approvedMarkets,browserCatalog,dailyRow,dailyHistoryPath} from './daily-session-view.mjs';
+import {approvedMarkets,browserCatalog,dailyRow,dailyHistoryPath,dailyState,dailyStateLabel} from './daily-session-view.mjs';
 import { renderHistoryChart, validateHistoryDocument, periodStartDate } from './chart.js';
 import { manifestResolver } from './market-week-core.mjs';
 import { assessPeriod, latestCloseChange } from './scripts/research/amsterdam-period-quality.mjs';
@@ -18,8 +18,9 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
  const crumbs=document.querySelector('.breadcrumbs');const links=crumbs?.querySelectorAll('a');if(links?.[2]){links[2].href=back;links[2].textContent=market.name}
  const backLink=document.querySelector('.back-link');backLink.href=back;backLink.textContent=`← ${market.name}`;
  detail.innerHTML=`<div><p class="eyebrow">Europa · ${esc(market.name)} · ${esc(mic)}</p><h1>${esc(share.name)}</h1><div class="identity-line"><span class="ticker">${esc(share.symbol||share.ticker)}</span><span>${esc(share.isin)}</span><span>${esc(mic)}</span></div></div><div class="latest-price"><span>Laatste koers</span><strong>—</strong><small>Historie wordt geladen</small></div>`;
- let current=null;
- if(approvedMarkets.has(market.mic)){try{const snap=await load('data/daily-session-'+market.mic+'.json');current=dailyRow(snap,share,market.mic);if(current){const fmt=n=>n.toLocaleString('nl-NL',{style:'currency',currency:share.currency||market.currency||'EUR'});detail.querySelector('.latest-price').innerHTML='<span>Opening / slot</span><strong>'+fmt(current.open)+' / '+fmt(current.close)+'</strong><small>'+esc(current.date)+'</small>';}}catch{}}
+ let current=null,currentState=null;
+ if(approvedMarkets.has(market.mic)){try{const snap=await load('data/daily-session-'+market.mic+'.json');currentState=dailyState(snap,share,market.mic);current=dailyRow(snap,share,market.mic);if(current){const fmt=n=>n.toLocaleString('nl-NL',{style:'currency',currency:share.currency||market.currency||'EUR'});detail.querySelector('.latest-price').innerHTML='<span>Opening / slot</span><strong>'+fmt(current.open)+' / '+fmt(current.close)+'</strong><small>'+esc(current.date)+'</small>';}}catch{}}
+ if(currentState&&!current)detail.querySelector('.latest-price').innerHTML='<span>Handelsdag '+esc(currentState.date)+'</span><strong>'+esc(dailyStateLabel(currentState))+'</strong><small>Geen bevestigde opening of slot voor deze dag</small>';
  try{
   let h,storageId,dailyHistory=null;
   try{dailyHistory=await load(dailyHistoryPath(share,market.mic));}catch(error){if(!String(error.message).includes('HTTP 404'))throw error;}
@@ -81,6 +82,6 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
   const delta=change.percent;
   const deltaText=delta===null?'—':new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:2,maximumFractionDigits:2}).format(delta)+'%';
   const deltaColor=delta===null?'':delta>=0?'#3fc98c':'#ee6677';
-  if(!current)detail.querySelector('.latest-price').innerHTML=`<span>Laatste slotkoers</span><strong>${Number(last.close).toLocaleString('nl-NL',{style:'currency',currency,minimumFractionDigits:2,maximumFractionDigits:2})}</strong><span style="color:${deltaColor};font-weight:700">${esc(deltaText)} t.o.v. vorig slot${lastDiscontinuity?' · koerssprong of historiegat niet geverifieerd':''}</span><small>${esc(last.date)} · historie vanaf ${esc(first.date)}</small>`;
+  if(!current)detail.querySelector('.latest-price').innerHTML=`<span>${esc(dailyStateLabel(currentState))} · ${esc(currentState?.date||'')}</span><span>Laatst opgeslagen slot</span><strong>${Number(last.close).toLocaleString('nl-NL',{style:'currency',currency,minimumFractionDigits:2,maximumFractionDigits:2})}</strong><span style="color:${deltaColor};font-weight:700">${esc(deltaText)} t.o.v. vorig slot${lastDiscontinuity?' · koerssprong of historiegat niet geverifieerd':''}</span><small>${esc(last.date)} · historie vanaf ${esc(first.date)}</small>`;
  }catch(e){fail(e.message+'; geen beleggingsadvies zonder voldoende betrouwbare historie')}
 }).catch(e=>{detail.innerHTML=`<div><p class="eyebrow">Niet beschikbaar</p><h1>${esc(e.message)}</h1></div>`;fail('Aandeelgegevens konden niet worden geladen')});

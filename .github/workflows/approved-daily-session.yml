@@ -1,5 +1,12 @@
 name: Approved European companies daily session
 on:
+  push:
+    branches: [consolidation-20261116]
+    paths:
+      - '.github/workflows/approved-daily-session.yml'
+      - 'scripts/cloudflare/approved-daily-session.mjs'
+      - 'scripts/history/trading-calendar.mjs'
+      - 'data/trading-calendars.json'
   workflow_dispatch:
     inputs:
       session:
@@ -17,16 +24,22 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       markets: ${{ steps.register.outputs.markets }}
+      reference_session: ${{ steps.register.outputs.reference_session }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - id: register
+        env:
+          REQUESTED_SESSION: ${{ inputs.session }}
         run: |
           node --input-type=module <<'JS' >> "$GITHUB_OUTPUT"
           import {approvedCompanyUniverse} from './scripts/history/company-register.mjs';
-          console.log('markets='+JSON.stringify((await approvedCompanyUniverse()).map(m=>m.mic)));
+          import {latestClosedSession} from './scripts/history/trading-calendar.mjs';
+          const markets=(await approvedCompanyUniverse()).map(m=>({mic:m.mic,session:process.env.REQUESTED_SESSION||latestClosedSession(m.mic)}));
+          console.log('markets='+JSON.stringify(markets));
+          console.log('reference_session='+markets[0].session);
           JS
   daily:
     needs: register
@@ -35,7 +48,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mic: ${{ fromJSON(needs.register.outputs.markets) }}
+        include: ${{ fromJSON(needs.register.outputs.markets) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -44,7 +57,7 @@ jobs:
       - run: node scripts/cloudflare/approved-daily-session.mjs
         env:
           MARKET_MIC: ${{ matrix.mic }}
-          TARGET_SESSION: ${{ inputs.session }}
+          TARGET_SESSION: ${{ matrix.session }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -86,7 +99,7 @@ jobs:
           name: approved-session-archive-report
           path: research/output/approved-session-archive-report.json
   research-development:
-    needs: archive-development
+    needs: [register, archive-development]
     if: always() && needs.archive-development.result == 'success' && github.ref == 'refs/heads/consolidation-20261116'
     permissions:
       contents: write
@@ -103,7 +116,7 @@ jobs:
         run: node scripts/research/daily-opportunity-ledger.mjs
         env:
           KOERSPLEIN_API_URL: ${{ vars.KOERSPLEIN_API_URL }}
-          TARGET_SESSION: ${{ inputs.session }}
+          TARGET_SESSION: ${{ inputs.session || needs.register.outputs.reference_session }}
       - name: Save research results after prices have already been preserved
         run: |
           git config user.name "Koersplein development"
@@ -118,3 +131,29 @@ jobs:
         with:
           name: daily-opportunity-diagnostics
           path: research/output/daily-opportunity-diagnostics.json
+  deploy-test:
+    needs: [archive-development, research-development]
+    if: always() && needs.archive-development.result == 'success' && github.ref == 'refs/heads/consolidation-20261116'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: consolidation-20261116
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate final stored data before any test deployment
+        run: npm test
+      - name: Deploy the exact validated development commit to the existing test service only
+        run: |
+          export TEST_COMMIT_SHA="$(git rev-parse HEAD)"
+          node scripts/cloudflare/deploy-approved-test.mjs
+        env:
+          TEST_BRANCH: consolidation-20261116
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-deployment-evidence
+          path: research/output/test-deployment.json

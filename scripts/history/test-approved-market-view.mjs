@@ -16,3 +16,12 @@ for(const catalog of await approvedCompanyUniverse()){
  assert.doesNotMatch(output,/<td>€\s*0,00<\/td>/,'Unverified prices must not be shown as zero');
  console.log('Actual canonical market renderer, complete approved identity list and daily open/close display: '+catalog.mic+' PASS');
 }
+
+const homeNodes=new Map();globalThis.document={querySelector(selector){if(!homeNodes.has(selector))homeNodes.set(selector,{textContent:'',innerHTML:''});return homeNodes.get(selector);}};
+await import('../../home-markets.js?approved-home-counts');
+for(let i=0;i<300&&!homeNodes.get('#market-navigation')?.innerHTML;i++)await new Promise(r=>setTimeout(r,10));
+const navigation=homeNodes.get('#market-navigation').innerHTML;
+for(const c of await approvedCompanyUniverse()){
+ const marker=c.mic+'</small>',card=navigation.split('<a ').find(part=>part.includes(marker));assert(card,'Home market '+c.mic);assert(card.includes(c.shares.length+' aandelen'),'Home must use approved count for '+c.mic);
+}
+console.log('Actual homepage navigation uses the same approved 80/105/664 catalogs PASS');

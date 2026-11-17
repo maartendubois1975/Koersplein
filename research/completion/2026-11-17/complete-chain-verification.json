@@ -1,0 +1,36 @@
+{
+  "session": "2026-11-16",
+  "scope": "Complete source-evidence replay using 697 previously verified trades plus 152 fresh individual investigations. Collection/archive execute unchanged production functions in disposable storage.",
+  "markets": [
+    {
+      "market": "XAMS",
+      "total": 80,
+      "counts": {
+        "TRADED": 78,
+        "NO_TRADES": 2
+      }
+    },
+    {
+      "market": "XBRU",
+      "total": 105,
+      "counts": {
+        "TRADED": 97,
+        "NO_TRADES": 4,
+        "SESSION_UNVERIFIED": 4
+      }
+    },
+    {
+      "market": "XPAR",
+      "total": 664,
+      "counts": {
+        "TRADED": 523,
+        "NO_TRADES": 132,
+        "SESSION_UNVERIFIED": 9
+      }
+    }
+  ],
+  "historyDocuments": 698,
+  "idempotentHistoryReplay": true,
+  "weakerEvidencePreservesVerifiedSession": true,
+  "productionWrites": 0
+}

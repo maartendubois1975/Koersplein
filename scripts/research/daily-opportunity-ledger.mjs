@@ -1,6 +1,7 @@
+import {latestClosedSession} from '../history/trading-calendar.mjs';
 import fs from 'node:fs/promises';
 import {loadApprovedHistory} from './market-history-source.mjs';
-import {latestClosedWeekday,mapConcurrent} from '../cloudflare/europe-run-policy.mjs';
+import {mapConcurrent} from '../cloudflare/europe-run-policy.mjs';
 import {validSessionDate} from '../../daily-session-view.mjs';
 import {assessPeriod} from './amsterdam-period-quality.mjs';
 import {evaluateOpportunity} from './exam-outcomes-core.mjs';
@@ -11,8 +12,8 @@ const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
 
 
 const active=await Promise.all(Object.keys(companyContracts).map(async mic=>{const catalog=await loadCompanyCatalog(mic);return {mic,name:catalog.exchange||mic,catalog};}));
-const runReferenceDate=process.env.TARGET_SESSION||latestClosedWeekday();
-if(!validSessionDate(runReferenceDate)||runReferenceDate>latestClosedWeekday()||[0,6].includes(new Date(runReferenceDate+'T12:00:00Z').getUTCDay()))throw Error('INVALID_RESEARCH_REFERENCE_SESSION');
+const runReferenceDate=process.env.TARGET_SESSION||latestClosedSession(active[0].mic);
+if(!validSessionDate(runReferenceDate)||runReferenceDate>latestClosedSession(active[0].mic)||[0,6].includes(new Date(runReferenceDate+'T12:00:00Z').getUTCDay()))throw Error('INVALID_RESEARCH_REFERENCE_SESSION');
 const diagnostics=[];
 const histCache=new Map();
 async function hist(share,market,{prediction=false}={}){
@@ -78,7 +79,7 @@ const newSelections=[];
 for(const m of active){
   const pack=candidatesByMarket.get(m.mic);
   if(!pack) continue;
-  if(runReferenceDate!==latestClosedWeekday()){diagnostics.push({market:m.mic,status:'HISTORICAL_REFERENCE_NO_NEW_PREDICTIONS'});continue;}
+  if(runReferenceDate!==latestClosedSession(active[0].mic)){diagnostics.push({market:m.mic,status:'HISTORICAL_REFERENCE_NO_NEW_PREDICTIONS'});continue;}
   if(ledger.some(x=>x.referenceDate===runReferenceDate&&x.market===m.mic)) continue;
   const sameDate=pack.rows.filter(r=>r.date===runReferenceDate);
   const coverage=sameDate.length/Math.max(1,pack.universeCount);

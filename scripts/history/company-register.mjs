@@ -2,6 +2,8 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 const data = new URL('../../data/', import.meta.url);
 const read = async file => JSON.parse(await readFile(new URL(file, data), 'utf8'));
+export const instrumentEvents=(await read('instrument-events.json')).events;
+export const identityEventAt=(isin,date)=>instrumentEvents.find(e=>e.oldIsin===isin&&date>=e.effectiveDate)||null;
 export const companyContracts = (await read('company-register-contracts.json')).markets;
 
 export function validateCompanyCatalog(catalog, contract = companyContracts[catalog?.mic]) {

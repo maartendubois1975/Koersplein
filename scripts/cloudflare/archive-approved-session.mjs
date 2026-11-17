@@ -29,9 +29,10 @@ export async function archiveApprovedSessions({inputDir='research/output',dataDi
    if(prior){
     validateSnapshot(prior,catalog,market);
     const current=new Map(snap.results.map(r=>[r.isin,r]));
-    for(const old of prior.results)if(old.status==='TRADED'){
+    for(const old of prior.results)if(['TRADED','NO_TRADES','MARKET_CLOSED'].includes(old.status)){
      const next=current.get(old.isin);
-     if(next.status==='TRADED'&&signature(next.bar)!==signature(old.bar))report.conflicts.push({market,isin:old.isin,date:snap.session,code:'SESSION_CONFLICT_PRESERVED'});
+     if(old.status!=='TRADED'&&next.status==='TRADED')report.conflicts.push({market,isin:old.isin,date:snap.session,code:'SESSION_STATUS_CONFLICT_PRESERVED',priorStatus:old.status,incomingStatus:next.status,incomingBar:next.bar});
+     if(old.status==='TRADED'&&next.status==='TRADED'&&signature(next.bar)!==signature(old.bar))report.conflicts.push({market,isin:old.isin,date:snap.session,code:'SESSION_CONFLICT_PRESERVED'});
      current.set(old.isin,old);
     }
     snap.results=[...current.values()].sort((a,b)=>a.isin.localeCompare(b.isin));

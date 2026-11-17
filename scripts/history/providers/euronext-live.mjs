@@ -86,3 +86,25 @@ export class EuronextLiveProvider{
   return{bars:traded,requestUrl:ROOT+key,providerMeta:{mic,isin:i.isin,source:'Euronext Live',windowPolicy:'<=700d chunks',partialHistory:failedWindows.length>0,failedWindows}};
  }
 }
+
+// These are instrument-scoped fields, not navigation labels or indicative closes.
+// The latest executed date corroborates a zero-volume historical session row.
+export function parseEuronextQuoteHeader(html,instrument){
+ const text=clean(html).replace(/&#039;|&apos;/g,"'").replace(/\s+/g,' ');
+ const venues={XAMS:'Euronext Amsterdam',XBRU:'Euronext Brussels',ALXB:'Euronext Growth Brussels',MLXB:'Euronext Access Brussels',XPAR:'Euronext Paris',ALXP:'Euronext Growth Paris',XMLI:'Euronext Access Paris'};
+ const mic=String(instrument.mic||instrument.market).toUpperCase();
+ const identityMatch=Boolean(venues[mic]&&text.includes(venues[mic]+' '+instrument.isin+' - Stock'));
+ const last=text.match(/Last traded price\s+(\d{2}\/\d{2}\/\d{4})/i),valuation=text.match(/Valuation Close.*?(\d{2}\/\d{2}\/\d{4})/i);
+ const status=html.match(/<!--\s*status\s+(\w+)\s*-->/)?.[1]||null;
+ return {identityMatch,lastTradeDate:last?iso(last[1]):null,valuationDate:valuation?iso(valuation[1]):null,status,bookState:html.match(/<!--\s*bookState\s+(\w+)\s*-->/)?.[1]||null,haltReason:html.match(/<!--\s*haltReasonKey\s+(.*?)\s*-->/)?.[1]||null,tradingState:status==='HAL'&&/\bSUSPENDED\b/.test(text)?'SUSPENDED':status==='HAL'?'RESERVED':status,identityUnknown:/This instrument is unknown/i.test(text)};
+}
+export function corroboratedEuronextNoTrade(header,row,date,snapshotAt){
+ const observed=String(snapshotAt||'').slice(0,10),lag=(Date.parse(observed)-Date.parse(date))/86400000;
+ return Boolean(header.identityMatch&&header.lastTradeDate&&header.lastTradeDate<date&&Number.isInteger(lag)&&lag>=0&&lag<=7&&row?.date===date&&row.volume===0&&row.open===null&&row.high===null&&row.low===null&&row.close>0);
+}
+export async function euronextQuoteSnapshot(instrument,signal){
+ const sourceUrl='https://live.euronext.com/en/ajax/getDetailedQuote/'+instrument.isin+'-'+euronextProviderMic(instrument.mic);
+ const response=await fetch(sourceUrl,{signal});if(!response.ok)throw Error('Euronext quote HTTP '+response.status);
+ const raw=await response.text(),html=decodeEuronextBody(raw);
+ return {...parseEuronextQuoteHeader(html,instrument),sourceUrl,retrievedAt:new Date().toISOString(),sourceSha256:createHash('sha256').update(raw).digest('hex')};
+}

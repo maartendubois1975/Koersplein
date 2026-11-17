@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "files": 1353,
+  "pages": 15,
+  "activeScripts": [
+    "chart.js",
+    "daily-session-view.mjs",
+    "generic-market.js",
+    "home-markets.js",
+    "kansscanner.js",
+    "market-week-core.mjs",
+    "research-lab.js",
+    "scripts/research/amsterdam-period-quality.mjs",
+    "share.js"
+  ],
+  "inactiveRootJs": [],
+  "rootScriptReferences": {},
+  "deletionCandidates": [],
+  "redirects": [
+    {
+      "page": "amsterdam.html",
+      "to": "market.html?market=amsterdam"
+    },
+    {
+      "page": "brussel.html",
+      "to": "market.html?market=brussels"
+    },
+    {
+      "page": "lissabon.html",
+      "to": "market.html?market=lisbon"
+    },
+    {
+      "page": "milaan.html",
+      "to": "market.html?market=milan"
+    },
+    {
+      "page": "oslo.html",
+      "to": "market.html?market=oslo"
+    },
+    {
+      "page": "parijs.html",
+      "to": "market.html?market=paris"
+    },
+    {
+      "page": "stockholm.html",
+      "to": "market.html?market=stockholm"
+    },
+    {
+      "page": "zurich.html",
+      "to": "market.html?market=zurich"
+    }
+  ],
+  "missing": [],
+  "workflows": [
+    {
+      "path": ".github/workflows/approved-daily-session.yml",
+      "scheduled": false,
+      "writes": true,
+      "targetsDevelopment": true
+    },
+    {
+      "path": ".github/workflows/approved-regression-check.yml",
+      "scheduled": false,
+      "writes": false,
+      "targetsDevelopment": false
+    }
+  ],
+  "notes": [
+    "Inactive root scripts are candidates only: CLI, tests, or dynamic loading can reference them.",
+    "GitHub scheduled workflows execute only from default branch.",
+    "Do not remove financial data or provenance evidence based on static reachability."
+  ]
+}

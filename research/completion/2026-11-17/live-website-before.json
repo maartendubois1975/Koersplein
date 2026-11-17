@@ -1,0 +1,59 @@
+{
+  "observedOn": "2026-11-17",
+  "renderServiceId": "srv-dajuqaek1f9s739gu8kg",
+  "liveDeployId": "dep-dbtunmp42hec73b2gi3g",
+  "liveCommit": "a99377c1d1e8684a374e580ab7484901e47223f1",
+  "configuredBranch": "codex/koersplein-home-history",
+  "autoDeploy": "off",
+  "homeParisCount": 770,
+  "markets": {
+    "XAMS": {
+      "rows": 80,
+      "unique": 80,
+      "session": "2026-11-13",
+      "confirmed": 76
+    },
+    "XBRU": {
+      "rows": 105,
+      "unique": 105,
+      "session": "2026-11-13",
+      "confirmed": 98
+    },
+    "XPAR": {
+      "rows": 664,
+      "unique": 664,
+      "session": "2026-11-13",
+      "confirmed": 516
+    }
+  },
+  "search": {
+    "Amsterdam ASML": "PASS",
+    "Brussels ABO": "PASS",
+    "Paris 2CRSI": "PASS"
+  },
+  "navigation": "Home to market to share; correct child MIC ALXP and backlinks verified",
+  "graphs": {
+    "ASML": {
+      "rendered": true,
+      "svg": 1,
+      "records": 7242,
+      "firstDate": "1998-07-20",
+      "lastDate": "2026-11-13"
+    },
+    "ABO": {
+      "rendered": false,
+      "visibleError": "Failed to fetch"
+    },
+    "2CRSI": {
+      "rendered": false,
+      "visibleError": "Failed to fetch"
+    }
+  },
+  "readOnlyHistoryApiProbe": {
+    "status": 200,
+    "origin": "https://koersplein-test.onrender.com",
+    "accessControlAllowOrigin": null,
+    "cause": "Worker CORS permits only its configured production origin; no production change authorized"
+  },
+  "accountAccess": "Render MCP read access confirmed for the user-selected workspace; dashboard authentication cancelled; no retry"
+}

@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+import {identityEventAt} from '../history/company-register.mjs';
 import {verifiedBackfillComplete} from '../history/bars.mjs';
 import {YahooChartProvider} from '../history/providers/yahoo-chart.mjs';
 
@@ -30,6 +31,7 @@ export async function loadMarketBars(item,mic,loadByIsin){
 export async function loadApprovedHistory(item,parentMic,{api='',cutoff,dataDir='data',fetchImpl=globalThis.fetch,requirePredictionEvidence=false}={}){
  const {listingIdentity}=await import('../../daily-session-view.mjs');
  const {inspectDailyBarIntegrity}=await import('../cloudflare/europe-run-policy.mjs');
+ if(identityEventAt(item.isin,cutoff))throw Error('HISTORY_IDENTITY_CHANGED_REQUIRES_REVIEW '+item.isin);
  const id=listingIdentity(item,parentMic),documents=[];
  for(const key of [id.storageKey,id.isin]){try{documents.push(JSON.parse(await fs.readFile(path.join(dataDir,'history',key+'.json'),'utf8')))}catch(e){if(e.code!=='ENOENT')throw e;}}
  if(api){

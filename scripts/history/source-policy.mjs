@@ -1,7 +1,8 @@
 import { readFile } from 'node:fs/promises';
+import {identityEventAt} from './company-register.mjs';
 import { validateBars } from './bars.mjs';
 const sources = JSON.parse(await readFile(new URL('../../data/market-source-registry.json', import.meta.url), 'utf8'));
-const parentMic = mic => ({ ALXB: 'XBRU', MLXB: 'XBRU', ALXP: 'XPAR', XMLI: 'XPAR', MTAA: 'XMIL', EXGM: 'XMIL', MERK: 'XOSL', XOAS: 'XOSL', ALXL: 'XLIS', ENXL: 'XLIS', XMSM: 'XDUB', XESM: 'XDUB', XATL: 'XDUB', FNSE: 'XSTO', SSME: 'XSTO' }[mic] || mic);
+export const parentMic = mic => ({ ALXB: 'XBRU', MLXB: 'XBRU', ALXP: 'XPAR', XMLI: 'XPAR', MTAA: 'XMIL', EXGM: 'XMIL', MERK: 'XOSL', XOAS: 'XOSL', ALXL: 'XLIS', ENXL: 'XLIS', XMSM: 'XDUB', XESM: 'XDUB', XATL: 'XDUB', FNSE: 'XSTO', SSME: 'XSTO' }[mic] || mic);
 
 // Registration order is not approval. Only explicit roles in the market source
 // register authorize a provider; research/paid candidates cannot become fallbacks.
@@ -18,6 +19,8 @@ export function providerRoute(instrument, { mode = 'backfill', sourceRegistry = 
 }
 
 export async function fetchConfiguredHistory(registry, instrument, range, { mode = 'backfill', sourceRegistry = sources, ...options } = {}) {
+  const event=identityEventAt(instrument.officialIsin||String(instrument.isin||'').split(':').at(-1),range.endDate);
+  if(event)throw Error('SOURCE_IDENTITY_CHANGED_REQUIRES_REVIEW '+event.oldIsin+' -> '+event.newIsin);
   instrument = { ...instrument, mic: instrument.primaryMic || instrument.mic };
   const route = providerRoute(instrument, { mode, sourceRegistry });
   const acceptable = result => result?.providerMeta?.partialHistory !== true &&
