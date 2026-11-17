@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "NL0010696704",
+    "mic": "XAMS",
+    "symbol": "AMUND",
+    "name": "ALMUNDA PRO NV",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 0.955,
+      "high": 0.955,
+      "low": 0.86,
+      "close": 0.86,
+      "adjustedClose": null,
+      "volume": 676
+    }
+  ]
+}

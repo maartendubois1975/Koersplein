@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "NL0013267909",
+    "mic": "XAMS",
+    "symbol": "AKZA",
+    "name": "AKZO NOBEL",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 62.62,
+      "high": 63.24,
+      "low": 62.36,
+      "close": 62.76,
+      "adjustedClose": null,
+      "volume": 235940
+    }
+  ]
+}

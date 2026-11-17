@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000039091",
+    "mic": "XPAR",
+    "symbol": "RBT",
+    "name": "ROBERTET",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 831,
+      "high": 840,
+      "low": 826,
+      "close": 828,
+      "adjustedClose": null,
+      "volume": 2235
+    }
+  ]
+}

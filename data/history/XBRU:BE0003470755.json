@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "BE0003470755",
+    "mic": "XBRU",
+    "symbol": "SOLB",
+    "name": "Solvay SA",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 24.78,
+      "high": 25.08,
+      "low": 24.54,
+      "close": 24.8,
+      "adjustedClose": null,
+      "volume": 297430
+    }
+  ]
+}

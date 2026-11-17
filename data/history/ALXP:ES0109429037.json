@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "ES0109429037",
+    "mic": "ALXP",
+    "symbol": "ALISP",
+    "name": "ISPD",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 1.025,
+      "high": 1.025,
+      "low": 1.025,
+      "close": 1.025,
+      "adjustedClose": null,
+      "volume": 1
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0011365907",
+    "mic": "ALXP",
+    "symbol": "ALBOA",
+    "name": "BOA CONCEPT",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 8.68,
+      "high": 9,
+      "low": 8.64,
+      "close": 9,
+      "adjustedClose": null,
+      "volume": 34463
+    }
+  ]
+}

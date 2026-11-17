@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000066607",
+    "mic": "XPAR",
+    "symbol": "LACR",
+    "name": "LACROIX GROUP",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 16.6,
+      "high": 16.6,
+      "low": 16.05,
+      "close": 16.25,
+      "adjustedClose": null,
+      "volume": 2611
+    }
+  ]
+}

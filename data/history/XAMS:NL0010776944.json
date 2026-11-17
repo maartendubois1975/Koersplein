@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "NL0010776944",
+    "mic": "XAMS",
+    "symbol": "BRNL",
+    "name": "BRUNEL INTERNAT",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 6.98,
+      "high": 7,
+      "low": 6.8,
+      "close": 6.81,
+      "adjustedClose": null,
+      "volume": 43704
+    }
+  ]
+}

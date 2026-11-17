@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "BE0003789063",
+    "mic": "XBRU",
+    "symbol": "DECB",
+    "name": "Deceuninck NV",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 2.42,
+      "high": 2.465,
+      "low": 2.42,
+      "close": 2.455,
+      "adjustedClose": null,
+      "volume": 103621
+    }
+  ]
+}

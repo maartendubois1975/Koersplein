@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0014003U94",
+    "mic": "XPAR",
+    "symbol": "ARAMI",
+    "name": "ARAMIS GROUP",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 3.59,
+      "high": 3.595,
+      "low": 3.515,
+      "close": 3.535,
+      "adjustedClose": null,
+      "volume": 11535
+    }
+  ]
+}

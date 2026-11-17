@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000036675",
+    "mic": "XPAR",
+    "symbol": "CEN",
+    "name": "GROUPE CRIT",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 48.8,
+      "high": 49.3,
+      "low": 48.5,
+      "close": 49.3,
+      "adjustedClose": null,
+      "volume": 1157
+    }
+  ]
+}

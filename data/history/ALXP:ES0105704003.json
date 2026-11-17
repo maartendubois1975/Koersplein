@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "ES0105704003",
+    "mic": "ALXP",
+    "symbol": "ALVIR",
+    "name": "VIRTUALWARE",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 5.25,
+      "high": 5.25,
+      "low": 5.25,
+      "close": 5.25,
+      "adjustedClose": null,
+      "volume": 1
+    }
+  ]
+}

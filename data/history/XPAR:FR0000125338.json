@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000125338",
+    "mic": "XPAR",
+    "symbol": "CAP",
+    "name": "CAPGEMINI",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 127.7,
+      "high": 128.8,
+      "low": 124.3,
+      "close": 125.5,
+      "adjustedClose": null,
+      "volume": 415505
+    }
+  ]
+}

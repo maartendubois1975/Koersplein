@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000030074",
+    "mic": "XPAR",
+    "symbol": "MALT",
+    "name": "MALTERIES FCO-BEL.",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 720,
+      "high": 720,
+      "low": 720,
+      "close": 720,
+      "adjustedClose": null,
+      "volume": 7
+    }
+  ]
+}

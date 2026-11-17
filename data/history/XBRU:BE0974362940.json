@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "BE0974362940",
+    "mic": "XBRU",
+    "symbol": "BAR",
+    "name": "Barco NV",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 6.205,
+      "high": 6.23,
+      "low": 6.13,
+      "close": 6.14,
+      "adjustedClose": null,
+      "volume": 99647
+    }
+  ]
+}

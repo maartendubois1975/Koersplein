@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000066755",
+    "mic": "XPAR",
+    "symbol": "PIG",
+    "name": "HAULOTTE GROUP",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 2.3,
+      "high": 2.3,
+      "low": 2.27,
+      "close": 2.27,
+      "adjustedClose": null,
+      "volume": 2104
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR001401A702",
+    "mic": "ALXP",
+    "symbol": "ALNRG",
+    "name": "ENERGISME",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 3.76,
+      "high": 3.99,
+      "low": 3.48,
+      "close": 3.92,
+      "adjustedClose": null,
+      "volume": 3878
+    }
+  ]
+}

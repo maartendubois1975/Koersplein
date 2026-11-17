@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000039232",
+    "mic": "XPAR",
+    "symbol": "AURE",
+    "name": "AUREA",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 5.4,
+      "high": 5.4,
+      "low": 5.18,
+      "close": 5.38,
+      "adjustedClose": null,
+      "volume": 1707
+    }
+  ]
+}

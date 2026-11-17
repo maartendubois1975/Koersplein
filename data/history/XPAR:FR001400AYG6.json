@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR001400AYG6",
+    "mic": "XPAR",
+    "symbol": "DEEZR",
+    "name": "DEEZER",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 1.21,
+      "high": 1.21,
+      "low": 1.195,
+      "close": 1.2,
+      "adjustedClose": null,
+      "volume": 2864
+    }
+  ]
+}

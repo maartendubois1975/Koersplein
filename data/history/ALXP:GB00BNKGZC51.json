@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "GB00BNKGZC51",
+    "mic": "ALXP",
+    "symbol": "ALAMA",
+    "name": "AMA CORPORATION",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 0.1125,
+      "high": 0.1125,
+      "low": 0.1125,
+      "close": 0.1125,
+      "adjustedClose": null,
+      "volume": 1
+    }
+  ]
+}

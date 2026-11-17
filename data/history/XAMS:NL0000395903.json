@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "NL0000395903",
+    "mic": "XAMS",
+    "symbol": "WKL",
+    "name": "WOLTERS KLUWER",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 90.78,
+      "high": 91.58,
+      "low": 90.34,
+      "close": 90.84,
+      "adjustedClose": null,
+      "volume": 620615
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR00140007I9",
+    "mic": "XMLI",
+    "symbol": "MLLCB",
+    "name": "CONSTRUCTEURS BOIS",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 1.3,
+      "high": 1.3,
+      "low": 1.3,
+      "close": 1.3,
+      "adjustedClose": null,
+      "volume": 4400
+    }
+  ]
+}

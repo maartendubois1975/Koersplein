@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "BE0003808251",
+    "mic": "XBRU",
+    "symbol": "EXM",
+    "name": "EXMAR NV",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 11.4,
+      "high": 11.4,
+      "low": 11.3,
+      "close": 11.35,
+      "adjustedClose": null,
+      "volume": 8721
+    }
+  ]
+}

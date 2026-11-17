@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0011726835",
+    "mic": "XPAR",
+    "symbol": "GTT",
+    "name": "GTT",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 185.4,
+      "high": 187.6,
+      "low": 185.4,
+      "close": 186.9,
+      "adjustedClose": null,
+      "volume": 162551
+    }
+  ]
+}

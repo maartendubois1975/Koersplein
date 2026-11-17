@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000060873",
+    "mic": "XPAR",
+    "symbol": "MBWS",
+    "name": "MBWS",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 2.77,
+      "high": 2.77,
+      "low": 2.76,
+      "close": 2.77,
+      "adjustedClose": null,
+      "volume": 1606
+    }
+  ]
+}

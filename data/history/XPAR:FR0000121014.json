@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000121014",
+    "mic": "XPAR",
+    "symbol": "MC",
+    "name": "LVMH",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 405.55,
+      "high": 408.1,
+      "low": 403.65,
+      "close": 404,
+      "adjustedClose": null,
+      "volume": 350372
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0012821890",
+    "mic": "ALXP",
+    "symbol": "ALDUX",
+    "name": "ADUX",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 0.848,
+      "high": 0.858,
+      "low": 0.84,
+      "close": 0.84,
+      "adjustedClose": null,
+      "volume": 16684
+    }
+  ]
+}

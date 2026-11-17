@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "NL0000440311",
+    "mic": "XAMS",
+    "symbol": "HOLCO",
+    "name": "HOLLAND COLOURS",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 62.5,
+      "high": 64,
+      "low": 62.5,
+      "close": 64,
+      "adjustedClose": null,
+      "volume": 170
+    }
+  ]
+}

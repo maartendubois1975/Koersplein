@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR001400H3A0",
+    "mic": "ALXP",
+    "symbol": "ALMCE",
+    "name": "MON COURTIER ENERG",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 5.05,
+      "high": 5.1,
+      "low": 5,
+      "close": 5.1,
+      "adjustedClose": null,
+      "volume": 773
+    }
+  ]
+}

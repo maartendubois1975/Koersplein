@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "NL0015073TS8",
+    "mic": "XAMS",
+    "symbol": "CSG",
+    "name": "CSG",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 10.198,
+      "high": 10.738,
+      "low": 10.044,
+      "close": 10.044,
+      "adjustedClose": null,
+      "volume": 1307626
+    }
+  ]
+}

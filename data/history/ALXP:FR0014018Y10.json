@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0014018Y10",
+    "mic": "ALXP",
+    "symbol": "ALLSF",
+    "name": "LE SLIP FRANCAIS",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 11.48,
+      "high": 11.48,
+      "low": 10.74,
+      "close": 11.26,
+      "adjustedClose": null,
+      "volume": 1029
+    }
+  ]
+}

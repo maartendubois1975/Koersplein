@@ -16,7 +16,7 @@
     "SESSION_UNVERIFIED": 4
   },
   "readOnly": true,
-  "generatedAt": "2026-11-17T16:01:52.586Z",
+  "generatedAt": "2026-11-17T16:17:45.329Z",
   "results": [
     {
       "isin": "BE0003008019",
@@ -428,13 +428,24 @@
       "name": "Fountain SA",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
       "evidence": {
+        "date": "2026-11-16",
+        "mic": "XBRU",
+        "isin": "BE0003752665",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003752665-XBRU",
+        "retrievedAt": "2026-11-17T16:17:51.242Z",
+        "lastTradeDate": "2026-11-17",
         "status": "SESSION_UNVERIFIED",
-        "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION"
+        "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003752665-XBRU",
+        "currentTradingState": "TAL",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-17T16:17:51.748Z"
       },
       "officialError": null,
-      "error": "Sources do not establish executed OHLC for the requested session"
+      "error": "Alle providers faalden voor BE0003752665: yahoo-chart: Provider returned no daily bars"
     },
     {
       "isin": "BE0003754687",
@@ -731,13 +742,10 @@
       "name": "Newtree SA",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
-      "evidence": {
-        "status": "SESSION_UNVERIFIED",
-        "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION"
-      },
+      "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
+      "evidence": null,
       "officialError": null,
-      "error": "Sources do not establish executed OHLC for the requested session"
+      "error": "Alle providers faalden voor BE0003832491: yahoo-chart: Provider returned no daily bars"
     },
     {
       "isin": "BE0003837540",
@@ -1541,13 +1549,10 @@
       "name": "Choice NV",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
-      "evidence": {
-        "status": "SESSION_UNVERIFIED",
-        "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION"
-      },
+      "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
+      "evidence": null,
       "officialError": null,
-      "error": "Sources do not establish executed OHLC for the requested session"
+      "error": "Alle providers faalden voor BE0974370026: yahoo-chart: Provider returned no daily bars"
     },
     {
       "isin": "BE0974371032",
@@ -1808,13 +1813,24 @@
       "name": "Floridienne SA",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
       "evidence": {
+        "date": "2026-11-16",
+        "mic": "XBRU",
+        "isin": "BE0974502347",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974502347-XBRU",
+        "retrievedAt": "2026-11-17T16:17:50.825Z",
+        "lastTradeDate": "2026-11-17",
         "status": "SESSION_UNVERIFIED",
-        "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION"
+        "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0974502347-XBRU",
+        "currentTradingState": "TAL",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-17T16:17:51.329Z"
       },
       "officialError": null,
-      "error": "Sources do not establish executed OHLC for the requested session"
+      "error": "Alle providers faalden voor BE0974502347: yahoo-chart: Provider returned no daily bars"
     },
     {
       "isin": "BE0974503352",
@@ -1925,5 +1941,12 @@
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0015000HT4-XBRU"
     }
   ],
-  "archiveConflicts": []
+  "archiveConflicts": [
+    {
+      "market": "XBRU",
+      "isin": "BE0003773877",
+      "date": "2026-11-16",
+      "code": "SESSION_CONFLICT_PRESERVED"
+    }
+  ]
 }

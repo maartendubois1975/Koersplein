@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "NL0011832811",
+    "mic": "XAMS",
+    "symbol": "FFARM",
+    "name": "FORFARMERS",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 5.5,
+      "high": 5.58,
+      "low": 5.5,
+      "close": 5.54,
+      "adjustedClose": null,
+      "volume": 75986
+    }
+  ]
+}

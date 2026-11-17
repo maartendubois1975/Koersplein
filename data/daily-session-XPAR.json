@@ -16,7 +16,7 @@
     "SESSION_UNVERIFIED": 9
   },
   "readOnly": true,
-  "generatedAt": "2026-11-17T16:01:52.593Z",
+  "generatedAt": "2026-11-17T16:17:56.453Z",
   "results": [
     {
       "isin": "BE0160342011",
@@ -1226,13 +1226,24 @@
       "name": "SAJA REAL ESTATE",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "NO_EXECUTED_PRICE_EVIDENCE",
+      "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
       "evidence": {
+        "date": "2026-11-16",
+        "mic": "XMLI",
+        "isin": "ES0105910006",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105910006-XMLI",
+        "retrievedAt": "2026-11-17T16:19:16.477Z",
+        "lastTradeDate": null,
         "status": "SESSION_UNVERIFIED",
-        "reasonCode": "NO_EXECUTED_PRICE_EVIDENCE"
+        "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105910006-XMLI",
+        "currentTradingState": "TAL",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-17T16:19:16.918Z"
       },
       "officialError": null,
-      "error": "Yahoo HTTP 404 voor MLSJA.PA"
+      "error": "Alle providers faalden voor ES0105910006: yahoo-chart: Yahoo HTTP 404 voor MLSJA.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105910006-XMLI; mislukte vensters: 0"
     },
     {
       "isin": "ES0105962007",
@@ -1341,13 +1352,24 @@
       "name": "HAY 2 SOCIMI",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "NO_EXECUTED_PRICE_EVIDENCE",
+      "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
       "evidence": {
+        "date": "2026-11-16",
+        "mic": "XMLI",
+        "isin": "ES0106042007",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0106042007-XMLI",
+        "retrievedAt": "2026-11-17T16:18:41.222Z",
+        "lastTradeDate": null,
         "status": "SESSION_UNVERIFIED",
-        "reasonCode": "NO_EXECUTED_PRICE_EVIDENCE"
+        "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0106042007-XMLI",
+        "currentTradingState": "TAL",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-17T16:18:41.775Z"
       },
       "officialError": null,
-      "error": "Yahoo HTTP 404 voor MLHA2.PA"
+      "error": "Alle providers faalden voor ES0106042007: yahoo-chart: Yahoo HTTP 404 voor MLHA2.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0106042007-XMLI; mislukte vensters: 0"
     },
     {
       "isin": "ES0106046008",
@@ -3735,13 +3757,24 @@
       "name": "BERNARD LOISEAU",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
       "evidence": {
+        "date": "2026-11-16",
+        "mic": "ALXP",
+        "isin": "FR0000066961",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR0000066961-ALXP",
+        "retrievedAt": "2026-11-17T16:18:09.908Z",
+        "lastTradeDate": "2026-11-17",
         "status": "SESSION_UNVERIFIED",
-        "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION"
+        "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/FR0000066961-ALXP",
+        "currentTradingState": "TAL",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-17T16:18:10.275Z"
       },
       "officialError": null,
-      "error": "Sources do not establish executed OHLC for the requested session"
+      "error": "Alle providers faalden voor FR0000066961: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor FR0000066961-ALXP; mislukte vensters: 0"
     },
     {
       "isin": "FR0000071797",
@@ -5160,13 +5193,24 @@
       "name": "PHONE WEB",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
       "evidence": {
+        "date": "2026-11-16",
+        "mic": "XMLI",
+        "isin": "FR0000185480",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR0000185480-XMLI",
+        "retrievedAt": "2026-11-17T16:19:09.745Z",
+        "lastTradeDate": "2026-11-17",
         "status": "SESSION_UNVERIFIED",
-        "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION"
+        "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/FR0000185480-XMLI",
+        "currentTradingState": "TAL",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-17T16:19:10.315Z"
       },
       "officialError": null,
-      "error": "Sources do not establish executed OHLC for the requested session"
+      "error": "Alle providers faalden voor FR0000185480: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor FR0000185480-XMLI; mislukte vensters: 0"
     },
     {
       "isin": "FR0004007813",
@@ -7784,13 +7828,24 @@
       "name": "ACTIVIUM GROUP",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
       "evidence": {
+        "date": "2026-11-16",
+        "mic": "XMLI",
+        "isin": "FR0010979377",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR0010979377-XMLI",
+        "retrievedAt": "2026-11-17T16:17:59.437Z",
+        "lastTradeDate": "2026-11-17",
         "status": "SESSION_UNVERIFIED",
-        "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION"
+        "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/FR0010979377-XMLI",
+        "currentTradingState": "TAL",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-17T16:17:59.974Z"
       },
       "officialError": null,
-      "error": "Sources do not establish executed OHLC for the requested session"
+      "error": "Alle providers faalden voor FR0010979377: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor FR0010979377-XMLI; mislukte vensters: 0"
     },
     {
       "isin": "FR0011005933",
@@ -8259,13 +8314,24 @@
       "name": "VOGO",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
       "evidence": {
+        "date": "2026-11-16",
+        "mic": "ALXP",
+        "isin": "FR0011532225",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR0011532225-ALXP",
+        "retrievedAt": "2026-11-17T16:19:32.002Z",
+        "lastTradeDate": "2026-11-17",
         "status": "SESSION_UNVERIFIED",
-        "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION"
+        "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/FR0011532225-ALXP",
+        "currentTradingState": "RESERVED",
+        "currentHaltReason": "4",
+        "stateObservedAt": "2026-11-17T16:19:32.492Z"
       },
       "officialError": null,
-      "error": "Sources do not establish executed OHLC for the requested session"
+      "error": "Alle providers faalden voor FR0011532225: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor FR0011532225-ALXP; mislukte vensters: 0"
     },
     {
       "isin": "FR0011605617",
@@ -9392,13 +9458,24 @@
       "name": "EUROFINS CEREP",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION",
+      "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
       "evidence": {
+        "date": "2026-11-16",
+        "mic": "ALXP",
+        "isin": "FR0013256518",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR0013256518-ALXP",
+        "retrievedAt": "2026-11-17T16:18:28.909Z",
+        "lastTradeDate": "2026-11-17",
         "status": "SESSION_UNVERIFIED",
-        "reasonCode": "LATER_LAST_TRADE_CANNOT_PROVE_PRIOR_SESSION"
+        "reasonCode": "ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/FR0013256518-ALXP",
+        "currentTradingState": "TAL",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-17T16:18:29.260Z"
       },
       "officialError": null,
-      "error": "Sources do not establish executed OHLC for the requested session"
+      "error": "Alle providers faalden voor FR0013256518: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor FR0013256518-ALXP; mislukte vensters: 0"
     },
     {
       "isin": "FR0013257409",
@@ -11585,13 +11662,24 @@
       "name": "IMEON ENERGY",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "NO_EXECUTED_PRICE_EVIDENCE",
+      "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
       "evidence": {
+        "date": "2026-11-16",
+        "mic": "XMLI",
+        "isin": "FR001400QW73",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR001400QW73-XMLI",
+        "retrievedAt": "2026-11-17T16:18:46.903Z",
+        "lastTradeDate": null,
         "status": "SESSION_UNVERIFIED",
-        "reasonCode": "NO_EXECUTED_PRICE_EVIDENCE"
+        "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/FR001400QW73-XMLI",
+        "currentTradingState": "TAL",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-17T16:18:47.512Z"
       },
       "officialError": null,
-      "error": "Yahoo HTTP 404 voor MLIME.PA"
+      "error": "Alle providers faalden voor FR001400QW73: yahoo-chart: Yahoo HTTP 404 voor MLIME.PA; euronext-live: Geen verhandelde Euronext koershistorie voor FR001400QW73-XMLI; mislukte vensters: 0"
     },
     {
       "isin": "FR001400RF99",
@@ -12573,13 +12661,24 @@
       "name": "GLASS TO POWER",
       "status": "SESSION_UNVERIFIED",
       "bar": null,
-      "reasonCode": "NO_EXECUTED_PRICE_EVIDENCE",
+      "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
       "evidence": {
+        "date": "2026-11-16",
+        "mic": "XMLI",
+        "isin": "IT0005613739",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IT0005613739-XMLI",
+        "retrievedAt": "2026-11-17T16:18:37.952Z",
+        "lastTradeDate": null,
         "status": "SESSION_UNVERIFIED",
-        "reasonCode": "NO_EXECUTED_PRICE_EVIDENCE"
+        "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/IT0005613739-XMLI",
+        "currentTradingState": "TAL",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-17T16:18:38.396Z"
       },
       "officialError": null,
-      "error": "Yahoo HTTP 404 voor MLGL.PA"
+      "error": "Alle providers faalden voor IT0005613739: yahoo-chart: Yahoo HTTP 404 voor MLGL.PA; euronext-live: Geen verhandelde Euronext koershistorie voor IT0005613739-XMLI; mislukte vensters: 0"
     },
     {
       "isin": "LU2999653251",

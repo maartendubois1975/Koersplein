@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "BE0974413453",
+    "mic": "XBRU",
+    "symbol": "DEME",
+    "name": "DEME Group NV",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 168,
+      "high": 168.2,
+      "low": 165.8,
+      "close": 166.6,
+      "adjustedClose": null,
+      "volume": 6628
+    }
+  ]
+}

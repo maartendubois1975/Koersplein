@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0014005AL0",
+    "mic": "XPAR",
+    "symbol": "ANTIN",
+    "name": "ANTIN INFRA PARTN",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 7.72,
+      "high": 7.76,
+      "low": 7.6,
+      "close": 7.66,
+      "adjustedClose": null,
+      "volume": 18873
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR001400CFI7",
+    "mic": "XPAR",
+    "symbol": "AVT",
+    "name": "AVENIR TELECOM",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 0.068,
+      "high": 0.0726,
+      "low": 0.068,
+      "close": 0.068,
+      "adjustedClose": null,
+      "volume": 101860
+    }
+  ]
+}

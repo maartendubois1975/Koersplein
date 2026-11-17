@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0010208488",
+    "mic": "XPAR",
+    "symbol": "ENGI",
+    "name": "ENGIE",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 25.22,
+      "high": 25.29,
+      "low": 24.92,
+      "close": 25.07,
+      "adjustedClose": null,
+      "volume": 2992549
+    }
+  ]
+}

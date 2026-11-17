@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "BE0974349814",
+    "mic": "XBRU",
+    "symbol": "WDP",
+    "name": "Warehouses De Pauw NV",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 19.94,
+      "high": 20.02,
+      "low": 19.81,
+      "close": 19.88,
+      "adjustedClose": null,
+      "volume": 483589
+    }
+  ]
+}

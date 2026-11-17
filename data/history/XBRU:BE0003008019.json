@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "BE0003008019",
+    "mic": "XBRU",
+    "symbol": "BNB",
+    "name": "Nationale Bank van België SA/NV",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 330,
+      "high": 330,
+      "low": 328,
+      "close": 328,
+      "adjustedClose": null,
+      "volume": 25
+    }
+  ]
+}

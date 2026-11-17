@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0014007ND6",
+    "mic": "ALXP",
+    "symbol": "ALHAF",
+    "name": "HAFFNER ENERGY",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 0.565,
+      "high": 0.584,
+      "low": 0.554,
+      "close": 0.568,
+      "adjustedClose": null,
+      "volume": 1935878
+    }
+  ]
+}

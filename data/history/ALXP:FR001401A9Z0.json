@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR001401A9Z0",
+    "mic": "ALXP",
+    "symbol": "ALSEN",
+    "name": "SENSORION",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 8.46,
+      "high": 8.46,
+      "low": 8.19,
+      "close": 8.257,
+      "adjustedClose": null,
+      "volume": 7433
+    }
+  ]
+}

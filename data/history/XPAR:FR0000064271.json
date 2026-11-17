@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000064271",
+    "mic": "XPAR",
+    "symbol": "STF",
+    "name": "STEF",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 127.6,
+      "high": 129.4,
+      "low": 127,
+      "close": 127,
+      "adjustedClose": null,
+      "volume": 922
+    }
+  ]
+}

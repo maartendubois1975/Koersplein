@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "BE0003851681",
+    "mic": "XBRU",
+    "symbol": "AED",
+    "name": "Aedifica NV/SA",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 66.45,
+      "high": 66.825,
+      "low": 66.35,
+      "close": 66.4,
+      "adjustedClose": null,
+      "volume": 147704
+    }
+  ]
+}

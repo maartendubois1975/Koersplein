@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "DE000A11Q133",
+    "mic": "XMLI",
+    "symbol": "MLHK",
+    "name": "HK",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 31,
+      "high": 31,
+      "low": 31,
+      "close": 31,
+      "adjustedClose": null,
+      "volume": 4
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000032526",
+    "mic": "XPAR",
+    "symbol": "GBT",
+    "name": "GUERBET",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 6.59,
+      "high": 6.65,
+      "low": 6.5,
+      "close": 6.55,
+      "adjustedClose": null,
+      "volume": 7205
+    }
+  ]
+}

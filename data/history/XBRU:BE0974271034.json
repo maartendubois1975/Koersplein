@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "BE0974271034",
+    "mic": "XBRU",
+    "symbol": "VIO",
+    "name": "Viohalco SA",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 15.5,
+      "high": 15.82,
+      "low": 15.32,
+      "close": 15.64,
+      "adjustedClose": null,
+      "volume": 2665
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "BE0003839561",
+    "mic": "XBRU",
+    "symbol": "VAN",
+    "name": "Van de Velde NV",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 29.4,
+      "high": 29.8,
+      "low": 29.4,
+      "close": 29.8,
+      "adjustedClose": null,
+      "volume": 2930
+    }
+  ]
+}

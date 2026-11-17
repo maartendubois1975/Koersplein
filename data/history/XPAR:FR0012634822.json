@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0012634822",
+    "mic": "XPAR",
+    "symbol": "MAAT",
+    "name": "MAAT PHARMA",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 1.03,
+      "high": 1.056,
+      "low": 1.026,
+      "close": 1.026,
+      "adjustedClose": null,
+      "volume": 47611
+    }
+  ]
+}

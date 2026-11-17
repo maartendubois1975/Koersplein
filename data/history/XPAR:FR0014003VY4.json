@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0014003VY4",
+    "mic": "XPAR",
+    "symbol": "HDF",
+    "name": "HDF",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-16",
+    "lastDate": "2026-11-16",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-16",
+      "open": 1.746,
+      "high": 1.746,
+      "low": 1.74,
+      "close": 1.74,
+      "adjustedClose": null,
+      "volume": 3011
+    }
+  ]
+}
