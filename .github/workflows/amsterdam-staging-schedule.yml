@@ -1,127 +1,26 @@
-name: Amsterdam staging daily refresh
+name: European staging daily refresh
 on:
   push:
-    branches:
-      - main
-    paths:
-      - .github/workflows/amsterdam-staging-schedule.yml
+    branches: [main]
+    paths: ['.github/workflows/amsterdam-staging-schedule.yml']
   schedule:
-    # GitHub scheduled workflows run only from the default branch.
-    # 18:40 UTC = 19:40 CET / 20:40 CEST, after the XAMS closing session.
+    # 19:40 CET / 20:40 CEST, after the exchange's closing session.
     - cron: '40 18 * * 1-5'
   workflow_dispatch:
+    inputs:
+      session:
+        description: 'Completed session YYYY-MM-DD; empty selects the latest completed session'
+        required: false
+        type: string
 permissions:
-  contents: write
-concurrency:
-  group: amsterdam-daily-history
-  cancel-in-progress: false
+  contents: read
 jobs:
   refresh-staging:
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    steps:
-      - name: Checkout isolated Amsterdam staging branch
-        uses: actions/checkout@v4
-        with:
-          ref: amsterdam-reset-20261027
-          persist-credentials: true
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Fetch official Euronext daily bars with verified fallback
-        run: node scripts/history/amsterdam-daily-run.mjs --phase close
-      - name: Validate the complete 80-company history and public market integration
-        run: |
-          node scripts/cloudflare/test-xams-market-page.mjs
-          npm test
-          npm run history:test
-          node scripts/history/amsterdam-end-to-end-acceptance.mjs
-      - name: Check all 80 identities and stored OHLC before staging publication
-        run: |
-          node scripts/history/audit-amsterdam-import.mjs
-          node scripts/history/check-amsterdam-latest-session.mjs
-      - name: Diagnose lagging Amsterdam instruments against source feeds
-        run: node scripts/history/diagnose-amsterdam-freshness.mjs
-      - name: Reject stale or structurally invalid Amsterdam refresh
-        run: |
-          node --input-type=module <<'EOF'
-          import fs from 'node:fs';
-          const r=JSON.parse(fs.readFileSync('research/output/amsterdam-session-readiness.json','utf8'));
-          const problems=[];
-          if(!r.countMatches || !r.identityUnique || r.invalidCount || r.unavailableCount) problems.push('invalid-or-missing-instruments');
-          if(r.latestObservedDateAgeDays==null || r.latestObservedDateAgeDays>4 || r.latestObservedDateAgeDays<0) problems.push('stale-or-future-session');
-          if(problems.length){console.error('Refusing scheduled staging publication: '+problems.join(', '));process.exit(1)}
-          console.log('Staging freshness checked; this does not certify official closing or provenance.');
-          EOF
-      - name: Record historical research warnings without blocking valid daily candles
-        continue-on-error: true
-        run: |
-          node scripts/research/amsterdam-structural-integrity-audit.mjs
-          node scripts/research/amsterdam-data-provenance-audit.mjs
-          node scripts/research/amsterdam-history-quality-audit.mjs
-          node scripts/research/amsterdam-consolidated-quality-gate.mjs
-      - name: Validate changed Amsterdam history before staging persistence
-        run: |
-          node --input-type=module <<'EOF'
-          import fs from 'node:fs';
-          import {execFileSync} from 'node:child_process';
-          import {loadCatalog,validateBars} from './scripts/history/engine.mjs';
-          const instruments=await loadCatalog();
-          if(instruments.length!==80)throw Error('Expected 80 Amsterdam instruments');
-          const allowed=new Map(instruments.map(x=>['data/history/'+x.isin+'.json',x]));
-          const changed=execFileSync('git',['diff','--name-only','--','data/history'],{encoding:'utf8'}).trim().split('\n').filter(Boolean).filter(file=>file!=='data/history/status.json');
-          for(const file of changed){
-            const instrument=allowed.get(file);
-            if(!instrument)throw Error('Unexpected history file: '+file);
-            const previous=JSON.parse(execFileSync('git',['show','HEAD:'+file],{encoding:'utf8',maxBuffer:64*1024*1024}));
-            const current=JSON.parse(fs.readFileSync(file,'utf8'));
-            if(current.instrument?.isin!==instrument.isin||current.instrument?.mic!=='XAMS')throw Error('Identity mismatch: '+file);
-            const before=validateBars(previous.bars||[]),after=validateBars(current.bars||[]);
-            if(before.length!==(previous.bars||[]).length||after.length!==(current.bars||[]).length)throw Error('Invalid OHLC: '+file);
-            if(after.length<before.length)throw Error('Historical candles removed: '+file);
-            const dates=new Set(after.map(x=>x.date));
-            for(const bar of before)if(!dates.has(bar.date))throw Error('Existing session missing: '+file+' '+bar.date);
-          }
-          console.log('AMSTERDAM_DAILY_PERSISTENCE_VALIDATED '+JSON.stringify({catalog:80,changed:changed.length}));
-          EOF
-      - name: Persist validated data only to staging
-        run: |
-          test "$(git branch --show-current)" = "amsterdam-reset-20261027"
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          node --input-type=module <<'EOF'
-          import {execFileSync} from 'node:child_process';
-          import {loadCatalog} from './scripts/history/engine.mjs';
-          const instruments=await loadCatalog();
-          if(instruments.length!==80)throw Error('Expected 80 Amsterdam equities');
-          const paths=instruments.map(x=>'data/history/'+x.isin+'.json');
-          execFileSync('git',['add','-f','--',...paths],{stdio:'inherit'});
-          EOF
-          if git diff --cached --quiet; then
-            echo 'No new validated daily prices'
-          else
-            git commit -m 'data: refresh validated Amsterdam daily history (staging)'
-            git push origin HEAD:amsterdam-reset-20261027
-          fi
-      - name: Preserve Amsterdam validation evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: amsterdam-validation-${{ github.run_id }}
-          path: |
-            research/output/amsterdam-daily-run.json
-            research/output/amsterdam-session-readiness.json
-            research/output/amsterdam-freshness-diagnostic.json
-            data/amsterdam-import-audit.json
-            research/output/amsterdam-structural-integrity-audit.json
-            research/output/amsterdam-data-provenance-audit.json
-            research/output/amsterdam-history-quality-audit.json
-            research/output/amsterdam-issuer-investigation-cases.json
-            research/output/amsterdam-consolidated-quality-gate.json
-          if-no-files-found: warn
-          retention-days: 30
-      - name: Record staging deployment boundary
-        run: |
-          echo 'Amsterdam history has been committed to amsterdam-reset-20261027 only.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'No automatic promotion of the full development branch to the legacy Render test branch.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Render auto-deploy is disabled; deploy the dedicated Amsterdam test service separately after validation.' >> "$GITHUB_STEP_SUMMARY"
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    uses: maartendubois1975/Koersplein/.github/workflows/approved-daily-session.yml@consolidation-20261116
+    with:
+      session: ${{ inputs.session || '' }}
+    secrets:
+      RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
