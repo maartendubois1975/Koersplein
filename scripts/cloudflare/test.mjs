@@ -60,3 +60,8 @@ await import('./test-europe-ohlc-defects.mjs');
 await import('./test-europe-stored-ohlc-severity.mjs');
 await import('./test-europe-summary-integration.mjs');
 await import('./test-europe-recovery.mjs');
+
+await import('./test-europe-provider-routing.mjs');
+await import('./test-europe-ohlc-source-evidence.mjs');
+await import('./test-import-session-boundary.mjs');
+await import('./test-six-sponsored-reference.mjs');

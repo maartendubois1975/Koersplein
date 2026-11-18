@@ -1,3 +1,4 @@
+import { providerRoute } from '../history/source-policy.mjs';
 import {validBars,parseOhlcPrice} from './europe-run-policy.mjs';
 import {classifyEuropeFailure} from './europe-failure-diagnosis.mjs';
 import {canonicalStoredOhlcSignature} from './europe-ohlc-defects.mjs';
@@ -273,9 +274,11 @@ export async function probeIncompleteOhlcCandidate(item,{registry,sources,market
  if(!approvedCatalogListingMic(market.mic,listingMic))return {...base,listingMic,status:'UNAPPROVED_CATALOG_SUBMARKET'};
  const identity={...base,listingMic};
  if(item.symbol&&share.symbol!==item.symbol&&share.ticker!==item.symbol)return {...identity,status:'CATALOG_SYMBOL_CHANGED_REQUIRES_REVIEW'};
- const primary=sources.historySources?.find(x=>x.role==='PRIMARY')?.provider;
- const allowed=[primary,...(sources.historySources||[]).filter(x=>['DISCOVERY_FALLBACK','FALLBACK'].includes(x.role)).map(x=>x.provider)].filter((id,index,array)=>id&&array.indexOf(id)===index&&registry.get(id));
- if(!primary||!registry.get(primary)||!allowed.length)return {...base,status:'NO_APPROVED_INSTALLED_PROVIDER'};
+ let route;
+ try { route=providerRoute({mic:market.mic},{sourceRegistry:{markets:{[market.mic]:sources}}}); }
+ catch { return {...base,status:'NO_APPROVED_INSTALLED_PROVIDER'}; }
+ const {primary}=route,allowed=route.allowedProviderIds.filter(id=>registry.get(id));
+ if(!registry.get(primary)||!allowed.length)return {...base,status:'NO_APPROVED_INSTALLED_PROVIDER'};
  const instrument={...share,mic:listingMic,market:listingMic,symbol:share.symbol||share.ticker,ticker:share.ticker||share.symbol,currency:share.currency||market.currency};
  // Opt-in only for the immutable read-only audit: a missing Yahoo OPEN or
  // CLOSE must be diagnosed, never silently discarded by the chart adapter.

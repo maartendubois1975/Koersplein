@@ -5,9 +5,10 @@ import { importGoldenHistory } from './history-store.mjs';
 import { createJob, runJob } from './jobs.mjs';
 
 const [command, argument] = process.argv.slice(2);
-const db = openDatabase();
-await seedAmsterdam(db);
+if (!['init', 'import-golden', 'status', 'run'].includes(command)) throw Error('Gebruik: init | import-golden [map] | status | run <JOBTYPE>');
+const db = openDatabase(undefined, { readOnly: command === 'status' });
 try {
+  if (command !== 'status') await seedAmsterdam(db);
   if (command === 'init') console.log(JSON.stringify({ database:'ready', instruments:db.prepare('SELECT COUNT(*) count FROM instruments').get().count }, null, 2));
   else if (command === 'import-golden') {
     const source = resolve(argument || process.env.KOERSPLEIN_HISTORY_SOURCE_DIR || 'data/history');

@@ -1,5 +1,14 @@
 // Shared read-only market-week contract for the public site and production audits.
 // A listing is identified by MIC + ticker, never by a globally shared ISIN alone.
+// The audited October fixture remains immutable for historical tests.
+export function lastCompletedAmsterdamWeek(now=new Date()) {
+ const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);
+ const midday=new Date(date+'T12:00:00Z');
+ const weekday=midday.getUTCDay(),sinceMonday=(weekday+6)%7;
+ // A week is completed only after Friday; Saturday/Sunday select the week just ended.
+ midday.setUTCDate(midday.getUTCDate()-sinceMonday-(weekday>=1&&weekday<=5?7:0));
+ return Array.from({length:5},(_,i)=>{const day=new Date(midday);day.setUTCDate(day.getUTCDate()+i);return day.toISOString().slice(0,10)});
+}
 export const AMSTERDAM_REFERENCE_WEEK=['2026-10-19','2026-10-20','2026-10-21','2026-10-22','2026-10-23'];
 const dayPattern=/^\d{4}-\d{2}-\d{2}$/;
 export function validDate(value){

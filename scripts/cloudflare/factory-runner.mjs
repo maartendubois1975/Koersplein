@@ -1,3 +1,5 @@
+import { fetchConfiguredHistory } from '../history/source-policy.mjs';
+import { validBars } from './europe-run-policy.mjs';
 import { FactoryApiClient } from './client.mjs';
 import { createDefaultProviderRegistry } from '../history/provider-registry.mjs';
 import { partitionBars } from './history-format.mjs';
@@ -17,7 +19,7 @@ const addDay = (date) => { const value = new Date(`${date}T00:00:00Z`); value.se
 const freshnessCutoff = latestClosedWeekday();
 
 async function processItem(job, item) {
-  const base = { isin: item.isin, name: item.company, symbol: item.ticker, ticker: item.ticker, mic: item.mic, market: item.mic, currency: item.currency, provider: 'yahoo-chart', providerSymbol: `${item.ticker}.AS` };
+  const base = { isin: item.isin, name: item.company, symbol: item.ticker, ticker: item.ticker, mic: item.mic, market: item.mic, currency: item.currency, providerSymbol: item.provider_symbol || item.providerSymbol || null };
   if (job.type === 'CHECK_AMSTERDAM') return { recordsAdded: 0, firstDate: item.first_date, lastDate: item.last_date };
   if (job.type === 'VALIDATE_HISTORY') {
     if (!item.record_count) throw new Error('Nog geen historie');
@@ -29,9 +31,10 @@ async function processItem(job, item) {
   if (job.type === 'HISTORY_BACKFILL' && item.history_status === 'COMPLETE') return { recordsAdded: 0, firstDate: item.first_date, lastDate: item.last_date };
   const startDate = item.last_date ? addDay(item.last_date) : '1990-01-01';
   if (startDate > freshnessCutoff) return { recordsAdded: 0, firstDate: item.first_date, lastDate: item.last_date };
-  const { provider, result } = await registry.fetchDaily(base, { startDate, endDate: freshnessCutoff }, base.provider);
+  const range = { startDate, endDate: freshnessCutoff };
+  const { provider, result } = await fetchConfiguredHistory(registry, base, range, { mode: job.type === 'HISTORY_BACKFILL' ? 'backfill' : 'update' });
   let added = 0;
-  for (const [period, bars] of partitionBars(result.bars)) { await client.putPartition(item.isin, period, { bars, provider: provider.id, appendOnly: item.mic === 'XAMS' }); added += bars.length; }
+  for (const [period, bars] of partitionBars(validBars(result, range))) { await client.putPartition(item.isin, period, { bars, provider: provider.id, appendOnly: true }); added += bars.length; }
   const coverage = await client.completeHistory(item.isin, { provider: provider.id });
   return { recordsAdded: added, firstDate: coverage.first_date, lastDate: coverage.last_date };
 }

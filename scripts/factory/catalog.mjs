@@ -1,12 +1,13 @@
 import { readFile } from 'node:fs/promises';
 import { transaction } from './db.mjs';
+import { loadCompanyCatalog } from '../history/company-register.mjs';
 
 const dataUrl = new URL('../../data/', import.meta.url);
 const readJson = async (name) => JSON.parse(await readFile(new URL(name, dataUrl), 'utf8'));
 
 export async function seedAmsterdam(db) {
   const [catalog, indices, mappings] = await Promise.all([
-    readJson('euronext-amsterdam.json'),
+    loadCompanyCatalog('XAMS'),
     readJson('euronext-amsterdam-indices.json'),
     readJson('history-instruments.json')
   ]);

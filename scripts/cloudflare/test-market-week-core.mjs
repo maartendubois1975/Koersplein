@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {AMSTERDAM_REFERENCE_WEEK,validDate,positiveNumber,validTradedBar,tradedBarDefect,sessionChange,manifestResolver,weekBars,weekCoverage,collectMarketWeek,verifiedNoTradeStatus} from '../../market-week-core.mjs';
+import {AMSTERDAM_REFERENCE_WEEK,lastCompletedAmsterdamWeek,validDate,positiveNumber,validTradedBar,tradedBarDefect,sessionChange,manifestResolver,weekBars,weekCoverage,collectMarketWeek,verifiedNoTradeStatus} from '../../market-week-core.mjs';
 const days=AMSTERDAM_REFERENCE_WEEK;
+for(const [instant,expected] of [['2026-11-09T12:00:00Z','2026-11-02'],['2026-11-13T12:00:00Z','2026-11-02'],['2026-11-14T12:00:00Z','2026-11-09'],['2026-11-15T12:00:00Z','2026-11-09'],['2026-11-16T12:00:00Z','2026-11-09']])assert.equal(lastCompletedAmsterdamWeek(new Date(instant))[0],expected,'Last completed Amsterdam week '+instant);
+
 const good=(date,open=100,close=105)=>({date,open,high:110,low:95,close,volume:200});
 assert.equal(validDate('2026-10-23'),true);
 assert.equal(validDate('2026-02-30'),false);

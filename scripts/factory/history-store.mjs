@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { transaction } from './db.mjs';
 import { getInstrument } from './catalog.mjs';
-import { validateBars } from '../history/engine.mjs';
+import { validateBars } from '../history/bars.mjs';
 
 export function refreshHistoryStatus(db, instrumentId, { provider = null, error = null, status = null } = {}) {
   const aggregate = db.prepare(`SELECT MIN(trading_date) firstDate, MAX(trading_date) lastDate, COUNT(*) records,
@@ -23,6 +23,7 @@ export function storeBars(db, instrument, bars, provider, metadata = {}, { compl
   const valid = validateBars(bars);
   const now = new Date().toISOString();
   let added = 0;
+  let coverage;
   transaction(db, () => {
     const insert = db.prepare(`INSERT INTO daily_prices(instrument_id, trading_date, open, high, low, close, volume, adjusted_close, provider, provider_metadata, imported_at)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(instrument_id, trading_date) DO NOTHING`);
@@ -30,9 +31,9 @@ export function storeBars(db, instrument, bars, provider, metadata = {}, { compl
       const result = insert.run(instrument.id, bar.date, bar.open, bar.high, bar.low, bar.close, bar.volume, bar.adjustedClose, provider, JSON.stringify(metadata), now);
       added += Number(result.changes);
     }
-    refreshHistoryStatus(db, instrument.id, { provider, status:complete ? 'COMPLETE' : null });
+    coverage = refreshHistoryStatus(db, instrument.id, { provider, status:complete ? 'COMPLETE' : null });
   });
-  return { valid: valid.length, added, ...refreshHistoryStatus(db, instrument.id, { provider, status:complete ? 'COMPLETE' : null }) };
+  return { valid: valid.length, added, ...coverage };
 }
 
 export async function importHistoryDocument(db, document) {

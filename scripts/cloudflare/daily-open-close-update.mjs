@@ -1,3 +1,5 @@
+import { providerRoute } from '../history/source-policy.mjs';
+import { companyContracts, loadCompanyCatalog } from '../history/company-register.mjs';
 import {fetchPublicHistoryManifest} from './public-history-manifest.mjs';
 import fs from 'node:fs/promises';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
@@ -37,7 +39,7 @@ const missingPool=[],priorityMissingPool=[];
 const isInactiveParis=(share,marketMic)=>!parisHistoryEligible(share,marketMic,parisPolicy,manifest,resolveExisting);
 const resolveExisting=storageIdentityResolver(factoryCatalog.instruments||[]);
 for(const market of targetMarkets){
- const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'));
+ const catalog=(companyContracts[market.mic]?await loadCompanyCatalog(market.mic):JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')));
  for(const share of (catalog.shares||catalog.instruments||[])){
   if(share.isin&&!isInactiveParis(share,market.mic)&&!manifest[resolveExisting({...share,mic:share.mic||market.mic})]?.lastDate){
    const key=(share.mic||market.mic)+'|'+(share.symbol||share.ticker||share.isin)+'|'+share.isin;
@@ -51,10 +53,8 @@ console.log('EUROPE_BACKFILL_SELECTION',JSON.stringify({shardIndex,missingPool:m
 
 for(const market of targetMarkets){
  const source=sourceRegistry.markets?.[market.mic];if(!source||source.status!=='APPROVED')throw Error(`${market.mic}: COMPLETE zonder APPROVED bronroute`);
- const primary=source.historySources?.find(x=>x.role==='PRIMARY')?.provider;if(!primary)throw Error(`${market.mic}: geen PRIMARY bronroute`);
- if(!providers.get(primary))throw Error(`${market.mic}: onbekende PRIMARY provider ${primary}; bronregister corrigeren`);
- const allowedProviderIds=[primary,...(source.historySources||[]).filter(x=>['DISCOVERY_FALLBACK','FALLBACK'].includes(x.role)&&x.provider!==primary&&providers.get(x.provider)).map(x=>x.provider)];
- const catalog=JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8')),allShares=catalog.shares||catalog.instruments||[];
+ const {primary,allowedProviderIds}=providerRoute({mic:market.mic},{mode:'update',sourceRegistry});
+ const catalog=(companyContracts[market.mic]?await loadCompanyCatalog(market.mic):JSON.parse(await fs.readFile(`data/euronext-${market.code}.json`,'utf8'))),allShares=catalog.shares||catalog.instruments||[];
  const shares=allShares.filter(share=>!isInactiveParis(share,market.mic));
  if(shares.length!==allShares.length)console.log('PARIS_INACTIVE_EXCLUDED_FROM_DAILY',JSON.stringify({mic:market.mic,retained:shares.length,inactive:allShares.length-shares.length}));
  // Preserve existing D1 identities, including Reykjavik legacy keys.
@@ -95,7 +95,7 @@ for(const market of targetMarkets){
     }
     current++;return;
    }
-   const instrument={...s,ticker:s.ticker||s.symbol,symbol:s.symbol||s.ticker,mic:s.mic||market.mic,market:s.mic||market.mic,currency:s.currency||market.currency,countryCode:market.country};
+   const instrument={...s,ticker:s.ticker||s.symbol,symbol:s.symbol||s.ticker,mic:s.primaryMic||s.mic||market.mic,market:s.primaryMic||s.mic||market.mic,currency:s.currency||market.currency,countryCode:market.country};
    if(!fullBackfill&&beforeDate){
     const status=await officialDailyStatus(instrument,freshnessCutoff);
     const previous=previousClosedWeekday(freshnessCutoff);

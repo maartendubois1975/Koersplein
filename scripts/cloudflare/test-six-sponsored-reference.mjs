@@ -47,8 +47,7 @@ assert.ok(Number.isSafeInteger(request.swissYahooRunId)&&request.swissYahooRunId
 assert.ok(request.scope.includes('XSWX')&&request.scope.includes('XLON'));
 assert.match(runner,/yahoo\.sourceRunId!==request\.sourceRunId/);
 assert.match(runner,/yahoo\.offset!==0/);
-const workflow=await fs.readFile('.github/workflows/europe-openfigi-yahoo-verification.yml','utf8');
-assert.match(workflow,/swissYahooRunId/);
-assert.match(workflow,/six-sponsored-identity-probe\.mjs/);
-assert.match(workflow,/Optional official SIX admission check[^\n]*\n\s*continue-on-error: true/,'Unavailable dynamic SIX table must not invalidate independent Yahoo evidence');
-console.log('SIX provenance, missing-source prevention, shared-ticker ISIN collisions and read-only workflow guards PASS');
+assert.match(runner,/mode:'READ_ONLY_NO_PRODUCTION_WRITES'/);
+assert.match(runner,/catch\(e\)\{error=/,'Unavailable optional SIX source remains diagnostic evidence');
+assert.doesNotMatch(runner,/putPartition|seedCatalog|completeHistory|dispatchWorkflow/,'Read-only reference probe must not write catalog/history or trigger imports');
+console.log('SIX provenance, missing-source prevention, shared-ticker ISIN collisions and read-only runner guards PASS');

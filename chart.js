@@ -1,7 +1,8 @@
 const DAY = 86_400_000;
-const PERIODS = { '1J': 1, '3J': 3, '5J': 5, '10J': 10, MAX: null };
+const PERIODS = { '1M': 1, '3M': 3, '6M': 6, '1J': 12, '3J': 36, '5J': 60, '10J': 120, MAX: null };
 
-const finite = (value) => Number.isFinite(Number(value));
+const validDate = date => typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(Date.parse(date)) && new Date(date+'T00:00:00Z').toISOString().slice(0,10) === date;
+const finite = (value) => value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value));
 const money = (value, currency = 'EUR') => new Intl.NumberFormat('nl-NL', {
   style: 'currency', currency, minimumFractionDigits: 2, maximumFractionDigits: 2
 }).format(Number(value));
@@ -22,7 +23,7 @@ export function validateHistoryDocument(document, identity) {
     close: finite(bar.close) ? Number(bar.close) : null,
     adjustedClose: finite(bar.adjustedClose) ? Number(bar.adjustedClose) : null,
     volume: finite(bar.volume) ? Number(bar.volume) : null
-  })).filter((bar) => /^\d{4}-\d{2}-\d{2}$/.test(bar.date) && bar.close > 0)
+  })).filter((bar) => validDate(bar.date) && bar.close > 0)
     .sort((a, b) => a.date.localeCompare(b.date));
   for (const bar of bars) {
     if (seen.has(bar.date)) throw new Error('Dubbele handelsdag in historie');
@@ -33,12 +34,24 @@ export function validateHistoryDocument(document, identity) {
   return bars;
 }
 
+export function periodStartDate(lastDate, period) {
+  if (!(period in PERIODS) || period === 'MAX') return null;
+  const d=new Date(lastDate+'T00:00:00Z');
+  if(Number.isNaN(d.getTime()))throw new Error('Ongeldige laatste koersdatum');
+  const originalDay=d.getUTCDate();
+  d.setUTCDate(1);
+  d.setUTCMonth(d.getUTCMonth()-PERIODS[period]);
+  const month=d.getUTCMonth();
+  d.setUTCMonth(month+1);
+  d.setUTCDate(0);
+  d.setUTCDate(Math.min(originalDay,d.getUTCDate()));
+  return d.toISOString().slice(0,10);
+}
+
 export function filterPeriod(bars, period) {
   if (!(period in PERIODS) || period === 'MAX') return bars;
-  const latest = new Date(`${bars.at(-1).date}T00:00:00Z`);
-  const threshold = new Date(latest);
-  threshold.setUTCFullYear(threshold.getUTCFullYear() - PERIODS[period]);
-  const result = bars.filter((bar) => bar.date >= threshold.toISOString().slice(0, 10));
+  const threshold = periodStartDate(bars.at(-1).date,period);
+  const result = bars.filter((bar) => bar.date >= threshold);
   return result.length > 1 ? result : bars.slice(-2);
 }
 

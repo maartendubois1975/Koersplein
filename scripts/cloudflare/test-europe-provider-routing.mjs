@@ -35,11 +35,8 @@ assert.match(updateScript,/const fullRequested=process\.env\.EUROPE_FULL_BACKFIL
 console.log('Paris existing-history-only and explicit full-backfill guard PASS');
 
 const sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.json','utf8'));
-const approvedFor=mic=>{
- const sources=sourceRegistry.markets[mic].historySources;
- const primary=sources.find(x=>x.role==='PRIMARY')?.provider;
- return [primary,...sources.filter(x=>['DISCOVERY_FALLBACK','FALLBACK'].includes(x.role)&&x.provider!==primary).map(x=>x.provider)];
-};
+const {providerRoute}=await import('../history/source-policy.mjs');
+const approvedFor=mic=>providerRoute({mic},{sourceRegistry}).allowedProviderIds;
 assert.deepEqual(approvedFor('XPAR').slice(0,2),['yahoo-chart','euronext-live']);
 assert.deepEqual(approvedFor('XSWX').slice(0,2),['yahoo-chart','yahoo-isin-resolver']);
 assert.deepEqual(approvedFor('XLON').slice(0,2),['yahoo-chart','yahoo-isin-resolver']);
@@ -51,7 +48,7 @@ const baltic=new NasdaqBalticProvider();
 for(const mic of ['XTAL','XLIT','XRIS'])assert.equal(baltic.supports({mic,isin:'EE3100008996'}),true, 'Official Nasdaq Baltic provider must support '+mic);
 assert.equal(baltic.supports({mic:'XLON',isin:'EE3100008996'}),false);
 
-assert.match(updateScript,/\['DISCOVERY_FALLBACK','FALLBACK'\]\.includes\(x\.role\)/);
+assert.match(updateScript,/providerRoute\(\{mic:market\.mic\},\{mode:'update',sourceRegistry\}\)/,'Daily import must use the central approved-only route');
 console.log('Registered approved fallback routes for Paris, Switzerland, London and Sofia PASS');
 
 const yahooChart=await fs.readFile('scripts/history/providers/yahoo-chart.mjs','utf8');

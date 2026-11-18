@@ -1,0 +1,3363 @@
+{
+  "schemaVersion": 1,
+  "exchange": "Euronext Brussels",
+  "sourceSnapshot": "https://live.euronext.com/en/product_directory/data/stocks-brussels/download?mics=XBRU%2CALXB%2CMLXB%2CTNLB%2CENXB",
+  "sourceSnapshotDate": "2026-09-16T17:40:11.435Z",
+  "inventoryStarted": "2026-11-13",
+  "officialVerificationSources": [
+    "https://live.euronext.com/en/markets/brussels/equities/list",
+    "https://live.euronext.com/en/markets/brussels/equities/euronext/list",
+    "https://live.euronext.com/en/markets/brussels/equities/access/list",
+    "https://www.fsma.be/nl/issuers"
+  ],
+  "method": "Existing Euronext snapshot is only a candidate universe; review each ISIN against current Euronext, FSMA and issuer primary listing before acceptance. Never treat shared Euronext market strings as proof of primary venue.",
+  "counts": {
+    "candidateRows": 133,
+    "alsoInAmsterdamCatalog": 5
+  },
+  "candidates": [
+    {
+      "name": "AB INBEV",
+      "symbol": "ABI",
+      "isin": "BE0974293251",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ABO GROUP",
+      "symbol": "ABO",
+      "isin": "BE0974278104",
+      "sourceMarket": "Euronext Brussels, Paris",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ACCENTIS",
+      "symbol": "ACCB",
+      "isin": "BE0003696102",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ACKERMANS V.HAAREN",
+      "symbol": "ACKB",
+      "isin": "BE0003764785",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ADEC INNOVATIONS",
+      "symbol": "MLADE",
+      "isin": "NL0015002K91",
+      "sourceMarket": "Euronext Access Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "access",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "AEDIFICA",
+      "symbol": "AED",
+      "isin": "BE0003851681",
+      "sourceMarket": "Euronext Brussels, Amsterdam",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "AGEAS",
+      "symbol": "AGS",
+      "isin": "BE0974264930",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "AGFA-GEVAERT",
+      "symbol": "AGFB",
+      "isin": "BE0003755692",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "AHOLD DEL",
+      "symbol": "AD",
+      "isin": "NL0011794037",
+      "sourceMarket": "Euronext Amsterdam, Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": true,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "foreign_primary_venue_likely_review",
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Primary Amsterdam listing",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "APERAM",
+      "symbol": "APAM",
+      "isin": "LU0569974404",
+      "sourceMarket": "Euronext Amsterdam, Brussels, Paris",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": true,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "foreign_primary_venue_likely_review",
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Primary Amsterdam listing",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "ARGENX SE",
+      "symbol": "ARGX",
+      "isin": "NL0010832176",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ASCENCIO",
+      "symbol": "ASCE",
+      "isin": "BE0003856730",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ATENOR",
+      "symbol": "ATEB",
+      "isin": "BE0003837540",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "AVANTIUM",
+      "symbol": "AVTX",
+      "isin": "NL0015002IE0",
+      "sourceMarket": "Euronext Amsterdam, Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": true,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "foreign_primary_venue_likely_review",
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Primary Amsterdam listing",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "AZELIS GROUP",
+      "symbol": "AZE",
+      "isin": "BE0974400328",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "BANIMMO A",
+      "symbol": "BANI",
+      "isin": "BE0003870871",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "BANQUP GROUP",
+      "symbol": "BANQ",
+      "isin": "BE0974371032",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "BARCO",
+      "symbol": "BAR",
+      "isin": "BE0974362940",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "BEKAERT",
+      "symbol": "BEKB",
+      "isin": "BE0974258874",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "BELYSSE GROUP",
+      "symbol": "BELYS",
+      "isin": "BE0974314461",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "BIOSENIC",
+      "symbol": "BIOS",
+      "isin": "BE0974280126",
+      "sourceMarket": "Euronext Brussels, Paris",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_pending_trading_resumption",
+        "reason": "FSMA suspension 2026-05-26; Euronext marks SUSPENDED",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://live.euronext.com/en/product/equities/be0974280126-xbru"
+      }
+    },
+    {
+      "name": "BIOTALYS",
+      "symbol": "BTLS",
+      "isin": "BE0974386188",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "BPOST",
+      "symbol": "BPOST",
+      "isin": "BE0974268972",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "BQUE NAT. BELGIQUE",
+      "symbol": "BNB",
+      "isin": "BE0003008019",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "BREDERODE",
+      "symbol": "BREB",
+      "isin": "LU1068091351",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "CAMPINE",
+      "symbol": "CAMB",
+      "isin": "BE0003825420",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "CANDELA INVEST",
+      "symbol": "CAND",
+      "isin": "BE0974298300",
+      "sourceMarket": "Euronext Growth Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "growth",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "CARE PROPERTY INV.",
+      "symbol": "CPINV",
+      "isin": "BE0974273055",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "CELYAD ONCOLOGY",
+      "symbol": "CYAD",
+      "isin": "BE0974260896",
+      "sourceMarket": "Euronext Brussels, Paris",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_pending_trading_resumption",
+        "reason": "FSMA trading suspension 2026-02-11; current resumption not verified",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://www.fsma.be/en/news/press-release-suspension-trading-celyad-oncology"
+      }
+    },
+    {
+      "name": "CENERGY",
+      "symbol": "CENER",
+      "isin": "BE0974303357",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "CFE",
+      "symbol": "CFEB",
+      "isin": "BE0003883031",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "CHOICE",
+      "symbol": "MLTV",
+      "isin": "BE0974370026",
+      "sourceMarket": "Euronext Access Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "access",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "CIE BOIS SAUVAGE",
+      "symbol": "COMB",
+      "isin": "BE0003592038",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "CMB.TECH",
+      "symbol": "CMBT",
+      "isin": "BE0003816338",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "CO.BR.HA",
+      "symbol": "COBH",
+      "isin": "BE0003519270",
+      "sourceMarket": "Euronext Growth Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "growth",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "COLRUYT",
+      "symbol": "COLR",
+      "isin": "BE0974256852",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "CUMULEX",
+      "symbol": "CLEX",
+      "isin": "BE0003463685",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "D'IETEREN GROUP",
+      "symbol": "DIE",
+      "isin": "BE0974259880",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "DECEUNINCK",
+      "symbol": "DECB",
+      "isin": "BE0003789063",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "DEME GROUP",
+      "symbol": "DEME",
+      "isin": "BE0974413453",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "DIEGEM KENNEDYCERT",
+      "symbol": "DIEG",
+      "isin": "BE0003698124",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": false,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "exclude_from_common_stock_pending_official_type_confirmation",
+        "flags": [
+          "certificate_or_nonordinary_security_review",
+          "real_estate_certificate_not_operating_company_equity"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Real estate certificate, not ordinary corporate equity",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "DISTRI-LAND CERT",
+      "symbol": "DISL",
+      "isin": "BE0003605160",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": false,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "exclude_from_common_stock_pending_official_type_confirmation",
+        "flags": [
+          "certificate_or_nonordinary_security_review",
+          "real_estate_certificate_not_operating_company_equity"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Real estate certificate, not ordinary corporate equity",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "ECONOCOM GROUP",
+      "symbol": "ECONB",
+      "isin": "BE0974313455",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "EKOPAK",
+      "symbol": "EKOP",
+      "isin": "BE0974380124",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ELIA GROUP",
+      "symbol": "ELI",
+      "isin": "BE0003822393",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ENERGYVISION",
+      "symbol": "ENRGY",
+      "isin": "BE0974499312",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ENGIE",
+      "symbol": "ENGI",
+      "isin": "FR0010208488",
+      "sourceMarket": "Euronext Paris, Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "foreign_primary_venue_likely_review",
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Primary Paris listing",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "EUROCOMMERCIAL",
+      "symbol": "ECMPA",
+      "isin": "NL0015000K93",
+      "sourceMarket": "Euronext Amsterdam, Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "foreign_primary_venue_likely_review",
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Primary Amsterdam listing",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "EURONEXT",
+      "symbol": "ENX",
+      "isin": "NL0006294274",
+      "sourceMarket": "Euronext Paris, Amsterdam, Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "foreign_primary_venue_likely_review",
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Primary Paris listing",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "European Medical S",
+      "symbol": "ALEMS",
+      "isin": "BE0974497290",
+      "sourceMarket": "Euronext Growth Brussels, Paris",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "growth",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "EVS",
+      "symbol": "EVS",
+      "isin": "BE0003820371",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "EXMAR",
+      "symbol": "EXM",
+      "isin": "BE0003808251",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "FAGRON",
+      "symbol": "FAGR",
+      "isin": "BE0003874915",
+      "sourceMarket": "Euronext Brussels, Amsterdam",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "FLORIDIENNE",
+      "symbol": "FLOB",
+      "isin": "BE0974502347",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "FLOWSPARKS",
+      "symbol": "FLSP",
+      "isin": "BE0003847648",
+      "sourceMarket": "Euronext Access Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "access",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "FLUXYS BELGIUM D",
+      "symbol": "FLUX",
+      "isin": "BE0974265945",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "FOUNTAIN",
+      "symbol": "FOU",
+      "isin": "BE0003752665",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "GBL",
+      "symbol": "GBLB",
+      "isin": "BE0003797140",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "GIMV",
+      "symbol": "GIMB",
+      "isin": "BE0003699130",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "HOME INVEST BE.",
+      "symbol": "HOMI",
+      "isin": "BE0974409410",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "HYBRID SOFTWARE GR",
+      "symbol": "HYSG",
+      "isin": "GB00BYN5BY03",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "HYLORIS",
+      "symbol": "HYL",
+      "isin": "BE0974363955",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "IBA",
+      "symbol": "IBAB",
+      "isin": "BE0003766806",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "IEP INVEST",
+      "symbol": "IEP",
+      "isin": "BE0003748622",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "IMMO MCC",
+      "symbol": "MCC",
+      "isin": "BE0974287196",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "IMMO MOURY",
+      "symbol": "IMMOU",
+      "isin": "BE0003893139",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "IMMOBEL",
+      "symbol": "IMMO",
+      "isin": "BE0003599108",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "INCLUSIO SA/NV",
+      "symbol": "INCLU",
+      "isin": "BE0974374069",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ING GROEP N.V.",
+      "symbol": "INGA",
+      "isin": "NL0011821202",
+      "sourceMarket": "Euronext Amsterdam, Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": true,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "foreign_primary_venue_likely_review",
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Primary Amsterdam listing",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "JENSEN-GROUP",
+      "symbol": "JEN",
+      "isin": "BE0003858751",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "KBC",
+      "symbol": "KBC",
+      "isin": "BE0003565737",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "KBC ANCORA",
+      "symbol": "KBCA",
+      "isin": "BE0003867844",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "KINEPOLIS GROUP",
+      "symbol": "KIN",
+      "isin": "BE0974274061",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "LAKEFRONT BIOTHER.",
+      "symbol": "LKFT",
+      "isin": "BE0003818359",
+      "sourceMarket": "Euronext Amsterdam, Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": true,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "LOTUS BAKERIES",
+      "symbol": "LOTB",
+      "isin": "BE0003604155",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "MAISON POMMERY",
+      "symbol": "POMRY",
+      "isin": "FR0000062796",
+      "sourceMarket": "Euronext Paris, Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "foreign_primary_venue_likely_review",
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Primary Paris listing",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "MATERIALISE",
+      "symbol": "MTLS",
+      "isin": "BE0974501331",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_primary_venue_review",
+        "reason": "2025 Euronext Brussels ordinary-share listing complements pre-existing Nasdaq ADS listing; home market classification requires explicit policy decision",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://www.euronext.com/sites/default/files/2025-11/2025.11.20_Materialise_PR_ENX.pdf"
+      }
+    },
+    {
+      "name": "MAZARO",
+      "symbol": "MLMAZ",
+      "isin": "BE0974404361",
+      "sourceMarket": "Euronext Access Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "access",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "MELEXIS",
+      "symbol": "MELE",
+      "isin": "BE0165385973",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "MIKO",
+      "symbol": "MIKO",
+      "isin": "BE0003731453",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "MONNI",
+      "symbol": "MONNI",
+      "isin": "BE0974503352",
+      "sourceMarket": "Euronext Growth Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "growth",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "MONTEA",
+      "symbol": "MONT",
+      "isin": "BE0003853703",
+      "sourceMarket": "Euronext Brussels, Paris",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "MOPOLI",
+      "symbol": "MOP",
+      "isin": "NL0000488153",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "MOPOLI FOND",
+      "symbol": "MOPF",
+      "isin": "NL0000488161",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "MOURY CONSTRUCT",
+      "symbol": "MOUR",
+      "isin": "BE0003602134",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "NEUFCOUR-FIN.",
+      "symbol": "MLNEU",
+      "isin": "BE0003680916",
+      "sourceMarket": "Euronext Access Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "access",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "NEWTREE",
+      "symbol": "NEWT",
+      "isin": "BE0003832491",
+      "sourceMarket": "Euronext Access Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "access",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "NEXTENSA",
+      "symbol": "NEXTA",
+      "isin": "BE0003770840",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "NYRSTAR",
+      "symbol": "NYR",
+      "isin": "BE0974294267",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "2026_trading_suspension_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Euronext reported June suspension but 2026-11-10 quote exists; verify restored trading and issuer business before acceptance",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://live.euronext.com/fr/markets/brussels/equities/euronext/list?page=0"
+      }
+    },
+    {
+      "name": "NYXOAH",
+      "symbol": "NYXH",
+      "isin": "BE0974358906",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ONTEX GROUP",
+      "symbol": "ONTEX",
+      "isin": "BE0974276082",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ONWARD MEDICAL",
+      "symbol": "ONWD",
+      "isin": "NL0015000HT4",
+      "sourceMarket": "Euronext Brussels, Amsterdam, Paris",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "OPTION",
+      "symbol": "OPTI",
+      "isin": "BE0974496284",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Official November 2026 Euronext regulated-market quote indicates trading; operational company verification remains",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://live.euronext.com/fr/markets/brussels/equities/euronext/list?page=0"
+      }
+    },
+    {
+      "name": "ORANGE BELGIUM",
+      "symbol": "OBEL",
+      "isin": "BE0003735496",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "OXURION",
+      "symbol": "OXUR",
+      "isin": "BE0974487192",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Official November 2026 quote exists, but issuer operations and corporate continuity not yet verified",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://live.euronext.com/fr/markets/brussels/equities/euronext/list?page=0"
+      }
+    },
+    {
+      "name": "PAYTON PLANAR",
+      "symbol": "PAY",
+      "isin": "IL0010830391",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "PROXIMUS",
+      "symbol": "PROX",
+      "isin": "BE0003810273",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "QRF",
+      "symbol": "QRF",
+      "isin": "BE0974272040",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Temporary June 2026 suspension; current Euronext quote exists in November; do not infer delisting",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://live.euronext.com/fr/markets/brussels/equities/euronext/list?page=0"
+      }
+    },
+    {
+      "name": "QUESTFOR GR-PRICAF",
+      "symbol": "QFG",
+      "isin": "BE0003730448",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "REALCO",
+      "symbol": "REAL",
+      "isin": "BE0003841583",
+      "sourceMarket": "Euronext Access Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "access",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "RECTICEL",
+      "symbol": "RECT",
+      "isin": "BE0003656676",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "REIBEL",
+      "symbol": "REI",
+      "isin": "BE0003829463",
+      "sourceMarket": "Euronext Access Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "access",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "RETAIL ESTATES",
+      "symbol": "RET",
+      "isin": "BE0003720340",
+      "sourceMarket": "Euronext Brussels, Amsterdam",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ROULARTA",
+      "symbol": "ROU",
+      "isin": "BE0003741551",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Delisting announced 2025 but 2026-11 official Euronext page still displayed trading; must verify effective date",
+        "evidenceStatus": "official_source_reviewed_2026-11-13",
+        "url": "https://live.euronext.com/fr/markets/brussels/equities/euronext/list?page=0"
+      }
+    },
+    {
+      "name": "SAINT GOBAIN",
+      "symbol": "SGO",
+      "isin": "FR0000125007",
+      "sourceMarket": "Euronext Paris, Amsterdam, Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "foreign_primary_venue_likely_review",
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Primary Paris listing",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "SEQUANA MEDICAL",
+      "symbol": "SEQUA",
+      "isin": "BE0974340722",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "SHURGARD",
+      "symbol": "SHUR",
+      "isin": "GG00BQZCBZ44",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "SIPEF",
+      "symbol": "SIP",
+      "isin": "BE0003898187",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "SOFINA",
+      "symbol": "SOF",
+      "isin": "BE0003717312",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "SOFTIMAT",
+      "symbol": "SOFT",
+      "isin": "BE0003773877",
+      "sourceMarket": "Euronext Growth Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "growth",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "manual_due_diligence_required",
+        "reason": "Legal/operating status, security class or trading activity needs current issuer-level confirmation",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "SOLVAC NOM(RETAIL)",
+      "symbol": "SOLV",
+      "isin": "BE0003545531",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "SOLVAY",
+      "symbol": "SOLB",
+      "isin": "BE0003470755",
+      "sourceMarket": "Euronext Brussels, Paris",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "SPADEL",
+      "symbol": "SPA",
+      "isin": "BE0003798155",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "SYENSQO",
+      "symbol": "SYENS",
+      "isin": "BE0974464977",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "TESSENDERLO",
+      "symbol": "TESB",
+      "isin": "BE0003555639",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "TEXAF",
+      "symbol": "TEXF",
+      "isin": "BE0974263924",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "TINC",
+      "symbol": "TINC",
+      "isin": "BE0974282148",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "TITAN S.A.",
+      "symbol": "TITC",
+      "isin": "BE0974338700",
+      "sourceMarket": "Euronext Brussels, Paris",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "TOTALENERGIES",
+      "symbol": "TTE",
+      "isin": "FR0000120271",
+      "sourceMarket": "Euronext Paris, Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "foreign_primary_venue_likely_review",
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Primary Paris listing",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "TUBIZE-FIN",
+      "symbol": "TUB",
+      "isin": "BE0003823409",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "UCB",
+      "symbol": "UCB",
+      "isin": "BE0003739530",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "UMICORE",
+      "symbol": "UMI",
+      "isin": "BE0974320526",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "VAN DE VELDE",
+      "symbol": "VAN",
+      "isin": "BE0003839561",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "VASTNED",
+      "symbol": "VASTB",
+      "isin": "BE0003754687",
+      "sourceMarket": "Euronext Brussels, Amsterdam",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "VGP",
+      "symbol": "VGP",
+      "isin": "BE0003878957",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "VIOHALCO",
+      "symbol": "VIO",
+      "isin": "BE0974271034",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "WAREHOUSES ESTATES",
+      "symbol": "WEB",
+      "isin": "BE0003734481",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "WDP",
+      "symbol": "WDP",
+      "isin": "BE0974349814",
+      "sourceMarket": "Euronext Brussels, Amsterdam",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "WERELDHAVE BELGIUM",
+      "symbol": "WEHB",
+      "isin": "BE0003724383",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "WHITESTONE GROUP",
+      "symbol": "ROCK",
+      "isin": "BE0974401334",
+      "sourceMarket": "Euronext Growth Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "growth",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "WINAMP GROUP",
+      "symbol": "ALWIN",
+      "isin": "BE0974334667",
+      "sourceMarket": "Euronext Growth Paris, Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "growth",
+        "multipleVenues": true,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": [
+          "foreign_primary_venue_likely_review",
+          "cross_listing_primary_venue_review"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Primary Paris Growth listing",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    },
+    {
+      "name": "XIOR",
+      "symbol": "XIOR",
+      "isin": "BE0974288202",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": true,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "hold_for_individual_verification",
+        "flags": []
+      },
+      "companyOnlyReview": {
+        "decision": "candidate_company_not_final",
+        "reason": "Corporate share candidate; primary venue and active legal operations still need individual source verification",
+        "evidenceStatus": "unverified"
+      }
+    },
+    {
+      "name": "ZENOBE GRAMME CERT",
+      "symbol": "ZEN",
+      "isin": "BE0003809267",
+      "sourceMarket": "Euronext Brussels",
+      "reviewStatus": "pending_official_2026_verification",
+      "crossListedAmsterdamCatalog": false,
+      "primaryVenue": "unverified",
+      "instrumentType": "unverified",
+      "eligible": null,
+      "preliminaryScreen": {
+        "venueBucket": "regulated",
+        "multipleVenues": false,
+        "companyCandidate": false,
+        "evidenceLevel": "preliminary_name_and_venue_only",
+        "decision": "exclude_from_common_stock_pending_official_type_confirmation",
+        "flags": [
+          "certificate_or_nonordinary_security_review",
+          "real_estate_certificate_not_operating_company_equity"
+        ]
+      },
+      "companyOnlyReview": {
+        "decision": "exclude_from_brussels_company_universe",
+        "reason": "Real estate certificate, not ordinary corporate equity",
+        "evidenceStatus": "requires final issuer and venue confirmation",
+        "basis": "security type or primary venue screening"
+      }
+    }
+  ],
+  "researchCheckpoint": {
+    "date": "2026-11-13",
+    "status": "individual_review_in_progress_not_final",
+    "officialEvidence": [
+      "https://live.euronext.com/en/markets/brussels/equities/list",
+      "https://live.euronext.com/fr/markets/brussels/equities/euronext/list",
+      "https://www.fsma.be/nl/news/persbericht-over-de-heropening-van-de-notering-van-nyrstar-11",
+      "https://markets.euronext.com/en/intframe/spi-messages/past?field_spimess_message_type_target_id=24&page=%2C3",
+      "https://live.euronext.com/fr/markets/brussels/equities/list?page=0",
+      "https://live.euronext.com/fr/markets/brussels/equities/list?page=1"
+    ],
+    "warning": "Official regulated market page showed 116 entries on 2026-11-10 while September snapshot contains 133 across segments. Counts are not directly comparable. No definitive company eligibility or delisting conclusion without issuer-by-issuer evidence.",
+    "nextRequired": "Review all 133 issuer identities, legal status, trading status, primary venue, security type against current official records.",
+    "currentOfficialSnapshot": {
+      "date": "2026-11-13",
+      "url": "https://live.euronext.com/fr/markets/brussels/equities/list?page=0",
+      "displayedTotal": 131,
+      "priorSnapshotCount": 133,
+      "delta": -2,
+      "verification": "Official page shows 131 listings on 2026-11-13; identity of two differences not yet verified. Do not remove candidates based on aggregate counts.",
+      "officialTypeCategories": [
+        "Common Stock",
+        "Real estate certificates"
+      ]
+    },
+    "latestEvidenceDate": "2026-11-13",
+    "reconciledImportantCases": [
+      "BIOS",
+      "CYAD",
+      "NYR",
+      "MTLS",
+      "ROU",
+      "QRF",
+      "OPTI",
+      "OXUR"
+    ],
+    "methodologyCorrection": "Do not equate a 2026 trading suspension with permanent delisting, nor a Belgian company domicile with Brussels primary listing. Do not equate an Euronext multi-market venue string with primary venue.",
+    "sources": [
+      {
+        "url": "https://www.fsma.be/en/shareholding",
+        "role": "issuer cross-check"
+      },
+      {
+        "url": "https://live.euronext.com/en/markets/brussels/equities/euronext/list",
+        "role": "regulated market and security types"
+      },
+      {
+        "url": "https://live.euronext.com/en/markets/brussels/equities/growth/list",
+        "role": "growth segment"
+      },
+      {
+        "url": "https://live.euronext.com/en/markets/brussels/equities/access/list",
+        "role": "access segment"
+      }
+    ]
+  },
+  "companyOnlyPolicy": "Include only actively operating companies and genuine listed holding/REIT entities with Brussels as primary listing. Exclude certificates, ETFs, funds without qualifying corporate issuer, shells, defunct issuers, and foreign-primary cross listings. No definitive inclusion from a name alone."
+}

@@ -37,7 +37,7 @@ function sameOrigin(request) {
 
 function serveStatic(pathname, response) {
   const path = pathname === '/' ? '/index.html' : pathname;
-  const allowed = new Set(['/index.html','/share.html','/app.js','/share.js','/chart.js','/styles.css','/data/euronext-amsterdam.json','/data/euronext-amsterdam-indices.json','/data/home-contracts.json','/data/markets.json','/data/regions.json']);
+  const allowed = new Set(['/index.html','/share.html','/share.js','/chart.js','/styles.css','/data/euronext-amsterdam.json','/data/euronext-amsterdam-indices.json','/data/home-contracts.json','/data/markets.json','/data/regions.json']);
   if (!allowed.has(path)) return response.writeHead(404).end('Niet gevonden');
   const target = resolve(join(root, path));
   if (!(target === root || target.startsWith(`${root}${sep}`))) return response.writeHead(403).end('Verboden');

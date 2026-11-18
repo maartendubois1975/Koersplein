@@ -1,0 +1,841 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-15T12:24:39.849Z",
+  "scope": "STAGING_OFFLINE_ACCEPTANCE_NO_LIVE_DATA_VERIFICATION",
+  "catalogCount": 80,
+  "mappedCount": 80,
+  "crossMarketReferences": [],
+  "historyCount": 80,
+  "historyRows": 363590,
+  "readiness": {
+    "schemaVersion": 2,
+    "scope": "OBSERVED_SESSION_NOT_OFFICIAL_CLOSE",
+    "expectedCount": 80,
+    "observedCount": 80,
+    "newestDate": "2026-11-13",
+    "currentCount": 76,
+    "laggingCount": 4,
+    "invalidCount": 0,
+    "unavailableCount": 0,
+    "countMatches": true,
+    "identityUnique": true,
+    "latestObservedDateAgeDays": 2,
+    "completeForObservedSession": false,
+    "current": [
+      {
+        "isin": "NL0000852564",
+        "symbol": "AALB",
+        "latestDate": "2026-11-13",
+        "open": 41.7,
+        "close": 41.18,
+        "records": 7242,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0011540547",
+        "symbol": "ABN",
+        "latestDate": "2026-11-13",
+        "open": 42.01,
+        "close": 42.12,
+        "records": 2811,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000313286",
+        "symbol": "ACOMO",
+        "latestDate": "2026-11-13",
+        "open": 23.1,
+        "close": 23.2,
+        "records": 6830,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0011794037",
+        "symbol": "AD",
+        "latestDate": "2026-11-13",
+        "open": 35.52,
+        "close": 36.05,
+        "records": 4620,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0012969182",
+        "symbol": "ADYEN",
+        "latestDate": "2026-11-13",
+        "open": 861.2,
+        "close": 867.1,
+        "records": 2158,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "BMG0112X1056",
+        "symbol": "AGN",
+        "latestDate": "2026-11-13",
+        "open": 7.87,
+        "close": 7.856,
+        "records": 7950,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000018034",
+        "symbol": "AJAX",
+        "latestDate": "2026-11-13",
+        "open": 7.78,
+        "close": 7.7,
+        "records": 7191,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0013267909",
+        "symbol": "AKZA",
+        "latestDate": "2026-11-13",
+        "open": 63.28,
+        "close": 62.9,
+        "records": 7954,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0012817175",
+        "symbol": "ALFEN",
+        "latestDate": "2026-11-13",
+        "open": 9.97,
+        "close": 9.77,
+        "records": 2214,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "GB00BNTJ3546",
+        "symbol": "ALLFG",
+        "latestDate": "2026-11-13",
+        "open": 9.705,
+        "close": 10.07,
+        "records": 1427,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0012194724",
+        "symbol": "ALX",
+        "latestDate": "2026-11-13",
+        "open": 1.24,
+        "close": 1.22,
+        "records": 4666,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000888691",
+        "symbol": "AMG",
+        "latestDate": "2026-11-13",
+        "open": 23.34,
+        "close": 23.28,
+        "records": 4952,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0010696704",
+        "symbol": "AMUND",
+        "latestDate": "2026-11-13",
+        "open": 0.95,
+        "close": 0.9,
+        "records": 3552,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "LU0569974404",
+        "symbol": "APAM",
+        "latestDate": "2026-11-13",
+        "open": 34.12,
+        "close": 34.56,
+        "records": 4044,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0006237562",
+        "symbol": "ARCAD",
+        "latestDate": "2026-11-13",
+        "open": 47.54,
+        "close": 47.68,
+        "records": 7209,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000334118",
+        "symbol": "ASM",
+        "latestDate": "2026-11-13",
+        "open": 715,
+        "close": 694.6,
+        "records": 7119,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0010273215",
+        "symbol": "ASML",
+        "latestDate": "2026-11-13",
+        "open": 1360,
+        "close": 1338.8,
+        "records": 7242,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0011872643",
+        "symbol": "ASRNL",
+        "latestDate": "2026-11-13",
+        "open": 79.88,
+        "close": 80.14,
+        "records": 2671,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0015002IE0",
+        "symbol": "AVTX",
+        "latestDate": "2026-11-13",
+        "open": 1.89,
+        "close": 1.81,
+        "records": 2473,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "GB00BQQFX454",
+        "symbol": "AXS",
+        "latestDate": "2026-11-13",
+        "open": 0.71,
+        "close": 0.71,
+        "records": 4773,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL00150006Z9",
+        "symbol": "AZRN",
+        "latestDate": "2026-11-13",
+        "open": 0.6,
+        "close": 0.624,
+        "records": 1409,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000337319",
+        "symbol": "BAMNB",
+        "latestDate": "2026-11-13",
+        "open": 13.4,
+        "close": 13.38,
+        "records": 6618,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0012866412",
+        "symbol": "BESI",
+        "latestDate": "2026-11-13",
+        "open": 156.8,
+        "close": 154.1,
+        "records": 7230,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0011872650",
+        "symbol": "BFIT",
+        "latestDate": "2026-11-13",
+        "open": 30.24,
+        "close": 30.4,
+        "records": 2671,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0015000X07",
+        "symbol": "BNJ",
+        "latestDate": "2026-11-13",
+        "open": 7.96,
+        "close": 8,
+        "records": 1118,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0010776944",
+        "symbol": "BRNL",
+        "latestDate": "2026-11-13",
+        "open": 6.98,
+        "close": 6.96,
+        "records": 7241,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "GB00BDCPN049",
+        "symbol": "CCEP",
+        "latestDate": "2026-11-13",
+        "open": 106.2,
+        "close": 107.2,
+        "records": 2668,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0012747059",
+        "symbol": "CMCOM",
+        "latestDate": "2026-11-13",
+        "open": 5.72,
+        "close": 5.62,
+        "records": 1946,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0010583399",
+        "symbol": "CRBN",
+        "latestDate": "2026-11-13",
+        "open": 26.56,
+        "close": 26.56,
+        "records": 7956,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0015073TS8",
+        "symbol": "CSG",
+        "latestDate": "2026-11-13",
+        "open": 10.068,
+        "close": 10.1,
+        "records": 208,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000345577",
+        "symbol": "CTAC",
+        "latestDate": "2026-11-13",
+        "open": 2.52,
+        "close": 2.56,
+        "records": 7121,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "CH1216478797",
+        "symbol": "DSFIR",
+        "latestDate": "2026-11-13",
+        "open": 105,
+        "close": 105.6,
+        "records": 915,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000345627",
+        "symbol": "EAS2P",
+        "latestDate": "2026-11-13",
+        "open": 0.57,
+        "close": 0.57,
+        "records": 7042,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0015002AG2",
+        "symbol": "EBUS",
+        "latestDate": "2026-11-13",
+        "open": 0.123,
+        "close": 0.12,
+        "records": 1297,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0015000GX8",
+        "symbol": "ENVI",
+        "latestDate": "2026-11-13",
+        "open": 3.6,
+        "close": 3.765,
+        "records": 1969,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0013654809",
+        "symbol": "FAST",
+        "latestDate": "2026-11-13",
+        "open": 35,
+        "close": 34.35,
+        "records": 1897,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "GB00BN0VZ646",
+        "symbol": "FERGR",
+        "latestDate": "2026-11-13",
+        "open": 7.78,
+        "close": 7.73,
+        "records": 448,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0011832811",
+        "symbol": "FFARM",
+        "latestDate": "2026-11-13",
+        "open": 5.46,
+        "close": 5.48,
+        "records": 2683,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "BMG3602E1084",
+        "symbol": "FLOW",
+        "latestDate": "2026-11-13",
+        "open": 22.6,
+        "close": 22.86,
+        "records": 2904,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL00150003E1",
+        "symbol": "FUR",
+        "latestDate": "2026-11-13",
+        "open": 8.405,
+        "close": 8.54,
+        "records": 7239,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0015002K83",
+        "symbol": "HAVAS",
+        "latestDate": "2026-11-13",
+        "open": 18.65,
+        "close": 18.6,
+        "records": 488,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000009165",
+        "symbol": "HEIA",
+        "latestDate": "2026-11-13",
+        "open": 84.16,
+        "close": 84.72,
+        "records": 7958,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0009269109",
+        "symbol": "HEIJM",
+        "latestDate": "2026-11-13",
+        "open": 86.5,
+        "close": 85.55,
+        "records": 7228,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000440311",
+        "symbol": "HOLCO",
+        "latestDate": "2026-11-13",
+        "open": 63.5,
+        "close": 63.5,
+        "records": 5801,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0009391242",
+        "symbol": "HYDRA",
+        "latestDate": "2026-11-13",
+        "open": 198,
+        "close": 195,
+        "records": 2806,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0010801007",
+        "symbol": "IMCD",
+        "latestDate": "2026-11-13",
+        "open": 104.3,
+        "close": 106.05,
+        "records": 3170,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0011821202",
+        "symbol": "INGA",
+        "latestDate": "2026-11-13",
+        "open": 30.025,
+        "close": 30.125,
+        "records": 7953,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000852531",
+        "symbol": "KENDR",
+        "latestDate": "2026-11-13",
+        "open": 17.86,
+        "close": 17.94,
+        "records": 6815,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000009082",
+        "symbol": "KPN",
+        "latestDate": "2026-11-13",
+        "open": 4.403,
+        "close": 4.447,
+        "records": 7957,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0011821392",
+        "symbol": "LIGHT",
+        "latestDate": "2026-11-13",
+        "open": 15.7,
+        "close": 15.59,
+        "records": 2681,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "BE0003818359",
+        "symbol": "LKFT",
+        "latestDate": "2026-11-13",
+        "open": 30.96,
+        "close": 30.18,
+        "records": 4172,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0015002MS2",
+        "symbol": "MICC",
+        "latestDate": "2026-11-13",
+        "open": 17.864,
+        "close": 18.048,
+        "records": 239,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "LU1598757687",
+        "symbol": "MT",
+        "latestDate": "2026-11-13",
+        "open": 58.24,
+        "close": 57.02,
+        "records": 5439,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000371243",
+        "symbol": "NEDAP",
+        "latestDate": "2026-11-13",
+        "open": 96.9,
+        "close": 95.4,
+        "records": 7187,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0010773842",
+        "symbol": "NN",
+        "latestDate": "2026-11-13",
+        "open": 81.52,
+        "close": 81.34,
+        "records": 3167,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0015000D50",
+        "symbol": "NXFIL",
+        "latestDate": "2026-11-13",
+        "open": 2.655,
+        "close": 2.58,
+        "records": 1392,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0010558797",
+        "symbol": "OCI",
+        "latestDate": "2026-11-13",
+        "open": 4.088,
+        "close": 4.09,
+        "records": 3529,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0010391025",
+        "symbol": "PHARM",
+        "latestDate": "2026-11-13",
+        "open": 1.154,
+        "close": 1.141,
+        "records": 7009,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000009538",
+        "symbol": "PHIA",
+        "latestDate": "2026-11-13",
+        "open": 27.29,
+        "close": 27.43,
+        "records": 7959,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0009739416",
+        "symbol": "PNL",
+        "latestDate": "2026-11-13",
+        "open": 0.8195,
+        "close": 0.821,
+        "records": 7242,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000379121",
+        "symbol": "RAND",
+        "latestDate": "2026-11-13",
+        "open": 42.6,
+        "close": 42.74,
+        "records": 7931,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "GB00B2B0DG97",
+        "symbol": "REN",
+        "latestDate": "2026-11-13",
+        "open": 36.28,
+        "close": 36.8,
+        "records": 7939,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000360618",
+        "symbol": "SBMO",
+        "latestDate": "2026-11-13",
+        "open": 33.92,
+        "close": 34.46,
+        "records": 7234,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "GB00BP6MXD84",
+        "symbol": "SHELL",
+        "latestDate": "2026-11-13",
+        "open": 44.275,
+        "close": 44.77,
+        "records": 8529,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0011660485",
+        "symbol": "SIFG",
+        "latestDate": "2026-11-13",
+        "open": 1.978,
+        "close": 2.045,
+        "records": 2692,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000817179",
+        "symbol": "SLIGR",
+        "latestDate": "2026-11-13",
+        "open": 9.41,
+        "close": 9.34,
+        "records": 7217,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "CY0200751713",
+        "symbol": "THEON",
+        "latestDate": "2026-11-13",
+        "open": 26.8,
+        "close": 26.86,
+        "records": 708,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0013332471",
+        "symbol": "TOM2",
+        "latestDate": "2026-11-13",
+        "open": 3.66,
+        "close": 3.596,
+        "records": 5493,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0010407946",
+        "symbol": "TRIO",
+        "latestDate": "2026-11-13",
+        "open": 37.3,
+        "close": 37.3,
+        "records": 362,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000852523",
+        "symbol": "TWEKA",
+        "latestDate": "2026-11-13",
+        "open": 48.38,
+        "close": 48.08,
+        "records": 7230,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0015000IY2",
+        "symbol": "UMG",
+        "latestDate": "2026-11-13",
+        "open": 17.295,
+        "close": 17.63,
+        "records": 1320,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "GB00BVZK7T90",
+        "symbol": "UNA",
+        "latestDate": "2026-11-13",
+        "open": 59.5,
+        "close": 59.91,
+        "records": 1523,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000302636",
+        "symbol": "VLK",
+        "latestDate": "2026-11-13",
+        "open": 66.15,
+        "close": 65.05,
+        "records": 6956,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0009432491",
+        "symbol": "VPK",
+        "latestDate": "2026-11-13",
+        "open": 54.9,
+        "close": 54.85,
+        "records": 6912,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL00150002Q7",
+        "symbol": "VVY",
+        "latestDate": "2026-11-13",
+        "open": 0.766,
+        "close": 0.768,
+        "records": 2987,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000395903",
+        "symbol": "WKL",
+        "latestDate": "2026-11-13",
+        "open": 89.98,
+        "close": 90.84,
+        "records": 7954,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      }
+    ],
+    "lagging": [
+      {
+        "isin": "NL0000285278",
+        "symbol": "BEVER",
+        "latestDate": "2026-11-04",
+        "open": 2.6,
+        "close": 2.6,
+        "records": 3101,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL00150000S7",
+        "symbol": "CABKA",
+        "latestDate": "2026-11-12",
+        "open": 2.16,
+        "close": 2.1,
+        "records": 1441,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "GB00BMXH3352",
+        "symbol": "MTRK",
+        "latestDate": "2026-11-12",
+        "open": 2.34,
+        "close": 2.3,
+        "records": 1165,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      },
+      {
+        "isin": "NL0000378669",
+        "symbol": "PORF",
+        "latestDate": "2026-11-09",
+        "open": 13.5,
+        "close": 14.4,
+        "records": 3026,
+        "rejectedRecords": 0,
+        "provider": "euronext-live"
+      }
+    ],
+    "invalid": [],
+    "unavailable": [],
+    "note": "An observed provider date does not establish official close; suspended trading, missing candles and licensing need independent verification."
+  },
+  "issues": [],
+  "structuralPass": true,
+  "liveReady": false,
+  "caveats": [
+    "Historical corporate actions and adjusted returns unverified",
+    "Provider observed date does not prove official close",
+    "Redistribution rights not verified",
+    "Staging deployment and daily scheduler not verified"
+  ]
+}

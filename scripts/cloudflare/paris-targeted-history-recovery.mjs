@@ -1,3 +1,4 @@
+import { providerRoute } from '../history/source-policy.mjs';
 // Explicit/manual Paris tail recovery: only existing, recorded XPAR history.
 // No catalog seeding, no first-time history creation, no global provider fallback.
 import fs from 'node:fs/promises';
@@ -19,9 +20,7 @@ const sourceRegistry=JSON.parse(await fs.readFile('data/market-source-registry.j
 const source=sourceRegistry.markets?.[mic];
 if(source?.status!=='APPROVED')throw Error('Paris approved history source missing');
 const provider=createDefaultProviderRegistry();
-const primary=source.historySources?.find(s=>s.role==='PRIMARY')?.provider;
-if(!primary||!provider.get(primary))throw Error('Paris approved primary provider missing');
-const allowedProviderIds=[primary,...(source.historySources||[]).filter(s=>['DISCOVERY_FALLBACK','FALLBACK'].includes(s.role)).map(s=>s.provider)].filter((id,index,array)=>id&&array.indexOf(id)===index&&provider.get(id));
+const {primary,allowedProviderIds}=providerRoute({mic},{sourceRegistry});
 const client=new FactoryApiClient();
 const manifest=(await client.historyManifest()).instruments||{};
 const factory=await client.catalog();

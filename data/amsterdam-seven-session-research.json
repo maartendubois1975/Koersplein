@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "market": "XAMS",
+  "referenceWeek": [
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21",
+    "2026-10-22",
+    "2026-10-23"
+  ],
+  "classification": "SECONDARY_SOURCE_RESEARCH_NOT_OFFICIAL_NO_TRADES",
+  "checkedAt": "2026-10-28",
+  "cases": [
+    {
+      "symbol": "AMUND",
+      "isin": "NL0010696704",
+      "date": "2026-10-21",
+      "evidence": "Historical trading tables skip this session; absence of a trade is not independently confirmed",
+      "sources": [
+        "https://es.investing.com/equities/1nomi-historical-data"
+      ],
+      "status": "NEEDS_OFFICIAL_TRADE_STATUS"
+    },
+    {
+      "symbol": "AMUND",
+      "isin": "NL0010696704",
+      "date": "2026-10-23",
+      "evidence": "Historical tables skip this session; do not create a price",
+      "sources": [
+        "https://es.investing.com/equities/1nomi-historical-data"
+      ],
+      "status": "NEEDS_OFFICIAL_TRADE_STATUS"
+    },
+    {
+      "symbol": "INPST",
+      "isin": "LU2290522684",
+      "date": "2026-10-23",
+      "evidence": "Multiple market pages last show 22 October, and one notes trading suspension; require official exchange notice before assigning no-trade or suspended status",
+      "sources": [
+        "https://www.marketscreener.com/quote/stock/INPOST-S-A-118138583/",
+        "https://uk.investing.com/equities/inpost-sa-as-historical-data"
+      ],
+      "status": "NEEDS_OFFICIAL_SUSPENSION_STATUS"
+    },
+    {
+      "symbol": "MTRK",
+      "isin": "GB00BMXH3352",
+      "date": "2026-10-19",
+      "evidence": "Sparse trading: historical table jumps from 16 to 21 October; no-trade unconfirmed",
+      "sources": [
+        "https://www.boursorama.com/cours/1rAMTRK/"
+      ],
+      "status": "NEEDS_OFFICIAL_TRADE_STATUS"
+    },
+    {
+      "symbol": "MTRK",
+      "isin": "GB00BMXH3352",
+      "date": "2026-10-20",
+      "evidence": "Sparse trading: historical table jumps from 16 to 21 October; no-trade unconfirmed",
+      "sources": [
+        "https://www.boursorama.com/cours/1rAMTRK/"
+      ],
+      "status": "NEEDS_OFFICIAL_TRADE_STATUS"
+    },
+    {
+      "symbol": "PORF",
+      "isin": "NL0000378669",
+      "date": "2026-10-19",
+      "evidence": "Secondary exchange data reports volume zero; no traded OHLC must be fabricated",
+      "sources": [
+        "https://ae.marketscreener.com/quote/stock/N-V-KONINKLIJKE-PORCELEYN-6431/"
+      ],
+      "status": "SECONDARY_ZERO_VOLUME_NEEDS_OFFICIAL_CONFIRMATION"
+    },
+    {
+      "symbol": "PORF",
+      "isin": "NL0000378669",
+      "date": "2026-10-22",
+      "evidence": "Secondary exchange data reports volume zero; no traded OHLC must be fabricated",
+      "sources": [
+        "https://www.zonebourse.com/cours/action/N-V-KONINKLIJKE-PORCELEYN-6431/"
+      ],
+      "status": "SECONDARY_ZERO_VOLUME_NEEDS_OFFICIAL_CONFIRMATION"
+    }
+  ],
+  "publicationRule": "Never label NO_TRADES from this secondary audit; only the existing strict official audit can authorize it."
+}
