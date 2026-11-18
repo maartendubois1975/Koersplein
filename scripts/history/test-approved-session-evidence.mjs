@@ -26,6 +26,9 @@ for(const market of ['XAMS','XBRU','XPAR']){
  assert.equal(latestClosedSession(market,new Date('2026-12-25T20:00:00Z')),'2026-12-24');
  assert.equal(latestClosedSession(market,new Date('2026-03-30T16:00:00Z')),'2026-03-27','CEST collection boundary');
  assert.equal(sessionCalendar(market,'2026-12-24').halfDay,true);
+ assert.equal(latestClosedSession(market,new Date('2026-12-25T20:00:00Z'),{currentDayOnly:true}),null);
+ assert.equal(latestClosedSession(market,new Date('2026-03-30T16:00:00Z'),{currentDayOnly:true}),null);
+ assert.equal(latestClosedSession(market,new Date('2026-03-30T18:40:00Z'),{currentDayOnly:true}),'2026-03-30');
 }
 assert.throws(()=>sessionCalendar('XAMS','2028-01-03'),/YEAR_NOT_APPROVED/);
 assert.equal(identityEventAt('FR00140062B9','2026-11-16'),null);

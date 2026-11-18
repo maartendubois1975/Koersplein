@@ -1,12 +1,13 @@
 name: Approved European companies daily session
 on:
-  push:
-    branches: [consolidation-20261116]
-    paths:
-      - '.github/workflows/approved-daily-session.yml'
-      - 'scripts/cloudflare/approved-daily-session.mjs'
-      - 'scripts/history/trading-calendar.mjs'
-      - 'data/trading-calendars.json'
+  workflow_call:
+    inputs:
+      session:
+        description: 'Completed session YYYY-MM-DD'
+        type: string
+    secrets:
+      RENDER_API_KEY:
+        required: false
   workflow_dispatch:
     inputs:
       session:
@@ -16,33 +17,47 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: approved-daily-session-${{ github.ref }}
+  group: approved-daily-session-consolidation-20261116
   cancel-in-progress: false
 jobs:
   register:
-    if: github.ref == 'refs/heads/consolidation-20261116'
+    if: >
+      github.repository == 'maartendubois1975/Koersplein' &&
+      (github.ref == 'refs/heads/consolidation-20261116' ||
+      github.workflow_ref == 'maartendubois1975/Koersplein/.github/workflows/amsterdam-staging-schedule.yml@refs/heads/main')
     runs-on: ubuntu-latest
     outputs:
       markets: ${{ steps.register.outputs.markets }}
       reference_session: ${{ steps.register.outputs.reference_session }}
+      source_commit: ${{ steps.register.outputs.source_commit }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ job.workflow_sha }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - id: register
         env:
           REQUESTED_SESSION: ${{ inputs.session }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
           node --input-type=module <<'JS' >> "$GITHUB_OUTPUT"
           import {approvedCompanyUniverse} from './scripts/history/company-register.mjs';
           import {latestClosedSession} from './scripts/history/trading-calendar.mjs';
-          const markets=(await approvedCompanyUniverse()).map(m=>({mic:m.mic,session:process.env.REQUESTED_SESSION||latestClosedSession(m.mic)}));
+          import {execFileSync} from 'node:child_process';
+          const now=new Date();
+          const currentDayOnly=process.env.EVENT_NAME==='schedule';
+          const markets=(await approvedCompanyUniverse())
+            .map(m=>({mic:m.mic,session:process.env.REQUESTED_SESSION||latestClosedSession(m.mic,now,{currentDayOnly})}))
+            .filter(m=>m.session);
           console.log('markets='+JSON.stringify(markets));
-          console.log('reference_session='+markets[0].session);
+          console.log('reference_session='+(markets[0]?.session??''));
+          console.log('source_commit='+execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim());
           JS
   daily:
     needs: register
+    if: needs.register.outputs.markets != '[]'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
@@ -51,6 +66,8 @@ jobs:
         include: ${{ fromJSON(needs.register.outputs.markets) }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.register.outputs.source_commit }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -66,7 +83,7 @@ jobs:
           if-no-files-found: warn
   archive-development:
     needs: [register, daily]
-    if: always() && needs.register.result == 'success' && github.ref == 'refs/heads/consolidation-20261116'
+    if: always() && needs.register.result == 'success' && needs.register.outputs.markets != '[]'
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -136,7 +153,7 @@ jobs:
           JS
   research-development:
     needs: [register, archive-development]
-    if: always() && needs.archive-development.result == 'success' && github.ref == 'refs/heads/consolidation-20261116'
+    if: always() && needs.archive-development.result == 'success'
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -169,7 +186,7 @@ jobs:
           path: research/output/daily-opportunity-diagnostics.json
   deploy-test:
     needs: [archive-development, research-development]
-    if: always() && needs.archive-development.result == 'success' && github.ref == 'refs/heads/consolidation-20261116'
+    if: always() && needs.archive-development.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
