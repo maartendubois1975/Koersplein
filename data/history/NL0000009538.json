@@ -13,7 +13,7 @@
     "id": "euronext-live",
     "name": "Euronext Live historical prices",
     "symbol": "NL0000009538-XAMS",
-    "retrievedAt": "2026-11-17T02:06:41.536Z",
+    "retrievedAt": "2026-11-18T01:18:42.168Z",
     "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000009538-XAMS",
     "metadata": {
       "mic": "XAMS",
@@ -29,9 +29,9 @@
   },
   "coverage": {
     "firstDate": "1995-08-01",
-    "lastDate": "2026-11-16",
-    "records": 7960,
-    "volumeRecords": 7960,
+    "lastDate": "2026-11-17",
+    "records": 7961,
+    "volumeRecords": 7961,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -71675,6 +71675,15 @@
       "close": 27.54,
       "adjustedClose": null,
       "volume": 1377680
+    },
+    {
+      "date": "2026-11-17",
+      "open": 27.47,
+      "high": 27.48,
+      "low": 27.09,
+      "close": 27.16,
+      "adjustedClose": null,
+      "volume": 1456942
     }
   ]
 }

@@ -13,7 +13,7 @@
     "id": "euronext-live",
     "name": "Euronext Live historical prices",
     "symbol": "GB00BQQFX454-XAMS",
-    "retrievedAt": "2026-11-17T02:06:11.686Z",
+    "retrievedAt": "2026-11-18T01:18:37.308Z",
     "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB00BQQFX454-XAMS",
     "metadata": {
       "mic": "XAMS",
@@ -29,9 +29,9 @@
   },
   "coverage": {
     "firstDate": "2007-09-18",
-    "lastDate": "2026-11-16",
-    "records": 4774,
-    "volumeRecords": 4774,
+    "lastDate": "2026-11-17",
+    "records": 4775,
+    "volumeRecords": 4775,
     "missingVolumeRecords": 0,
     "backfillComplete": false
   },
@@ -43001,6 +43001,15 @@
       "close": 0.7,
       "adjustedClose": null,
       "volume": 123163
+    },
+    {
+      "date": "2026-11-17",
+      "open": 0.71,
+      "high": 0.71,
+      "low": 0.68,
+      "close": 0.695,
+      "adjustedClose": null,
+      "volume": 270745
     }
   ]
 }
