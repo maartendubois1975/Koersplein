@@ -43,6 +43,17 @@ try{
  const conflict=await archiveApprovedSessions({inputDir,dataDir,markets:[catalog.mic],loadCatalog});assert.equal(conflict.conflicts[0].code,'SESSION_CONFLICT_PRESERVED');assert.equal(await fs.readFile(file,'utf8'),before);
  await fs.writeFile(path.join(inputDir,'daily-session-'+catalog.mic+'.json'),'invalid json');
  const isolated=await archiveApprovedSessions({inputDir,dataDir,markets:catalogs.map(c=>c.mic),loadCatalog});assert.equal(isolated.markets.length,catalogs.length-1);assert.equal(isolated.errors.length,1);
+ const latestPath=path.join(dataDir,'daily-session-'+catalog.mic+'.json');
+ const latestBefore=await fs.readFile(latestPath,'utf8');
+ const nextSession=new Date(snapshot.session+'T12:00:00Z');nextSession.setUTCDate(nextSession.getUTCDate()+1);
+ const outageDate=nextSession.toISOString().slice(0,10);
+ const outage={...snapshot,session:outageDate,results:snapshot.results.map(row=>({...row,status:'SESSION_UNVERIFIED',bar:null}))};
+ await fs.writeFile(path.join(inputDir,'daily-session-'+catalog.mic+'.json'),JSON.stringify(outage));
+ const afterOutage=await archiveApprovedSessions({inputDir,dataDir,markets:catalogs.map(c=>c.mic),loadCatalog});
+ assert.deepEqual(afterOutage.errors,[{market:catalog.mic,error:'NO_CONFIRMED_SESSION_EVIDENCE'}]);
+ assert.equal(afterOutage.markets.length,catalogs.length-1);
+ assert.equal(await fs.readFile(latestPath,'utf8'),latestBefore,'A fully unverified session must preserve the latest usable snapshot');
+ await assert.rejects(()=>fs.access(path.join(dataDir,'daily-sessions',catalog.mic,outageDate+'.json')), {code:'ENOENT'});
  const noTrade=await collectApprovedSession({market:catalog.mic,session:snapshot.session,catalog:{...catalog,shares:[share]},now:new Date(snapshot.session+'T20:00:00Z'),official:async()=>({date:snapshot.session,status:'NO_TRADES',lastTradeDate:'2020-01-01'}),registry:{fetchDaily(){throw Error('NO_TRADES must not become fallback candle')}}});assert.equal(noTrade.results[0].status,'NO_TRADES');assert.equal(noTrade.results[0].bar,null);
  await assert.rejects(()=>collectApprovedSession({market:catalog.mic,session:'2026-02-30',catalog}),/Invalid/);
  const ledgerBefore=JSON.parse(await fs.readFile('data/opportunity-ledger.json','utf8'));

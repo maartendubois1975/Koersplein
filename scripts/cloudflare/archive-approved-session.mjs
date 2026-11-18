@@ -37,6 +37,7 @@ export async function archiveApprovedSessions({inputDir='research/output',dataDi
     }
     snap.results=[...current.values()].sort((a,b)=>a.isin.localeCompare(b.isin));
    }
+   if(snap.results.every(row=>row.status==='SESSION_UNVERIFIED'))throw Error('NO_CONFIRMED_SESSION_EVIDENCE');
    // One exchange-scoped history document format; old remote/local archives are read-only compatibility sources.
    // Keep every existing raw bar, including old defects; never replace a same-date stored observation.
    const historyWrites=[];

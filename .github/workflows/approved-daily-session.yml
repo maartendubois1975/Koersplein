@@ -98,6 +98,42 @@ jobs:
         with:
           name: approved-session-archive-report
           path: research/output/approved-session-archive-report.json
+  verify-daily:
+    needs: [register, daily, archive-development]
+    if: always() && needs.register.result == 'success' && needs.archive-development.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          name: approved-session-archive-report
+      - name: Check and report all intended market sessions after preservation
+        env:
+          EXPECTED_SESSIONS: ${{ needs.register.outputs.markets }}
+          COLLECTION_RESULT: ${{ needs.daily.result }}
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const expected = JSON.parse(process.env.EXPECTED_SESSIONS);
+          const report = JSON.parse(fs.readFileSync('approved-session-archive-report.json', 'utf8'));
+          const rows = expected.map(({mic, session}) => {
+            const saved = report.markets.find(market => market.market === mic && market.session === session);
+            const counts = saved?.counts ?? {};
+            return `| ${mic} | ${session} | ${counts.TRADED ?? 0} | ${counts.NO_TRADES ?? 0} | ${counts.MARKET_CLOSED ?? 0} | ${counts.SESSION_UNVERIFIED ?? 0} | ${saved ? 'Archived' : 'Missing or rejected'} |`;
+          });
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, [
+            '| Market | Session | Traded | No trades | Market closed | Unverified | Archive |',
+            '| --- | --- | ---: | ---: | ---: | ---: | --- |',
+            ...rows, '',
+          ].join('\n'));
+          const missing = expected.filter(({mic, session}) => !report.markets.some(market => market.market === mic && market.session === session));
+          if (process.env.COLLECTION_RESULT !== 'success' || missing.length || report.errors.length) {
+            console.error(JSON.stringify({collection:process.env.COLLECTION_RESULT, missing, errors:report.errors}));
+            process.exitCode = 1;
+          }
+          JS
   research-development:
     needs: [register, archive-development]
     if: always() && needs.archive-development.result == 'success' && github.ref == 'refs/heads/consolidation-20261116'
@@ -144,7 +180,9 @@ jobs:
         with:
           node-version: 22
       - name: Validate final stored data before any test deployment
-        run: npm test
+        run: |
+          npm test
+          npm run history:test
       - name: Deploy the exact validated development commit to the existing test service only
         run: |
           export TEST_COMMIT_SHA="$(git rev-parse HEAD)"
