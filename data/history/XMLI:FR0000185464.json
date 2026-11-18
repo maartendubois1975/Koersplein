@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000185464",
+    "mic": "XMLI",
+    "symbol": "MLNOV",
+    "name": "NOVATECH IND.",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-17",
+    "lastDate": "2026-11-17",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-17",
+      "open": 11.8,
+      "high": 11.8,
+      "low": 11.8,
+      "close": 11.8,
+      "adjustedClose": null,
+      "volume": 5
+    }
+  ]
+}

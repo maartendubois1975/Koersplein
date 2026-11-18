@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000061475",
+    "mic": "XPAR",
+    "symbol": "EFI",
+    "name": "EURASIA FONC INV",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-17",
+    "lastDate": "2026-11-17",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-17",
+      "open": 0.12,
+      "high": 0.12,
+      "low": 0.12,
+      "close": 0.12,
+      "adjustedClose": null,
+      "volume": 200
+    }
+  ]
+}
