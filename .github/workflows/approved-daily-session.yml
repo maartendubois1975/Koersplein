@@ -1,5 +1,8 @@
 name: Approved European companies daily session
 on:
+  push:
+    branches: [consolidation-20261116]
+    paths: ['.github/workflows/approved-daily-session.yml']
   workflow_call:
     inputs:
       session:
@@ -40,7 +43,6 @@ jobs:
       - id: register
         env:
           REQUESTED_SESSION: ${{ inputs.session }}
-          EVENT_NAME: ${{ github.event_name }}
         run: |
           node --input-type=module <<'JS' >> "$GITHUB_OUTPUT"
           import {approvedCompanyUniverse} from './scripts/history/company-register.mjs';
@@ -51,8 +53,8 @@ jobs:
           // Always select the latest fully closed approved market session; the
           // archive is idempotent and preserves previously verified records.
           const markets=(await approvedCompanyUniverse())
-            .map(m=>({mic:m.mic,session:process.env.REQUESTED_SESSION||latestClosedSession(m.mic,now)}))
-            .filter(m=>m.session);
+            .map(m=>({mic:m.mic,session:process.env.REQUESTED_SESSION||latestClosedSession(m.mic,now)}));
+          if (!markets.length || markets.some(m => !m.session)) throw Error("NO_APPROVED_MARKET_SESSION");
           console.log('markets='+JSON.stringify(markets));
           console.log('reference_session='+(markets[0]?.session??''));
           console.log('source_commit='+execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim());
@@ -187,8 +189,8 @@ jobs:
           name: daily-opportunity-diagnostics
           path: research/output/daily-opportunity-diagnostics.json
   deploy-test:
-    needs: [archive-development, research-development]
-    if: always() && needs.archive-development.result == 'success'
+    needs: [archive-development, verify-daily, research-development]
+    if: always() && needs.verify-daily.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:

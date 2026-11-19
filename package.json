@@ -8,6 +8,7 @@
     "validate": "node scripts/validate.mjs",
     "test": "npm run audit:architecture && node scripts/validate.mjs && node scripts/test.mjs && node scripts/factory/test.mjs && node scripts/cloudflare/test.mjs && node scripts/cloudflare/test-market-week-core.mjs && node scripts/cloudflare/test-xams-market-page.mjs && npm run test:consolidation",
     "history:test": "node --check scripts/history/diagnose-amsterdam-freshness.mjs && npm run history:core:test && node scripts/history/audit-amsterdam-import.mjs && node scripts/history/test-amsterdam-public-integration.mjs",
+    "posthistory:test": "node scripts/history/publish-test-history.mjs",
     "history:update": "node scripts/history.mjs update --all",
     "history:status": "node scripts/history.mjs status",
     "history:movers": "node scripts/history.mjs movers",

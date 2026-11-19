@@ -31,12 +31,18 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
     if(!storageId)throw Error('Geen gevalideerde historische opslagidentiteit');
     h=await load('data/history/'+encodeURIComponent(storageId)+'.json');
    }else{
-    const api=String(runtime.apiBaseUrl||'').replace(/\/$/,'');
-    if(!api)throw Error('Koersplein API is niet geconfigureerd');
-    const manifest=await load(api+'/api/history/manifest.json');
-    storageId=manifestResolver(manifest,mic)(share);
-    if(!storageId)throw Error('Geen gevalideerde historie voor deze beursnotering');
-    h=await load(`${api}/api/history/${encodeURIComponent(storageId).replace(/%3A/gi,':')}`);
+    if(location.hostname==='koersplein-test.onrender.com'&&approvedMarkets.has(market.mic)){
+     // The isolated Render build publishes public, identity-checked history on its own origin.
+     storageId=share.isin;
+     h=await load(dailyHistoryPath(share,market.mic).replace('/history/','/test-history/'));
+    }else{
+     const api=String(runtime.apiBaseUrl||'').replace(/\/$/,'');
+     if(!api)throw Error('Koersplein API is niet geconfigureerd');
+     const manifest=await load(api+'/api/history/manifest.json');
+     storageId=manifestResolver(manifest,mic)(share);
+     if(!storageId)throw Error('Geen gevalideerde historie voor deze beursnotering');
+     h=await load(`${api}/api/history/${encodeURIComponent(storageId).replace(/%3A/gi,':')}`);
+    }
    }
   }catch(error){
    if(!dailyHistory)throw error;

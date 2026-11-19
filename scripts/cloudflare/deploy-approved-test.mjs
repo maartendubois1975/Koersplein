@@ -27,5 +27,6 @@ export async function deployApprovedTest({apiKey,commitSha,branch=DEVELOPMENT_BR
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  let report;try{report=await deployApprovedTest({apiKey:process.env.RENDER_API_KEY,commitSha:process.env.TEST_COMMIT_SHA,branch:process.env.TEST_BRANCH});}catch(error){report={status:'FAILED',error:error.message,productionChanged:false};process.exitCode=1;}
  await fs.mkdir('research/output',{recursive:true});await fs.writeFile('research/output/test-deployment.json',JSON.stringify(report,null,2)+'\n');
+ if(report.status!=='LIVE')process.exitCode=1;
  console.log(JSON.stringify(report));if(process.env.GITHUB_STEP_SUMMARY)await fs.appendFile(process.env.GITHUB_STEP_SUMMARY,'\nTest deployment: '+report.status+'; production unchanged.\n');
 }
