@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0013257409",
+    "mic": "ALXP",
+    "symbol": "ALCOF",
+    "name": "COFIDUR",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-18",
+    "lastDate": "2026-11-18",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-18",
+      "open": 258,
+      "high": 266,
+      "low": 258,
+      "close": 266,
+      "adjustedClose": null,
+      "volume": 200
+    }
+  ]
+}
