@@ -47,9 +47,11 @@ jobs:
           import {latestClosedSession} from './scripts/history/trading-calendar.mjs';
           import {execFileSync} from 'node:child_process';
           const now=new Date();
-          const currentDayOnly=process.env.EVENT_NAME==='schedule';
+          // Scheduled GitHub runs may start hours late or after local midnight.
+          // Always select the latest fully closed approved market session; the
+          // archive is idempotent and preserves previously verified records.
           const markets=(await approvedCompanyUniverse())
-            .map(m=>({mic:m.mic,session:process.env.REQUESTED_SESSION||latestClosedSession(m.mic,now,{currentDayOnly})}))
+            .map(m=>({mic:m.mic,session:process.env.REQUESTED_SESSION||latestClosedSession(m.mic,now)}))
             .filter(m=>m.session);
           console.log('markets='+JSON.stringify(markets));
           console.log('reference_session='+(markets[0]?.session??''));
