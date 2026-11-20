@@ -1,7 +1,7 @@
 import { strict as assert } from 'node:assert';
 import { readFile } from 'node:fs/promises';
 import { computeMovers, mergeBars, validateBars } from './history/engine.mjs';
-import { buildChartModel, downsampleSeries, filterPeriod, validateHistoryDocument } from '../chart.js';
+import { buildChartModel, downsampleSeries, filterPeriod, validateHistoryDocument, sameSourcePrice, mergeChartHistoryBars } from '../chart.js';
 
 const original = [{ date: '2026-09-10', open: 100, high: 103, low: 99, close: 102, adjustedClose: 102, volume: null }];
 const incoming = [
@@ -63,3 +63,16 @@ assert.ok(filterPeriod(synthetic, '3J').length < synthetic.length);
 assert.ok(filterPeriod(synthetic, '5J').length < synthetic.length);
 assert.ok(filterPeriod(synthetic, '10J').length < synthetic.length);
 assert.equal(filterPeriod(synthetic, 'MAX').length, synthetic.length);
+// Actual Samba official row versus its published Yahoo binary representation.
+const samba=JSON.parse(await readFile(new URL('../data/history/ALXL:PTDGL0AM0003.json',import.meta.url),'utf8'));
+const sambaOfficial=samba.bars.find(bar=>bar.date==='2026-01-26');
+assert.equal(sambaOfficial.close,14.8);assert.equal(sambaOfficial.volume,30);
+const sambaLegacy={...sambaOfficial,open:14.800000190734863,high:14.800000190734863,low:14.800000190734863,close:14.800000190734863};
+assert.equal(sameSourcePrice(sambaLegacy.close,sambaOfficial.close),true);
+const chartMerged=mergeChartHistoryBars([sambaLegacy],samba.bars);
+assert.equal(chartMerged.find(bar=>bar.date===sambaLegacy.date),sambaLegacy,'Do not overwrite an existing source record');
+assert.equal(chartMerged.length,samba.bars.length);
+assert.throws(()=>mergeChartHistoryBars([sambaLegacy],[{...sambaOfficial,close:14.81}]),/spreken elkaar tegen/,'Real price differences remain blocked');
+assert.throws(()=>mergeChartHistoryBars([sambaLegacy],[{...sambaOfficial,volume:31}]),/spreken elkaar tegen/,'Volume differences are never rounded');
+assert.equal(sameSourcePrice(null,0),false);assert.equal(sameSourcePrice(14.8,14.8000001),false,'No broad relative tolerance');
+console.log('Actual Samba float32 source representation, immutable base history and rejection of real price/volume differences PASS');

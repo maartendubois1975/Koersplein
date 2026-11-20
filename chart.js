@@ -34,6 +34,24 @@ export function validateHistoryDocument(document, identity) {
   return bars;
 }
 
+// Compare only a demonstrated IEEE-754 float32 representation difference.
+// This does not round prices or tolerate a monetary/volume discrepancy.
+export function sameSourcePrice(a,b) {
+  if(a===b)return true;
+  if(!Number.isFinite(a)||!Number.isFinite(b))return false;
+  const fa=Math.fround(a),fb=Math.fround(b);
+  return Number.isFinite(fa)&&fa===fb&&(a===fa||b===fb);
+}
+export function mergeChartHistoryBars(base,tail) {
+  const byDate=new Map(base.map(bar=>[bar.date,bar]));
+  for(const bar of tail){
+    const old=byDate.get(bar.date);
+    if(old&&(['open','high','low','close'].some(k=>!sameSourcePrice(old[k],bar[k]))||old.volume!==bar.volume))throw Error('Historische bronnen spreken elkaar tegen op '+bar.date);
+    if(!old)byDate.set(bar.date,bar);
+  }
+  return [...byDate.values()].sort((a,b)=>a.date.localeCompare(b.date));
+}
+
 export function periodStartDate(lastDate, period) {
   if (!(period in PERIODS) || period === 'MAX') return null;
   const d=new Date(lastDate+'T00:00:00Z');

@@ -1,0 +1,1375 @@
+{
+  "observedAt": "2026-11-20T19:24:37.059134+00:00",
+  "scope": "All 50 approved Dublin/Lisbon instruments; published test-history versus canonical history",
+  "publishedCommit": "a8627e0965821c10d95d9476e9aef71062b5fdb4",
+  "beforePrecisionFix": {
+    "chartsBlocked": 37
+  },
+  "afterFloat32Equivalence": {
+    "mergePassed": 17,
+    "materialConflictInstruments": 33,
+    "priceConflictInstruments": 31,
+    "volumeOnlyInstruments": 2,
+    "conflictingDates": 434
+  },
+  "policy": "PRESERVE_BOTH_SOURCES_AND_BLOCK_MATERIAL_CHART_CONFLICTS_NO_AUTOMATIC_OVERWRITE",
+  "conflicts": [
+    {
+      "key": "XESM:IE00BD64C665",
+      "name": "Mincon Group",
+      "count": 2,
+      "first": {
+        "date": "2026-10-19",
+        "fields": [
+          "low",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-10-19",
+          "open": 0.9900000095367432,
+          "high": 0.9900000095367432,
+          "low": 0.9900000095367432,
+          "close": 0.9900000095367432,
+          "volume": 38,
+          "adjustedClose": 0.9900000095367432
+        },
+        "incoming": {
+          "date": "2026-10-19",
+          "open": 0.99,
+          "high": 0.99,
+          "low": 0.98,
+          "close": 0.99,
+          "adjustedClose": null,
+          "volume": 543
+        }
+      },
+      "priceConflicts": 2
+    },
+    {
+      "key": "XESM:IE00B1WV4493",
+      "name": "Origin Enterprises",
+      "count": 2,
+      "first": {
+        "date": "2026-10-19",
+        "fields": [
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-10-19",
+          "open": 4,
+          "high": 4.039999961853027,
+          "low": 3.880000114440918,
+          "close": 3.9000000953674316,
+          "volume": 14619,
+          "adjustedClose": 3.9000000953674316
+        },
+        "incoming": {
+          "date": "2026-10-19",
+          "open": 4,
+          "high": 4.04,
+          "low": 3.88,
+          "close": 4,
+          "adjustedClose": null,
+          "volume": 54090
+        }
+      },
+      "priceConflicts": 2
+    },
+    {
+      "key": "XESM:IE00BJ5FQX74",
+      "name": "Uniphar",
+      "count": 2,
+      "first": {
+        "date": "2026-10-19",
+        "fields": [
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-10-19",
+          "open": 3.9800000190734863,
+          "high": 4,
+          "low": 3.950000047683716,
+          "close": 3.9600000381469727,
+          "volume": 19596,
+          "adjustedClose": 3.9600000381469727
+        },
+        "incoming": {
+          "date": "2026-10-19",
+          "open": 3.98,
+          "high": 4,
+          "low": 3.92,
+          "close": 3.93,
+          "adjustedClose": null,
+          "volume": 446454
+        }
+      },
+      "priceConflicts": 2
+    },
+    {
+      "key": "ENXL:PTFNV1AM0002",
+      "name": "Farminveste",
+      "count": 1,
+      "first": {
+        "date": "2026-10-19",
+        "fields": [
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-10-19",
+          "open": 5.099999904632568,
+          "high": 5.099999904632568,
+          "low": 5.099999904632568,
+          "close": 5.099999904632568,
+          "volume": 40,
+          "adjustedClose": 5.099999904632568
+        },
+        "incoming": {
+          "date": "2026-10-19",
+          "open": 5.1,
+          "high": 5.1,
+          "low": 5,
+          "close": 5,
+          "adjustedClose": null,
+          "volume": 90
+        }
+      },
+      "priceConflicts": 1
+    },
+    {
+      "key": "ENXL:PTRIZ0AM0009",
+      "name": "Raize",
+      "count": 1,
+      "first": {
+        "date": "2026-10-19",
+        "fields": [
+          "high",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-10-19",
+          "open": 1.4199999570846558,
+          "high": 1.4199999570846558,
+          "low": 1.4199999570846558,
+          "close": 1.4199999570846558,
+          "volume": 833,
+          "adjustedClose": 1.4199999570846558
+        },
+        "incoming": {
+          "date": "2026-10-19",
+          "open": 1.42,
+          "high": 1.5,
+          "low": 1.42,
+          "close": 1.5,
+          "adjustedClose": null,
+          "volume": 1233
+        }
+      },
+      "priceConflicts": 1
+    },
+    {
+      "key": "ENXL:PTSCB0AM0001",
+      "name": "Sporting Clube de Braga SAD",
+      "count": 1,
+      "first": {
+        "date": "2026-10-02",
+        "fields": [
+          "volume"
+        ],
+        "old": {
+          "date": "2026-10-02",
+          "open": 21,
+          "high": 21,
+          "low": 21,
+          "close": 21,
+          "volume": 760,
+          "adjustedClose": 21
+        },
+        "incoming": {
+          "date": "2026-10-02",
+          "open": 21,
+          "high": 21,
+          "low": 21,
+          "close": 21,
+          "adjustedClose": null,
+          "volume": 796
+        }
+      },
+      "priceConflicts": 0
+    },
+    {
+      "key": "XLIS:PTALT0AE0002",
+      "name": "Altri",
+      "count": 8,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 4.690000057220459,
+          "high": 4.75,
+          "low": 4.679999828338623,
+          "close": 4.71999979019165,
+          "volume": 116215,
+          "adjustedClose": 4.71999979019165
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 4.69,
+          "high": 4.75,
+          "low": 4.67,
+          "close": 4.675,
+          "adjustedClose": null,
+          "volume": 281916
+        }
+      },
+      "priceConflicts": 8
+    },
+    {
+      "key": "XLIS:PTBCP0AM0015",
+      "name": "Banco Comercial Portugu\u00eas",
+      "count": 10,
+      "first": {
+        "date": "2026-03-05",
+        "fields": [
+          "high"
+        ],
+        "old": {
+          "date": "2026-03-05",
+          "open": 0.8432000279426575,
+          "high": 0.8514000177383423,
+          "low": 0.8208000063896179,
+          "close": 0.8235999941825867,
+          "volume": 58513067,
+          "adjustedClose": 0.7944639921188354
+        },
+        "incoming": {
+          "date": "2026-03-05",
+          "open": 0.8432,
+          "high": 0.8518,
+          "low": 0.8208,
+          "close": 0.8236,
+          "adjustedClose": null,
+          "volume": 58513067
+        }
+      },
+      "priceConflicts": 10
+    },
+    {
+      "key": "XLIS:PTCOR0AE0006",
+      "name": "Corticeira Amorim",
+      "count": 10,
+      "first": {
+        "date": "2026-05-28",
+        "fields": [
+          "high"
+        ],
+        "old": {
+          "date": "2026-05-28",
+          "open": 6.679999828338623,
+          "high": 6.710000038146973,
+          "low": 6.630000114440918,
+          "close": 6.690000057220459,
+          "volume": 158768,
+          "adjustedClose": 6.690000057220459
+        },
+        "incoming": {
+          "date": "2026-05-28",
+          "open": 6.68,
+          "high": 6.72,
+          "low": 6.63,
+          "close": 6.69,
+          "adjustedClose": null,
+          "volume": 158768
+        }
+      },
+      "priceConflicts": 10
+    },
+    {
+      "key": "XLIS:PTCTT0AM0001",
+      "name": "CTT Correios de Portugal",
+      "count": 8,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "open",
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 6.315000057220459,
+          "high": 6.28000020980835,
+          "low": 6.235000133514404,
+          "close": 6.235000133514404,
+          "volume": 38150,
+          "adjustedClose": 6.235000133514404
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 6.24,
+          "high": 6.28,
+          "low": 6.145,
+          "close": 6.145,
+          "adjustedClose": null,
+          "volume": 499492
+        }
+      },
+      "priceConflicts": 8
+    },
+    {
+      "key": "XLIS:PTEDP0AM0009",
+      "name": "EDP",
+      "count": 9,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "high",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 4.808000087738037,
+          "high": 4.86299991607666,
+          "low": 4.808000087738037,
+          "close": 4.855000019073486,
+          "volume": 2095932,
+          "adjustedClose": 4.855000019073486
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 4.808,
+          "high": 4.897,
+          "low": 4.808,
+          "close": 4.843,
+          "adjustedClose": null,
+          "volume": 10669079
+        }
+      },
+      "priceConflicts": 9
+    },
+    {
+      "key": "XLIS:ES0127797019",
+      "name": "EDP Renov\u00e1veis",
+      "count": 125,
+      "first": {
+        "date": "2025-11-20",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2025-11-20",
+          "open": 11.399999618530273,
+          "high": 11.729999542236328,
+          "low": 11.399999618530273,
+          "close": 11.550000190734863,
+          "volume": 1330437,
+          "adjustedClose": 11.452371597290039
+        },
+        "incoming": {
+          "date": "2025-11-20",
+          "open": 11.299115,
+          "high": 11.626195,
+          "low": 11.299115,
+          "close": 11.447788,
+          "adjustedClose": null,
+          "volume": 1342315
+        }
+      },
+      "priceConflicts": 125
+    },
+    {
+      "key": "XLIS:PTMEN0AE0005",
+      "name": "Mota-Engil",
+      "count": 8,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "open",
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 5.440000057220459,
+          "high": 5.215000152587891,
+          "low": 5.135000228881836,
+          "close": 5.144999980926514,
+          "volume": 413980,
+          "adjustedClose": 5.144999980926514
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 5.17,
+          "high": 5.215,
+          "low": 5.1,
+          "close": 5.1,
+          "adjustedClose": null,
+          "volume": 1427830
+        }
+      },
+      "priceConflicts": 8
+    },
+    {
+      "key": "XLIS:PTESO0AM0000",
+      "name": "Estoril Sol",
+      "count": 1,
+      "first": {
+        "date": "2026-10-19",
+        "fields": [
+          "volume"
+        ],
+        "old": {
+          "date": "2026-10-19",
+          "open": 2.700000047683716,
+          "high": 2.700000047683716,
+          "low": 2.700000047683716,
+          "close": 2.700000047683716,
+          "volume": 330,
+          "adjustedClose": 2.700000047683716
+        },
+        "incoming": {
+          "date": "2026-10-19",
+          "open": 2.7,
+          "high": 2.7,
+          "low": 2.7,
+          "close": 2.7,
+          "adjustedClose": null,
+          "volume": 405
+        }
+      },
+      "priceConflicts": 0
+    },
+    {
+      "key": "XLIS:PTFCP0AM0008",
+      "name": "Futebol Clube do Porto SAD",
+      "count": 3,
+      "first": {
+        "date": "2026-10-01",
+        "fields": [
+          "volume"
+        ],
+        "old": {
+          "date": "2026-10-01",
+          "open": 2.619999885559082,
+          "high": 2.619999885559082,
+          "low": 2.619999885559082,
+          "close": 2.619999885559082,
+          "volume": 350,
+          "adjustedClose": 2.619999885559082
+        },
+        "incoming": {
+          "date": "2026-10-01",
+          "open": 2.62,
+          "high": 2.62,
+          "low": 2.62,
+          "close": 2.62,
+          "adjustedClose": null,
+          "volume": 450
+        }
+      },
+      "priceConflicts": 2
+    },
+    {
+      "key": "XLIS:PTGAL0AM0009",
+      "name": "Galp Energia",
+      "count": 7,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 22.489999771118164,
+          "high": 22.489999771118164,
+          "low": 22.479999542236328,
+          "close": 22.31999969482422,
+          "volume": 282567,
+          "adjustedClose": 22.31999969482422
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 22.49,
+          "high": 22.5,
+          "low": 22.2,
+          "close": 22.45,
+          "adjustedClose": null,
+          "volume": 1002437
+        }
+      },
+      "priceConflicts": 7
+    },
+    {
+      "key": "XLIS:PTPAD0AM0007",
+      "name": "Glintt Global",
+      "count": 5,
+      "first": {
+        "date": "2026-10-01",
+        "fields": [
+          "high",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-10-01",
+          "open": 1.2100000381469727,
+          "high": 1.2300000190734863,
+          "low": 1.2100000381469727,
+          "close": 1.2100000381469727,
+          "volume": 2726,
+          "adjustedClose": 1.2100000381469727
+        },
+        "incoming": {
+          "date": "2026-10-01",
+          "open": 1.21,
+          "high": 1.235,
+          "low": 1.21,
+          "close": 1.23,
+          "adjustedClose": null,
+          "volume": 7228
+        }
+      },
+      "priceConflicts": 5
+    },
+    {
+      "key": "XLIS:PTIBS0AM0008",
+      "name": "Ibersol",
+      "count": 9,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 10.079999923706055,
+          "high": 10.100000381469727,
+          "low": 10,
+          "close": 10.119999885559082,
+          "volume": 1153,
+          "adjustedClose": 10.119999885559082
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 10,
+          "high": 10.14,
+          "low": 9.91,
+          "close": 9.91,
+          "adjustedClose": null,
+          "volume": 28059
+        }
+      },
+      "priceConflicts": 9
+    },
+    {
+      "key": "XLIS:PTIPR0AM0000",
+      "name": "Impresa",
+      "count": 9,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "open",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 0.2004999965429306,
+          "high": 0.20000000298023224,
+          "low": 0.1979999989271164,
+          "close": 0.1979999989271164,
+          "volume": 47279,
+          "adjustedClose": 0.1979999989271164
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 0.2,
+          "high": 0.2,
+          "low": 0.198,
+          "close": 0.2,
+          "adjustedClose": null,
+          "volume": 83484
+        }
+      },
+      "priceConflicts": 9
+    },
+    {
+      "key": "XLIS:PTJMT0AE0001",
+      "name": "Jer\u00f3nimo Martins",
+      "count": 9,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 17.979999542236328,
+          "high": 18.170000076293945,
+          "low": 17.8799991607666,
+          "close": 18.15999984741211,
+          "volume": 228185,
+          "adjustedClose": 18.15999984741211
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 18.15,
+          "high": 18.21,
+          "low": 17.93,
+          "close": 17.93,
+          "adjustedClose": null,
+          "volume": 1515486
+        }
+      },
+      "priceConflicts": 9
+    },
+    {
+      "key": "XLIS:PTMFR0AM0003",
+      "name": "Martifer",
+      "count": 6,
+      "first": {
+        "date": "2026-10-01",
+        "fields": [
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-10-01",
+          "open": 2.309999942779541,
+          "high": 2.309999942779541,
+          "low": 2.309999942779541,
+          "close": 2.309999942779541,
+          "volume": 150,
+          "adjustedClose": 2.309999942779541
+        },
+        "incoming": {
+          "date": "2026-10-01",
+          "open": 2.31,
+          "high": 2.33,
+          "low": 2.29,
+          "close": 2.29,
+          "adjustedClose": null,
+          "volume": 515
+        }
+      },
+      "priceConflicts": 5
+    },
+    {
+      "key": "XLIS:PTNBA0AM0006",
+      "name": "Novabase",
+      "count": 7,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "open",
+          "high",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 7.099999904632568,
+          "high": 7.099999904632568,
+          "low": 7.099999904632568,
+          "close": 7.119999885559082,
+          "volume": 300,
+          "adjustedClose": 7.119999885559082
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 7.12,
+          "high": 7.14,
+          "low": 7.1,
+          "close": 7.14,
+          "adjustedClose": null,
+          "volume": 1292
+        }
+      },
+      "priceConflicts": 6
+    },
+    {
+      "key": "XLIS:PTZON0AM0006",
+      "name": "NOS",
+      "count": 121,
+      "first": {
+        "date": "2025-11-20",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2025-11-20",
+          "open": 3.690000057220459,
+          "high": 3.7149999141693115,
+          "low": 3.6449999809265137,
+          "close": 3.6700000762939453,
+          "volume": 424168,
+          "adjustedClose": 3.3724324703216553
+        },
+        "incoming": {
+          "date": "2025-11-20",
+          "open": 3.6190385,
+          "high": 3.6435577,
+          "low": 3.5749038,
+          "close": 3.5994231,
+          "adjustedClose": null,
+          "volume": 432485
+        }
+      },
+      "priceConflicts": 121
+    },
+    {
+      "key": "XLIS:PTPTI0AM0006",
+      "name": "The Navigator Company",
+      "count": 8,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "open",
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 3.259999990463257,
+          "high": 3.252000093460083,
+          "low": 3.2219998836517334,
+          "close": 3.2360000610351562,
+          "volume": 98578,
+          "adjustedClose": 3.2360000610351562
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 3.222,
+          "high": 3.252,
+          "low": 3.21,
+          "close": 3.21,
+          "adjustedClose": null,
+          "volume": 1263188
+        }
+      },
+      "priceConflicts": 8
+    },
+    {
+      "key": "XLIS:PTFRV0AE0004",
+      "name": "Ramada Investimentos",
+      "count": 8,
+      "first": {
+        "date": "2026-04-13",
+        "fields": [
+          "volume"
+        ],
+        "old": {
+          "date": "2026-04-13",
+          "open": 7.460000038146973,
+          "high": 7.460000038146973,
+          "low": 7.360000133514404,
+          "close": 7.380000114440918,
+          "volume": 1050,
+          "adjustedClose": 7.1419358253479
+        },
+        "incoming": {
+          "date": "2026-04-13",
+          "open": 7.46,
+          "high": 7.46,
+          "low": 7.36,
+          "close": 7.38,
+          "adjustedClose": null,
+          "volume": 1055
+        }
+      },
+      "priceConflicts": 7
+    },
+    {
+      "key": "XLIS:PTREL0AM0008",
+      "name": "REN",
+      "count": 8,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "open",
+          "high",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 3.565000057220459,
+          "high": 3.5850000381469727,
+          "low": 3.555000066757202,
+          "close": 3.5850000381469727,
+          "volume": 96692,
+          "adjustedClose": 3.5850000381469727
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 3.575,
+          "high": 3.605,
+          "low": 3.555,
+          "close": 3.555,
+          "adjustedClose": null,
+          "volume": 606790
+        }
+      },
+      "priceConflicts": 8
+    },
+    {
+      "key": "XLIS:PTSCP0AM0001",
+      "name": "Sporting Clube de Portugal SAD",
+      "count": 3,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 0.9950000047683716,
+          "high": 0.9950000047683716,
+          "low": 0.9950000047683716,
+          "close": 0.9950000047683716,
+          "volume": 996,
+          "adjustedClose": 0.9950000047683716
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 0.995,
+          "high": 0.995,
+          "low": 0.975,
+          "close": 0.975,
+          "adjustedClose": null,
+          "volume": 1050
+        }
+      },
+      "priceConflicts": 2
+    },
+    {
+      "key": "XLIS:PTSCT0AP0018",
+      "name": "Toyota Caetano Portugal",
+      "count": 3,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 7.300000190734863,
+          "high": 7.300000190734863,
+          "low": 7.300000190734863,
+          "close": 7.300000190734863,
+          "volume": 43,
+          "adjustedClose": 7.300000190734863
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 7.3,
+          "high": 7.3,
+          "low": 6.7,
+          "close": 6.7,
+          "adjustedClose": null,
+          "volume": 543
+        }
+      },
+      "priceConflicts": 1
+    },
+    {
+      "key": "XLIS:PTSEM0AM0004",
+      "name": "Semapa",
+      "count": 8,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "open",
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 20.950000762939453,
+          "high": 20.649999618530273,
+          "low": 20.450000762939453,
+          "close": 20.5,
+          "volume": 7625,
+          "adjustedClose": 20.5
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 20.45,
+          "high": 20.65,
+          "low": 20.25,
+          "close": 20.35,
+          "adjustedClose": null,
+          "volume": 21729
+        }
+      },
+      "priceConflicts": 8
+    },
+    {
+      "key": "XLIS:PTSLB0AM0010",
+      "name": "Sport Lisboa e Benfica SAD",
+      "count": 8,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "high",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 6.559999942779541,
+          "high": 6.639999866485596,
+          "low": 6.559999942779541,
+          "close": 6.559999942779541,
+          "volume": 245,
+          "adjustedClose": 6.559999942779541
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 6.56,
+          "high": 6.7,
+          "low": 6.56,
+          "close": 6.7,
+          "adjustedClose": null,
+          "volume": 1555
+        }
+      },
+      "priceConflicts": 8
+    },
+    {
+      "key": "XLIS:PTSNC0AM0006",
+      "name": "Sonaecom",
+      "count": 6,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "open"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 2.940000057220459,
+          "high": 2.9600000381469727,
+          "low": 2.9000000953674316,
+          "close": 2.9600000381469727,
+          "volume": 3157,
+          "adjustedClose": 2.9600000381469727
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 2.96,
+          "high": 2.96,
+          "low": 2.9,
+          "close": 2.96,
+          "adjustedClose": null,
+          "volume": 3157
+        }
+      },
+      "priceConflicts": 6
+    },
+    {
+      "key": "XLIS:PTSON0AM0001",
+      "name": "Sonae",
+      "count": 8,
+      "first": {
+        "date": "2026-09-30",
+        "fields": [
+          "high",
+          "low",
+          "close",
+          "volume"
+        ],
+        "old": {
+          "date": "2026-09-30",
+          "open": 2.125,
+          "high": 2.125,
+          "low": 2.125,
+          "close": 2.125,
+          "volume": 618193,
+          "adjustedClose": 2.125
+        },
+        "incoming": {
+          "date": "2026-09-30",
+          "open": 2.125,
+          "high": 2.13,
+          "low": 2.105,
+          "close": 2.105,
+          "adjustedClose": null,
+          "volume": 2161600
+        }
+      },
+      "priceConflicts": 6
+    },
+    {
+      "key": "XLIS:PTTD10AM0000",
+      "name": "Teixeira Duarte",
+      "count": 10,
+      "first": {
+        "date": "2026-03-06",
+        "fields": [
+          "low"
+        ],
+        "old": {
+          "date": "2026-03-06",
+          "open": 0.48500001430511475,
+          "high": 0.48500001430511475,
+          "low": 0.460999995470047,
+          "close": 0.47099998593330383,
+          "volume": 2834439,
+          "adjustedClose": 0.47099998593330383
+        },
+        "incoming": {
+          "date": "2026-03-06",
+          "open": 0.485,
+          "high": 0.485,
+          "low": 0.46,
+          "close": 0.471,
+          "adjustedClose": null,
+          "volume": 2834439
+        }
+      },
+      "priceConflicts": 10
+    }
+  ],
+  "mergeResults": [
+    {
+      "key": "XMSM:IE00BF0L3536",
+      "name": "AIB Group",
+      "records": 255,
+      "status": "PASS"
+    },
+    {
+      "key": "XMSM:IE00BD1RP616",
+      "name": "Bank of Ireland Group",
+      "records": 255,
+      "status": "PASS"
+    },
+    {
+      "key": "XMSM:IE00BWY4ZF18",
+      "name": "Cairn Homes",
+      "records": 255,
+      "status": "PASS"
+    },
+    {
+      "key": "XMSM:IE0003290289",
+      "name": "FBD Holdings",
+      "records": 255,
+      "status": "PASS"
+    },
+    {
+      "key": "XMSM:IE0000669501",
+      "name": "Glanbia",
+      "records": 255,
+      "status": "PASS"
+    },
+    {
+      "key": "XMSM:IE00BD6JX574",
+      "name": "Glenveagh Properties",
+      "records": 255,
+      "status": "PASS"
+    },
+    {
+      "key": "XMSM:IE00BLP58571",
+      "name": "Irish Continental Group",
+      "records": 255,
+      "status": "PASS"
+    },
+    {
+      "key": "XMSM:IE00BJ34P519",
+      "name": "Irish Residential Properties REIT",
+      "records": 255,
+      "status": "PASS"
+    },
+    {
+      "key": "XMSM:IE0004906560",
+      "name": "Kerry Group",
+      "records": 255,
+      "status": "PASS"
+    },
+    {
+      "key": "XMSM:IE0004927939",
+      "name": "Kingspan Group",
+      "records": 255,
+      "status": "PASS"
+    },
+    {
+      "key": "XMSM:IE00BWB8X525",
+      "name": "Permanent TSB Group Holdings",
+      "records": 255,
+      "status": "PASS"
+    },
+    {
+      "key": "XMSM:IE00BYTBXV33",
+      "name": "Ryanair Holdings",
+      "records": 255,
+      "status": "PASS"
+    },
+    {
+      "key": "XESM:IE00BD64C665",
+      "name": "Mincon Group",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-10-19"
+    },
+    {
+      "key": "XESM:IE00B1WV4493",
+      "name": "Origin Enterprises",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-10-19"
+    },
+    {
+      "key": "XESM:IE00BJ5FQX74",
+      "name": "Uniphar",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-10-19"
+    },
+    {
+      "key": "XACD:IE000O0F49R3",
+      "name": "Senus",
+      "records": 2,
+      "status": "PASS"
+    },
+    {
+      "key": "ALXL:PTDGL0AM0003",
+      "name": "Samba Digital",
+      "records": 1033,
+      "status": "PASS"
+    },
+    {
+      "key": "ENXL:PTCDU0AE0003",
+      "name": "Conduril Engenharia",
+      "records": 6895,
+      "status": "PASS"
+    },
+    {
+      "key": "ENXL:PTFNV1AM0002",
+      "name": "Farminveste",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-10-19"
+    },
+    {
+      "key": "ENXL:PTRIZ0AM0009",
+      "name": "Raize",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-10-19"
+    },
+    {
+      "key": "ENXL:PTSCB0AM0001",
+      "name": "Sporting Clube de Braga SAD",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-10-02"
+    },
+    {
+      "key": "ENXL:PTSNG0AM0007",
+      "name": "Sonagi",
+      "records": 6890,
+      "status": "PASS"
+    },
+    {
+      "key": "XLIS:PTALT0AE0002",
+      "name": "Altri",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTBCP0AM0015",
+      "name": "Banco Comercial Portugu\u00eas",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-03-05"
+    },
+    {
+      "key": "XLIS:PTCOR0AE0006",
+      "name": "Corticeira Amorim",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-05-28"
+    },
+    {
+      "key": "XLIS:PTCTT0AM0001",
+      "name": "CTT Correios de Portugal",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTEDP0AM0009",
+      "name": "EDP",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:ES0127797019",
+      "name": "EDP Renov\u00e1veis",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2025-11-20"
+    },
+    {
+      "key": "XLIS:PTMEN0AE0005",
+      "name": "Mota-Engil",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTESO0AM0000",
+      "name": "Estoril Sol",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-10-19"
+    },
+    {
+      "key": "XLIS:PTFCP0AM0008",
+      "name": "Futebol Clube do Porto SAD",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-10-01"
+    },
+    {
+      "key": "XLIS:PTGAL0AM0009",
+      "name": "Galp Energia",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTPAD0AM0007",
+      "name": "Glintt Global",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-10-01"
+    },
+    {
+      "key": "XLIS:PTIBS0AM0008",
+      "name": "Ibersol",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTIPR0AM0000",
+      "name": "Impresa",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTJMT0AE0001",
+      "name": "Jer\u00f3nimo Martins",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTMFR0AM0003",
+      "name": "Martifer",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-10-01"
+    },
+    {
+      "key": "XLIS:PTGMC0AM0003",
+      "name": "Grupo M\u00e9dia Capital",
+      "records": 5788,
+      "status": "PASS"
+    },
+    {
+      "key": "XLIS:PTNBA0AM0006",
+      "name": "Novabase",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTZON0AM0006",
+      "name": "NOS",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2025-11-20"
+    },
+    {
+      "key": "XLIS:PTPTI0AM0006",
+      "name": "The Navigator Company",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTFRV0AE0004",
+      "name": "Ramada Investimentos",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-04-13"
+    },
+    {
+      "key": "XLIS:PTREL0AM0008",
+      "name": "REN",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTSCP0AM0001",
+      "name": "Sporting Clube de Portugal SAD",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTSCT0AP0018",
+      "name": "Toyota Caetano Portugal",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTSEM0AM0004",
+      "name": "Semapa",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTSLB0AM0010",
+      "name": "Sport Lisboa e Benfica SAD",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTSNC0AM0006",
+      "name": "Sonaecom",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTSON0AM0001",
+      "name": "Sonae",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-09-30"
+    },
+    {
+      "key": "XLIS:PTTD10AM0000",
+      "name": "Teixeira Duarte",
+      "status": "BLOCKED",
+      "error": "Historische bronnen spreken elkaar tegen op 2026-03-06"
+    }
+  ]
+}

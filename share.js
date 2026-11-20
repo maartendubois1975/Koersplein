@@ -1,5 +1,5 @@
 import {approvedMarkets,browserCatalog,dailyRow,dailyHistoryPath,dailyState,dailyStateLabel} from './daily-session-view.mjs';
-import { renderHistoryChart, validateHistoryDocument, periodStartDate } from './chart.js';
+import { renderHistoryChart, validateHistoryDocument, periodStartDate, mergeChartHistoryBars } from './chart.js';
 import { manifestResolver } from './market-week-core.mjs';
 import { assessPeriod, latestCloseChange } from './scripts/research/amsterdam-period-quality.mjs';
 const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
@@ -53,9 +53,7 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
    if(h.coverage?.recordCount!=null&&h.coverage.records==null)h.coverage.records=h.coverage.recordCount;
    const oldBars=validateHistoryDocument(h,{...share,isin:storageId,mic,symbol:share.symbol||share.ticker});
    const tail=validateHistoryDocument(dailyHistory,{...share,mic,symbol:share.symbol||share.ticker});
-   const byDate=new Map(oldBars.map(bar=>[bar.date,bar]));
-   for(const bar of tail){const old=byDate.get(bar.date);if(old&&['open','high','low','close','volume'].some(k=>old[k]!==bar[k]))throw Error('Historische bronnen spreken elkaar tegen op '+bar.date);if(!old)byDate.set(bar.date,bar);}
-   const merged=[...byDate.values()].sort((a,b)=>a.date.localeCompare(b.date));
+   const merged=mergeChartHistoryBars(oldBars,tail);
    h={...h,bars:merged,coverage:{...h.coverage,records:merged.length,firstDate:merged[0].date,lastDate:merged.at(-1).date}};
   }
   if(h.coverage?.recordCount!=null&&h.coverage.records==null)h.coverage.records=h.coverage.recordCount;
