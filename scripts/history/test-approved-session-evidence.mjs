@@ -31,6 +31,31 @@ for(const market of ['XAMS','XBRU','XPAR']){
  assert.equal(latestClosedSession(market,new Date('2026-03-30T18:40:00Z'),{currentDayOnly:true}),'2026-03-30');
 }
 assert.throws(()=>sessionCalendar('XAMS','2028-01-03'),/YEAR_NOT_APPROVED/);
+assert.equal(sessionCalendar('XACD','2026-05-04').open,false);
+assert.equal(sessionCalendar('XESM','2026-12-28').open,false);
+assert.equal(sessionCalendar('XDUB','2027-12-27').open,false);
+assert.equal(sessionCalendar('XMSM','2026-12-24').halfDay,true);
+assert.equal(latestClosedSession('XDUB',new Date('2026-11-19T18:14:00Z')),'2026-11-18');
+assert.equal(latestClosedSession('XDUB',new Date('2026-11-19T18:15:00Z')),'2026-11-19');
+assert.equal(latestClosedSession('XDUB',new Date('2026-07-08T17:15:00Z')),'2026-07-08');
+const senusQuote='SENUS PLC Euronext Access Dublin IE000O0F49R3 - Stock Last traded price 18/05/2026';
+const senusBar={date:'2026-11-19',open:null,high:null,low:null,close:6.15,volume:0};
+const dublinNoTrade=(mic,isin)=>corroboratedEuronextNoTrade(parseEuronextQuoteHeader(senusQuote,{mic,isin}),senusBar,senusBar.date,'2026-11-20T06:00:00Z');
+assert.equal(dublinNoTrade('XACD','IE000O0F49R3'),true);
+assert.equal(dublinNoTrade('XESM','IE000O0F49R3'),false);
+assert.equal(dublinNoTrade('XACD','IE00BD64C665'),false);
+assert.equal(sessionCalendar('ENXL','2026-12-28').open,true);
+assert.equal(sessionCalendar('ALXL','2027-12-24').halfDay,true);
+assert.equal(sessionCalendar('XLIS','2026-05-01').open,false);
+assert.equal(latestClosedSession('XLIS',new Date('2026-11-19T18:14:00Z')),'2026-11-18');
+assert.equal(latestClosedSession('XLIS',new Date('2026-11-19T18:15:00Z')),'2026-11-19');
+assert.equal(latestClosedSession('XLIS',new Date('2026-07-08T17:15:00Z')),'2026-07-08');
+const sambaQuote='SAMBA DIGITAL SGPS S.A. Euronext Growth Lisbon PTDGL0AM0003 - Stock Last traded price 29/09/2026';
+const sambaBar={date:'2026-11-19',open:null,high:null,low:null,close:1,volume:0};
+const lisboaNoTrade=(mic,isin)=>corroboratedEuronextNoTrade(parseEuronextQuoteHeader(sambaQuote,{mic,isin}),sambaBar,sambaBar.date,'2026-11-20T07:00:00Z');
+assert.equal(lisboaNoTrade('ALXL','PTDGL0AM0003'),true);
+assert.equal(lisboaNoTrade('ENXL','PTDGL0AM0003'),false);
+assert.equal(lisboaNoTrade('ALXL','PTRIZ0AM0009'),false);
 assert.equal(identityEventAt('FR00140062B9','2026-11-16'),null);
 assert.equal(identityEventAt('FR00140062B9','2026-11-17').newIsin,'FR001401B9V8');
 await assert.rejects(()=>fetchConfiguredHistory({}, {isin:'FR00140062B9',mic:'ALXP'},{startDate:'2026-11-16',endDate:'2026-11-17'}),/IDENTITY_CHANGED/);
@@ -43,11 +68,12 @@ const temporary=await fs.mkdtemp(path.join(os.tmpdir(),'real-session-replay-')),
 try{
  const snapshots=[];
  for(const market of ['XAMS','XBRU','XPAR']){const snapshot=JSON.parse(gunzipSync(await fs.readFile('research/completion/2026-11-17/verified-session-'+market+'.json.gz')));snapshots.push(snapshot);await fs.writeFile(path.join(inputDir,'daily-session-'+market+'.json'),JSON.stringify(snapshot));}
- const first=await archiveApprovedSessions({inputDir,dataDir});assert.equal(first.errors.length,0);assert.equal(first.markets.length,snapshots.length);
+ const markets=snapshots.map(snapshot=>snapshot.market);
+ const first=await archiveApprovedSessions({inputDir,dataDir,markets});assert.equal(first.errors.length,0);assert.equal(first.markets.length,snapshots.length);
  const files=await fs.readdir(path.join(dataDir,'history')),before=await Promise.all(files.map(async file=>[file,await fs.readFile(path.join(dataDir,'history',file),'utf8')]));
- await archiveApprovedSessions({inputDir,dataDir});for(const [file,raw]of before)assert.equal(await fs.readFile(path.join(dataDir,'history',file),'utf8'),raw);
+ await archiveApprovedSessions({inputDir,dataDir,markets});for(const [file,raw]of before)assert.equal(await fs.readFile(path.join(dataDir,'history',file),'utf8'),raw);
  for(const s of snapshots)await fs.writeFile(path.join(inputDir,'daily-session-'+s.market+'.json'),JSON.stringify({...s,results:s.results.map(r=>({...r,status:'SESSION_UNVERIFIED',bar:null}))}));
- const replay=await archiveApprovedSessions({inputDir,dataDir});assert.equal(replay.errors.length,0);
+ const replay=await archiveApprovedSessions({inputDir,dataDir,markets});assert.equal(replay.errors.length,0);
  for(const s of snapshots){const saved=JSON.parse(await fs.readFile(path.join(dataDir,'daily-session-'+s.market+'.json')));assert.deepEqual(saved.counts,s.counts,'Weaker late evidence must preserve previously proven trades and no-trade sessions');}
  console.log('Full 849-company evidence archive, append-only histories and preservation of proved NO_TRADES PASS');
 }finally{await fs.rm(temporary,{recursive:true,force:true});}

@@ -14,6 +14,24 @@ for(const catalog of await approvedCompanyUniverse()){
  const snapshot=JSON.parse(await fs.readFile('data/daily-session-'+catalog.mic+'.json','utf8'));
  assert.match(nodes.get('#market-meta').textContent,new RegExp(snapshot.session));
  assert.doesNotMatch(output,/<td>€\s*0,00<\/td>/,'Unverified prices must not be shown as zero');
+ if(catalog.mic==='XDUB'||catalog.mic==='XLIS'){
+  const symbol=catalog.mic==='XDUB'?'SENUS':'ALSMB';
+  const sessionUrl='data/daily-session-'+catalog.mic+'.json';
+  const noTradeRow=html=>html.match(/<tr>[^]*?<\/tr>/g).find(row=>row.includes('symbol='+symbol));
+  assert.match(noTradeRow(output),/<td>—<\/td><td>—<\/td><td>—<\/td><td>Geen handel \(officieel\)<\/td>/);
+  const fetchSnapshot=globalThis.fetch;
+  const withoutEvidence={...snapshot,counts:{...snapshot.counts,NO_TRADES:snapshot.counts.NO_TRADES-1,SESSION_UNVERIFIED:1},results:snapshot.results.map(row=>
+   row.symbol===symbol?{...row,status:'SESSION_UNVERIFIED',evidence:null}:row
+  )};
+  globalThis.fetch=(url,...args)=>url===sessionUrl?
+   Promise.resolve({ok:true,json:async()=>withoutEvidence}):fetchSnapshot(url,...args);
+  nodes.get('#market-meta').textContent='';
+  try{
+   await import('../../generic-market.js?approved-view-unverified='+catalog.mic);
+   for(let i=0;i<200&&!nodes.get('#market-meta').textContent.includes('1 niet bevestigd');i++)await new Promise(r=>setTimeout(r,10));
+   assert.match(noTradeRow(nodes.get('#share-groups').innerHTML),/<td>—<\/td><td>—<\/td><td>—<\/td><td>Koers niet bevestigd<\/td>/);
+  }finally{globalThis.fetch=fetchSnapshot;}
+ }
  console.log('Actual canonical market renderer, complete approved identity list and daily open/close display: '+catalog.mic+' PASS');
 }
 
@@ -24,4 +42,4 @@ const navigation=homeNodes.get('#market-navigation').innerHTML;
 for(const c of await approvedCompanyUniverse()){
  const marker=c.mic+'</small>',card=navigation.split('<a ').find(part=>part.includes(marker));assert(card,'Home market '+c.mic);assert(card.includes(c.shares.length+' aandelen'),'Home must use approved count for '+c.mic);
 }
-console.log('Actual homepage navigation uses the same approved 80/105/664 catalogs PASS');
+console.log('Actual homepage navigation uses the same approved market catalogs PASS');

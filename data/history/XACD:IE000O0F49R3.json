@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "IE000O0F49R3",
+    "mic": "XACD",
+    "symbol": "SENUS",
+    "name": "Senus",
+    "storageKey": "XACD:IE000O0F49R3",
+    "currency": "EUR"
+  },
+  "coverage": {
+    "firstDate": "2026-01-05",
+    "lastDate": "2026-05-18",
+    "records": 2,
+    "recordCount": 2,
+    "backfillComplete": false
+  },
+  "provider": {
+    "id": "euronext-live",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE000O0F49R3-XACD",
+    "metadata": {
+      "mic": "XACD",
+      "isin": "IE000O0F49R3",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": [],
+      "backfillComplete": false
+    }
+  },
+  "bars": [
+    {
+      "date": "2026-01-05",
+      "open": 6,
+      "high": 6,
+      "low": 6,
+      "close": 6,
+      "adjustedClose": null,
+      "volume": 500
+    },
+    {
+      "date": "2026-05-18",
+      "open": 6.15,
+      "high": 6.15,
+      "low": 6.15,
+      "close": 6.15,
+      "adjustedClose": null,
+      "volume": 1380
+    }
+  ]
+}

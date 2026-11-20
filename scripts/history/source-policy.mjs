@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import {identityEventAt} from './company-register.mjs';
 import { validateBars } from './bars.mjs';
 const sources = JSON.parse(await readFile(new URL('../../data/market-source-registry.json', import.meta.url), 'utf8'));
-export const parentMic = mic => ({ ALXB: 'XBRU', MLXB: 'XBRU', ALXP: 'XPAR', XMLI: 'XPAR', MTAA: 'XMIL', EXGM: 'XMIL', MERK: 'XOSL', XOAS: 'XOSL', ALXL: 'XLIS', ENXL: 'XLIS', XMSM: 'XDUB', XESM: 'XDUB', XATL: 'XDUB', FNSE: 'XSTO', SSME: 'XSTO' }[mic] || mic);
+export const parentMic = mic => ({ ALXB: 'XBRU', MLXB: 'XBRU', ALXP: 'XPAR', XMLI: 'XPAR', MTAA: 'XMIL', EXGM: 'XMIL', MERK: 'XOSL', XOAS: 'XOSL', ALXL: 'XLIS', ENXL: 'XLIS', XMSM: 'XDUB', XESM: 'XDUB', XATL: 'XDUB', XACD: 'XDUB', FNSE: 'XSTO', SSME: 'XSTO' }[mic] || mic);
 
 // Registration order is not approval. Only explicit roles in the market source
 // register authorize a provider; research/paid candidates cannot become fallbacks.

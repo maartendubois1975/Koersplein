@@ -11,7 +11,7 @@ import { approvedCompanyUniverse, identityEventAt } from './company-register.mjs
 const publicWorker = 'https://koersplein.maarten-dubois1975.workers.dev/api/history/';
 const dataDir = fileURLToPath(new URL('../../data/', import.meta.url));
 
-export async function publishTestHistory({ markets, outputDir, fetchImpl = globalThis.fetch, now = new Date() }) {
+export async function publishTestHistory({ markets, outputDir, historyDir = join(dataDir, 'history'), fetchImpl = globalThis.fetch, now = new Date() }) {
   async function readPublic(path) {
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
@@ -43,7 +43,20 @@ export async function publishTestHistory({ markets, outputDir, fetchImpl = globa
       const row = { market, storageKey, symbol };
       const storageId = getResolver(mic)({ ...share, mic });
       if (!storageId || !/^[A-Z0-9][A-Z0-9:-]{2,31}$/.test(storageId)) {
-        results.push({ ...row, status: 'NO_VERIFIED_MANIFEST_IDENTITY' });
+        let local;
+        try {
+          local = JSON.parse(await fs.readFile(join(historyDir, storageKey + '.json'), 'utf8'));
+        } catch (error) {
+          if (error.code !== 'ENOENT') throw error;
+          results.push({ ...row, status: 'NO_VERIFIED_MANIFEST_IDENTITY' });
+          return;
+        }
+        validateHistoryDocument(local, identity);
+        if (share.currency && local.instrument.currency !== share.currency) throw Error('LOCAL_HISTORY_CURRENCY_MISMATCH');
+        if (local.coverage.lastDate > now.toISOString().slice(0, 10) ||
+            identityEventAt(isin, local.coverage.lastDate)) throw Error('LOCAL_HISTORY_IDENTITY_DATE_MISMATCH');
+        await fs.writeFile(join(stagedDir, storageKey + '.json'), JSON.stringify(local));
+        results.push({ ...row, status: 'PUBLISHED', source: 'CANONICAL_ARCHIVE', records: local.coverage.records });
         return;
       }
 

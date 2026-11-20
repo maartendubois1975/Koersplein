@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "PTSCB0AM0001",
+    "mic": "ENXL",
+    "symbol": "SCB",
+    "name": "Sporting Clube de Braga SAD",
+    "storageKey": "ENXL:PTSCB0AM0001",
+    "currency": "EUR"
+  },
+  "coverage": {
+    "firstDate": "2025-11-25",
+    "lastDate": "2026-11-17",
+    "records": 27,
+    "recordCount": 27,
+    "backfillComplete": false
+  },
+  "provider": {
+    "id": "euronext-live",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSCB0AM0001-ENXL",
+    "metadata": {
+      "mic": "ENXL",
+      "isin": "PTSCB0AM0001",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": [],
+      "backfillComplete": false
+    }
+  },
+  "bars": [
+    {
+      "date": "2025-11-25",
+      "open": 15,
+      "high": 15,
+      "low": 15,
+      "close": 15,
+      "adjustedClose": null,
+      "volume": 4
+    },
+    {
+      "date": "2026-01-06",
+      "open": 15.3,
+      "high": 15.3,
+      "low": 15.3,
+      "close": 15.3,
+      "adjustedClose": null,
+      "volume": 10
+    },
+    {
+      "date": "2026-01-12",
+      "open": 15.3,
+      "high": 15.3,
+      "low": 15.3,
+      "close": 15.3,
+      "adjustedClose": null,
+      "volume": 3
+    },
+    {
+      "date": "2026-02-12",
+      "open": 15.3,
+      "high": 15.3,
+      "low": 15.3,
+      "close": 15.3,
+      "adjustedClose": null,
+      "volume": 10
+    },
+    {
+      "date": "2026-02-17",
+      "open": 15.3,
+      "high": 15.3,
+      "low": 15.3,
+      "close": 15.3,
+      "adjustedClose": null,
+      "volume": 2
+    },
+    {
+      "date": "2026-03-18",
+      "open": 15.4,
+      "high": 15.4,
+      "low": 15.4,
+      "close": 15.4,
+      "adjustedClose": null,
+      "volume": 1
+    },
+    {
+      "date": "2026-03-31",
+      "open": 15.4,
+      "high": 15.4,
+      "low": 15.4,
+      "close": 15.4,
+      "adjustedClose": null,
+      "volume": 50
+    },
+    {
+      "date": "2026-05-06",
+      "open": 26.8,
+      "high": 26.8,
+      "low": 26.8,
+      "close": 26.8,
+      "adjustedClose": null,
+      "volume": 2
+    },
+    {
+      "date": "2026-05-07",
+      "open": 28.8,
+      "high": 28.8,
+      "low": 28.8,
+      "close": 28.8,
+      "adjustedClose": null,
+      "volume": 1
+    },
+    {
+      "date": "2026-05-14",
+      "open": 28.8,
+      "high": 28.8,
+      "low": 28.8,
+      "close": 28.8,
+      "adjustedClose": null,
+      "volume": 20
+    },
+    {
+      "date": "2026-05-21",
+      "open": 21.2,
+      "high": 21.2,
+      "low": 21.2,
+      "close": 21.2,
+      "adjustedClose": null,
+      "volume": 47
+    },
+    {
+      "date": "2026-05-22",
+      "open": 22.2,
+      "high": 22.2,
+      "low": 22.2,
+      "close": 22.2,
+      "adjustedClose": null,
+      "volume": 10
+    },
+    {
+      "date": "2026-05-27",
+      "open": 20.2,
+      "high": 20.2,
+      "low": 20.2,
+      "close": 20.2,
+      "adjustedClose": null,
+      "volume": 40
+    },
+    {
+      "date": "2026-06-12",
+      "open": 20,
+      "high": 20,
+      "low": 20,
+      "close": 20,
+      "adjustedClose": null,
+      "volume": 121
+    },
+    {
+      "date": "2026-07-15",
+      "open": 20,
+      "high": 20,
+      "low": 20,
+      "close": 20,
+      "adjustedClose": null,
+      "volume": 150
+    },
+    {
+      "date": "2026-08-03",
+      "open": 21,
+      "high": 21,
+      "low": 21,
+      "close": 21,
+      "adjustedClose": null,
+      "volume": 50
+    },
+    {
+      "date": "2026-08-18",
+      "open": 23,
+      "high": 23,
+      "low": 23,
+      "close": 23,
+      "adjustedClose": null,
+      "volume": 30
+    },
+    {
+      "date": "2026-08-24",
+      "open": 23,
+      "high": 23,
+      "low": 23,
+      "close": 23,
+      "adjustedClose": null,
+      "volume": 4
+    },
+    {
+      "date": "2026-09-09",
+      "open": 22.8,
+      "high": 22.8,
+      "low": 22.8,
+      "close": 22.8,
+      "adjustedClose": null,
+      "volume": 10
+    },
+    {
+      "date": "2026-09-16",
+      "open": 22.8,
+      "high": 22.8,
+      "low": 22.8,
+      "close": 22.8,
+      "adjustedClose": null,
+      "volume": 20
+    },
+    {
+      "date": "2026-09-21",
+      "open": 21,
+      "high": 21,
+      "low": 21,
+      "close": 21,
+      "adjustedClose": null,
+      "volume": 46
+    },
+    {
+      "date": "2026-09-25",
+      "open": 21,
+      "high": 21,
+      "low": 21,
+      "close": 21,
+      "adjustedClose": null,
+      "volume": 160
+    },
+    {
+      "date": "2026-09-28",
+      "open": 19,
+      "high": 19,
+      "low": 19,
+      "close": 19,
+      "adjustedClose": null,
+      "volume": 5
+    },
+    {
+      "date": "2026-10-02",
+      "open": 21,
+      "high": 21,
+      "low": 21,
+      "close": 21,
+      "adjustedClose": null,
+      "volume": 796
+    },
+    {
+      "date": "2026-10-08",
+      "open": 19,
+      "high": 19,
+      "low": 19,
+      "close": 19,
+      "adjustedClose": null,
+      "volume": 30
+    },
+    {
+      "date": "2026-10-28",
+      "open": 19,
+      "high": 19,
+      "low": 19,
+      "close": 19,
+      "adjustedClose": null,
+      "volume": 25
+    },
+    {
+      "date": "2026-11-17",
+      "open": 18,
+      "high": 18,
+      "low": 18,
+      "close": 18,
+      "adjustedClose": null,
+      "volume": 10
+    }
+  ]
+}

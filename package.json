@@ -34,7 +34,7 @@
     "daily:archive": "node scripts/cloudflare/archive-approved-session.mjs",
     "research:daily": "node scripts/research/daily-opportunity-ledger.mjs",
     "research:market": "node scripts/research/universal-market-machine1.mjs",
-    "test:consolidation": "node scripts/history/test-approved-pipeline.mjs && node scripts/research/test-opportunity-boundaries.mjs && node scripts/history/test-approved-market-view.mjs && node scripts/history/test-approved-session-evidence.mjs && node scripts/cloudflare/test-approved-test-deploy.mjs"
+    "test:consolidation": "node scripts/history/test-approved-pipeline.mjs && node scripts/research/test-opportunity-boundaries.mjs && node scripts/history/test-approved-market-view.mjs && node scripts/history/test-approved-session-evidence.mjs && node scripts/cloudflare/test-approved-test-deploy.mjs && node scripts/history/test-test-history-publication.mjs"
   },
   "engines": {
     "node": ">=22.5"

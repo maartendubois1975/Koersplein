@@ -63,7 +63,7 @@ export async function euronextDailySnapshot(i,date,signal,adjusted='Y'){
 }
 export class EuronextLiveProvider{
  id=PROVIDER_ID;name='Euronext Live historical prices';requiresApiKey=false;
- supports(i){return ['XAMS','XBRU','ALXB','MLXB','XDUB','XMSM','XESM','XATL','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin)}
+ supports(i){return ['XAMS','XBRU','ALXB','MLXB','XDUB','XMSM','XESM','XATL','XACD','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin)}
  async fetchDaily(i,{startDate,endDate,signal}={}){
   const mic=euronextProviderMic(i.mic||i.market),key=`${i.isin}-${mic}`,all=[];
   const failedWindows=[];
@@ -91,8 +91,8 @@ export class EuronextLiveProvider{
 // The latest executed date corroborates a zero-volume historical session row.
 export function parseEuronextQuoteHeader(html,instrument){
  const text=clean(html).replace(/&#039;|&apos;/g,"'").replace(/\s+/g,' ');
- const venues={XAMS:'Euronext Amsterdam',XBRU:'Euronext Brussels',ALXB:'Euronext Growth Brussels',MLXB:'Euronext Access Brussels',XPAR:'Euronext Paris',ALXP:'Euronext Growth Paris',XMLI:'Euronext Access Paris'};
- const mic=String(instrument.mic||instrument.market).toUpperCase();
+ const venues={XAMS:'Euronext Amsterdam',XBRU:'Euronext Brussels',ALXB:'Euronext Growth Brussels',MLXB:'Euronext Access Brussels',XPAR:'Euronext Paris',ALXP:'Euronext Growth Paris',XMLI:'Euronext Access Paris',XMSM:'Euronext Dublin',XESM:'Euronext Growth Dublin',XACD:'Euronext Access Dublin',XLIS:'Euronext Lisbon',ALXL:'Euronext Growth Lisbon',ENXL:'Euronext Access Lisbon'};
+ const mic=euronextProviderMic(instrument.mic||instrument.market);
  const identityMatch=Boolean(venues[mic]&&text.includes(venues[mic]+' '+instrument.isin+' - Stock'));
  const last=text.match(/Last traded price\s+(\d{2}\/\d{2}\/\d{4})/i),valuation=text.match(/Valuation Close.*?(\d{2}\/\d{2}\/\d{4})/i);
  const status=html.match(/<!--\s*status\s+(\w+)\s*-->/)?.[1]||null;

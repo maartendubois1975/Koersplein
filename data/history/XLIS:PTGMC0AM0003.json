@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "PTGMC0AM0003",
+    "mic": "XLIS",
+    "symbol": "MCP",
+    "name": "Grupo Média Capital",
+    "storageKey": "XLIS:PTGMC0AM0003",
+    "currency": "EUR"
+  },
+  "coverage": {
+    "firstDate": "2025-11-20",
+    "lastDate": "2026-07-03",
+    "records": 6,
+    "recordCount": 6,
+    "backfillComplete": false
+  },
+  "provider": {
+    "id": "euronext-live",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTGMC0AM0003-XLIS",
+    "metadata": {
+      "mic": "XLIS",
+      "isin": "PTGMC0AM0003",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": [],
+      "backfillComplete": false
+    }
+  },
+  "bars": [
+    {
+      "date": "2025-11-20",
+      "open": 1.9,
+      "high": 1.9,
+      "low": 1.9,
+      "close": 1.9,
+      "adjustedClose": null,
+      "volume": 800
+    },
+    {
+      "date": "2025-12-29",
+      "open": 1.9,
+      "high": 1.9,
+      "low": 1.9,
+      "close": 1.9,
+      "adjustedClose": null,
+      "volume": 1
+    },
+    {
+      "date": "2026-06-26",
+      "open": 1.9,
+      "high": 1.9,
+      "low": 1.9,
+      "close": 1.9,
+      "adjustedClose": null,
+      "volume": 4
+    },
+    {
+      "date": "2026-06-29",
+      "open": 1.9,
+      "high": 1.9,
+      "low": 1.9,
+      "close": 1.9,
+      "adjustedClose": null,
+      "volume": 15
+    },
+    {
+      "date": "2026-07-01",
+      "open": 1.9,
+      "high": 1.9,
+      "low": 1.9,
+      "close": 1.9,
+      "adjustedClose": null,
+      "volume": 1
+    },
+    {
+      "date": "2026-07-03",
+      "open": 1.9,
+      "high": 1.9,
+      "low": 1.9,
+      "close": 1.9,
+      "adjustedClose": null,
+      "volume": 1
+    }
+  ]
+}

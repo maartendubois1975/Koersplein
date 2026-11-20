@@ -6,7 +6,7 @@ on:
   workflow_call:
     inputs:
       session:
-        description: 'Completed session YYYY-MM-DD'
+        description: 'Completed session YYYY-MM-DD for every approved market'
         type: string
     secrets:
       RENDER_API_KEY:

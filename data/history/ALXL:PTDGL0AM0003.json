@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "PTDGL0AM0003",
+    "mic": "ALXL",
+    "symbol": "ALSMB",
+    "name": "Samba Digital",
+    "storageKey": "ALXL:PTDGL0AM0003",
+    "currency": "EUR"
+  },
+  "coverage": {
+    "firstDate": "2026-01-05",
+    "lastDate": "2026-09-29",
+    "records": 8,
+    "recordCount": 8,
+    "backfillComplete": false
+  },
+  "provider": {
+    "id": "euronext-live",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTDGL0AM0003-ALXL",
+    "metadata": {
+      "mic": "ALXL",
+      "isin": "PTDGL0AM0003",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": [],
+      "backfillComplete": false
+    }
+  },
+  "bars": [
+    {
+      "date": "2026-01-05",
+      "open": 14.5,
+      "high": 14.5,
+      "low": 14.5,
+      "close": 14.5,
+      "adjustedClose": null,
+      "volume": 4100
+    },
+    {
+      "date": "2026-01-26",
+      "open": 14.8,
+      "high": 14.8,
+      "low": 14.8,
+      "close": 14.8,
+      "adjustedClose": null,
+      "volume": 30
+    },
+    {
+      "date": "2026-01-27",
+      "open": 14.8,
+      "high": 14.8,
+      "low": 14.8,
+      "close": 14.8,
+      "adjustedClose": null,
+      "volume": 40
+    },
+    {
+      "date": "2026-02-18",
+      "open": 14.8,
+      "high": 14.8,
+      "low": 14.8,
+      "close": 14.8,
+      "adjustedClose": null,
+      "volume": 2677
+    },
+    {
+      "date": "2026-03-30",
+      "open": 14.8,
+      "high": 14.8,
+      "low": 14.8,
+      "close": 14.8,
+      "adjustedClose": null,
+      "volume": 2
+    },
+    {
+      "date": "2026-09-04",
+      "open": 14.8,
+      "high": 14.8,
+      "low": 14.8,
+      "close": 14.8,
+      "adjustedClose": null,
+      "volume": 15000
+    },
+    {
+      "date": "2026-09-07",
+      "open": 14.8,
+      "high": 14.8,
+      "low": 14.8,
+      "close": 14.8,
+      "adjustedClose": null,
+      "volume": 6800
+    },
+    {
+      "date": "2026-09-29",
+      "open": 14.8,
+      "high": 14.8,
+      "low": 14.8,
+      "close": 14.8,
+      "adjustedClose": null,
+      "volume": 28200
+    }
+  ]
+}

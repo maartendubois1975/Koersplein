@@ -118,7 +118,7 @@ export async function officialDailyStatus(instrument,date){
   const status=rows.get(isin);
   return status&&status.mic===mic?{...status,sourceUrl,retrievedAt:new Date().toISOString()}:null;
  }
- if(['XAMS','XBRU','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL','XDUB','XMSM','XESM','XATL'].includes(mic)){
+ if(['XAMS','XBRU','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL','XDUB','XMSM','XESM','XATL','XACD'].includes(mic)){
   const snapshot=await cached(`euronext:${mic}:${isin}:${date}`,()=>euronextDailySnapshot({...instrument,mic,isin},date,AbortSignal.timeout(20000)));
   const row=snapshot.rows.find(x=>x.date===date);
   if(!row)return null;
@@ -126,7 +126,7 @@ export async function officialDailyStatus(instrument,date){
   // A zero-volume reference close with no opening price is not independent
   // evidence of zero executed trades. Fail closed until a dated official
   // transaction count or complete-session record establishes NO_TRADES.
-  if(row.volume===0&&row.open===null&&row.close>0&&['XAMS','XBRU','ALXB','MLXB','XPAR','ALXP','XMLI'].includes(mic)){
+  if(row.volume===0&&row.open===null&&row.close>0&&['XAMS','XBRU','ALXB','MLXB','XPAR','ALXP','XMLI','XDUB','XMSM','XESM','XACD','XLIS','ALXL','ENXL'].includes(mic)){
    const quote=await cached(`euronext-quote:${mic}:${isin}:${date}`,()=>euronextQuoteSnapshot({...instrument,mic,isin},AbortSignal.timeout(20000)));
    if(corroboratedEuronextNoTrade(quote,row,date,quote.retrievedAt))return {...common,status:'NO_TRADES',lastTradeDate:quote.lastTradeDate,volume:0,verification:'OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION',quoteSourceUrl:quote.sourceUrl,quoteSha256:quote.sourceSha256,stateObservedAt:quote.retrievedAt,currentTradingState:quote.tradingState,currentHaltReason:quote.haltReason};
    return {...common,status:'SESSION_UNVERIFIED',reasonCode:quote.identityUnknown?'SOURCE_IDENTITY_UNKNOWN':quote.lastTradeDate>=date?'ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET':'NO_EXECUTED_TRADE_EVIDENCE',lastTradeDate:quote.lastTradeDate,quoteSourceUrl:quote.sourceUrl,currentTradingState:quote.tradingState,currentHaltReason:quote.haltReason,stateObservedAt:quote.retrievedAt};

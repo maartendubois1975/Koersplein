@@ -128,6 +128,9 @@
       "status": "APPROVED",
       "catalogFingerprint": "cf951f3219704345ae22bb2e5a5004c255b190a4795866a8ef5ce0244b3beaa8",
       "catalogSource": "https://live.euronext.com/en/product_directory/data/stocks-lisbon/download?mics=XLIS%2CALXL%2CENXL",
+      "dailySources": [
+        {"provider":"euronext-live","role":"PRIMARY","note":"Lisbon pilot: official exact-session records, XLIS/ALXL/ENXL. No venue substitution."}
+      ],
       "historySources": [
         {
           "provider": "yahoo-isin-resolver",
@@ -856,6 +859,9 @@
         "sourceCountTested": 4,
         "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
       },
+      "dailySources": [
+        {"provider":"euronext-live","role":"PRIMARY","note":"Dublin pilot: official exact-session records, XMSM/XESM/XACD. No venue substitution."}
+      ],
       "historySources": [
         {
           "provider": "yahoo-isin-resolver",

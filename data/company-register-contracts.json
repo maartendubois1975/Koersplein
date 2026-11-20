@@ -2,6 +2,8 @@
   "version": 1,
   "policy": "APPROVED_COMPANIES_ONLY_NO_AUTOMATIC_DIRECTORY_REPLACEMENT",
   "markets": {
+    "XLIS": {"file": "euronext-lisbon-approved.json", "expectedCount": 34, "identitySha256": "5be08e0dccc19988ad3f8306c09b041db0afc99f32e4d472042edde764cea31a"},
+    "XDUB": {"file": "euronext-dublin-approved.json", "expectedCount": 16, "identitySha256": "6387b147b73f87412096564374aad05ea4ba8dbc9dec7e9859ef67aeeb07ae86"},
     "XAMS": {
       "file": "euronext-amsterdam.json",
       "expectedCount": 80,

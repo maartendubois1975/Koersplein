@@ -15,12 +15,148 @@
     }
   },
   "coverage": {
-    "firstDate": "2026-11-16",
+    "firstDate": "2026-10-26",
     "lastDate": "2026-11-19",
-    "recordCount": 4,
-    "records": 4
+    "recordCount": 19,
+    "records": 19,
+    "backfillComplete": false
   },
   "bars": [
+    {
+      "date": "2026-10-26",
+      "open": 23.65,
+      "high": 23.65,
+      "low": 21.58,
+      "close": 22.2,
+      "adjustedClose": null,
+      "volume": 13189
+    },
+    {
+      "date": "2026-10-27",
+      "open": 21.54,
+      "high": 22.2,
+      "low": 21.54,
+      "close": 21.89,
+      "adjustedClose": null,
+      "volume": 2330
+    },
+    {
+      "date": "2026-10-28",
+      "open": 21.9,
+      "high": 22.19,
+      "low": 21.72,
+      "close": 21.9,
+      "adjustedClose": null,
+      "volume": 3561
+    },
+    {
+      "date": "2026-10-29",
+      "open": 23.59,
+      "high": 23.59,
+      "low": 22.5,
+      "close": 22.5,
+      "adjustedClose": null,
+      "volume": 1242
+    },
+    {
+      "date": "2026-10-30",
+      "open": 23,
+      "high": 23,
+      "low": 22.3,
+      "close": 22.5,
+      "adjustedClose": null,
+      "volume": 1316
+    },
+    {
+      "date": "2026-11-02",
+      "open": 23.04,
+      "high": 23.14,
+      "low": 22.4,
+      "close": 23,
+      "adjustedClose": null,
+      "volume": 855
+    },
+    {
+      "date": "2026-11-03",
+      "open": 23.11,
+      "high": 23.7,
+      "low": 22.525,
+      "close": 23.7,
+      "adjustedClose": null,
+      "volume": 506
+    },
+    {
+      "date": "2026-11-04",
+      "open": 22.8,
+      "high": 23.625,
+      "low": 22.53,
+      "close": 23,
+      "adjustedClose": null,
+      "volume": 1519
+    },
+    {
+      "date": "2026-11-05",
+      "open": 23,
+      "high": 23.39,
+      "low": 23,
+      "close": 23.065,
+      "adjustedClose": null,
+      "volume": 692
+    },
+    {
+      "date": "2026-11-06",
+      "open": 23.38,
+      "high": 23.38,
+      "low": 22.725,
+      "close": 23.17,
+      "adjustedClose": null,
+      "volume": 1057
+    },
+    {
+      "date": "2026-11-09",
+      "open": 23.17,
+      "high": 23.685,
+      "low": 22.85,
+      "close": 23.46,
+      "adjustedClose": null,
+      "volume": 1913
+    },
+    {
+      "date": "2026-11-10",
+      "open": 22.9,
+      "high": 23.39,
+      "low": 22.9,
+      "close": 23.15,
+      "adjustedClose": null,
+      "volume": 624
+    },
+    {
+      "date": "2026-11-11",
+      "open": 23.28,
+      "high": 23.29,
+      "low": 22.705,
+      "close": 23.29,
+      "adjustedClose": null,
+      "volume": 655
+    },
+    {
+      "date": "2026-11-12",
+      "open": 23.285,
+      "high": 23.285,
+      "low": 22.805,
+      "close": 22.99,
+      "adjustedClose": null,
+      "volume": 344
+    },
+    {
+      "date": "2026-11-13",
+      "open": 23,
+      "high": 23.28,
+      "low": 22.97,
+      "close": 23.07,
+      "adjustedClose": null,
+      "volume": 678
+    },
     {
       "date": "2026-11-16",
       "open": 22.91,
@@ -56,6 +192,14 @@
       "close": 22.98,
       "adjustedClose": null,
       "volume": 344
+    }
+  ],
+  "recoverySources": [
+    {
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR001401BD72-ALXP",
+      "added": 15,
+      "conflicts": []
     }
   ]
 }

@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "PTCDU0AE0003",
+    "mic": "ENXL",
+    "symbol": "CDU",
+    "name": "Conduril Engenharia",
+    "storageKey": "ENXL:PTCDU0AE0003",
+    "currency": "EUR"
+  },
+  "coverage": {
+    "firstDate": "2025-11-24",
+    "lastDate": "2026-08-04",
+    "records": 13,
+    "recordCount": 13,
+    "backfillComplete": false
+  },
+  "provider": {
+    "id": "euronext-live",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTCDU0AE0003-ENXL",
+    "metadata": {
+      "mic": "ENXL",
+      "isin": "PTCDU0AE0003",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": [],
+      "backfillComplete": false
+    }
+  },
+  "bars": [
+    {
+      "date": "2025-11-24",
+      "open": 13.3,
+      "high": 13.3,
+      "low": 13.3,
+      "close": 13.3,
+      "adjustedClose": null,
+      "volume": 1463
+    },
+    {
+      "date": "2025-11-26",
+      "open": 15,
+      "high": 15,
+      "low": 15,
+      "close": 15,
+      "adjustedClose": null,
+      "volume": 525
+    },
+    {
+      "date": "2026-03-04",
+      "open": 15,
+      "high": 15,
+      "low": 15,
+      "close": 15,
+      "adjustedClose": null,
+      "volume": 245
+    },
+    {
+      "date": "2026-03-05",
+      "open": 15,
+      "high": 15,
+      "low": 15,
+      "close": 15,
+      "adjustedClose": null,
+      "volume": 60
+    },
+    {
+      "date": "2026-03-24",
+      "open": 15,
+      "high": 15,
+      "low": 15,
+      "close": 15,
+      "adjustedClose": null,
+      "volume": 2078
+    },
+    {
+      "date": "2026-04-14",
+      "open": 15,
+      "high": 15,
+      "low": 15,
+      "close": 15,
+      "adjustedClose": null,
+      "volume": 2500
+    },
+    {
+      "date": "2026-06-17",
+      "open": 14.9,
+      "high": 14.9,
+      "low": 14.9,
+      "close": 14.9,
+      "adjustedClose": null,
+      "volume": 18719
+    },
+    {
+      "date": "2026-06-22",
+      "open": 12.6,
+      "high": 12.6,
+      "low": 12.6,
+      "close": 12.6,
+      "adjustedClose": null,
+      "volume": 3
+    },
+    {
+      "date": "2026-06-23",
+      "open": 12.6,
+      "high": 12.6,
+      "low": 12.6,
+      "close": 12.6,
+      "adjustedClose": null,
+      "volume": 50
+    },
+    {
+      "date": "2026-06-26",
+      "open": 12.6,
+      "high": 12.6,
+      "low": 12.6,
+      "close": 12.6,
+      "adjustedClose": null,
+      "volume": 50
+    },
+    {
+      "date": "2026-07-13",
+      "open": 12.6,
+      "high": 12.6,
+      "low": 12.6,
+      "close": 12.6,
+      "adjustedClose": null,
+      "volume": 50
+    },
+    {
+      "date": "2026-07-24",
+      "open": 12.6,
+      "high": 12.6,
+      "low": 12.6,
+      "close": 12.6,
+      "adjustedClose": null,
+      "volume": 50
+    },
+    {
+      "date": "2026-08-04",
+      "open": 12.6,
+      "high": 12.6,
+      "low": 12.6,
+      "close": 12.6,
+      "adjustedClose": null,
+      "volume": 50
+    }
+  ]
+}

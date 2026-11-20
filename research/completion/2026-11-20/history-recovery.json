@@ -1,0 +1,922 @@
+[
+  {
+    "market": "XBRU",
+    "isin": "BE0974298300",
+    "mic": "ALXB",
+    "symbol": "CAND",
+    "name": "Candela Invest SA",
+    "storageKey": "ALXB:BE0974298300",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/CAND.BR?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 32,
+    "records": 32,
+    "conflicts": []
+  },
+  {
+    "market": "XBRU",
+    "isin": "BE0003680916",
+    "mic": "MLXB",
+    "symbol": "MLNEU",
+    "name": "Compagnie Financière de Neufcour SA",
+    "storageKey": "MLXB:BE0003680916",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/MLNEU.BR?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 25,
+    "records": 26,
+    "conflicts": []
+  },
+  {
+    "market": "XBRU",
+    "isin": "BE0003847648",
+    "mic": "MLXB",
+    "symbol": "FLSP",
+    "name": "FLOWSPARKS NV",
+    "storageKey": "MLXB:BE0003847648",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/FLSP.BR?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 51,
+    "records": 52,
+    "conflicts": []
+  },
+  {
+    "market": "XBRU",
+    "isin": "BE0974370026",
+    "mic": "MLXB",
+    "symbol": "MLTV",
+    "name": "Choice NV",
+    "storageKey": "MLXB:BE0974370026",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/MLTV.BR?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 82,
+    "records": 83,
+    "conflicts": []
+  },
+  {
+    "market": "XBRU",
+    "isin": "BE0003519270",
+    "mic": "ALXB",
+    "symbol": "COBH",
+    "name": "Brouwerij Handelsmaatschappij NV",
+    "storageKey": "ALXB:BE0003519270",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/COBH.BR?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 136,
+    "records": 137,
+    "conflicts": []
+  },
+  {
+    "market": "XBRU",
+    "isin": "BE0974497290",
+    "mic": "ALXB",
+    "symbol": "ALEMS",
+    "name": "European Medical Solutions SA",
+    "storageKey": "ALXB:BE0974497290",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ALEMS.BR?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 178,
+    "records": 181,
+    "conflicts": []
+  },
+  {
+    "market": "XBRU",
+    "isin": "BE0974401334",
+    "mic": "ALXB",
+    "symbol": "ROCK",
+    "name": "Whitestone Group SA",
+    "storageKey": "ALXB:BE0974401334",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ROCK.BR?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 162,
+    "records": 166,
+    "conflicts": []
+  },
+  {
+    "market": "XBRU",
+    "isin": "BE0974503352",
+    "mic": "ALXB",
+    "symbol": "MONNI",
+    "name": "Monni NV",
+    "storageKey": "ALXB:BE0974503352",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/MONNI.BR?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 159,
+    "records": 162,
+    "conflicts": []
+  },
+  {
+    "market": "XBRU",
+    "isin": "BE0003841583",
+    "mic": "MLXB",
+    "symbol": "REAL",
+    "name": "Realco SA",
+    "storageKey": "MLXB:BE0003841583",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/REAL.BR?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 34,
+    "records": 34,
+    "conflicts": []
+  },
+  {
+    "market": "XPAR",
+    "isin": "FR001401B5X2",
+    "mic": "ALXP",
+    "symbol": "ALALO",
+    "name": "ACHETER-LOUER.FR",
+    "storageKey": "ALXP:FR001401B5X2",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ALALO.PA?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 246,
+    "records": 247,
+    "conflicts": [
+      {
+        "date": "2026-11-16",
+        "fields": [
+          "low",
+          "close"
+        ],
+        "preserved": {
+          "date": "2026-11-16",
+          "open": 2,
+          "high": 2,
+          "low": 1.8,
+          "close": 1.999,
+          "adjustedClose": null,
+          "volume": 1097
+        },
+        "incoming": {
+          "date": "2026-11-16",
+          "open": 2,
+          "high": 2,
+          "low": 1.7999999523162842,
+          "close": 1.9989999532699585,
+          "adjustedClose": 1.9989999532699585,
+          "volume": 1097
+        }
+      }
+    ]
+  },
+  {
+    "market": "XBRU",
+    "isin": "BE0003832491",
+    "mic": "MLXB",
+    "symbol": "NEWT",
+    "name": "Newtree SA",
+    "storageKey": "MLXB:BE0003832491",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/NEWT.BR?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 97,
+    "records": 98,
+    "conflicts": []
+  },
+  {
+    "market": "XBRU",
+    "isin": "BE0003773877",
+    "mic": "ALXB",
+    "symbol": "SOFT",
+    "name": "Softimat SA",
+    "storageKey": "ALXB:BE0003773877",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SOFT.BR?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 163,
+    "records": 167,
+    "conflicts": [
+      {
+        "date": "2026-11-16",
+        "fields": [
+          "volume"
+        ],
+        "preserved": {
+          "date": "2026-11-16",
+          "open": 0.6399999856948853,
+          "high": 0.6399999856948853,
+          "low": 0.6399999856948853,
+          "close": 0.6399999856948853,
+          "adjustedClose": 0.6399999856948853,
+          "volume": 165
+        },
+        "incoming": {
+          "date": "2026-11-16",
+          "open": 0.6399999856948853,
+          "high": 0.6399999856948853,
+          "low": 0.6399999856948853,
+          "close": 0.6399999856948853,
+          "adjustedClose": 0.6399999856948853,
+          "volume": 2500
+        }
+      }
+    ]
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105362000",
+    "mic": "XMLI",
+    "symbol": "MLBAR",
+    "name": "BARINGS CORE SPAIN",
+    "storageKey": "XMLI:ES0105362000",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105362000: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105362000-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0106008008",
+    "mic": "XMLI",
+    "symbol": "MLBIM",
+    "name": "BIMMART INVESTMENT",
+    "storageKey": "XMLI:ES0106008008",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0106008008: yahoo-chart: Yahoo HTTP 404 voor MLBIM.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0106008008-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105660007",
+    "mic": "XMLI",
+    "symbol": "MLCOE",
+    "name": "CORE SPAIN HOLDCO",
+    "storageKey": "XMLI:ES0105660007",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105660007: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105660007-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105661005",
+    "mic": "XMLI",
+    "symbol": "MLARE",
+    "name": "AREF THALASSA",
+    "storageKey": "XMLI:ES0105661005",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105661005: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105661005-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "FR0000130692",
+    "mic": "XPAR",
+    "symbol": "BGO",
+    "name": "BELGRANO",
+    "storageKey": "XPAR:FR0000130692",
+    "status": "RECOVERED",
+    "provider": "euronext-live",
+    "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR0000130692-XPAR",
+    "added": 252,
+    "records": 256,
+    "conflicts": []
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105601001",
+    "mic": "XMLI",
+    "symbol": "MLARI",
+    "name": "ARIMELIA ITG",
+    "storageKey": "XMLI:ES0105601001",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105601001: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105601001-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0106046008",
+    "mic": "XMLI",
+    "symbol": "MLEXX",
+    "name": "EXXITA BE CIRCULAR",
+    "storageKey": "XMLI:ES0106046008",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0106046008: yahoo-chart: Providerbeurs wijkt af voor ES0106046008: verwacht XMLI, ontvangen YHD; euronext-live: Geen verhandelde Euronext koershistorie voor ES0106046008-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "IT0005613739",
+    "mic": "XMLI",
+    "symbol": "MLGL",
+    "name": "GLASS TO POWER",
+    "storageKey": "XMLI:IT0005613739",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor IT0005613739: yahoo-chart: Yahoo HTTP 404 voor MLGL.PA; euronext-live: Geen verhandelde Euronext koershistorie voor IT0005613739-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "FR0014018PW8",
+    "mic": "ALXP",
+    "symbol": "ALDAT",
+    "name": "D.A.T.E",
+    "storageKey": "ALXP:FR0014018PW8",
+    "status": "RECOVERED",
+    "provider": "euronext-live",
+    "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR0014018PW8-ALXP",
+    "added": 36,
+    "records": 40,
+    "conflicts": []
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105964003",
+    "mic": "XMLI",
+    "symbol": "MLESV",
+    "name": "ES VEDRA",
+    "storageKey": "XMLI:ES0105964003",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105964003: yahoo-chart: Yahoo HTTP 404 voor MLESV.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105964003-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105553004",
+    "mic": "XMLI",
+    "symbol": "MLECE",
+    "name": "FAIFEY INVEST",
+    "storageKey": "XMLI:ES0105553004",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105553004: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105553004-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105586004",
+    "mic": "XMLI",
+    "symbol": "MLCAN",
+    "name": "EUROLOG CANOLA",
+    "storageKey": "XMLI:ES0105586004",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105586004: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105586004-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105537007",
+    "mic": "XMLI",
+    "symbol": "MLNDG",
+    "name": "GLOBAL PIELAGO",
+    "storageKey": "XMLI:ES0105537007",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105537007: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105537007-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105498002",
+    "mic": "XMLI",
+    "symbol": "MLHAY",
+    "name": "HEALTHCARE ACTIVOS",
+    "storageKey": "XMLI:ES0105498002",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105498002: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105498002-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0106042007",
+    "mic": "XMLI",
+    "symbol": "MLHA2",
+    "name": "HAY 2 SOCIMI",
+    "storageKey": "XMLI:ES0106042007",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0106042007: yahoo-chart: Yahoo HTTP 404 voor MLHA2.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0106042007-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105511002",
+    "mic": "XMLI",
+    "symbol": "MLINM",
+    "name": "INMARK",
+    "storageKey": "XMLI:ES0105511002",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105511002: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105511002-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105473005",
+    "mic": "XMLI",
+    "symbol": "MLISP",
+    "name": "INMOSUPA",
+    "storageKey": "XMLI:ES0105473005",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105473005: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105473005-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "FR001400QW73",
+    "mic": "XMLI",
+    "symbol": "MLIME",
+    "name": "IMEON ENERGY",
+    "storageKey": "XMLI:FR001400QW73",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor FR001400QW73: yahoo-chart: Yahoo HTTP 404 voor MLIME.PA; euronext-live: Geen verhandelde Euronext koershistorie voor FR001400QW73-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "FR0010428771",
+    "mic": "XPAR",
+    "symbol": "OLG",
+    "name": "OL GROUPE",
+    "storageKey": "XPAR:FR0010428771",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/OLG.PA?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 251,
+    "records": 255,
+    "conflicts": [
+      {
+        "date": "2026-11-16",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close"
+        ],
+        "preserved": {
+          "date": "2026-11-16",
+          "open": 1.54,
+          "high": 1.61,
+          "low": 1.54,
+          "close": 1.585,
+          "adjustedClose": null,
+          "volume": 2502
+        },
+        "incoming": {
+          "date": "2026-11-16",
+          "open": 1.5399999618530273,
+          "high": 1.6100000143051147,
+          "low": 1.5399999618530273,
+          "close": 1.5850000381469727,
+          "adjustedClose": 1.5850000381469727,
+          "volume": 2502
+        }
+      },
+      {
+        "date": "2026-11-17",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close"
+        ],
+        "preserved": {
+          "date": "2026-11-17",
+          "open": 1.51,
+          "high": 1.55,
+          "low": 1.51,
+          "close": 1.51,
+          "adjustedClose": null,
+          "volume": 660
+        },
+        "incoming": {
+          "date": "2026-11-17",
+          "open": 1.5099999904632568,
+          "high": 1.5499999523162842,
+          "low": 1.5099999904632568,
+          "close": 1.5099999904632568,
+          "adjustedClose": 1.5099999904632568,
+          "volume": 660
+        }
+      },
+      {
+        "date": "2026-11-18",
+        "fields": [
+          "open",
+          "high",
+          "close"
+        ],
+        "preserved": {
+          "date": "2026-11-18",
+          "open": 1.505,
+          "high": 1.56,
+          "low": 1.5,
+          "close": 1.56,
+          "adjustedClose": null,
+          "volume": 1818
+        },
+        "incoming": {
+          "date": "2026-11-18",
+          "open": 1.5049999952316284,
+          "high": 1.559999942779541,
+          "low": 1.5,
+          "close": 1.559999942779541,
+          "adjustedClose": 1.559999942779541,
+          "volume": 1818
+        }
+      },
+      {
+        "date": "2026-11-19",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close"
+        ],
+        "preserved": {
+          "date": "2026-11-19",
+          "open": 1.56,
+          "high": 1.56,
+          "low": 1.305,
+          "close": 1.435,
+          "adjustedClose": null,
+          "volume": 10809
+        },
+        "incoming": {
+          "date": "2026-11-19",
+          "open": 1.559999942779541,
+          "high": 1.559999942779541,
+          "low": 1.3049999475479126,
+          "close": 1.434999942779541,
+          "adjustedClose": 1.434999942779541,
+          "volume": 10809
+        }
+      }
+    ]
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105417002",
+    "mic": "XMLI",
+    "symbol": "MLIPO",
+    "name": "IPOSA PROPERTIES",
+    "storageKey": "XMLI:ES0105417002",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105417002: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105417002-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105977005",
+    "mic": "XMLI",
+    "symbol": "MLMED",
+    "name": "MEDITERRANEAN REIT",
+    "storageKey": "XMLI:ES0105977005",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105977005: yahoo-chart: Providerbeurs wijkt af voor ES0105977005: verwacht XMLI, ontvangen YHD; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105977005-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "FR001401AOZ5",
+    "mic": "ALXP",
+    "symbol": "ALPRG",
+    "name": "PROLOGUE",
+    "storageKey": "ALXP:FR001401AOZ5",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ALPRG.PA?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 252,
+    "records": 256,
+    "conflicts": [
+      {
+        "date": "2026-11-16",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close"
+        ],
+        "preserved": {
+          "date": "2026-11-16",
+          "open": 29.35,
+          "high": 29.95,
+          "low": 28.835,
+          "close": 29.03,
+          "adjustedClose": null,
+          "volume": 529
+        },
+        "incoming": {
+          "date": "2026-11-16",
+          "open": 29.350000381469727,
+          "high": 29.950000762939453,
+          "low": 28.834999084472656,
+          "close": 29.030000686645508,
+          "adjustedClose": 29.030000686645508,
+          "volume": 529
+        }
+      },
+      {
+        "date": "2026-11-17",
+        "fields": [
+          "high",
+          "low"
+        ],
+        "preserved": {
+          "date": "2026-11-17",
+          "open": 30,
+          "high": 30.55,
+          "low": 29.995,
+          "close": 30,
+          "adjustedClose": null,
+          "volume": 332
+        },
+        "incoming": {
+          "date": "2026-11-17",
+          "open": 30,
+          "high": 30.549999237060547,
+          "low": 29.9950008392334,
+          "close": 30,
+          "adjustedClose": 30,
+          "volume": 332
+        }
+      },
+      {
+        "date": "2026-11-18",
+        "fields": [
+          "open",
+          "high",
+          "low"
+        ],
+        "preserved": {
+          "date": "2026-11-18",
+          "open": 29.995,
+          "high": 30.7,
+          "low": 29.12,
+          "close": 30,
+          "adjustedClose": null,
+          "volume": 521
+        },
+        "incoming": {
+          "date": "2026-11-18",
+          "open": 29.9950008392334,
+          "high": 30.700000762939453,
+          "low": 29.1200008392334,
+          "close": 30,
+          "adjustedClose": 30,
+          "volume": 521
+        }
+      },
+      {
+        "date": "2026-11-19",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close"
+        ],
+        "preserved": {
+          "date": "2026-11-19",
+          "open": 29.155,
+          "high": 29.95,
+          "low": 29.1,
+          "close": 29.95,
+          "adjustedClose": null,
+          "volume": 112
+        },
+        "incoming": {
+          "date": "2026-11-19",
+          "open": 29.155000686645508,
+          "high": 29.950000762939453,
+          "low": 29.100000381469727,
+          "close": 29.950000762939453,
+          "adjustedClose": 29.950000762939453,
+          "volume": 112
+        }
+      }
+    ]
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105698007",
+    "mic": "XMLI",
+    "symbol": "MLKPS",
+    "name": "K PRIME CAPITAL",
+    "storageKey": "XMLI:ES0105698007",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105698007: yahoo-chart: Yahoo HTTP 404 voor MLKPS.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105698007-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "FR0011858190",
+    "mic": "ALXP",
+    "symbol": "ALREE",
+    "name": "REED",
+    "storageKey": "ALXP:FR0011858190",
+    "status": "RECOVERED",
+    "provider": "yahoo-chart",
+    "sourceUrl": "https://query1.finance.yahoo.com/v8/finance/chart/ALREE.PA?period1=1763510400&period2=1795132799&interval=1d&events=div%2Csplits",
+    "added": 192,
+    "records": 196,
+    "conflicts": [
+      {
+        "date": "2026-11-16",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close"
+        ],
+        "preserved": {
+          "date": "2026-11-16",
+          "open": 0.0006,
+          "high": 0.0102,
+          "low": 0.0006,
+          "close": 0.0052,
+          "adjustedClose": null,
+          "volume": 10818105
+        },
+        "incoming": {
+          "date": "2026-11-16",
+          "open": 0.0006000000284984708,
+          "high": 0.010200000368058681,
+          "low": 0.0006000000284984708,
+          "close": 0.005200000014156103,
+          "adjustedClose": 0.005200000014156103,
+          "volume": 10818105
+        }
+      },
+      {
+        "date": "2026-11-17",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close"
+        ],
+        "preserved": {
+          "date": "2026-11-17",
+          "open": 0.0078,
+          "high": 0.0078,
+          "low": 0.005,
+          "close": 0.005,
+          "adjustedClose": null,
+          "volume": 6618648
+        },
+        "incoming": {
+          "date": "2026-11-17",
+          "open": 0.007799999788403511,
+          "high": 0.007799999788403511,
+          "low": 0.004999999888241291,
+          "close": 0.004999999888241291,
+          "adjustedClose": 0.004999999888241291,
+          "volume": 6618648
+        }
+      },
+      {
+        "date": "2026-11-18",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close"
+        ],
+        "preserved": {
+          "date": "2026-11-18",
+          "open": 0.0046,
+          "high": 0.005,
+          "low": 0.003,
+          "close": 0.003,
+          "adjustedClose": null,
+          "volume": 2313610
+        },
+        "incoming": {
+          "date": "2026-11-18",
+          "open": 0.004600000102072954,
+          "high": 0.004999999888241291,
+          "low": 0.003000000026077032,
+          "close": 0.003000000026077032,
+          "adjustedClose": 0.003000000026077032,
+          "volume": 2313610
+        }
+      },
+      {
+        "date": "2026-11-19",
+        "fields": [
+          "open",
+          "high",
+          "low",
+          "close"
+        ],
+        "preserved": {
+          "date": "2026-11-19",
+          "open": 0.003,
+          "high": 0.0034,
+          "low": 0.0024,
+          "close": 0.0026,
+          "adjustedClose": null,
+          "volume": 1167645
+        },
+        "incoming": {
+          "date": "2026-11-19",
+          "open": 0.003000000026077032,
+          "high": 0.0034000000450760126,
+          "low": 0.002400000113993883,
+          "close": 0.0026000000070780516,
+          "adjustedClose": 0.0026000000070780516,
+          "volume": 1167645
+        }
+      }
+    ]
+  },
+  {
+    "market": "XPAR",
+    "isin": "FR001401BD72",
+    "mic": "ALXP",
+    "symbol": "ALN4",
+    "name": "N4 GROUP",
+    "storageKey": "ALXP:FR001401BD72",
+    "status": "RECOVERED",
+    "provider": "euronext-live",
+    "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR001401BD72-ALXP",
+    "added": 15,
+    "records": 19,
+    "conflicts": []
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105490009",
+    "mic": "XMLI",
+    "symbol": "MLORB",
+    "name": "ORBIS PROPERTIES",
+    "storageKey": "XMLI:ES0105490009",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105490009: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105490009-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105559001",
+    "mic": "XMLI",
+    "symbol": "MLMIV",
+    "name": "MERIDIA RE IV",
+    "storageKey": "XMLI:ES0105559001",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105559001: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105559001-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "FR0004998318",
+    "mic": "XMLI",
+    "symbol": "MLOTT",
+    "name": "OTT HERITAGE HOSP",
+    "storageKey": "XMLI:FR0004998318",
+    "status": "RECOVERED",
+    "provider": "euronext-live",
+    "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR0004998318-XMLI",
+    "added": 81,
+    "records": 81,
+    "conflicts": []
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105651006",
+    "mic": "XMLI",
+    "symbol": "MLSAG",
+    "name": "SAGAX REAL ESTATE",
+    "storageKey": "XMLI:ES0105651006",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105651006: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105651006-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105550000",
+    "mic": "XMLI",
+    "symbol": "MLJDL",
+    "name": "RES GESTAE SOCIMI",
+    "storageKey": "XMLI:ES0105550000",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105550000: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105550000-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105910006",
+    "mic": "XMLI",
+    "symbol": "MLSJA",
+    "name": "SAJA REAL ESTATE",
+    "storageKey": "XMLI:ES0105910006",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105910006: yahoo-chart: Yahoo HTTP 404 voor MLSJA.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105910006-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105962007",
+    "mic": "XMLI",
+    "symbol": "MLVIC",
+    "name": "VICSO",
+    "storageKey": "XMLI:ES0105962007",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105962007: yahoo-chart: Yahoo HTTP 404 voor MLVIC.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105962007-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105623005",
+    "mic": "XMLI",
+    "symbol": "MLVRE",
+    "name": "VANDOR REAL ESTATE",
+    "storageKey": "XMLI:ES0105623005",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105623005: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105623005-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105492005",
+    "mic": "XMLI",
+    "symbol": "MLVRF",
+    "name": "VREF SEVILLE",
+    "storageKey": "XMLI:ES0105492005",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105492005: yahoo-chart: Provider returned no daily bars; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105492005-XMLI; mislukte vensters: 0"
+  },
+  {
+    "market": "XPAR",
+    "isin": "ES0105748000",
+    "mic": "XMLI",
+    "symbol": "MLURC",
+    "name": "URCOLESA",
+    "storageKey": "XMLI:ES0105748000",
+    "status": "UNRESOLVED",
+    "error": "Alle providers faalden voor ES0105748000: yahoo-chart: Yahoo HTTP 404 voor MLURC.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105748000-XMLI; mislukte vensters: 0"
+  }
+]

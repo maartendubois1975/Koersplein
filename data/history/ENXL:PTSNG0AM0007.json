@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "PTSNG0AM0007",
+    "mic": "ENXL",
+    "symbol": "SNG",
+    "name": "Sonagi",
+    "storageKey": "ENXL:PTSNG0AM0007",
+    "currency": "EUR"
+  },
+  "coverage": {
+    "firstDate": "2026-06-03",
+    "lastDate": "2026-10-06",
+    "records": 6,
+    "recordCount": 6,
+    "backfillComplete": false
+  },
+  "provider": {
+    "id": "euronext-live",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSNG0AM0007-ENXL",
+    "metadata": {
+      "mic": "ENXL",
+      "isin": "PTSNG0AM0007",
+      "source": "Euronext Live",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": [],
+      "backfillComplete": false
+    }
+  },
+  "bars": [
+    {
+      "date": "2026-06-03",
+      "open": 1.16,
+      "high": 1.16,
+      "low": 1.16,
+      "close": 1.16,
+      "adjustedClose": null,
+      "volume": 55600
+    },
+    {
+      "date": "2026-06-08",
+      "open": 1.17,
+      "high": 1.17,
+      "low": 1.17,
+      "close": 1.17,
+      "adjustedClose": null,
+      "volume": 300
+    },
+    {
+      "date": "2026-06-19",
+      "open": 1.7,
+      "high": 1.7,
+      "low": 1.7,
+      "close": 1.7,
+      "adjustedClose": null,
+      "volume": 31742
+    },
+    {
+      "date": "2026-06-22",
+      "open": 1.7,
+      "high": 1.7,
+      "low": 1.7,
+      "close": 1.7,
+      "adjustedClose": null,
+      "volume": 4314
+    },
+    {
+      "date": "2026-07-15",
+      "open": 1.7,
+      "high": 1.7,
+      "low": 1.7,
+      "close": 1.7,
+      "adjustedClose": null,
+      "volume": 1000
+    },
+    {
+      "date": "2026-10-06",
+      "open": 1.7,
+      "high": 1.7,
+      "low": 1.7,
+      "close": 1.7,
+      "adjustedClose": null,
+      "volume": 500
+    }
+  ]
+}
