@@ -1,6 +1,7 @@
 import {createHash,createDecipheriv} from 'node:crypto';
 const PROVIDER_ID='euronext-live';
 export const euronextProviderMic=mic=>String(mic||'').toUpperCase()==='XDUB'?'XMSM':String(mic||'').toUpperCase();
+export const supportsEuronextInstrument=i=>['XAMS','XBRU','ALXB','MLXB','XDUB','XMSM','XESM','XATL','XACD','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin);
 const ROOT='https://live.euronext.com/en/ajax/getHistoricalPricePopup/';
 const clean=s=>String(s??'').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').trim();
 const iso=s=>{const m=clean(s).match(/(\d{2})\/(\d{2})\/(\d{4})/);return m?`${m[3]}-${m[2]}-${m[1]}`:null};
@@ -63,7 +64,7 @@ export async function euronextDailySnapshot(i,date,signal,adjusted='Y'){
 }
 export class EuronextLiveProvider{
  id=PROVIDER_ID;name='Euronext Live historical prices';requiresApiKey=false;
- supports(i){return ['XAMS','XBRU','ALXB','MLXB','XDUB','XMSM','XESM','XATL','XACD','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin)}
+ supports(i){return supportsEuronextInstrument(i)}
  async fetchDaily(i,{startDate,endDate,signal}={}){
   const mic=euronextProviderMic(i.mic||i.market),key=`${i.isin}-${mic}`,all=[];
   const failedWindows=[];

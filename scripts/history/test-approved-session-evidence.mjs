@@ -1,3 +1,4 @@
+import {officialDailyStatus} from './official-daily-status.mjs';
 import {fetchConfiguredHistory} from './source-policy.mjs';
 import os from 'node:os';import path from 'node:path';
 import {archiveApprovedSessions} from '../cloudflare/archive-approved-session.mjs';
@@ -77,3 +78,30 @@ try{
  for(const s of snapshots){const saved=JSON.parse(await fs.readFile(path.join(dataDir,'daily-session-'+s.market+'.json')));assert.deepEqual(saved.counts,s.counts,'Weaker late evidence must preserve previously proven trades and no-trade sessions');}
  console.log('Full 849-company evidence archive, append-only histories and preservation of proved NO_TRADES PASS');
 }finally{await fs.rm(temporary,{recursive:true,force:true});}
+
+// Replay actual Brussels Growth/Access responses through the complete official
+// dispatcher. Previously the parser understood these MICs but the dispatcher
+// silently skipped them, causing valid no-trade proof to be lost.
+const brusselsSegments=raw.records.filter(r=>['ALXB','MLXB'].includes(r.mic));
+assert.equal(brusselsSegments.length,6);
+const originalFetch=globalThis.fetch;let routedRequests=0;
+try{
+ globalThis.fetch=async (url,options={})=>{
+  const record=brusselsSegments.find(r=>String(url).endsWith(r.isin+'-'+r.mic));
+  assert(record,'Only the exact approved instrument may be queried');
+  routedRequests++;
+  if(options.method==='POST'){
+   assert.equal(new URLSearchParams(options.body).get('startdate'),record.session);
+   return new Response(record.historyHtml);
+  }
+  return new Response(record.quoteHtml);
+ };
+ for(const record of brusselsSegments){
+  const status=await officialDailyStatus(record,record.session);
+  assert(status,'Segment MIC must be routed to the official source');
+  assert.equal(status.isin,record.isin);assert.equal(status.mic,record.mic);
+  assert.equal(status.status,record.resolution==='OFFICIAL_NO_TRADES'?'NO_TRADES':'SESSION_UNVERIFIED');
+ }
+ assert.equal(routedRequests,12,'Both historical session and independent quote must be checked');
+}finally{globalThis.fetch=originalFetch;}
+console.log('Real Brussels Growth/Access dispatcher replay: four proved no-trade cases; two later-trade cases stay unverified PASS');

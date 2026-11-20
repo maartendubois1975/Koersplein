@@ -2,7 +2,11 @@ name: Approved European companies daily session
 on:
   push:
     branches: [consolidation-20261116]
-    paths: ['.github/workflows/approved-daily-session.yml']
+    paths:
+      - '.github/workflows/approved-daily-session.yml'
+      - 'scripts/history/official-daily-status.mjs'
+      - 'scripts/history/providers/euronext-live.mjs'
+      - 'scripts/history/test-approved-session-evidence.mjs'
   workflow_call:
     inputs:
       session:

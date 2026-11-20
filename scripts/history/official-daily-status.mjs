@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import {budapestClosedSessionStatus,BUDAPEST_CALENDAR_URL} from './providers/budapest-holiday.mjs';
 import {fetchMseOfficialPriceList,mseOfficialNoTradeStatus,MSE_PRICE_LIST_URL} from './providers/mse-official-price-list.mjs';
 import {BseSofiaProvider,bseOfficialIdentity,bseSessionSnapshot} from './providers/bse-sofia.mjs';
-import {euronextDailySnapshot,euronextQuoteSnapshot,corroboratedEuronextNoTrade} from './providers/euronext-live.mjs';
+import {euronextDailySnapshot,euronextQuoteSnapshot,corroboratedEuronextNoTrade,supportsEuronextInstrument} from './providers/euronext-live.mjs';
 import {zseDailySnapshot} from './providers/zse-price-list.mjs';
 const cache=new Map();
 const clean=s=>String(s||'').replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/g,' ').replace(/\s+/g,' ').trim();
@@ -118,7 +118,8 @@ export async function officialDailyStatus(instrument,date){
   const status=rows.get(isin);
   return status&&status.mic===mic?{...status,sourceUrl,retrievedAt:new Date().toISOString()}:null;
  }
- if(['XAMS','XBRU','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL','XDUB','XMSM','XESM','XATL','XACD'].includes(mic)){
+ // Share the provider venue contract: segment MICs must reach official evidence too.
+ if(supportsEuronextInstrument({mic,isin})){
   const snapshot=await cached(`euronext:${mic}:${isin}:${date}`,()=>euronextDailySnapshot({...instrument,mic,isin},date,AbortSignal.timeout(20000)));
   const row=snapshot.rows.find(x=>x.date===date);
   if(!row)return null;
