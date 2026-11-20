@@ -15,7 +15,7 @@
     "NO_TRADES": 2
   },
   "readOnly": true,
-  "generatedAt": "2026-11-20T17:29:35.571Z",
+  "generatedAt": "2026-11-20T18:44:31.406Z",
   "results": [
     {
       "isin": "BE0003818359",
@@ -1476,5 +1476,12 @@
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0015073TS8-XAMS"
     }
   ],
-  "archiveConflicts": []
+  "archiveConflicts": [
+    {
+      "market": "XAMS",
+      "isin": "NL0010273215",
+      "date": "2026-11-20",
+      "code": "SESSION_CONFLICT_PRESERVED"
+    }
+  ]
 }

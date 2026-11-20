@@ -16,7 +16,7 @@
     "SESSION_UNVERIFIED": 5
   },
   "readOnly": true,
-  "generatedAt": "2026-11-20T17:29:35.187Z",
+  "generatedAt": "2026-11-20T18:44:31.599Z",
   "results": [
     {
       "isin": "BE0160342011",
@@ -1310,14 +1310,14 @@
         "isin": "ES0105910006",
         "provider": "euronext-live",
         "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105910006-XMLI",
-        "retrievedAt": "2026-11-20T17:30:39.701Z",
+        "retrievedAt": "2026-11-20T18:45:54.216Z",
         "lastTradeDate": null,
         "status": "SESSION_UNVERIFIED",
         "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
         "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105910006-XMLI",
         "currentTradingState": "CLO",
         "currentHaltReason": null,
-        "stateObservedAt": "2026-11-20T17:30:40.082Z"
+        "stateObservedAt": "2026-11-20T18:45:54.741Z"
       },
       "officialError": null,
       "error": "Alle providers faalden voor ES0105910006: yahoo-chart: Yahoo HTTP 404 voor MLSJA.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105910006-XMLI; mislukte vensters: 0"
@@ -1444,14 +1444,14 @@
         "isin": "ES0106042007",
         "provider": "euronext-live",
         "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0106042007-XMLI",
-        "retrievedAt": "2026-11-20T17:30:08.894Z",
+        "retrievedAt": "2026-11-20T18:45:16.839Z",
         "lastTradeDate": null,
         "status": "SESSION_UNVERIFIED",
         "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
         "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0106042007-XMLI",
         "currentTradingState": "CLO",
         "currentHaltReason": null,
-        "stateObservedAt": "2026-11-20T17:30:09.459Z"
+        "stateObservedAt": "2026-11-20T18:45:17.264Z"
       },
       "officialError": null,
       "error": "Alle providers faalden voor ES0106042007: yahoo-chart: Yahoo HTTP 404 voor MLHA2.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0106042007-XMLI; mislukte vensters: 0"
@@ -11913,14 +11913,14 @@
         "isin": "FR001400QW73",
         "provider": "euronext-live",
         "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR001400QW73-XMLI",
-        "retrievedAt": "2026-11-20T17:30:14.448Z",
+        "retrievedAt": "2026-11-20T18:45:23.526Z",
         "lastTradeDate": null,
         "status": "SESSION_UNVERIFIED",
         "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
         "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/FR001400QW73-XMLI",
         "currentTradingState": "CLO",
         "currentHaltReason": null,
-        "stateObservedAt": "2026-11-20T17:30:14.742Z"
+        "stateObservedAt": "2026-11-20T18:45:23.957Z"
       },
       "officialError": null,
       "error": "Alle providers faalden voor FR001400QW73: yahoo-chart: Yahoo HTTP 404 voor MLIME.PA; euronext-live: Geen verhandelde Euronext koershistorie voor FR001400QW73-XMLI; mislukte vensters: 0"
@@ -12974,14 +12974,14 @@
         "isin": "IT0005613739",
         "provider": "euronext-live",
         "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IT0005613739-XMLI",
-        "retrievedAt": "2026-11-20T17:30:06.506Z",
+        "retrievedAt": "2026-11-20T18:45:13.178Z",
         "lastTradeDate": null,
         "status": "SESSION_UNVERIFIED",
         "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
         "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/IT0005613739-XMLI",
         "currentTradingState": "CLO",
         "currentHaltReason": null,
-        "stateObservedAt": "2026-11-20T17:30:06.927Z"
+        "stateObservedAt": "2026-11-20T18:45:13.622Z"
       },
       "officialError": null,
       "error": "Alle providers faalden voor IT0005613739: yahoo-chart: Yahoo HTTP 404 voor MLGL.PA; euronext-live: Geen verhandelde Euronext koershistorie voor IT0005613739-XMLI; mislukte vensters: 0"
@@ -13293,5 +13293,42 @@
       }
     }
   ],
-  "archiveConflicts": []
+  "archiveConflicts": [
+    {
+      "market": "XPAR",
+      "isin": "FR0000120073",
+      "date": "2026-11-20",
+      "code": "SESSION_CONFLICT_PRESERVED"
+    },
+    {
+      "market": "XPAR",
+      "isin": "FR0000120321",
+      "date": "2026-11-20",
+      "code": "SESSION_CONFLICT_PRESERVED"
+    },
+    {
+      "market": "XPAR",
+      "isin": "FR0000121972",
+      "date": "2026-11-20",
+      "code": "SESSION_CONFLICT_PRESERVED"
+    },
+    {
+      "market": "XPAR",
+      "isin": "FR0010282822",
+      "date": "2026-11-20",
+      "code": "SESSION_CONFLICT_PRESERVED"
+    },
+    {
+      "market": "XPAR",
+      "isin": "FR0013506730",
+      "date": "2026-11-20",
+      "code": "SESSION_CONFLICT_PRESERVED"
+    },
+    {
+      "market": "XPAR",
+      "isin": "NL0014559478",
+      "date": "2026-11-20",
+      "code": "SESSION_CONFLICT_PRESERVED"
+    }
+  ]
 }
