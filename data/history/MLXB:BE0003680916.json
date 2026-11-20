@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "BE0003680916",
+    "mic": "MLXB",
+    "symbol": "MLNEU",
+    "name": "Compagnie Financière de Neufcour SA",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-19",
+    "lastDate": "2026-11-19",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-19",
+      "open": 11.300000190734863,
+      "high": 11.300000190734863,
+      "low": 11.300000190734863,
+      "close": 11.300000190734863,
+      "adjustedClose": 11.300000190734863,
+      "volume": 3
+    }
+  ]
+}
