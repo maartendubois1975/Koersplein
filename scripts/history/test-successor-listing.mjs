@@ -13,7 +13,9 @@ assert.equal(snapshot.counts.TRADED,1);assert.equal(snapshot.results[0].isin,suc
 const root=await fs.mkdtemp(path.join(os.tmpdir(),'successor-listing-')),dataDir=path.join(root,'data'),inputDir=path.join(root,'input');await fs.mkdir(path.join(dataDir,'history'),{recursive:true});await fs.mkdir(path.join(dataDir,'daily-sessions/XPAR'),{recursive:true});await fs.mkdir(inputDir);
 try{
  const oldHistory=await fs.readFile('data/history/ALXP:'+share.isin+'.json','utf8'),oldHistoryFile=path.join(dataDir,'history/ALXP:'+share.isin+'.json');await fs.writeFile(oldHistoryFile,oldHistory);
- const realPrior=JSON.parse(await fs.readFile('data/daily-session-XPAR.json')).results.find(r=>r.isin===share.isin);assert.equal(realPrior.status,'SESSION_UNVERIFIED');
+ const stored=JSON.parse(await fs.readFile('data/daily-session-XPAR.json'));
+ const realPrior=stored.results.find(r=>r.isin===share.isin)||stored.retiredIdentityEvidence?.find(r=>r.isin===share.isin);
+ assert(realPrior,'The original predecessor evidence must remain available after activation');assert.equal(realPrior.status,'SESSION_UNVERIFIED');
  const prior={market:'XPAR',session:'2026-11-20',counts:{SESSION_UNVERIFIED:1},results:[realPrior]},sessionFile=path.join(dataDir,'daily-sessions/XPAR/2026-11-20.json');await fs.writeFile(sessionFile,JSON.stringify(prior));await fs.writeFile(path.join(inputDir,'daily-session-XPAR.json'),JSON.stringify(snapshot));
  const options={inputDir,dataDir,markets:['XPAR'],loadCatalog:async()=>catalog};const result=await archiveApprovedSessions(options);assert.deepEqual(result.errors,[]);assert.equal(await fs.readFile(oldHistoryFile,'utf8'),oldHistory);
  const saved=JSON.parse(await fs.readFile(sessionFile));assert.equal(saved.results[0].isin,successor.instrument.isin);assert.equal(saved.retiredIdentityEvidence.length,1);assert.deepEqual(saved.retiredIdentityEvidence[0],realPrior);
