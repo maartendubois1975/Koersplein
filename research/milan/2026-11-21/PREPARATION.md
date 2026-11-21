@@ -22,3 +22,16 @@ Status: VOORBEREIDING, niet aangesloten. Bestaande vijf markten en 899 bedrijven
 
 ## Niet als voltooid claimen
 Geen complete gecontroleerde Milaan-catalogus, koersbronproef, testdeploy of live-HTTP-verificatie uitgevoerd. De vier XMLI-uitzonderingen van Parijs blijven afzonderlijk zichtbaar en blokkeren niet.
+
+## Harde toelatings- en publicatievoorwaarden (bevestigd door opdrachtgever)
+
+**Onderzoek eerst volledig; pas daarna één geïntegreerde invoering. Geen tussentijdse gedeeltelijke imports of live-publicatie.**
+
+1. Alleen echte, actieve, individueel identificeerbare beursgenoteerde ondernemingen met aandelen (equity); sluit ETF's, ETN's, fondsen, obligaties, warrants, rechten, certificaten zonder zelfstandig bedrijf en andere niet-aandelen uit.
+2. **Milaan is de primaire/hoofdbeursnotering** van de onderneming. Alleen een secundaire, cross- of dual listing op Milaan is onvoldoende. Controleer per twijfelgeval de primaire handelsmarkt via officiële uitgevende-instelling- en beursbronnen; vestigingsland of ISIN-landcode is niet doorslaggevend.
+3. Eén onderneming één record, ook bij meerdere aandelenklassen, tickers of segmentvermeldingen. Bewaar relevante alternatieve instrumenten apart indien nodig; tel niet dubbel.
+4. Onderzoek eerst de volledige officiële populatie en de relevante segmenten (Euronext Milan, STAR, Euronext Growth Milan, Professional en MIV alleen waar echte ondernemingsaandelen kwalificeren). Maak controleerbare inclusie-, exclusie- en twijfelgevallenlijsten met bronverwijzingen en expliciete redenen.
+5. Valideer per goedgekeurde onderneming ten minste officiële naam, ISIN, ticker, MIC/segment, status, primaire notering en bron/bewijsdatum. Leg grensgevallen voor vóór goedkeuring; geen aannames bij ontbrekend bewijs.
+6. Controleer representatieve dagelijkse OHLC- en historische bronproeven, handelskalender en statusafhandeling. Een handelsdag zonder transactie is geen reden om een geldig bedrijf te verwijderen; oude koersen mogen nooit als nieuwe transacties worden voorgesteld.
+7. **Integratiepoort:** pas na compleet onderzoeksrapport, sluitende aantallen, nul onbesliste toelatingsgevallen en geslaagde tests één samenhangende wijziging op de bestaande centrale architectuur in werkbranch consolidation-20261116. Geen afzonderlijke of gedeeltelijke import, geen nieuwe parallelle infrastructuur, geen productie/main/Cloudflare-wijzigingen.
+8. Publiceer uitsluitend naar de bestaande testomgeving nadat de exacte SHA en deploymentvoorwaarden zijn gecontroleerd. Live-HTTP-controle apart vastleggen; niet claimen als niet uitgevoerd.
