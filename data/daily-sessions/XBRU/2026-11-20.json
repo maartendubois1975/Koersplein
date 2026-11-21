@@ -12,11 +12,10 @@
   },
   "counts": {
     "TRADED": 98,
-    "SESSION_UNVERIFIED": 6,
-    "NO_TRADES": 1
+    "NO_TRADES": 7
   },
   "readOnly": true,
-  "generatedAt": "2026-11-20T19:16:32.673Z",
+  "generatedAt": "2026-11-21T05:07:35.362Z",
   "results": [
     {
       "isin": "BE0003008019",
@@ -222,12 +221,27 @@
       "mic": "MLXB",
       "symbol": "MLNEU",
       "name": "Compagnie Financière de Neufcour SA",
-      "status": "SESSION_UNVERIFIED",
+      "status": "NO_TRADES",
       "bar": null,
-      "reasonCode": "OFFICIAL_SOURCE_ERROR",
-      "evidence": null,
-      "officialError": "Euronext HTTP 503",
-      "error": "Alle providers faalden voor BE0003680916: yahoo-chart: Provider returned no usable bars in requested range"
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003680916-MLXB",
+      "evidence": {
+        "date": "2026-11-20",
+        "mic": "MLXB",
+        "isin": "BE0003680916",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003680916-MLXB",
+        "retrievedAt": "2026-11-21T05:07:40.222Z",
+        "lastTradeDate": "2026-11-19",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003680916-MLXB",
+        "quoteSha256": "261637125d277c5b754233b983faa99df3b619d34bde5f80b62c5e01232ce61d",
+        "stateObservedAt": "2026-11-21T05:07:40.551Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
     },
     {
       "isin": "BE0003696102",
@@ -721,12 +735,27 @@
       "mic": "MLXB",
       "symbol": "NEWT",
       "name": "Newtree SA",
-      "status": "SESSION_UNVERIFIED",
+      "status": "NO_TRADES",
       "bar": null,
-      "reasonCode": "OFFICIAL_SOURCE_ERROR",
-      "evidence": null,
-      "officialError": "Euronext HTTP 503",
-      "error": "Alle providers faalden voor BE0003832491: yahoo-chart: Provider returned no daily bars"
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003832491-MLXB",
+      "evidence": {
+        "date": "2026-11-20",
+        "mic": "MLXB",
+        "isin": "BE0003832491",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003832491-MLXB",
+        "retrievedAt": "2026-11-21T05:07:44.836Z",
+        "lastTradeDate": "2026-11-17",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003832491-MLXB",
+        "quoteSha256": "aa6e41a3f0f804cd2e3c01b2a871d0ec8a7ecad78ecc60cdea2961086ff624bf",
+        "stateObservedAt": "2026-11-21T05:07:45.195Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
     },
     {
       "isin": "BE0003837540",
@@ -769,24 +798,54 @@
       "mic": "MLXB",
       "symbol": "REAL",
       "name": "Realco SA",
-      "status": "SESSION_UNVERIFIED",
+      "status": "NO_TRADES",
       "bar": null,
-      "reasonCode": "OFFICIAL_SOURCE_ERROR",
-      "evidence": null,
-      "officialError": "Euronext HTTP 503",
-      "error": "Alle providers faalden voor BE0003841583: yahoo-chart: Provider returned no daily bars"
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003841583-MLXB",
+      "evidence": {
+        "date": "2026-11-20",
+        "mic": "MLXB",
+        "isin": "BE0003841583",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003841583-MLXB",
+        "retrievedAt": "2026-11-21T05:07:46.300Z",
+        "lastTradeDate": "2026-11-02",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003841583-MLXB",
+        "quoteSha256": "15ce27eaa11f783a7803fa64646f35baef7b86eff755782db0a067ce7d21f579",
+        "stateObservedAt": "2026-11-21T05:07:46.698Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
     },
     {
       "isin": "BE0003847648",
       "mic": "MLXB",
       "symbol": "FLSP",
       "name": "FLOWSPARKS NV",
-      "status": "SESSION_UNVERIFIED",
+      "status": "NO_TRADES",
       "bar": null,
-      "reasonCode": "OFFICIAL_SOURCE_ERROR",
-      "evidence": null,
-      "officialError": "Euronext HTTP 503",
-      "error": "Alle providers faalden voor BE0003847648: yahoo-chart: Provider returned no daily bars"
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003847648-MLXB",
+      "evidence": {
+        "date": "2026-11-20",
+        "mic": "MLXB",
+        "isin": "BE0003847648",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003847648-MLXB",
+        "retrievedAt": "2026-11-21T05:07:42.211Z",
+        "lastTradeDate": "2026-11-18",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003847648-MLXB",
+        "quoteSha256": "86868f3b49767773ea8770df1ceae91457055308a045097ac3aa892d4a27c5d5",
+        "stateObservedAt": "2026-11-21T05:07:42.656Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
     },
     {
       "isin": "BE0003851681",
@@ -1315,12 +1374,27 @@
       "mic": "ALXB",
       "symbol": "CAND",
       "name": "Candela Invest SA",
-      "status": "SESSION_UNVERIFIED",
+      "status": "NO_TRADES",
       "bar": null,
-      "reasonCode": "OFFICIAL_SOURCE_ERROR",
-      "evidence": null,
-      "officialError": "Euronext HTTP 503",
-      "error": "Alle providers faalden voor BE0974298300: yahoo-chart: Provider returned no daily bars"
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974298300-ALXB",
+      "evidence": {
+        "date": "2026-11-20",
+        "mic": "ALXB",
+        "isin": "BE0974298300",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974298300-ALXB",
+        "retrievedAt": "2026-11-21T05:07:39.156Z",
+        "lastTradeDate": "2026-10-19",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0974298300-ALXB",
+        "quoteSha256": "4dced5e77fd6f13f4a6754686dbe4b2e460c382a343082d72cec0e692c9bbe23",
+        "stateObservedAt": "2026-11-21T05:07:39.845Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
     },
     {
       "isin": "BE0974303357",
@@ -1498,12 +1572,27 @@
       "mic": "MLXB",
       "symbol": "MLTV",
       "name": "Choice NV",
-      "status": "SESSION_UNVERIFIED",
+      "status": "NO_TRADES",
       "bar": null,
-      "reasonCode": "OFFICIAL_SOURCE_ERROR",
-      "evidence": null,
-      "officialError": "Euronext HTTP 503",
-      "error": "Alle providers faalden voor BE0974370026: yahoo-chart: Provider returned no daily bars"
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974370026-MLXB",
+      "evidence": {
+        "date": "2026-11-20",
+        "mic": "MLXB",
+        "isin": "BE0974370026",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974370026-MLXB",
+        "retrievedAt": "2026-11-21T05:07:39.887Z",
+        "lastTradeDate": "2026-11-17",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0974370026-MLXB",
+        "quoteSha256": "8577a839b0670c5f62cafed44f0fde24f5f5d09121b164ddbab90f4341bf1f6f",
+        "stateObservedAt": "2026-11-21T05:07:40.228Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
     },
     {
       "isin": "BE0974371032",
@@ -1890,421 +1979,13 @@
   "archiveConflicts": [
     {
       "market": "XBRU",
-      "isin": "BE0003470755",
+      "isin": "BE0003773877",
       "date": "2026-11-20",
       "code": "SESSION_CONFLICT_PRESERVED"
     },
     {
       "market": "XBRU",
-      "isin": "BE0003555639",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003565737",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003592038",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003599108",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003656676",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003696102",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003699130",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003717312",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003720340",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003724383",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003734481",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003735496",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003739530",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003754687",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003755692",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003764785",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003766806",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003770840",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003797140",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003808251",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003810273",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003816338",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003820371",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003822393",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003823409",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003837540",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003839561",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003853703",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003856730",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003858751",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003867844",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003870871",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003874915",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003883031",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003893139",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0003898187",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974256852",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974258874",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974260896",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974263924",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974264930",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974268972",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974272040",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974274061",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974276082",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974278104",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974282148",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974288202",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974293251",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974303357",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974313455",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974320526",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974349814",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974358906",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974371032",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974374069",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974386188",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974400328",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974409410",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974413453",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974464977",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974487192",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974499312",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "BE0974501331",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "GB00BYN5BY03",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "GG00BQZCBZ44",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "IL0010830391",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "NL0010832176",
-      "date": "2026-11-20",
-      "code": "SESSION_CONFLICT_PRESERVED"
-    },
-    {
-      "market": "XBRU",
-      "isin": "NL0015000HT4",
+      "isin": "BE0974503352",
       "date": "2026-11-20",
       "code": "SESSION_CONFLICT_PRESERVED"
     }
