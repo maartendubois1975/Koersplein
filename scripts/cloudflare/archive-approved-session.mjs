@@ -11,7 +11,7 @@ export function validateSnapshot(snapshot,catalog,market){
  if(snapshot?.market!==market||!validSessionDate(snapshot.session)||snapshot.results?.length!==catalog.shares.length||new Set(snapshot.results.map(r=>r.isin)).size!==catalog.shares.length)throw Error('Session register mismatch '+market);
  const rows=new Map(snapshot.results.map(r=>[r.isin,r]));
  for(const share of catalog.shares){
-  const row=rows.get(share.isin),id=listingIdentity(share,market);
+  const id=listingIdentity(share,market,snapshot.session),row=rows.get(id.isin);
   if(!row||row.symbol!==id.symbol||row.mic!==id.mic)throw Error('Session identity mismatch '+share.isin);
   if(row.status==='TRADED'?!dailyRow(snapshot,share,market):!['SESSION_UNVERIFIED','NO_TRADES','MARKET_CLOSED'].includes(row.status)||row.bar!==null)throw Error('Invalid session evidence '+share.isin);
  }
@@ -27,6 +27,15 @@ export async function archiveApprovedSessions({inputDir='research/output',dataDi
    const archivePath=path.join(dataDir,'daily-sessions',market,snap.session+'.json');
    const prior=await readOptional(archivePath);
    if(prior){
+    // Only an unverified predecessor row may migrate. Its entire evidence stays
+    // in the saved snapshot; a proved old-identity price can never be migrated.
+    const retired=[...(prior.retiredIdentityEvidence||[])];
+    prior.results=prior.results.map(row=>{
+      const share=catalog.shares.find(s=>s.isin===row.isin),current=share&&listingIdentity(share,market,snap.session);
+      if(current&&current.isin!==row.isin&&row.status==='SESSION_UNVERIFIED'&&row.reasonCode==='IDENTITY_CHANGED'&&row.successorIsin===current.isin){retired.push(row);return {...current,status:'SESSION_UNVERIFIED',bar:null,reasonCode:'PREDECESSOR_IDENTITY_UNVERIFIED'};}
+      return row;
+    });
+    if(retired.length)snap.retiredIdentityEvidence=retired;
     validateSnapshot(prior,catalog,market);
     const current=new Map(snap.results.map(r=>[r.isin,r]));
     for(const old of prior.results)if(['TRADED','NO_TRADES','MARKET_CLOSED'].includes(old.status)){
@@ -43,14 +52,14 @@ export async function archiveApprovedSessions({inputDir='research/output',dataDi
    const historyWrites=[];
    for(const share of catalog.shares){
     const bar=dailyRow(snap,share,market);if(!bar)continue;
-    const identity=listingIdentity(share,market),file=path.join(dataDir,'history',identity.storageKey+'.json');
+    const identity=listingIdentity(share,market,snap.session),file=path.join(dataDir,'history',identity.storageKey+'.json');
     const doc=await readOptional(file);
     if(doc&&(doc.instrument?.isin!==identity.isin||doc.instrument?.mic!==identity.mic||doc.instrument?.symbol!==identity.symbol||!Array.isArray(doc.bars)))throw Error('Stored history identity mismatch '+identity.storageKey);
     const bars=doc?[...doc.bars]:[],existing=bars.find(b=>b.date===bar.date);
     if(existing){
      if(signature(existing)!==signature(bar)){
       report.conflicts.push({market,isin:share.isin,date:bar.date,code:'HISTORY_CONFLICT_PRESERVED'});
-      if(!prior?.results.some(r=>r.isin===share.isin&&r.status==='TRADED')){const row=snap.results.find(r=>r.isin===share.isin);row.status='SESSION_UNVERIFIED';row.bar=null;row.error='Stored history conflicts with session; raw history retained';}
+      if(!prior?.results.some(r=>r.isin===identity.isin&&r.status==='TRADED')){const row=snap.results.find(r=>r.isin===identity.isin);row.status='SESSION_UNVERIFIED';row.bar=null;row.error='Stored history conflicts with session; raw history retained';}
      }
     }else bars.push(bar);
     bars.sort((a,b)=>a.date.localeCompare(b.date));

@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import {catalogWithListingEvents} from '../../daily-session-view.mjs';
 const data = new URL('../../data/', import.meta.url);
 const read = async file => JSON.parse(await readFile(new URL(file, data), 'utf8'));
 export const instrumentEvents=(await read('instrument-events.json')).events;
@@ -14,6 +15,10 @@ export function validateCompanyCatalog(catalog, contract = companyContracts[cata
     if (new Set(catalog.shares.map(s => s[field])).size !== catalog.shares.length) throw Error(`Duplicate company ${field}: ${catalog.mic}`);
   }
   if (catalog.shares.some(s => !s.name || !s.symbol || !/^[A-Z]{2}[A-Z0-9]{9}[0-9]$/.test(s.isin))) throw Error('Invalid company identity');
+  for(const share of catalog.shares)if(share.currentListing){
+    const current=share.currentListing,event=instrumentEvents.find(e=>e.oldIsin===share.isin);
+    if(!event||event.successorStatus!=='VERIFIED_SUCCESSOR'||current.status!==event.successorStatus||current.isin!==event.newIsin||current.mic!==event.mic||current.symbol!==event.symbol||current.effectiveDate!==event.effectiveDate||!/^\d{4}-\d{2}-\d{2}$/.test(current.activeFromSession)||current.activeFromSession<event.effectiveDate||current.activeFromSession>event.successorVerifiedThrough)throw Error('Unverified successor listing '+share.isin);
+  }
   const digest = createHash('sha256').update(identities.join('\n')).digest('hex');
   if (digest !== contract.identitySha256) throw Error(`Approved company identities changed: ${catalog.mic}`);
   return catalog;
@@ -23,7 +28,8 @@ export async function loadCompanyCatalog(mic) {
   if (!contract) throw Error(`No approved company contract: ${mic}`);
   const input = await read(contract.file);
   const catalog = { ...input, mic };
-  return validateCompanyCatalog(catalog, contract);
+  validateCompanyCatalog(catalog, contract);
+  return validateCompanyCatalog(catalogWithListingEvents(catalog,instrumentEvents),contract);
 }
 export async function approvedCompanyUniverse() {
   const markets=await Promise.all(Object.keys(companyContracts).map(loadCompanyCatalog));

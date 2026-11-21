@@ -15,6 +15,7 @@ assert.equal(plan.markets.find(x=>x.mic==='XAMS')?.state,'INCOMPLETE',
 assert.match(html,/generic-market\.js\?v=20261026xams-retry1/,'Browser must fetch updated JS');
 const browserJs=await readFile(new URL('../../generic-market.js',import.meta.url),'utf8');
 assert.match(browserJs,/market-week-core\.mjs\?v=20261026xams-retry1/,'Browser must fetch the updated shared OHLCV validator');
+const instrumentEvents=JSON.parse(await readFile(new URL('../../data/instrument-events.json',import.meta.url),'utf8'));
 const nodes=new Map();
 globalThis.document={querySelector(selector){
  if(!nodes.has(selector))nodes.set(selector,{value:'',textContent:'',innerHTML:'',addEventListener(){}});
@@ -46,6 +47,7 @@ globalThis.fetch=async url=>{
  let data;
  if(path.endsWith('data/world-fill-plan.json'))data={markets:[{code:'amsterdam',mic:'XAMS',name:'Amsterdam',country:'NL',currency:'EUR'}]};
  else if(path.endsWith('data/company-register-contracts.json'))data={markets:{XAMS:{file:'euronext-amsterdam.json',expectedCount:shares.length}}};
+ else if(path.endsWith('data/instrument-events.json'))data=instrumentEvents;
  else if(path.endsWith('data/euronext-amsterdam.json'))data={shares};
  else if(path.endsWith('data/amsterdam-no-trades-2026-10-19-23.json'))data=status;
  else if(path.endsWith('/api/history/manifest.json'))data=manifest;

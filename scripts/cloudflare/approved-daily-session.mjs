@@ -18,10 +18,10 @@ export async function collectApprovedSession({market,session,now=new Date(),cata
  const exact=result=>{const check=inspectDailyBarIntegrity(result,range);return !check.conflicts.length&&check.bars.length===1?check.bars[0]:null;};
  const results=[];
  await mapConcurrent(catalog.shares,concurrency,async share=>{
-  const {storageKey,...identity}=listingIdentity(share,market);
-  const instrument={...share,...identity,officialIsin:share.isin,ticker:identity.symbol,currency:share.currency||catalog.currency||'EUR'};
+  const {storageKey,...identity}=listingIdentity(share,market,session);
+  const instrument={...share,...identity,officialIsin:identity.isin,ticker:identity.symbol,currency:share.currency||catalog.currency||'EUR'};
   const event=identityEventAt(share.isin,session);
-  if(event){results.push({...identity,status:'SESSION_UNVERIFIED',bar:null,reasonCode:'IDENTITY_CHANGED',successorIsin:event.newIsin,effectiveDate:event.effectiveDate,error:'Successor series requires separate admission/price verification'});return;}
+  if(event&&identity.isin!==event.newIsin){results.push({...identity,status:'SESSION_UNVERIFIED',bar:null,reasonCode:'IDENTITY_CHANGED',successorIsin:event.newIsin,effectiveDate:event.effectiveDate,error:'Successor series requires separate admission/price verification'});return;}
   if(!calendar.open){results.push({...identity,status:'MARKET_CLOSED',bar:null,evidence:{sourceUrl:calendar.sourceUrl,date:session,verification:'OFFICIAL_TRADING_CALENDAR'}});return;}
   let officialError=null,officialEvidence=null;
   try{

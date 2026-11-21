@@ -42,10 +42,29 @@ export function sameSourcePrice(a,b) {
   const fa=Math.fround(a),fb=Math.fround(b);
   return Number.isFinite(fa)&&fa===fb&&(a===fa||b===fb);
 }
-export function mergeChartHistoryBars(base,tail) {
+const sourceFields=['date','open','high','low','close','volume'];
+const exactSourceBar=(a,b)=>a===null||b===null?a===b:sourceFields.every(k=>a?.[k]===b?.[k]);
+function reviewedSourceBar(review,identity,old,incoming) {
+  const instrument=review?.instrument,source=review?.source;
+  if(!identity||instrument?.isin!==identity.isin||instrument.mic!==identity.mic||instrument.symbol!==identity.symbol||review.priceBasis!=='UNADJUSTED'||source?.provider!=='euronext-live'||source.adjusted!=='N'||source.sourceUrl!==`https://live.euronext.com/en/ajax/getHistoricalPricePopup/${identity.isin}-${identity.mic}`||!/^[a-f0-9]{64}$/.test(source.officialBarsSha256||''))throw Error('Bronbeoordeling heeft geen geldige instrumentidentiteit');
+  const proof=review.resolutions?.find(r=>r.date===incoming.date);
+  if(!proof)return null;
+  if(!exactSourceBar(proof.base,old||null)||!exactSourceBar(proof.incoming,incoming))throw Error('Bronwaarneming wijkt af van de vastgelegde beoordeling op '+incoming.date);
+  const b=proof.official;
+  if(b?.date!==incoming.date||!validDate(b.date)||![b.open,b.high,b.low,b.close,b.volume].every(n=>Number.isFinite(n)&&n>0)||!Number.isSafeInteger(b.volume)||b.high<Math.max(b.open,b.close)||b.low>Math.min(b.open,b.close)||b.high<b.low)throw Error('Officiële ongecorrigeerde bronregel ongeldig');
+  if(proof.selection==='PRESERVE_BASE'){
+    if(!old||!['open','high','low','close'].every(k=>sameSourcePrice(old[k],b[k]))||old.volume!==b.volume)throw Error('Basisregel is niet door de officiële bron bevestigd');
+    return old;
+  }
+  if(proof.selection!=='OFFICIAL_UNADJUSTED')throw Error('Onbekende bronkeuze');
+  return {...b};
+}
+export function mergeChartHistoryBars(base,tail,{identity,review,onResolution}={}) {
   const byDate=new Map(base.map(bar=>[bar.date,bar]));
   for(const bar of tail){
     const old=byDate.get(bar.date);
+    const reviewed=review?reviewedSourceBar(review,identity,old,bar):null;
+    if(reviewed){byDate.set(bar.date,reviewed);onResolution?.(bar.date);continue;}
     if(old&&(['open','high','low','close'].some(k=>!sameSourcePrice(old[k],bar[k]))||old.volume!==bar.volume))throw Error('Historische bronnen spreken elkaar tegen op '+bar.date);
     if(!old)byDate.set(bar.date,bar);
   }

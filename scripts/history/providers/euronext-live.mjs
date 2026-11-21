@@ -55,7 +55,7 @@ export function decodeEuronextBody(text){
  if(!html.length)throw Error('EURONEXT_TRANSPORT_NO_HTML');
  return html.join('\n');
 }
-export async function euronextDailySnapshot(i,date,signal,adjusted='Y'){
+export async function euronextDailySnapshot(i,date,signal,adjusted='N'){
  if(!['Y','N'].includes(adjusted))throw Error('Invalid adjustment mode');
  const key=`${i.isin}-${euronextProviderMic(i.mic)}`,sourceUrl=ROOT+encodeURIComponent(key);
  const r=await fetch(sourceUrl,{method:'POST',signal,headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},body:new URLSearchParams({adjusted,startdate:date,enddate:date,nbSession:'100000'})});
@@ -65,12 +65,13 @@ export async function euronextDailySnapshot(i,date,signal,adjusted='Y'){
 export class EuronextLiveProvider{
  id=PROVIDER_ID;name='Euronext Live historical prices';requiresApiKey=false;
  supports(i){return supportsEuronextInstrument(i)}
- async fetchDaily(i,{startDate,endDate,signal}={}){
+ async fetchDaily(i,{startDate,endDate,signal,adjusted='N'}={}){
+  if(!['Y','N'].includes(adjusted))throw Error('Invalid adjustment mode');
   const mic=euronextProviderMic(i.mic||i.market),key=`${i.isin}-${mic}`,all=[];
   const failedWindows=[];
   for(const [start,end] of chunks(startDate,endDate)){
    try{
-    const body=new URLSearchParams({adjusted:'Y',startdate:start,enddate:end,nbSession:'100000'});
+    const body=new URLSearchParams({adjusted,startdate:start,enddate:end,nbSession:'100000'});
     const r=await fetch(ROOT+encodeURIComponent(key),{method:'POST',signal,headers:{Accept:'*/*','Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest','User-Agent':'Koersplein-history/1.0'},body});
     if(!r.ok)throw Error(`Euronext HTTP ${r.status}`);
     all.push(...parseEuronextHistoryRows(decodeEuronextBody(await r.text())));
@@ -84,7 +85,7 @@ export class EuronextLiveProvider{
   // The official table's Number of Shares must confirm positive volume.
   const traded=dedup.filter(b=>Number(b.open)>0&&Number(b.close)>0&&Number(b.volume)>0);
   if(!traded.length)throw Error(`Geen verhandelde Euronext koershistorie voor ${key}; mislukte vensters: ${failedWindows.length}`);
-  return{bars:traded,requestUrl:ROOT+key,providerMeta:{mic,isin:i.isin,source:'Euronext Live',windowPolicy:'<=700d chunks',partialHistory:failedWindows.length>0,failedWindows}};
+  return{bars:traded,requestUrl:ROOT+key,providerMeta:{mic,isin:i.isin,source:'Euronext Live',priceBasis:adjusted==='N'?'UNADJUSTED':'EURONEXT_ADJUSTED',adjusted,windowPolicy:'<=700d chunks',partialHistory:failedWindows.length>0,failedWindows}};
  }
 }
 

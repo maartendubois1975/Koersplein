@@ -14,7 +14,11 @@
         "https://www.toosla-bourse.com/informations-financieres/informations-reglementees?ID=ACTUS-0-100453",
         "https://live.euronext.com/en/ajax/getDetailedQuote/FR001401B9V8-ALXP"
       ],
-      "note": "Approved company membership remains unchanged. Successor admission is proven; returned successor quote still contains pre-effective old-price observations. Verify the new series separately before mapping it or calculating returns."
+      "note": "Successor admission and three separate raw OHLC sessions (18\u201320 November) verified. Old series stays quarantined from 17 November; no automatic price join.",
+      "successorStatus": "VERIFIED_SUCCESSOR",
+      "successorVerifiedThrough": "2026-11-20",
+      "successorVerificationFile": "research/completion/2026-11-21/toosla-successor-verification.json",
+      "activeFromSession": "2026-11-20"
     }
   ]
 }

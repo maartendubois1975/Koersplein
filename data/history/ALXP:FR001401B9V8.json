@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR001401B9V8",
+    "mic": "ALXP",
+    "symbol": "ALTOO",
+    "currency": "EUR",
+    "name": "TOOSLA"
+  },
+  "provider": {
+    "id": "euronext-live",
+    "requestUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR001401B9V8-ALXP",
+    "metadata": {
+      "mic": "ALXP",
+      "isin": "FR001401B9V8",
+      "source": "Euronext Live",
+      "priceBasis": "UNADJUSTED",
+      "adjusted": "N",
+      "windowPolicy": "<=700d chunks",
+      "partialHistory": false,
+      "failedWindows": []
+    }
+  },
+  "coverage": {
+    "records": 3,
+    "recordCount": 3,
+    "firstDate": "2026-11-18",
+    "lastDate": "2026-11-20"
+  },
+  "bars": [
+    {
+      "date": "2026-11-18",
+      "open": 0.7,
+      "high": 0.92,
+      "low": 0.6825,
+      "close": 0.92,
+      "adjustedClose": null,
+      "volume": 10672
+    },
+    {
+      "date": "2026-11-19",
+      "open": 0.98,
+      "high": 1.185,
+      "low": 0.898,
+      "close": 0.898,
+      "adjustedClose": null,
+      "volume": 28588
+    },
+    {
+      "date": "2026-11-20",
+      "open": 0.9101,
+      "high": 0.93,
+      "low": 0.89,
+      "close": 0.89,
+      "adjustedClose": null,
+      "volume": 951
+    }
+  ]
+}
