@@ -25,3 +25,11 @@
 
 ## Integratiepoort
 Geen nieuwe XMIL-contractregel, dagelijkse import, koersbestand, testdeploy of productiepublicatie totdat officiële actuele instrumentenlijst, primaire-notering-bewijs, uitsluitingen, unieke ondernemingen, koersbronproeven en regressietests volledig zijn afgerond. Vervolgens één samenhangende invoering.
+
+## Onafhankelijke officiële ijkpunten (toegevoegd 2026-11-21)
+- Borsa Italiana meldde **406 genoteerde ondernemingen per eind maart 2026** over haar aandelenmarkten; dit is een historische ijkwaarde, **geen** actueel goedgekeurd Milaan-aantal: https://www.borsaitaliana.it/azioni/mercati/mercati-landingpage/slidedoc.en.pdf
+- Euronext actuele webdirectory meldt **201 instrumenten** voor de gereglementeerde Euronext Milan-lijst: https://live.euronext.com/it/markets/milan/equities/euronext/list
+- Euronext actuele webdirectory meldt **234 instrumenten** voor Growth Milan, waaronder warrants/fondsen: https://live.euronext.com/it/markets/milan/equities/growth/list
+- Samen **435 instrumentregels**, niet 435 ondernemingen en niet rechtstreeks vergelijkbaar met de 401 historische gefilterde regels. De 34-regels-afwijking is **niet** per onderneming gereconcilieerd.
+- Borsa Italiana publiceert maandelijkse statistiek en ondernemingslijsten; deze zijn geschikt als tweede volledigheidscontrole: https://www.borsaitaliana.it/borsaitaliana/statistiche/faq/faq.en.htm
+- Het 401-regelige controlebestand staat in `ALL_401_REVIEW.csv`. **398 regels zijn nog niet definitief beoordeeld**; geen import toegestaan.
