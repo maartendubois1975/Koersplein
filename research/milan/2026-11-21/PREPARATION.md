@@ -35,3 +35,9 @@ Geen complete gecontroleerde Milaan-catalogus, koersbronproef, testdeploy of liv
 6. Controleer representatieve dagelijkse OHLC- en historische bronproeven, handelskalender en statusafhandeling. Een handelsdag zonder transactie is geen reden om een geldig bedrijf te verwijderen; oude koersen mogen nooit als nieuwe transacties worden voorgesteld.
 7. **Integratiepoort:** pas na compleet onderzoeksrapport, sluitende aantallen, nul onbesliste toelatingsgevallen en geslaagde tests één samenhangende wijziging op de bestaande centrale architectuur in werkbranch consolidation-20261116. Geen afzonderlijke of gedeeltelijke import, geen nieuwe parallelle infrastructuur, geen productie/main/Cloudflare-wijzigingen.
 8. Publiceer uitsluitend naar de bestaande testomgeving nadat de exacte SHA en deploymentvoorwaarden zijn gecontroleerd. Live-HTTP-controle apart vastleggen; niet claimen als niet uitgevoerd.
+
+## Laatste verificatiepoging 2026-11-21
+- Officiële A-Z is bereikbaar: https://www.borsaitaliana.it/borsa/azioni/listino-a-z.html . Deze lijst mengt Milanese ondernemingen, Global Equity Market en andere instrumenten; kan niet als goedgekeurde ondernemingslijst worden gebruikt.
+- De officiële volledige Euronext CSV-download via https://live.euronext.com/en/product_directory/data/stocks-milan/download?mics=XMIL%2CMTAA%2CEXGM is vanuit deze onderzoeksomgeving niet toegankelijk. **Geen volledige actuele reconciliatie bewezen**.
+- De historische catalogus (401 gefilterde instrumentregels) blijft uitsluitend onderzoeksbasis; 398 instrumentregels zijn nog niet definitief toegelaten/afgewezen.
+- Blokkeer XMIL-contract, import en deploy tot actuele officiële lijst plus bewijs primaire beurs en één onderneming per issuer compleet zijn. Geen gedeeltelijke of onbewezen aansluiting.
