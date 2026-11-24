@@ -3,24 +3,25 @@ import {loadCompanyCatalog,validateCompanyCatalog} from './company-register.mjs'
 import {listingIdentity,listingForRequest,dailyHistoryPath,browserCatalog} from '../../daily-session-view.mjs';
 import {collectApprovedSession} from '../cloudflare/approved-daily-session.mjs';import {archiveApprovedSessions} from '../cloudflare/archive-approved-session.mjs';import {publishTestHistory} from './publish-test-history.mjs';
 const full=await loadCompanyCatalog('XPAR'),share=full.shares.find(s=>s.isin==='FR00140062B9'),catalog={...full,shares:[share]},successor=JSON.parse(await fs.readFile('data/history/ALXP:FR001401B9V8.json'));
+const targetBar=successor.bars.find(b=>b.date==='2026-11-20');assert(targetBar,'Exact successor session fixture must exist');
 assert.equal(full.shares.length,664);assert.equal(listingIdentity(share,'XPAR','2026-11-19').isin,share.isin);assert.equal(listingIdentity(share,'XPAR','2026-11-20').isin,successor.instrument.isin);
 assert.throws(()=>validateCompanyCatalog({...full,shares:full.shares.map(s=>s===share?{...s,currentListing:{...s.currentListing,isin:'FR0000000000'}}:s)}),/Unverified successor/);
 const load=async file=>JSON.parse(await fs.readFile(file));const browser=await browserCatalog('XPAR','',load),current=browser.shares.find(s=>s.companyIsin===share.isin);
 assert.equal(current.isin,successor.instrument.isin);assert.equal(current.companyIsin,share.isin);
 const previous=listingForRequest(current,'XPAR',{isin:share.isin,mic:'ALXP',symbol:'ALTOO'});assert(previous.historicalListing);assert.equal(previous.isin,share.isin);assert.equal(previous.currentListing,undefined);assert.notEqual(dailyHistoryPath(current,'XPAR'),dailyHistoryPath(previous,'XPAR'));assert.equal(listingForRequest(current,'XPAR',{isin:share.isin,mic:'XAMS'}),null);
-const snapshot=await collectApprovedSession({market:'XPAR',session:'2026-11-20',now:new Date('2026-11-21T04:00:00Z'),catalog,official:async instrument=>{assert.equal(instrument.isin,successor.instrument.isin);assert.equal(instrument.officialIsin,successor.instrument.isin);return {date:'2026-11-20',status:'TRADED',bar:successor.bars.at(-1),provider:'euronext-live'};},registry:{fetchDaily(){throw Error('No predecessor or fallback query')}}});
+const snapshot=await collectApprovedSession({market:'XPAR',session:'2026-11-20',now:new Date('2026-11-21T04:00:00Z'),catalog,official:async instrument=>{assert.equal(instrument.isin,successor.instrument.isin);assert.equal(instrument.officialIsin,successor.instrument.isin);return {date:'2026-11-20',status:'TRADED',bar:targetBar,provider:'euronext-live'};},registry:{fetchDaily(){throw Error('No predecessor or fallback query')}}});
 assert.equal(snapshot.counts.TRADED,1);assert.equal(snapshot.results[0].isin,successor.instrument.isin);
 const root=await fs.mkdtemp(path.join(os.tmpdir(),'successor-listing-')),dataDir=path.join(root,'data'),inputDir=path.join(root,'input');await fs.mkdir(path.join(dataDir,'history'),{recursive:true});await fs.mkdir(path.join(dataDir,'daily-sessions/XPAR'),{recursive:true});await fs.mkdir(inputDir);
 try{
  const oldHistory=await fs.readFile('data/history/ALXP:'+share.isin+'.json','utf8'),oldHistoryFile=path.join(dataDir,'history/ALXP:'+share.isin+'.json');await fs.writeFile(oldHistoryFile,oldHistory);
- const stored=JSON.parse(await fs.readFile('data/daily-session-XPAR.json'));
+ const stored=JSON.parse(await fs.readFile('data/daily-sessions/XPAR/2026-11-20.json'));
  const realPrior=stored.results.find(r=>r.isin===share.isin)||stored.retiredIdentityEvidence?.find(r=>r.isin===share.isin);
  assert(realPrior,'The original predecessor evidence must remain available after activation');assert.equal(realPrior.status,'SESSION_UNVERIFIED');
  const prior={market:'XPAR',session:'2026-11-20',counts:{SESSION_UNVERIFIED:1},results:[realPrior]},sessionFile=path.join(dataDir,'daily-sessions/XPAR/2026-11-20.json');await fs.writeFile(sessionFile,JSON.stringify(prior));await fs.writeFile(path.join(inputDir,'daily-session-XPAR.json'),JSON.stringify(snapshot));
  const options={inputDir,dataDir,markets:['XPAR'],loadCatalog:async()=>catalog};const result=await archiveApprovedSessions(options);assert.deepEqual(result.errors,[]);assert.equal(await fs.readFile(oldHistoryFile,'utf8'),oldHistory);
  const saved=JSON.parse(await fs.readFile(sessionFile));assert.equal(saved.results[0].isin,successor.instrument.isin);assert.equal(saved.retiredIdentityEvidence.length,1);assert.deepEqual(saved.retiredIdentityEvidence[0],realPrior);
  await archiveApprovedSessions(options);assert.equal(JSON.parse(await fs.readFile(sessionFile)).retiredIdentityEvidence.length,1);
- const newHistory=JSON.parse(await fs.readFile(path.join(dataDir,'history/ALXP:'+successor.instrument.isin+'.json')));assert.deepEqual(newHistory.bars,[successor.bars.at(-1)]);
+ const newHistory=JSON.parse(await fs.readFile(path.join(dataDir,'history/ALXP:'+successor.instrument.isin+'.json')));assert.deepEqual(newHistory.bars,[targetBar]);
  // A proved predecessor row can never be silently migrated to a new security.
  await fs.writeFile(sessionFile,JSON.stringify({...prior,results:[{...realPrior,status:'NO_TRADES',reasonCode:undefined}]}));const blocked=await archiveApprovedSessions(options);assert.equal(blocked.errors.length,1);assert.equal(await fs.readFile(oldHistoryFile,'utf8'),oldHistory);
  // Publish the current and retired identities separately; count the company once.
