@@ -1,0 +1,706 @@
+{
+  "market": "XLIS",
+  "session": "2026-11-24",
+  "calendar": {
+    "date": "2026-11-24",
+    "market": "XLIS",
+    "timezone": "Europe/Lisbon",
+    "finalizedAfter": "18:15",
+    "open": true,
+    "halfDay": false,
+    "sourceUrl": "https://www.euronext.com/en/trading/trading-hours-holidays"
+  },
+  "counts": {
+    "TRADED": 26,
+    "NO_TRADES": 8
+  },
+  "readOnly": true,
+  "generatedAt": "2026-11-24T18:45:11.479Z",
+  "results": [
+    {
+      "isin": "ES0127797019",
+      "mic": "XLIS",
+      "symbol": "EDPR",
+      "name": "EDP Renováveis",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 12.96,
+        "high": 13.09,
+        "low": 12.88,
+        "close": 12.97,
+        "adjustedClose": null,
+        "volume": 478065
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0127797019-XLIS"
+    },
+    {
+      "isin": "PTALT0AE0002",
+      "mic": "XLIS",
+      "symbol": "ALTR",
+      "name": "Altri",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 4.055,
+        "high": 4.075,
+        "low": 4.02,
+        "close": 4.05,
+        "adjustedClose": null,
+        "volume": 222028
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTALT0AE0002-XLIS"
+    },
+    {
+      "isin": "PTBCP0AM0015",
+      "mic": "XLIS",
+      "symbol": "BCP",
+      "name": "Banco Comercial Português",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 1.083,
+        "high": 1.084,
+        "low": 1.058,
+        "close": 1.058,
+        "adjustedClose": null,
+        "volume": 23166338
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTBCP0AM0015-XLIS"
+    },
+    {
+      "isin": "PTCDU0AE0003",
+      "mic": "ENXL",
+      "symbol": "CDU",
+      "name": "Conduril Engenharia",
+      "status": "NO_TRADES",
+      "bar": null,
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTCDU0AE0003-ENXL",
+      "evidence": {
+        "date": "2026-11-24",
+        "mic": "ENXL",
+        "isin": "PTCDU0AE0003",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTCDU0AE0003-ENXL",
+        "retrievedAt": "2026-11-24T18:45:12.380Z",
+        "lastTradeDate": "2026-08-04",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/PTCDU0AE0003-ENXL",
+        "quoteSha256": "0f3e4905466a2558dd7f96e26aaf5156e3ce60f2aca7fbe177ef7a56eedd0b8f",
+        "stateObservedAt": "2026-11-24T18:45:12.825Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
+    },
+    {
+      "isin": "PTCOR0AE0006",
+      "mic": "XLIS",
+      "symbol": "COR",
+      "name": "Corticeira Amorim",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 6.47,
+        "high": 6.54,
+        "low": 6.46,
+        "close": 6.52,
+        "adjustedClose": null,
+        "volume": 72949
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTCOR0AE0006-XLIS"
+    },
+    {
+      "isin": "PTCTT0AM0001",
+      "mic": "XLIS",
+      "symbol": "CTT",
+      "name": "CTT Correios de Portugal",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 4.77,
+        "high": 4.824,
+        "low": 4.75,
+        "close": 4.778,
+        "adjustedClose": null,
+        "volume": 408826
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTCTT0AM0001-XLIS"
+    },
+    {
+      "isin": "PTDGL0AM0003",
+      "mic": "ALXL",
+      "symbol": "ALSMB",
+      "name": "Samba Digital",
+      "status": "NO_TRADES",
+      "bar": null,
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTDGL0AM0003-ALXL",
+      "evidence": {
+        "date": "2026-11-24",
+        "mic": "ALXL",
+        "isin": "PTDGL0AM0003",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTDGL0AM0003-ALXL",
+        "retrievedAt": "2026-11-24T18:45:12.384Z",
+        "lastTradeDate": "2026-09-29",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/PTDGL0AM0003-ALXL",
+        "quoteSha256": "183f37a09d315f441c692e70f58b358803090cea6107124d5942a855f04620a9",
+        "stateObservedAt": "2026-11-24T18:45:12.961Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
+    },
+    {
+      "isin": "PTEDP0AM0009",
+      "mic": "XLIS",
+      "symbol": "EDP",
+      "name": "EDP",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 4.914,
+        "high": 4.928,
+        "low": 4.875,
+        "close": 4.906,
+        "adjustedClose": null,
+        "volume": 6610705
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTEDP0AM0009-XLIS"
+    },
+    {
+      "isin": "PTESO0AM0000",
+      "mic": "XLIS",
+      "symbol": "ESON",
+      "name": "Estoril Sol",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 3.22,
+        "high": 3.22,
+        "low": 3.22,
+        "close": 3.22,
+        "adjustedClose": null,
+        "volume": 150
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTESO0AM0000-XLIS"
+    },
+    {
+      "isin": "PTFCP0AM0008",
+      "mic": "XLIS",
+      "symbol": "FCP",
+      "name": "Futebol Clube do Porto SAD",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 2.6,
+        "high": 2.6,
+        "low": 2.6,
+        "close": 2.6,
+        "adjustedClose": null,
+        "volume": 519
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTFCP0AM0008-XLIS"
+    },
+    {
+      "isin": "PTFNV1AM0002",
+      "mic": "ENXL",
+      "symbol": "MLFMV",
+      "name": "Farminveste",
+      "status": "NO_TRADES",
+      "bar": null,
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTFNV1AM0002-ENXL",
+      "evidence": {
+        "date": "2026-11-24",
+        "mic": "ENXL",
+        "isin": "PTFNV1AM0002",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTFNV1AM0002-ENXL",
+        "retrievedAt": "2026-11-24T18:45:12.656Z",
+        "lastTradeDate": "2026-11-19",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/PTFNV1AM0002-ENXL",
+        "quoteSha256": "a7ef3e00399bd8736fd251ae666a9d81c2aefdfe18dc25559f69658d9887ba47",
+        "stateObservedAt": "2026-11-24T18:45:13.120Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
+    },
+    {
+      "isin": "PTFRV0AE0004",
+      "mic": "XLIS",
+      "symbol": "RAM",
+      "name": "Ramada Investimentos",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 6.6,
+        "high": 6.6,
+        "low": 6.5,
+        "close": 6.5,
+        "adjustedClose": null,
+        "volume": 292
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTFRV0AE0004-XLIS"
+    },
+    {
+      "isin": "PTGAL0AM0009",
+      "mic": "XLIS",
+      "symbol": "GALP",
+      "name": "Galp Energia",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 18.105,
+        "high": 18.37,
+        "low": 17.995,
+        "close": 18.245,
+        "adjustedClose": null,
+        "volume": 1226271
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTGAL0AM0009-XLIS"
+    },
+    {
+      "isin": "PTGMC0AM0003",
+      "mic": "XLIS",
+      "symbol": "MCP",
+      "name": "Grupo Média Capital",
+      "status": "NO_TRADES",
+      "bar": null,
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTGMC0AM0003-XLIS",
+      "evidence": {
+        "date": "2026-11-24",
+        "mic": "XLIS",
+        "isin": "PTGMC0AM0003",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTGMC0AM0003-XLIS",
+        "retrievedAt": "2026-11-24T18:45:15.979Z",
+        "lastTradeDate": "2026-07-03",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/PTGMC0AM0003-XLIS",
+        "quoteSha256": "3a5dbae1d5d5b712856ae99ab53fab59f7b3a4edfe42f073c8de25a692be468d",
+        "stateObservedAt": "2026-11-24T18:45:16.399Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
+    },
+    {
+      "isin": "PTIBS0AM0008",
+      "mic": "XLIS",
+      "symbol": "IBS",
+      "name": "Ibersol",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 10.46,
+        "high": 10.46,
+        "low": 10.16,
+        "close": 10.28,
+        "adjustedClose": null,
+        "volume": 10860
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTIBS0AM0008-XLIS"
+    },
+    {
+      "isin": "PTIPR0AM0000",
+      "mic": "XLIS",
+      "symbol": "IPR",
+      "name": "Impresa",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 0.191,
+        "high": 0.194,
+        "low": 0.1902,
+        "close": 0.1938,
+        "adjustedClose": null,
+        "volume": 44188
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTIPR0AM0000-XLIS"
+    },
+    {
+      "isin": "PTJMT0AE0001",
+      "mic": "XLIS",
+      "symbol": "JMT",
+      "name": "Jerónimo Martins",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 19.35,
+        "high": 19.6,
+        "low": 19.3,
+        "close": 19.52,
+        "adjustedClose": null,
+        "volume": 998886
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTJMT0AE0001-XLIS"
+    },
+    {
+      "isin": "PTMEN0AE0005",
+      "mic": "XLIS",
+      "symbol": "EGL",
+      "name": "Mota-Engil",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 4.7,
+        "high": 4.73,
+        "low": 4.57,
+        "close": 4.59,
+        "adjustedClose": null,
+        "volume": 893314
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTMEN0AE0005-XLIS"
+    },
+    {
+      "isin": "PTMFR0AM0003",
+      "mic": "XLIS",
+      "symbol": "MAR",
+      "name": "Martifer",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 2.23,
+        "high": 2.28,
+        "low": 2.23,
+        "close": 2.23,
+        "adjustedClose": null,
+        "volume": 341
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTMFR0AM0003-XLIS"
+    },
+    {
+      "isin": "PTNBA0AM0006",
+      "mic": "XLIS",
+      "symbol": "NBA",
+      "name": "Novabase",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 7.22,
+        "high": 7.22,
+        "low": 7.12,
+        "close": 7.12,
+        "adjustedClose": null,
+        "volume": 145
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTNBA0AM0006-XLIS"
+    },
+    {
+      "isin": "PTPAD0AM0007",
+      "mic": "XLIS",
+      "symbol": "GLINT",
+      "name": "Glintt Global",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 1.16,
+        "high": 1.165,
+        "low": 1.16,
+        "close": 1.165,
+        "adjustedClose": null,
+        "volume": 199
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTPAD0AM0007-XLIS"
+    },
+    {
+      "isin": "PTPTI0AM0006",
+      "mic": "XLIS",
+      "symbol": "NVG",
+      "name": "The Navigator Company",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 2.926,
+        "high": 2.956,
+        "low": 2.914,
+        "close": 2.954,
+        "adjustedClose": null,
+        "volume": 557570
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTPTI0AM0006-XLIS"
+    },
+    {
+      "isin": "PTREL0AM0008",
+      "mic": "XLIS",
+      "symbol": "RENE",
+      "name": "REN",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 3.91,
+        "high": 3.955,
+        "low": 3.895,
+        "close": 3.955,
+        "adjustedClose": null,
+        "volume": 1164528
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTREL0AM0008-XLIS"
+    },
+    {
+      "isin": "PTRIZ0AM0009",
+      "mic": "ENXL",
+      "symbol": "MLRZE",
+      "name": "Raize",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 1.5,
+        "high": 1.5,
+        "low": 1.5,
+        "close": 1.5,
+        "adjustedClose": null,
+        "volume": 133
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTRIZ0AM0009-ENXL"
+    },
+    {
+      "isin": "PTSCB0AM0001",
+      "mic": "ENXL",
+      "symbol": "SCB",
+      "name": "Sporting Clube de Braga SAD",
+      "status": "NO_TRADES",
+      "bar": null,
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSCB0AM0001-ENXL",
+      "evidence": {
+        "date": "2026-11-24",
+        "mic": "ENXL",
+        "isin": "PTSCB0AM0001",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSCB0AM0001-ENXL",
+        "retrievedAt": "2026-11-24T18:45:12.883Z",
+        "lastTradeDate": "2026-11-17",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/PTSCB0AM0001-ENXL",
+        "quoteSha256": "f052d5031a29a1ad3ae22d1dbdbd5fe405566862c5dcbee42c0046c63962f738",
+        "stateObservedAt": "2026-11-24T18:45:13.236Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
+    },
+    {
+      "isin": "PTSCP0AM0001",
+      "mic": "XLIS",
+      "symbol": "SCP",
+      "name": "Sporting Clube de Portugal SAD",
+      "status": "NO_TRADES",
+      "bar": null,
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSCP0AM0001-XLIS",
+      "evidence": {
+        "date": "2026-11-24",
+        "mic": "XLIS",
+        "isin": "PTSCP0AM0001",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSCP0AM0001-XLIS",
+        "retrievedAt": "2026-11-24T18:45:16.795Z",
+        "lastTradeDate": "2026-11-23",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/PTSCP0AM0001-XLIS",
+        "quoteSha256": "aa693cd0d7abae936bef57f3d1df3297e00cb11fd176ba32105c2a8163b78595",
+        "stateObservedAt": "2026-11-24T18:45:17.387Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
+    },
+    {
+      "isin": "PTSCT0AP0018",
+      "mic": "XLIS",
+      "symbol": "SCT",
+      "name": "Toyota Caetano Portugal",
+      "status": "NO_TRADES",
+      "bar": null,
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSCT0AP0018-XLIS",
+      "evidence": {
+        "date": "2026-11-24",
+        "mic": "XLIS",
+        "isin": "PTSCT0AP0018",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSCT0AP0018-XLIS",
+        "retrievedAt": "2026-11-24T18:45:16.607Z",
+        "lastTradeDate": "2026-11-18",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/PTSCT0AP0018-XLIS",
+        "quoteSha256": "025492b668c40b77ec8e1b7de216b859040385d3d2b5197abd625296bd0a0887",
+        "stateObservedAt": "2026-11-24T18:45:17.039Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
+    },
+    {
+      "isin": "PTSEM0AM0004",
+      "mic": "XLIS",
+      "symbol": "SEM",
+      "name": "Semapa",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 18.82,
+        "high": 18.88,
+        "low": 18.64,
+        "close": 18.7,
+        "adjustedClose": null,
+        "volume": 13376
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSEM0AM0004-XLIS"
+    },
+    {
+      "isin": "PTSLB0AM0010",
+      "mic": "XLIS",
+      "symbol": "SLBEN",
+      "name": "Sport Lisboa e Benfica SAD",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 6.2,
+        "high": 6.36,
+        "low": 6.16,
+        "close": 6.32,
+        "adjustedClose": null,
+        "volume": 1217
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSLB0AM0010-XLIS"
+    },
+    {
+      "isin": "PTSNC0AM0006",
+      "mic": "XLIS",
+      "symbol": "SNC",
+      "name": "Sonaecom",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 2.86,
+        "high": 2.88,
+        "low": 2.82,
+        "close": 2.88,
+        "adjustedClose": null,
+        "volume": 2507
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSNC0AM0006-XLIS"
+    },
+    {
+      "isin": "PTSNG0AM0007",
+      "mic": "ENXL",
+      "symbol": "SNG",
+      "name": "Sonagi",
+      "status": "NO_TRADES",
+      "bar": null,
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSNG0AM0007-ENXL",
+      "evidence": {
+        "date": "2026-11-24",
+        "mic": "ENXL",
+        "isin": "PTSNG0AM0007",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSNG0AM0007-ENXL",
+        "retrievedAt": "2026-11-24T18:45:13.200Z",
+        "lastTradeDate": "2026-10-06",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/PTSNG0AM0007-ENXL",
+        "quoteSha256": "fe3b517bca83133c75ac1ec4e17013c08c5d4f87182faaee74edba401fb14a2a",
+        "stateObservedAt": "2026-11-24T18:45:13.687Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
+    },
+    {
+      "isin": "PTSON0AM0001",
+      "mic": "XLIS",
+      "symbol": "SON",
+      "name": "Sonae",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 2.215,
+        "high": 2.26,
+        "low": 2.185,
+        "close": 2.255,
+        "adjustedClose": null,
+        "volume": 1577853
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTSON0AM0001-XLIS"
+    },
+    {
+      "isin": "PTTD10AM0000",
+      "mic": "XLIS",
+      "symbol": "TDSA",
+      "name": "Teixeira Duarte",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 0.4,
+        "high": 0.4,
+        "low": 0.388,
+        "close": 0.389,
+        "adjustedClose": null,
+        "volume": 2756452
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTTD10AM0000-XLIS"
+    },
+    {
+      "isin": "PTZON0AM0006",
+      "mic": "XLIS",
+      "symbol": "NOS",
+      "name": "NOS",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 5.62,
+        "high": 5.645,
+        "low": 5.56,
+        "close": 5.62,
+        "adjustedClose": null,
+        "volume": 333301
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/PTZON0AM0006-XLIS"
+    }
+  ],
+  "archiveConflicts": []
+}

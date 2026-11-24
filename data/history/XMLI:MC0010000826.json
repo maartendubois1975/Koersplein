@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "MC0010000826",
+    "mic": "XMLI",
+    "symbol": "MLCFM",
+    "name": "CFM INDOSUEZWEALTH",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-24",
+    "lastDate": "2026-11-24",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-24",
+      "open": 1450,
+      "high": 1450,
+      "low": 1450,
+      "close": 1450,
+      "adjustedClose": null,
+      "volume": 1
+    }
+  ]
+}

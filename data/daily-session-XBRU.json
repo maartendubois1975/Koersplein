@@ -1,8 +1,8 @@
 {
   "market": "XBRU",
-  "session": "2026-11-23",
+  "session": "2026-11-24",
   "calendar": {
-    "date": "2026-11-23",
+    "date": "2026-11-24",
     "market": "XBRU",
     "timezone": "Europe/Paris",
     "finalizedAfter": "18:15",
@@ -11,11 +11,11 @@
     "sourceUrl": "https://www.euronext.com/en/trading/trading-hours-holidays"
   },
   "counts": {
-    "TRADED": 98,
-    "NO_TRADES": 7
+    "TRADED": 97,
+    "NO_TRADES": 8
   },
   "readOnly": true,
-  "generatedAt": "2026-11-23T18:45:18.172Z",
+  "generatedAt": "2026-11-24T18:45:11.395Z",
   "results": [
     {
       "isin": "BE0003008019",
@@ -24,13 +24,13 @@
       "name": "Nationale Bank van België SA/NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 312,
-        "high": 316,
+        "date": "2026-11-24",
+        "open": 310,
+        "high": 315,
         "low": 310,
         "close": 310,
         "adjustedClose": null,
-        "volume": 34
+        "volume": 66
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003008019-XBRU"
@@ -42,13 +42,13 @@
       "name": "Solvay SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 23.6,
-        "high": 23.64,
-        "low": 23.16,
-        "close": 23.5,
+        "date": "2026-11-24",
+        "open": 23.46,
+        "high": 23.46,
+        "low": 22.98,
+        "close": 23.06,
         "adjustedClose": null,
-        "volume": 447110
+        "volume": 405028
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003470755-XBRU"
@@ -58,27 +58,18 @@
       "mic": "ALXB",
       "symbol": "COBH",
       "name": "Brouwerij Handelsmaatschappij NV",
-      "status": "NO_TRADES",
-      "bar": null,
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 2120,
+        "high": 2120,
+        "low": 2120,
+        "close": 2120,
+        "adjustedClose": null,
+        "volume": 2
+      },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003519270-ALXB",
-      "evidence": {
-        "date": "2026-11-23",
-        "mic": "ALXB",
-        "isin": "BE0003519270",
-        "provider": "euronext-live",
-        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003519270-ALXB",
-        "retrievedAt": "2026-11-23T18:45:20.922Z",
-        "lastTradeDate": "2026-11-20",
-        "status": "NO_TRADES",
-        "volume": 0,
-        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
-        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003519270-ALXB",
-        "quoteSha256": "64e34d178c8589baeb72341d495411bc4b7e989c9ba742359a2793670178b646",
-        "stateObservedAt": "2026-11-23T18:45:21.299Z",
-        "currentTradingState": "CLO",
-        "currentHaltReason": null
-      }
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003519270-ALXB"
     },
     {
       "isin": "BE0003545531",
@@ -87,13 +78,13 @@
       "name": "Solvac SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "open": 83,
         "high": 83.5,
-        "low": 82,
-        "close": 82.5,
+        "low": 81,
+        "close": 81.5,
         "adjustedClose": null,
-        "volume": 551
+        "volume": 2800
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003545531-XBRU"
@@ -105,13 +96,13 @@
       "name": "Tessenderlo Group NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 15.54,
-        "high": 15.68,
-        "low": 15.3,
-        "close": 15.56,
+        "date": "2026-11-24",
+        "open": 15.6,
+        "high": 15.6,
+        "low": 15.26,
+        "close": 15.58,
         "adjustedClose": null,
-        "volume": 26622
+        "volume": 23766
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003555639-XBRU"
@@ -123,13 +114,13 @@
       "name": "KBC Group NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 109,
-        "high": 111.15,
-        "low": 108.55,
-        "close": 110.6,
+        "date": "2026-11-24",
+        "open": 111,
+        "high": 111.1,
+        "low": 108.7,
+        "close": 108.95,
         "adjustedClose": null,
-        "volume": 516085
+        "volume": 452338
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003565737-XBRU"
@@ -141,13 +132,13 @@
       "name": "Compagnie du Bois Sauvage SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 275,
-        "high": 276,
-        "low": 265,
-        "close": 276,
+        "date": "2026-11-24",
+        "open": 279,
+        "high": 279,
+        "low": 270,
+        "close": 271,
         "adjustedClose": null,
-        "volume": 1182
+        "volume": 279
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003592038-XBRU"
@@ -159,13 +150,13 @@
       "name": "Immobel SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 16.9,
-        "high": 17.15,
-        "low": 16.9,
-        "close": 17.1,
+        "date": "2026-11-24",
+        "open": 16.8,
+        "high": 17.85,
+        "low": 16.8,
+        "close": 17.85,
         "adjustedClose": null,
-        "volume": 2250
+        "volume": 4396
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003599108-XBRU"
@@ -177,13 +168,13 @@
       "name": "Moury Construct SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 684,
-        "high": 684,
-        "low": 684,
-        "close": 684,
+        "date": "2026-11-24",
+        "open": 690,
+        "high": 690,
+        "low": 690,
+        "close": 690,
         "adjustedClose": null,
-        "volume": 2
+        "volume": 55
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003602134-XBRU"
@@ -195,13 +186,13 @@
       "name": "Lotus Bakeries NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 13620,
-        "high": 13760,
-        "low": 13560,
-        "close": 13720,
+        "date": "2026-11-24",
+        "open": 13760,
+        "high": 13880,
+        "low": 13660,
+        "close": 13880,
         "adjustedClose": null,
-        "volume": 662
+        "volume": 538
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003604155-XBRU"
@@ -213,13 +204,13 @@
       "name": "Recticel SA/NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 11.9,
+        "date": "2026-11-24",
+        "open": 12.2,
         "high": 12.24,
-        "low": 11.9,
-        "close": 12.1,
+        "low": 11.72,
+        "close": 11.76,
         "adjustedClose": null,
-        "volume": 43606
+        "volume": 38866
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003656676-XBRU"
@@ -234,19 +225,19 @@
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003680916-MLXB",
       "evidence": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "mic": "MLXB",
         "isin": "BE0003680916",
         "provider": "euronext-live",
         "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003680916-MLXB",
-        "retrievedAt": "2026-11-23T18:45:22.137Z",
+        "retrievedAt": "2026-11-24T18:45:15.387Z",
         "lastTradeDate": "2026-11-19",
         "status": "NO_TRADES",
         "volume": 0,
         "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
         "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003680916-MLXB",
-        "quoteSha256": "b05d4d2b8bea7f5cc68cbd3644c6419a4c4d473748710e6bae6a16bf615dd3f5",
-        "stateObservedAt": "2026-11-23T18:45:22.636Z",
+        "quoteSha256": "34adaa1e2bb443bb30f9458b3031f3a92d95243cb62bcd42434528092ec4a978",
+        "stateObservedAt": "2026-11-24T18:45:15.863Z",
         "currentTradingState": "CLO",
         "currentHaltReason": null
       }
@@ -258,13 +249,13 @@
       "name": "Accentis NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 0.0265,
-        "high": 0.0265,
-        "low": 0.025,
+        "date": "2026-11-24",
+        "open": 0.026,
+        "high": 0.026,
+        "low": 0.026,
         "close": 0.026,
         "adjustedClose": null,
-        "volume": 100777
+        "volume": 8706
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003696102-XBRU"
@@ -276,13 +267,13 @@
       "name": "Gimv NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 47.6,
-        "high": 47.9,
-        "low": 46.9,
-        "close": 47.7,
+        "date": "2026-11-24",
+        "open": 47.7,
+        "high": 48.5,
+        "low": 47.65,
+        "close": 48.3,
         "adjustedClose": null,
-        "volume": 42368
+        "volume": 28895
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003699130-XBRU"
@@ -294,13 +285,13 @@
       "name": "Sofina SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 263,
-        "high": 266.8,
-        "low": 259,
-        "close": 265.8,
+        "date": "2026-11-24",
+        "open": 266,
+        "high": 270,
+        "low": 265.2,
+        "close": 269.4,
         "adjustedClose": null,
-        "volume": 24613
+        "volume": 22841
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003717312-XBRU"
@@ -312,13 +303,13 @@
       "name": "Retail Estates NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 62.7,
-        "high": 62.8,
-        "low": 61.9,
-        "close": 62.2,
+        "date": "2026-11-24",
+        "open": 62.2,
+        "high": 63.2,
+        "low": 62,
+        "close": 63.2,
         "adjustedClose": null,
-        "volume": 7957
+        "volume": 6641
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003720340-XBRU"
@@ -330,13 +321,13 @@
       "name": "Wereldhave Belgium NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 50.8,
-        "high": 51,
-        "low": 50.4,
-        "close": 51,
+        "date": "2026-11-24",
+        "open": 51,
+        "high": 51.2,
+        "low": 50.8,
+        "close": 50.8,
         "adjustedClose": null,
-        "volume": 1325
+        "volume": 712
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003724383-XBRU"
@@ -348,13 +339,13 @@
       "name": "Miko NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 74,
-        "high": 74,
-        "low": 74,
-        "close": 74,
+        "date": "2026-11-24",
+        "open": 73,
+        "high": 73,
+        "low": 71.5,
+        "close": 71.5,
         "adjustedClose": null,
-        "volume": 296
+        "volume": 408
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003731453-XBRU"
@@ -366,13 +357,13 @@
       "name": "Warehouses Estates Belgium SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 37.6,
-        "high": 38,
-        "low": 37.5,
-        "close": 38,
+        "date": "2026-11-24",
+        "open": 37.9,
+        "high": 38.1,
+        "low": 37.9,
+        "close": 37.9,
         "adjustedClose": null,
-        "volume": 464
+        "volume": 34
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003734481-XBRU"
@@ -384,13 +375,13 @@
       "name": "Orange Belgium SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 22.3,
+        "date": "2026-11-24",
+        "open": 22.2,
         "high": 22.9,
-        "low": 22,
-        "close": 22.1,
+        "low": 22.2,
+        "close": 22.9,
         "adjustedClose": null,
-        "volume": 11826
+        "volume": 546
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003735496-XBRU"
@@ -402,13 +393,13 @@
       "name": "UCB SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 278.2,
-        "high": 284,
-        "low": 276.2,
-        "close": 283.7,
+        "date": "2026-11-24",
+        "open": 284.4,
+        "high": 288.4,
+        "low": 283,
+        "close": 287.9,
         "adjustedClose": null,
-        "volume": 190758
+        "volume": 211908
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003739530-XBRU"
@@ -423,19 +414,19 @@
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003741551-XBRU",
       "evidence": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "mic": "XBRU",
         "isin": "BE0003741551",
         "provider": "euronext-live",
         "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003741551-XBRU",
-        "retrievedAt": "2026-11-23T18:45:27.978Z",
+        "retrievedAt": "2026-11-24T18:45:21.768Z",
         "lastTradeDate": "2026-11-20",
         "status": "NO_TRADES",
         "volume": 0,
         "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
         "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003741551-XBRU",
-        "quoteSha256": "5a12cef0d07fab19b0b39038bc1e86da960fb39cb6577d3b35f5f6137a93ed03",
-        "stateObservedAt": "2026-11-23T18:45:28.277Z",
+        "quoteSha256": "0a2f541acbe7b630770237b850a0443ef529420b45be9aed4bc77d2071098b25",
+        "stateObservedAt": "2026-11-24T18:45:22.440Z",
         "currentTradingState": "CLO",
         "currentHaltReason": null
       }
@@ -447,13 +438,13 @@
       "name": "Fountain SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "open": 1,
         "high": 1,
         "low": 1,
         "close": 1,
         "adjustedClose": null,
-        "volume": 220
+        "volume": 1999
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003752665-XBRU"
@@ -465,13 +456,13 @@
       "name": "Vastned NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 26.45,
-        "high": 26.5,
-        "low": 25.5,
-        "close": 26.15,
+        "date": "2026-11-24",
+        "open": 26.4,
+        "high": 26.4,
+        "low": 26,
+        "close": 26.3,
         "adjustedClose": null,
-        "volume": 33409
+        "volume": 19045
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003754687-XBRU"
@@ -483,13 +474,13 @@
       "name": "Agfa-Gevaert NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 0.3115,
-        "high": 0.3245,
+        "date": "2026-11-24",
+        "open": 0.32,
+        "high": 0.32,
         "low": 0.299,
-        "close": 0.299,
+        "close": 0.311,
         "adjustedClose": null,
-        "volume": 312701
+        "volume": 274804
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003755692-XBRU"
@@ -501,13 +492,13 @@
       "name": "Ackermans & van Haaren NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 259.6,
-        "high": 263.4,
-        "low": 258.8,
-        "close": 262.2,
+        "date": "2026-11-24",
+        "open": 262.6,
+        "high": 263.2,
+        "low": 255.4,
+        "close": 255.4,
         "adjustedClose": null,
-        "volume": 22661
+        "volume": 22406
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003764785-XBRU"
@@ -519,13 +510,13 @@
       "name": "Ion Beam Applications SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 16.2,
-        "high": 16.36,
-        "low": 16.06,
-        "close": 16.26,
+        "date": "2026-11-24",
+        "open": 16.36,
+        "high": 16.6,
+        "low": 16.22,
+        "close": 16.38,
         "adjustedClose": null,
-        "volume": 13464
+        "volume": 15120
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003766806-XBRU"
@@ -537,13 +528,13 @@
       "name": "Nextensa NV/SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 45.5,
-        "high": 45.645,
-        "low": 45.36,
-        "close": 45.375,
+        "date": "2026-11-24",
+        "open": 45.375,
+        "high": 45.505,
+        "low": 45.375,
+        "close": 45.405,
         "adjustedClose": null,
-        "volume": 841
+        "volume": 309
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003770840-XBRU"
@@ -555,13 +546,13 @@
       "name": "Softimat SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 0.7,
-        "high": 0.7,
-        "low": 0.7,
-        "close": 0.7,
+        "date": "2026-11-24",
+        "open": 0.65,
+        "high": 0.65,
+        "low": 0.65,
+        "close": 0.65,
         "adjustedClose": null,
-        "volume": 250
+        "volume": 715
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003773877-ALXB"
@@ -573,13 +564,13 @@
       "name": "Deceuninck NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 2.31,
-        "high": 2.35,
-        "low": 2.31,
-        "close": 2.33,
+        "date": "2026-11-24",
+        "open": 2.34,
+        "high": 2.34,
+        "low": 2.3,
+        "close": 2.3,
         "adjustedClose": null,
-        "volume": 67798
+        "volume": 45198
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003789063-XBRU"
@@ -591,13 +582,13 @@
       "name": "Groupe Bruxelles Lambert SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 78.05,
-        "high": 78.5,
-        "low": 77.6,
-        "close": 78.5,
+        "date": "2026-11-24",
+        "open": 78.5,
+        "high": 79,
+        "low": 78.425,
+        "close": 78.45,
         "adjustedClose": null,
-        "volume": 74603
+        "volume": 84809
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003797140-XBRU"
@@ -607,18 +598,27 @@
       "mic": "XBRU",
       "symbol": "SPA",
       "name": "Spadel SA",
-      "status": "TRADED",
-      "bar": {
-        "date": "2026-11-23",
-        "open": 350,
-        "high": 350,
-        "low": 332,
-        "close": 332,
-        "adjustedClose": null,
-        "volume": 90
-      },
+      "status": "NO_TRADES",
+      "bar": null,
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003798155-XBRU"
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003798155-XBRU",
+      "evidence": {
+        "date": "2026-11-24",
+        "mic": "XBRU",
+        "isin": "BE0003798155",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003798155-XBRU",
+        "retrievedAt": "2026-11-24T18:45:22.666Z",
+        "lastTradeDate": "2026-11-23",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003798155-XBRU",
+        "quoteSha256": "26176dcee9610986a2b4c8e905855ae2f808d29734b2cdada8226e0b9364a193",
+        "stateObservedAt": "2026-11-24T18:45:23.165Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
     },
     {
       "isin": "BE0003808251",
@@ -627,13 +627,13 @@
       "name": "EXMAR NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 11.3,
+        "date": "2026-11-24",
+        "open": 11.2,
         "high": 11.45,
-        "low": 11.3,
-        "close": 11.3,
+        "low": 11.2,
+        "close": 11.45,
         "adjustedClose": null,
-        "volume": 1786
+        "volume": 224
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003808251-XBRU"
@@ -645,13 +645,13 @@
       "name": "Proximus SA/NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 6.08,
-        "high": 6.125,
-        "low": 5.91,
-        "close": 5.985,
+        "date": "2026-11-24",
+        "open": 6.02,
+        "high": 6.2,
+        "low": 5.95,
+        "close": 6.2,
         "adjustedClose": null,
-        "volume": 400221
+        "volume": 347555
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003810273-XBRU"
@@ -663,13 +663,13 @@
       "name": "CMB.TECH NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 14.94,
-        "high": 15.6,
-        "low": 14.9,
-        "close": 15.4,
+        "date": "2026-11-24",
+        "open": 16.12,
+        "high": 16.18,
+        "low": 15.72,
+        "close": 16.1,
         "adjustedClose": null,
-        "volume": 132619
+        "volume": 248776
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003816338-XBRU"
@@ -681,13 +681,13 @@
       "name": "EVS Broadcast Equipment SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 14.68,
-        "high": 14.74,
-        "low": 14.14,
-        "close": 14.38,
+        "date": "2026-11-24",
+        "open": 14.2,
+        "high": 14.42,
+        "low": 13.82,
+        "close": 14.16,
         "adjustedClose": null,
-        "volume": 73219
+        "volume": 57673
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003820371-XBRU"
@@ -699,13 +699,13 @@
       "name": "Elia Group SA/NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 126.6,
-        "high": 128.6,
-        "low": 126.6,
-        "close": 128.6,
+        "date": "2026-11-24",
+        "open": 129.8,
+        "high": 131,
+        "low": 129,
+        "close": 130.1,
         "adjustedClose": null,
-        "volume": 98527
+        "volume": 95653
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003822393-XBRU"
@@ -717,13 +717,13 @@
       "name": "Financière de Tubize SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 226.8,
-        "high": 234.4,
-        "low": 226.8,
-        "close": 234.4,
+        "date": "2026-11-24",
+        "open": 232,
+        "high": 236.4,
+        "low": 231.8,
+        "close": 236.4,
         "adjustedClose": null,
-        "volume": 13017
+        "volume": 23382
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003823409-XBRU"
@@ -735,13 +735,13 @@
       "name": "Campine NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 160,
-        "high": 160,
-        "low": 155.5,
-        "close": 158,
+        "date": "2026-11-24",
+        "open": 156.5,
+        "high": 157,
+        "low": 152,
+        "close": 152,
         "adjustedClose": null,
-        "volume": 106
+        "volume": 589
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003825420-XBRU"
@@ -751,18 +751,27 @@
       "mic": "MLXB",
       "symbol": "NEWT",
       "name": "Newtree SA",
-      "status": "TRADED",
-      "bar": {
-        "date": "2026-11-23",
-        "open": 1.9,
-        "high": 1.9,
-        "low": 1.9,
-        "close": 1.9,
-        "adjustedClose": null,
-        "volume": 100
-      },
+      "status": "NO_TRADES",
+      "bar": null,
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003832491-MLXB"
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003832491-MLXB",
+      "evidence": {
+        "date": "2026-11-24",
+        "mic": "MLXB",
+        "isin": "BE0003832491",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003832491-MLXB",
+        "retrievedAt": "2026-11-24T18:45:20.023Z",
+        "lastTradeDate": "2026-11-23",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003832491-MLXB",
+        "quoteSha256": "00bd1168036d393c276d4f36b37372e326ce05926f9df6ec72d2bdd3828d9a4b",
+        "stateObservedAt": "2026-11-24T18:45:20.447Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
     },
     {
       "isin": "BE0003837540",
@@ -771,13 +780,13 @@
       "name": "Atenor SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 0.78,
-        "high": 0.838,
-        "low": 0.73,
-        "close": 0.73,
+        "date": "2026-11-24",
+        "open": 0.74,
+        "high": 0.774,
+        "low": 0.7,
+        "close": 0.71,
         "adjustedClose": null,
-        "volume": 29947
+        "volume": 18243
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003837540-XBRU"
@@ -789,13 +798,13 @@
       "name": "Van de Velde NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 29.2,
+        "date": "2026-11-24",
+        "open": 29.1,
         "high": 29.3,
         "low": 29.1,
         "close": 29.1,
         "adjustedClose": null,
-        "volume": 2069
+        "volume": 1833
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003839561-XBRU"
@@ -805,27 +814,18 @@
       "mic": "MLXB",
       "symbol": "REAL",
       "name": "Realco SA",
-      "status": "NO_TRADES",
-      "bar": null,
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-24",
+        "open": 14,
+        "high": 14,
+        "low": 14,
+        "close": 14,
+        "adjustedClose": null,
+        "volume": 2
+      },
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003841583-MLXB",
-      "evidence": {
-        "date": "2026-11-23",
-        "mic": "MLXB",
-        "isin": "BE0003841583",
-        "provider": "euronext-live",
-        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003841583-MLXB",
-        "retrievedAt": "2026-11-23T18:45:27.885Z",
-        "lastTradeDate": "2026-11-02",
-        "status": "NO_TRADES",
-        "volume": 0,
-        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
-        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003841583-MLXB",
-        "quoteSha256": "0df522a2c5ef5569dde38d333c580ddd336721ed45ae6a73f87f8831b2bdac64",
-        "stateObservedAt": "2026-11-23T18:45:28.285Z",
-        "currentTradingState": "CLO",
-        "currentHaltReason": null
-      }
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003841583-MLXB"
     },
     {
       "isin": "BE0003847648",
@@ -837,19 +837,19 @@
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003847648-MLXB",
       "evidence": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "mic": "MLXB",
         "isin": "BE0003847648",
         "provider": "euronext-live",
         "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003847648-MLXB",
-        "retrievedAt": "2026-11-23T18:45:23.778Z",
+        "retrievedAt": "2026-11-24T18:45:17.014Z",
         "lastTradeDate": "2026-11-18",
         "status": "NO_TRADES",
         "volume": 0,
         "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
         "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003847648-MLXB",
-        "quoteSha256": "1b853a34ef7343ae79054c5184bebaa3825783fd96256e227a62cdefcd4b9741",
-        "stateObservedAt": "2026-11-23T18:45:24.271Z",
+        "quoteSha256": "6f0cda68561f7ae81241b9ef9854cf929a54900128a8f64cf69e734e109910c8",
+        "stateObservedAt": "2026-11-24T18:45:17.645Z",
         "currentTradingState": "CLO",
         "currentHaltReason": null
       }
@@ -861,13 +861,13 @@
       "name": "Aedifica NV/SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 63.5,
-        "high": 64.55,
-        "low": 63.4,
-        "close": 64.5,
+        "date": "2026-11-24",
+        "open": 64.5,
+        "high": 65.5,
+        "low": 64.2,
+        "close": 65,
         "adjustedClose": null,
-        "volume": 119298
+        "volume": 107458
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003851681-XBRU"
@@ -879,13 +879,13 @@
       "name": "Montea NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 67.8,
+        "date": "2026-11-24",
+        "open": 68,
         "high": 68.1,
-        "low": 67.4,
-        "close": 67.8,
+        "low": 67.3,
+        "close": 67.9,
         "adjustedClose": null,
-        "volume": 17667
+        "volume": 17518
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003853703-XBRU"
@@ -897,13 +897,13 @@
       "name": "Ascencio SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 52.3,
-        "high": 53,
-        "low": 52.3,
-        "close": 52.8,
+        "date": "2026-11-24",
+        "open": 52.5,
+        "high": 53.2,
+        "low": 52.5,
+        "close": 53.2,
         "adjustedClose": null,
-        "volume": 3346
+        "volume": 1551
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003856730-XBRU"
@@ -915,13 +915,13 @@
       "name": "JENSEN-GROUP NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 71.2,
-        "high": 72.8,
-        "low": 71.2,
-        "close": 72.4,
+        "date": "2026-11-24",
+        "open": 74,
+        "high": 77,
+        "low": 74,
+        "close": 74.6,
         "adjustedClose": null,
-        "volume": 2528
+        "volume": 4437
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003858751-XBRU"
@@ -933,13 +933,13 @@
       "name": "KBC Ancora SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 90.5,
-        "high": 92.1,
-        "low": 90.1,
-        "close": 91.4,
+        "date": "2026-11-24",
+        "open": 91.5,
+        "high": 91.5,
+        "low": 89.7,
+        "close": 89.8,
         "adjustedClose": null,
-        "volume": 31588
+        "volume": 46740
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003867844-XBRU"
@@ -951,13 +951,13 @@
       "name": "Banimmo SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "open": 3.02,
-        "high": 3.04,
+        "high": 3.02,
         "low": 3.02,
-        "close": 3.04,
+        "close": 3.02,
         "adjustedClose": null,
-        "volume": 6
+        "volume": 1
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003870871-XBRU"
@@ -969,13 +969,13 @@
       "name": "Fagron NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 24.7,
-        "high": 25.1,
-        "low": 24.65,
-        "close": 25,
+        "date": "2026-11-24",
+        "open": 25.15,
+        "high": 25.35,
+        "low": 24.95,
+        "close": 25.3,
         "adjustedClose": null,
-        "volume": 114756
+        "volume": 108401
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003874915-XBRU"
@@ -987,13 +987,13 @@
       "name": "VGP NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 62.3,
-        "high": 63,
-        "low": 62,
-        "close": 62.5,
+        "date": "2026-11-24",
+        "open": 62.6,
+        "high": 62.8,
+        "low": 61.4,
+        "close": 62.6,
         "adjustedClose": null,
-        "volume": 20772
+        "volume": 25276
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003878957-XBRU"
@@ -1005,13 +1005,13 @@
       "name": "Compagnie d'Entreprises CFE SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 10.7,
-        "high": 10.8,
+        "date": "2026-11-24",
+        "open": 10.75,
+        "high": 10.95,
         "low": 10.65,
-        "close": 10.65,
+        "close": 10.95,
         "adjustedClose": null,
-        "volume": 221
+        "volume": 2982
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003883031-XBRU"
@@ -1023,13 +1023,13 @@
       "name": "Immo Moury SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "open": 29.6,
         "high": 29.6,
         "low": 29.6,
         "close": 29.6,
         "adjustedClose": null,
-        "volume": 8
+        "volume": 3
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003893139-XBRU"
@@ -1041,13 +1041,13 @@
       "name": "SIPEF NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 107,
-        "high": 107.8,
-        "low": 104.2,
-        "close": 105.4,
+        "date": "2026-11-24",
+        "open": 105,
+        "high": 106,
+        "low": 104.8,
+        "close": 105.6,
         "adjustedClose": null,
-        "volume": 8571
+        "volume": 3067
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003898187-XBRU"
@@ -1059,13 +1059,13 @@
       "name": "Melexis NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 53.5,
-        "high": 56,
-        "low": 53.25,
-        "close": 55.2,
+        "date": "2026-11-24",
+        "open": 55.2,
+        "high": 55.2,
+        "low": 52.85,
+        "close": 52.95,
         "adjustedClose": null,
-        "volume": 60960
+        "volume": 53824
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0165385973-XBRU"
@@ -1077,13 +1077,13 @@
       "name": "Colruyt Group NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 37.28,
-        "high": 37.84,
-        "low": 37.22,
-        "close": 37.4,
+        "date": "2026-11-24",
+        "open": 37.5,
+        "high": 38.16,
+        "low": 37.4,
+        "close": 38.16,
         "adjustedClose": null,
-        "volume": 42634
+        "volume": 58397
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974256852-XBRU"
@@ -1095,13 +1095,13 @@
       "name": "NV Bekaert SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 39.7,
+        "date": "2026-11-24",
+        "open": 40,
         "high": 40,
-        "low": 39.35,
-        "close": 39.85,
+        "low": 39.05,
+        "close": 39.15,
         "adjustedClose": null,
-        "volume": 28605
+        "volume": 28358
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974258874-XBRU"
@@ -1113,13 +1113,13 @@
       "name": "D'Ieteren Group SA/NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 170.8,
-        "high": 174.4,
-        "low": 170.2,
-        "close": 173.5,
+        "date": "2026-11-24",
+        "open": 174,
+        "high": 174.7,
+        "low": 171,
+        "close": 171,
         "adjustedClose": null,
-        "volume": 52547
+        "volume": 35811
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974259880-XBRU"
@@ -1131,13 +1131,13 @@
       "name": "Celyad Oncology SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 0.17,
-        "high": 0.17,
-        "low": 0.17,
+        "date": "2026-11-24",
+        "open": 0.15,
+        "high": 0.175,
+        "low": 0.139,
         "close": 0.17,
         "adjustedClose": null,
-        "volume": 1016
+        "volume": 22362
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974260896-XBRU"
@@ -1149,13 +1149,13 @@
       "name": "Texaf SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "open": 37.8,
         "high": 37.8,
-        "low": 37.8,
+        "low": 37.4,
         "close": 37.8,
         "adjustedClose": null,
-        "volume": 10
+        "volume": 64
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974263924-XBRU"
@@ -1167,13 +1167,13 @@
       "name": "ageas SA/NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 75.15,
-        "high": 76.2,
-        "low": 75.15,
-        "close": 75.95,
+        "date": "2026-11-24",
+        "open": 76.05,
+        "high": 76.15,
+        "low": 75.2,
+        "close": 75.4,
         "adjustedClose": null,
-        "volume": 208672
+        "volume": 206897
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974264930-XBRU"
@@ -1185,13 +1185,13 @@
       "name": "Fluxys Belgium SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 20.3,
-        "high": 20.7,
+        "date": "2026-11-24",
+        "open": 20.5,
+        "high": 20.5,
         "low": 20.3,
-        "close": 20.4,
+        "close": 20.3,
         "adjustedClose": null,
-        "volume": 2616
+        "volume": 1058
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974265945-XBRU"
@@ -1203,13 +1203,13 @@
       "name": "bpost NV/SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 0.696,
-        "high": 0.71,
-        "low": 0.664,
-        "close": 0.691,
+        "date": "2026-11-24",
+        "open": 0.697,
+        "high": 0.697,
+        "low": 0.67,
+        "close": 0.69,
         "adjustedClose": null,
-        "volume": 1120230
+        "volume": 498210
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974268972-XBRU"
@@ -1221,13 +1221,13 @@
       "name": "Viohalco SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 14.82,
-        "high": 15.48,
-        "low": 14.82,
-        "close": 15.1,
+        "date": "2026-11-24",
+        "open": 15.18,
+        "high": 15.2,
+        "low": 14.02,
+        "close": 14.02,
         "adjustedClose": null,
-        "volume": 7362
+        "volume": 5339
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974271034-XBRU"
@@ -1239,13 +1239,13 @@
       "name": "Qrf NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 10.8,
-        "high": 10.8,
-        "low": 10.6,
-        "close": 10.6,
+        "date": "2026-11-24",
+        "open": 10.6,
+        "high": 10.65,
+        "low": 10.5,
+        "close": 10.65,
         "adjustedClose": null,
-        "volume": 3900
+        "volume": 824
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974272040-XBRU"
@@ -1257,13 +1257,13 @@
       "name": "Care Property Invest NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 12.7,
-        "high": 12.7,
-        "low": 12.52,
-        "close": 12.64,
+        "date": "2026-11-24",
+        "open": 12.66,
+        "high": 12.74,
+        "low": 12.6,
+        "close": 12.72,
         "adjustedClose": null,
-        "volume": 26431
+        "volume": 11642
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974273055-XBRU"
@@ -1275,13 +1275,13 @@
       "name": "Kinepolis Group NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 48.1,
-        "high": 49.75,
-        "low": 48,
+        "date": "2026-11-24",
+        "open": 49.6,
+        "high": 50.1,
+        "low": 49.3,
         "close": 49.5,
         "adjustedClose": null,
-        "volume": 42858
+        "volume": 33259
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974274061-XBRU"
@@ -1293,13 +1293,13 @@
       "name": "Ontex Group NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 1.148,
-        "high": 1.186,
-        "low": 1.116,
-        "close": 1.138,
+        "date": "2026-11-24",
+        "open": 1.16,
+        "high": 1.184,
+        "low": 1.124,
+        "close": 1.166,
         "adjustedClose": null,
-        "volume": 295756
+        "volume": 435790
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974276082-XBRU"
@@ -1311,13 +1311,13 @@
       "name": "ABO-Group Environment NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 2.18,
+        "date": "2026-11-24",
+        "open": 2.06,
         "high": 2.18,
-        "low": 2,
-        "close": 2.16,
+        "low": 2.06,
+        "close": 2.18,
         "adjustedClose": null,
-        "volume": 6666
+        "volume": 4070
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974278104-XBRU"
@@ -1329,13 +1329,13 @@
       "name": "TINC NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 10.44,
-        "high": 10.44,
-        "low": 10.12,
-        "close": 10.16,
+        "date": "2026-11-24",
+        "open": 10.16,
+        "high": 10.4,
+        "low": 10.14,
+        "close": 10.4,
         "adjustedClose": null,
-        "volume": 89214
+        "volume": 31867
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974282148-XBRU"
@@ -1347,13 +1347,13 @@
       "name": "Xior Student Housing NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "open": 24.4,
-        "high": 24.5,
-        "low": 24.25,
-        "close": 24.45,
+        "high": 24.6,
+        "low": 24.15,
+        "close": 24.6,
         "adjustedClose": null,
-        "volume": 26080
+        "volume": 25433
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974288202-XBRU"
@@ -1365,13 +1365,13 @@
       "name": "Anheuser-Busch InBev SA/NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 72,
-        "high": 72.66,
-        "low": 71.8,
-        "close": 72.62,
+        "date": "2026-11-24",
+        "open": 72.62,
+        "high": 72.94,
+        "low": 72.02,
+        "close": 72.68,
         "adjustedClose": null,
-        "volume": 1990541
+        "volume": 1830418
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974293251-XBRU"
@@ -1386,19 +1386,19 @@
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974298300-ALXB",
       "evidence": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "mic": "ALXB",
         "isin": "BE0974298300",
         "provider": "euronext-live",
         "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974298300-ALXB",
-        "retrievedAt": "2026-11-23T18:45:20.939Z",
+        "retrievedAt": "2026-11-24T18:45:14.149Z",
         "lastTradeDate": "2026-10-19",
         "status": "NO_TRADES",
         "volume": 0,
         "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
         "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0974298300-ALXB",
-        "quoteSha256": "0955ca3660d7010ca94d358784ad804ac1e013c7ca07089ccac67fba12c7cf7d",
-        "stateObservedAt": "2026-11-23T18:45:21.288Z",
+        "quoteSha256": "ebf9d32d4c7f50b794210ee7afe23674891986035bfaf83949fae6df36e727e1",
+        "stateObservedAt": "2026-11-24T18:45:14.597Z",
         "currentTradingState": "CLO",
         "currentHaltReason": null
       }
@@ -1410,13 +1410,13 @@
       "name": "Cenergy Holdings SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 20.86,
-        "high": 21.74,
-        "low": 20.66,
-        "close": 21.74,
+        "date": "2026-11-24",
+        "open": 21.8,
+        "high": 21.8,
+        "low": 20.38,
+        "close": 20.4,
         "adjustedClose": null,
-        "volume": 14800
+        "volume": 17724
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974303357-XBRU"
@@ -1428,13 +1428,13 @@
       "name": "Econocom Group SE",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 1.4,
-        "high": 1.455,
+        "date": "2026-11-24",
+        "open": 1.405,
+        "high": 1.445,
         "low": 1.37,
-        "close": 1.41,
+        "close": 1.38,
         "adjustedClose": null,
-        "volume": 129643
+        "volume": 47442
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974313455-XBRU"
@@ -1446,13 +1446,13 @@
       "name": "Belysse Group NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 0.32,
-        "high": 0.33,
+        "date": "2026-11-24",
+        "open": 0.34,
+        "high": 0.34,
         "low": 0.312,
-        "close": 0.33,
+        "close": 0.312,
         "adjustedClose": null,
-        "volume": 22809
+        "volume": 9293
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974314461-XBRU"
@@ -1464,13 +1464,13 @@
       "name": "Umicore SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 16,
-        "high": 16.94,
-        "low": 16,
-        "close": 16.88,
+        "date": "2026-11-24",
+        "open": 16.78,
+        "high": 16.78,
+        "low": 16.1,
+        "close": 16.1,
         "adjustedClose": null,
-        "volume": 756820
+        "volume": 773233
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974320526-XBRU"
@@ -1482,13 +1482,13 @@
       "name": "Titan SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 43.8,
-        "high": 44.38,
-        "low": 43.6,
-        "close": 44.28,
+        "date": "2026-11-24",
+        "open": 44.32,
+        "high": 44.36,
+        "low": 43.1,
+        "close": 43.44,
         "adjustedClose": null,
-        "volume": 9101
+        "volume": 5537
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974338700-XBRU"
@@ -1500,13 +1500,13 @@
       "name": "Warehouses De Pauw NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 18.62,
-        "high": 18.81,
-        "low": 18.54,
-        "close": 18.81,
+        "date": "2026-11-24",
+        "open": 18.83,
+        "high": 18.97,
+        "low": 18.7,
+        "close": 18.93,
         "adjustedClose": null,
-        "volume": 718760
+        "volume": 674906
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974349814-XBRU"
@@ -1518,13 +1518,13 @@
       "name": "Nyxoah SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 0.74,
-        "high": 0.75,
-        "low": 0.708,
-        "close": 0.749,
+        "date": "2026-11-24",
+        "open": 0.784,
+        "high": 0.784,
+        "low": 0.706,
+        "close": 0.708,
         "adjustedClose": null,
-        "volume": 224500
+        "volume": 122654
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974358906-XBRU"
@@ -1536,13 +1536,13 @@
       "name": "Barco NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 5.7,
-        "high": 5.87,
-        "low": 5.7,
-        "close": 5.865,
+        "date": "2026-11-24",
+        "open": 5.85,
+        "high": 5.92,
+        "low": 5.74,
+        "close": 5.74,
         "adjustedClose": null,
-        "volume": 126839
+        "volume": 73886
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974362940-XBRU"
@@ -1554,13 +1554,13 @@
       "name": "Hyloris Pharmaceuticals SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 4.16,
-        "high": 4.2,
-        "low": 4.07,
-        "close": 4.07,
+        "date": "2026-11-24",
+        "open": 4.01,
+        "high": 4.3,
+        "low": 4.01,
+        "close": 4.1,
         "adjustedClose": null,
-        "volume": 5236
+        "volume": 16472
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974363955-XBRU"
@@ -1570,18 +1570,27 @@
       "mic": "MLXB",
       "symbol": "MLTV",
       "name": "Choice NV",
-      "status": "TRADED",
-      "bar": {
-        "date": "2026-11-23",
-        "open": 0.13,
-        "high": 0.13,
-        "low": 0.13,
-        "close": 0.13,
-        "adjustedClose": null,
-        "volume": 214
-      },
+      "status": "NO_TRADES",
+      "bar": null,
       "provider": "euronext-live",
-      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974370026-MLXB"
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974370026-MLXB",
+      "evidence": {
+        "date": "2026-11-24",
+        "mic": "MLXB",
+        "isin": "BE0974370026",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974370026-MLXB",
+        "retrievedAt": "2026-11-24T18:45:14.716Z",
+        "lastTradeDate": "2026-11-23",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0974370026-MLXB",
+        "quoteSha256": "112a3c7086b26ad993f1b28017fa4bbc6b6a19251cdb672a71b9e4d0350fe42d",
+        "stateObservedAt": "2026-11-24T18:45:15.299Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      }
     },
     {
       "isin": "BE0974371032",
@@ -1590,13 +1599,13 @@
       "name": "Banqup Group SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 0.75,
-        "high": 0.75,
-        "low": 0.698,
-        "close": 0.716,
+        "date": "2026-11-24",
+        "open": 0.72,
+        "high": 0.74,
+        "low": 0.674,
+        "close": 0.738,
         "adjustedClose": null,
-        "volume": 23422
+        "volume": 4237
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974371032-XBRU"
@@ -1608,13 +1617,13 @@
       "name": "Inclusio SA/NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 15.65,
+        "date": "2026-11-24",
+        "open": 15.85,
         "high": 15.9,
-        "low": 15.65,
+        "low": 15.85,
         "close": 15.9,
         "adjustedClose": null,
-        "volume": 672
+        "volume": 9
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974374069-XBRU"
@@ -1626,13 +1635,13 @@
       "name": "Ekopak NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 3.44,
-        "high": 3.44,
-        "low": 3.105,
-        "close": 3.175,
+        "date": "2026-11-24",
+        "open": 3.18,
+        "high": 3.18,
+        "low": 3.005,
+        "close": 3.065,
         "adjustedClose": null,
-        "volume": 12691
+        "volume": 2199
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974380124-XBRU"
@@ -1644,13 +1653,13 @@
       "name": "Biotalys NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 1.63,
-        "high": 1.686,
-        "low": 1.63,
-        "close": 1.66,
+        "date": "2026-11-24",
+        "open": 1.68,
+        "high": 1.69,
+        "low": 1.66,
+        "close": 1.676,
         "adjustedClose": null,
-        "volume": 10111
+        "volume": 4696
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974386188-XBRU"
@@ -1662,13 +1671,13 @@
       "name": "Azelis Group NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 12.08,
-        "high": 12.17,
-        "low": 11.86,
-        "close": 11.99,
+        "date": "2026-11-24",
+        "open": 11.99,
+        "high": 11.99,
+        "low": 11.76,
+        "close": 11.82,
         "adjustedClose": null,
-        "volume": 222747
+        "volume": 134168
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974400328-XBRU"
@@ -1680,13 +1689,13 @@
       "name": "Whitestone Group SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 17.9,
-        "high": 17.9,
-        "low": 17.9,
-        "close": 17.9,
+        "date": "2026-11-24",
+        "open": 17,
+        "high": 17,
+        "low": 17,
+        "close": 17,
         "adjustedClose": null,
-        "volume": 60
+        "volume": 799
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974401334-ALXB"
@@ -1698,13 +1707,13 @@
       "name": "Home Invest Belgium SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 18.12,
-        "high": 18.12,
-        "low": 17.88,
-        "close": 17.88,
+        "date": "2026-11-24",
+        "open": 18.1,
+        "high": 18.1,
+        "low": 17.76,
+        "close": 17.92,
         "adjustedClose": null,
-        "volume": 8328
+        "volume": 6871
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974409410-XBRU"
@@ -1716,13 +1725,13 @@
       "name": "DEME Group NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 155.6,
-        "high": 157.2,
+        "date": "2026-11-24",
+        "open": 157.2,
+        "high": 158.8,
         "low": 155.2,
-        "close": 157,
+        "close": 155.4,
         "adjustedClose": null,
-        "volume": 7144
+        "volume": 6728
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974413453-XBRU"
@@ -1734,13 +1743,13 @@
       "name": "Syensqo SA/NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 75,
-        "high": 76.25,
-        "low": 74.65,
-        "close": 76,
+        "date": "2026-11-24",
+        "open": 75.75,
+        "high": 75.8,
+        "low": 74.15,
+        "close": 74.3,
         "adjustedClose": null,
-        "volume": 137910
+        "volume": 126603
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974464977-XBRU"
@@ -1752,13 +1761,13 @@
       "name": "Oxurion NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 0.0012,
-        "high": 0.0014,
-        "low": 0.0012,
+        "date": "2026-11-24",
+        "open": 0.0014,
+        "high": 0.0018,
+        "low": 0.001,
         "close": 0.0012,
         "adjustedClose": null,
-        "volume": 1977910
+        "volume": 6386972
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974487192-XBRU"
@@ -1770,13 +1779,13 @@
       "name": "Option NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "open": 3.55,
-        "high": 3.85,
-        "low": 3.55,
-        "close": 3.82,
+        "high": 3.73,
+        "low": 3.38,
+        "close": 3.72,
         "adjustedClose": null,
-        "volume": 871
+        "volume": 1831
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974496284-XBRU"
@@ -1788,13 +1797,13 @@
       "name": "European Medical Solutions SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "open": 3.44,
         "high": 3.44,
-        "low": 3.44,
-        "close": 3.44,
+        "low": 3.42,
+        "close": 3.42,
         "adjustedClose": null,
-        "volume": 14
+        "volume": 84
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974497290-ALXB"
@@ -1806,13 +1815,13 @@
       "name": "EnergyVision NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 17.9,
-        "high": 18.4,
-        "low": 17.86,
-        "close": 18.4,
+        "date": "2026-11-24",
+        "open": 18.32,
+        "high": 18.7,
+        "low": 18.32,
+        "close": 18.5,
         "adjustedClose": null,
-        "volume": 16737
+        "volume": 21962
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974499312-XBRU"
@@ -1824,13 +1833,13 @@
       "name": "Materialise NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "open": 5.6,
-        "high": 5.85,
-        "low": 5.6,
-        "close": 5.85,
+        "high": 5.9,
+        "low": 5.45,
+        "close": 5.45,
         "adjustedClose": null,
-        "volume": 1471
+        "volume": 7505
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974501331-XBRU"
@@ -1842,13 +1851,13 @@
       "name": "Floridienne SA",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 54,
-        "high": 54,
+        "date": "2026-11-24",
+        "open": 53.5,
+        "high": 53.5,
         "low": 53.5,
         "close": 53.5,
         "adjustedClose": null,
-        "volume": 129
+        "volume": 76
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974502347-XBRU"
@@ -1863,19 +1872,19 @@
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974503352-ALXB",
       "evidence": {
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "mic": "ALXB",
         "isin": "BE0974503352",
         "provider": "euronext-live",
         "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974503352-ALXB",
-        "retrievedAt": "2026-11-23T18:45:26.094Z",
+        "retrievedAt": "2026-11-24T18:45:19.516Z",
         "lastTradeDate": "2026-11-20",
         "status": "NO_TRADES",
         "volume": 0,
         "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
         "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0974503352-ALXB",
-        "quoteSha256": "a35ef15f9ccb3c1b7810c8660851449e50dfe66470ee99d5062009f11756cc29",
-        "stateObservedAt": "2026-11-23T18:45:26.583Z",
+        "quoteSha256": "dde94ad139bc885110c187756f1192191b1345d32f31c078f4ce9bfab18fd18c",
+        "stateObservedAt": "2026-11-24T18:45:20.136Z",
         "currentTradingState": "CLO",
         "currentHaltReason": null
       }
@@ -1887,13 +1896,13 @@
       "name": "Hybrid Software Group PLC",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 3.84,
-        "high": 3.88,
-        "low": 3.84,
-        "close": 3.86,
+        "date": "2026-11-24",
+        "open": 3.86,
+        "high": 3.92,
+        "low": 3.86,
+        "close": 3.9,
         "adjustedClose": null,
-        "volume": 1301
+        "volume": 3312
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB00BYN5BY03-XBRU"
@@ -1905,13 +1914,13 @@
       "name": "Shurgard Self Storage Ltd",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 24.25,
-        "high": 24.6,
-        "low": 24.2,
-        "close": 24.45,
+        "date": "2026-11-24",
+        "open": 24.55,
+        "high": 24.65,
+        "low": 24.25,
+        "close": 24.55,
         "adjustedClose": null,
-        "volume": 43548
+        "volume": 51796
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GG00BQZCBZ44-XBRU"
@@ -1923,13 +1932,13 @@
       "name": "Payton Planar Magnetics Ltd",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 7.8,
-        "high": 7.8,
-        "low": 7.8,
-        "close": 7.8,
+        "date": "2026-11-24",
+        "open": 7.5,
+        "high": 7.5,
+        "low": 7.5,
+        "close": 7.5,
         "adjustedClose": null,
-        "volume": 300
+        "volume": 666
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IL0010830391-XBRU"
@@ -1941,13 +1950,13 @@
       "name": "argenx SE",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 854.2,
-        "high": 883.2,
-        "low": 851,
-        "close": 876.2,
+        "date": "2026-11-24",
+        "open": 869.6,
+        "high": 899.6,
+        "low": 869.2,
+        "close": 891.2,
         "adjustedClose": null,
-        "volume": 77500
+        "volume": 86125
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0010832176-XBRU"
@@ -1959,13 +1968,13 @@
       "name": "ONWARD Medical NV",
       "status": "TRADED",
       "bar": {
-        "date": "2026-11-23",
-        "open": 1.348,
-        "high": 1.348,
-        "low": 1.22,
-        "close": 1.32,
+        "date": "2026-11-24",
+        "open": 1.33,
+        "high": 1.338,
+        "low": 1.28,
+        "close": 1.338,
         "adjustedClose": null,
-        "volume": 646932
+        "volume": 216395
       },
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0015000HT4-XBRU"

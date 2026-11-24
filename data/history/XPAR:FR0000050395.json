@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0000050395",
+    "mic": "XPAR",
+    "symbol": "CROS",
+    "name": "CROSSWOOD",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "approved-daily-session",
+    "role": "verified-session-source",
+    "metadata": {
+      "backfillComplete": false
+    }
+  },
+  "coverage": {
+    "firstDate": "2026-11-24",
+    "lastDate": "2026-11-24",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2026-11-24",
+      "open": 9.6,
+      "high": 9.6,
+      "low": 9.6,
+      "close": 9.6,
+      "adjustedClose": null,
+      "volume": 8
+    }
+  ]
+}
