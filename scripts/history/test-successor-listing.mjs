@@ -25,6 +25,15 @@ try{
  // A proved predecessor row can never be silently migrated to a new security.
  await fs.writeFile(sessionFile,JSON.stringify({...prior,results:[{...realPrior,status:'NO_TRADES',reasonCode:undefined}]}));const blocked=await archiveApprovedSessions(options);assert.equal(blocked.errors.length,1);assert.equal(await fs.readFile(oldHistoryFile,'utf8'),oldHistory);
  // Publish the current and retired identities separately; count the company once.
- await fs.writeFile(path.join(dataDir,'history/ALXP:'+successor.instrument.isin+'.json'),JSON.stringify(successor));const publishedDir=path.join(root,'public');const counts=await publishTestHistory({markets:[catalog],historyDir:path.join(dataDir,'history'),outputDir:publishedDir,fetchImpl:async()=>({ok:true,json:async()=>({instruments:{}})}),now:new Date('2026-11-21T05:00:00Z')});assert.deepEqual(counts,{XPAR:1});const publicNew=JSON.parse(await fs.readFile(path.join(publishedDir,'ALXP:'+successor.instrument.isin+'.json')));const publicOld=JSON.parse(await fs.readFile(path.join(publishedDir,'ALXP:'+share.isin+'.json')));assert.deepEqual(publicNew.bars,successor.bars);assert.equal(publicOld.instrument.isin,share.isin);assert(publicOld.bars.every(b=>b.date<'2026-11-17'));
+ // Reconstruct the historical publication snapshot before subsequent sessions were appended.
+ const bars=successor.bars.filter(bar=>bar.date<=targetBar.date);
+ const coverage={records:bars.length,recordCount:bars.length,firstDate:bars[0].date,lastDate:targetBar.date};
+ await fs.writeFile(path.join(dataDir,'history/ALXP:'+successor.instrument.isin+'.json'),JSON.stringify({...successor,bars,coverage}));
+ const publishedDir=path.join(root,'public');
+ const counts=await publishTestHistory({markets:[catalog],historyDir:path.join(dataDir,'history'),outputDir:publishedDir,fetchImpl:async()=>({ok:true,json:async()=>({instruments:{}})}),now:new Date('2026-11-21T05:00:00Z')});
+ assert.deepEqual(counts,{XPAR:1});
+ const publicNew=JSON.parse(await fs.readFile(path.join(publishedDir,'ALXP:'+successor.instrument.isin+'.json')));
+ const publicOld=JSON.parse(await fs.readFile(path.join(publishedDir,'ALXP:'+share.isin+'.json')));
+ assert.deepEqual(publicNew.bars,bars);assert.equal(publicOld.instrument.isin,share.isin);assert(publicOld.bars.every(b=>b.date<'2026-11-17'));
  console.log('Verified successor listing: stable 664-company register, date-scoped identity, immutable predecessor, retained quarantine evidence, separate public chart series PASS');
 }finally{await fs.rm(root,{recursive:true,force:true});}

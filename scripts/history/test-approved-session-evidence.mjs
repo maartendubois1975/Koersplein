@@ -1,3 +1,4 @@
+import {mock} from 'node:test';
 import {officialDailyStatus} from './official-daily-status.mjs';
 import {fetchConfiguredHistory} from './source-policy.mjs';
 import os from 'node:os';import path from 'node:path';
@@ -85,6 +86,7 @@ try{
 const brusselsSegments=raw.records.filter(r=>['ALXB','MLXB'].includes(r.mic));
 assert.equal(brusselsSegments.length,6);
 const originalFetch=globalThis.fetch;let routedRequests=0;
+mock.timers.enable({apis:['Date']});
 try{
  globalThis.fetch=async (url,options={})=>{
   const record=brusselsSegments.find(r=>String(url).endsWith(r.isin+'-'+r.mic));
@@ -97,11 +99,13 @@ try{
   return new Response(record.quoteHtml);
  };
  for(const record of brusselsSegments){
+  // The dispatcher timestamps the source response using the system clock.
+  mock.timers.setTime(Date.parse(record.checkedAt));
   const status=await officialDailyStatus(record,record.session);
   assert(status,'Segment MIC must be routed to the official source');
   assert.equal(status.isin,record.isin);assert.equal(status.mic,record.mic);
   assert.equal(status.status,record.resolution==='OFFICIAL_NO_TRADES'?'NO_TRADES':'SESSION_UNVERIFIED');
  }
  assert.equal(routedRequests,12,'Both historical session and independent quote must be checked');
-}finally{globalThis.fetch=originalFetch;}
+}finally{globalThis.fetch=originalFetch;mock.timers.reset();}
 console.log('Real Brussels Growth/Access dispatcher replay: four proved no-trade cases; two later-trade cases stay unverified PASS');
