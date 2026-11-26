@@ -10,10 +10,10 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
  const venue=venues.venues.find(v=>v.id==='euronext');if(!venue)throw Error('Europese markten niet gevonden');
  let found=null;
  for(const market of venue.markets.filter(m=>m.status==='available'&&m.sharesData)){
-  try{const data=await browserCatalog(market.mic,'data/'+market.sharesData,load),shares=Array.isArray(data)?data:(data.shares||[]),share=shares.map(x=>listingForRequest(x,market.mic,{isin,mic:requestedMic,symbol:requestedSymbol})).find(Boolean);if(share){found={market,share};break}}catch(error){console.warn('CATALOG_UNAVAILABLE',market.mic,error.message);}
+  try{const data=await browserCatalog(market.mic,'data/'+market.sharesData,load),shares=Array.isArray(data)?data:(data.shares||[]),share=shares.map(x=>listingForRequest(x,market.mic,{isin,mic:requestedMic,symbol:requestedSymbol})).find(Boolean);if(share){found={market,share,catalogPreview:data.catalogPreview};break}}catch(error){console.warn('CATALOG_UNAVAILABLE',market.mic,error.message);}
  }
  if(!found)throw Error('Aandeel niet gevonden');
- const {market,share}=found,mic=share.primaryMic||share.mic||market.mic;const back=`market.html?market=${encodeURIComponent(market.id)}`;
+ const {market,share,catalogPreview}=found,mic=share.primaryMic||share.mic||market.mic;const back=`market.html?market=${encodeURIComponent(market.id)}`;
  document.title=`${share.name} — Koersplein`;document.querySelector('#crumb-share').textContent=share.name;
  const crumbs=document.querySelector('.breadcrumbs');const links=crumbs?.querySelectorAll('a');if(links?.[2]){links[2].href=back;links[2].textContent=market.name}
  const backLink=document.querySelector('.back-link');backLink.href=back;backLink.textContent=`← ${market.name}`;
@@ -22,6 +22,13 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
  const related=successor||previous;
  const listingNote=related?`<p class="history-source">${successor?'Historische notering. De opvolgende notering heeft een aparte koersreeks.':'Nieuwe ISIN. Oudere koersen staan in een aparte historische reeks.'} <a href="share.html?isin=${encodeURIComponent(related.isin)}&mic=${encodeURIComponent(related.mic||related.primaryMic||mic)}&symbol=${encodeURIComponent(related.symbol||related.ticker)}">${esc(related.isin)}</a></p>`:'';
  detail.innerHTML=`<div><p class="eyebrow">Europa · ${esc(market.name)} · ${esc(mic)}</p><h1>${esc(share.name)}</h1><div class="identity-line"><span class="ticker">${esc(share.symbol||share.ticker)}</span><span>${esc(share.isin)}</span><span>${esc(mic)}</span></div>${listingNote}</div><div class="latest-price"><span>Laatste koers</span><strong>—</strong><small>Historie wordt geladen</small></div>`;
+ if(catalogPreview){
+  detail.querySelector('.latest-price').innerHTML='<span>Koersdata in voorbereiding</span><strong>—</strong>';
+  historyState.className='history-empty';
+  historyState.textContent='Koershistorie in voorbereiding.';
+  document.querySelector('#history-range').textContent='—';
+  return;
+ }
  let current=null,currentState=null;
  if(approvedMarkets.has(market.mic)){try{const snap=await load('data/daily-session-'+market.mic+'.json');currentState=dailyState(snap,share,market.mic);current=dailyRow(snap,share,market.mic);if(current){const fmt=n=>n.toLocaleString('nl-NL',{style:'currency',currency:share.currency||market.currency||'EUR'});detail.querySelector('.latest-price').innerHTML='<span>Opening / slot</span><strong>'+fmt(current.open)+' / '+fmt(current.close)+'</strong><small>'+esc(current.date)+'</small>';}}catch{}}
  if(currentState&&!current)detail.querySelector('.latest-price').innerHTML='<span>Handelsdag '+esc(currentState.date)+'</span><strong>'+esc(dailyStateLabel(currentState))+'</strong><small>Geen bevestigde opening of slot voor deze dag</small>';

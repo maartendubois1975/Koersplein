@@ -3,10 +3,11 @@ let contractsPromise;
 export async function browserCatalog(mic,fallback,load){
  const contracts=await (contractsPromise??=load('data/company-register-contracts.json').catch(e=>{contractsPromise=null;throw e}));
  for(const key of Object.keys(contracts.markets))approvedMarkets.add(key);
- if(!approvedMarkets.has(mic))return load(fallback);
- const contract=contracts.markets[mic];
+ const contract=contracts.markets[mic]||contracts.catalogPreviews?.[mic];
+ if(!contract)return load(fallback);
  const catalog=await load('data/'+contract.file);
  if(catalog.shares.length!==contract.expectedCount)throw Error('Bedrijvenregister onvolledig');
+ if(!approvedMarkets.has(mic))return {...catalog,catalogPreview:true};
  const resolved=catalogWithListingEvents(catalog,(await load('data/instrument-events.json')).events);
  return {...resolved,shares:resolved.shares.map(share=>share.currentListing?.status==='VERIFIED_SUCCESSOR'?{...share,...listingIdentity(share,mic),primaryMic:listingIdentity(share,mic).mic,companyIsin:share.isin,previousListing:{...share,currentListing:undefined}}:share)};
 }

@@ -56,3 +56,26 @@ for(const c of await approvedCompanyUniverse()){
  const marker=c.mic+'</small>',card=navigation.split('<a ').find(part=>part.includes(marker));assert(card,'Home market '+c.mic);assert(card.includes(c.shares.length+' aandelen'),'Home must use approved count for '+c.mic);
 }
 console.log('Actual homepage navigation uses the same approved market catalogs PASS');
+
+const previewNodes=new Map(),previewRequests=[];
+globalThis.document={querySelector(selector){
+ if(!previewNodes.has(selector))previewNodes.set(selector,{value:'',textContent:'',innerHTML:'',addEventListener(){},querySelector:s=>this.querySelector(s),querySelectorAll:()=>[]});
+ return previewNodes.get(selector);
+}};
+globalThis.location={search:'?market=milan'};
+const localFetch=globalThis.fetch;
+globalThis.fetch=(url,...args)=>{previewRequests.push(url);return localFetch(url,...args);};
+await import('../../generic-market.js?reviewed-milan-preview');
+for(let i=0;i<200&&!previewNodes.get('#market-meta')?.textContent.includes('Bedrijvenregister gecontroleerd');i++)await new Promise(r=>setTimeout(r,10));
+assert.equal((previewNodes.get('#share-groups')?.innerHTML.match(/class="share-link"/g)||[]).length,360);
+assert.match(previewNodes.get('#market-meta').textContent,/Koersdata in voorbereiding/);
+assert(!previewRequests.some(url=>url.includes('daily-session')||url.startsWith('https://')),'Preview must not fetch legacy/active prices');
+const previewCard=navigation.split('<a ').find(part=>part.includes('XMIL</small>'));
+assert.match(previewCard,/360 aandelen · Koersdata in voorbereiding/);
+globalThis.location={search:'?isin=IT0001233417&mic=MTAA&symbol=A2A'};
+await import('../../share.js?reviewed-milan-preview');
+for(let i=0;i<200&&!previewNodes.get('#history-state')?.textContent.includes('Koershistorie in voorbereiding');i++)await new Promise(r=>setTimeout(r,10));
+assert.match(previewNodes.get('#share-detail').innerHTML,/<h1>A2A<\/h1>/);
+assert.equal(previewNodes.get('#history-state').textContent,'Koershistorie in voorbereiding.');
+assert(!previewRequests.some(url=>url.includes('daily-session')||url.startsWith('https://')||url.startsWith('data/history/')));
+console.log('Milan reviewed catalog, navigation and company detail without legacy quote access: PASS');

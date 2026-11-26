@@ -14,6 +14,13 @@ const milan = await read(milanReview + 'approved-companies.json');
 const oslo = await read(osloReview + 'candidate-companies.json');
 const milanEvidence = await read(milanReview + 'summary.json');
 const osloEvidence = await read(osloReview + 'summary.json');
+const contracts = await read('data/company-register-contracts.json');
+assert.deepEqual(contracts.catalogPreviews.XMIL, {
+  file: '../' + milanReview + 'approved-companies.json',
+  expectedCount: milanEvidence.decisions.INCLUDE,
+  identitySha256: milanEvidence.identitySha256,
+});
+assert(!contracts.markets.XMIL, 'Preview must stay outside public raw-price archiving');
 for (const [catalog, expectedCount, identitySha256] of [
   [milan, milanEvidence.decisions.INCLUDE, milanEvidence.identitySha256],
   [oslo, osloEvidence.counts.INCLUDE, osloEvidence.identitySha256],
