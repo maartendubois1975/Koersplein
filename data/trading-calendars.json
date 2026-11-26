@@ -3,6 +3,10 @@
   "source": "https://www.euronext.com/en/trading/trading-hours-holidays",
   "verifiedAt": "2026-11-17",
   "markets": {"XAMS":"euronext-cash","XBRU":"euronext-cash","XPAR":"euronext-cash","XDUB":"euronext-dublin-cash","XLIS":"euronext-lisbon-cash","XMIL":"euronext-milan-cash","XOSL":"euronext-oslo-cash"},
+  "segments": {
+    "ALXB":"XBRU","MLXB":"XBRU","ALXP":"XPAR","XMLI":"XPAR","MTAA":"XMIL","EXGM":"XMIL","MERK":"XOSL","XOAS":"XOSL",
+    "ALXL":"XLIS","ENXL":"XLIS","XMSM":"XDUB","XESM":"XDUB","XATL":"XDUB","XACD":"XDUB","FNSE":"XSTO","SSME":"XSTO"
+  },
   "calendars": {
     "euronext-milan-cash": {
       "timezone": "Europe/Rome",

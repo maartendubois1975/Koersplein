@@ -1,14 +1,14 @@
-import { readFile } from 'node:fs/promises';
 import {identityEventAt} from './company-register.mjs';
 import { validateBars } from './bars.mjs';
-const sources = JSON.parse(await readFile(new URL('../../data/market-source-registry.json', import.meta.url), 'utf8'));
-export const parentMic = mic => ({ ALXB: 'XBRU', MLXB: 'XBRU', ALXP: 'XPAR', XMLI: 'XPAR', MTAA: 'XMIL', EXGM: 'XMIL', MERK: 'XOSL', XOAS: 'XOSL', ALXL: 'XLIS', ENXL: 'XLIS', XMSM: 'XDUB', XESM: 'XDUB', XATL: 'XDUB', XACD: 'XDUB', FNSE: 'XSTO', SSME: 'XSTO' }[mic] || mic);
+import { marketSources as sources, parentMic } from './market-definitions.mjs';
+export { parentMic };
 
 // Registration order is not approval. Only explicit roles in the market source
 // register authorize a provider; research/paid candidates cannot become fallbacks.
 export function providerRoute(instrument, { mode = 'backfill', sourceRegistry = sources } = {}) {
   const listingMic = instrument.mic || instrument.market;
-  const mic = sourceRegistry.markets?.[listingMic] ? listingMic : parentMic(listingMic);
+  const parent = parentMic(listingMic);
+  const mic = sourceRegistry.markets?.[parent]?.publication || !sourceRegistry.markets?.[listingMic] ? parent : listingMic;
   const source = sourceRegistry.markets?.[mic];
   if (source?.status !== 'APPROVED') throw Error(`No approved source route: ${mic}`);
   const entries = mode === 'update' && source.dailySources ? source.dailySources : source.historySources;

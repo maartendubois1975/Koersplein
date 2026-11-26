@@ -1,7 +1,17 @@
 export const approvedMarkets=new Set();
 let contractsPromise;
+const loadContracts=load=>(contractsPromise??=load('data/company-register-contracts.json').catch(e=>{contractsPromise=null;throw e}));
+export async function browserMarkets(legacy,load){
+ const contracts=await loadContracts(load);
+ const reviewed=Object.entries(contracts.markets).flatMap(([mic,contract])=>contract.navigation
+  ? [{...contract.navigation,mic,id:contract.navigation.code,status:'available',state:'COMPLETE',sharesData:contract.file}]
+  : []);
+ const byMic=new Map(legacy.map(market=>[market.mic,market]));
+ for(const market of reviewed)byMic.set(market.mic,market);
+ return [...byMic.values()];
+}
 export async function browserCatalog(mic,fallback,load){
- const contracts=await (contractsPromise??=load('data/company-register-contracts.json').catch(e=>{contractsPromise=null;throw e}));
+ const contracts=await loadContracts(load);
  for(const key of Object.keys(contracts.markets))approvedMarkets.add(key);
  const contract=contracts.markets[mic]||contracts.catalogPreviews?.[mic];
  if(!contract)return load(fallback);

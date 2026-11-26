@@ -10,7 +10,7 @@ export function verifyLedger(records){const ids=new Set(),hashes=new Set();for(c
 export async function appendLedger(path,record){let rows=[];try{rows=(await fs.readFile(path,'utf8')).split(/\r?\n/).filter(Boolean).map(JSON.parse)}catch(e){if(e.code!=='ENOENT')throw e}if(rows.some(x=>x.predictionId===record.predictionId))throw Error('IMMUTABLE_LEDGER_ALREADY_CONTAINS_'+record.predictionId);verifyLedger([...rows,record]);await fs.mkdir(path.split('/').slice(0,-1).join('/'),{recursive:true});await fs.appendFile(path,JSON.stringify(record)+'\n');return record;}
 export function freezeSnapshot(kind,payload,{asOfTime,sourceIds=[]}={}){if(!kind||!asOfTime)throw Error('SNAPSHOT_IDENTITY_REQUIRED');const body={kind,asOfTime:new Date(asOfTime).toISOString(),sourceIds:[...sourceIds].sort(),payloadHash:hash(payload)};return{...body,snapshotId:hash(body),immutable:true};}
 
-const opportunityFields=['selectionDate','market','venue','currency','targetPct','horizonMonths','frozen','modelVersion','name','ticker','isin','referenceDate','referenceClose','consensusRank','componentRanks','componentScores','features','audit','createdAt'];
+const opportunityFields=['selectionDate','market','venue','currency','targetPct','horizonMonths','frozen','modelVersion','name','ticker','isin','referenceDate','referenceClose','consensusRank','componentRanks','componentScores','features','audit','createdAt','signalType','benchmarkAtSelection'];
 export const opportunityCore=p=>Object.fromEntries(opportunityFields.filter(k=>p[k]!==undefined).map(k=>[k,p[k]]));
 export function sealOpportunity(prediction){return {...prediction,recordHash:hash(opportunityCore(prediction)),immutable:true};}
 export function verifyOpportunity(prediction){
@@ -40,4 +40,50 @@ export function verifyOpportunityAppend(previous, next) {
  }
  for (const row of records.values()) verifyOpportunity(row);
  return true;
+}
+
+const average = values => values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
+
+export function opportunityScoreboard(ledger, markets = []) {
+ const scored = ledger.filter(row => row.recordHash && row.immutable === true && !row.legacyUnverified);
+ function summarize(rows) {
+  const finished = rows.filter(row => row.status === 'CLOSED' && !row.evaluationError &&
+   typeof row.result30 === 'boolean' && Number.isFinite(row.currentReturn));
+  const wins = finished.filter(row => row.result30).length;
+  const matched = finished.filter(row => Number.isFinite(row.benchmarkReturn));
+  return {
+   predictions: rows.length, closed: finished.length, hits30: wins, misses30: finished.length - wins,
+   hitRate: finished.length ? wins / finished.length * 100 : null,
+   averageReturn: average(finished.map(row => row.currentReturn)),
+   averageLoss: average(finished.map(row => row.currentReturn).filter(value => value < 0)),
+   benchmarkComparisons: matched.length,
+   averageBenchmarkReturn: average(matched.map(row => row.benchmarkReturn)),
+   averageExcessReturn: average(matched.map(row => row.currentReturn - row.benchmarkReturn)),
+  };
+ }
+ function group(key, initial = []) {
+  return Object.fromEntries([...new Set([...initial, ...scored.map(key)])].sort()
+   .map(value => [value, summarize(scored.filter(row => key(row) === value))]));
+ }
+ return { ...summarize(scored), savedRecords: ledger.length, unsealedRecords: ledger.length - scored.length,
+  open: scored.filter(row => row.status === 'OPEN').length,
+  byMarket: group(row => row.market, markets),
+  bySignal: group(row => row.signalType || row.modelVersion || 'unknown'),
+  byHorizon: group(row => String(row.horizonMonths || 3)),
+ };
+}
+
+export async function evaluateBenchmark(prediction, outcome, loadBars) {
+ const members = prediction.benchmarkAtSelection;
+ if (outcome.status !== 'CLOSED' || !Array.isArray(members) || members.length < 2) return null;
+ const returns = [];
+ for (const member of members) {
+  const bars = await loadBars(member);
+  const first = bars.find(row => row.date === prediction.referenceDate);
+  const last = bars.find(row => row.date === outcome.latestDate);
+  if (!first || first.close !== member.referenceClose || !last || !Number.isFinite(last.close) || last.close <= 0 ||
+      outcome.latestDate <= prediction.referenceDate) return null;
+  returns.push(last.close / member.referenceClose - 1);
+ }
+ return average(returns);
 }

@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import {catalogWithListingEvents} from '../../daily-session-view.mjs';
+import {assertOperationalMarket,establishedMarkets} from './market-definitions.mjs';
 const data = new URL('../../data/', import.meta.url);
 const read = async file => JSON.parse(await readFile(new URL(file, data), 'utf8'));
 export const instrumentEvents=(await read('instrument-events.json')).events;
@@ -29,14 +30,21 @@ export async function loadCompanyCatalog(mic) {
   const input = await read(contract.file);
   const catalog = { ...input, mic };
   validateCompanyCatalog(catalog, contract);
+  assertOperationalMarket(catalog, contract);
+  if (!establishedMarkets.has(mic)) {
+    catalog.canonicalHistoryOnly = true;
+    catalog.currency ??= contract.navigation.currency;
+  }
   return validateCompanyCatalog(catalogWithListingEvents(catalog,instrumentEvents),contract);
 }
 export async function approvedCompanyUniverse() {
   const markets=await Promise.all(Object.keys(companyContracts).map(loadCompanyCatalog));
-  const ids=new Set();
+  const ids=new Set(), issuers=new Set();
   for(const market of markets)for(const share of market.shares){
     if(ids.has(share.isin))throw Error('Duplicate approved company across markets: '+share.isin);
     ids.add(share.isin);
+    if (share.issuerId && issuers.has(share.issuerId)) throw Error('Duplicate issuer across approved registers: '+share.issuerId);
+    if (share.issuerId) issuers.add(share.issuerId);
   }
   return markets;
 }

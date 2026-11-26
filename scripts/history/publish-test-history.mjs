@@ -26,7 +26,9 @@ export async function publishTestHistory({ markets, outputDir, historyDir = join
     }
   }
 
-  const manifest = await readPublic('manifest.json');
+  const needsLegacy = markets.some(market => market.mic !== 'XAMS' && !market.canonicalHistoryOnly);
+  const manifest = needsLegacy ? await readPublic('manifest.json') : null;
+  if (needsLegacy && !manifest) throw Error('PUBLIC_HISTORY_MANIFEST_MISSING');
   const resolvers = new Map();
   function getResolver(mic) {
     if (!resolvers.has(mic)) resolvers.set(mic, manifestResolver(manifest, mic));
@@ -34,19 +36,19 @@ export async function publishTestHistory({ markets, outputDir, historyDir = join
   }
   const requested = markets.filter(market => market.mic !== 'XAMS').flatMap(market =>
     market.shares.flatMap(share => {
-      const current={share,market:market.mic,identity:listingIdentity(share,market.mic)};
+      const current={share,market:market.mic,canonicalOnly:market.canonicalHistoryOnly,identity:listingIdentity(share,market.mic)};
       if(!share.currentListing)return [current];
       const previous={...share,currentListing:undefined};
-      return [current,{share:previous,market:market.mic,identity:listingIdentity(previous,market.mic),historicalOnly:true}];
+      return [current,{share:previous,market:market.mic,canonicalOnly:market.canonicalHistoryOnly,identity:listingIdentity(previous,market.mic),historicalOnly:true}];
     })
   );
   const stagedDir = await fs.mkdtemp(outputDir + '-');
   try {
     const results = [];
-    await mapConcurrent(requested, 8, async ({ share, market, identity, historicalOnly=false }) => {
+    await mapConcurrent(requested, 8, async ({ share, market, identity, canonicalOnly, historicalOnly=false }) => {
       const { storageKey, isin, mic, symbol } = identity;
       const row = { market, storageKey, symbol, ...(historicalOnly?{historicalOnly:true}:{}) };
-      const storageId = getResolver(mic)({ ...share, ...identity });
+      const storageId = canonicalOnly ? null : getResolver(mic)({ ...share, ...identity });
       if (!storageId || !/^[A-Z0-9][A-Z0-9:-]{2,31}$/.test(storageId)) {
         let local;
         try {
@@ -105,7 +107,7 @@ export async function publishTestHistory({ markets, outputDir, historyDir = join
     ]));
     if (Object.values(counts).some(count => count === 0)) throw Error('NO_VALID_PUBLIC_HISTORY_FOR_MARKET');
     await fs.writeFile(join(stagedDir, 'coverage.json'), JSON.stringify({
-      workerManifestDate: manifest.generatedAt,
+      workerManifestDate: manifest?.generatedAt ?? null,
       counts,
       results: results.sort((a, b) => a.storageKey.localeCompare(b.storageKey)),
     }, null, 2));

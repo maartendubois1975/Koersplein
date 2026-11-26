@@ -76,12 +76,13 @@ export async function euronextDailySnapshot(i,date,signal,adjusted='N'){
 export class EuronextLiveProvider{
  id=PROVIDER_ID;name='Euronext Live historical prices';requiresApiKey=false;
  supports(i){return supportsEuronextInstrument(i)}
- async fetchDaily(i,{startDate,endDate,signal,adjusted='N'}={}){
+ async fetchDaily(i,{startDate,endDate,signal,adjusted='N',verifyIdentity=false}={}){
   if(!['Y','N'].includes(adjusted))throw Error('Invalid adjustment mode');
   const mic=euronextProviderMic(i.mic||i.market),key=`${i.isin}-${mic}`,all=[];
-  if(requiresEuronextQuoteIdentity(mic)){
-   const quote=await euronextQuoteSnapshot({...i,mic},signal);
-   if(!quote.identityMatch)throw Error('EURONEXT_LISTING_IDENTITY_MISMATCH '+key);
+  let quote;
+  if(verifyIdentity||requiresEuronextQuoteIdentity(mic)){
+   quote=await euronextQuoteSnapshot({...i,mic},signal);
+   if(!quote.identityMatch||verifyIdentity&&(!i.currency||quote.currency!==i.currency))throw Error('EURONEXT_LISTING_IDENTITY_MISMATCH '+key);
   }
   const failedWindows=[];
   for(const [start,end] of chunks(startDate,endDate)){
@@ -100,7 +101,7 @@ export class EuronextLiveProvider{
   // The official table's Number of Shares must confirm positive volume.
   const traded=dedup.filter(b=>Number(b.open)>0&&Number(b.close)>0&&Number(b.volume)>0);
   if(!traded.length)throw Error(`Geen verhandelde Euronext koershistorie voor ${key}; mislukte vensters: ${failedWindows.length}`);
-  return{bars:traded,requestUrl:ROOT+key,providerMeta:{mic,isin:i.isin,source:'Euronext Live',priceBasis:adjusted==='N'?'UNADJUSTED':'EURONEXT_ADJUSTED',adjusted,windowPolicy:'<=700d chunks',partialHistory:failedWindows.length>0,failedWindows}};
+  return{bars:traded,requestUrl:ROOT+key,providerMeta:{mic,isin:i.isin,source:'Euronext Live',...(quote?.currency?{currency:quote.currency,quoteSourceUrl:quote.sourceUrl}:{}),priceBasis:adjusted==='N'?'UNADJUSTED':'EURONEXT_ADJUSTED',adjusted,windowPolicy:'<=700d chunks',partialHistory:failedWindows.length>0,failedWindows}};
  }
 }
 
@@ -110,15 +111,16 @@ export function parseEuronextQuoteHeader(html,instrument){
  const text=clean(html).replace(/&#039;|&apos;/g,"'").replace(/\s+/g,' ');
  const mic=euronextProviderMic(instrument.mic||instrument.market);
  const address=clean(html.match(/<p[^>]+class="address__text[^"]*"[^>]*>([\s\S]*?)<\/p>/)?.[1]).replace(/\s+/g,' ');
- const currency=clean(html.match(/id="header-instrument-currency"[^>]*>([\s\S]*?)<\/span>/)?.[1]);
+ const currencyLabel=clean(html.match(/id="header-instrument-currency"[^>]*>([\s\S]*?)<\/span>/)?.[1]);
+ const currency=currencyLabel==='€'?'EUR':currencyLabel;
  const expected=quoteVenues[mic]+' '+instrument.isin+' - Stock';
  const expectedCurrency=instrument.currency||strictQuoteCurrencies[mic];
  const identityMatch=supportsEuronextQuoteIdentity(mic)&&(requiresEuronextQuoteIdentity(mic)
-  ? address===expected&&(currency==='€'?'EUR':currency)===expectedCurrency
+  ? address===expected&&currency===expectedCurrency
   : text.includes(expected));
  const last=text.match(/Last traded price\s+(\d{2}\/\d{2}\/\d{4})/i),valuation=text.match(/Valuation Close.*?(\d{2}\/\d{2}\/\d{4})/i);
  const status=html.match(/<!--\s*status\s+(\w+)\s*-->/)?.[1]||null;
- return {identityMatch,lastTradeDate:last?iso(last[1]):null,valuationDate:valuation?iso(valuation[1]):null,status,bookState:html.match(/<!--\s*bookState\s+(\w+)\s*-->/)?.[1]||null,haltReason:html.match(/<!--\s*haltReasonKey\s+(.*?)\s*-->/)?.[1]||null,tradingState:status==='HAL'&&/\bSUSPENDED\b/.test(text)?'SUSPENDED':status==='HAL'?'RESERVED':status,identityUnknown:/This instrument is unknown/i.test(text)};
+ return {identityMatch,currency,lastTradeDate:last?iso(last[1]):null,valuationDate:valuation?iso(valuation[1]):null,status,bookState:html.match(/<!--\s*bookState\s+(\w+)\s*-->/)?.[1]||null,haltReason:html.match(/<!--\s*haltReasonKey\s+(.*?)\s*-->/)?.[1]||null,tradingState:status==='HAL'&&/\bSUSPENDED\b/.test(text)?'SUSPENDED':status==='HAL'?'RESERVED':status,identityUnknown:/This instrument is unknown/i.test(text)};
 }
 export function corroboratedEuronextNoTrade(header,row,date,snapshotAt){
  const observed=String(snapshotAt||'').slice(0,10),lag=(Date.parse(observed)-Date.parse(date))/86400000;

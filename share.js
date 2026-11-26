@@ -1,4 +1,4 @@
-import {approvedMarkets,browserCatalog,dailyRow,dailyHistoryPath,dailyState,dailyStateLabel,listingForRequest} from './daily-session-view.mjs';
+import {approvedMarkets,browserCatalog,browserMarkets,dailyRow,dailyHistoryPath,dailyState,dailyStateLabel,listingForRequest,previousConfirmedBar} from './daily-session-view.mjs';
 import { renderHistoryChart, validateHistoryDocument, periodStartDate, mergeChartHistoryBars } from './chart.js';
 import { manifestResolver } from './market-week-core.mjs';
 import { assessPeriod, latestCloseChange } from './scripts/research/amsterdam-period-quality.mjs';
@@ -9,7 +9,7 @@ const fail=m=>{historyState.className='history-empty';historyState.innerHTML=`<s
 Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()=>({apiBaseUrl:''}))]).then(async([venues,runtime])=>{
  const venue=venues.venues.find(v=>v.id==='euronext');if(!venue)throw Error('Europese markten niet gevonden');
  let found=null;
- for(const market of venue.markets.filter(m=>m.status==='available'&&m.sharesData)){
+ for(const market of (await browserMarkets(venue.markets,load)).filter(m=>m.status==='available'&&m.sharesData)){
   try{const data=await browserCatalog(market.mic,'data/'+market.sharesData,load),shares=Array.isArray(data)?data:(data.shares||[]),share=shares.map(x=>listingForRequest(x,market.mic,{isin,mic:requestedMic,symbol:requestedSymbol})).find(Boolean);if(share){found={market,share,catalogPreview:data.catalogPreview};break}}catch(error){console.warn('CATALOG_UNAVAILABLE',market.mic,error.message);}
  }
  if(!found)throw Error('Aandeel niet gevonden');
@@ -31,7 +31,13 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
  }
  let current=null,currentState=null;
  if(approvedMarkets.has(market.mic)){try{const snap=await load('data/daily-session-'+market.mic+'.json');currentState=dailyState(snap,share,market.mic);current=dailyRow(snap,share,market.mic);if(current){const fmt=n=>n.toLocaleString('nl-NL',{style:'currency',currency:share.currency||market.currency||'EUR'});detail.querySelector('.latest-price').innerHTML='<span>Opening / slot</span><strong>'+fmt(current.open)+' / '+fmt(current.close)+'</strong><small>'+esc(current.date)+'</small>';}}catch{}}
- if(currentState&&!current)detail.querySelector('.latest-price').innerHTML='<span>Handelsdag '+esc(currentState.date)+'</span><strong>'+esc(dailyStateLabel(currentState))+'</strong><small>Geen bevestigde opening of slot voor deze dag</small>';
+ const lastConfirmed=previousConfirmedBar(currentState);
+ if(currentState&&!current){
+  const savedClose=lastConfirmed?.close.toLocaleString('nl-NL',{style:'currency',currency:share.currency||market.currency||'EUR'});
+  detail.querySelector('.latest-price').innerHTML='<span>Handelsdag '+esc(currentState.date)+' · '+esc(dailyStateLabel(currentState))+'</span>'+
+   (lastConfirmed?'<strong>'+esc(savedClose)+'</strong><small>Laatst bevestigd slot · '+esc(lastConfirmed.date)+'</small>':
+    '<small>Geen bevestigde opening of slot voor deze dag</small>');
+ }
  try{
   let h,storageId,dailyHistory=null,resolvedSourceDays=0;
   try{dailyHistory=await load(dailyHistoryPath(share,market.mic));}catch(error){if(!String(error.message).includes('HTTP 404'))throw error;}
@@ -100,6 +106,6 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
   const delta=change.percent;
   const deltaText=delta===null?'—':new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:2,maximumFractionDigits:2}).format(delta)+'%';
   const deltaColor=delta===null?'':delta>=0?'#3fc98c':'#ee6677';
-  if(!current)detail.querySelector('.latest-price').innerHTML=`<span>${esc(share.historicalListing?'Historische notering':dailyStateLabel(currentState))} · ${esc(currentState?.date||'')}</span><span>Laatst opgeslagen slot</span><strong>${Number(last.close).toLocaleString('nl-NL',{style:'currency',currency,minimumFractionDigits:2,maximumFractionDigits:2})}</strong><span style="color:${deltaColor};font-weight:700">${esc(deltaText)} t.o.v. vorig slot${lastDiscontinuity?' · koerssprong of historiegat niet geverifieerd':''}</span><small>${esc(last.date)} · historie vanaf ${esc(first.date)}</small>`;
+  if(!current&&(!lastConfirmed||last.date>lastConfirmed.date))detail.querySelector('.latest-price').innerHTML=`<span>${esc(share.historicalListing?'Historische notering':dailyStateLabel(currentState))} · ${esc(currentState?.date||'')}</span><span>Laatst opgeslagen slot</span><strong>${Number(last.close).toLocaleString('nl-NL',{style:'currency',currency,minimumFractionDigits:2,maximumFractionDigits:2})}</strong><span style="color:${deltaColor};font-weight:700">${esc(deltaText)} t.o.v. vorig slot${lastDiscontinuity?' · koerssprong of historiegat niet geverifieerd':''}</span><small>${esc(last.date)} · historie vanaf ${esc(first.date)}</small>`;
  }catch(e){fail(e.message+'; geen beleggingsadvies zonder voldoende betrouwbare historie')}
 }).catch(e=>{detail.innerHTML=`<div><p class="eyebrow">Niet beschikbaar</p><h1>${esc(e.message)}</h1></div>`;fail('Aandeelgegevens konden niet worden geladen')});

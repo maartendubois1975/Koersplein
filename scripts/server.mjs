@@ -9,7 +9,7 @@ const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=
 createServer((request, response) => {
   let pathname;
   try { pathname = decodeURIComponent(request.url.split('?')[0]); } catch { response.writeHead(400).end('Ongeldig pad'); return; }
-  if (pathname === '/') pathname = '/index.html';
+  if (pathname.endsWith('/')) pathname += 'index.html';
   const target = normalize(join(root, pathname));
 
   if (!target.startsWith(root)) {

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Technische status · Koersplein</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .status-section {padding-block: 2rem}
+    .status-table {overflow-x: auto; margin-block: 1rem}
+    .status-table table {width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums}
+    .status-table :is(th, td) {padding: .65rem; border-bottom: 1px solid #38332a; text-align: left}
+    .status-table tr:nth-child(even) {background: rgba(127,127,127,.09)}
+    .status-table td {vertical-align: top}
+    .status-section select {margin-inline-start: .5rem; padding: .35rem; font: inherit}
+    .status-section summary {cursor: pointer}
+    .status-section :focus-visible {outline: 2px solid #d9b45b; outline-offset: 3px}
+    .status-section p {max-width: 85ch}
+    #market-info ul {padding-inline-start: 1.5rem}
+  </style>
+</head>
+<body>
+<header class="site-header"><a class="brand" href="../"><span>K</span>KOERSPLEIN</a></header>
+<main class="shell">
+  <section class="status-section">
+    <h1>Technische status</h1>
+    <p id="build" role="status">Status van deze build laden…</p>
+    <p id="previews" hidden></p>
+    <div id="markets" class="status-table" tabindex="0" role="region" aria-label="Beurzen"></div>
+  </section>
+  <section id="history" class="status-section" hidden>
+    <h2>Historie per onderneming</h2>
+    <label for="exchange">Beurs</label><select id="exchange"></select>
+    <div id="market-info"></div>
+    <p>De aangegeven periode begint bij de bevestigde noteringsdatum of de oudste opgeslagen waarneming. De telling van ontbrekende sessies loopt alleen over jaren met een beschikbare officiële kalender. Koersdagen hebben complete OHLCV. Historische reeksen kunnen verschillen in bron en prijsbasis.</p>
+    <div id="companies" class="status-table" tabindex="0" role="region" aria-label="Ondernemingen"></div>
+  </section>
+  <section id="predictions" class="status-section" hidden>
+    <h2>Voorspellingen</h2>
+    <p id="prediction-counts"></p>
+    <div id="scores" class="status-table" tabindex="0" role="region" aria-label="Voorspellingsresultaten"></div>
+    <p>De benchmark neemt de gelijkgewogen prijsrendementen van de ondernemingen die bij selectie in aanmerking kwamen. Het benchmarkrendement verschijnt als de referentiekoers en eindkoers van alle vooraf vastgelegde ondernemingen zijn bevestigd.</p>
+  </section>
+</main>
+<script type="module" src="operations-status.js"></script>
+</body>
+</html>

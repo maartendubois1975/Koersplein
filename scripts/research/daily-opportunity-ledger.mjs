@@ -5,7 +5,7 @@ import {mapConcurrent} from '../cloudflare/europe-run-policy.mjs';
 import {validSessionDate} from '../../daily-session-view.mjs';
 import {assessPeriod} from './amsterdam-period-quality.mjs';
 import {evaluateOpportunity} from './exam-outcomes-core.mjs';
-import {sealOpportunity,verifyOpportunityAppend} from './prediction-ledger-core.mjs';
+import {sealOpportunity,verifyOpportunityAppend,opportunityScoreboard,evaluateBenchmark} from './prediction-ledger-core.mjs';
 import {loadCompanyCatalog,companyContracts} from '../history/company-register.mjs';
 
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
@@ -101,6 +101,8 @@ for(const m of active){
     frozen:true,
     createdAt:new Date().toISOString(),
     modelVersion:'consensus-price-v2-auditable',
+    signalType:'consensus',
+    benchmarkAtSelection:sameDate.map(row=>({isin:row.x.isin,referenceClose:row.close})).sort((a,b)=>a.isin.localeCompare(b.isin)),
     name:q.x.name||q.x.company||q.x.symbol||q.x.isin,
     ticker:q.x.ticker||q.x.symbol||null,
     isin:q.x.isin,
@@ -123,8 +125,16 @@ for(const p of ledger){
     if(!share)throw Error('PREDICTION_OUTSIDE_APPROVED_REGISTER');
     const bars=await hist(share,p.market);
     if(p.evaluationVersion!=='bounded-calendar-v1'&&p.latestDate)p.previousEvaluation={latestDate:p.latestDate,latestClose:p.latestClose,result30:p.result30,hit30:p.hit30,hit30Date:p.hit30Date,maxReturn:p.maxReturn};
-    Object.assign(p,evaluateOpportunity(p,bars,{asOf:runReferenceDate}));delete p.evaluationError;
-  }catch(error){p.evaluationError=error.message;p.status='EVALUATION_UNVERIFIED';p.result30=null;diagnostics.push({market:p.market,isin:p.isin,status:'EVALUATION_FAILED',error:error.message});}
+    const outcome=evaluateOpportunity(p,bars,{asOf:runReferenceDate});
+    Object.assign(p,outcome);delete p.evaluationError;
+    p.benchmarkReturn=null;
+    try{
+      p.benchmarkReturn=await evaluateBenchmark(p,outcome,async member=>{
+        const benchmarkShare=market.catalog.shares.find(x=>x.isin===member.isin);
+        return benchmarkShare ? hist(benchmarkShare,p.market) : [];
+      });
+    }catch(error){diagnostics.push({market:p.market,isin:p.isin,status:'BENCHMARK_UNVERIFIED',error:error.message});}
+  }catch(error){p.evaluationError=error.message;p.status='EVALUATION_UNVERIFIED';p.result30=null;p.benchmarkReturn=null;diagnostics.push({market:p.market,isin:p.isin,status:'EVALUATION_FAILED',error:error.message});}
 }
 
 verifyOpportunityAppend(savedLedger,ledger);
@@ -137,22 +147,13 @@ for(const mic of Object.keys(companyContracts)){
   if(xs[0]) latestByMarket[mic]=xs[0];
 }
 const closed=ledger.filter(x=>x.status==='CLOSED'&&x.recordHash&&!x.legacyUnverified&&!x.evaluationError);
-const hits30=closed.filter(x=>x.result30===true).length;
-const misses30=closed.filter(x=>x.result30===false).length;
 const learning={
   generatedAt:new Date().toISOString(),
   referenceDate:runReferenceDate,
   purpose:'Bevries iedere voorspelling vooraf, volg de uitkomst en leer van raak en mis.',
   target:'+30% binnen 3 maanden',
   latestByMarket,
-  scoreboard:{
-    totalPredictions:ledger.length,
-    open:ledger.filter(x=>x.status==='OPEN').length,
-    closed:closed.length,
-    hits30,
-    misses30,
-    hitRate:closed.length?round(hits30/closed.length*100,2):null
-  },
+  scoreboard:{totalPredictions:ledger.length,...opportunityScoreboard(ledger,Object.keys(companyContracts))},
   lessons:closed.slice(-50).map(x=>({
     market:x.market,name:x.name,isin:x.isin,selectionDate:x.selectionDate,referenceDate:x.referenceDate,
     referenceClose:x.referenceClose,latestDate:x.latestDate,latestClose:x.latestClose,

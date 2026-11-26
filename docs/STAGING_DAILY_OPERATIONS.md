@@ -1,6 +1,6 @@
 # Koersplein dagelijkse testomgeving
 
-De bestaande hoofdbranchplanner `.github/workflows/amsterdam-staging-schedule.yml` roept de centrale `approved-daily-session.yml` op `consolidation-20261116` aan. Die kiest bij een late start de laatste afgesloten sessie per goedgekeurde markt volgens de handelskalender in lokale beurstijd. Een wijziging aan de centrale workflow op de werkbranch start dezelfde keten ter controle. Datacommits starten geen nieuwe import.
+De bestaande hoofdbranchplanner `.github/workflows/amsterdam-staging-schedule.yml` roept de centrale `approved-daily-session.yml` op `consolidation-20261116` aan. Die kiest bij een late start de laatste afgesloten sessie per goedgekeurde markt volgens de handelskalender in lokale beurstijd. Gewone pushes op de werkbranch starten de afzonderlijke regressie. De bestaande hoofdbranchplanner blijft de ingang van de geplande dagverwerking.
 
 Controleer alle marktjobs uit de goedgekeurde registercontracten, het archiefrapport en de verificatiejob. De archiver bewaart geslaagde markten onafhankelijk. Publicatie vereist dat de verwachte marktsessies zijn verzameld en gearchiveerd en dat de regressietests slagen. Een ontbrekende Render-referentie verschijnt als `BLOCKED_CREDENTIAL_ABSENT` en laat de publicatiejob falen. De bestaande beschermde publicatiestap verwacht een GitHub Actions-secret `RENDER_API_KEY` en controleert de exacte werkbranchcommit tegen testservice `srv-dajuqaek1f9s739gu8kg`.
 
@@ -9,3 +9,5 @@ De bestaande Render-build voert `npm test && npm run history:test` uit. De bijbe
 Dagkoersen, historie en onderzoek behouden hun eigen validatie. Een ontbrekende of afgewezen historische reeks blijft als zodanig zichtbaar. De documenten uit de centrale dagarchivering blijven de bron van de gecontroleerde dagelijkse openingen en slotkoersen.
 
 Als een notering geen gevalideerde identiteit in het oude openbare manifest heeft, publiceert dezelfde helper de canonieke lokale historie na identiteits-, valuta- en datumvalidatie. Dublin, Lissabon en herstelde bronreeksen gebruiken deze bestaande documenten. De archivering voegt nieuwe handelsdagen aan die reeksen toe.
+
+Na de historietests genereert de build ook `data/operations-status.json` voor `/status/`. De status gebruikt de sessiearchieven, per-notering historie en het opgeslagen voorspellingsgrootboek in de checkout. GitHub Actions blijft leidend voor fouten van runs die geen nieuwe build opleveren.

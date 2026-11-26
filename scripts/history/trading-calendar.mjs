@@ -1,7 +1,6 @@
-import fs from 'node:fs/promises';
-import {parentMic} from './source-policy.mjs';
-import {validSessionDate} from '../../daily-session-view.mjs';
-export const tradingCalendars=JSON.parse(await fs.readFile(new URL('../../data/trading-calendars.json',import.meta.url),'utf8'));
+import { parentMic, tradingCalendars } from './market-definitions.mjs';
+import { validSessionDate } from '../../daily-session-view.mjs';
+export { tradingCalendars };
 export function sessionCalendar(market,date){
  if(!validSessionDate(date))throw Error('INVALID_CALENDAR_DATE');
  const id=tradingCalendars.markets[parentMic(market)],calendar=tradingCalendars.calendars[id];

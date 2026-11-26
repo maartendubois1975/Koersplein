@@ -10,9 +10,18 @@ export async function deployApprovedTest({apiKey,commitSha,branch=DEVELOPMENT_BR
  const service=await request();
  if(service.id!==TEST_SERVICE||service.name!=='koersplein-test'||service.type!=='static_site'||service.serviceDetails?.url!==TEST_URL||service.repo!=='https://github.com/maartendubois1975/Koersplein')throw Error('REFUSE_UNEXPECTED_RENDER_SERVICE');
  // Keep automatic deployments off: only this validated development workflow publishes the exact recorded commit.
- await request('','PATCH',{branch:DEVELOPMENT_BRANCH,autoDeployTrigger:'off'});
- const created=await request('/deploys','POST',{commitId:commitSha,clearCache:'do_not_clear'});
- const deploy=created.deploy||created;if(!/^dep-/.test(deploy.id||''))throw Error('RENDER_TEST_DEPLOY_ID_MISSING');
+ if(service.branch!==DEVELOPMENT_BRANCH||service.autoDeployTrigger!=='off'){
+  await request('','PATCH',{branch:DEVELOPMENT_BRANCH,autoDeployTrigger:'off'});
+ }
+ const recent=await request('/deploys?limit=20');
+ if(!Array.isArray(recent))throw Error('RENDER_TEST_DEPLOY_LIST_INVALID');
+ let deploy=recent.map(entry=>entry.deploy||entry).find(entry=>entry.commit?.id===commitSha&&
+  ['live','created','build_in_progress','pre_deploy_in_progress','update_in_progress'].includes(entry.status));
+ if(!deploy){
+  const created=await request('/deploys','POST',{commitId:commitSha,clearCache:'do_not_clear'});
+  deploy=created.deploy||created;
+ }
+ if(!/^dep-/.test(deploy.id||''))throw Error('RENDER_TEST_DEPLOY_ID_MISSING');
  for(let attempt=0;attempt<90;attempt++){
   const state=await request('/deploys/'+deploy.id),current=state.deploy||state;
   if(current.status==='live'){
