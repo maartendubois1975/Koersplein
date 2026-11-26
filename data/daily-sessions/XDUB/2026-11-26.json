@@ -1,0 +1,332 @@
+{
+  "market": "XDUB",
+  "session": "2026-11-26",
+  "calendar": {
+    "date": "2026-11-26",
+    "market": "XDUB",
+    "timezone": "Europe/Dublin",
+    "finalizedAfter": "18:15",
+    "open": true,
+    "halfDay": false,
+    "sourceUrl": "https://www.euronext.com/en/trading/trading-hours-holidays"
+  },
+  "counts": {
+    "TRADED": 14,
+    "NO_TRADES": 1,
+    "SESSION_UNVERIFIED": 1
+  },
+  "readOnly": true,
+  "generatedAt": "2026-11-26T18:45:25.091Z",
+  "results": [
+    {
+      "isin": "IE0000669501",
+      "mic": "XMSM",
+      "symbol": "GL9",
+      "name": "Glanbia",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 16.64,
+        "high": 17.23,
+        "low": 16.57,
+        "close": 17.22,
+        "adjustedClose": null,
+        "volume": 3106237
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE0000669501-XMSM"
+    },
+    {
+      "isin": "IE0003290289",
+      "mic": "XMSM",
+      "symbol": "EG7",
+      "name": "FBD Holdings",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 19.1,
+        "high": 19.1,
+        "low": 18.9,
+        "close": 19,
+        "adjustedClose": null,
+        "volume": 1494
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE0003290289-XMSM"
+    },
+    {
+      "isin": "IE0004906560",
+      "mic": "XMSM",
+      "symbol": "KRZ",
+      "name": "Kerry Group",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 103.6,
+        "high": 105.8,
+        "low": 103.3,
+        "close": 105.8,
+        "adjustedClose": null,
+        "volume": 307300
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE0004906560-XMSM"
+    },
+    {
+      "isin": "IE0004927939",
+      "mic": "XMSM",
+      "symbol": "KRX",
+      "name": "Kingspan Group",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 89.45,
+        "high": 90.2,
+        "low": 88,
+        "close": 88,
+        "adjustedClose": null,
+        "volume": 702238
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE0004927939-XMSM"
+    },
+    {
+      "isin": "IE000O0F49R3",
+      "mic": "XACD",
+      "symbol": "SENUS",
+      "name": "Senus",
+      "status": "NO_TRADES",
+      "bar": null,
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE000O0F49R3-XACD",
+      "evidence": {
+        "date": "2026-11-26",
+        "mic": "XACD",
+        "isin": "IE000O0F49R3",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE000O0F49R3-XACD",
+        "retrievedAt": "2026-11-26T18:45:27.258Z",
+        "lastTradeDate": "2026-05-18",
+        "status": "NO_TRADES",
+        "volume": 0,
+        "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/IE000O0F49R3-XACD",
+        "quoteSha256": "c9407069c9a01f2151242e265c538e100f33df957f8394adb9dd08a2d74bc804",
+        "stateObservedAt": "2026-11-26T18:45:27.746Z",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null
+      },
+      "lastConfirmedBar": {
+        "date": "2026-05-18",
+        "open": 6.15,
+        "high": 6.15,
+        "low": 6.15,
+        "close": 6.15,
+        "adjustedClose": null,
+        "volume": 1380
+      }
+    },
+    {
+      "isin": "IE00B1WV4493",
+      "mic": "XESM",
+      "symbol": "OIZ",
+      "name": "Origin Enterprises",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 4.195,
+        "high": 4.37,
+        "low": 4.135,
+        "close": 4.37,
+        "adjustedClose": null,
+        "volume": 105233
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE00B1WV4493-XESM"
+    },
+    {
+      "isin": "IE00BD1RP616",
+      "mic": "XMSM",
+      "symbol": "BIRG",
+      "name": "Bank of Ireland Group",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 18.18,
+        "high": 18.405,
+        "low": 18.075,
+        "close": 18.245,
+        "adjustedClose": null,
+        "volume": 1209773
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE00BD1RP616-XMSM"
+    },
+    {
+      "isin": "IE00BD64C665",
+      "mic": "XESM",
+      "symbol": "MIO",
+      "name": "Mincon Group",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 0.9,
+        "high": 0.9,
+        "low": 0.9,
+        "close": 0.9,
+        "adjustedClose": null,
+        "volume": 4000
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE00BD64C665-XESM"
+    },
+    {
+      "isin": "IE00BD6JX574",
+      "mic": "XMSM",
+      "symbol": "GVR",
+      "name": "Glenveagh Properties",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 2.35,
+        "high": 2.445,
+        "low": 2.35,
+        "close": 2.435,
+        "adjustedClose": null,
+        "volume": 355111
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE00BD6JX574-XMSM"
+    },
+    {
+      "isin": "IE00BF0L3536",
+      "mic": "XMSM",
+      "symbol": "A5G",
+      "name": "AIB Group",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 10.72,
+        "high": 10.85,
+        "low": 10.665,
+        "close": 10.76,
+        "adjustedClose": null,
+        "volume": 3955494
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE00BF0L3536-XMSM"
+    },
+    {
+      "isin": "IE00BJ34P519",
+      "mic": "XMSM",
+      "symbol": "IRES",
+      "name": "Irish Residential Properties REIT",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 1.362,
+        "high": 1.368,
+        "low": 1.362,
+        "close": 1.364,
+        "adjustedClose": null,
+        "volume": 435884
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE00BJ34P519-XMSM"
+    },
+    {
+      "isin": "IE00BJ5FQX74",
+      "mic": "XESM",
+      "symbol": "UPR",
+      "name": "Uniphar",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 4.15,
+        "high": 4.27,
+        "low": 4.15,
+        "close": 4.27,
+        "adjustedClose": null,
+        "volume": 158554
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE00BJ5FQX74-XESM"
+    },
+    {
+      "isin": "IE00BLP58571",
+      "mic": "XMSM",
+      "symbol": "IR5B",
+      "name": "Irish Continental Group",
+      "status": "SESSION_UNVERIFIED",
+      "bar": null,
+      "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
+      "evidence": null,
+      "officialError": null,
+      "error": "Alle providers faalden voor IE00BLP58571: euronext-live: Geen verhandelde Euronext koershistorie voor IE00BLP58571-XMSM; mislukte vensters: 0",
+      "lastConfirmedBar": {
+        "date": "2026-11-20",
+        "open": 7.96,
+        "high": 8,
+        "low": 7.96,
+        "close": 7.96,
+        "adjustedClose": null,
+        "volume": 21719
+      }
+    },
+    {
+      "isin": "IE00BWB8X525",
+      "mic": "XMSM",
+      "symbol": "PTSB",
+      "name": "Permanent TSB Group Holdings",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 2.98,
+        "high": 3.17,
+        "low": 2.97,
+        "close": 3.1,
+        "adjustedClose": null,
+        "volume": 1468697
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE00BWB8X525-XMSM"
+    },
+    {
+      "isin": "IE00BWY4ZF18",
+      "mic": "XMSM",
+      "symbol": "C5H",
+      "name": "Cairn Homes",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 2.86,
+        "high": 2.9,
+        "low": 2.83,
+        "close": 2.895,
+        "adjustedClose": null,
+        "volume": 3698373
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE00BWY4ZF18-XMSM"
+    },
+    {
+      "isin": "IE00BYTBXV33",
+      "mic": "XMSM",
+      "symbol": "RYA",
+      "name": "Ryanair Holdings",
+      "status": "TRADED",
+      "bar": {
+        "date": "2026-11-26",
+        "open": 25.38,
+        "high": 25.58,
+        "low": 25.05,
+        "close": 25.25,
+        "adjustedClose": null,
+        "volume": 821638
+      },
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE00BYTBXV33-XMSM"
+    }
+  ],
+  "archiveConflicts": []
+}
