@@ -2,8 +2,26 @@
   "version": 1,
   "source": "https://www.euronext.com/en/trading/trading-hours-holidays",
   "verifiedAt": "2026-11-17",
-  "markets": {"XAMS":"euronext-cash","XBRU":"euronext-cash","XPAR":"euronext-cash","XDUB":"euronext-dublin-cash","XLIS":"euronext-lisbon-cash"},
+  "markets": {"XAMS":"euronext-cash","XBRU":"euronext-cash","XPAR":"euronext-cash","XDUB":"euronext-dublin-cash","XLIS":"euronext-lisbon-cash","XMIL":"euronext-milan-cash","XOSL":"euronext-oslo-cash"},
   "calendars": {
+    "euronext-milan-cash": {
+      "timezone": "Europe/Rome",
+      "finalizedAfter": "18:15",
+      "note": "Official cash calendar. Trading After Hours restrictions do not close the cash session.",
+      "years": {
+        "2026": {"closed":["2026-01-01","2026-04-03","2026-04-06","2026-05-01","2026-12-24","2026-12-25","2026-12-31"],"halfDays":[]},
+        "2027": {"closed":["2027-01-01","2027-03-26","2027-03-29"],"halfDays":["2027-12-24","2027-12-31"]}
+      }
+    },
+    "euronext-oslo-cash": {
+      "timezone": "Europe/Oslo",
+      "finalizedAfter": "17:15",
+      "note": "Conservative local collection boundary after the Oslo cash session, including half days.",
+      "years": {
+        "2026": {"closed":["2026-01-01","2026-04-02","2026-04-03","2026-04-06","2026-05-01","2026-05-14","2026-05-25","2026-12-24","2026-12-25","2026-12-31"],"halfDays":["2026-04-01"]},
+        "2027": {"closed":["2027-01-01","2027-03-25","2027-03-26","2027-03-29","2027-05-06","2027-05-17","2027-12-24","2027-12-31"],"halfDays":["2027-03-24"]}
+      }
+    },
     "euronext-lisbon-cash": {
       "timezone": "Europe/Lisbon",
       "finalizedAfter": "18:15",

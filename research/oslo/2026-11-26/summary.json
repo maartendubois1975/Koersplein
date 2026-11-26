@@ -1,0 +1,47 @@
+{
+  "asOf": "2026-11-26",
+  "directorySource": "https://live.euronext.com/en/product_directory/data/stocks-oslo/download?mics=XOSL%2CMERK%2CXOAS",
+  "directorySha256": "73b771e10bf23b46e241aabf2369e3ecfc51d635c322a2ab6c047a0faf2e8113",
+  "directoryCount": 292,
+  "counts": {
+    "INCLUDE": 243,
+    "EXCLUDE": 45,
+    "REVIEW": 4
+  },
+  "bySegment": {
+    "XOSL": 163,
+    "XOAS": 9,
+    "MERK": 71
+  },
+  "identitySha256": "c6e821934ef7d04045fb671b74d08345616cf6ba1029e809031ea95dc9954b37",
+  "changes": [
+    {
+      "symbol": "CAPT",
+      "isin": "MHY1096C1093",
+      "fromMic": "MERK",
+      "toMic": "XOSL",
+      "effectiveDate": "2026-11-25",
+      "source": "https://live.euronext.com/en/ipo-showcase/capital-tankers-corp"
+    }
+  ],
+  "priorReplay": {
+    "result": "PASS",
+    "calendar": "RESEARCH_FIXTURE",
+    "identitySha256": "0c3043b1e7425dacb03069ec0910ae1b1abc59eacbad8cea7d42d0c91babe3c5",
+    "sourceReplay": {
+      "TRADED": 238,
+      "NO_TRADES": 5
+    },
+    "archiveErrors": 0,
+    "archiveConflicts": 0,
+    "chartSeries": 243,
+    "chartBars": 111604,
+    "repeatByteIdentical": 243,
+    "protectedCompanies": 899
+  },
+  "newListing": {
+    "symbol": "HEDER",
+    "firstTradingDay": "2026-11-26",
+    "source": "https://live.euronext.com/en/ipo-showcase/heder-bank-asa"
+  }
+}
