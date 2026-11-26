@@ -1,0 +1,39 @@
+{
+  "retrievedAt": "2026-11-26T05:16:56.131Z",
+  "requestedStart": "2025-11-25",
+  "requestedEnd": "2026-11-25",
+  "freeAccess": true,
+  "apiKeyUsed": false,
+  "companies": 360,
+  "nonEmpty": 360,
+  "totalObservations": 78425,
+  "bySegment": {
+    "EXGM": 178,
+    "MTAA": 182
+  },
+  "latestDates": {
+    "2026-02-03": 1,
+    "2026-02-27": 1,
+    "2026-09-03": 1,
+    "2026-09-29": 1,
+    "2026-11-02": 1,
+    "2026-11-13": 2,
+    "2026-11-17": 2,
+    "2026-11-18": 6,
+    "2026-11-19": 4,
+    "2026-11-20": 9,
+    "2026-11-23": 26,
+    "2026-11-24": 306
+  },
+  "crosscheck": {
+    "companies": 16,
+    "observations": 2773,
+    "complete": 2773,
+    "incomplete": 1,
+    "priceDifferences": 236,
+    "volumeDifferences": 232,
+    "priceTolerance": "max(1e-7, abs(price)*1e-6) for float32 representation only"
+  },
+  "publicationPermission": "NOT_ESTABLISHED_BY_TECHNICAL_ACCESS",
+  "deployment": "RESEARCH_ONLY"
+}
