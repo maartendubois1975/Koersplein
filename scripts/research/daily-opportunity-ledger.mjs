@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import {loadApprovedHistory} from './market-history-source.mjs';
 import {mapConcurrent} from '../cloudflare/europe-run-policy.mjs';
 import {validSessionDate} from '../../daily-session-view.mjs';
-import {assessPeriod} from './amsterdam-period-quality.mjs';
+import {assessForecastWindow,loadForecastHistory} from './forecast-input-review.mjs';
 import {evaluateOpportunity} from './exam-outcomes-core.mjs';
 import {sealOpportunity,verifyOpportunityAppend,opportunityScoreboard,evaluateBenchmark} from './prediction-ledger-core.mjs';
 import {loadCompanyCatalog,companyContracts} from '../history/company-register.mjs';
@@ -18,7 +18,10 @@ const diagnostics=[];
 const histCache=new Map();
 async function hist(share,market,{prediction=false}={}){
  const key=(share.primaryMic||share.mic||market)+':'+share.isin+':'+prediction;
- if(!histCache.has(key))histCache.set(key,loadApprovedHistory(share,market,{api:API,cutoff:runReferenceDate,requirePredictionEvidence:prediction}));
+ if(!histCache.has(key)){
+  const load=prediction?loadForecastHistory:loadApprovedHistory;
+  histCache.set(key,load(share,market,{api:API,cutoff:runReferenceDate,currency:share.currency||active.find(row=>row.mic===market)?.catalog.currency||'EUR'}));
+ }
  return histCache.get(key);
 }
 const pct=(a,b)=>a&&b?b/a-1:0;
@@ -42,10 +45,8 @@ for(const m of active){
   await mapConcurrent(ins,6,async x=>{
     try{
       const b=await hist(x,m.mic,{prediction:true}),i=b.length-1;
-      if(b[i]?.date!==runReferenceDate){diagnostics.push({market:m.mic,isin:x.isin,status:'STALE_HISTORY',lastDate:b[i]?.date});return;}
-      if(i<252){diagnostics.push({market:m.mic,isin:x.isin,status:'INSUFFICIENT_HISTORY',records:b.length});return;}
-      const quality=assessPeriod(b.slice(i-252));
-      if(quality.issues.length){diagnostics.push({market:m.mic,isin:x.isin,status:'HISTORY_QUALITY_BLOCKED',issues:quality.issues});return;}
+      const review=assessForecastWindow(b,runReferenceDate);
+      if(review.status!=='READY'){diagnostics.push({market:m.mic,isin:x.isin,...review});return;}
       const c=b[i].close,r=[];
       for(let j=i-125;j<=i;j++) r.push(pct(b[j-1].close,b[j].close));
       const w=b.slice(i-252,i+1).map(v=>v.close);
@@ -66,7 +67,7 @@ for(const m of active){
         acceleration:features.acceleration3m+features.m3-.5*features.volatility126,
         breakout:features.m6+features.drawdown52w+.2*features.recovery52w
       };
-      rows.push({x,date:b[i].date,close:c,features,scores,componentRanks:{},consensusRank:0});
+      rows.push({x,date:b[i].date,close:c,features,scores,componentRanks:{},consensusRank:0,windowSha256:review.windowSha256});
     }catch(e){failed++;diagnostics.push({market:m.mic,isin:x.isin,status:'HISTORY_FAILED',error:e.message});console.warn('HISTORY_FAILED',m.mic,x.isin,e.message)}
   });
   rows.sort((a,b)=>a.x.isin.localeCompare(b.x.isin));
@@ -112,7 +113,7 @@ for(const m of active){
     componentRanks:q.componentRanks,
     componentScores:Object.fromEntries(Object.entries(q.scores).map(([k,v])=>[k,round(v)])),
     features:Object.fromEntries(Object.entries(q.features).map(([k,v])=>[k,round(v)])),
-    audit:{universeCount:pack.universeCount,eligibleCount:sameDate.length,failedCount:pack.failedCount,coveragePct:round(coverage*100,4)}
+    audit:{universeCount:pack.universeCount,eligibleCount:sameDate.length,failedCount:pack.failedCount,coveragePct:round(coverage*100,4),historyWindowSha256:q.windowSha256}
   };
   const sealed=sealOpportunity(selection);ledger.push(sealed);
   newSelections.push(sealed);

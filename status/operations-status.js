@@ -1,3 +1,5 @@
+import {historyAvailabilityText} from '../daily-session-view.mjs';
+
 const element = id => document.getElementById(id);
 const number = new Intl.NumberFormat('nl-NL');
 const percent = new Intl.NumberFormat('nl-NL', { style: 'percent', maximumFractionDigits: 2 });
@@ -61,6 +63,8 @@ function showMarket(market) {
     const values = [row.archive, row.legacy].filter(Boolean).map(source =>
       [source.source, source.priceBasis, source.completenessVerified ? 'Volledigheid bewezen' : 'Volledigheid onbevestigd',
        source.incompleteBars ? source.incompleteBars + ' onvolledige records' : null].filter(Boolean).join(' · '));
+    const checked = historyAvailabilityText(row.availability);
+    if (checked) values.push(checked);
     values.push(...row.issues.map(issue => issue.kind + ' · ' + issue.reason));
     return values.length ? expandable('Herkomst', values) : '—';
   }
@@ -76,11 +80,24 @@ function showMarket(market) {
   ]));
 }
 
-function showPredictions(scores, names) {
+function showPredictions(scores, markets) {
   if (!scores) return;
   element('predictions').hidden = false;
   element('prediction-counts').textContent = show(scores.predictions) + ' vooraf vastgelegde voorspellingen · ' +
     show(scores.closed) + ' afgerond · ' + show(scores.unsealedRecords) + ' oudere of onbevestigde records';
+  const names = new Map(markets.map(market => [market.mic, market.name]));
+  const checked = markets.filter(market => market.forecastReadiness);
+  if (checked.length) {
+    table(element('forecast-readiness'), [
+      'Beurs', 'Getoetste sessie', 'Direct bruikbaar', 'Herkomst onbevestigd',
+      'Overige blokkades', 'Technisch bruikbaar vóór herkomstcontrole',
+    ], checked.map(market => {
+      const { session, counts, unverifiedWindows } = market.forecastReadiness;
+      const ready = counts.READY ?? 0, provenance = counts.PROVENANCE_UNVERIFIED ?? 0;
+      return [market.name, session, ready, provenance, market.approvedCompanies - ready - provenance,
+        unverifiedWindows.READY ?? 0];
+    }));
+  }
   const groups = [['Totaal', scores],
     ...Object.entries(scores.byMarket).map(([key, data]) => [names.get(key) || key, data]),
     ...Object.entries(scores.bySignal).map(([key, data]) => ['Signaal · ' + key, data]),
@@ -128,7 +145,7 @@ async function start() {
     element('history').hidden = false;
     update();
   }
-  showPredictions(report.predictions, new Map(report.markets.map(market => [market.mic, market.name])));
+  showPredictions(report.predictions, report.markets);
 }
 
 start().catch(() => {

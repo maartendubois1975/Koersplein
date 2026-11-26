@@ -259,3 +259,10 @@ De werkbranch bevat voor 25 november vijf sessies met de beschermde 80/105/664/1
 ## 2026-11-26 — technische opschaling
 
 De bestaande 899 registeridentiteiten en de vijf dagarchieven van 25 november zijn opnieuw gecontroleerd. De gedeelde technische status, geschiedeniscontrole en toelatingsvalidatie werken op de checkout. Voor een nieuw marktregister vereist de centrale ingang bewezen gratis openbare historie- en dagbronnen naast de gecontroleerde identiteit en kalender. De geplande verwerking van 25 november archiveerde alle vijf beurzen vóór de publicatiefout `BLOCKED_CREDENTIAL_ABSENT`. De testsite wacht op de bestaande publicatieroute met geldig Render-secret. Milaan en Oslo zijn herbevestigd op 360 en 243 geselecteerde identiteiten. Verdere bronnen, resterende blokkades, verificatie en rollback staan in [Europese opschaling](EUROPEAN_SCALING_2026-11-26.md).
+
+
+## 2026-11-26 — publicatie, Trade Files en ontbrekende geschiedenis
+
+De geplande GitHub-route geeft de Render-secretnaam correct door. De publicatiejob ontving geen sleutel. Een nieuwe gratis Milanese dagbron is technisch gemeten: de Euronext Trade File heeft voor 25 november dezelfde 310 verhandelde ISIN/MIC-identiteiten als de beurscontrole. Acht van dertien koersproeven wijken af op slot of volume. De vergoeding voor bepaalde Milanese data na middernacht is volgens Euronext geschrapt. Voor automatische koerspublicatie blijven de exacte bronvoorwaarden en berekeningsmethode te verifiëren.
+
+Alle 28 Parijse grafiekgaten zijn opnieuw gecontroleerd rond de laatst gemelde transactiedatum. Er kwamen 33 regels zonder volume en geen volledige OHLCV-dag terug. De bronbevindingen zijn beschikbaar in de aandeelpagina en het statusrapport. De lokaal opgeslagen forecast-ingang bevat 110 structureel bruikbare reeksen, met nul volledig geverifieerde kandidaten. Voor exacte metingen, bronverwijzingen, voorwaarden en herstelroute zie [Publicatie en historie](EUROPEAN_PUBLICATION_AND_HISTORY_2026-11-26.md).

@@ -2,13 +2,14 @@ import fs from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { listingIdentity, validSessionDate } from '../../daily-session-view.mjs';
+import { historyAvailability, listingIdentity, validSessionDate } from '../../daily-session-view.mjs';
 import { validateHistoryDocument } from '../../chart.js';
 import { validateSnapshot } from '../cloudflare/archive-approved-session.mjs';
 import { inspectDailyBarIntegrity, mapConcurrent } from '../cloudflare/europe-run-policy.mjs';
 import { approvedCompanyUniverse, companyContracts } from './company-register.mjs';
 import { providerRoute } from './source-policy.mjs';
 import { latestClosedSession, sessionCalendar, tradingCalendars } from './trading-calendar.mjs';
+import { auditStoredForecastInput } from '../research/forecast-input-review.mjs';
 import { verifyOpportunity, opportunityScoreboard } from '../research/prediction-ledger-core.mjs';
 
 async function json(file) {
@@ -49,7 +50,7 @@ async function inspectHistory(file, identity, currency, cutoff) {
   } };
 }
 
-async function reportMarket(catalog, dataDir, now) {
+async function reportMarket(catalog, dataDir, now, availability) {
   const { mic, shares } = catalog;
   const closed = latestClosedSession(mic, now);
   const sessions = openDates(mic, closed);
@@ -79,6 +80,7 @@ async function reportMarket(catalog, dataDir, now) {
   } catch (error) { readErrors.push({ reason: error.message }); }
 
   const companies = [];
+  const forecastCounts = {}, forecastWindows = {};
   await mapConcurrent(shares, 8, async (share, index) => {
     const identity = listingIdentity(share, mic, closed);
     const currency = share.currency || catalog.currency || 'EUR';
@@ -107,9 +109,17 @@ async function reportMarket(catalog, dataDir, now) {
       }
       else if (!bars.has(date)) missing.push(date);
     }
+    if (latest) {
+      const review = await auditStoredForecastInput(share, mic, { dataDir, cutoff: latest.session, currency });
+      forecastCounts[review.status] = (forecastCounts[review.status] ?? 0) + 1;
+      if (review.storedWindowStatus) {
+        forecastWindows[review.storedWindowStatus] = (forecastWindows[review.storedWindowStatus] ?? 0) + 1;
+      }
+    }
     companies[index] = { ...identity, currency, firstDate: [archive?.audit.firstDate, legacy?.audit.firstDate].filter(Boolean).sort()[0] ?? null,
       lastDate: [archive?.audit.lastDate, legacy?.audit.lastDate].filter(Boolean).sort().at(-1) ?? null,
       archive: archive?.audit ?? null, legacy: legacy?.audit ?? null,
+      availability: historyAvailability(availability, identity),
       gapWindowStart: start && sessions.find(date => date >= start) || null,
       listingDateVerified: validSessionDate(listingDate), noTrades, unverified, unverifiedWithBar, missing, issues };
   });
@@ -127,6 +137,7 @@ async function reportMarket(catalog, dataDir, now) {
       any: companies.filter(row => row.archive || row.legacy).length,
       archiveBars: companies.reduce((total, row) => total + (row.archive?.completeBars ?? 0), 0),
       legacyBars: companies.reduce((total, row) => total + (row.legacy?.completeBars ?? 0), 0) },
+    forecastReadiness: latest ? { session: latest.session, counts: forecastCounts, unverifiedWindows: forecastWindows } : null,
     sources: sources.allowedProviderIds, observedSources,
     sourceErrors: latest?.results.filter(row => row.officialError || ['OFFICIAL_SOURCE_ERROR', 'PROVIDER_DATA_UNAVAILABLE'].includes(row.reasonCode))
       .map(row => ({ isin: row.isin, reason: row.officialError || row.error || row.reasonCode })) ?? null,
@@ -137,7 +148,9 @@ async function reportMarket(catalog, dataDir, now) {
 export async function operationsReport({ dataDir = 'data', now = new Date(), commit = null, buildCheck = null } = {}) {
   const catalogs = await approvedCompanyUniverse();
   const markets = [];
-  for (const catalog of catalogs) markets.push(await reportMarket(catalog, dataDir, now));
+  const storedAvailability = await json(join(dataDir, 'history-availability.json'));
+  const availability = storedAvailability?.reviewedOn <= now.toISOString().slice(0, 10) ? storedAvailability : null;
+  for (const catalog of catalogs) markets.push(await reportMarket(catalog, dataDir, now, availability));
   const ledger = await json(join(dataDir, 'opportunity-ledger.json'));
   const contracts = await json(new URL('../../data/company-register-contracts.json', import.meta.url));
   const previews = Object.entries(contracts.catalogPreviews || {}).map(([mic, row]) => ({ mic, companies: row.expectedCount }));

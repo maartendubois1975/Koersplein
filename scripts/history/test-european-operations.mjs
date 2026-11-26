@@ -1,5 +1,9 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import os from 'node:os';
+import { join } from 'node:path';
+import { historyAvailability, historyAvailabilityText } from '../../daily-session-view.mjs';
+import { assessForecastWindow, auditStoredForecastInput, loadForecastHistory } from '../research/forecast-input-review.mjs';
 import { operationsReport } from './operations-report.mjs';
 import { catalogDrift } from './catalog-drift.mjs';
 import { reviewHistoryGaps } from './history-gap-review.mjs';
@@ -22,6 +26,19 @@ for (const row of archived.results) {
   if (row.status === 'NO_TRADES') assert(company.noTrades.includes(archived.session));
   if (row.status === 'SESSION_UNVERIFIED') assert(company.unverified.includes(archived.session));
 }
+for (const row of report.markets) {
+  if (!row.forecastReadiness) continue;
+  assert.equal(Object.values(row.forecastReadiness.counts).reduce((total, value) => total + value, 0), row.approvedCompanies);
+}
+const parisReview = await read('data/history-availability.json');
+const reviewed = Object.values(parisReview.instruments);
+assert.equal(reviewed.length, 28);
+assert(reviewed.every(row => row.completeOhlcv === 0 && row.historyRows === row.zeroVolumeRows));
+const lastTrade = reviewed.find(row => row.lastTradeDateReported);
+const noTradeDate = reviewed.find(row => !row.lastTradeDateReported);
+assert.match(historyAvailabilityText(historyAvailability(parisReview, lastTrade)), /laatste transactiedatum/);
+assert.match(historyAvailabilityText(historyAvailability(parisReview, noTradeDate)), /geen laatste transactiedatum/);
+assert.equal(historyAvailability(parisReview, { ...lastTrade, mic: 'XPAR' }), null);
 assert.equal(report.predictions.savedRecords, (await read('data/opportunity-ledger.json')).length);
 
 const catalog = await loadCompanyCatalog('XBRU');
@@ -54,6 +71,32 @@ assert.equal(milan.shares.length, 360);
 const xams = report.markets.find(row => row.mic === 'XAMS');
 const actual = await read('data/history/XAMS:NL0010273215.json');
 const observation = actual.bars.at(-1);
+const shortWindow = actual.bars.slice(-6);
+assert.equal(assessForecastWindow(shortWindow, observation.date).status, 'INSUFFICIENT_HISTORY');
+const amsterdam = await loadCompanyCatalog('XAMS');
+const asml = amsterdam.shares.find(share => share.symbol === 'ASML');
+const temporary = await fs.mkdtemp(join(os.tmpdir(), 'koersplein-forecast-'));
+try {
+  const folder = join(temporary, 'history');
+  await fs.mkdir(folder);
+  const legacy = await read('data/history/NL0010273215.json');
+  legacy.coverage.backfillComplete = false;
+  await fs.writeFile(join(folder, 'NL0010273215.json'), JSON.stringify(legacy));
+  const verified = { ...actual, bars: shortWindow, provider: { metadata: {
+    completenessEvidenceVerified: true, corporateActionsSource: 'regression fixture metadata',
+  } }, coverage: { lastDate: observation.date, backfillComplete: true } };
+  const file = join(folder, 'XAMS:NL0010273215.json');
+  await fs.writeFile(file, JSON.stringify(verified));
+  const options = { dataDir: temporary, cutoff: observation.date, currency: 'EUR' };
+  assert.equal((await loadForecastHistory(asml, 'XAMS', options)).length, shortWindow.length,
+    'The unverified legacy series must not be mixed into the short verified input');
+  assert.equal((await auditStoredForecastInput(asml, 'XAMS', options)).status, 'INSUFFICIENT_HISTORY');
+  await assert.rejects(() => loadForecastHistory(asml, 'XAMS', { ...options, currency: 'USD' }),
+    /PREDICTION_HISTORY_CURRENCY_MISMATCH/);
+  verified.coverage.backfillComplete = false;
+  await fs.writeFile(file, JSON.stringify(verified));
+  assert.equal((await auditStoredForecastInput(asml, 'XAMS', options)).status, 'PROVENANCE_UNVERIFIED');
+} finally { await fs.rm(temporary, { recursive: true, force: true }); }
 const company = {
   ...xams.companies.find(row => row.symbol === 'ASML'), issues: [],
   missing: [observation.date], unverified: [],

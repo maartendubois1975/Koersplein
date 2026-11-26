@@ -75,3 +75,25 @@ export function dailyStateLabel(row){
  if(row?.reasonCode==='IDENTITY_CHANGED')return 'ISIN gewijzigd — verificatie nodig';
  return 'Koers niet bevestigd';
 }
+
+export function historyAvailability(document, identity) {
+ const key=identity.mic+':'+identity.isin;
+ const row=document?.schemaVersion===1?document.instruments?.[key]:null;
+ if(!row||row.isin!==identity.isin||row.mic!==identity.mic||row.symbol!==identity.symbol||
+    !validSessionDate(document.reviewedOn)||!validSessionDate(row.historyWindow?.startDate)||
+    !validSessionDate(row.historyWindow?.endDate)||row.historyWindow.startDate>row.historyWindow.endDate||
+    row.historyWindow.endDate>document.reviewedOn||(row.lastTradeDateReported!=null&&
+     (!validSessionDate(row.lastTradeDateReported)||row.lastTradeDateReported>document.reviewedOn))||
+    !Number.isSafeInteger(row.completeOhlcv)||row.completeOhlcv<0)return null;
+ return {reviewedOn:document.reviewedOn,lastTradeDateReported:row.lastTradeDateReported,
+   historyWindow:row.historyWindow,completeOhlcv:row.completeOhlcv};
+}
+
+export function historyAvailabilityText(review) {
+ if(!review||review.completeOhlcv!==0)return null;
+ const lastTrade=review.lastTradeDateReported
+  ? ' De beurs vermeldde '+review.lastTradeDateReported+' als laatste transactiedatum.'
+  : ' De beurs vermeldde geen laatste transactiedatum.';
+ return 'De beursbron leverde bij de controle van '+review.reviewedOn+' geen volledige koersdag voor '+
+  review.historyWindow.startDate+' t/m '+review.historyWindow.endDate+'.'+lastTrade;
+}

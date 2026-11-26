@@ -1,11 +1,11 @@
-import {approvedMarkets,browserCatalog,browserMarkets,dailyRow,dailyHistoryPath,dailyState,dailyStateLabel,listingForRequest,previousConfirmedBar} from './daily-session-view.mjs';
+import {approvedMarkets,browserCatalog,browserMarkets,dailyRow,dailyHistoryPath,dailyState,dailyStateLabel,listingForRequest,previousConfirmedBar,historyAvailability,historyAvailabilityText} from './daily-session-view.mjs';
 import { renderHistoryChart, validateHistoryDocument, periodStartDate, mergeChartHistoryBars } from './chart.js';
 import { manifestResolver } from './market-week-core.mjs';
 import { assessPeriod, latestCloseChange } from './scripts/research/amsterdam-period-quality.mjs';
 const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
 const params=new URLSearchParams(location.search),isin=params.get('isin'),requestedMic=params.get('mic'),requestedSymbol=params.get('symbol'),detail=document.querySelector('#share-detail'),historyState=document.querySelector('#history-state');
 const load=async url=>{const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error(`HTTP ${r.status}`);return r.json()};
-const fail=m=>{historyState.className='history-empty';historyState.innerHTML=`<strong>Historie tijdelijk niet beschikbaar</strong><p>${esc(m)}.</p>`;document.querySelector('#history-range').textContent='—'};
+const fail=(m,title='Historie tijdelijk niet beschikbaar')=>{historyState.className='history-empty';historyState.innerHTML=`<strong>${esc(title)}</strong><p>${esc(m)}</p>`;document.querySelector('#history-range').textContent='—'};
 Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()=>({apiBaseUrl:''}))]).then(async([venues,runtime])=>{
  const venue=venues.venues.find(v=>v.id==='euronext');if(!venue)throw Error('Europese markten niet gevonden');
  let found=null;
@@ -107,5 +107,11 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
   const deltaText=delta===null?'—':new Intl.NumberFormat('nl-NL',{signDisplay:'always',minimumFractionDigits:2,maximumFractionDigits:2}).format(delta)+'%';
   const deltaColor=delta===null?'':delta>=0?'#3fc98c':'#ee6677';
   if(!current&&(!lastConfirmed||last.date>lastConfirmed.date))detail.querySelector('.latest-price').innerHTML=`<span>${esc(share.historicalListing?'Historische notering':dailyStateLabel(currentState))} · ${esc(currentState?.date||'')}</span><span>Laatst opgeslagen slot</span><strong>${Number(last.close).toLocaleString('nl-NL',{style:'currency',currency,minimumFractionDigits:2,maximumFractionDigits:2})}</strong><span style="color:${deltaColor};font-weight:700">${esc(deltaText)} t.o.v. vorig slot${lastDiscontinuity?' · koerssprong of historiegat niet geverifieerd':''}</span><small>${esc(last.date)} · historie vanaf ${esc(first.date)}</small>`;
- }catch(e){fail(e.message+'; geen beleggingsadvies zonder voldoende betrouwbare historie')}
+ }catch(e){
+  const availability=market.mic==='XPAR'
+   ? await load('data/history-availability.json').catch(()=>null) : null;
+  const note=historyAvailabilityText(historyAvailability(availability,{isin:share.isin,mic,symbol:share.symbol||share.ticker}));
+  if(note)fail(note,'Geen volledige koersgegevens gevonden');
+  else fail(e.message+'.');
+ }
 }).catch(e=>{detail.innerHTML=`<div><p class="eyebrow">Niet beschikbaar</p><h1>${esc(e.message)}</h1></div>`;fail('Aandeelgegevens konden niet worden geladen')});

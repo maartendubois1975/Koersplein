@@ -1,0 +1,568 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-11-26",
+  "market": "XPAR",
+  "priceMode": "UNADJUSTED",
+  "instruments": {
+    "XMLI:ES0106008008": {
+      "isin": "ES0106008008",
+      "mic": "XMLI",
+      "symbol": "MLBIM",
+      "lastTradeDateReported": "2026-03-09",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2026-01-23",
+        "endDate": "2026-03-09"
+      },
+      "historyRows": 1,
+      "zeroVolumeRows": 1,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0106008008-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0106008008-XMLI",
+      "quoteSha256": "a2681f3065483e9c159eaca8a55bff364a161af7a107e98d6e5160666d3b9cfc",
+      "historySha256": "0e8ee930feeadd951af4cacd335b4149b08efd8b45ca68f438210c53f2691106"
+    },
+    "XMLI:ES0105660007": {
+      "isin": "ES0105660007",
+      "mic": "XMLI",
+      "symbol": "MLCOE",
+      "lastTradeDateReported": "2022-11-17",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2022-10-03",
+        "endDate": "2022-11-17"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105660007-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105660007-XMLI",
+      "quoteSha256": "5439187d742125225a2a2fb6a3f2759e9b3c0e8240b75376c903df3e9e2e4241",
+      "historySha256": "8a11db2f9d87c436a994b003b75ae88b947976fc12158306d8ff01b4879ab906"
+    },
+    "XMLI:ES0105362000": {
+      "isin": "ES0105362000",
+      "mic": "XMLI",
+      "symbol": "MLBAR",
+      "lastTradeDateReported": "2018-09-18",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2018-08-04",
+        "endDate": "2018-09-18"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105362000-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105362000-XMLI",
+      "quoteSha256": "75eda573f7fe55d7650ccc8ca53519d5f2fbeccce647b66bb8bdd5caf4eb3265",
+      "historySha256": "d518e891d881d7b160f24ef7a1250158d65cc0dd2b5f62e31d352cee9c410fe5"
+    },
+    "XMLI:ES0105661005": {
+      "isin": "ES0105661005",
+      "mic": "XMLI",
+      "symbol": "MLARE",
+      "lastTradeDateReported": "2022-11-17",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2022-10-03",
+        "endDate": "2022-11-17"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105661005-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105661005-XMLI",
+      "quoteSha256": "a6a8a7f710e314b634f03b7f778bc9c294b6717601895de1d80492b08db5099c",
+      "historySha256": "25b74621dbed413fc344470705ac86237355b655418bea632e3a5fed5b9b767f"
+    },
+    "XMLI:ES0106046008": {
+      "isin": "ES0106046008",
+      "mic": "XMLI",
+      "symbol": "MLEXX",
+      "lastTradeDateReported": "2026-07-14",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2026-05-30",
+        "endDate": "2026-07-14"
+      },
+      "historyRows": 1,
+      "zeroVolumeRows": 1,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0106046008-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0106046008-XMLI",
+      "quoteSha256": "07b55114917ae9463ff708c74cb4e540dd1046140e3b4de16177233aa9ef5189",
+      "historySha256": "4612b281cb23668c802ebacda16c90126412538d888f7c801e04159deea4e837"
+    },
+    "XMLI:ES0105601001": {
+      "isin": "ES0105601001",
+      "mic": "XMLI",
+      "symbol": "MLARI",
+      "lastTradeDateReported": "2021-09-17",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2021-08-03",
+        "endDate": "2021-09-17"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105601001-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105601001-XMLI",
+      "quoteSha256": "55a983299fc8798eb19c3aa8fd41696cd3a856b155846822db754c0373424555",
+      "historySha256": "5aaf49c77d7df80211de759b92f42a766897a3c95bc5bbb7d188221843d5463f"
+    },
+    "XMLI:IT0005613739": {
+      "isin": "IT0005613739",
+      "mic": "XMLI",
+      "symbol": "MLGL",
+      "lastTradeDateReported": null,
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "SESSION_UNVERIFIED",
+      "historyWindow": {
+        "startDate": "2026-11-18",
+        "endDate": "2026-11-26"
+      },
+      "historyRows": 7,
+      "zeroVolumeRows": 7,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/IT0005613739-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IT0005613739-XMLI",
+      "quoteSha256": "a9b9ce46edab33601e9a112c85657d61a53f6a78eb017cbea636ff521a2cf911",
+      "historySha256": "36d771c61de526509b064bfc9520b677a348b5e693c6798628ea354b6133448b"
+    },
+    "XMLI:ES0105964003": {
+      "isin": "ES0105964003",
+      "mic": "XMLI",
+      "symbol": "MLESV",
+      "lastTradeDateReported": "2025-12-18",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2025-11-03",
+        "endDate": "2025-12-18"
+      },
+      "historyRows": 1,
+      "zeroVolumeRows": 1,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105964003-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105964003-XMLI",
+      "quoteSha256": "badaeafe995b8271110e5803ac70910d5c3b3b5ae6e3ce207ce465abfccb074f",
+      "historySha256": "88c4914e6ec09307028264f332ebf40d0fb5b1878bf6d3670049858e71d38574"
+    },
+    "XMLI:ES0105553004": {
+      "isin": "ES0105553004",
+      "mic": "XMLI",
+      "symbol": "MLECE",
+      "lastTradeDateReported": "2021-07-29",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2021-06-14",
+        "endDate": "2021-07-29"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105553004-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105553004-XMLI",
+      "quoteSha256": "4476cf2ee59042b0a6c4fe59a08cb298f5aa3829c93b3fd0bf714d0835debf15",
+      "historySha256": "07b146055013f1ba878929874a452d5fdf08fe1ee7a3c83f52c59cabf46f9a18"
+    },
+    "XMLI:ES0105537007": {
+      "isin": "ES0105537007",
+      "mic": "XMLI",
+      "symbol": "MLNDG",
+      "lastTradeDateReported": "2021-04-16",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2021-03-02",
+        "endDate": "2021-04-16"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105537007-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105537007-XMLI",
+      "quoteSha256": "7873afdff6d3d7c1115bc74c93c02aefe8369afb113921475f4d233201e8d06c",
+      "historySha256": "0fa3c24f5cd20b57d23cf10e210a921a44976c0788e412e26f39cc054e3d3cea"
+    },
+    "XMLI:ES0105498002": {
+      "isin": "ES0105498002",
+      "mic": "XMLI",
+      "symbol": "MLHAY",
+      "lastTradeDateReported": "2020-09-30",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2020-08-16",
+        "endDate": "2020-09-30"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105498002-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105498002-XMLI",
+      "quoteSha256": "274fd0ee1269db12f77e6815680cc62e296e8d9903f1dcd51243ae8de07c64c5",
+      "historySha256": "d4cc24eee5867865be2e0aa070c06d1b2f5382935005c505ba4065ad62ad681a"
+    },
+    "XMLI:ES0105586004": {
+      "isin": "ES0105586004",
+      "mic": "XMLI",
+      "symbol": "MLCAN",
+      "lastTradeDateReported": "2021-08-11",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2021-06-27",
+        "endDate": "2021-08-11"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105586004-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105586004-XMLI",
+      "quoteSha256": "4c57bf87b5fdb5348532344882181683d43f86074075c101d71c8a731f09ca35",
+      "historySha256": "d489c815aca168a5d960b6410ac150bf2678e74219fecf53a34dd30a3a2170bc"
+    },
+    "XMLI:ES0106042007": {
+      "isin": "ES0106042007",
+      "mic": "XMLI",
+      "symbol": "MLHA2",
+      "lastTradeDateReported": null,
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "SESSION_UNVERIFIED",
+      "historyWindow": {
+        "startDate": "2026-11-18",
+        "endDate": "2026-11-26"
+      },
+      "historyRows": 7,
+      "zeroVolumeRows": 7,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0106042007-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0106042007-XMLI",
+      "quoteSha256": "0907df1f191e13527deb12cb266e0581541f8fef44ffe899d82f0aa51e27168a",
+      "historySha256": "e3a2a90432f42707c4b14f0bce719ddf0c55485429fafee982f9756d8b9abb2e"
+    },
+    "XMLI:ES0105511002": {
+      "isin": "ES0105511002",
+      "mic": "XMLI",
+      "symbol": "MLINM",
+      "lastTradeDateReported": "2021-04-08",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2021-02-22",
+        "endDate": "2021-04-08"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105511002-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105511002-XMLI",
+      "quoteSha256": "1a76f25b013b1802105de4fbb39d72402cea98417e2bb57cbbbf84ee877cd67a",
+      "historySha256": "26a0140f67a719d7ca95cea07815f49ab9eede6beec4e64dfbe33fed77b870d5"
+    },
+    "XMLI:ES0105473005": {
+      "isin": "ES0105473005",
+      "mic": "XMLI",
+      "symbol": "MLISP",
+      "lastTradeDateReported": "2020-04-06",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2020-02-21",
+        "endDate": "2020-04-06"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105473005-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105473005-XMLI",
+      "quoteSha256": "e2d358c4e4b53702225191dad91868cfac1c4853ac332a2f22ed694d9b91ba96",
+      "historySha256": "972eacb02235d89265a89a1b4387b77ac42ffbb9c0e68d92adb87ac07e3b63c6"
+    },
+    "XMLI:FR001400QW73": {
+      "isin": "FR001400QW73",
+      "mic": "XMLI",
+      "symbol": "MLIME",
+      "lastTradeDateReported": null,
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "SESSION_UNVERIFIED",
+      "historyWindow": {
+        "startDate": "2026-11-18",
+        "endDate": "2026-11-26"
+      },
+      "historyRows": 7,
+      "zeroVolumeRows": 7,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/FR001400QW73-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR001400QW73-XMLI",
+      "quoteSha256": "66908b7d4fb53a2fe8e4b0d4a585ccebfc5cb42378d6ee576eec294827053873",
+      "historySha256": "024aead17520844eb50ddd6f97c933538d6f9609aa423030b1ea25958ffb5fc4"
+    },
+    "XMLI:ES0105977005": {
+      "isin": "ES0105977005",
+      "mic": "XMLI",
+      "symbol": "MLMED",
+      "lastTradeDateReported": "2026-03-30",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2026-02-13",
+        "endDate": "2026-03-30"
+      },
+      "historyRows": 1,
+      "zeroVolumeRows": 1,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105977005-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105977005-XMLI",
+      "quoteSha256": "9b646984fbd76b606509e32e83b77a296bfc8d2c3338eb3de013d86405d27b9a",
+      "historySha256": "5e24603a1e4a2b06dd20ba799e1bf4ce8f879939fcfbc2c5f4be9a6ed6389716"
+    },
+    "XMLI:ES0105417002": {
+      "isin": "ES0105417002",
+      "mic": "XMLI",
+      "symbol": "MLIPO",
+      "lastTradeDateReported": "2019-08-05",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2019-06-21",
+        "endDate": "2019-08-05"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105417002-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105417002-XMLI",
+      "quoteSha256": "dfbdc4be3f226420b4fec05bb9df4a9cc8d336013c68a4239ee33de3a64cd1ea",
+      "historySha256": "e9af08fccdfc90fd95b32997a1155a5755dedf5dacd94ef3efcd6adee25d4a12"
+    },
+    "XMLI:ES0105698007": {
+      "isin": "ES0105698007",
+      "mic": "XMLI",
+      "symbol": "MLKPS",
+      "lastTradeDateReported": "2023-03-29",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2023-02-12",
+        "endDate": "2023-03-29"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105698007-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105698007-XMLI",
+      "quoteSha256": "8c5100e591cafe16a6356f48cce322f2bc9266a72db2627bfe25ccb0885a442d",
+      "historySha256": "a0eb438beb008d94aa76e7a1cfc034c68fb5df893d5ba481a4dbd2503fca5dd4"
+    },
+    "XMLI:ES0105490009": {
+      "isin": "ES0105490009",
+      "mic": "XMLI",
+      "symbol": "MLORB",
+      "lastTradeDateReported": "2020-07-30",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2020-06-15",
+        "endDate": "2020-07-30"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105490009-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105490009-XMLI",
+      "quoteSha256": "6d7747385b9b9ba956beccc170d8e268da304abf097db125a39e40f084a3a269",
+      "historySha256": "8af184c60768348396611f15fe19eb7a61b0036d859b37077365818113bbc434"
+    },
+    "XMLI:ES0105559001": {
+      "isin": "ES0105559001",
+      "mic": "XMLI",
+      "symbol": "MLMIV",
+      "lastTradeDateReported": "2021-07-02",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2021-05-18",
+        "endDate": "2021-07-02"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105559001-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105559001-XMLI",
+      "quoteSha256": "4dd7e6e74bff2437c0279a2bca1e32275f16dbfb39aeb81af868cb3219053239",
+      "historySha256": "1177bc65a8c8e32ce0001fe41729e77a2fb618a3b321243a0f7dc03bdf029cb7"
+    },
+    "XMLI:ES0105651006": {
+      "isin": "ES0105651006",
+      "mic": "XMLI",
+      "symbol": "MLSAG",
+      "lastTradeDateReported": "2022-06-14",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2022-04-30",
+        "endDate": "2022-06-14"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105651006-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105651006-XMLI",
+      "quoteSha256": "969fb19806dbaa1dd98d3551167728168c658647744e33796ee55444652e5bea",
+      "historySha256": "c408a6d295193d89c1e9bb6aef0b542d210106078cca9b35b7273d53cc414a62"
+    },
+    "XMLI:ES0105910006": {
+      "isin": "ES0105910006",
+      "mic": "XMLI",
+      "symbol": "MLSJA",
+      "lastTradeDateReported": null,
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "SESSION_UNVERIFIED",
+      "historyWindow": {
+        "startDate": "2026-11-18",
+        "endDate": "2026-11-26"
+      },
+      "historyRows": 7,
+      "zeroVolumeRows": 7,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105910006-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105910006-XMLI",
+      "quoteSha256": "92cead14a62c33dcb909ac627bea94cf1a33f6fea23661642959d59b2f6314ee",
+      "historySha256": "841f8795e740314a26961238381a9edfde75d69e3c242f26bac6920f16106a3f"
+    },
+    "XMLI:ES0105550000": {
+      "isin": "ES0105550000",
+      "mic": "XMLI",
+      "symbol": "MLJDL",
+      "lastTradeDateReported": "2021-06-29",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2021-05-15",
+        "endDate": "2021-06-29"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105550000-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105550000-XMLI",
+      "quoteSha256": "bf058e09389d50fbdf3f490bae08f701450d99e3c0c0e6e423951006c42609c6",
+      "historySha256": "e2308384fda5a1d943e7a17f4e3960105789a41bffbc4976b9bcbc846c899b12"
+    },
+    "XMLI:ES0105962007": {
+      "isin": "ES0105962007",
+      "mic": "XMLI",
+      "symbol": "MLVIC",
+      "lastTradeDateReported": "2025-11-10",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2025-09-26",
+        "endDate": "2025-11-10"
+      },
+      "historyRows": 1,
+      "zeroVolumeRows": 1,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105962007-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105962007-XMLI",
+      "quoteSha256": "d5c49f1e0be4ad6b96130eea9890c3c678d987eaac175ebed5c7388d223c504c",
+      "historySha256": "c01abd7a988e44053c8795a66121019b5b12973d5b0e765c7e8aea4a6f88cd93"
+    },
+    "XMLI:ES0105623005": {
+      "isin": "ES0105623005",
+      "mic": "XMLI",
+      "symbol": "MLVRE",
+      "lastTradeDateReported": "2021-12-16",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2021-11-01",
+        "endDate": "2021-12-16"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105623005-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105623005-XMLI",
+      "quoteSha256": "771a57960b591225244af0877410e4435398b68cfee9b3536e90fbedfdd4062d",
+      "historySha256": "d439c156ad17095a00bf57be893c5bca4513fa2f1d5c647816d861a1e9ed3eb5"
+    },
+    "XMLI:ES0105492005": {
+      "isin": "ES0105492005",
+      "mic": "XMLI",
+      "symbol": "MLVRF",
+      "lastTradeDateReported": "2020-07-30",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2020-06-15",
+        "endDate": "2020-07-30"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105492005-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105492005-XMLI",
+      "quoteSha256": "174c4b8ea075b53c22919a5fcb2dae1a535484075b5a4de1072ee94a3c340d3d",
+      "historySha256": "7c4cec4e4a0cf24d0e2bb162a78d06bf6b671ffa687fa2e5847bead96cd7c29a"
+    },
+    "XMLI:ES0105748000": {
+      "isin": "ES0105748000",
+      "mic": "XMLI",
+      "symbol": "MLURC",
+      "lastTradeDateReported": "2024-02-22",
+      "archivedSession": "2026-11-25",
+      "archivedStatus": "NO_TRADES",
+      "historyWindow": {
+        "startDate": "2024-01-08",
+        "endDate": "2024-02-22"
+      },
+      "historyRows": 0,
+      "zeroVolumeRows": 0,
+      "completeOhlcv": 0,
+      "conflicts": 0,
+      "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105748000-XMLI",
+      "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105748000-XMLI",
+      "quoteSha256": "a15206704310b11eff5574161f49b1d6e4810245534a0847ebf868578cfa05d8",
+      "historySha256": "e9c6f13c5f2e840cbf79cbf29ce6577de3e15fafef332db85fa00b07b5f4daa9"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "observedOn": "2026-11-26",
+  "readOnly": true,
+  "markets": {
+    "MIL": {
+      "session": "2026-11-25",
+      "dates": {
+        "2026-11-25": 325372
+      },
+      "venues": {
+        "MTAA": 305615,
+        "EXGM": 2163,
+        "BGEM": 17463,
+        "ETLX": 117,
+        "MIVX": 14
+      },
+      "approved": 360,
+      "observed": 310,
+      "bookObserved": 310,
+      "eligibleRows": 235965,
+      "bookRows": 232517,
+      "unqualifiedRows": 0,
+      "mechanisms": {
+        "1": 232517,
+        "3": 3418,
+        "4": 30
+      },
+      "sourceUrl": "https://marketdata.euronext.com/data-reporting-service/trades-file/download/EQUITIES/PREVIOUS_TRADING_DAY/MIL",
+      "downloadSha256": "7dec3dce96a0667e3337a73c3d5cf0b2fa6d99e526f1542624d061fb70f0ad3f",
+      "officialPresenceMismatches": 0,
+      "ohlcvCrossCheck": {
+        "exact": [
+          "ABP",
+          "MFEB",
+          "MTVFR",
+          "SGF"
+        ],
+        "volumeDiffers": [
+          "A2A",
+          "BFF",
+          "DHH",
+          "ISP",
+          "ITD",
+          "SOL"
+        ],
+        "closeDiffers": [
+          "IDNTT",
+          "VLS"
+        ],
+        "bothWithoutTrade": [
+          "OMG"
+        ],
+        "priceComparisonBasis": "First/last execution and price extremes, EUR, flag 1 Central Limit Order Book, without other MMT qualification flags"
+      }
+    },
+    "PAR": {
+      "session": "2026-11-25",
+      "dates": {
+        "2026-11-25": 512551
+      },
+      "venues": {
+        "ALXP": 18483,
+        "XPAR": 493965,
+        "XMLI": 103
+      },
+      "approved": 28,
+      "observed": 0,
+      "bookObserved": 0,
+      "eligibleRows": 0,
+      "bookRows": 0,
+      "unqualifiedRows": 0,
+      "mechanisms": {},
+      "sourceUrl": "https://marketdata.euronext.com/data-reporting-service/trades-file/download/EQUITIES/PREVIOUS_TRADING_DAY/PAR",
+      "downloadSha256": "5c6c14f1769fb25648254f6d952830bf70c295c8c91553cf605220a6f71577b2"
+    }
+  }
+}
