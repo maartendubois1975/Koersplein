@@ -34,12 +34,20 @@ export function validSessionDate(date){
  return typeof date==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(date)&&Number.isFinite(Date.parse(date+'T00:00:00Z'))&&new Date(date+'T00:00:00Z').toISOString().slice(0,10)===date;
 }
 export function dailyHistoryPath(share,parentMic){return 'data/history/'+encodeURIComponent(listingIdentity(share,parentMic).storageKey)+'.json';}
+function validDailyBar(bar){
+ return validSessionDate(bar?.date)&&[bar.open,bar.high,bar.low,bar.close,bar.volume].every(x=>Number.isFinite(x)&&x>0)&&
+  bar.high>=Math.max(bar.open,bar.close)&&bar.low<=Math.min(bar.open,bar.close)&&bar.high>=bar.low;
+}
+export function previousConfirmedBar(state){
+ const bar=state?.lastConfirmedBar;
+ return validDailyBar(bar)&&bar.date<state.date?bar:null;
+}
 export function dailyRow(snapshot,share,mic){
  if(!share||!validSessionDate(snapshot?.session)||snapshot.market!==mic)return null;
  const identity=listingIdentity(share,mic,snapshot.session);
  const row=snapshot?.results?.find(x=>x.isin===identity.isin&&x.symbol===identity.symbol&&x.mic===identity.mic);
  const b=row?.bar;
- if(row?.status!=='TRADED'||!b||b.date!==snapshot.session||![b.open,b.high,b.low,b.close,b.volume].every(x=>Number.isFinite(x)&&x>0)||b.high<Math.max(b.open,b.close)||b.low>Math.min(b.open,b.close)||b.high<b.low)return null;
+ if(row?.status!=='TRADED'||!validDailyBar(b)||b.date!==snapshot.session)return null;
  return b;
 }
 export function dailyState(snapshot,share,mic){

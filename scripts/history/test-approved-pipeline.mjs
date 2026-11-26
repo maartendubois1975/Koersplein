@@ -8,7 +8,11 @@ import {approvedCompanyUniverse,companyContracts,validateCompanyCatalog} from '.
 import {collectApprovedSession} from '../cloudflare/approved-daily-session.mjs';
 import {archiveApprovedSessions,validateSnapshot} from '../cloudflare/archive-approved-session.mjs';
 import {loadApprovedHistory} from '../research/market-history-source.mjs';
+import {sessionCalendar,latestClosedSession} from './trading-calendar.mjs';
 import {dailyRow,listingIdentity} from '../../daily-session-view.mjs';
+assert.equal(sessionCalendar('XDUB','2027-12-28').open,false);
+assert.equal(sessionCalendar('XLIS','2027-12-28').open,true);
+assert.equal(latestClosedSession('XDUB',new Date('2027-12-28T20:00:00Z')),'2027-12-24');
 const catalogs=await approvedCompanyUniverse(),tmp=await fs.mkdtemp(path.join(os.tmpdir(),'koersplein-approved-'));
 const inputDir=path.join(tmp,'input'),dataDir=path.join(tmp,'data');await fs.mkdir(inputDir,{recursive:true});
 const loadCatalog=async mic=>catalogs.find(c=>c.mic===mic),samples=[];

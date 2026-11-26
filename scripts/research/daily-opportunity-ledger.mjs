@@ -1,11 +1,11 @@
-import {latestClosedSession} from '../history/trading-calendar.mjs';
+import {latestClosedSession,sessionCalendar} from '../history/trading-calendar.mjs';
 import fs from 'node:fs/promises';
 import {loadApprovedHistory} from './market-history-source.mjs';
 import {mapConcurrent} from '../cloudflare/europe-run-policy.mjs';
 import {validSessionDate} from '../../daily-session-view.mjs';
 import {assessPeriod} from './amsterdam-period-quality.mjs';
 import {evaluateOpportunity} from './exam-outcomes-core.mjs';
-import {sealOpportunity,verifyOpportunity} from './prediction-ledger-core.mjs';
+import {sealOpportunity,verifyOpportunityAppend} from './prediction-ledger-core.mjs';
 import {loadCompanyCatalog,companyContracts} from '../history/company-register.mjs';
 
 const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
@@ -29,6 +29,9 @@ const round=(n,d=8)=>Number(Number(n).toFixed(d));
 await fs.mkdir('research/output',{recursive:true});
 let ledger=[];
 try{ledger=JSON.parse(await fs.readFile('data/opportunity-ledger.json','utf8'))}catch(e){if(e.code!=='ENOENT')throw e;}
+
+const savedLedger=structuredClone(ledger);
+verifyOpportunityAppend(savedLedger,ledger);
 
 const candidatesByMarket=new Map();
 for(const m of active){
@@ -79,7 +82,7 @@ const newSelections=[];
 for(const m of active){
   const pack=candidatesByMarket.get(m.mic);
   if(!pack) continue;
-  if(runReferenceDate!==latestClosedSession(active[0].mic)){diagnostics.push({market:m.mic,status:'HISTORICAL_REFERENCE_NO_NEW_PREDICTIONS'});continue;}
+  if(!sessionCalendar(m.mic,runReferenceDate).open||runReferenceDate!==latestClosedSession(m.mic)){diagnostics.push({market:m.mic,status:'HISTORICAL_REFERENCE_NO_NEW_PREDICTIONS'});continue;}
   if(ledger.some(x=>x.referenceDate===runReferenceDate&&x.market===m.mic)) continue;
   const sameDate=pack.rows.filter(r=>r.date===runReferenceDate);
   const coverage=sameDate.length/Math.max(1,pack.universeCount);
@@ -115,8 +118,7 @@ for(const m of active){
 
 for(const p of ledger){
   try{
-    if(p.recordHash)verifyOpportunity(p);
-    else {p.legacyUnverified=true;diagnostics.push({market:p.market,isin:p.isin,status:'LEGACY_PREDICTION_NOT_PRESEALED'});}
+    if(!p.recordHash){p.legacyUnverified=true;diagnostics.push({market:p.market,isin:p.isin,status:'LEGACY_PREDICTION_NOT_PRESEALED'});}
     const market=active.find(x=>x.mic===p.market),share=market?.catalog.shares.find(x=>x.isin===p.isin);
     if(!share)throw Error('PREDICTION_OUTSIDE_APPROVED_REGISTER');
     const bars=await hist(share,p.market);
@@ -125,8 +127,10 @@ for(const p of ledger){
   }catch(error){p.evaluationError=error.message;p.status='EVALUATION_UNVERIFIED';p.result30=null;diagnostics.push({market:p.market,isin:p.isin,status:'EVALUATION_FAILED',error:error.message});}
 }
 
+verifyOpportunityAppend(savedLedger,ledger);
 await fs.writeFile('research/output/daily-opportunity-diagnostics.json',JSON.stringify({referenceDate:runReferenceDate,diagnostics},null,2)+'\n');
-await fs.writeFile('data/opportunity-ledger.json',JSON.stringify(ledger,null,2));
+await fs.writeFile('data/opportunity-ledger.json.tmp',JSON.stringify(ledger,null,2));
+await fs.rename('data/opportunity-ledger.json.tmp','data/opportunity-ledger.json');
 const latestByMarket={};
 for(const mic of Object.keys(companyContracts)){
   const xs=ledger.filter(x=>x.market===mic).sort((a,b)=>String(b.selectionDate||b.referenceDate).localeCompare(String(a.selectionDate||a.referenceDate)));

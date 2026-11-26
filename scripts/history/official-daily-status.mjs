@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import {budapestClosedSessionStatus,BUDAPEST_CALENDAR_URL} from './providers/budapest-holiday.mjs';
 import {fetchMseOfficialPriceList,mseOfficialNoTradeStatus,MSE_PRICE_LIST_URL} from './providers/mse-official-price-list.mjs';
 import {BseSofiaProvider,bseOfficialIdentity,bseSessionSnapshot} from './providers/bse-sofia.mjs';
-import {euronextDailySnapshot,euronextQuoteSnapshot,corroboratedEuronextNoTrade,supportsEuronextInstrument} from './providers/euronext-live.mjs';
+import {euronextDailySnapshot,euronextQuoteSnapshot,corroboratedEuronextNoTrade,requiresEuronextQuoteIdentity,supportsEuronextInstrument,supportsEuronextQuoteIdentity} from './providers/euronext-live.mjs';
 import {zseDailySnapshot} from './providers/zse-price-list.mjs';
 const cache=new Map();
 const clean=s=>String(s||'').replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/g,' ').replace(/\s+/g,' ').trim();
@@ -127,8 +127,10 @@ export async function officialDailyStatus(instrument,date){
   // A zero-volume reference close with no opening price is not independent
   // evidence of zero executed trades. Fail closed until a dated official
   // transaction count or complete-session record establishes NO_TRADES.
-  if(row.volume===0&&row.open===null&&row.close>0&&['XAMS','XBRU','ALXB','MLXB','XPAR','ALXP','XMLI','XDUB','XMSM','XESM','XACD','XLIS','ALXL','ENXL'].includes(mic)){
-   const quote=await cached(`euronext-quote:${mic}:${isin}:${date}`,()=>euronextQuoteSnapshot({...instrument,mic,isin},AbortSignal.timeout(20000)));
+  const quoteForListing=()=>cached(`euronext-quote:${mic}:${isin}:${date}`,()=>euronextQuoteSnapshot({...instrument,mic,isin},AbortSignal.timeout(20000)));
+  if(requiresEuronextQuoteIdentity(mic)&&!(await quoteForListing()).identityMatch)return {...common,status:'SESSION_UNVERIFIED',reasonCode:'SOURCE_IDENTITY_MISMATCH'};
+  if(row.volume===0&&row.open===null&&row.close>0&&supportsEuronextQuoteIdentity(mic)){
+   const quote=await quoteForListing();
    if(corroboratedEuronextNoTrade(quote,row,date,quote.retrievedAt))return {...common,status:'NO_TRADES',lastTradeDate:quote.lastTradeDate,volume:0,verification:'OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION',quoteSourceUrl:quote.sourceUrl,quoteSha256:quote.sourceSha256,stateObservedAt:quote.retrievedAt,currentTradingState:quote.tradingState,currentHaltReason:quote.haltReason};
    return {...common,status:'SESSION_UNVERIFIED',reasonCode:quote.identityUnknown?'SOURCE_IDENTITY_UNKNOWN':quote.lastTradeDate>=date?'ZERO_VOLUME_REFERENCE_LAST_TRADE_AFTER_TARGET':'NO_EXECUTED_TRADE_EVIDENCE',lastTradeDate:quote.lastTradeDate,quoteSourceUrl:quote.sourceUrl,currentTradingState:quote.tradingState,currentHaltReason:quote.haltReason,stateObservedAt:quote.retrievedAt};
   }

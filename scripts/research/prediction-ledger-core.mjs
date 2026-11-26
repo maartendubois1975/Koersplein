@@ -14,6 +14,30 @@ const opportunityFields=['selectionDate','market','venue','currency','targetPct'
 export const opportunityCore=p=>Object.fromEntries(opportunityFields.filter(k=>p[k]!==undefined).map(k=>[k,p[k]]));
 export function sealOpportunity(prediction){return {...prediction,recordHash:hash(opportunityCore(prediction)),immutable:true};}
 export function verifyOpportunity(prediction){
- if(!prediction.recordHash)throw Error('OPPORTUNITY_NOT_SEALED');
+ if(!prediction.recordHash||prediction.immutable!==true)throw Error('OPPORTUNITY_NOT_SEALED');
  if(hash(opportunityCore(prediction))!==prediction.recordHash)throw Error('FROZEN_OPPORTUNITY_CHANGED');return true;
+}
+
+// Outcome fields may be recomputed. Previously saved selections, including
+// legacy records and their original attestations, are append-only.
+export function verifyOpportunityAppend(previous, next) {
+ const identity = row => JSON.stringify([row.market, row.selectionDate, row.referenceDate]);
+ const records = new Map();
+ for (const row of next) {
+  const key = identity(row);
+  if (records.has(key)) throw Error('DUPLICATE_OPPORTUNITY '+key);
+  if (row.recordHash) verifyOpportunity(row);
+  records.set(key, row);
+ }
+ for (const row of previous) {
+  const key = identity(row);
+  const saved = records.get(key);
+  if (!saved || saved.recordHash !== row.recordHash || saved.immutable !== row.immutable ||
+      hash(opportunityCore(saved)) !== hash(opportunityCore(row))) {
+   throw Error('SAVED_OPPORTUNITY_CHANGED '+key);
+  }
+  records.delete(key);
+ }
+ for (const row of records.values()) verifyOpportunity(row);
+ return true;
 }

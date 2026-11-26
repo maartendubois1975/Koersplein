@@ -3,7 +3,7 @@ import {outcome} from './research-quality.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import {horizonEndDate,evaluateOpportunity} from './exam-outcomes-core.mjs';
-import {sealOpportunity,verifyOpportunity} from './prediction-ledger-core.mjs';
+import {sealOpportunity,verifyOpportunity,verifyOpportunityAppend} from './prediction-ledger-core.mjs';
 assert.equal(horizonEndDate('2024-01-31',1),'2024-02-29');
 assert.equal(horizonEndDate('2026-01-31',3),'2026-04-30');
 assert.throws(()=>horizonEndDate('2026-02-30',3),/INVALID_REFERENCE/);
@@ -30,4 +30,9 @@ const again=evaluateOpportunity({...p,hit30:true,hit30Date:late.date,result30:tr
 assert.throws(()=>verifyOpportunity({...p,referenceClose:p.referenceClose+1}),/FROZEN_OPPORTUNITY_CHANGED/);
 assert.throws(()=>evaluateOpportunity({...p,referenceClose:p.referenceClose+1},bars,{asOf:late.date}),/REFERENCE_PRICE_MISMATCH/);
 assert.equal(JSON.stringify(p),JSON.stringify(sealOpportunity(p)),'Outcome evaluation never changes frozen prediction fields');
+assert(verifyOpportunityAppend([p],[{...p,...measured}]));
+assert.throws(()=>verifyOpportunityAppend([p],[]),/SAVED_OPPORTUNITY_CHANGED/);
+assert.throws(()=>verifyOpportunityAppend([p],[sealOpportunity({...p,referenceClose:p.referenceClose+1})]),/SAVED_OPPORTUNITY_CHANGED/);
+assert.throws(()=>verifyOpportunityAppend([p],[p,p]),/DUPLICATE_OPPORTUNITY/);
+assert.throws(()=>verifyOpportunityAppend([p],[{...p,immutable:false}]),/OPPORTUNITY_NOT_SEALED/);
 console.log('Real-history late +30% hit excluded after calendar deadline; sealed forecast and reference price protected: PASS');

@@ -3,6 +3,17 @@ const PROVIDER_ID='euronext-live';
 export const euronextProviderMic=mic=>String(mic||'').toUpperCase()==='XDUB'?'XMSM':String(mic||'').toUpperCase();
 export const supportsEuronextInstrument=i=>['XAMS','XBRU','ALXB','MLXB','XDUB','XMSM','XESM','XATL','XACD','XPAR','ALXP','XMLI','XMIL','MTAA','EXGM','XOSL','XOAS','MERK','XLIS','ALXL','ENXL'].includes(String(i.mic||i.market||'').toUpperCase())&&Boolean(i.isin);
 const ROOT='https://live.euronext.com/en/ajax/getHistoricalPricePopup/';
+const quoteVenues={
+ XAMS:'Euronext Amsterdam',XBRU:'Euronext Brussels',ALXB:'Euronext Growth Brussels',MLXB:'Euronext Access Brussels',
+ XPAR:'Euronext Paris',ALXP:'Euronext Growth Paris',XMLI:'Euronext Access Paris',
+ XMSM:'Euronext Dublin',XESM:'Euronext Growth Dublin',XACD:'Euronext Access Dublin',
+ XLIS:'Euronext Lisbon',ALXL:'Euronext Growth Lisbon',ENXL:'Euronext Access Lisbon',
+ MTAA:'Euronext Milan',EXGM:'Euronext Growth Milan',XOSL:'Oslo Børs',XOAS:'Euronext Expand Oslo',MERK:'Euronext Growth Oslo',
+};
+export const supportsEuronextQuoteIdentity=mic=>Boolean(quoteVenues[euronextProviderMic(mic)]);
+const strictQuoteCurrencies={MTAA:'EUR',EXGM:'EUR',XOSL:'NOK',XOAS:'NOK',MERK:'NOK'};
+export const requiresEuronextQuoteIdentity=mic=>Boolean(strictQuoteCurrencies[euronextProviderMic(mic)]);
+
 const clean=s=>String(s??'').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').trim();
 const iso=s=>{const m=clean(s).match(/(\d{2})\/(\d{2})\/(\d{4})/);return m?`${m[3]}-${m[2]}-${m[1]}`:null};
 // The public table may format decimal prices as 12,34 or 12.34, and group thousands
@@ -68,6 +79,10 @@ export class EuronextLiveProvider{
  async fetchDaily(i,{startDate,endDate,signal,adjusted='N'}={}){
   if(!['Y','N'].includes(adjusted))throw Error('Invalid adjustment mode');
   const mic=euronextProviderMic(i.mic||i.market),key=`${i.isin}-${mic}`,all=[];
+  if(requiresEuronextQuoteIdentity(mic)){
+   const quote=await euronextQuoteSnapshot({...i,mic},signal);
+   if(!quote.identityMatch)throw Error('EURONEXT_LISTING_IDENTITY_MISMATCH '+key);
+  }
   const failedWindows=[];
   for(const [start,end] of chunks(startDate,endDate)){
    try{
@@ -93,9 +108,14 @@ export class EuronextLiveProvider{
 // The latest executed date corroborates a zero-volume historical session row.
 export function parseEuronextQuoteHeader(html,instrument){
  const text=clean(html).replace(/&#039;|&apos;/g,"'").replace(/\s+/g,' ');
- const venues={XAMS:'Euronext Amsterdam',XBRU:'Euronext Brussels',ALXB:'Euronext Growth Brussels',MLXB:'Euronext Access Brussels',XPAR:'Euronext Paris',ALXP:'Euronext Growth Paris',XMLI:'Euronext Access Paris',XMSM:'Euronext Dublin',XESM:'Euronext Growth Dublin',XACD:'Euronext Access Dublin',XLIS:'Euronext Lisbon',ALXL:'Euronext Growth Lisbon',ENXL:'Euronext Access Lisbon'};
  const mic=euronextProviderMic(instrument.mic||instrument.market);
- const identityMatch=Boolean(venues[mic]&&text.includes(venues[mic]+' '+instrument.isin+' - Stock'));
+ const address=clean(html.match(/<p[^>]+class="address__text[^"]*"[^>]*>([\s\S]*?)<\/p>/)?.[1]).replace(/\s+/g,' ');
+ const currency=clean(html.match(/id="header-instrument-currency"[^>]*>([\s\S]*?)<\/span>/)?.[1]);
+ const expected=quoteVenues[mic]+' '+instrument.isin+' - Stock';
+ const expectedCurrency=instrument.currency||strictQuoteCurrencies[mic];
+ const identityMatch=supportsEuronextQuoteIdentity(mic)&&(requiresEuronextQuoteIdentity(mic)
+  ? address===expected&&(currency==='€'?'EUR':currency)===expectedCurrency
+  : text.includes(expected));
  const last=text.match(/Last traded price\s+(\d{2}\/\d{2}\/\d{4})/i),valuation=text.match(/Valuation Close.*?(\d{2}\/\d{2}\/\d{4})/i);
  const status=html.match(/<!--\s*status\s+(\w+)\s*-->/)?.[1]||null;
  return {identityMatch,lastTradeDate:last?iso(last[1]):null,valuationDate:valuation?iso(valuation[1]):null,status,bookState:html.match(/<!--\s*bookState\s+(\w+)\s*-->/)?.[1]||null,haltReason:html.match(/<!--\s*haltReasonKey\s+(.*?)\s*-->/)?.[1]||null,tradingState:status==='HAL'&&/\bSUSPENDED\b/.test(text)?'SUSPENDED':status==='HAL'?'RESERVED':status,identityUnknown:/This instrument is unknown/i.test(text)};

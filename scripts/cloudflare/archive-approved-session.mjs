@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {loadCompanyCatalog,companyContracts} from '../history/company-register.mjs';
-import {dailyRow,listingIdentity,validSessionDate} from '../../daily-session-view.mjs';
+import {dailyRow,listingIdentity,previousConfirmedBar,validSessionDate} from '../../daily-session-view.mjs';
 
 const readOptional=async file=>{try{return JSON.parse(await fs.readFile(file,'utf8'))}catch(e){if(e.code!=='ENOENT')throw e;return null}};
 const write=async(file,value)=>{await fs.mkdir(path.dirname(file),{recursive:true});const tmp=file+'.tmp';await fs.writeFile(tmp,JSON.stringify(value,null,2)+'\n');await fs.rename(tmp,file);};
@@ -64,6 +64,18 @@ export async function archiveApprovedSessions({inputDir='research/output',dataDi
     }else bars.push(bar);
     bars.sort((a,b)=>a.date.localeCompare(b.date));
     historyWrites.push([file,{...(doc||{}),schemaVersion:1,instrument:doc?.instrument||{isin:identity.isin,mic:identity.mic,symbol:identity.symbol,name:identity.name,currency:share.currency||catalog.currency||'EUR'},provider:doc?.provider||{name:'approved-daily-session',role:'verified-session-source',metadata:{backfillComplete:false}},coverage:{...(doc?.coverage||{}),firstDate:bars[0]?.date,lastDate:bars.at(-1)?.date,recordCount:bars.length,records:bars.length},bars}]);
+   }
+   if(snap.results.every(row=>row.status==='SESSION_UNVERIFIED'))throw Error('NO_CONFIRMED_SESSION_EVIDENCE');
+   const results=new Map(snap.results.map(row=>[row.isin,row]));
+   for(const share of catalog.shares){
+    const id=listingIdentity(share,market,snap.session),row=results.get(id.isin);
+    delete row.lastConfirmedBar;
+    if(row.status==='TRADED')continue;
+    const doc=await readOptional(path.join(dataDir,'history',id.storageKey+'.json'));
+    if(doc?.instrument?.isin!==id.isin||doc.instrument.mic!==id.mic||doc.instrument.symbol!==id.symbol||!Array.isArray(doc.bars))continue;
+    for(const bar of doc.bars){
+     if(previousConfirmedBar({lastConfirmedBar:bar,date:snap.session})&&(!row.lastConfirmedBar||bar.date>row.lastConfirmedBar.date))row.lastConfirmedBar=bar;
+    }
    }
    // Validate all identities before persisting this market; another market's failure cannot prevent this commit.
    for(const [file,doc] of historyWrites)await write(file,doc);

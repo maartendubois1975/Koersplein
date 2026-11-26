@@ -18,10 +18,11 @@ for(const catalog of await approvedCompanyUniverse()){
   const symbol=catalog.mic==='XDUB'?'SENUS':'ALSMB';
   const sessionUrl='data/daily-session-'+catalog.mic+'.json';
   const noTradeRow=html=>html.match(/<tr>[^]*?<\/tr>/g).find(row=>row.includes('symbol='+symbol));
-  assert.match(noTradeRow(output),/<td>—<\/td><td>—<\/td><td>—<\/td><td>Geen handel \(officieel\)<\/td>/);
+  const fixture=JSON.parse(await fs.readFile('data/daily-sessions/'+catalog.mic+'/2026-11-25.json','utf8'));
+  assert.equal(fixture.results.find(row=>row.symbol===symbol)?.status,'NO_TRADES');
   const fetchSnapshot=globalThis.fetch;
-  const withoutEvidence={...snapshot,counts:{...snapshot.counts,NO_TRADES:snapshot.counts.NO_TRADES-1,SESSION_UNVERIFIED:1},results:snapshot.results.map(row=>
-   row.symbol===symbol?{...row,status:'SESSION_UNVERIFIED',evidence:null}:row
+  const withoutEvidence={...fixture,counts:{...fixture.counts,NO_TRADES:fixture.counts.NO_TRADES-1,SESSION_UNVERIFIED:1},results:fixture.results.map(row=>
+   row.symbol===symbol?{...row,status:'SESSION_UNVERIFIED',evidence:null,lastConfirmedBar:null}:row
   )};
   globalThis.fetch=(url,...args)=>url===sessionUrl?
    Promise.resolve({ok:true,json:async()=>withoutEvidence}):fetchSnapshot(url,...args);
@@ -30,6 +31,18 @@ for(const catalog of await approvedCompanyUniverse()){
    await import('../../generic-market.js?approved-view-unverified='+catalog.mic);
    for(let i=0;i<200&&!nodes.get('#market-meta').textContent.includes('1 niet bevestigd');i++)await new Promise(r=>setTimeout(r,10));
    assert.match(noTradeRow(nodes.get('#share-groups').innerHTML),/<td>—<\/td><td>—<\/td><td>—<\/td><td>Koers niet bevestigd<\/td>/);
+   const share=catalog.shares.find(row=>row.symbol===symbol);
+   const path='data/history/'+(share.primaryMic||share.mic||catalog.mic)+':'+share.isin+'.json';
+   const history=JSON.parse(await fs.readFile(path,'utf8'));
+   const confirmedBar=history.bars.findLast(bar=>bar.date<fixture.session&&bar.volume>0);
+   assert(confirmedBar,'A preceding real traded session is required');
+   withoutEvidence.results.find(row=>row.symbol===symbol).lastConfirmedBar=confirmedBar;
+   nodes.get('#market-meta').textContent='';
+   await import('../../generic-market.js?approved-view-previous='+catalog.mic);
+   for(let i=0;i<200&&!nodes.get('#market-meta').textContent.includes('1 niet bevestigd');i++)await new Promise(r=>setTimeout(r,10));
+   const fallbackRow=noTradeRow(nodes.get('#share-groups').innerHTML);
+   assert(fallbackRow.includes('<td>'+confirmedBar.date+'</td>'));
+   assert.match(fallbackRow,/<td>—<\/td><td>€[^<]+<\/td><td>—<\/td><td>Koers niet bevestigd · laatst bevestigd slot<\/td>/);
   }finally{globalThis.fetch=fetchSnapshot;}
  }
  console.log('Actual canonical market renderer, complete approved identity list and daily open/close display: '+catalog.mic+' PASS');
