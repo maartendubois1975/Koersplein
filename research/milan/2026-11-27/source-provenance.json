@@ -1,0 +1,1834 @@
+{
+  "session": "2026-11-26",
+  "retrievedOn": "2026-11-27",
+  "tradeFile": {
+    "url": "https://marketdata.euronext.com/data-reporting-service/trades-file",
+    "csvSha256": "01e35585290b23f675396d55c8180ca4aa43ab9479bcdc6bc8e406599ff1b2de",
+    "rows": 199131,
+    "venues": {
+      "BGEM": 9232,
+      "MTAA": 188081,
+      "EXGM": 1768,
+      "ETLX": 47,
+      "MIVX": 3
+    }
+  },
+  "official": {
+    "urlTemplate": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/{ISIN}-{MIC}",
+    "method": "POST",
+    "adjusted": "N",
+    "startdate": "2026-11-26",
+    "enddate": "2026-11-26",
+    "requests": 360,
+    "http200": 360,
+    "responses": [
+      {
+        "isin": "IT0005439861",
+        "mic": "EXGM",
+        "sha256": "27c337de7eaf40e28e5270806b48ff6152be253a5e7f30b085db36920fb31418"
+      },
+      {
+        "isin": "IT0001233417",
+        "mic": "MTAA",
+        "sha256": "26846797de32414d4a27ec8789651e807dda9ff8c247b7b58f40544c6abd5b9b"
+      },
+      {
+        "isin": "IT0005548521",
+        "mic": "EXGM",
+        "sha256": "21b98b9c1d7b48bcc85af5fcfd43229d73a5870311400af59d37de6135dc55f6"
+      },
+      {
+        "isin": "IT0005445280",
+        "mic": "MTAA",
+        "sha256": "7b27ed07964aa6e1f60fc55426f93d8ce1bdbd5f92c8e260cc40764752a84682"
+      },
+      {
+        "isin": "IT0001207098",
+        "mic": "MTAA",
+        "sha256": "c1074348e432fe38bdc1e06cc078afaec3cd35517e625b4480487c43a94268de"
+      },
+      {
+        "isin": "IT0001382024",
+        "mic": "MTAA",
+        "sha256": "552745a2dea1d3d7c6a66c57f5eb8cc48ecb56111c6d55a5b8a4c7996321cf7e"
+      },
+      {
+        "isin": "IT0005735722",
+        "mic": "EXGM",
+        "sha256": "3d346ef729a5d1f7ffd9e3010ac968bb80b1e9055421f4ff2d623337aa5a8a60"
+      },
+      {
+        "isin": "IT0005708174",
+        "mic": "MTAA",
+        "sha256": "d22039255c23fa6fff840fd716cdd56b8f98626c26c34950999c8e613e5dd91b"
+      },
+      {
+        "isin": "IT0001384590",
+        "mic": "MTAA",
+        "sha256": "0ba819e22656d723998ad9a0713c94287ac88273294ed03b4745c2887d9ac8f1"
+      },
+      {
+        "isin": "IT0001006128",
+        "mic": "MTAA",
+        "sha256": "ae2881f10440f9bbdb2a2596800ed90c17b44a4c5a1af7ca4df9dd58fd0b72c4"
+      },
+      {
+        "isin": "IT0004720733",
+        "mic": "MTAA",
+        "sha256": "6b99947b3c817e4f7f18f962d8ba24e650fa10ecfa7f877d1563d24d603cce17"
+      },
+      {
+        "isin": "IT0005244030",
+        "mic": "EXGM",
+        "sha256": "3f8d9099670b64ae0a256182956a099bb73640e82c3d282a3eb4a2962f87c722"
+      },
+      {
+        "isin": "IT0005466039",
+        "mic": "EXGM",
+        "sha256": "a6836a9b1add787ca9e7d2382a3452248e2005ec76d101928d9344f907b7176b"
+      },
+      {
+        "isin": "IT0005717241",
+        "mic": "EXGM",
+        "sha256": "6aa208dad302bb5709a6005d359bfe287751df3bd6f404493ac15e2d3546cafe"
+      },
+      {
+        "isin": "IT0005461303",
+        "mic": "EXGM",
+        "sha256": "05e70c3743c185b9e6e6cfabc332bf4d8e36d76e10ae13f7028fd99edcc7a9f5"
+      },
+      {
+        "isin": "IT0005472730",
+        "mic": "MTAA",
+        "sha256": "d2a06a9c44fa2b8b0e9c58fba1ba8c8a8ef21ed3a5e75d966a029d4980f72898"
+      },
+      {
+        "isin": "IT0004779515",
+        "mic": "EXGM",
+        "sha256": "ef0ac0141e769a60fbb86dd94eb273597775f38bbc73675ed59c64056a40b5fc"
+      },
+      {
+        "isin": "IT0004056880",
+        "mic": "MTAA",
+        "sha256": "37abacc22964a10d3af8b34f78e66df90235b705beb11b577550f49b9a079da8"
+      },
+      {
+        "isin": "IT0004998065",
+        "mic": "MTAA",
+        "sha256": "326e4619b0d5f3ce533a115110d1f67a4ca9f8b7f8bea99ebf83322b0f45a0ae"
+      },
+      {
+        "isin": "IT0005241192",
+        "mic": "MTAA",
+        "sha256": "8edf8ffab138537180190a402cc71bc286511f6192f236597cd1816c5e9042c9"
+      },
+      {
+        "isin": "NL0015000N33",
+        "mic": "MTAA",
+        "sha256": "0951978b6076a8cf6ac34f31289aa3e1f5b67ebb68e0f712fa1fbe4089c5324e"
+      },
+      {
+        "isin": "IT0005386369",
+        "mic": "EXGM",
+        "sha256": "34ba0aa6f278e04e16ed208380123b6d7ef8c7d9ea1a290ccd77d243187cb812"
+      },
+      {
+        "isin": "IT0004093263",
+        "mic": "MTAA",
+        "sha256": "7abeb75383be673f5ee23906ef4cf4cc36802ad5f9833223261a3ed4e3811255"
+      },
+      {
+        "isin": "IT0005449464",
+        "mic": "EXGM",
+        "sha256": "6edd83eb1e6e25a1ab763a822c30c7c272b52e42e0b5bf1f0e6c0793fd1733ac"
+      },
+      {
+        "isin": "IT0000084043",
+        "mic": "MTAA",
+        "sha256": "129ec5f0cc74cf25c02144a32fc5c207e925557c12c57857953b10d8a92c442a"
+      },
+      {
+        "isin": "IT0005119810",
+        "mic": "MTAA",
+        "sha256": "5aa324fa91981e74cf3a5542416d483e0f907f8a9fb0aab4c2ca3f722b04b504"
+      },
+      {
+        "isin": "IT0003261697",
+        "mic": "MTAA",
+        "sha256": "840a3bf35432d1636713b757633342f0b4c9917d016283a684c3ac5a673bfb13"
+      },
+      {
+        "isin": "IT0001268561",
+        "mic": "MTAA",
+        "sha256": "b77d5fca0eed27246f53a28d9c3849c9348a9d0d8e77be68896ca704fd7c5d05"
+      },
+      {
+        "isin": "IT0005187460",
+        "mic": "MTAA",
+        "sha256": "583cabd563ce94071b4b75b21e19b761e475de9458688f7f1156ed851a432fc0"
+      },
+      {
+        "isin": "IT0001031084",
+        "mic": "MTAA",
+        "sha256": "3ab47706b6f7e75c960c441da4f4c2a612cc2c3c9a24a29188b4962a4ddac7ce"
+      },
+      {
+        "isin": "IT0003188064",
+        "mic": "MTAA",
+        "sha256": "f2e4476e5fb7d6ee9c3951e5f0038fe84bd2d5b63f187d40c965a23881fbaac4"
+      },
+      {
+        "isin": "IT0004776628",
+        "mic": "MTAA",
+        "sha256": "c79551eb5395333df84e8e9ed8b6bccd6ddecf9cb1d340f7cb407573f20c326d"
+      },
+      {
+        "isin": "IT0005508921",
+        "mic": "MTAA",
+        "sha256": "bf39e8ebbb40a4505e178d62b3bff25f04c32567f8d8539d0d39008601a32ce2"
+      },
+      {
+        "isin": "IT0003173629",
+        "mic": "MTAA",
+        "sha256": "3f866c0eaa06769bfeb2f8e25262f69be7b7d6af5082bc957a72ed2074598ebe"
+      },
+      {
+        "isin": "IT0005218380",
+        "mic": "MTAA",
+        "sha256": "b44f7637c767a3d076dda3359edd938c9d0dddbe139ec046398571cc7820d7f9"
+      },
+      {
+        "isin": "IT0001033700",
+        "mic": "MTAA",
+        "sha256": "2eeb32dffb230a230a24c8aaf3409c2745092f8ea80e3ef33c8f54ec8d4a48fd"
+      },
+      {
+        "isin": "IT0004412497",
+        "mic": "MTAA",
+        "sha256": "2a20ef00a17f8094d5a7b68825df49c3ccac61a77028254e153bcadc97aae5ea"
+      },
+      {
+        "isin": "IT0005704439",
+        "mic": "MTAA",
+        "sha256": "e0cae208fef2160028585145eda1e86b550f49dc0aeb7417c0c8bc804b045872"
+      },
+      {
+        "isin": "IT0001041000",
+        "mic": "MTAA",
+        "sha256": "ab339ef0bee169a643a04eee0cd6503495fc2b8bad20b94a07261b8580c7f89c"
+      },
+      {
+        "isin": "IT0001487047",
+        "mic": "MTAA",
+        "sha256": "6ed85a3875c52abb3157fa1042fd0d1aecc9ca785420f68f5513390668c248cc"
+      },
+      {
+        "isin": "IT0005497042",
+        "mic": "EXGM",
+        "sha256": "34484d74ad9306fc03b8b3bda1847537bffb8803814d30b2e6b466c8a4dc9d92"
+      },
+      {
+        "isin": "IT0005244402",
+        "mic": "MTAA",
+        "sha256": "64c84bfe3be5dc1cdb95e0e2e763a0008f090479a4351e3ac2680d89cb19c1f2"
+      },
+      {
+        "isin": "IT0003097257",
+        "mic": "MTAA",
+        "sha256": "6ba3258ff133a9e5a9f9d4d0d21ae162e9c340a97453591a124a991f859f14e6"
+      },
+      {
+        "isin": "IT0003217335",
+        "mic": "MTAA",
+        "sha256": "2a3eb566f8ffc3c099f198a3c8ebf1e56a367d2205154eb15c3abe0bad3b6f6d"
+      },
+      {
+        "isin": "IT0000066123",
+        "mic": "MTAA",
+        "sha256": "f32a1f6dd77256fcc1eed348cf4e57c38d42c97e24f0a70ef0900ee59b6e53fc"
+      },
+      {
+        "isin": "NL0015001KT6",
+        "mic": "MTAA",
+        "sha256": "55811df3fbf75c013476b489a3bd44126bd5d8c2f759b12abc7d81c35d7ff933"
+      },
+      {
+        "isin": "IT0000066180",
+        "mic": "MTAA",
+        "sha256": "bac7410c830e3703bc2b98846c17cd1f5b76b0b35748646bc267b4f97f311284"
+      },
+      {
+        "isin": "IT0004764699",
+        "mic": "MTAA",
+        "sha256": "689f1eee88fab2b6a20b7a95fd4d141f26f7a72462c75524146784ab286271a9"
+      },
+      {
+        "isin": "IT0001347308",
+        "mic": "MTAA",
+        "sha256": "ed30392afc9109be4c8bb74accac5e81a063a52049c045b9a370189e8757ffbe"
+      },
+      {
+        "isin": "IT0003023980",
+        "mic": "MTAA",
+        "sha256": "601cf24d640864f669b6177f5ddc545c135f34d3252dafe9187a23e78c8a793f"
+      },
+      {
+        "isin": "IT0004329733",
+        "mic": "MTAA",
+        "sha256": "e56f570d2694bc8be12be3183dbbab9c3aa296be63687ddc05a7fb544ec56c37"
+      },
+      {
+        "isin": "IT0003025019",
+        "mic": "MTAA",
+        "sha256": "8318d375ebfbc678973f54c0d880a196eeef6227415cf05c108ba4aee5e45d06"
+      },
+      {
+        "isin": "IT0003127930",
+        "mic": "MTAA",
+        "sha256": "69240e11f986a7dfebfa7b7c3979b3cb1a8465f8b87ab393fa4d909a3e016048"
+      },
+      {
+        "isin": "IT0001472171",
+        "mic": "MTAA",
+        "sha256": "caf57e2d03145e96adcbe798b4c824a296a7d8350f2620ba83946abb618b1513"
+      },
+      {
+        "isin": "NL0015435975",
+        "mic": "MTAA",
+        "sha256": "058acca854be6f33cb6a4044727c95c79ac0a8f81bf455d0c1fd772ca07a7206"
+      },
+      {
+        "isin": "IT0005331019",
+        "mic": "MTAA",
+        "sha256": "afe7794cb8f09bafb2a1118d089de01d892ed07fd32a8616922b0d110ba14a8b"
+      },
+      {
+        "isin": "IT0005003782",
+        "mic": "EXGM",
+        "sha256": "5385f10bc5e3feb938af1f4101798ffadf244a6b407d82994d7148c3c544b5c8"
+      },
+      {
+        "isin": "IT0005244618",
+        "mic": "MTAA",
+        "sha256": "1c3bb00642c20a279049a4b3f2936c75c620b3d9969252b8545851692e11bfb0"
+      },
+      {
+        "isin": "IT0001128047",
+        "mic": "MTAA",
+        "sha256": "477f7d6fea252c4224ff18554e32230bb2a26b492c2a3e67389d182a48970992"
+      },
+      {
+        "isin": "NL0013995087",
+        "mic": "MTAA",
+        "sha256": "3b334d2fa41c4204eb79809e6b5f50d535adf7e2ab5b765a8918afd276a6194c"
+      },
+      {
+        "isin": "IT0000070786",
+        "mic": "MTAA",
+        "sha256": "b1d16585a4842e07702533dcb7564b2d5a4ba98ce0de4393f00ecf97fc2d812f"
+      },
+      {
+        "isin": "IT0005344996",
+        "mic": "EXGM",
+        "sha256": "38a5f64b00d56cd4ff2df40e51ec0b0c7932e9f20ba47dea318aef2113c11046"
+      },
+      {
+        "isin": "IT0005117848",
+        "mic": "MTAA",
+        "sha256": "1aae132a6e7385a56eb2e10a6c3b8049fd4ad27e328aa884fc260f69cfd562b7"
+      },
+      {
+        "isin": "IT0005377277",
+        "mic": "EXGM",
+        "sha256": "61af136056f3a91e6712e5888326939f757010fe4e8a3f94a2e1bb4a1b035076"
+      },
+      {
+        "isin": "IT0005465619",
+        "mic": "EXGM",
+        "sha256": "1da90e61fca0be23df6124bbac429a5dd8cf95f3d1df42b5711aada028d970c7"
+      },
+      {
+        "isin": "IT0005618043",
+        "mic": "EXGM",
+        "sha256": "9a4f54495f7789118b342113b3b19873e00558de3e6ca1161af9cb7e71a1ea20"
+      },
+      {
+        "isin": "IT0005632945",
+        "mic": "EXGM",
+        "sha256": "284e618f7afc373c9f1f6a6fbf02ea86e73907a920183b34dd7b2bdfa5b1975a"
+      },
+      {
+        "isin": "IT0005246191",
+        "mic": "MTAA",
+        "sha256": "14b6aaa6210a33781ff50d8fafa497365af8dff8d5daa8220c6f8ba7c492eff0"
+      },
+      {
+        "isin": "IT0005379604",
+        "mic": "EXGM",
+        "sha256": "ab88c961026399de7e4eb935d970a6e67112e794292d13991983a2e600bc3129"
+      },
+      {
+        "isin": "IT0005426215",
+        "mic": "EXGM",
+        "sha256": "15704f46968ae024da6fbca2ae2b55adccb344c7d269bf78d9d4c481e3206cd3"
+      },
+      {
+        "isin": "IT0005379406",
+        "mic": "EXGM",
+        "sha256": "db385773dbc477e7f246c2e6302e28e818f1cffe470118d05a77a8c328cd796a"
+      },
+      {
+        "isin": "IT0005408593",
+        "mic": "EXGM",
+        "sha256": "4bddaa3114812526320008e5945f5164842e941c4e7ac2fe376dad6bd86139a4"
+      },
+      {
+        "isin": "IT0003121677",
+        "mic": "MTAA",
+        "sha256": "b8a9605a149762620e1e17d4a8159480e46ef5c1f52660c27e0f53385be7c179"
+      },
+      {
+        "isin": "IT0001127874",
+        "mic": "MTAA",
+        "sha256": "7daf283116b77b3adcf24671badd24b3cf3a94425746f90e78fdb8da61690806"
+      },
+      {
+        "isin": "IT0005412504",
+        "mic": "MTAA",
+        "sha256": "5873ea51a038a3d53f7d49168134441583f1b54dfe90f28dec942c75db918898"
+      },
+      {
+        "isin": "IT0005546103",
+        "mic": "EXGM",
+        "sha256": "81ca3efcd91831bd44203551145bbbef84b39f63460e805d9d410e0451e0b69d"
+      },
+      {
+        "isin": "LU2592315662",
+        "mic": "MTAA",
+        "sha256": "8650a7d6e504c2d1d141f93f166ee57cf9c1740a0e14f47feefbb796ee0b5541"
+      },
+      {
+        "isin": "IT0000076502",
+        "mic": "MTAA",
+        "sha256": "3ab60f93d070047d8757c207c64030dcc8a95bfebabda92bc410bafd983a036d"
+      },
+      {
+        "isin": "IT0005468357",
+        "mic": "EXGM",
+        "sha256": "5d375c545dbbeaee513ae90a39899bb93e73651d5087195047a7c5db69ff1d37"
+      },
+      {
+        "isin": "IT0005285942",
+        "mic": "EXGM",
+        "sha256": "a626f89fade93bb24e31ae3868f62e478528e99ad3c6ff77c8deed5de0cdd5a5"
+      },
+      {
+        "isin": "IT0003115950",
+        "mic": "MTAA",
+        "sha256": "687938b69478852973ed1bbc578978f0d97d1bea02697ba3758511ac3ff3099e"
+      },
+      {
+        "isin": "IT0005659724",
+        "mic": "EXGM",
+        "sha256": "96154e77e0be6c37766b339443112cac446b8b0fadc216b6f4032431bfeca50c"
+      },
+      {
+        "isin": "IT0005528937",
+        "mic": "EXGM",
+        "sha256": "b30103cc8eeda23d8e3196975ee6426ca8464e0b17513acf07555cbe6bbeab91"
+      },
+      {
+        "isin": "IT0005454027",
+        "mic": "EXGM",
+        "sha256": "0d54cd5261ff58e9956f3d99b3230bcc09ad533804c3d89fbb28b5f4959a1c6f"
+      },
+      {
+        "isin": "IT0005543480",
+        "mic": "MTAA",
+        "sha256": "62301012756c7c1ce8cec256f4b149b2f500a6c861d7259fc75f4f584710cf4e"
+      },
+      {
+        "isin": "IT0005203622",
+        "mic": "EXGM",
+        "sha256": "22387f9a38a1f8dd8e79d294ab8b9ceb07aa3afd91aea937aa86a66324fdf1c5"
+      },
+      {
+        "isin": "IT0003492391",
+        "mic": "MTAA",
+        "sha256": "7d5e896aaa4523b5c0b936ebfac089621c2327370f769177aa4a96af70b6b616"
+      },
+      {
+        "isin": "IT0001469995",
+        "mic": "MTAA",
+        "sha256": "27c4cb656db427a6cffca30b140182f7338c417ed47a8b7952622f6e4a5f3897"
+      },
+      {
+        "isin": "IT0005089476",
+        "mic": "EXGM",
+        "sha256": "f7e284a00527d0c0a3b60261f3ef8eeb0952ca1bcec0c1156b06cee6e406c0a1"
+      },
+      {
+        "isin": "IT0005716813",
+        "mic": "EXGM",
+        "sha256": "78fa700ceea5740be6c95512d463c6ff3e0fcc977e08ae9f798b2e199251248f"
+      },
+      {
+        "isin": "IT0001463063",
+        "mic": "EXGM",
+        "sha256": "cbe27f036959197e5688a4b78ed58f70f45b674e09caf40f6055c2a961037d23"
+      },
+      {
+        "isin": "IT0005600249",
+        "mic": "EXGM",
+        "sha256": "6ac9477328113ab9b50243ec06176c6deb51a99f2049af27d1d1c043663108bc"
+      },
+      {
+        "isin": "IT0005523839",
+        "mic": "EXGM",
+        "sha256": "ee77655a119124908dc74ccbd1222f5d538dc34fd7348a5a4e2931b29dbbba7c"
+      },
+      {
+        "isin": "IT0005610958",
+        "mic": "MTAA",
+        "sha256": "76681b9b85695df5047ac76a99119624b15f681cac0d6011ae7f415f6099de25"
+      },
+      {
+        "isin": "IT0005394413",
+        "mic": "EXGM",
+        "sha256": "f8506ce822feb4d901ba0bd632130f9e7842d1f77377b110596c4ab2df53a17a"
+      },
+      {
+        "isin": "IT0005557514",
+        "mic": "EXGM",
+        "sha256": "17b8c11fd788fcf6898f25bc2a5c6cc8530a035431389ac643a18f5ed95061d6"
+      },
+      {
+        "isin": "IT0005669558",
+        "mic": "EXGM",
+        "sha256": "1b24e1da04482bb1dc0814e929f46f5fd2a7bc7538082bfb63a326785eab3096"
+      },
+      {
+        "isin": "IT0005543332",
+        "mic": "EXGM",
+        "sha256": "6ec8638d86504828a56154de69deeade6b7e466c62d2321f7528ad09711a7fef"
+      },
+      {
+        "isin": "IT0005654766",
+        "mic": "EXGM",
+        "sha256": "da5e6100e58d1b95ea73b7f2ee72863e4a1a7064811a642c5cf16709a6a967cd"
+      },
+      {
+        "isin": "IT0005627762",
+        "mic": "EXGM",
+        "sha256": "44ed4085fe48b405f4f7eceeefd2d292493b9f8b91bb2800f9feedcb17d69aa0"
+      },
+      {
+        "isin": "IT0005561441",
+        "mic": "EXGM",
+        "sha256": "a6965374bf98b0187cd7b774d12ea69f24bcb33a7a3131e2f9c66ab26ef4c981"
+      },
+      {
+        "isin": "IT0005351504",
+        "mic": "EXGM",
+        "sha256": "464e023911fce4ee0f30b6794741f7b8c5f4d19181e36dcbceb6c04f7550b47a"
+      },
+      {
+        "isin": "IT0003372205",
+        "mic": "MTAA",
+        "sha256": "cba36043a2d9669675b1d380492eb0aac6d2a5ae66b8dbb9a6902e832988b529"
+      },
+      {
+        "isin": "IT0005453250",
+        "mic": "MTAA",
+        "sha256": "595c790bd9c67cd5359beb275187d6006f16e58bb26f0c459a8e48ac24684e41"
+      },
+      {
+        "isin": "IT0003404214",
+        "mic": "MTAA",
+        "sha256": "3106b2583e194f440eb2a74a74f0e6f5163d5d103f6890e793821062742e305e"
+      },
+      {
+        "isin": "IT0005561466",
+        "mic": "EXGM",
+        "sha256": "134596c040feee6a3ec4e3c5075da4d99f31c8267085dc61d3fdf88f23c554eb"
+      },
+      {
+        "isin": "IT0001237053",
+        "mic": "MTAA",
+        "sha256": "2e09933a99bd19f996f0d339629d84b2f00c3d18a7c318a82de8f434dac91154"
+      },
+      {
+        "isin": "IT0005562183",
+        "mic": "EXGM",
+        "sha256": "f2bd6ee70d65f699983b54043aabf73904374e7e7012eb8445954d1c7a36a9d8"
+      },
+      {
+        "isin": "IT0005468290",
+        "mic": "EXGM",
+        "sha256": "fdc196a613337acbc2d6fc2f5fd74a52a2ccfdc0409baa0a3c72915bf0663511"
+      },
+      {
+        "isin": "IT0005176406",
+        "mic": "MTAA",
+        "sha256": "8e60da4a7203ef42259f6298fea3b277ad81633cf1288b0a6944d725403f3751"
+      },
+      {
+        "isin": "IT0003128367",
+        "mic": "MTAA",
+        "sha256": "1a24dce53a502dee381ec256cc80a8b74f6e59cb9cc389dce23f8184f37460c5"
+      },
+      {
+        "isin": "IT0005500712",
+        "mic": "EXGM",
+        "sha256": "408aca7dc46aedc87ba97cbbe043d86c6945d8b705c61339c9eec178ae0a48f7"
+      },
+      {
+        "isin": "IT0005660219",
+        "mic": "EXGM",
+        "sha256": "b0e02b1801d4e6ee776d31a45086b9b3245923b5ff857daefebfe87b779afb57"
+      },
+      {
+        "isin": "IT0004356751",
+        "mic": "MTAA",
+        "sha256": "6efa65973c833744d1d10760a6c2d30e0ae204d9073b8bbadaaabb95030aa582"
+      },
+      {
+        "isin": "IT0003132476",
+        "mic": "MTAA",
+        "sha256": "6e0618fa1de5f29f9d25d6ab1c5010d943bd028e5525b560c8f7f7df4f60f635"
+      },
+      {
+        "isin": "IT0005353575",
+        "mic": "EXGM",
+        "sha256": "64a4458f5c38cd18f97bf597dd4587f9fa0e4753a7d9fe016bc4003301b49537"
+      },
+      {
+        "isin": "IT0005519837",
+        "mic": "EXGM",
+        "sha256": "3fb7c02d5e8f1bd95c5d5b77b00263623f75e0e10d8637494b93240ad20ed1b9"
+      },
+      {
+        "isin": "IT0005312027",
+        "mic": "MTAA",
+        "sha256": "ef95c88f1e4aa9232a0e99d11329a092356ca7da75f7716b8d1293dff07021af"
+      },
+      {
+        "isin": "IT0001157020",
+        "mic": "MTAA",
+        "sha256": "a81e1ba6816422d97e8fe310f6e2d79da18147e684910f182a1d8890666cfbc2"
+      },
+      {
+        "isin": "IT0005521247",
+        "mic": "EXGM",
+        "sha256": "a62b021f5a4fb010e60877845d73063f684b59f89bb24ca93961a958af246d68"
+      },
+      {
+        "isin": "IT0005337107",
+        "mic": "EXGM",
+        "sha256": "69766be504589aaf97c6b13f2982d17c07446829335215e650c66cbca9f36ec0"
+      },
+      {
+        "isin": "IT0005421885",
+        "mic": "EXGM",
+        "sha256": "b299f5ad8ed8c404128f841f11d98535a4e7375574526cbf4efdec946249beb9"
+      },
+      {
+        "isin": "IT0005573818",
+        "mic": "EXGM",
+        "sha256": "f7b78c2001ed50268a98fb22ee82b9e5e43acaa80bd583188216e92d2bc0e7dd"
+      },
+      {
+        "isin": "IT0003850929",
+        "mic": "MTAA",
+        "sha256": "a9062b8019c0630a10d97034f4aedf6d8a4e51ef01db7eb405034b08ead72683"
+      },
+      {
+        "isin": "IT0005468191",
+        "mic": "EXGM",
+        "sha256": "b939def0481e9677913565b56bb2cef7539769105ff5751417cfd5cffcf5ebd2"
+      },
+      {
+        "isin": "IT0005720005",
+        "mic": "EXGM",
+        "sha256": "bc86317fc617b0ef0d5e7aa16e5967387d009fa62f754b1b17877caff37f828f"
+      },
+      {
+        "isin": "IT0004818297",
+        "mic": "MTAA",
+        "sha256": "3827680ee7b07febaeacea45ec74f0ff9c3c9c3cb6925644c8407f8ddb93051b"
+      },
+      {
+        "isin": "IT0005527616",
+        "mic": "MTAA",
+        "sha256": "5e765b6a80d6172b0b0b7e29389523b05557d15dc060bbeb45dac3c1f8beb263"
+      },
+      {
+        "isin": "IT0003895668",
+        "mic": "MTAA",
+        "sha256": "bfacc8d01f44d2bbb112f1c4bc505c6643af088fb033c48f01d502c322479e96"
+      },
+      {
+        "isin": "IT0005430936",
+        "mic": "EXGM",
+        "sha256": "185b062a78de14c85854b3b1111a97853e45d5fa51413654eceb58c602909f24"
+      },
+      {
+        "isin": "IT0005557530",
+        "mic": "EXGM",
+        "sha256": "18288a31694d0ea815ba82bcd674e0fb370b491583a947f5b43e2beb3c74cb36"
+      },
+      {
+        "isin": "IT0004496029",
+        "mic": "EXGM",
+        "sha256": "63c1718ad66c64cf184982af658a6fb76597e211c4fe66d871738841d1213d6a"
+      },
+      {
+        "isin": "IT0005500688",
+        "mic": "EXGM",
+        "sha256": "1d47b5277d0a667a5ef8d94c4e5a6bd85780eae0da1949ae2b9711f6f0ebc7b5"
+      },
+      {
+        "isin": "IT0005487670",
+        "mic": "EXGM",
+        "sha256": "1680a89cea8da4a3707783323911e20789972cc4673d18a229aa3af96f72c342"
+      },
+      {
+        "isin": "IT0005654683",
+        "mic": "MTAA",
+        "sha256": "f4b2cf01e0c3261e35fc71274c9488544b9c512283bb6fd750797fa6fef07ef6"
+      },
+      {
+        "isin": "IT0003365613",
+        "mic": "MTAA",
+        "sha256": "55cecec3de0386cd55dd6d9fcaee875a39715db48c5ad4c8780a9a36c5ed0d5d"
+      },
+      {
+        "isin": "IT0004967292",
+        "mic": "MTAA",
+        "sha256": "305856c25280fadfd5e5feb60fad108888fcf155fd178a63e47f845a24836f10"
+      },
+      {
+        "isin": "IT0005475162",
+        "mic": "EXGM",
+        "sha256": "9408f5221e501db4a80b1deccd58b485add9e38a14c072abc8f4f219303708ce"
+      },
+      {
+        "isin": "IT0005599938",
+        "mic": "MTAA",
+        "sha256": "91a418896d7b513ba491791dcc44141404b0346eb3a0369b41a68fdd0ea4ed1f"
+      },
+      {
+        "isin": "IT0005215329",
+        "mic": "MTAA",
+        "sha256": "bac5694752e4aed9c23d3c5b1082a31c1487550ea56f26710d0f02de30a477b9"
+      },
+      {
+        "isin": "IT0000072170",
+        "mic": "MTAA",
+        "sha256": "2d2a462dd954de93c16fd8d215f17032c65931353cbec8161f50bc0c1e64f650"
+      },
+      {
+        "isin": "IT0005720500",
+        "mic": "EXGM",
+        "sha256": "d170f0f5eeace1b66bd5713bbd1e2064a95cf04e7799461de38603e03d748576"
+      },
+      {
+        "isin": "IT0000060886",
+        "mic": "MTAA",
+        "sha256": "9fe49c80d70900cedf1c2fa19455f9f8dbc3ba7718ff51f64dd491042ef88b04"
+      },
+      {
+        "isin": "IT0005203424",
+        "mic": "EXGM",
+        "sha256": "a1c96fc8823525b6dbe8b7293b506f337420aa558b9c0c01dded1398340ddbbf"
+      },
+      {
+        "isin": "IT0005508574",
+        "mic": "EXGM",
+        "sha256": "d964a4c03fa511fedc2a86ffdb94692350f17277b466ff2bb9cc56c4f8d8c5b8"
+      },
+      {
+        "isin": "IT0005335754",
+        "mic": "EXGM",
+        "sha256": "c8fbbd360509111b4c3e9fcdb55a5046b5fbf39480881ba1a9ae7a6c7cea9fc2"
+      },
+      {
+        "isin": "IT0004819857",
+        "mic": "EXGM",
+        "sha256": "53b8a6b3bcc31b985df72bd15ab6bf392101b4a18125a21ff1b7750ca078af97"
+      },
+      {
+        "isin": "IT0005498610",
+        "mic": "EXGM",
+        "sha256": "db886a6b35d2e3310cefc86ddb080c4dd4669ad39483fdedf1b54dace5a78818"
+      },
+      {
+        "isin": "IT0005023038",
+        "mic": "MTAA",
+        "sha256": "c2145f74b9a8e62d63afd647f1284233b2b425ec0e750b0aa5d2dee75e17e1cf"
+      },
+      {
+        "isin": "IT0005672461",
+        "mic": "EXGM",
+        "sha256": "e22ad496ee1056e22ee49d71a6df50df454185be86899233d1f1945483ed94d2"
+      },
+      {
+        "isin": "IT0005122392",
+        "mic": "EXGM",
+        "sha256": "2958502cf5efd91637e7fde464c37e0101c5c62171ec5acc60af182a11592d2a"
+      },
+      {
+        "isin": "IT0005345233",
+        "mic": "MTAA",
+        "sha256": "7a8c5b2b4bd3f8ebabd713e17322feed66d0a5bdd109d33c93a6609b796527ec"
+      },
+      {
+        "isin": "IT0004098510",
+        "mic": "MTAA",
+        "sha256": "185d6a893401990430cd5c36495ccd28a13f5aa2e29d5da10e157c516baa067d"
+      },
+      {
+        "isin": "IT0003203947",
+        "mic": "MTAA",
+        "sha256": "a4cc6fd7237f1fbb8c010e9cdb21dded26cea693898f897566ae67f3ca52073d"
+      },
+      {
+        "isin": "IT0005312365",
+        "mic": "EXGM",
+        "sha256": "0bdfc1adf031ef35d27af44c178583cf49a391018fa70661edec2b224d3152b9"
+      },
+      {
+        "isin": "IT0005144784",
+        "mic": "MTAA",
+        "sha256": "5478d05be2c9c52d467112ceb635dbef5d65826510939593863c7daae479039e"
+      },
+      {
+        "isin": "IT0000062072",
+        "mic": "MTAA",
+        "sha256": "90cce97777cd300392e43889c6c2eed8d112643433c58284986cb2fd3be5f903"
+      },
+      {
+        "isin": "IT0005713232",
+        "mic": "MTAA",
+        "sha256": "320402a35d85dfb9a27d2f374653d26a62fde5c84697d01b8f70e0e0a8a01521"
+      },
+      {
+        "isin": "IT0005531261",
+        "mic": "EXGM",
+        "sha256": "38a48696718d3732cfe364746507d67e0e76b7c17fd252dd88082f21df79b46a"
+      },
+      {
+        "isin": "IT0003697080",
+        "mic": "MTAA",
+        "sha256": "d6418723f221b48f5f58266f673241abdf7297c4d60bcb540c2903cf2b3d5838"
+      },
+      {
+        "isin": "IT0005453003",
+        "mic": "EXGM",
+        "sha256": "853655bfb7c652ba74900781b5607cfb64adbcc74bb10374862b126799638706"
+      },
+      {
+        "isin": "IT0005652489",
+        "mic": "EXGM",
+        "sha256": "ec61f2548c1ceaf626f0b9d628f76f3c43a0d7404de51a18f83fbb4e1cec44e4"
+      },
+      {
+        "isin": "IT0005391138",
+        "mic": "EXGM",
+        "sha256": "233d4627b05a98496af084530ee6a5d37eb6aeace03248646f6bc3845b0936e8"
+      },
+      {
+        "isin": "IT0005722191",
+        "mic": "EXGM",
+        "sha256": "feffd6833bd42e66c0a21f3fa4015ca2f3e1a651af7e2ad479d98a2d3dfe3559"
+      },
+      {
+        "isin": "IT0005221517",
+        "mic": "MTAA",
+        "sha256": "f4e11d0e55ab05b0614fdb88edb12bb18841be568b52ac37d66a7e25382cb044"
+      },
+      {
+        "isin": "IT0005549768",
+        "mic": "EXGM",
+        "sha256": "20fe7071c2dc6b0582e814e49aab1b34ac1b5ed0c1ff868b029dbe5adeafbff0"
+      },
+      {
+        "isin": "IT0005332595",
+        "mic": "EXGM",
+        "sha256": "cff30d2d0f34ba23655b72b4daaeb1914377fe6cf38027ec0ddfd35849359e49"
+      },
+      {
+        "isin": "IT0005040354",
+        "mic": "EXGM",
+        "sha256": "bf0b3da18e8af1dfa6aa2a912389f6ace54d20741b66ff7ec9fd9b14505693e1"
+      },
+      {
+        "isin": "IT0005723074",
+        "mic": "EXGM",
+        "sha256": "0cddb5282e99e32a3e82fcd6b183296e3c1fb78c3e022fb3915042c5fe6b42ec"
+      },
+      {
+        "isin": "IT0005411209",
+        "mic": "MTAA",
+        "sha256": "8da56d8acbef3e4f44f386d0951ce6a4e3515e07d7487a35bbb66fb656b8133d"
+      },
+      {
+        "isin": "IT0005628778",
+        "mic": "EXGM",
+        "sha256": "042f21bb1c6341a0b478ad96041dfc6c525834c8ccae727d966e389c05152753"
+      },
+      {
+        "isin": "IT0005451213",
+        "mic": "EXGM",
+        "sha256": "a2bf31148aebb1fa9b82a52a6fc66f17c29c9724c919ce412778fa41b3ff1a58"
+      },
+      {
+        "isin": "IT0001250932",
+        "mic": "MTAA",
+        "sha256": "691fc5c2d5988aefef2cbb328b44e220eb1a68fd9b38ae6601841e216ced52ca"
+      },
+      {
+        "isin": "IT0005450694",
+        "mic": "EXGM",
+        "sha256": "a6ca22a42aa8db45074a4fb77ae9631d0ca8c5d8fa84ee52c25dc84262427aa9"
+      },
+      {
+        "isin": "IT0005468662",
+        "mic": "EXGM",
+        "sha256": "c8bf6e7a923391016039ae0d444adbc97d1419179934ff9e078ddc4eaddcd241"
+      },
+      {
+        "isin": "IT0005108219",
+        "mic": "MTAA",
+        "sha256": "8ed49d1f29b0252745cd498efc20a2274e9859d3920304e95558aaefdb7a4ea5"
+      },
+      {
+        "isin": "IT0005549255",
+        "mic": "EXGM",
+        "sha256": "6e2fb79cfd01d9e82a84b7968cd67c64d1786a451c9c621053b0bc3baedf5769"
+      },
+      {
+        "isin": "IT0001214433",
+        "mic": "MTAA",
+        "sha256": "c4baf5a53cc96fdc06ddf21262f1fe78cb2e64bccbea915e0509e98d196ffc06"
+      },
+      {
+        "isin": "CH1118852594",
+        "mic": "EXGM",
+        "sha256": "c5746e67d047ce1ca78f9772d2e2de42183f87384921f47d5da39bf032b1d36c"
+      },
+      {
+        "isin": "IT0005322612",
+        "mic": "MTAA",
+        "sha256": "d48a5c5ba34d19762b79602c51323465d6b542881f7148f6e1a96ad1d215b1c0"
+      },
+      {
+        "isin": "IT0005359101",
+        "mic": "EXGM",
+        "sha256": "753734f3ac77c0627133fb8e455472396a9cec700ba4912062990a5073276d68"
+      },
+      {
+        "isin": "IT0001413837",
+        "mic": "MTAA",
+        "sha256": "926b2713dbecf9967f1f4c1c3c3e7b6b6fbc70c9cbe5f70a44b7b7b8e70c3304"
+      },
+      {
+        "isin": "IT0005518953",
+        "mic": "EXGM",
+        "sha256": "1f88ad260d80d9326cf646aa0e281e978bc34cd3549fb7f0113c73800707e4b1"
+      },
+      {
+        "isin": "IT0005416281",
+        "mic": "EXGM",
+        "sha256": "5ddda4867e4cef585322fd2f8ba53cf20bc606834d48881255bd28fea9c50dbb"
+      },
+      {
+        "isin": "IT0005245508",
+        "mic": "MTAA",
+        "sha256": "2c6a92e80fa4105208cb2082a51eae82c8f2a3fa0acec4d9a1c70b311fe76695"
+      },
+      {
+        "isin": "IT0005186371",
+        "mic": "MTAA",
+        "sha256": "441545fc13cc403667869b5313eb95d7cfb71445cf01f3159615761bbc5e6a59"
+      },
+      {
+        "isin": "IT0005037905",
+        "mic": "EXGM",
+        "sha256": "066cb0e00d1a2e4d8da306a5f54fdd273384e8f9be57a6eadfae83899d9dd4d3"
+      },
+      {
+        "isin": "IT0005412298",
+        "mic": "EXGM",
+        "sha256": "0a82665ef23ef2e43a7694b46b04d805a11cd4a0f1064eb5376443d47fc6cad2"
+      },
+      {
+        "isin": "IT0005455875",
+        "mic": "MTAA",
+        "sha256": "c5a88fb08d781f3388c8aeb6a01df80d940cf173aabb25141c1f5466357384a4"
+      },
+      {
+        "isin": "IT0005469371",
+        "mic": "EXGM",
+        "sha256": "1731af6ec361001ca591905c3bacace33b86c18cb909021be27549b2e05016df"
+      },
+      {
+        "isin": "IT0001078911",
+        "mic": "MTAA",
+        "sha256": "339fc052a6a187814a997e3a97ebb24f90a298f1af0ea751b49f4261769816e0"
+      },
+      {
+        "isin": "IT0000072618",
+        "mic": "MTAA",
+        "sha256": "8794b228884fed661a9a45d77b02108d07296a92211f99eb2de34dc01b41f1e3"
+      },
+      {
+        "isin": "IT0005337818",
+        "mic": "MTAA",
+        "sha256": "bd4ce10f37496e802f28957e6d5b5012c1e1daba810401a1ccae0184637ffa39"
+      },
+      {
+        "isin": "IT0005090300",
+        "mic": "MTAA",
+        "sha256": "9dc15a3fe282dafeda565eb2d339992307694c870d9f001a957146ab929424b9"
+      },
+      {
+        "isin": "IT0001077780",
+        "mic": "MTAA",
+        "sha256": "57bf5cabfe567fd40d301478e88914efec5e3f1d3b0c8004a0956f5dab6a335b"
+      },
+      {
+        "isin": "IT0003027817",
+        "mic": "MTAA",
+        "sha256": "021e483dd3c7f9f290a54820da427afa48547c2ad99a48e927a1630776df4ec7"
+      },
+      {
+        "isin": "IT0005474108",
+        "mic": "EXGM",
+        "sha256": "831e371d44603118f599ca6674793e1fe0bce0bc73b3278f91f91a75efe528b5"
+      },
+      {
+        "isin": "IT0003057624",
+        "mic": "MTAA",
+        "sha256": "552d4ea010ee17759b6ca23b0ecc148fd54adc71bb7b034e1da69d31a23db1be"
+      },
+      {
+        "isin": "IT0005211237",
+        "mic": "MTAA",
+        "sha256": "c21b466fb3623362755ccf08690361e2940bffc31340eacfe493dd89adbbd409"
+      },
+      {
+        "isin": "IT0003411417",
+        "mic": "MTAA",
+        "sha256": "ca821d70e7e6a884c617f67da10ab9b1fcd8a00739dedac8e09d8cb2e7370168"
+      },
+      {
+        "isin": "IT0005075764",
+        "mic": "EXGM",
+        "sha256": "ea923299b87b360ba842736bf59e2b1d0eff43394cec002d0abe603149a98a0a"
+      },
+      {
+        "isin": "IT0005253205",
+        "mic": "MTAA",
+        "sha256": "203018961ec99aea0a5d9eb9819283ea92e4bd58734c7715effbb6a82ab322c2"
+      },
+      {
+        "isin": "IT0005554784",
+        "mic": "EXGM",
+        "sha256": "126bb1a2e46070e1a028f61cc7ae20cb17464eb7144aa1565db5a97731a24131"
+      },
+      {
+        "isin": "IT0005572778",
+        "mic": "MTAA",
+        "sha256": "cd977fb3ab3d1b967966c8ccad31ba34bf2d5a07dacefe0602b269ffd09fb1d2"
+      },
+      {
+        "isin": "IT0005678104",
+        "mic": "EXGM",
+        "sha256": "daf4fb372be996c2dc58f510a4d37bfcf92a42559d26e8f4101c895bb83c447d"
+      },
+      {
+        "isin": "IT0004552359",
+        "mic": "MTAA",
+        "sha256": "f51151133f6d8869b1e336ca6ce29bd1ee7ed7ca570dbaa02b4db6940ece0b8a"
+      },
+      {
+        "isin": "IT0005707341",
+        "mic": "MTAA",
+        "sha256": "159c917ce4d6649c0bff99c1abdca74d71df201bc7e77ec07b831c8a9fc102be"
+      },
+      {
+        "isin": "IT0005497885",
+        "mic": "EXGM",
+        "sha256": "934483a6bb940cb6ab393122b9f06adde298211f6c6887ecef4abb8b7803b44b"
+      },
+      {
+        "isin": "IT0005619843",
+        "mic": "MTAA",
+        "sha256": "2486344e9b3bdd45e4d55151bd4e0a95dbf3f5adc3a935e19b824e0dbd32f47f"
+      },
+      {
+        "isin": "IT0005573438",
+        "mic": "EXGM",
+        "sha256": "17368c4e1e7abfef81bebc7100d607047eadaa394912cb097beb3738f292bb49"
+      },
+      {
+        "isin": "IT0003856405",
+        "mic": "MTAA",
+        "sha256": "5ce41f55e11fba7fa03bd5dbbc02fe9650213d4101eed8709159116d450c4a22"
+      },
+      {
+        "isin": "IT0004973696",
+        "mic": "EXGM",
+        "sha256": "97d8901927812f134c2372014390a4733e0d6573e62c342691b4c6e9638c9325"
+      },
+      {
+        "isin": "IT0005469272",
+        "mic": "EXGM",
+        "sha256": "c88482fea5eabeb9d75986f010ed9b0e858124142674aa2f149e08195b61e109"
+      },
+      {
+        "isin": "IT0005600801",
+        "mic": "EXGM",
+        "sha256": "33be551f97851d92e1b178eadacae473c5ff02a923952787243e8f8c834b6e18"
+      },
+      {
+        "isin": "IT0005337073",
+        "mic": "EXGM",
+        "sha256": "09069041169545029d7b7b28ef95f70f5f5a6c0b675901c24a9d3a3cfca07236"
+      },
+      {
+        "isin": "IT0005541336",
+        "mic": "MTAA",
+        "sha256": "4259737a7e1569208c41ac7214ad9dd41e09cebbe9471ff11f6e57e04e53f4da"
+      },
+      {
+        "isin": "IT0004522162",
+        "mic": "EXGM",
+        "sha256": "d996c7da76ca4a5e436ff263c8f546d1941b5fe9e2ce1c7b428c7993b420bf43"
+      },
+      {
+        "isin": "IT0005107492",
+        "mic": "MTAA",
+        "sha256": "aba44b9888a543df7fa5b9eee92ffe8d68fe6a348eb806184dac30ae093be3b9"
+      },
+      {
+        "isin": "IT0005525347",
+        "mic": "EXGM",
+        "sha256": "0e669fb5d8d2fcd2735145a137a927fdb7eaedec792c509ece346d9e66a1bf6e"
+      },
+      {
+        "isin": "IT0004931058",
+        "mic": "MTAA",
+        "sha256": "bf73b7d006fd19a549939d45fa9a55e8244f2f037724e61cbdcfaae53ad4e138"
+      },
+      {
+        "isin": "IT0005364333",
+        "mic": "EXGM",
+        "sha256": "1b153ad71d5d61e61c4d2fa8a43ff6ce3719111907ed575b21bdc8f9233981a2"
+      },
+      {
+        "isin": "IT0005588626",
+        "mic": "EXGM",
+        "sha256": "4700ac20f2c9d8aeb97d1d1acab2230b6894a9c4168153693cfe57dc87363db8"
+      },
+      {
+        "isin": "IT0005670960",
+        "mic": "EXGM",
+        "sha256": "c3de15490e1aa7286a58fc6065ad73adb7487674deb9757211fc5f64e699c0a2"
+      },
+      {
+        "isin": "IT0003428445",
+        "mic": "MTAA",
+        "sha256": "788357f9f1c38335d3763adbec597978a7d664e1d616aa3b97cf839565664920"
+      },
+      {
+        "isin": "IT0004376858",
+        "mic": "EXGM",
+        "sha256": "9902934a32b4cf5977faa1f5f7b9870207cb67b7da736a875beeb15a79fa46db"
+      },
+      {
+        "isin": "IT0004125677",
+        "mic": "EXGM",
+        "sha256": "f6ad0d1bf95df45aefcdd780a0d6fa738663a3a571d8c1de285e7675009ded65"
+      },
+      {
+        "isin": "IT0005388449",
+        "mic": "EXGM",
+        "sha256": "d12ce329c7b24a09ee75c90c57f36e25d959e430df23f2a3e023c16f30c08bbf"
+      },
+      {
+        "isin": "IT0000062957",
+        "mic": "MTAA",
+        "sha256": "5c789c5a5c50a0d568dc37053b4e853e651d2a31382a7c61080ae4a0144e95d2"
+      },
+      {
+        "isin": "IT0005651481",
+        "mic": "EXGM",
+        "sha256": "1b4252cad7018f47305c1667f1a7b829ce530ca5d5116a383c4cdb642cf5cd41"
+      },
+      {
+        "isin": "IT0005586950",
+        "mic": "EXGM",
+        "sha256": "7c41fffc6d0729ad6fbcf2ecefaca06e290628b7ff73e145f3a913807aa8d025"
+      },
+      {
+        "isin": "NL0015001OJ9",
+        "mic": "MTAA",
+        "sha256": "c9bebdd26f711755b00fe00d5359146da17ba17ea8bcce086fc70978302c8a1e"
+      },
+      {
+        "isin": "IT0005603078",
+        "mic": "EXGM",
+        "sha256": "7129919d709167e5a9ebcff4fce574ece1ee43b57c8936e58afde3d60359c301"
+      },
+      {
+        "isin": "IT0005427510",
+        "mic": "EXGM",
+        "sha256": "043363de0d5e4f6e60c57ec492468a9d6196fed6fc4f9a0161f8b8d121c27fa8"
+      },
+      {
+        "isin": "IT0004195308",
+        "mic": "MTAA",
+        "sha256": "5b3f5323443b408cc60b5cb2d206c38c7646e1cc3bfbe526e726728f3aa25c68"
+      },
+      {
+        "isin": "IT0004965148",
+        "mic": "MTAA",
+        "sha256": "d2b964b1de76dcaf8656d7fa1bd0888e509e899a0af305640e04807a797066ac"
+      },
+      {
+        "isin": "IT0001469383",
+        "mic": "MTAA",
+        "sha256": "82ad620e412e38a2c5293a05ab34cdea574d0008a7a08b1cd2a100030ee6b08e"
+      },
+      {
+        "isin": "IT0001447785",
+        "mic": "MTAA",
+        "sha256": "23f57a3a0585f729c6215069171547a7809e3225c1b9f117e25c13743689120c"
+      },
+      {
+        "isin": "FR001401B312",
+        "mic": "EXGM",
+        "sha256": "c6a8cb9303d803590c049e1d21b40e9b810056e4588a5ea87e3b66055dfbbf8d"
+      },
+      {
+        "isin": "IT0005730384",
+        "mic": "EXGM",
+        "sha256": "b85e53da9ca0f7e34c434c82957f64a244f048e04842534e512995c294c69656"
+      },
+      {
+        "isin": "IT0005275778",
+        "mic": "MTAA",
+        "sha256": "dc882d3c6a7140ce39e5e25e343d11deca4aa8e7e57abb7a285334e74bf8bfda"
+      },
+      {
+        "isin": "GRS802003004",
+        "mic": "EXGM",
+        "sha256": "bccdbb70bf59ac6155fe01f84f2e1897cb3de9bb8745d89cefeea95ec4887fed"
+      },
+      {
+        "isin": "IT0005385213",
+        "mic": "MTAA",
+        "sha256": "f5455f8256cb5538dd5a72578c0b7ae532b1ee2d666083379d16dd5eacd9ece2"
+      },
+      {
+        "isin": "IT0005366767",
+        "mic": "MTAA",
+        "sha256": "3532dfb7fe21610455450125c56dca1fb1600921b8a7e4d5fae1a3edf4fe344c"
+      },
+      {
+        "isin": "IT0005594418",
+        "mic": "EXGM",
+        "sha256": "fde71fcb20e430da94129543934865fd0eea88cdd20476bcbda3159e8ee29c34"
+      },
+      {
+        "isin": "IT0005025355",
+        "mic": "EXGM",
+        "sha256": "dbc903a354b6a9e8fd98825d990278fbf7b3444aba6ec6e8fc1a6d9c417a9c91"
+      },
+      {
+        "isin": "IT0005605701",
+        "mic": "EXGM",
+        "sha256": "25506b151a485935da62fdcf164d85ab3331ac2456c263ec0967aff6cc07042b"
+      },
+      {
+        "isin": "IT0005453110",
+        "mic": "EXGM",
+        "sha256": "df0e7a6fe461ca12d09bb348e16552063720c2d9e16a8d0dbdfa300d35973583"
+      },
+      {
+        "isin": "IT0005374035",
+        "mic": "EXGM",
+        "sha256": "34ed4068cd7e4740a32eb591c62078d9e6868d3459ad1c0187cb3822fefc8833"
+      },
+      {
+        "isin": "IT0005634610",
+        "mic": "MTAA",
+        "sha256": "5b3a7b624b314862b8d3a48e23ff049bf79a21f888cbb834cac067a2f3f93464"
+      },
+      {
+        "isin": "IT0005453748",
+        "mic": "EXGM",
+        "sha256": "bafb9dd82f797e3c79787ac404f6a0c91470db284717fd0753c0833595a04e3d"
+      },
+      {
+        "isin": "IT0005713646",
+        "mic": "EXGM",
+        "sha256": "64a9611127081ba388f8228e9b78dd12b6122c82b0a40c467390d8d424cffae9"
+      },
+      {
+        "isin": "IT0005733040",
+        "mic": "EXGM",
+        "sha256": "01346f1d7f52a962e2fdb5c002052d3763d1d27b587676d78f102dd0fe6117fb"
+      },
+      {
+        "isin": "IT0005138703",
+        "mic": "MTAA",
+        "sha256": "597d63d94a36b02618c3ffd2dcda8f4edbf1a6e89ba8799a250a971fce40c5f7"
+      },
+      {
+        "isin": "IT0005663361",
+        "mic": "EXGM",
+        "sha256": "e9204452e5a1c3ef212d8f220c9ac51cbcb6867bf1c35b60612f27b18dec7533"
+      },
+      {
+        "isin": "IT0005043507",
+        "mic": "MTAA",
+        "sha256": "84a3cc51c90b6422953be9fd2210e8bf970e72580077f7e68d56fbe307d612e9"
+      },
+      {
+        "isin": "IT0005546319",
+        "mic": "EXGM",
+        "sha256": "210e675ef7e9b4ce3d4415f8730ed1b91dd027eb74ab6c6a72cf96ae427c3c65"
+      },
+      {
+        "isin": "IT0005378143",
+        "mic": "EXGM",
+        "sha256": "330d840a281e9fb511f4be59b52ad5625496fc64a00a4e5a6e6318b770e0aa16"
+      },
+      {
+        "isin": "IT0005274094",
+        "mic": "MTAA",
+        "sha256": "8b96ebe7f09d352fc677d104eea0f2cb70fefb8ed6242300eaf69ea8bb05aa84"
+      },
+      {
+        "isin": "IT0005373789",
+        "mic": "MTAA",
+        "sha256": "653e43f9e5413ae149f1e1924f0d9e1d75ed1bd23225c8bb33a247de7ee480db"
+      },
+      {
+        "isin": "IT0003073266",
+        "mic": "MTAA",
+        "sha256": "89ac3b19f8f5c80e7f9012a49703f5b580dac41a0f10d1b9f86b9472a1cb00b7"
+      },
+      {
+        "isin": "IT0003056386",
+        "mic": "MTAA",
+        "sha256": "07287a2e9fd59248afff6b61b4815ad585261bd633024cd00f47a3ab8fe9676f"
+      },
+      {
+        "isin": "IT0004240443",
+        "mic": "MTAA",
+        "sha256": "82fee694f006aa728328e04ffe5c822415d71cee6d352a612e41f814d43fa0ee"
+      },
+      {
+        "isin": "IT0005278236",
+        "mic": "MTAA",
+        "sha256": "c64b8b6d1eba5902b4474ff18cb5cf3f3fb2eb0f3c5f3e3c0ba3548fd2b2fb09"
+      },
+      {
+        "isin": "IT0005676140",
+        "mic": "EXGM",
+        "sha256": "ea1f690bf3ab1c699e938ce65686897c6c896b950f9e40fd2fe6dd549ee881d2"
+      },
+      {
+        "isin": "IT0005430951",
+        "mic": "EXGM",
+        "sha256": "34c2b19f4d1946f5d5696876cf9bfd5f124aaba70e4fea3029f73d5f8fe87af1"
+      },
+      {
+        "isin": "IT0004587470",
+        "mic": "EXGM",
+        "sha256": "07b78fa6fd05bf78ba7038c2642c65a8187d4de018867ebcd9f44d9f2782accd"
+      },
+      {
+        "isin": "IT0005545238",
+        "mic": "EXGM",
+        "sha256": "95f1adff17053eec2cfdda88200c2a53d6aec7c7bd88658ea0ec754372f58684"
+      },
+      {
+        "isin": "IT0005337495",
+        "mic": "EXGM",
+        "sha256": "5bf9afcf9105d98db9b12bcb11b5d1f1f27f6c369925aba45eee63fa1c140e4f"
+      },
+      {
+        "isin": "IT0003796171",
+        "mic": "MTAA",
+        "sha256": "d0201642b5a2f9ef82589d411998bd322212fcd3dbce0ca99c196206728a01f4"
+      },
+      {
+        "isin": "IT0005353815",
+        "mic": "EXGM",
+        "sha256": "50229420de272177a0273270b45ea3dfc92ca1dd982ef29bf225bf9f95c68064"
+      },
+      {
+        "isin": "IT0005499949",
+        "mic": "EXGM",
+        "sha256": "f6e23d17525c12b999ad4c0679c0e73693abaaf616281865eec00ceb32f6c9e3"
+      },
+      {
+        "isin": "IT0005611071",
+        "mic": "EXGM",
+        "sha256": "b3f57070d88a5c57213cdf46dd484857a97fbf57d3cf162dfcecd8aca45b9bb7"
+      },
+      {
+        "isin": "IT0005425365",
+        "mic": "EXGM",
+        "sha256": "e717dbadbf70b5bb2b757969a20b39ddbf5da84f935d6529fb71aa440dc1b2db"
+      },
+      {
+        "isin": "IT0004176001",
+        "mic": "MTAA",
+        "sha256": "8c4b9c4b626cf5333bd0f7464a364831ef15642168a778399f93925b14315b8b"
+      },
+      {
+        "isin": "IT0005466963",
+        "mic": "EXGM",
+        "sha256": "7fa4074cde0ca746ae9c49175ba89c85e3b9c28bfc82be6bc8c7b391a4c59973"
+      },
+      {
+        "isin": "IT0005379737",
+        "mic": "EXGM",
+        "sha256": "3e9a4c2502c610122a03d85743f64f1d1c65e404fd2e09cdade43c4a1dd52410"
+      },
+      {
+        "isin": "IT0005054967",
+        "mic": "MTAA",
+        "sha256": "dcdfbd15c3c830c38002f3020167ac0b65b8033fb8725cd33fc1bea829b08f22"
+      },
+      {
+        "isin": "IT0004724107",
+        "mic": "MTAA",
+        "sha256": "6eda96271f6ce7a8c893f5b383c0cf6b04487ab78afb9509fde569dc50416b9a"
+      },
+      {
+        "isin": "IT0004931496",
+        "mic": "MTAA",
+        "sha256": "a822a704ae760b7661829f3eb33af246e13766b35f3e522059253088bc310eda"
+      },
+      {
+        "isin": "IT0005496101",
+        "mic": "EXGM",
+        "sha256": "70239c8f23eacae2d0633cff4aba30f9f7b35a93940faf25f43bb33b6cf47149"
+      },
+      {
+        "isin": "IT0005500571",
+        "mic": "EXGM",
+        "sha256": "43cebfe0313df294af10e69ce37978c0c0b372c11e0d4ac5806bc96c3ca47c79"
+      },
+      {
+        "isin": "IT0005282865",
+        "mic": "MTAA",
+        "sha256": "7ddbb60b6c364a785445925cc1009aaa830ebce2ba3ae9ddfe65a29cc0fd219d"
+      },
+      {
+        "isin": "IT0005543613",
+        "mic": "EXGM",
+        "sha256": "047e5957e7ec4092f4463ef2b8dab49fc12a1f8dae3d8a7c3b06caf637575513"
+      },
+      {
+        "isin": "IT0005418204",
+        "mic": "EXGM",
+        "sha256": "1a36327d6f5ce9be2ec6b33e86cd480a982a7a36445fbfb5a6473ee43c0183f4"
+      },
+      {
+        "isin": "IT0005513202",
+        "mic": "MTAA",
+        "sha256": "91cba5d140af5168af6eaab825648e3ff1db91565a6b335433c461b3c4c3896d"
+      },
+      {
+        "isin": "IT0005663429",
+        "mic": "EXGM",
+        "sha256": "ac321068c0c9244b1bf0fad09e0b983d377c1c6e5474ed061c94670035160105"
+      },
+      {
+        "isin": "IT0001402269",
+        "mic": "MTAA",
+        "sha256": "1c1b3141c24e1d6394b7aa77a6d2ac894b7ce7146963a2a2cf931774251a86df"
+      },
+      {
+        "isin": "IT0005481830",
+        "mic": "EXGM",
+        "sha256": "2a45a10460c7f1e1d94c21d5d28bf45e6f4af8ef2b44d190edd54cf4e0cb3f0a"
+      },
+      {
+        "isin": "IT0001017851",
+        "mic": "EXGM",
+        "sha256": "99bcd73e2d12225c5d0395dcb0d6c599495c23241aa757824112036d1bf54b30"
+      },
+      {
+        "isin": "IT0005680373",
+        "mic": "EXGM",
+        "sha256": "4a7681367f13e1147f336e8dbcd2842cfc218d293d002ba34bdd7927055f86dc"
+      },
+      {
+        "isin": "IT0003621783",
+        "mic": "MTAA",
+        "sha256": "c0dc4807419fe1b9fe2cdd5ce01e07993d856eed423b9bc47fd0624134020466"
+      },
+      {
+        "isin": "IT0001042610",
+        "mic": "MTAA",
+        "sha256": "1cd15f06f2c6c66d2f07b3346ec0879617da60df1623375fcc13999abb0fd70e"
+      },
+      {
+        "isin": "IT0005521551",
+        "mic": "EXGM",
+        "sha256": "79369911f8df1920c636a341d3621c5256bf5d2b01491759fc01834efa639fb2"
+      },
+      {
+        "isin": "IT0004604762",
+        "mic": "MTAA",
+        "sha256": "b02d7233e8c1f9d355ceae4527cc71470a02b515e7ea3d25527e2562a4d62027"
+      },
+      {
+        "isin": "IT0005495657",
+        "mic": "MTAA",
+        "sha256": "7e96cf0dc5db94ca07b81acc688e0d2ebf4c411f43a3547b3d167f1c84663fec"
+      },
+      {
+        "isin": "IT0004712375",
+        "mic": "MTAA",
+        "sha256": "a505c35622f3b54c5abd7b522989cd2846647b454d5a4f4bbcf023bf3182af48"
+      },
+      {
+        "isin": "IT0003549422",
+        "mic": "MTAA",
+        "sha256": "af3e0b233b7212aaecee6039c1a022ffd36e1cfd24bba3ae018a464309c84aa5"
+      },
+      {
+        "isin": "IT0005568461",
+        "mic": "EXGM",
+        "sha256": "6623c045a623894455e6e1cf07a4f1f4cc2201935ccc5468b45ddfa9ee50993e"
+      },
+      {
+        "isin": "IT0005438046",
+        "mic": "MTAA",
+        "sha256": "4f55d194dc036baef515df0461d55788b01d3b102c3dbdda21bd5a05c66384ac"
+      },
+      {
+        "isin": "IT0005283640",
+        "mic": "MTAA",
+        "sha256": "6019a3acfc2ce4cfd10db5b03d8a4015be89be6f0fe7a625369afd7819c9b3a7"
+      },
+      {
+        "isin": "IT0004729759",
+        "mic": "MTAA",
+        "sha256": "52cd95960823068a9923640fa67c1e971aa28c6e909e9bf53a0c7bddf01339d3"
+      },
+      {
+        "isin": "IT0005337172",
+        "mic": "EXGM",
+        "sha256": "2a0f19457c73ad5552062c764b9e4a901965d37422b7dc31d720128a91698165"
+      },
+      {
+        "isin": "IT0005504128",
+        "mic": "EXGM",
+        "sha256": "582455dd181591df4cae84cc005c0b98739624f8a98f3fa7bb5018a4bfbc4123"
+      },
+      {
+        "isin": "IT0005556581",
+        "mic": "EXGM",
+        "sha256": "df9b2e3730952a5e4c409c23a54d580fc5a6449e25064eb30a4e729647d2c911"
+      },
+      {
+        "isin": "IT0005573123",
+        "mic": "EXGM",
+        "sha256": "11703aa5476781d8e003fc234a63ada88730cb3a3033bcf80e93915983f6c3fa"
+      },
+      {
+        "isin": "IT0005262149",
+        "mic": "MTAA",
+        "sha256": "fb35d58ecb2f3646bb5d3460369d04c82a4fa8a9650075090eb5510a5ce70754"
+      },
+      {
+        "isin": "IT0003153415",
+        "mic": "MTAA",
+        "sha256": "67abbf99f1e0675e15993e38a0e811bf4f149ab0ca03c8fb76a998e2fc6f70f8"
+      },
+      {
+        "isin": "IT0005353484",
+        "mic": "EXGM",
+        "sha256": "b74968777dded3a9e37c4852b5323d10f5599fa0268e6699a6451ec8bb5c5f14"
+      },
+      {
+        "isin": "IT0001469953",
+        "mic": "MTAA",
+        "sha256": "32b68956bf4ad5364ff3306ad98cc6d97d81debda843a880e0866f70825d2f8d"
+      },
+      {
+        "isin": "IT0000076536",
+        "mic": "MTAA",
+        "sha256": "60a210be11b9be753416f90f369d95ca0f392c669d13138a34e9dd9a51f2f99d"
+      },
+      {
+        "isin": "IT0005597411",
+        "mic": "EXGM",
+        "sha256": "9d0c98f5202c4e8691967f33624a1c1036e6275ea87bbe293f2be4d73486568a"
+      },
+      {
+        "isin": "IT0001206769",
+        "mic": "MTAA",
+        "sha256": "3723158abdb9e77a01ca4b85a1a5e8f8c9a5f6a8d908fdf8be40cc91fe42a35f"
+      },
+      {
+        "isin": "IT0005497893",
+        "mic": "EXGM",
+        "sha256": "71ce461feebb6138acf9ca4627d03b9cdddc5b828c1fb48865c04e6ff3faccd4"
+      },
+      {
+        "isin": "IT0005329815",
+        "mic": "MTAA",
+        "sha256": "b0765825aa69e438afa8cb0f144d25534f72a5ec8fba1eeabfc92509ddf8db5d"
+      },
+      {
+        "isin": "IT0005338675",
+        "mic": "EXGM",
+        "sha256": "e607ba0cfe23c051f18c15ac0d22a4ab12981b9ec3a6c69d84b370d77f902762"
+      },
+      {
+        "isin": "IT0005469264",
+        "mic": "EXGM",
+        "sha256": "2e58c6fbeea790b744eeb36ce335b64c49ce419b562a4e49466e3138db7145fe"
+      },
+      {
+        "isin": "IT0005595423",
+        "mic": "MTAA",
+        "sha256": "c8e848958f97da59d005c3eda948f68f84358ad4ac688848211e316e8286bcfe"
+      },
+      {
+        "isin": "IT0003153621",
+        "mic": "MTAA",
+        "sha256": "e7aac8ba23c14d709850bcee096ba5caae2b9fe0068e455f048cfa8b557014c7"
+      },
+      {
+        "isin": "IT0005162406",
+        "mic": "MTAA",
+        "sha256": "957cd89d599ff219b79e2f57662087d05bdf048f1b5eb8c634f5e3cd92f8d596"
+      },
+      {
+        "isin": "IT0005482333",
+        "mic": "MTAA",
+        "sha256": "6b86e84b05adbfda904b7dc3138f103ff12c78aca218afffd0b1be5a9deb4d41"
+      },
+      {
+        "isin": "IT0005425050",
+        "mic": "EXGM",
+        "sha256": "31b87d72362cbfedf5303e9fef4dcf1b09f05d14eb1d25edb1e5824365e59253"
+      },
+      {
+        "isin": "IT0005658841",
+        "mic": "EXGM",
+        "sha256": "c36d12bb44172bbb5bab831d0037fb0d0766fd3f77b3232502c73abd76bb1bac"
+      },
+      {
+        "isin": "IT0005712671",
+        "mic": "MTAA",
+        "sha256": "b200e19456cb3f5df1cb5b26423cc04f84de662c01bd39dfb318b0c4ed2ca574"
+      },
+      {
+        "isin": "IT0005240046",
+        "mic": "EXGM",
+        "sha256": "11fbbfdfd6a2f87188f348c16bc91851e280dbbf72ec2218c497737ab48ad58e"
+      },
+      {
+        "isin": "IT0005683401",
+        "mic": "EXGM",
+        "sha256": "8b83d76c8826cfc66f523645b97ea675dbed19d4602171b2e772a424c4e977dd"
+      },
+      {
+        "isin": "IT0005428898",
+        "mic": "EXGM",
+        "sha256": "b1908c02664d318e873232984cf7224d78385490caba85041599a61bc5b36a42"
+      },
+      {
+        "isin": "IT0003242622",
+        "mic": "MTAA",
+        "sha256": "fa282c5df141f96fd71ef16db6357d41c84cc8e15ced516e2a23bce3c8cdfb5b"
+      },
+      {
+        "isin": "IT0004585243",
+        "mic": "MTAA",
+        "sha256": "356f561a31a06e97da2167861082a4d2c45f6a4c19c82377cc6bbffe83e98fd3"
+      },
+      {
+        "isin": "IT0005496473",
+        "mic": "MTAA",
+        "sha256": "8ec7d958c56b852fe334d49ed9111a1c1f765041cb41d43ef8062d37e2cf21b9"
+      },
+      {
+        "isin": "IT0005439085",
+        "mic": "MTAA",
+        "sha256": "deac8e184d2390b2461ad7fcaffcf0c18926267088d1a2d350cd9a0d43bcbfaa"
+      },
+      {
+        "isin": "IT0005531238",
+        "mic": "EXGM",
+        "sha256": "2b0febe6a4eced26590527e88d0a3b8876f9390d7fac3f6c92ce628edd93f8dd"
+      },
+      {
+        "isin": "IT0000214293",
+        "mic": "MTAA",
+        "sha256": "34ab0c035866a74e7807cae8a52a37404704297d0870869d2a4085b102b8371e"
+      },
+      {
+        "isin": "IT0005246142",
+        "mic": "EXGM",
+        "sha256": "7123762b22bd0a69dddd041f03cce2bbd31593cfb7b44cd98220982d3b663ceb"
+      },
+      {
+        "isin": "IT0005651507",
+        "mic": "EXGM",
+        "sha256": "b39060fdd3ce420e62c8cf1a2609fe393f8bb998a4eb3832ab4edce29047b197"
+      },
+      {
+        "isin": "IT0005717571",
+        "mic": "EXGM",
+        "sha256": "5b7c7a213663defb42d501524fc175e5f99d586bc8cf91e04b67034f32a59ab0"
+      },
+      {
+        "isin": "IT0005709909",
+        "mic": "MTAA",
+        "sha256": "bdf0edc6e7586fd66e9dac0741d01c4f07831a72b9047aca95f743159e642863"
+      },
+      {
+        "isin": "IT0005001554",
+        "mic": "MTAA",
+        "sha256": "087372a4db1ad470e800549b2a2d368c9aea14eb15bb9344c7ce795a4c9132a8"
+      },
+      {
+        "isin": "IT0001454435",
+        "mic": "MTAA",
+        "sha256": "6726f5b011e5bdb361883925cdf200d31a000c72a7c6ffd176b4db7087a476f2"
+      },
+      {
+        "isin": "IT0005628158",
+        "mic": "EXGM",
+        "sha256": "d86373e47aaba1ab4fb119ba910da12f332378564a4d5848af370b6c04a567ae"
+      },
+      {
+        "isin": "IT0005380461",
+        "mic": "EXGM",
+        "sha256": "47a0e426acdcfdd2d11264b8cc81a524535a4b8fb848176f7e685b3efca7eaac"
+      },
+      {
+        "isin": "IT0005239360",
+        "mic": "MTAA",
+        "sha256": "8368cb4d706fb722424ab7cd919881b0857d9d8fc9cd1d0260c391cff923bc03"
+      },
+      {
+        "isin": "IT0005573065",
+        "mic": "MTAA",
+        "sha256": "ac118e57a03bc3565f6abc201f8f16144c0d6e6d0e652a7f093e263aaa0d01de"
+      },
+      {
+        "isin": "IT0004810054",
+        "mic": "MTAA",
+        "sha256": "8f521d2e8f44de17d70c1bdf625018476dbadcb9be27fce956428b9a50961be5"
+      },
+      {
+        "isin": "IT0005562514",
+        "mic": "EXGM",
+        "sha256": "1c5e96d64fcb41e5ed4c7acd501eabae7c924d47d7cf2b07f6fee6a3281931b3"
+      },
+      {
+        "isin": "IT0001018362",
+        "mic": "MTAA",
+        "sha256": "eca42610881b808bcec3187aab2ed6681f4d282bb9de41fc25b7ea4bb13837f1"
+      },
+      {
+        "isin": "IT0005532525",
+        "mic": "EXGM",
+        "sha256": "fcd6e8cb679e4d4689cf02567d75cf8a4e3f7a38cbbd444e0d0928b00a645ab1"
+      },
+      {
+        "isin": "IT0005433765",
+        "mic": "EXGM",
+        "sha256": "512dd8ea5116796f98080cdad2af12e73b35a254183e1a1a6fad6d094d349995"
+      },
+      {
+        "isin": "IT0004717200",
+        "mic": "EXGM",
+        "sha256": "e6b8c8de5b8ff5c1af3486e2ffe460f02183cc40689564c6f1d47cb18411b233"
+      },
+      {
+        "isin": "IT0005652414",
+        "mic": "EXGM",
+        "sha256": "d6bc42b58a10ba7565a47deea2d71ddd70bf03ef59fb5a3c67bd18b77dffc067"
+      },
+      {
+        "isin": "IT0005622581",
+        "mic": "EXGM",
+        "sha256": "64868b275b767f069d98385701ce23f643f22c5fadc56d2474e215d48ff623e8"
+      },
+      {
+        "isin": "IT0005556110",
+        "mic": "EXGM",
+        "sha256": "97baae501ad019ba8f53d6097d5fbcc76bd67ea21d37a4bef1e9053b4df491e5"
+      },
+      {
+        "isin": "IT0005384901",
+        "mic": "EXGM",
+        "sha256": "b6bdcb27ae6d8be2651171d621dd2f0a8ce2b484656681ad4120f12e7f5bfe35"
+      },
+      {
+        "isin": "IT0003865570",
+        "mic": "MTAA",
+        "sha256": "f5196e81d02f7e14dc2ff8be047be0172bc61a46d44784ae2308904cc85a2ea3"
+      },
+      {
+        "isin": "IT0005440893",
+        "mic": "MTAA",
+        "sha256": "12406b759beccc4c2301cdd75fcd50050198ea3a3b2d545eaba46fe6dc4d40b8"
+      },
+      {
+        "isin": "IT0005568487",
+        "mic": "EXGM",
+        "sha256": "8beed0aa10eee8225296f973970d13f12ba8ee674b5d5b4bb0464c8110b846a8"
+      },
+      {
+        "isin": "IT0005573966",
+        "mic": "EXGM",
+        "sha256": "358342b8261ae9a0e6309e08000d3de6ffc23d2e96b69983f2bc993491573aa8"
+      },
+      {
+        "isin": "IT0005495871",
+        "mic": "EXGM",
+        "sha256": "db62c67d6e7079740d37fa3cec956c3472f80ac8b926c66bff8cac948a91ee81"
+      },
+      {
+        "isin": "IT0005013013",
+        "mic": "MTAA",
+        "sha256": "6fed7f9bca50536a962c3b38104ad0057bef3e8b0ffd2b2581ed03655f0eb210"
+      },
+      {
+        "isin": "IT0004171440",
+        "mic": "MTAA",
+        "sha256": "f56c3d561f86d0793e2035e06304b634b882852c618bda0fd2d443fcae4bfcab"
+      },
+      {
+        "isin": "IT0005395071",
+        "mic": "MTAA",
+        "sha256": "56eb9971f3c11448e1122b6c147e1e856f6531f5555906db85767832b7c478ad"
+      }
+    ]
+  },
+  "fixtureSymbols": [
+    "A2A",
+    "ALMS",
+    "PRO",
+    "EDAC",
+    "KME"
+  ]
+}

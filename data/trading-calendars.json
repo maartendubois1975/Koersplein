@@ -49,6 +49,7 @@
       "finalizedAfter": "18:15",
       "note": "Conservative collection boundary after closing auctions, trading-at-last and valuation publication. Half days also use this boundary until the importer runs later in the evening.",
       "years": {
+        "2025": {"closed":["2025-01-01","2025-04-18","2025-04-21","2025-05-01","2025-12-25","2025-12-26"],"halfDays":["2025-12-24","2025-12-31"]},
         "2026": {"closed":["2026-01-01","2026-04-03","2026-04-06","2026-05-01","2026-12-25"],"halfDays":["2026-12-24","2026-12-31"]},
         "2027": {"closed":["2027-01-01","2027-03-26","2027-03-29"],"halfDays":["2027-12-24","2027-12-31"]}
       }

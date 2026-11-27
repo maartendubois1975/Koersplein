@@ -1,0 +1,44 @@
+{
+  "testedOn": "2026-11-27",
+  "baseCommit": "b3e2cb27571a5bfbcba102db91a4f2f72c979f50",
+  "researchTestFiles": 20,
+  "commands": [
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "outputSha256": "1255e4c9087f8e492639196346b32b1707c0b78a6053bd2fd6588e5a96f097fa"
+    },
+    {
+      "command": "npm run audit:codebase",
+      "exitCode": 0,
+      "outputSha256": "822d21aa5d82f8b40f44142e21d03dc95deea48328b513fedf167a7981af9f74"
+    },
+    {
+      "command": "npm run history:test",
+      "exitCode": 0,
+      "outputSha256": "935551239d1bd14568f83141266f9cee1e64e4289db57ffd7936e71c64f6a45d"
+    },
+    {
+      "command": "all scripts/research/test-*.mjs",
+      "exitCode": 0,
+      "outputSha256": "941916853617d5b6dd4528f8f780e6e50bac33db6cd4f7008e9cd0f734ab4508"
+    },
+    {
+      "command": "export-paris-company-review.mjs --check",
+      "exitCode": 0,
+      "outputSha256": "fd53cc96e6508104d2efcda6bd9cdd9b6f5c2666157cbea5505eb73bc5db7866"
+    }
+  ],
+  "protectedRegisters": {
+    "XAMS": 80,
+    "XBRU": 105,
+    "XPAR": 664,
+    "XDUB": 16,
+    "XLIS": 34
+  },
+  "priceArchiveFilesChanged": 0,
+  "previousLedgerRecordsChanged": 0,
+  "newSealedRecords": 1,
+  "productionChanged": false,
+  "deployed": false
+}

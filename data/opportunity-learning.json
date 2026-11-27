@@ -1,26 +1,83 @@
 {
-  "generatedAt": "2026-11-26T18:47:17.903Z",
+  "generatedAt": "2026-11-27T05:32:01.900Z",
   "referenceDate": "2026-11-26",
   "purpose": "Bevries iedere voorspelling vooraf, volg de uitkomst en leer van raak en mis.",
   "target": "+30% binnen 3 maanden",
   "latestByMarket": {
     "XAMS": {
-      "selectionDate": "2026-09-17",
+      "selectionDate": "2026-11-26",
       "market": "XAMS",
-      "venue": "Amsterdam",
+      "venue": "Euronext Amsterdam",
+      "currency": "EUR",
       "targetPct": 30,
       "horizonMonths": 3,
-      "status": "EVALUATION_UNVERIFIED",
+      "status": "OPEN",
       "frozen": true,
-      "modelVersion": "consensus-price-v1",
-      "name": "FAGRON",
-      "ticker": "FAGR",
-      "isin": "BE0003874915",
-      "referenceDate": "2026-09-16",
-      "referenceClose": 22.049999237060547,
+      "createdAt": "2026-11-27T05:32:01.879Z",
+      "modelVersion": "consensus-price-v2-auditable",
+      "signalType": "consensus",
+      "benchmarkAtSelection": [
+        {
+          "isin": "NL0011872650",
+          "referenceClose": 31.28
+        },
+        {
+          "isin": "NL0012969182",
+          "referenceClose": 868.4
+        }
+      ],
+      "name": "BASIC-FIT",
+      "ticker": "BFIT",
+      "isin": "NL0011872650",
+      "referenceDate": "2026-11-26",
+      "referenceClose": 31.28,
       "consensusRank": 4,
-      "legacyUnverified": true,
-      "evaluationError": "PREDICTION_OUTSIDE_APPROVED_REGISTER",
+      "componentRanks": {
+        "momentum": 1,
+        "balanced": 1,
+        "acceleration": 1,
+        "breakout": 1
+      },
+      "componentScores": {
+        "momentum": 0.02620769,
+        "balanced": 0.20398897,
+        "acceleration": -0.27929156,
+        "breakout": -0.04071656
+      },
+      "features": {
+        "m1": 0.04405874,
+        "m3": -0.06682579,
+        "m6": 0.05962058,
+        "m12": 0.12437097,
+        "volatility126": 0.02027725,
+        "recovery52w": 0.16109871,
+        "drawdown52w": -0.13255688,
+        "previous3m": 0.13550135,
+        "acceleration3m": -0.20232714
+      },
+      "audit": {
+        "universeCount": 80,
+        "eligibleCount": 2,
+        "failedCount": 78,
+        "coveragePct": 2.5,
+        "historyWindowSha256": "93bf315fb59511871f7d84e92f5c0400751c492d2827c6b895b980cefd55f753"
+      },
+      "recordHash": "b1bc97fd10aa67a6739ecb581d08e33fb319a0a7da658c6ff075e319c03b1aae",
+      "immutable": true,
+      "evaluationVersion": "bounded-calendar-v1",
+      "endDate": "2027-02-26",
+      "latestDate": "2026-11-26",
+      "latestClose": 31.28,
+      "currentReturn": 0,
+      "maxReturn": 0,
+      "maxDrawdown": 0,
+      "observedThrough": "2026-11-26",
+      "hit10": false,
+      "hit10Date": null,
+      "hit20": false,
+      "hit20Date": null,
+      "hit30": false,
+      "hit30Date": null,
       "result30": null,
       "benchmarkReturn": null
     },
@@ -46,8 +103,8 @@
     }
   },
   "scoreboard": {
-    "totalPredictions": 2,
-    "predictions": 0,
+    "totalPredictions": 3,
+    "predictions": 1,
     "closed": 0,
     "hits30": 0,
     "misses30": 0,
@@ -57,12 +114,12 @@
     "benchmarkComparisons": 0,
     "averageBenchmarkReturn": null,
     "averageExcessReturn": null,
-    "savedRecords": 2,
+    "savedRecords": 3,
     "unsealedRecords": 2,
-    "open": 0,
+    "open": 1,
     "byMarket": {
       "XAMS": {
-        "predictions": 0,
+        "predictions": 1,
         "closed": 0,
         "hits30": 0,
         "misses30": 0,
@@ -122,8 +179,34 @@
         "averageExcessReturn": null
       }
     },
-    "bySignal": {},
-    "byHorizon": {}
+    "bySignal": {
+      "consensus": {
+        "predictions": 1,
+        "closed": 0,
+        "hits30": 0,
+        "misses30": 0,
+        "hitRate": null,
+        "averageReturn": null,
+        "averageLoss": null,
+        "benchmarkComparisons": 0,
+        "averageBenchmarkReturn": null,
+        "averageExcessReturn": null
+      }
+    },
+    "byHorizon": {
+      "3": {
+        "predictions": 1,
+        "closed": 0,
+        "hits30": 0,
+        "misses30": 0,
+        "hitRate": null,
+        "averageReturn": null,
+        "averageLoss": null,
+        "benchmarkComparisons": 0,
+        "averageBenchmarkReturn": null,
+        "averageExcessReturn": null
+      }
+    }
   },
   "lessons": []
 }
