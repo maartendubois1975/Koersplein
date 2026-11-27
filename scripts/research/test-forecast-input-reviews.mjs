@@ -8,8 +8,10 @@ import { sameSourcePrice } from '../../chart.js';
 
 const reviewFile = JSON.parse(await fs.readFile('data/forecast-input-reviews.json', 'utf8'));
 const evidence = JSON.parse(gunzipSync(await fs.readFile('research/forecast/2026-11-27/official-window-evidence.json.gz')));
+const additional = JSON.parse(gunzipSync(await fs.readFile('research/completion/2026-11-27/forecast-source-evidence.json.gz')));
 const catalog = await loadCompanyCatalog('XAMS');
-assert.equal(Object.keys(reviewFile.instruments).length, 2);
+assert(Object.keys(reviewFile.instruments).length >= 2);
+for (const key of ['XAMS:NL0012969182','XAMS:NL0011872650']) assert(reviewFile.instruments[key]);
 for (const [key, review] of Object.entries(reviewFile.instruments)) {
   const share = catalog.shares.find(item => item.isin === review.instrument.isin);
   const latest = JSON.parse(await fs.readFile('data/history/' + key + '.json', 'utf8')).coverage.lastDate;
@@ -19,7 +21,8 @@ for (const [key, review] of Object.entries(reviewFile.instruments)) {
   assert.equal(JSON.stringify(input), before, 'Reviewed model window leaves all source records unchanged');
   assert.equal(bars.length, 253);
   assert.equal(assessForecastWindow(bars, review.asOf).status, 'READY');
-  const official = evidence.instruments.find(row => row.key === key);
+  const added = additional.find(row => row.instrument.mic + ':' + row.instrument.isin === key);
+  const official = evidence.instruments.find(row => row.key === key) || { quote: added.quote, official: added.rawRows, adjusted: added.adjustedRows };
   assert(official.quote.identityMatch);
   assert.equal(official.quote.currency, 'EUR');
   assert.deepEqual(official.official, official.adjusted);
@@ -37,9 +40,10 @@ for (const [key, review] of Object.entries(reviewFile.instruments)) {
   assert.throws(() => reviewedForecastWindow(input, review, { ...review.instrument, mic: 'MTAA' }, review.asOf), /MISMATCH/);
   assert.throws(() => reviewedForecastWindow(input, review, review.instrument, '2026-11-27'), /MISMATCH/);
   const changedReview = structuredClone(review);
-  changedReview.resolutions[0].official[changedReview.resolutions[0].fields[0]] += 0.001;
+  if (changedReview.resolutions.length) changedReview.resolutions[0].official[changedReview.resolutions[0].fields[0]] += 0.001;
+  else changedReview.modelWindowSha256 = '0'.repeat(64);
   assert.throws(() => reviewedForecastWindow(input, changedReview, review.instrument, review.asOf), /VALUES_CHANGED/);
   const missing = input.filter(row => row.date !== review.firstDate);
   assert.throws(() => reviewedForecastWindow(missing, review, review.instrument, review.asOf), /OBSERVATION_CHANGED/);
 }
-console.log('Two actual 253-session forecast windows, source-mode equivalence, bounded corrections and changed-input rejection PASS');
+console.log(Object.keys(reviewFile.instruments).length + ' actual 253-session forecast windows, source-mode equivalence, bounded corrections and changed-input rejection PASS');

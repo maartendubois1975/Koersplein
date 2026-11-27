@@ -1,0 +1,49 @@
+{
+  "testedOn": "2026-11-27",
+  "baseCommit": "64c4f0b4516e678408bf5ee56918a31483539a50",
+  "researchTestFiles": 21,
+  "commands": [
+    {
+      "exitCode": 0,
+      "outputSha256": "e72248497c86de01160e6425a4980c820d256b705fd9877a409007cb5558be37",
+      "command": "npm test"
+    },
+    {
+      "exitCode": 0,
+      "outputSha256": "4daa8600a1cc97c74ca0f9d1b60774746e679c05e6af0542a8345ca2f8cb9127",
+      "command": "npm run audit:codebase"
+    },
+    {
+      "exitCode": 0,
+      "outputSha256": "935551239d1bd14568f83141266f9cee1e64e4289db57ffd7936e71c64f6a45d",
+      "command": "npm run history:test"
+    },
+    {
+      "exitCode": 0,
+      "outputSha256": "63aaa8e8df205d379089ed2e65f31dd382d3621acdbe3bc296522a52ea5b63aa",
+      "command": "all scripts/research/test-*.mjs"
+    },
+    {
+      "exitCode": 0,
+      "outputSha256": "fd53cc96e6508104d2efcda6bd9cdd9b6f5c2666157cbea5505eb73bc5db7866",
+      "command": "export-paris-company-review.mjs --check"
+    }
+  ],
+  "approvedCompanies": 899,
+  "activeMarkets": 5,
+  "forecastWindows": 18,
+  "firstForecastAndBenchmarkChanged": false,
+  "historyArchivesChanged": false,
+  "deployed": false,
+  "visualBrowserAcceptance": {
+    "status": "BLOCKED_ENVIRONMENT",
+    "reason": "No executable Chromium engine; official Playwright browser download returned HTTP 403",
+    "deployed": false
+  },
+  "statusRendererTest": "PASS_ACTUAL_STORED_REPORT",
+  "initialSourceEvidence": {
+    "complete": 54,
+    "partial": 16,
+    "total": 70
+  }
+}

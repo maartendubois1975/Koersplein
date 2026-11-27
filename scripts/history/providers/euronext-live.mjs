@@ -41,14 +41,15 @@ const chunks=(start,end)=>{
  while(s<=end){const eCandidate=addDays(s,700);const e=eCandidate<end?eCandidate:end;out.push([s,e]);if(e===end)break;s=addDays(e,1)}
  return out;
 };
-export const parseEuronextHistoryRows=html=>{
+export const parseEuronextHistoryRows=(html,{includePriceDefinitions=false}={})=>{
  const rows=[...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].map(x=>[...x[1].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map(y=>clean(y[1])));
  const header=rows.findIndex(row=>row.some(v=>/^date$/i.test(v)));if(header<0)return[];
  const h=rows[header].map(x=>x.toLowerCase()),idx=n=>h.findIndex(x=>x.includes(n));
  const di=idx('date'),oi=idx('open'),hi=idx('high'),li=idx('low'),ci=idx('close');
+ const lastIndex=h.findIndex(x=>x==='last'),vwapIndex=idx('vwap');
  const vi=h.findIndex(x=>x.includes('number of shares')||x==='volume'||/^vol\.?$/i.test(x.trim())||x.includes('traded volume')||x.includes('quantity traded'));
  if(di<0||oi<0||ci<0)return[];
- return rows.slice(header+1).map(row=>({date:iso(row[di]),open:num(row[oi]),high:num(row[hi]),low:num(row[li]),close:num(row[ci]),adjustedClose:null,volume:vi>=0?num(row[vi]):null})).filter(x=>x.date&&x.close!==null&&x.close>0);
+ return rows.slice(header+1).map(row=>({date:iso(row[di]),open:num(row[oi]),high:num(row[hi]),low:num(row[li]),close:num(row[ci]),adjustedClose:null,volume:vi>=0?num(row[vi]):null,...(includePriceDefinitions?{lastTradePrice:lastIndex>=0?num(row[lastIndex]):null,officialVwap:vwapIndex>=0?num(row[vwapIndex]):null}: {})})).filter(x=>x.date&&x.close!==null&&x.close>0);
 };
 // Euronext's public AJAX client uses this published transport format and
 // default passphrase (ajax_secure/js/ajax-secure.js); this is not an account credential.
@@ -117,7 +118,7 @@ export function parseEuronextQuoteHeader(html,instrument){
  const expectedCurrency=instrument.currency||strictQuoteCurrencies[mic];
  const identityMatch=supportsEuronextQuoteIdentity(mic)&&(requiresEuronextQuoteIdentity(mic)
   ? address===expected&&currency===expectedCurrency
-  : text.includes(expected));
+  : text.includes(expected)||address.replace(/ Other Markets:.*?(?= [A-Z]{2}[A-Z0-9]{9}[0-9] - Stock$)/, '')===expected);
  const last=text.match(/Last traded price\s+(\d{2}\/\d{2}\/\d{4})/i),valuation=text.match(/Valuation Close.*?(\d{2}\/\d{2}\/\d{4})/i);
  const status=html.match(/<!--\s*status\s+(\w+)\s*-->/)?.[1]||null;
  return {identityMatch,currency,lastTradeDate:last?iso(last[1]):null,valuationDate:valuation?iso(valuation[1]):null,status,bookState:html.match(/<!--\s*bookState\s+(\w+)\s*-->/)?.[1]||null,haltReason:html.match(/<!--\s*haltReasonKey\s+(.*?)\s*-->/)?.[1]||null,tradingState:status==='HAL'&&/\bSUSPENDED\b/.test(text)?'SUSPENDED':status==='HAL'?'RESERVED':status,identityUnknown:/This instrument is unknown/i.test(text)};

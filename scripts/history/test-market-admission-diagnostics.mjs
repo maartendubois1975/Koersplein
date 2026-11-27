@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import { operationalMarketIssues, assertOperationalMarket } from './market-definitions.mjs';
+const contracts = JSON.parse(await fs.readFile('data/company-register-contracts.json', 'utf8'));
+const catalog = JSON.parse(await fs.readFile('research/milan/2026-11-26/approved-companies.json', 'utf8'));
+const contract = contracts.catalogPreviews.XMIL;
+const before = JSON.stringify(catalog);
+const issues = operationalMarketIssues(catalog, contract);
+assert(issues.some(row => row.startsWith('INCOMPLETE_OPERATIONAL_SOURCE_ROUTES')));
+assert(issues.some(row => row.startsWith('UNVERIFIED_PUBLICATION_RIGHTS')));
+assert.equal(issues.filter(row => row.startsWith('INVALID_ADMITTED_LISTING')).length, 360);
+assert.throws(() => assertOperationalMarket(catalog, contract), error => error.message === issues[0]);
+assert.equal(JSON.stringify(catalog), before);
+assert.deepEqual(operationalMarketIssues(catalog, contract, { sources: { markets: {} } }).filter(row => row.startsWith('UNVERIFIED')), []);
+for (const mic of Object.keys(contracts.markets)) assert.deepEqual(operationalMarketIssues({ mic }, contracts.markets[mic]), []);
+console.log('Central admission diagnostic preserves all five contracts, reports all Milan gates and cannot activate registers PASS');

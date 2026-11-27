@@ -1,0 +1,25 @@
+{
+  "asOf": "2026-11-27",
+  "directorySource": "https://live.euronext.com/en/product_directory/data/stocks-oslo/download?mics=XOSL%2CMERK%2CXOAS",
+  "directorySha256": "c82fbf78bad94239ffae7dcb2c1c31ed801c3135e9f6fa62e7b9a598f4d48fc4",
+  "directoryCount": 292,
+  "counts": {
+    "INCLUDE": 244,
+    "EXCLUDE": 45,
+    "REVIEW": 3
+  },
+  "identitySha256": "e953738470509096178606972c7485a3c9669eee606abf6c67e508550cf7280c",
+  "previousCandidateCount": 243,
+  "changes": [
+    {
+      "symbol": "HEDER",
+      "decision": "REVIEW_TO_INCLUDE",
+      "reason": "First completed primary XOSL session 2026-11-26 confirmed, exact ISIN and NOK"
+    }
+  ],
+  "operationalAdmission": false,
+  "remainingBlockers": [
+    "PUBLICATION_RIGHTS_UNVERIFIED",
+    "OPERATIONAL_MARKET_CONTRACT_NOT_ADMITTED"
+  ]
+}

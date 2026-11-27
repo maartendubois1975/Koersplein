@@ -2,8 +2,16 @@
   "version": 1,
   "policy": "APPROVED_COMPANIES_ONLY_NO_AUTOMATIC_DIRECTORY_REPLACEMENT",
   "markets": {
-    "XLIS": {"file": "euronext-lisbon-approved.json", "expectedCount": 34, "identitySha256": "5be08e0dccc19988ad3f8306c09b041db0afc99f32e4d472042edde764cea31a"},
-    "XDUB": {"file": "euronext-dublin-approved.json", "expectedCount": 16, "identitySha256": "6387b147b73f87412096564374aad05ea4ba8dbc9dec7e9859ef67aeeb07ae86"},
+    "XLIS": {
+      "file": "euronext-lisbon-approved.json",
+      "expectedCount": 34,
+      "identitySha256": "5be08e0dccc19988ad3f8306c09b041db0afc99f32e4d472042edde764cea31a"
+    },
+    "XDUB": {
+      "file": "euronext-dublin-approved.json",
+      "expectedCount": 16,
+      "identitySha256": "6387b147b73f87412096564374aad05ea4ba8dbc9dec7e9859ef67aeeb07ae86"
+    },
     "XAMS": {
       "file": "euronext-amsterdam.json",
       "expectedCount": 80,
@@ -21,6 +29,14 @@
     }
   },
   "catalogPreviews": {
-    "XMIL": {"file": "../research/milan/2026-11-26/approved-companies.json", "expectedCount": 360, "identitySha256": "02d2d762d1852e72d5742cf83be024baf46a569c720a268ea2c94460a95fe7ec"}
+    "XMIL": {
+      "file": "../research/milan/2026-11-26/approved-companies.json",
+      "expectedCount": 360,
+      "identitySha256": "02d2d762d1852e72d5742cf83be024baf46a569c720a268ea2c94460a95fe7ec",
+      "sourceReview": {
+        "file": "../research/completion/2026-11-27/milan-price-definitions.json",
+        "sha256": "572a3d130db9de4bc18f7e09ab088d719b4e398d2f6997f463492a9ef6f6178b"
+      }
+    }
   }
 }

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { approvedCompanyUniverse, validateCompanyCatalog } from './company-register.mjs';
 import { sessionCalendar } from './trading-calendar.mjs';
@@ -15,11 +16,14 @@ const oslo = await read(osloReview + 'candidate-companies.json');
 const milanEvidence = await read(milanReview + 'summary.json');
 const osloEvidence = await read(osloReview + 'summary.json');
 const contracts = await read('data/company-register-contracts.json');
-assert.deepEqual(contracts.catalogPreviews.XMIL, {
+const { sourceReview, ...membershipContract } = contracts.catalogPreviews.XMIL;
+assert.deepEqual(membershipContract, {
   file: '../' + milanReview + 'approved-companies.json',
   expectedCount: milanEvidence.decisions.INCLUDE,
   identitySha256: milanEvidence.identitySha256,
 });
+assert.equal(sourceReview.file, '../research/completion/2026-11-27/milan-price-definitions.json');
+assert.equal(createHash('sha256').update(await readFile(new URL('../../data/' + sourceReview.file, import.meta.url))).digest('hex'), sourceReview.sha256);
 assert(!contracts.markets.XMIL, 'Preview must stay outside public raw-price archiving');
 for (const [catalog, expectedCount, identitySha256] of [
   [milan, milanEvidence.decisions.INCLUDE, milanEvidence.identitySha256],

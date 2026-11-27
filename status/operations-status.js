@@ -125,8 +125,25 @@ async function start() {
   if (report.previews.length) {
     const previews = element('previews');
     previews.hidden = false;
-    previews.textContent = report.previews.map(row => row.mic + ' · ' + number.format(row.companies) +
-      ' bedrijven in gecontroleerde catalogus · koerspublicatie in voorbereiding').join(' / ');
+    const labels = {
+      INCOMPLETE_MARKET_DEFINITION: 'Operationele beursconfiguratie ontbreekt',
+      INCOMPLETE_OPERATIONAL_SOURCE_ROUTES: 'Dag- of historische bronroute nog niet toegelaten',
+      UNVERIFIED_PUBLICATION_RIGHTS: 'Herpublicatierechten niet bewezen',
+      INVALID_ADMITTED_LISTING: 'Uitgeveridentiteit of noteringsvelden nog niet operationeel toegelaten',
+      CATALOG_UNAVAILABLE: 'Catalogus niet beschikbaar',
+      CATALOG_IDENTITY_MISMATCH: 'Catalogus wijkt af van de vastgelegde selectie',
+    };
+    previews.replaceChildren(...report.previews.map(row => expandable(
+      row.mic + ' · ' + show(row.companies) + ' bedrijven in catalogus · ' +
+      (row.operational ? 'Technische toelatingscontrole geslaagd' : 'Koerspublicatie in voorbereiding'),
+      [...Object.entries(row.admissionBlockers || {}).map(([code, count]) => (labels[code] || code) + ' · ' + show(count)),
+        ...(row.sourceReview ? ['Bronproef ' + row.sourceReview.session + ' · ' + show(row.sourceReview.observed) +
+          ' verhandelde ondernemingen · ' + show(row.sourceReview.lastTradeMatches) + ' laatste prijzen bevestigd · ' +
+          show(row.sourceReview.volumeMatches) + ' volumes bevestigd · ' + show(row.sourceReview.referenceCloseDifferences) +
+          ' expliciete slotreferenties verschillend van laatste transactie'] : []),
+        ...(row.sourceReviewError ? ['Bronproef niet bruikbaar · ' + row.sourceReviewError] : []),
+      ],
+    )));
   }
   table(element('markets'), [
     'Beurs', 'Bedrijven', 'Afgesloten sessie bij build', 'Gearchiveerd', 'Getoond in build',

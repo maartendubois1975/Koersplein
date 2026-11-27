@@ -1,0 +1,35 @@
+{
+  "instrument": {
+    "isin": "NO0013774166",
+    "mic": "XOSL",
+    "currency": "NOK",
+    "symbol": "HEDER"
+  },
+  "historySource": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NO0013774166-XOSL",
+  "historySha256": "0b4973792350a999b748bb979f4fc8e52bf82ed8f33915a2cc94b7cf0f6c2925",
+  "quoteSource": "https://live.euronext.com/en/ajax/getDetailedQuote/NO0013774166-XOSL",
+  "quoteSha256": "8759cf56ad408677fc43d3cab7d1cb544c642ab64589dd8b011a5ff04a629961",
+  "bars": [
+    {
+      "date": "2026-11-26",
+      "open": 34.93,
+      "high": 35.15,
+      "low": 33.145,
+      "close": 34,
+      "adjustedClose": null,
+      "volume": 2966616
+    }
+  ],
+  "quote": {
+    "identityMatch": true,
+    "currency": "NOK",
+    "lastTradeDate": "2026-11-26",
+    "valuationDate": "2026-11-26",
+    "status": "CLO",
+    "bookState": "1",
+    "haltReason": null,
+    "tradingState": "CLO",
+    "identityUnknown": false
+  },
+  "tableHtml": "<table id=\"AwlHistoricalPriceTable\" class=\"table table-sm text-center dt-responsive\" data-striping=\"1\">\n\t\t<thead>\n\t\t\t<tr>\n\t\t\t\t<th class=\"historical-time\" data-priority=\"1\">Date</th>\n\t\t\t\t<th class=\"historical-open text-right\" data-priority=\"5\">Open</th>\n\t\t\t\t<th class=\"historical-high text-right\" data-priority=\"4\">High</th>\n\t\t\t\t<th class=\"historical-low text-right\" data-priority=\"4\">Low</th>\n        <th class=\"historical-low text-right\" data-priority=\"5\">Last</th>\n\t\t\t\t<th class=\"historical-close text-right\" data-priority=\"1\">Close</th>\n\t\t\t\t<th class=\"historical-volume text-right\" data-priority=\"3\">Number of shares</th>\n\t\t\t\t<th class=\"historical-turnover text-right\" data-priority=\"5\">Turnover</th>\n\t\t\t\t\t\t\t\t\t<th class=\"historical-vwap text-right \" data-priority=\"7\">VWAP</th>\n\t\t\t\t\t\t\t</tr>\n\t\t</thead>\n\t\t<tbody class=\"scrollBody\">\n\t\t\t\t\t\t\t<tr class=\"odd\">\n\t\t\t\t\t<td class=\"historical-time\">\n\t\t\t\t\t\t<span>26/11/2026</span>\n\t\t\t\t\t</td>\n\t\t\t\t\t<td class=\"historical-open text-right\">34.93</td>\n\t\t\t\t\t<td class=\"historical-high text-right\">35.15</td>\n\t\t\t\t\t<td class=\"historical-low text-right\">33.145</td>\n          <td class=\"historical-low text-right\">34.00</td>\n\t\t\t\t\t<td class=\"historical-close text-right\">34.00</td>\n\t\t\t\t\t<td class=\"historical-volume text-right\">2,966,616</td>\n\t\t\t\t\t<td class=\"historical-turnover text-right\">102,647,646</td>\n\t\t\t\t\t\t\t\t\t\t\t<td class=\"historical-vwap  text-right\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t34.1928\n\t\t\t\t\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t</tbody>\n\t</table>"
+}

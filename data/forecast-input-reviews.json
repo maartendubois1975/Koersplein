@@ -458,6 +458,4120 @@
           "selection": "OFFICIAL_UNADJUSTED"
         }
       ]
+    },
+    "XAMS:GB00BNTJ3546": {
+      "instrument": {
+        "isin": "GB00BNTJ3546",
+        "mic": "XAMS",
+        "symbol": "ALLFG",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "f1c00efefb1b1497216ea76a233fabcf99a6ca0c98e7a39ee5f0e517353cfc62",
+      "officialWindowSha256": "308e554f0793970d341a34996e9a2f6337ff8d432f72174f6bbb9468e9ec8bc8",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/GB00BNTJ3546-XAMS",
+        "rawResponseSha256": "c93423d69df72fdfc7f3d7ab0695c9fc7e1b4201dfd8b2a925d4fc2c1306e875",
+        "adjustedResponseSha256": "4ba7f5d79fabaa0a8bf6296becb2c8ec3ad60611e2203096ee6cfc8e09d78e8f",
+        "quoteSha256": "68ba55ceeec67247ec1a990fb25225aeef67d7a2d6bae06a656f886fdf6bf228",
+        "noticeSha256": "dc6698e6af7185d7015e2fe4228a535078b718fccefb8d4062e1e07a8d58b972",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "dc6698e6af7185d7015e2fe4228a535078b718fccefb8d4062e1e07a8d58b972"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:44:00.567Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/GB00BNTJ3546-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "dc6698e6af7185d7015e2fe4228a535078b718fccefb8d4062e1e07a8d58b972",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260430_00352_EUR",
+            "issued": "30 Apr 2026",
+            "effective": "11 May 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20251104_00977_EUR",
+            "issued": "04 Nov 2025",
+            "effective": "06 Nov 2025",
+            "type": "CE - Change of trading group"
+          },
+          {
+            "id": "AMS_20250926_00860_EUR",
+            "issued": "26 Sep 2025",
+            "effective": "30 Sep 2025",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20250422_00357_EUR",
+            "issued": "22 Apr 2025",
+            "effective": "08 May 2025",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20250414_00334_EUR",
+            "issued": "14 Apr 2025",
+            "effective": "16 Apr 2025",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20240924_00789_EUR",
+            "issued": "24 Sep 2024",
+            "effective": "25 Sep 2024",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20240507_00373_EUR",
+            "issued": "07 May 2024",
+            "effective": "09 May 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20231228_01076_EUR",
+            "issued": "28 Dec 2023",
+            "effective": "29 Dec 2023",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20230505_00393_EUR",
+            "issued": "05 May 2023",
+            "effective": "11 May 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20220407_00309_EUR",
+            "issued": "07 Apr 2022",
+            "effective": "25 Apr 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210423_00353_EUR",
+            "issued": "23 Apr 2021",
+            "effective": "22 Apr 2021",
+            "type": "CE - Shares - IPO Result Euronext and Alternext new"
+          },
+          {
+            "id": "AMS_20210416_00326_EUR",
+            "issued": "16 Apr 2021",
+            "effective": "22 Apr 2021",
+            "type": "CE - Shares - IPO Euronext and Alternext new"
+          }
+        ]
+      },
+      "resolutions": [],
+      "modelWindowSha256": "f1c00efefb1b1497216ea76a233fabcf99a6ca0c98e7a39ee5f0e517353cfc62"
+    },
+    "XAMS:NL0000334118": {
+      "instrument": {
+        "isin": "NL0000334118",
+        "mic": "XAMS",
+        "symbol": "ASM",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "4752aeedbe4ced5ddc5e6ffdb1358850be0c436a46eee01720469661ac01b959",
+      "officialWindowSha256": "23aa2d921cd86d1ead23b465e2e74dc8018a2f9ba76fe80f006152d53fd15739",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000334118-XAMS",
+        "rawResponseSha256": "e009a7e4b0d44942f80f2fc14f60660b82cec18ee0c8691b45a9586a4ab72e6e",
+        "adjustedResponseSha256": "ed63a03521f54db6469cb26479ae7f865569e137648e59dc4eada4152846ea3f",
+        "quoteSha256": "90408f16de7a5acca00430458b31f26c5716d3213bbefb5af9a29c2eef975389",
+        "noticeSha256": "6c5cfaf7ae9560ee6d628c0ea761fdb5058aa21bd9f5e2612070336225b1fd2e",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "6c5cfaf7ae9560ee6d628c0ea761fdb5058aa21bd9f5e2612070336225b1fd2e"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:44:11.170Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0000334118-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "6c5cfaf7ae9560ee6d628c0ea761fdb5058aa21bd9f5e2612070336225b1fd2e",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260304_00161_EUR",
+            "issued": "04 Mar 2026",
+            "effective": "13 May 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20250303_00190_EUR",
+            "issued": "03 Mar 2025",
+            "effective": "14 May 2025",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20241128_00945_EUR",
+            "issued": "28 Nov 2024",
+            "effective": "02 Dec 2024",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20240322_00238_EUR",
+            "issued": "22 Mar 2024",
+            "effective": "15 May 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "MIL_20231116_06807_TAH",
+            "issued": "16 Nov 2023",
+            "effective": "17 Nov 2023",
+            "type": "CE - Shares - New listing"
+          },
+          {
+            "id": "AMS_20230516_00421_EUR",
+            "issued": "16 May 2023",
+            "effective": "17 May 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20230419_00337_EUR",
+            "issued": "19 Apr 2023",
+            "effective": "21 Apr 2023",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20230315_00216_EUR",
+            "issued": "15 Mar 2023",
+            "effective": "17 May 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20221003_00870_EUR",
+            "issued": "03 Oct 2022",
+            "effective": "05 Oct 2022",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20220404_00292_EUR",
+            "issued": "04 Apr 2022",
+            "effective": "18 May 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210723_00686_EUR",
+            "issued": "23 Jul 2021",
+            "effective": "27 Jul 2021",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20210311_00200_EUR",
+            "issued": "11 Mar 2021",
+            "effective": "19 May 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200724_03688_EUR",
+            "issued": "24 Jul 2020",
+            "effective": "28 Jul 2020",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20200318_01830_EUR",
+            "issued": "18 Mar 2020",
+            "effective": "23 Mar 2020",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20200306_01496_EUR",
+            "issued": "06 Mar 2020",
+            "effective": "20 May 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200306_01495_EUR",
+            "issued": "06 Mar 2020",
+            "effective": "20 May 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20191031_06489_EUR",
+            "issued": "31 Oct 2019",
+            "effective": "05 Nov 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190724_04396_EUR",
+            "issued": "24 Jul 2019",
+            "effective": "25 Jul 2019",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20190723_04386_EUR",
+            "issued": "23 Jul 2019",
+            "effective": "25 Jul 2019",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20190314_01559_EUR",
+            "issued": "14 Mar 2019",
+            "effective": "22 May 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180803_04711_EUR",
+            "issued": "03 Aug 2018",
+            "effective": "07 Aug 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180731_04622_EUR",
+            "issued": "31 Jul 2018",
+            "effective": "01 Aug 2018",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20180413_02219_EUR",
+            "issued": "13 Apr 2018",
+            "effective": "30 May 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20170814_04589_EUR",
+            "issued": "14 Aug 2017",
+            "effective": "15 Aug 2017",
+            "type": "CE - Capital decrease"
+          },
+          {
+            "id": "AMS_20170315_01511_EUR",
+            "issued": "15 Mar 2017",
+            "effective": "24 May 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20160629_04479_EUR",
+            "issued": "29 Jun 2016",
+            "effective": "30 Jun 2016",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20160525_03578_EUR",
+            "issued": "25 May 2016",
+            "effective": "27 May 2016",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "LALA 2005-0134",
+            "issued": "08 Mar 2005",
+            "effective": "08 Mar 2005",
+            "type": "Euronext Amsterdam Notices"
+          },
+          {
+            "id": "LALA 2005-0133",
+            "issued": "08 Mar 2005",
+            "effective": "08 Mar 2005",
+            "type": "Euronext Amsterdam Notices"
+          },
+          {
+            "id": "AMS_20070718_6722_EUR",
+            "issued": "18 Jul 2007",
+            "effective": "18 Jul 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20070427_6151_EUR",
+            "issued": "27 Apr 2007",
+            "effective": "27 Apr 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20080124_00227_EUR",
+            "issued": "25 Jan 2008",
+            "effective": "25 Jan 2008",
+            "type": "CE - Diverse announcement"
+          },
+          {
+            "id": "AMS_20090223_00436_EUR",
+            "issued": "23 Feb 2009",
+            "effective": "23 Feb 2009",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110118_00212_EUR",
+            "issued": "18 Jan 2011",
+            "effective": "24 Jan 2011",
+            "type": "CE - Diverse announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110411_01481_EUR",
+            "issued": "11 Apr 2011",
+            "effective": "18 Apr 2011",
+            "type": "CE - Shares - Dividend - Daily pre-announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110524_02215_EUR",
+            "issued": "24 May 2011",
+            "effective": "25 May 2011",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20120424_02848_EUR",
+            "issued": "24 Apr 2012",
+            "effective": "17 May 2012",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20120516_03869_EUR",
+            "issued": "16 May 2012",
+            "effective": "17 May 2012",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20120516_03877_EUR",
+            "issued": "16 May 2012",
+            "effective": "17 May 2012",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20120502_02961_EUR",
+            "issued": "02 May 2012",
+            "effective": "17 May 2012",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20121212_07504_EUR",
+            "issued": "12 Dec 2012",
+            "effective": "13 Dec 2012",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20130412_01675_EUR",
+            "issued": "12 Apr 2013",
+            "effective": "19 Apr 2013",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20130723_03435_EUR",
+            "issued": "23 Jul 2013",
+            "effective": "25 Jul 2013",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20140522_02498_EUR",
+            "issued": "22 May 2014",
+            "effective": "23 May 2014",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20150514_03347_EUR",
+            "issued": "14 May 2015",
+            "effective": "25 May 2015",
+            "type": "CE - Shares - Dividend - Announcement"
+          }
+        ]
+      },
+      "resolutions": [
+        {
+          "date": "2026-05-27",
+          "base": {
+            "date": "2026-05-27",
+            "open": 911.5999755859375,
+            "high": 919.4000244140625,
+            "low": 883,
+            "close": 894.2000122070312,
+            "adjustedClose": null,
+            "volume": 164018
+          },
+          "official": {
+            "date": "2026-05-27",
+            "open": 911.6,
+            "high": 919.4,
+            "low": 882.8,
+            "close": 894.2,
+            "adjustedClose": null,
+            "volume": 164018
+          },
+          "fields": [
+            "low"
+          ],
+          "selection": "OFFICIAL_UNADJUSTED"
+        },
+        {
+          "date": "2026-06-29",
+          "base": {
+            "date": "2026-06-29",
+            "open": 953,
+            "high": 979.2000122070312,
+            "low": 930,
+            "close": 971.7999877929688,
+            "adjustedClose": null,
+            "volume": 114819
+          },
+          "official": {
+            "date": "2026-06-29",
+            "open": 953,
+            "high": 979.2,
+            "low": 929.8,
+            "close": 971.8,
+            "adjustedClose": null,
+            "volume": 114819
+          },
+          "fields": [
+            "low"
+          ],
+          "selection": "OFFICIAL_UNADJUSTED"
+        },
+        {
+          "date": "2026-07-13",
+          "base": {
+            "date": "2026-07-13",
+            "open": 883,
+            "high": 904.5999755859375,
+            "low": 874.7999877929688,
+            "close": 889.5999755859375,
+            "adjustedClose": null,
+            "volume": 156803
+          },
+          "official": {
+            "date": "2026-07-13",
+            "open": 883,
+            "high": 904.6,
+            "low": 874.6,
+            "close": 889.6,
+            "adjustedClose": null,
+            "volume": 156803
+          },
+          "fields": [
+            "low"
+          ],
+          "selection": "OFFICIAL_UNADJUSTED"
+        }
+      ],
+      "modelWindowSha256": "17a473a58afab3dab718bd43e5dd6695cfd66588941506dc725f3554290d1826"
+    },
+    "XAMS:NL00150006Z9": {
+      "instrument": {
+        "isin": "NL00150006Z9",
+        "mic": "XAMS",
+        "symbol": "AZRN",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "142d47ad32b15f61517a20fffd71c948c14e07bb3f724d66122fd7c7962ec5a2",
+      "officialWindowSha256": "3ada21c8a689c733b61d6709b5fd19eb11ed4dd2b518f29aefbd0797ba19b99c",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL00150006Z9-XAMS",
+        "rawResponseSha256": "690ce9b2576ea6e212afad5da20d4cf7bb2753982c44394b8b7df058c4cb6ce7",
+        "adjustedResponseSha256": "2f6ede09dd260b5fc2e30371763d8ce1fdf971000b90e8cc088b8c077860ef1d",
+        "quoteSha256": "7d04749fb451779df37a867d6e50e341ee84cc15b923a4db47026c15825eb6fd",
+        "noticeSha256": "ad0f0d3967e87459cc9852e9a6f12b9ec4b5021816f61bb106eedad5cc2a649b",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "ad0f0d3967e87459cc9852e9a6f12b9ec4b5021816f61bb106eedad5cc2a649b"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:44:22.435Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL00150006Z9-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "ad0f0d3967e87459cc9852e9a6f12b9ec4b5021816f61bb106eedad5cc2a649b",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20250619_00571_EUR",
+            "issued": "19 Jun 2025",
+            "effective": "23 Jun 2025",
+            "type": "CE - Shares - Euronext Tech Leaders segment update"
+          },
+          {
+            "id": "AMS_20240123_00053_EUR",
+            "issued": "23 Jan 2024",
+            "effective": "31 Jan 2024",
+            "type": "CE - Shares - Change of compartment"
+          },
+          {
+            "id": "AMS_20230823_00749_EUR",
+            "issued": "23 Aug 2023",
+            "effective": "25 Aug 2023",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20230124_00057_EUR",
+            "issued": "24 Jan 2023",
+            "effective": "31 Jan 2023",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20220201_00076_EUR",
+            "issued": "01 Feb 2022",
+            "effective": "02 Feb 2022",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20220131_00075_EUR",
+            "issued": "31 Jan 2022",
+            "effective": "02 Feb 2022",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20211007_00914_EUR",
+            "issued": "07 Oct 2021",
+            "effective": "08 Oct 2021",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20210325_00261_EUR",
+            "issued": "25 Mar 2021",
+            "effective": "25 Mar 2021",
+            "type": "CE - Shares - IPO Result Euronext and Alternext new"
+          }
+        ]
+      },
+      "resolutions": [],
+      "modelWindowSha256": "142d47ad32b15f61517a20fffd71c948c14e07bb3f724d66122fd7c7962ec5a2"
+    },
+    "XAMS:NL0012866412": {
+      "instrument": {
+        "isin": "NL0012866412",
+        "mic": "XAMS",
+        "symbol": "BESI",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "912fe08ad959f7badbc6c098dc90411ae3046fa2290a65fb313f4ce480618f8b",
+      "officialWindowSha256": "00e4becb6642ec52a9ec7a1311be58a3e61c577792fac3abc405a6e5fee73b70",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0012866412-XAMS",
+        "rawResponseSha256": "8601e1c7c034b91cde0d6e316d465cfc1679e1c6166097fd221c11b27aa66ae7",
+        "adjustedResponseSha256": "ac24ac97d7540d8c183aefd845a6b79be608bc2627e6b9e677b1ca341f99be6d",
+        "quoteSha256": "f1370e939bf97f1ecebf6ee8a19939bd96364ad39f59154c1b180dfeb1121587",
+        "noticeSha256": "9d195b7be7503f6af9e4a934711121de1ed648ef9e6eca4cf30e289b9707fd38",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "9d195b7be7503f6af9e4a934711121de1ed648ef9e6eca4cf30e289b9707fd38"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:44:32.318Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0012866412-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "9d195b7be7503f6af9e4a934711121de1ed648ef9e6eca4cf30e289b9707fd38",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260324_00222_EUR",
+            "issued": "24 Mar 2026",
+            "effective": "27 Apr 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20250312_00228_EUR",
+            "issued": "12 Mar 2025",
+            "effective": "25 Apr 2025",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240222_00143_EUR",
+            "issued": "22 Feb 2024",
+            "effective": "29 Apr 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "MIL_20231116_06807_TAH",
+            "issued": "16 Nov 2023",
+            "effective": "17 Nov 2023",
+            "type": "CE - Shares - New listing"
+          },
+          {
+            "id": "AMS_20230227_00152_EUR",
+            "issued": "27 Feb 2023",
+            "effective": "28 Apr 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20220429_00394_EUR",
+            "issued": "29 Apr 2022",
+            "effective": "03 May 2022",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20220317_00249_EUR",
+            "issued": "17 Mar 2022",
+            "effective": "03 May 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210315_00215_EUR",
+            "issued": "15 Mar 2021",
+            "effective": "22 Mar 2021",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20210304_00167_EUR",
+            "issued": "04 Mar 2021",
+            "effective": "04 May 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20201022_03930_EUR",
+            "issued": "22 Oct 2020",
+            "effective": "26 Oct 2020",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20200225_01197_EUR",
+            "issued": "25 Feb 2020",
+            "effective": "05 May 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190221_01110_EUR",
+            "issued": "21 Feb 2019",
+            "effective": "30 Apr 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20181128_07295_EUR",
+            "issued": "28 Nov 2018",
+            "effective": "30 Nov 2018",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20180502_02627_EUR",
+            "issued": "02 May 2018",
+            "effective": "03 May 2018",
+            "type": "CE - Shares - Split"
+          },
+          {
+            "id": "AMS_20180220_01059_EUR",
+            "issued": "20 Feb 2018",
+            "effective": "29 Mar 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20170228_01174_EUR",
+            "issued": "28 Feb 2017",
+            "effective": "03 May 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20170125_00481_EUR",
+            "issued": "25 Jan 2017",
+            "effective": "27 Jan 2017",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20160720_05090_EUR",
+            "issued": "20 Jul 2016",
+            "effective": "21 Jul 2016",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20160229_01379_EUR",
+            "issued": "29 Feb 2016",
+            "effective": "14 Apr 2016",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20080124_00227_EUR",
+            "issued": "25 Jan 2008",
+            "effective": "25 Jan 2008",
+            "type": "CE - Diverse announcement"
+          },
+          {
+            "id": "AMS_20100512_01312_EUR",
+            "issued": "12 May 2010",
+            "effective": "13 May 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20100119_00152_EUR",
+            "issued": "19 Jan 2010",
+            "effective": "20 Jan 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110118_00212_EUR",
+            "issued": "18 Jan 2011",
+            "effective": "24 Jan 2011",
+            "type": "CE - Diverse announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110429_01788_EUR",
+            "issued": "29 Apr 2011",
+            "effective": "02 May 2011",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110429_01786_EUR",
+            "issued": "29 Apr 2011",
+            "effective": "02 May 2011",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110418_01597_EUR",
+            "issued": "18 Apr 2011",
+            "effective": "19 Apr 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110530_02321_EUR",
+            "issued": "30 May 2011",
+            "effective": "01 Jun 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110505_01878_EUR",
+            "issued": "05 May 2011",
+            "effective": "06 May 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110621_02696_EUR",
+            "issued": "21 Jun 2011",
+            "effective": "22 Jun 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110616_02622_EUR",
+            "issued": "16 Jun 2011",
+            "effective": "17 Jun 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110613_02546_EUR",
+            "issued": "13 Jun 2011",
+            "effective": "14 Jun 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110610_02523_EUR",
+            "issued": "10 Jun 2011",
+            "effective": "13 Jun 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110603_02421_EUR",
+            "issued": "03 Jun 2011",
+            "effective": "07 Jun 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110603_02418_EUR",
+            "issued": "03 Jun 2011",
+            "effective": "06 Jun 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110602_02383_EUR",
+            "issued": "02 Jun 2011",
+            "effective": "03 Jun 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20120306_01698_EUR",
+            "issued": "06 Mar 2012",
+            "effective": "05 Apr 2012",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20130426_01954_EUR",
+            "issued": "26 Apr 2013",
+            "effective": "30 Apr 2013",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20130426_01958_EUR",
+            "issued": "26 Apr 2013",
+            "effective": "30 Apr 2013",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20130425_01928_EUR",
+            "issued": "25 Apr 2013",
+            "effective": "26 Apr 2013",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20140304_01097_EUR",
+            "issued": "04 Mar 2014",
+            "effective": "22 Apr 2014",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20150716_04900_EUR",
+            "issued": "16 Jul 2015",
+            "effective": "17 Jul 2015",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20150303_01525_EUR",
+            "issued": "03 Mar 2015",
+            "effective": "17 Apr 2015",
+            "type": "CE - Shares - Dividend - Announcement"
+          }
+        ]
+      },
+      "resolutions": [
+        {
+          "date": "2026-04-20",
+          "base": {
+            "date": "2026-04-20",
+            "open": 228.60000610351562,
+            "high": 230,
+            "low": 225.39999389648438,
+            "close": 227,
+            "adjustedClose": null,
+            "volume": 444574
+          },
+          "official": {
+            "date": "2026-04-20",
+            "open": 228.6,
+            "high": 230,
+            "low": 225.3,
+            "close": 227,
+            "adjustedClose": null,
+            "volume": 444574
+          },
+          "fields": [
+            "low"
+          ],
+          "selection": "OFFICIAL_UNADJUSTED"
+        },
+        {
+          "date": "2026-09-11",
+          "base": {
+            "date": "2026-09-11",
+            "open": 182.8000030517578,
+            "high": 190.25,
+            "low": 182.5,
+            "close": 189.25,
+            "adjustedClose": null,
+            "volume": 426209
+          },
+          "official": {
+            "date": "2026-09-11",
+            "open": 182.8,
+            "high": 190.3,
+            "low": 182.5,
+            "close": 189.25,
+            "adjustedClose": null,
+            "volume": 426209
+          },
+          "fields": [
+            "high"
+          ],
+          "selection": "OFFICIAL_UNADJUSTED"
+        }
+      ],
+      "modelWindowSha256": "2ea2ec2e08413e05e2d4e23f0c61cc78e35738a97d351aad39e1268c8fa0548c"
+    },
+    "XAMS:NL0011832811": {
+      "instrument": {
+        "isin": "NL0011832811",
+        "mic": "XAMS",
+        "symbol": "FFARM",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "644f67ab4d9e2007475ab0a42417484a82428dd16339174fe9c99d0c40fb9055",
+      "officialWindowSha256": "1e6e05a8024eca25026b777bd1ea832e12f71f564a8c5049d63a2ebb659106e7",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0011832811-XAMS",
+        "rawResponseSha256": "752b238761c4f906ccbe8403b558f3c95a90c9ccb0f280d904fbac4794249c1c",
+        "adjustedResponseSha256": "d904d4aff6cc17432a7cefca1130da03c909c967dca1566e56a148de0cb34f80",
+        "quoteSha256": "4f575277593ebf42f089266bdbf464a5b5d0e90da036aba0858fdcd3e57d486c",
+        "noticeSha256": "99d9f45426defed7b7850807dce22ffa3aa005050f7a06d5967c5fdbdef559a2",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "99d9f45426defed7b7850807dce22ffa3aa005050f7a06d5967c5fdbdef559a2"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:45:34.760Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0011832811-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "99d9f45426defed7b7850807dce22ffa3aa005050f7a06d5967c5fdbdef559a2",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260220_00112_EUR",
+            "issued": "20 Feb 2026",
+            "effective": "20 Apr 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20250220_00152_EUR",
+            "issued": "20 Feb 2025",
+            "effective": "23 Apr 2025",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240222_00140_EUR",
+            "issued": "22 Feb 2024",
+            "effective": "15 Apr 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20230627_00592_EUR",
+            "issued": "27 Jun 2023",
+            "effective": "29 Jun 2023",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20230301_00160_EUR",
+            "issued": "01 Mar 2023",
+            "effective": "17 Apr 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20220309_00219_EUR",
+            "issued": "09 Mar 2022",
+            "effective": "20 Apr 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20220309_00218_EUR",
+            "issued": "09 Mar 2022",
+            "effective": "20 Apr 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210401_00276_EUR",
+            "issued": "01 Apr 2021",
+            "effective": "27 Apr 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200903_03794_EUR",
+            "issued": "03 Sep 2020",
+            "effective": "11 Sep 2020",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20200417_02519_EUR",
+            "issued": "17 Apr 2020",
+            "effective": "28 Apr 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200417_02518_EUR",
+            "issued": "17 Apr 2020",
+            "effective": "28 Apr 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200120_00367_EUR",
+            "issued": "20 Jan 2020",
+            "effective": "29 Jan 2020",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20190502_02614_EUR",
+            "issued": "02 May 2019",
+            "effective": "30 Apr 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190430_02596_EUR",
+            "issued": "30 Apr 2019",
+            "effective": "30 Apr 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190315_01602_EUR",
+            "issued": "15 Mar 2019",
+            "effective": "30 Apr 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190315_01601_EUR",
+            "issued": "15 Mar 2019",
+            "effective": "30 Apr 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180315_01609_EUR",
+            "issued": "15 Mar 2018",
+            "effective": "30 Apr 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180125_00493_EUR",
+            "issued": "25 Jan 2018",
+            "effective": "26 Jan 2018",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20170426_02357_EUR",
+            "issued": "26 Apr 2017",
+            "effective": "28 Apr 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20170315_01502_EUR",
+            "issued": "15 Mar 2017",
+            "effective": "28 Apr 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20160523_03492_EUR",
+            "issued": "23 May 2016",
+            "effective": "23 May 2016",
+            "type": "CE - Shares - IPO result (NL or BE)"
+          },
+          {
+            "id": "AMS_20160517_03294_EUR",
+            "issued": "17 May 2016",
+            "effective": "23 May 2016",
+            "type": "CE - Shares - Direct Listing"
+          }
+        ]
+      },
+      "resolutions": [],
+      "modelWindowSha256": "644f67ab4d9e2007475ab0a42417484a82428dd16339174fe9c99d0c40fb9055"
+    },
+    "XAMS:BMG3602E1084": {
+      "instrument": {
+        "isin": "BMG3602E1084",
+        "mic": "XAMS",
+        "symbol": "FLOW",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "d047862bf70c4415d6f7019ab0678c5fc5c97b925509da68b5f33b6a76a92524",
+      "officialWindowSha256": "13868090d74567c46a4fa4b866227cd8e3528c9216a1f1b8c6856775f9ef3796",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BMG3602E1084-XAMS",
+        "rawResponseSha256": "3f42bb2a7e581e7eb5655b41e208f9f93a41bc30d4653c2d932936afb8ac5b9f",
+        "adjustedResponseSha256": "b984a3361dee300188d4813fc665722537b716542a43e289d59e8d9b7d9a259c",
+        "quoteSha256": "9a0774aeb8ebab1eb06ec7b3d2e4075fb53a760c1a64d8479de4526a761480ae",
+        "noticeSha256": "e764eb4895bea2e93b244fa6c284f1e217ba88cb909bc7ede8024484e4c27b35",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "e764eb4895bea2e93b244fa6c284f1e217ba88cb909bc7ede8024484e4c27b35"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:45:46.907Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/BMG3602E1084-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "e764eb4895bea2e93b244fa6c284f1e217ba88cb909bc7ede8024484e4c27b35",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260205_00064_EUR",
+            "issued": "05 Feb 2026",
+            "effective": "12 Feb 2026",
+            "type": "CE - Shares - Change of compartment"
+          },
+          {
+            "id": "AMS_20240530_00438_EUR",
+            "issued": "30 May 2024",
+            "effective": "17 Jun 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240123_00053_EUR",
+            "issued": "23 Jan 2024",
+            "effective": "31 Jan 2024",
+            "type": "CE - Shares - Change of compartment"
+          },
+          {
+            "id": "AMS_20240117_00039_EUR",
+            "issued": "17 Jan 2024",
+            "effective": "19 Jan 2024",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20230731_00687_EUR",
+            "issued": "31 Jul 2023",
+            "effective": "15 Aug 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20230411_00305_EUR",
+            "issued": "11 Apr 2023",
+            "effective": "13 Apr 2023",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20230322_00252_EUR",
+            "issued": "22 Mar 2023",
+            "effective": "28 Apr 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20230116_00033_EUR",
+            "issued": "16 Jan 2023",
+            "effective": "17 Jan 2023",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20230111_00021_EUR",
+            "issued": "11 Jan 2023",
+            "effective": "13 Jan 2023",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20220722_00685_EUR",
+            "issued": "22 Jul 2022",
+            "effective": "16 Aug 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20220309_00220_EUR",
+            "issued": "09 Mar 2022",
+            "effective": "03 May 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210729_00700_EUR",
+            "issued": "29 Jul 2021",
+            "effective": "17 Aug 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210726_00688_EUR",
+            "issued": "26 Jul 2021",
+            "effective": "17 Aug 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210330_00265_EUR",
+            "issued": "30 Mar 2021",
+            "effective": "27 Apr 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200814_03756_EUR",
+            "issued": "14 Aug 2020",
+            "effective": "18 Aug 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200424_02683_EUR",
+            "issued": "24 Apr 2020",
+            "effective": "28 Apr 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200212_00887_EUR",
+            "issued": "12 Feb 2020",
+            "effective": "28 Apr 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190725_04432_EUR",
+            "issued": "25 Jul 2019",
+            "effective": "12 Aug 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190214_00933_EUR",
+            "issued": "14 Feb 2019",
+            "effective": "28 Mar 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190213_00910_EUR",
+            "issued": "13 Feb 2019",
+            "effective": "28 Mar 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190122_00433_EUR",
+            "issued": "22 Jan 2019",
+            "effective": "24 Jan 2019",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "PAR_20190122_00768_EUR",
+            "issued": "22 Jan 2019",
+            "effective": "24 Jan 2019",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20180807_04785_EUR",
+            "issued": "07 Aug 2018",
+            "effective": "08 Aug 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180212_00872_EUR",
+            "issued": "12 Feb 2018",
+            "effective": "30 Apr 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180125_00493_EUR",
+            "issued": "25 Jan 2018",
+            "effective": "26 Jan 2018",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20170731_04295_EUR",
+            "issued": "31 Jul 2017",
+            "effective": "04 Aug 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20170220_01020_EUR",
+            "issued": "20 Feb 2017",
+            "effective": "21 Apr 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20160812_05755_EUR",
+            "issued": "12 Aug 2016",
+            "effective": "31 Aug 2016",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20160303_01459_EUR",
+            "issued": "03 Mar 2016",
+            "effective": "22 Apr 2016",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20150819_05717_EUR",
+            "issued": "19 Aug 2015",
+            "effective": "26 Aug 2015",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20150716_04933_EUR",
+            "issued": "16 Jul 2015",
+            "effective": "09 Jul 2015",
+            "type": "CE - Shares - Admission to listing and trading (NL and BE)"
+          },
+          {
+            "id": "AMS_20150630_04518_EUR",
+            "issued": "30 Jun 2015",
+            "effective": "09 Jul 2015",
+            "type": "CE - Shares - Admission to listing and trading (NL and BE)"
+          }
+        ]
+      },
+      "resolutions": [],
+      "modelWindowSha256": "d047862bf70c4415d6f7019ab0678c5fc5c97b925509da68b5f33b6a76a92524"
+    },
+    "XAMS:NL0015002K83": {
+      "instrument": {
+        "isin": "NL0015002K83",
+        "mic": "XAMS",
+        "symbol": "HAVAS",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "9dcf20ee369b7d2bf9aa842b8a19c2d10298ecb92d4b2de25b34ca060ff815ae",
+      "officialWindowSha256": "37619035be42a2c79ceb81a12dfdb77fa07751abc085479736a3bc195fb5752c",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0015002K83-XAMS",
+        "rawResponseSha256": "2382a62621027178c622d9a1b6fff324e11e53be1d88459d7ca91bb6cf84a1e5",
+        "adjustedResponseSha256": "9e5034c09833f34f4c1a149f39af08527c5ee5b3381346709edd47aead1f2fdb",
+        "quoteSha256": "789d111f00b13d50ea2c9cccc405d556339640df514a68f53ca2c19a13c064d3",
+        "noticeSha256": "e6c4c854a713cfe5f64dc7ab64eeb66f416f802f802687835732f170c9fe38bc",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "e6c4c854a713cfe5f64dc7ab64eeb66f416f802f802687835732f170c9fe38bc"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:45:50.236Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0015002K83-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "e6c4c854a713cfe5f64dc7ab64eeb66f416f802f802687835732f170c9fe38bc",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260514_00393_EUR",
+            "issued": "14 May 2026",
+            "effective": "15 May 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20251014_00918_EUR",
+            "issued": "14 Oct 2025",
+            "effective": "18 Nov 2025",
+            "type": "CE - Shares - Reverse split"
+          },
+          {
+            "id": "AMS_20251009_00912_EUR",
+            "issued": "09 Oct 2025",
+            "effective": "13 Oct 2025",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20250530_00480_EUR",
+            "issued": "30 May 2025",
+            "effective": "30 May 2025",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20241213_00998_EUR",
+            "issued": "13 Dec 2024",
+            "effective": "13 Dec 2024",
+            "type": "CE - Shares - Direct Listing"
+          }
+        ]
+      },
+      "resolutions": [],
+      "modelWindowSha256": "9dcf20ee369b7d2bf9aa842b8a19c2d10298ecb92d4b2de25b34ca060ff815ae"
+    },
+    "XAMS:NL0009269109": {
+      "instrument": {
+        "isin": "NL0009269109",
+        "mic": "XAMS",
+        "symbol": "HEIJM",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "4baa5d8f3afc40ec63c116ae10d0b211a544614a5967741c3f156fe671a4b31e",
+      "officialWindowSha256": "903ab2e25f23e541ddf608b3247c1c3a1c4761e73ca8571570c582eaaae8faaf",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0009269109-XAMS",
+        "rawResponseSha256": "7e3fde3b8bf0bed5306b8c2710957b58ede521599a7b7e704a834fcc32bf335f",
+        "adjustedResponseSha256": "1da9864e2dbf2b43b503e0ad18250f466196c5caf797bcdf689dbea4b7405c3e",
+        "quoteSha256": "061bfb9d2fc7dd6a429dbec1cd7205dee8428a3f73a790ae63d785190a39bc1d",
+        "noticeSha256": "9271f361ebae3ce1e420a8d04e800030bb4a524675a4a9a8cffffd564f53c3b9",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "9271f361ebae3ce1e420a8d04e800030bb4a524675a4a9a8cffffd564f53c3b9"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:46:00.015Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0009269109-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "9271f361ebae3ce1e420a8d04e800030bb4a524675a4a9a8cffffd564f53c3b9",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260318_00206_EUR",
+            "issued": "18 Mar 2026",
+            "effective": "04 May 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20260205_00064_EUR",
+            "issued": "05 Feb 2026",
+            "effective": "12 Feb 2026",
+            "type": "CE - Shares - Change of compartment"
+          },
+          {
+            "id": "AMS_20250221_00156_EUR",
+            "issued": "21 Feb 2025",
+            "effective": "22 Apr 2025",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240524_00419_EUR",
+            "issued": "24 May 2024",
+            "effective": "30 May 2024",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20240320_00227_EUR",
+            "issued": "20 Mar 2024",
+            "effective": "03 May 2024",
+            "type": "CE - Shares - Optional dividend"
+          },
+          {
+            "id": "AMS_20230907_00788_EUR",
+            "issued": "07 Sep 2023",
+            "effective": "08 Sep 2023",
+            "type": "CE - Change of issuer/product name"
+          },
+          {
+            "id": "AMS_20230905_00777_EUR",
+            "issued": "05 Sep 2023",
+            "effective": "07 Sep 2023",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20230502_00372_EUR",
+            "issued": "02 May 2023",
+            "effective": "04 May 2023",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20230316_00223_EUR",
+            "issued": "16 Mar 2023",
+            "effective": "05 Apr 2023",
+            "type": "CE - Shares - Optional dividend"
+          },
+          {
+            "id": "AMS_20230224_00147_EUR",
+            "issued": "24 Feb 2023",
+            "effective": "05 Apr 2023",
+            "type": "CE - Shares - Optional dividend"
+          },
+          {
+            "id": "AMS_20220511_00423_EUR",
+            "issued": "11 May 2022",
+            "effective": "13 May 2022",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20220303_00202_EUR",
+            "issued": "03 Mar 2022",
+            "effective": "14 Apr 2022",
+            "type": "CE - Shares - Optional dividend"
+          },
+          {
+            "id": "AMS_20210511_00410_EUR",
+            "issued": "11 May 2021",
+            "effective": "14 May 2021",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20210305_00173_EUR",
+            "issued": "05 Mar 2021",
+            "effective": "19 Apr 2021",
+            "type": "CE - Shares - Optional dividend"
+          },
+          {
+            "id": "AMS_20200521_03272_EUR",
+            "issued": "21 May 2020",
+            "effective": "22 May 2020",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20200326_02069_EUR",
+            "issued": "26 Mar 2020",
+            "effective": "17 Apr 2020",
+            "type": "CE - Shares - Optional dividend"
+          },
+          {
+            "id": "AMS_20200309_01556_EUR",
+            "issued": "09 Mar 2020",
+            "effective": "17 Apr 2020",
+            "type": "CE - Shares - Optional dividend"
+          },
+          {
+            "id": "AMS_20180125_00493_EUR",
+            "issued": "25 Jan 2018",
+            "effective": "26 Jan 2018",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20170426_02365_EUR",
+            "issued": "26 Apr 2017",
+            "effective": "28 Apr 2017",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20160127_00596_EUR",
+            "issued": "27 Jan 2016",
+            "effective": "29 Jan 2016",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20100119_00163_EUR",
+            "issued": "19 Jan 2010",
+            "effective": "22 Jan 2010",
+            "type": "CE - Diverse announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110325_01201_EUR",
+            "issued": "25 Mar 2011",
+            "effective": "05 Apr 2011",
+            "type": "CE - Shares - Dividend - Daily pre-announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110325_01194_EUR",
+            "issued": "25 Mar 2011",
+            "effective": "05 Apr 2011",
+            "type": "CE - Shares - Dividend - Daily pre-announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110420_01663_EUR",
+            "issued": "20 Apr 2011",
+            "effective": "21 Apr 2011",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110420_01661_EUR",
+            "issued": "20 Apr 2011",
+            "effective": "21 Apr 2011",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110517_02078_EUR",
+            "issued": "17 May 2011",
+            "effective": "18 May 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20120309_01774_EUR",
+            "issued": "09 Mar 2012",
+            "effective": "19 Mar 2012",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20120516_03864_EUR",
+            "issued": "16 May 2012",
+            "effective": "17 May 2012",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20130514_02209_EUR",
+            "issued": "14 May 2013",
+            "effective": "15 May 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20130306_01079_EUR",
+            "issued": "06 Mar 2013",
+            "effective": "16 Apr 2013",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20130114_00223_EUR",
+            "issued": "14 Jan 2013",
+            "effective": "01 Jan 1970",
+            "type": "CE - Diverse announcement"
+          },
+          {
+            "id": "AMS_20130823_03930_EUR",
+            "issued": "23 Aug 2013",
+            "effective": "26 Aug 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140515_02365_EUR",
+            "issued": "15 May 2014",
+            "effective": "16 May 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140306_01153_EUR",
+            "issued": "06 Mar 2014",
+            "effective": "22 Apr 2014",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20140128_00446_EUR",
+            "issued": "28 Jan 2014",
+            "effective": "01 Jan 1970",
+            "type": "CE - Diverse announcement"
+          },
+          {
+            "id": "AMS_20140127_00437_EUR",
+            "issued": "27 Jan 2014",
+            "effective": "01 Jan 1970",
+            "type": "CE - Diverse announcement"
+          },
+          {
+            "id": "AMS_20150522_03557_EUR",
+            "issued": "22 May 2015",
+            "effective": "25 May 2015",
+            "type": "CE - Shares - Capital increase"
+          }
+        ]
+      },
+      "resolutions": [],
+      "modelWindowSha256": "4baa5d8f3afc40ec63c116ae10d0b211a544614a5967741c3f156fe671a4b31e"
+    },
+    "XAMS:NL0010801007": {
+      "instrument": {
+        "isin": "NL0010801007",
+        "mic": "XAMS",
+        "symbol": "IMCD",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "d7c3ccb7211f5a505b5b01e79f10744f8588df8427fefa7464489f2368e71f5e",
+      "officialWindowSha256": "3f1222c526fe232b39b42db52a55de68bc2e3ae941c69fb8a24e862ef49b86dd",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0010801007-XAMS",
+        "rawResponseSha256": "2cc28aef1bddf482ce51ba2de516c9009a03bc500d774327c4c7e7b8bd664966",
+        "adjustedResponseSha256": "d08db84595b6fbed307f14527f6743934d8f83fc0df3acce7c73edb31666c8fb",
+        "quoteSha256": "d77b2dbe3cff412a6772c8105e98f31d9f478a582f83a8754ad6d658485e18dc",
+        "noticeSha256": "1d7a0adb6264e77d42fe6b05a721b5fffca1096c1d330e1a41dc6019be704267",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "1d7a0adb6264e77d42fe6b05a721b5fffca1096c1d330e1a41dc6019be704267"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:46:04.291Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0010801007-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "1d7a0adb6264e77d42fe6b05a721b5fffca1096c1d330e1a41dc6019be704267",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260218_00105_EUR",
+            "issued": "18 Feb 2026",
+            "effective": "05 May 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20250305_00202_EUR",
+            "issued": "05 Mar 2025",
+            "effective": "29 Apr 2025",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20241113_00908_EUR",
+            "issued": "13 Nov 2024",
+            "effective": "15 Nov 2024",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20240306_00182_EUR",
+            "issued": "06 Mar 2024",
+            "effective": "16 May 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "MIL_20231116_06807_TAH",
+            "issued": "16 Nov 2023",
+            "effective": "17 Nov 2023",
+            "type": "CE - Shares - New listing"
+          },
+          {
+            "id": "AMS_20230315_00219_EUR",
+            "issued": "15 Mar 2023",
+            "effective": "28 Apr 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20220309_00214_EUR",
+            "issued": "09 Mar 2022",
+            "effective": "04 May 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210430_00378_EUR",
+            "issued": "30 Apr 2021",
+            "effective": "24 Jun 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210312_00214_EUR",
+            "issued": "12 Mar 2021",
+            "effective": "28 Jun 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200916_03827_EUR",
+            "issued": "16 Sep 2020",
+            "effective": "18 Sep 2020",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20200522_03306_EUR",
+            "issued": "22 May 2020",
+            "effective": "02 Jul 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190502_02626_EUR",
+            "issued": "02 May 2019",
+            "effective": "10 May 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190308_01444_EUR",
+            "issued": "08 Mar 2019",
+            "effective": "18 Mar 2019",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20180406_02079_EUR",
+            "issued": "06 Apr 2018",
+            "effective": "11 May 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20170316_01529_EUR",
+            "issued": "16 Mar 2017",
+            "effective": "12 May 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20160422_02665_EUR",
+            "issued": "22 Apr 2016",
+            "effective": "16 May 2016",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20140626_03219_EUR",
+            "issued": "26 Jun 2014",
+            "effective": "26 Jun 2014",
+            "type": "CE - Diverse announcement"
+          },
+          {
+            "id": "AMS_20150512_03288_EUR",
+            "issued": "12 May 2015",
+            "effective": "14 May 2015",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20150430_03064_EUR",
+            "issued": "30 Apr 2015",
+            "effective": "04 May 2015",
+            "type": "CE - Shares - Dividend - Announcement"
+          }
+        ]
+      },
+      "resolutions": [
+        {
+          "date": "2026-03-23",
+          "base": {
+            "date": "2026-03-23",
+            "open": 68.81999969482422,
+            "high": 75.0199966430664,
+            "low": 68.81999969482422,
+            "close": 74,
+            "adjustedClose": null,
+            "volume": 469162
+          },
+          "official": {
+            "date": "2026-03-23",
+            "open": 68.82,
+            "high": 75.06,
+            "low": 68.82,
+            "close": 74,
+            "adjustedClose": null,
+            "volume": 469162
+          },
+          "fields": [
+            "high"
+          ],
+          "selection": "OFFICIAL_UNADJUSTED"
+        }
+      ],
+      "modelWindowSha256": "c8b41e1be8fae3b2015f9752ca3916d4f4804c276b038928661481860c0bc889"
+    },
+    "XAMS:NL0011660485": {
+      "instrument": {
+        "isin": "NL0011660485",
+        "mic": "XAMS",
+        "symbol": "SIFG",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "c6bda7cea09b0a69c81949271894b70d198f1c93dc00c5d893e8d9b9444a2244",
+      "officialWindowSha256": "1eaba1364a75f271599a92a3e10b151bcf85f0a479fec0203a4cf286d34d917c",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0011660485-XAMS",
+        "rawResponseSha256": "4842e79a8c8aa1163b96f2f17ca49c6bc758f09a37d79b134cbab5b820b94c74",
+        "adjustedResponseSha256": "418708e4fc5adb34dde65ce44614d62894ec6eedc8901ad07d48bde88fd9e94f",
+        "quoteSha256": "5848df4a2a78f054100e4c48895fb1dbbcc0673d0bec121c79ec4adf5fbddafb",
+        "noticeSha256": "f863e842a7cbe8e15692a45c247adf6d3557cb0fa2195b23c85396e030e8d272",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "f863e842a7cbe8e15692a45c247adf6d3557cb0fa2195b23c85396e030e8d272"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:45:46.755Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0011660485-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "f863e842a7cbe8e15692a45c247adf6d3557cb0fa2195b23c85396e030e8d272",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20230704_00616_EUR",
+            "issued": "04 Jul 2023",
+            "effective": "07 Jul 2023",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20230616_00528_EUR",
+            "issued": "16 Jun 2023",
+            "effective": "19 Jun 2023",
+            "type": "CE - Shares - Increase with subscription right"
+          },
+          {
+            "id": "AMS_20220321_00258_EUR",
+            "issued": "21 Mar 2022",
+            "effective": "16 May 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210513_00419_EUR",
+            "issued": "13 May 2021",
+            "effective": "14 May 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190321_01734_EUR",
+            "issued": "21 Mar 2019",
+            "effective": "07 May 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180403_01943_EUR",
+            "issued": "03 Apr 2018",
+            "effective": "04 May 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20170517_02773_EUR",
+            "issued": "17 May 2017",
+            "effective": "22 May 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20160512_03174_EUR",
+            "issued": "12 May 2016",
+            "effective": "11 Feb 2016",
+            "type": "CE - Shares - IPO result (NL or BE)"
+          },
+          {
+            "id": "AMS_20160509_03091_EUR",
+            "issued": "09 May 2016",
+            "effective": "11 Feb 2016",
+            "type": "CE - Shares - Admission to listing and trading (NL or BE)"
+          },
+          {
+            "id": "AMS_20160211_00978_EUR",
+            "issued": "11 Feb 2016",
+            "effective": "11 Feb 2016",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20160201_00692_EUR",
+            "issued": "01 Feb 2016",
+            "effective": "11 Feb 2016",
+            "type": "CE - Shares - Admission to listing and trading (NL or BE)"
+          }
+        ]
+      },
+      "resolutions": [],
+      "modelWindowSha256": "c6bda7cea09b0a69c81949271894b70d198f1c93dc00c5d893e8d9b9444a2244"
+    },
+    "XAMS:NL0010407946": {
+      "instrument": {
+        "isin": "NL0010407946",
+        "mic": "XAMS",
+        "symbol": "TRIO",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "1579dddd70df0c9064ee80ac6ff786e625f5063facc93173dedbd102a4f1b48a",
+      "officialWindowSha256": "199874d6760a8109774e3713bb94cfdc7706707764915c0beed35501efda07d6",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0010407946-XAMS",
+        "rawResponseSha256": "310eca452d076cdd1b7eaff369d1225d052d40c527a52a0316029b7027648bbf",
+        "adjustedResponseSha256": "db94a7d70edd1c71b14589bf6920fbbb1a180730506af827ac88a527b3d49015",
+        "quoteSha256": "efbbc76745725345fbf732e4f9a315440facd26618e5a52e3c3f2f478cf88ba7",
+        "noticeSha256": "02f6e1ec5a54e8008aa4d3f964ce8839774fe9aa9514c2e3bbdf7c87ad728b07",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "02f6e1ec5a54e8008aa4d3f964ce8839774fe9aa9514c2e3bbdf7c87ad728b07"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:46:22.803Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0010407946-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "02f6e1ec5a54e8008aa4d3f964ce8839774fe9aa9514c2e3bbdf7c87ad728b07",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260813_00728_EUR",
+            "issued": "13 Aug 2026",
+            "effective": "17 Aug 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20260324_00223_EUR",
+            "issued": "24 Mar 2026",
+            "effective": "26 Mar 2026",
+            "type": "CE - Change of trading group"
+          },
+          {
+            "id": "AMS_20250814_00755_EUR",
+            "issued": "14 Aug 2025",
+            "effective": "18 Aug 2025",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20250617_00564_EUR",
+            "issued": "17 Jun 2025",
+            "effective": "17 Jun 2025",
+            "type": "CE - Shares - Direct Listing"
+          },
+          {
+            "id": "AMS_20250613_00549_EUR",
+            "issued": "13 Jun 2025",
+            "effective": "17 Jun 2025",
+            "type": "CE - Shares - Direct Listing"
+          }
+        ]
+      },
+      "resolutions": [],
+      "modelWindowSha256": "1579dddd70df0c9064ee80ac6ff786e625f5063facc93173dedbd102a4f1b48a"
+    },
+    "XAMS:NL0000852523": {
+      "instrument": {
+        "isin": "NL0000852523",
+        "mic": "XAMS",
+        "symbol": "TWEKA",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "1fc97a41b500425cee287e4d6cbb4f841dcb378d5f612d83dd0869626ff66920",
+      "officialWindowSha256": "592bc6a223b29350d13120aeb74875c8e9aa165275cebc90d12c5d7fcad68573",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000852523-XAMS",
+        "rawResponseSha256": "4df22fda682c292634f9e300a8eb5d311f0f5aa2a2eebd163d23365a85baef86",
+        "adjustedResponseSha256": "a16bb778d8f26f263f8c8cf33dc2aa910a27267464d05612c0068c23f998fcac",
+        "quoteSha256": "2962774d1a0420775a6c7a949dea4e18bfe71b5c82d31793c0939f54464733aa",
+        "noticeSha256": "2395110ac2b27fbd7e80162692f92f5e2afad4884d251f26b9cdb35406b97124",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "2395110ac2b27fbd7e80162692f92f5e2afad4884d251f26b9cdb35406b97124"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:46:33.396Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0000852523-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "2395110ac2b27fbd7e80162692f92f5e2afad4884d251f26b9cdb35406b97124",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260305_00165_EUR",
+            "issued": "05 Mar 2026",
+            "effective": "15 May 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20250305_00204_EUR",
+            "issued": "05 Mar 2025",
+            "effective": "19 May 2025",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240307_00189_EUR",
+            "issued": "07 Mar 2024",
+            "effective": "09 May 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240306_00185_EUR",
+            "issued": "06 Mar 2024",
+            "effective": "09 May 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "MIL_20231116_06807_TAH",
+            "issued": "16 Nov 2023",
+            "effective": "17 Nov 2023",
+            "type": "CE - Shares - New listing"
+          },
+          {
+            "id": "AMS_20230307_00195_EUR",
+            "issued": "07 Mar 2023",
+            "effective": "27 Apr 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20220309_00213_EUR",
+            "issued": "09 Mar 2022",
+            "effective": "28 Apr 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20211209_01075_EUR",
+            "issued": "09 Dec 2021",
+            "effective": "13 Dec 2021",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20210309_00180_EUR",
+            "issued": "09 Mar 2021",
+            "effective": "10 May 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200306_01536_EUR",
+            "issued": "06 Mar 2020",
+            "effective": "11 May 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190306_01379_EUR",
+            "issued": "06 Mar 2019",
+            "effective": "08 May 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180306_01386_EUR",
+            "issued": "06 Mar 2018",
+            "effective": "07 May 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20170308_01352_EUR",
+            "issued": "08 Mar 2017",
+            "effective": "24 Apr 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20160524_03510_EUR",
+            "issued": "24 May 2016",
+            "effective": "26 May 2016",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20160310_01621_EUR",
+            "issued": "10 Mar 2016",
+            "effective": "28 Apr 2016",
+            "type": "CE - Shares - Optional dividend"
+          },
+          {
+            "id": "AMS_20070911_7139_EUR",
+            "issued": "11 Sep 2007",
+            "effective": "11 Sep 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20081201_02649_EUR",
+            "issued": "01 Dec 2008",
+            "effective": "01 Dec 2008",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20080508_01063_EUR",
+            "issued": "08 May 2008",
+            "effective": "08 May 2008",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20080124_00227_EUR",
+            "issued": "25 Jan 2008",
+            "effective": "25 Jan 2008",
+            "type": "CE - Diverse announcement"
+          },
+          {
+            "id": "AMS_20090727_01859_EUR",
+            "issued": "27 Jul 2009",
+            "effective": "27 Jul 2009",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20090311_00577_EUR",
+            "issued": "11 Mar 2009",
+            "effective": "11 Mar 2009",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20100603_01529_EUR",
+            "issued": "03 Jun 2010",
+            "effective": "04 Jun 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20100428_01156_EUR",
+            "issued": "28 Apr 2010",
+            "effective": "29 Apr 2010",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20100428_01152_EUR",
+            "issued": "28 Apr 2010",
+            "effective": "29 Apr 2010",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20100311_00698_EUR",
+            "issued": "11 Mar 2010",
+            "effective": "22 Mar 2010",
+            "type": "CE - Shares - Dividend - Daily pre-announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110309_00925_EUR",
+            "issued": "09 Mar 2011",
+            "effective": "19 May 2011",
+            "type": "CE - Shares - Dividend - Daily pre-announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110411_01483_EUR",
+            "issued": "11 Apr 2011",
+            "effective": "26 May 2011",
+            "type": "CE - Shares - Dividend - Daily pre-announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110525_02244_EUR",
+            "issued": "25 May 2011",
+            "effective": "26 May 2011",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110706_02965_EUR",
+            "issued": "06 Jul 2011",
+            "effective": "07 Jul 2011",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20120314_01843_EUR",
+            "issued": "14 Mar 2012",
+            "effective": "21 Mar 2012",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20120615_04424_EUR",
+            "issued": "15 Jun 2012",
+            "effective": "18 Jun 2012",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20130529_02477_EUR",
+            "issued": "29 May 2013",
+            "effective": "30 May 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20130307_01096_EUR",
+            "issued": "07 Mar 2013",
+            "effective": "09 May 2013",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20140312_01252_EUR",
+            "issued": "12 Mar 2014",
+            "effective": "16 May 2014",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20150609_04008_EUR",
+            "issued": "09 Jun 2015",
+            "effective": "10 Jun 2015",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20150311_01772_EUR",
+            "issued": "11 Mar 2015",
+            "effective": "24 Mar 2015",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20150126_00553_EUR",
+            "issued": "26 Jan 2015",
+            "effective": "28 Jan 2015",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20141121_05906_EUR",
+            "issued": "21 Nov 2014",
+            "effective": "24 Nov 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20141118_05822_EUR",
+            "issued": "18 Nov 2014",
+            "effective": "19 Nov 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20141118_05821_EUR",
+            "issued": "18 Nov 2014",
+            "effective": "19 Nov 2014",
+            "type": "CE - Shares - Capital increase"
+          }
+        ]
+      },
+      "resolutions": [],
+      "modelWindowSha256": "1fc97a41b500425cee287e4d6cbb4f841dcb378d5f612d83dd0869626ff66920"
+    },
+    "XAMS:NL0009432491": {
+      "instrument": {
+        "isin": "NL0009432491",
+        "mic": "XAMS",
+        "symbol": "VPK",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "31abe38540f460e8efffefbeeb8fe01bc2574d364a3e6885b3ea452f227e2774",
+      "officialWindowSha256": "001b1597941e7be5d2c34bf4212630f0164b2dcadc0bed252e3f6ed248fa3686",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0009432491-XAMS",
+        "rawResponseSha256": "d4e596edf3988f171b3369c03726ae1855ed7b442f60fc9341e704a37647ef1b",
+        "adjustedResponseSha256": "bf5d24237e3b1dfaab0c7acd701002b10c9fac07a3ba0f6a32b84052eb6958a1",
+        "quoteSha256": "aab992f1594e5b1ccef96b4980d06cdaa19d6018c6a8bffec736c59d78f4820b",
+        "noticeSha256": "328ee01b90e31dc95efdf06aa3a2fea1c7bf367b6f5572f10f1e13f505a854e4",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "328ee01b90e31dc95efdf06aa3a2fea1c7bf367b6f5572f10f1e13f505a854e4"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:47:00.632Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0009432491-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "328ee01b90e31dc95efdf06aa3a2fea1c7bf367b6f5572f10f1e13f505a854e4",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260916_00825_EUR",
+            "issued": "16 Sep 2026",
+            "effective": "17 Sep 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20260226_00135_EUR",
+            "issued": "26 Feb 2026",
+            "effective": "24 Apr 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20250908_00813_EUR",
+            "issued": "08 Sep 2025",
+            "effective": "10 Sep 2025",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20250424_00364_EUR",
+            "issued": "24 Apr 2025",
+            "effective": "25 Apr 2025",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20241213_00994_EUR",
+            "issued": "13 Dec 2024",
+            "effective": "17 Dec 2024",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20240221_00137_EUR",
+            "issued": "21 Feb 2024",
+            "effective": "26 Apr 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "MIL_20231116_06807_TAH",
+            "issued": "16 Nov 2023",
+            "effective": "17 Nov 2023",
+            "type": "CE - Shares - New listing"
+          },
+          {
+            "id": "AMS_20230424_00353_EUR",
+            "issued": "24 Apr 2023",
+            "effective": "28 Apr 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20220420_00356_EUR",
+            "issued": "20 Apr 2022",
+            "effective": "22 Apr 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210311_00204_EUR",
+            "issued": "11 Mar 2021",
+            "effective": "23 Apr 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20201106_03960_EUR",
+            "issued": "06 Nov 2020",
+            "effective": "09 Nov 2020",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20200318_01830_EUR",
+            "issued": "18 Mar 2020",
+            "effective": "23 Mar 2020",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20200224_01155_EUR",
+            "issued": "24 Feb 2020",
+            "effective": "23 Apr 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190621_03727_EUR",
+            "issued": "21 Jun 2019",
+            "effective": "24 Jun 2019",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20190219_01027_EUR",
+            "issued": "19 Feb 2019",
+            "effective": "20 Feb 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190219_01023_EUR",
+            "issued": "19 Feb 2019",
+            "effective": "20 Feb 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180220_01084_EUR",
+            "issued": "20 Feb 2018",
+            "effective": "20 Apr 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20170220_01020_EUR",
+            "issued": "20 Feb 2017",
+            "effective": "21 Apr 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20160303_01459_EUR",
+            "issued": "03 Mar 2016",
+            "effective": "22 Apr 2016",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20080124_00227_EUR",
+            "issued": "25 Jan 2008",
+            "effective": "25 Jan 2008",
+            "type": "CE - Diverse announcement"
+          },
+          {
+            "id": "AMS_20100512_01311_EUR",
+            "issued": "12 May 2010",
+            "effective": "18 May 2010",
+            "type": "CE - Diverse announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110311_00974_EUR",
+            "issued": "11 Mar 2011",
+            "effective": "21 Apr 2011",
+            "type": "CE - Shares - Dividend - Daily pre-announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110428_01768_EUR",
+            "issued": "28 Apr 2011",
+            "effective": "29 Apr 2011",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110428_01763_EUR",
+            "issued": "28 Apr 2011",
+            "effective": "29 Apr 2011",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20090928_02436_EUR",
+            "issued": "28 Sep 2009",
+            "effective": "28 Sep 2009",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20120301_01625_EUR",
+            "issued": "01 Mar 2012",
+            "effective": "18 Apr 2012",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20130305_01062_EUR",
+            "issued": "05 Mar 2013",
+            "effective": "17 Apr 2013",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20130305_01054_EUR",
+            "issued": "05 Mar 2013",
+            "effective": "17 Apr 2013",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20140317_01322_EUR",
+            "issued": "17 Mar 2014",
+            "effective": "25 Apr 2014",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20150317_01914_EUR",
+            "issued": "17 Mar 2015",
+            "effective": "23 Mar 2015",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20150312_01814_EUR",
+            "issued": "12 Mar 2015",
+            "effective": "24 Mar 2015",
+            "type": "CE - Shares - Dividend - Announcement"
+          }
+        ]
+      },
+      "resolutions": [],
+      "modelWindowSha256": "31abe38540f460e8efffefbeeb8fe01bc2574d364a3e6885b3ea452f227e2774"
+    },
+    "XAMS:NL0000313286": {
+      "instrument": {
+        "isin": "NL0000313286",
+        "mic": "XAMS",
+        "symbol": "ACOMO",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "3d441ef139c9dc37d71ecf85c2acc0cd2f647f3b6b4a4f5bd6ed0cf627c81ca3",
+      "officialWindowSha256": "650819f6abddd3260cda7e07034276d7822b3c770ebaaf2e8bcd6c625e579a3f",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000313286-XAMS",
+        "rawResponseSha256": "31e6652ffaf5fe9eb0566e814dda356d07d4c65cb4861a3855ba384eb9d90854",
+        "adjustedResponseSha256": "2289a048472e47f55d9b277fb232a10569cca96ff22b09c8b4923f7476d439e8",
+        "quoteSha256": "5138464416d681bdcc58a66fbded01308fe211f62758305f24785ab553863a5f",
+        "noticeSha256": "2fcaeaffc7893c486a403e8b5c3db254382c3bc1626dcc8f49593aa900e4a4a9",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "85036a92786e5285ab231973fcca3166efaba3ba24593d21b32174ee2d7883e3"
+          },
+          {
+            "page": 2,
+            "sha256": "b6bbf7837d871881181d3b75fd1b831e911f31b3a2b15c5193a00c59f8178384"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:43:15.737Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0000313286-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "2fcaeaffc7893c486a403e8b5c3db254382c3bc1626dcc8f49593aa900e4a4a9",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260728_00679_EUR",
+            "issued": "28 Jul 2026",
+            "effective": "03 Aug 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20260306_00170_EUR",
+            "issued": "06 Mar 2026",
+            "effective": "28 Apr 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20260305_00162_EUR",
+            "issued": "05 Mar 2026",
+            "effective": "28 Apr 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20250724_00709_EUR",
+            "issued": "24 Jul 2025",
+            "effective": "30 Jul 2025",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20250404_00311_EUR",
+            "issued": "04 Apr 2025",
+            "effective": "08 Apr 2025",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20250314_00234_EUR",
+            "issued": "14 Mar 2025",
+            "effective": "29 Apr 2025",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240723_00628_EUR",
+            "issued": "23 Jul 2024",
+            "effective": "29 Jul 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240221_00136_EUR",
+            "issued": "21 Feb 2024",
+            "effective": "30 Apr 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20230725_00669_EUR",
+            "issued": "25 Jul 2023",
+            "effective": "28 Jul 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20230321_00244_EUR",
+            "issued": "21 Mar 2023",
+            "effective": "25 Apr 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20220726_00697_EUR",
+            "issued": "26 Jul 2022",
+            "effective": "29 Jul 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20220708_00660_EUR",
+            "issued": "08 Jul 2022",
+            "effective": "11 Jul 2022",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20220222_00156_EUR",
+            "issued": "22 Feb 2022",
+            "effective": "03 May 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20201222_04087_EUR",
+            "issued": "22 Dec 2020",
+            "effective": "24 Dec 2020",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20201202_04030_EUR",
+            "issued": "02 Dec 2020",
+            "effective": "04 Dec 2020",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20200724_03690_EUR",
+            "issued": "24 Jul 2020",
+            "effective": "28 Jul 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200228_01343_EUR",
+            "issued": "28 Feb 2020",
+            "effective": "05 May 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190722_04338_EUR",
+            "issued": "22 Jul 2019",
+            "effective": "23 Jul 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190219_01030_EUR",
+            "issued": "19 Feb 2019",
+            "effective": "29 Apr 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180720_04399_EUR",
+            "issued": "20 Jul 2018",
+            "effective": "24 Jul 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180219_01043_EUR",
+            "issued": "19 Feb 2018",
+            "effective": "30 Apr 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20170724_04170_EUR",
+            "issued": "24 Jul 2017",
+            "effective": "25 Jul 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20170511_02659_EUR",
+            "issued": "11 May 2017",
+            "effective": "12 May 2017",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20170220_01020_EUR",
+            "issued": "20 Feb 2017",
+            "effective": "21 Apr 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20161114_08168_EUR",
+            "issued": "14 Nov 2016",
+            "effective": "15 Nov 2016",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20160722_05167_EUR",
+            "issued": "22 Jul 2016",
+            "effective": "25 Jul 2016",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20160624_04385_EUR",
+            "issued": "24 Jun 2016",
+            "effective": "27 Jun 2016",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20160322_01904_EUR",
+            "issued": "22 Mar 2016",
+            "effective": "23 Mar 2016",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20160216_01076_EUR",
+            "issued": "16 Feb 2016",
+            "effective": "25 Feb 2016",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20080530_01249_EUR",
+            "issued": "30 May 2008",
+            "effective": "30 May 2008",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20080529_01233_EUR",
+            "issued": "29 May 2008",
+            "effective": "29 May 2008",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20080424_00971_EUR",
+            "issued": "24 Apr 2008",
+            "effective": "24 Apr 2008",
+            "type": "CE - Shares - Dividend - Daily pre-announcement"
+          },
+          {
+            "id": "AMS_20100917_02574_EUR",
+            "issued": "17 Sep 2010",
+            "effective": "21 Sep 2010",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20100916_02556_EUR",
+            "issued": "16 Sep 2010",
+            "effective": "16 Sep 2010",
+            "type": "CE - Shares - Dividend - Daily pre-announcement (Updated)"
+          },
+          {
+            "id": "AMS_20100623_01696_EUR",
+            "issued": "23 Jun 2010",
+            "effective": "24 Jun 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20100528_01471_EUR",
+            "issued": "28 May 2010",
+            "effective": "31 May 2010",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20100421_01075_EUR",
+            "issued": "21 Apr 2010",
+            "effective": "26 Apr 2010",
+            "type": "CE - Shares - Dividend - Daily pre-announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110118_00212_EUR",
+            "issued": "18 Jan 2011",
+            "effective": "24 Jan 2011",
+            "type": "CE - Diverse announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110214_00579_EUR",
+            "issued": "14 Feb 2011",
+            "effective": "15 Feb 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110322_01128_EUR",
+            "issued": "22 Mar 2011",
+            "effective": "29 Mar 2011",
+            "type": "CE - Shares - Dividend - Daily pre-announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110322_01121_EUR",
+            "issued": "22 Mar 2011",
+            "effective": "29 Mar 2011",
+            "type": "CE - Shares - Dividend - Daily pre-announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110526_02264_EUR",
+            "issued": "26 May 2011",
+            "effective": "27 May 2011",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110902_03871_EUR",
+            "issued": "02 Sep 2011",
+            "effective": "05 Sep 2011",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20110901_03847_EUR",
+            "issued": "01 Sep 2011",
+            "effective": "05 Sep 2011",
+            "type": "CE - Shares - Dividend - Daily pre-announcement"
+          },
+          {
+            "id": "AMS_20110901_03842_EUR",
+            "issued": "01 Sep 2011",
+            "effective": "05 Sep 2011",
+            "type": "CE - Shares - Dividend - Daily pre-announcement"
+          },
+          {
+            "id": "AMS_20120319_01928_EUR",
+            "issued": "19 Mar 2012",
+            "effective": "21 Mar 2012",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20120904_05800_EUR",
+            "issued": "04 Sep 2012",
+            "effective": "05 Sep 2012",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20130314_01206_EUR",
+            "issued": "14 Mar 2013",
+            "effective": "20 Mar 2013",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20130830_04054_EUR",
+            "issued": "30 Aug 2013",
+            "effective": "02 Sep 2013",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20130912_04221_EUR",
+            "issued": "12 Sep 2013",
+            "effective": "13 Sep 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20130905_04130_EUR",
+            "issued": "05 Sep 2013",
+            "effective": "06 Sep 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20130904_04111_EUR",
+            "issued": "04 Sep 2013",
+            "effective": "06 Sep 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20131111_05190_EUR",
+            "issued": "11 Nov 2013",
+            "effective": "12 Nov 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140429_02106_EUR",
+            "issued": "29 Apr 2014",
+            "effective": "30 Apr 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140429_02104_EUR",
+            "issued": "29 Apr 2014",
+            "effective": "30 Apr 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140325_01481_EUR",
+            "issued": "25 Mar 2014",
+            "effective": "27 Mar 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140221_00909_EUR",
+            "issued": "21 Feb 2014",
+            "effective": "07 Apr 2014",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20140801_03849_EUR",
+            "issued": "01 Aug 2014",
+            "effective": "04 Aug 2014",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20140710_03480_EUR",
+            "issued": "10 Jul 2014",
+            "effective": "14 Jul 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20141022_05325_EUR",
+            "issued": "22 Oct 2014",
+            "effective": "23 Oct 2014",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20150928_06707_EUR",
+            "issued": "28 Sep 2015",
+            "effective": "29 Sep 2015",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20150731_05279_EUR",
+            "issued": "31 Jul 2015",
+            "effective": "03 Aug 2015",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20150616_04194_EUR",
+            "issued": "16 Jun 2015",
+            "effective": "18 Jun 2015",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20150217_01153_EUR",
+            "issued": "17 Feb 2015",
+            "effective": "04 May 2015",
+            "type": "CE - Shares - Dividend - Announcement"
+          }
+        ]
+      },
+      "resolutions": [],
+      "modelWindowSha256": "3d441ef139c9dc37d71ecf85c2acc0cd2f647f3b6b4a4f5bd6ed0cf627c81ca3"
+    },
+    "XAMS:NL0000379121": {
+      "instrument": {
+        "isin": "NL0000379121",
+        "mic": "XAMS",
+        "symbol": "RAND",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "dd541184cd6b90e2b8afba030253d5be79a52a49c97049d831abc39204593093",
+      "officialWindowSha256": "623e03ac7fbdbe0eba07aa84839b96cc2dadc430503440e73cab5f7fd791d1fa",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000379121-XAMS",
+        "rawResponseSha256": "6ce0508665fd91bfa234007eecf51cc53c606162fc0508cc5e657bea5b6bf237",
+        "adjustedResponseSha256": "dc37d104aa51711c0af1e87c1d347b1197395edf7482b6c3e08e4b4f18de13ae",
+        "quoteSha256": "b6d7e48a6beb669a0f904d8bfc4dfa6f76f0f2703e325500014db26c8ed03f3a",
+        "noticeSha256": "73d041453e9cb129b8a6334f42c93c01c50cfa59f46003843f94ead6fa9cb435",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "47754c5b6a93075377465e59ac3856c49ea6371fe395ea074669648e3756d63b"
+          },
+          {
+            "page": 2,
+            "sha256": "f592eadbe160ee7f3497b6ec6b0bfbe6863e64d5e22f269f2358339c5ddf0b96"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:46:45.656Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0000379121-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "73d041453e9cb129b8a6334f42c93c01c50cfa59f46003843f94ead6fa9cb435",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20260319_00209_EUR",
+            "issued": "19 Mar 2026",
+            "effective": "23 Mar 2026",
+            "type": "CE - Change of Index components"
+          },
+          {
+            "id": "AMS_20260211_00077_EUR",
+            "issued": "11 Feb 2026",
+            "effective": "31 Mar 2026",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20251118_01014_EUR",
+            "issued": "18 Nov 2025",
+            "effective": "20 Nov 2025",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20250219_00148_EUR",
+            "issued": "19 Feb 2025",
+            "effective": "28 Mar 2025",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240924_00794_EUR",
+            "issued": "24 Sep 2024",
+            "effective": "26 Sep 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240327_00248_EUR",
+            "issued": "27 Mar 2024",
+            "effective": "28 Mar 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240214_00117_EUR",
+            "issued": "14 Feb 2024",
+            "effective": "26 Sep 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240214_00116_EUR",
+            "issued": "14 Feb 2024",
+            "effective": "28 Mar 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240213_00114_EUR",
+            "issued": "13 Feb 2024",
+            "effective": "26 Sep 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20240213_00113_EUR",
+            "issued": "13 Feb 2024",
+            "effective": "28 Mar 2024",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20231227_01075_EUR",
+            "issued": "27 Dec 2023",
+            "effective": "29 Dec 2023",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "MIL_20231116_06807_TAH",
+            "issued": "16 Nov 2023",
+            "effective": "17 Nov 2023",
+            "type": "CE - Shares - New listing"
+          },
+          {
+            "id": "AMS_20230217_00120_EUR",
+            "issued": "17 Feb 2023",
+            "effective": "30 Mar 2023",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20220215_00137_EUR",
+            "issued": "15 Feb 2022",
+            "effective": "29 Sep 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20220215_00136_EUR",
+            "issued": "15 Feb 2022",
+            "effective": "31 Mar 2022",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210209_00082_EUR",
+            "issued": "09 Feb 2021",
+            "effective": "25 Mar 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210209_00081_EUR",
+            "issued": "09 Feb 2021",
+            "effective": "24 Sep 2021",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20210209_00080_EUR",
+            "issued": "09 Feb 2021",
+            "effective": "11 Feb 2021",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20200325_02055_EUR",
+            "issued": "25 Mar 2020",
+            "effective": "26 Mar 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200320_01924_EUR",
+            "issued": "20 Mar 2020",
+            "effective": "27 Mar 2020",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20200228_01338_EUR",
+            "issued": "28 Feb 2020",
+            "effective": "26 Mar 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200212_00890_EUR",
+            "issued": "12 Feb 2020",
+            "effective": "26 Mar 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20200212_00889_EUR",
+            "issued": "12 Feb 2020",
+            "effective": "26 Mar 2020",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190902_05235_EUR",
+            "issued": "02 Sep 2019",
+            "effective": "27 Sep 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190225_01158_EUR",
+            "issued": "25 Feb 2019",
+            "effective": "27 Feb 2019",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20190214_00933_EUR",
+            "issued": "14 Feb 2019",
+            "effective": "28 Mar 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20190213_00910_EUR",
+            "issued": "13 Feb 2019",
+            "effective": "28 Mar 2019",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180906_05426_EUR",
+            "issued": "06 Sep 2018",
+            "effective": "07 Sep 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20180514_02887_EUR",
+            "issued": "14 May 2018",
+            "effective": "15 May 2018",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20180410_02128_EUR",
+            "issued": "10 Apr 2018",
+            "effective": "11 Apr 2018",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20180315_01608_EUR",
+            "issued": "15 Mar 2018",
+            "effective": "16 Mar 2018",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20180220_01059_EUR",
+            "issued": "20 Feb 2018",
+            "effective": "29 Mar 2018",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20170817_04654_EUR",
+            "issued": "17 Aug 2017",
+            "effective": "18 Aug 2017",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20170511_02662_EUR",
+            "issued": "11 May 2017",
+            "effective": "15 May 2017",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20170504_02499_EUR",
+            "issued": "04 May 2017",
+            "effective": "05 May 2017",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20170302_01230_EUR",
+            "issued": "02 Mar 2017",
+            "effective": "03 Mar 2017",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20170216_00926_EUR",
+            "issued": "16 Feb 2017",
+            "effective": "17 Feb 2017",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20170214_00874_EUR",
+            "issued": "14 Feb 2017",
+            "effective": "03 Apr 2017",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20161124_08468_EUR",
+            "issued": "24 Nov 2016",
+            "effective": "25 Nov 2016",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20160218_01140_EUR",
+            "issued": "18 Feb 2016",
+            "effective": "23 Mar 2016",
+            "type": "CE - Shares - Dividend - Announcement"
+          },
+          {
+            "id": "AMS_20071024_7597_EUR",
+            "issued": "24 Oct 2007",
+            "effective": "24 Oct 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20070730_6823_EUR",
+            "issued": "30 Jul 2007",
+            "effective": "30 Jul 2007",
+            "type": "CE - Stock warrant - Increase number listed"
+          },
+          {
+            "id": "AMS_20070718_6730_EUR",
+            "issued": "18 Jul 2007",
+            "effective": "18 Jul 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20070504_6185_EUR",
+            "issued": "04 May 2007",
+            "effective": "04 May 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20081112_02480_EUR",
+            "issued": "12 Nov 2008",
+            "effective": "12 Nov 2008",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20080708_01511_EUR",
+            "issued": "08 Jul 2008",
+            "effective": "08 Jul 2008",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20080630_01454_EUR",
+            "issued": "30 Jun 2008",
+            "effective": "30 Jun 2008",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20080515_01112_EUR",
+            "issued": "15 May 2008",
+            "effective": "15 May 2008",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20080508_01063_EUR",
+            "issued": "08 May 2008",
+            "effective": "08 May 2008",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20080429_01002_EUR",
+            "issued": "29 Apr 2008",
+            "effective": "29 Apr 2008",
+            "type": "CE - Shares - Dividend - Daily pre-announcement"
+          },
+          {
+            "id": "AMS_20080424_00967_EUR",
+            "issued": "24 Apr 2008",
+            "effective": "24 Apr 2008",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20080128_00243_EUR",
+            "issued": "28 Jan 2008",
+            "effective": "28 Jan 2008",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20090319_00647_EUR",
+            "issued": "19 Mar 2009",
+            "effective": "19 Mar 2009",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101224_03807_EUR",
+            "issued": "24 Dec 2010",
+            "effective": "27 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20100603_01527_EUR",
+            "issued": "03 Jun 2010",
+            "effective": "04 Jun 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20100125_00211_EUR",
+            "issued": "25 Jan 2010",
+            "effective": "26 Jan 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110217_00647_EUR",
+            "issued": "17 Feb 2011",
+            "effective": "21 Feb 2011",
+            "type": "CE - Shares - Dividend - Daily pre-announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110413_01528_EUR",
+            "issued": "13 Apr 2011",
+            "effective": "14 Apr 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110401_01320_EUR",
+            "issued": "01 Apr 2011",
+            "effective": "04 Apr 2011",
+            "type": "CE - Shares - Dividend - Final announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110627_02811_EUR",
+            "issued": "27 Jun 2011",
+            "effective": "28 Jun 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20091026_02722_EUR",
+            "issued": "26 Oct 2009",
+            "effective": "26 Oct 2009",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20110926_04260_EUR",
+            "issued": "26 Sep 2011",
+            "effective": "27 Sep 2011",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20120216_01377_EUR",
+            "issued": "16 Feb 2012",
+            "effective": "02 Apr 2012",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20120315_01865_EUR",
+            "issued": "15 Mar 2012",
+            "effective": "16 Mar 2012",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20130424_01878_EUR",
+            "issued": "24 Apr 2013",
+            "effective": "25 Apr 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20130424_01875_EUR",
+            "issued": "24 Apr 2013",
+            "effective": "25 Apr 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20130314_01213_EUR",
+            "issued": "14 Mar 2013",
+            "effective": "15 Mar 2013",
+            "type": "CE - Diverse announcement"
+          },
+          {
+            "id": "AMS_20130308_01117_EUR",
+            "issued": "08 Mar 2013",
+            "effective": "11 Mar 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20130215_00765_EUR",
+            "issued": "15 Feb 2013",
+            "effective": "03 Apr 2013",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20130912_04226_EUR",
+            "issued": "12 Sep 2013",
+            "effective": "13 Sep 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20131119_05317_EUR",
+            "issued": "19 Nov 2013",
+            "effective": "20 Nov 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20131203_05585_EUR",
+            "issued": "03 Dec 2013",
+            "effective": "04 Dec 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140502_02153_EUR",
+            "issued": "02 May 2014",
+            "effective": "05 May 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140224_00927_EUR",
+            "issued": "24 Feb 2014",
+            "effective": "25 Feb 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140221_00909_EUR",
+            "issued": "21 Feb 2014",
+            "effective": "07 Apr 2014",
+            "type": "CE - Shares - Dividend - Final announcement"
+          },
+          {
+            "id": "AMS_20150702_04592_EUR",
+            "issued": "02 Jul 2015",
+            "effective": "03 Jul 2015",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20150507_03163_EUR",
+            "issued": "07 May 2015",
+            "effective": "08 May 2015",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20150430_03066_EUR",
+            "issued": "30 Apr 2015",
+            "effective": "04 May 2015",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20150324_02131_EUR",
+            "issued": "24 Mar 2015",
+            "effective": "26 Mar 2015",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20150303_01536_EUR",
+            "issued": "03 Mar 2015",
+            "effective": "05 Mar 2015",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20150219_01228_EUR",
+            "issued": "19 Feb 2015",
+            "effective": "08 Apr 2015",
+            "type": "CE - Shares - Dividend - Announcement"
+          }
+        ]
+      },
+      "resolutions": [
+        {
+          "date": "2026-03-11",
+          "base": {
+            "date": "2026-03-11",
+            "open": 26,
+            "high": 26.68000030517578,
+            "low": 25.799999237060547,
+            "close": 26.1200008392334,
+            "adjustedClose": null,
+            "volume": 670065
+          },
+          "official": {
+            "date": "2026-03-11",
+            "open": 26,
+            "high": 26.7,
+            "low": 25.8,
+            "close": 26.12,
+            "adjustedClose": null,
+            "volume": 670065
+          },
+          "fields": [
+            "high"
+          ],
+          "selection": "OFFICIAL_UNADJUSTED"
+        },
+        {
+          "date": "2026-05-20",
+          "base": {
+            "date": "2026-05-20",
+            "open": 24.760000228881836,
+            "high": 25.389999389648438,
+            "low": 24.459999084472656,
+            "close": 25.170000076293945,
+            "adjustedClose": null,
+            "volume": 560761
+          },
+          "official": {
+            "date": "2026-05-20",
+            "open": 24.76,
+            "high": 25.42,
+            "low": 24.46,
+            "close": 25.17,
+            "adjustedClose": null,
+            "volume": 560761
+          },
+          "fields": [
+            "high"
+          ],
+          "selection": "OFFICIAL_UNADJUSTED"
+        }
+      ],
+      "modelWindowSha256": "f7f3a45503d246b692844caea0621aef4be595403922cfd735e282d6d77473bf"
+    },
+    "XAMS:NL0013332471": {
+      "instrument": {
+        "isin": "NL0013332471",
+        "mic": "XAMS",
+        "symbol": "TOM2",
+        "currency": "EUR"
+      },
+      "asOf": "2026-11-26",
+      "firstDate": "2025-12-01",
+      "records": 253,
+      "priceBasis": "UNADJUSTED",
+      "rawWindowSha256": "e7fee3a08ed062b411b31fd743376251f22aaaa9cc9bc39f69e422ddfbe0ec20",
+      "officialWindowSha256": "3efbba8acc9eef076f38fe51d7a38f71ab4c1e6095e407afce656b6570f2080f",
+      "source": {
+        "provider": "euronext-live",
+        "url": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0013332471-XAMS",
+        "rawResponseSha256": "1074ae2ad4db666618efe8794214e516089022a2e27c0212f81531a7e1027345",
+        "adjustedResponseSha256": "381ad84bedf92de27506a3122607bca6acaac450b39323f413042dda182f1ad9",
+        "quoteSha256": "bb23872ff7b98ca5cf54c8d4d258b5631dd18f8348b0341496538d97c7f80f51",
+        "noticeSha256": "b87fbcbade22b62e008c12b31e655fd917a6773bc8bda0714451450f3c1dad3e",
+        "noticePages": [
+          {
+            "page": 1,
+            "sha256": "05a9f7a71a76c05031c3dbbe4675f2c44f0477dde0f8dfd957f9270ee0f0b69b"
+          },
+          {
+            "page": 2,
+            "sha256": "786a61a1c21e5111e9b0fcee05a7805e9c0621d3b45bf5fad3fa29aee2ec56ce"
+          }
+        ],
+        "retrievedAt": "2026-11-27T05:46:11.228Z",
+        "adjusted": "N",
+        "adjustmentComparison": "N_EQUALS_Y"
+      },
+      "corporateActions": {
+        "sourceUrl": "https://live.euronext.com/en/ajax/getNoticePublicData/NL0013332471-XAMS?alias=1&pageNum=1&pageSize=50",
+        "sourceSha256": "b87fbcbade22b62e008c12b31e655fd917a6773bc8bda0714451450f3c1dad3e",
+        "review": "NO_SPLIT_OR_RIGHTS_ADJUSTMENT_OBSERVED_IN_253_SESSION_WINDOW",
+        "events": [
+          {
+            "id": "AMS_20240807_00668_EUR",
+            "issued": "07 Aug 2024",
+            "effective": "08 Aug 2024",
+            "type": "CE - Shares - Capital decrease"
+          },
+          {
+            "id": "AMS_20230124_00057_EUR",
+            "issued": "24 Jan 2023",
+            "effective": "31 Jan 2023",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20220125_00057_EUR",
+            "issued": "25 Jan 2022",
+            "effective": "31 Jan 2022",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20210125_00044_EUR",
+            "issued": "25 Jan 2021",
+            "effective": "29 Jan 2021",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20190925_05730_EUR",
+            "issued": "25 Sep 2019",
+            "effective": "26 Sep 2019",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20190523_03063_EUR",
+            "issued": "23 May 2019",
+            "effective": "22 May 2019",
+            "type": "CE - Shares - Reverse split"
+          },
+          {
+            "id": "AMS_20190516_02925_EUR",
+            "issued": "16 May 2019",
+            "effective": "22 May 2019",
+            "type": "CE - Shares - Reverse split"
+          },
+          {
+            "id": "AMS_20180530_03300_EUR",
+            "issued": "30 May 2018",
+            "effective": "18 Jun 2018",
+            "type": "CE - Diverse Announcement"
+          },
+          {
+            "id": "AMS_20171009_05660_EUR",
+            "issued": "09 Oct 2017",
+            "effective": "10 Oct 2017",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20160816_05821_EUR",
+            "issued": "16 Aug 2016",
+            "effective": "17 Aug 2016",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20071224_8187_EUR",
+            "issued": "24 Dec 2007",
+            "effective": "24 Dec 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20071207_8048_EUR",
+            "issued": "07 Dec 2007",
+            "effective": "07 Dec 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20071206_8032_EUR",
+            "issued": "06 Dec 2007",
+            "effective": "06 Dec 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20071102_7691_EUR",
+            "issued": "02 Nov 2007",
+            "effective": "02 Nov 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20070726_6790_EUR",
+            "issued": "26 Jul 2007",
+            "effective": "26 Jul 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20070711_6657_EUR",
+            "issued": "11 Jul 2007",
+            "effective": "11 Jul 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20070629_6573_EUR",
+            "issued": "29 Jun 2007",
+            "effective": "29 Jun 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20070627_6557_EUR",
+            "issued": "27 Jun 2007",
+            "effective": "27 Jun 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20070605_6404_EUR",
+            "issued": "05 Jun 2007",
+            "effective": "05 Jun 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20070604_6392_EUR",
+            "issued": "04 Jun 2007",
+            "effective": "04 Jun 2007",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20080811_01777_EUR",
+            "issued": "11 Aug 2008",
+            "effective": "11 Aug 2008",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20080801_01708_EUR",
+            "issued": "01 Aug 2008",
+            "effective": "01 Aug 2008",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20080221_00450_EUR",
+            "issued": "21 Feb 2008",
+            "effective": "21 Feb 2008",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20090716_01763_EUR",
+            "issued": "16 Jul 2009",
+            "effective": "16 Jul 2009",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20090701_01593_EUR",
+            "issued": "01 Jul 2009",
+            "effective": "01 Jul 2009",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20090623_01526_EUR",
+            "issued": "23 Jun 2009",
+            "effective": "23 Jun 2009",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20090508_01078_EUR",
+            "issued": "08 May 2009",
+            "effective": "08 May 2009",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20090423_00946_EUR",
+            "issued": "23 Apr 2009",
+            "effective": "23 Apr 2009",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101224_03806_EUR",
+            "issued": "24 Dec 2010",
+            "effective": "27 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101223_03788_EUR",
+            "issued": "23 Dec 2010",
+            "effective": "24 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101221_03765_EUR",
+            "issued": "21 Dec 2010",
+            "effective": "23 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101220_03747_EUR",
+            "issued": "20 Dec 2010",
+            "effective": "22 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101216_03708_EUR",
+            "issued": "16 Dec 2010",
+            "effective": "20 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101214_03679_EUR",
+            "issued": "14 Dec 2010",
+            "effective": "16 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101210_03622_EUR",
+            "issued": "10 Dec 2010",
+            "effective": "13 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101208_03596_EUR",
+            "issued": "08 Dec 2010",
+            "effective": "10 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101207_03579_EUR",
+            "issued": "07 Dec 2010",
+            "effective": "09 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101206_03546_EUR",
+            "issued": "06 Dec 2010",
+            "effective": "07 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101201_03500_EUR",
+            "issued": "01 Dec 2010",
+            "effective": "02 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101130_03492_EUR",
+            "issued": "30 Nov 2010",
+            "effective": "02 Dec 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101126_03449_EUR",
+            "issued": "26 Nov 2010",
+            "effective": "29 Nov 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101125_03442_EUR",
+            "issued": "25 Nov 2010",
+            "effective": "29 Nov 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101123_03418_EUR",
+            "issued": "23 Nov 2010",
+            "effective": "25 Nov 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101119_03362_EUR",
+            "issued": "19 Nov 2010",
+            "effective": "23 Nov 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101119_03361_EUR",
+            "issued": "19 Nov 2010",
+            "effective": "22 Nov 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101118_03323_EUR",
+            "issued": "18 Nov 2010",
+            "effective": "19 Nov 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101027_03080_EUR",
+            "issued": "27 Oct 2010",
+            "effective": "29 Oct 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101026_03060_EUR",
+            "issued": "26 Oct 2010",
+            "effective": "28 Oct 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20101022_03020_EUR",
+            "issued": "22 Oct 2010",
+            "effective": "26 Oct 2010",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20100119_00163_EUR",
+            "issued": "19 Jan 2010",
+            "effective": "22 Jan 2010",
+            "type": "CE - Diverse announcement (Updated)"
+          },
+          {
+            "id": "AMS_20110128_00373_EUR",
+            "issued": "28 Jan 2011",
+            "effective": "01 Feb 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110110_00108_EUR",
+            "issued": "10 Jan 2011",
+            "effective": "12 Jan 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110104_00015_EUR",
+            "issued": "04 Jan 2011",
+            "effective": "05 Jan 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110222_00717_EUR",
+            "issued": "22 Feb 2011",
+            "effective": "24 Feb 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110214_00578_EUR",
+            "issued": "14 Feb 2011",
+            "effective": "15 Feb 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110209_00533_EUR",
+            "issued": "09 Feb 2011",
+            "effective": "11 Feb 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110208_00509_EUR",
+            "issued": "08 Feb 2011",
+            "effective": "10 Feb 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110330_01261_EUR",
+            "issued": "30 Mar 2011",
+            "effective": "31 Mar 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110311_00970_EUR",
+            "issued": "11 Mar 2011",
+            "effective": "14 Mar 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110302_00820_EUR",
+            "issued": "02 Mar 2011",
+            "effective": "04 Mar 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110404_01335_EUR",
+            "issued": "04 Apr 2011",
+            "effective": "05 Apr 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110404_01334_EUR",
+            "issued": "04 Apr 2011",
+            "effective": "05 Apr 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110531_02332_EUR",
+            "issued": "31 May 2011",
+            "effective": "01 Jun 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110520_02174_EUR",
+            "issued": "20 May 2011",
+            "effective": "24 May 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110513_02027_EUR",
+            "issued": "13 May 2011",
+            "effective": "17 May 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110622_02732_EUR",
+            "issued": "22 Jun 2011",
+            "effective": "23 Jun 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20110603_02413_EUR",
+            "issued": "03 Jun 2011",
+            "effective": "06 Jun 2011",
+            "type": "CE - Shares - Capital increase (Updated)"
+          },
+          {
+            "id": "AMS_20091130_03075_EUR",
+            "issued": "30 Nov 2009",
+            "effective": "30 Nov 2009",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20091030_02785_EUR",
+            "issued": "30 Oct 2009",
+            "effective": "30 Oct 2009",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20120920_06096_EUR",
+            "issued": "20 Sep 2012",
+            "effective": "24 Sep 2012",
+            "type": "CE - Diverse announcement"
+          },
+          {
+            "id": "AMS_20131023_04894_EUR",
+            "issued": "23 Oct 2013",
+            "effective": "24 Oct 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20131021_04842_EUR",
+            "issued": "21 Oct 2013",
+            "effective": "22 Oct 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20131120_05351_EUR",
+            "issued": "20 Nov 2013",
+            "effective": "21 Nov 2013",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20131230_05991_EUR",
+            "issued": "30 Dec 2013",
+            "effective": "02 Jan 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140624_03134_EUR",
+            "issued": "24 Jun 2014",
+            "effective": "26 Jun 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140613_02949_EUR",
+            "issued": "13 Jun 2014",
+            "effective": "16 Jun 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140430_02122_EUR",
+            "issued": "30 Apr 2014",
+            "effective": "02 May 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140404_01711_EUR",
+            "issued": "04 Apr 2014",
+            "effective": "08 Apr 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140128_00446_EUR",
+            "issued": "28 Jan 2014",
+            "effective": "01 Jan 1970",
+            "type": "CE - Diverse announcement"
+          },
+          {
+            "id": "AMS_20140127_00437_EUR",
+            "issued": "27 Jan 2014",
+            "effective": "01 Jan 1970",
+            "type": "CE - Diverse announcement"
+          },
+          {
+            "id": "AMS_20140930_04869_EUR",
+            "issued": "30 Sep 2014",
+            "effective": "02 Oct 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140904_04446_EUR",
+            "issued": "04 Sep 2014",
+            "effective": "08 Sep 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140827_04305_EUR",
+            "issued": "27 Aug 2014",
+            "effective": "29 Aug 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20140804_03874_EUR",
+            "issued": "04 Aug 2014",
+            "effective": "06 Aug 2014",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20160105_00043_EUR",
+            "issued": "05 Jan 2016",
+            "effective": "06 Jan 2016",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20150608_03972_EUR",
+            "issued": "08 Jun 2015",
+            "effective": "09 Jun 2015",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20150410_02513_EUR",
+            "issued": "10 Apr 2015",
+            "effective": "13 Apr 2015",
+            "type": "CE - Shares - Capital increase"
+          },
+          {
+            "id": "AMS_20150109_00186_EUR",
+            "issued": "09 Jan 2015",
+            "effective": "13 Jan 2015",
+            "type": "CE - Capital decrease"
+          },
+          {
+            "id": "AMS_20141230_06709_EUR",
+            "issued": "30 Dec 2014",
+            "effective": "02 Jan 2015",
+            "type": "CE - Shares - Capital increase"
+          }
+        ]
+      },
+      "resolutions": [],
+      "modelWindowSha256": "e7fee3a08ed062b411b31fd743376251f22aaaa9cc9bc39f69e422ddfbe0ec20"
     }
   }
 }

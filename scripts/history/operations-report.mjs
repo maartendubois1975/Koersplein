@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -6,7 +7,8 @@ import { historyAvailability, listingIdentity, validSessionDate } from '../../da
 import { validateHistoryDocument } from '../../chart.js';
 import { validateSnapshot } from '../cloudflare/archive-approved-session.mjs';
 import { inspectDailyBarIntegrity, mapConcurrent } from '../cloudflare/europe-run-policy.mjs';
-import { approvedCompanyUniverse, companyContracts } from './company-register.mjs';
+import { approvedCompanyUniverse, companyContracts, validateCompanyCatalog } from './company-register.mjs';
+import { operationalMarketIssues } from './market-definitions.mjs';
 import { providerRoute } from './source-policy.mjs';
 import { latestClosedSession, sessionCalendar, tradingCalendars } from './trading-calendar.mjs';
 import { auditStoredForecastInput } from '../research/forecast-input-review.mjs';
@@ -153,7 +155,28 @@ export async function operationsReport({ dataDir = 'data', now = new Date(), com
   for (const catalog of catalogs) markets.push(await reportMarket(catalog, dataDir, now, availability));
   const ledger = await json(join(dataDir, 'opportunity-ledger.json'));
   const contracts = await json(new URL('../../data/company-register-contracts.json', import.meta.url));
-  const previews = Object.entries(contracts.catalogPreviews || {}).map(([mic, row]) => ({ mic, companies: row.expectedCount }));
+  const previews = [];
+  for (const [mic, contract] of Object.entries(contracts.catalogPreviews || {})) {
+    const catalog = await json(join(dataDir, contract.file));
+    const blockers = catalog ? operationalMarketIssues(catalog, contract) : ['CATALOG_UNAVAILABLE'];
+    if (catalog) { try { validateCompanyCatalog(catalog, contract); }
+      catch { blockers.push('CATALOG_IDENTITY_MISMATCH'); } }
+    const counts = {};
+    for (const issue of blockers) counts[issue.split(' ')[0]] = (counts[issue.split(' ')[0]] || 0) + 1;
+    let sourceReview = null, sourceReviewError = null;
+    if (contract.sourceReview) {
+      try {
+        const raw = await fs.readFile(join(dataDir, contract.sourceReview.file));
+        if (createHash('sha256').update(raw).digest('hex') !== contract.sourceReview.sha256) throw Error('SOURCE_REVIEW_CHANGED');
+        const evidence = JSON.parse(raw);
+        if (evidence.approved !== catalog?.shares.length || !validSessionDate(evidence.session)) throw Error('SOURCE_REVIEW_IDENTITY_MISMATCH');
+        sourceReview = Object.fromEntries(['session', 'approved', 'observed', 'volumeMatches', 'lastTradeMatches',
+          'referenceCloseDifferences', 'definitionUnresolved'].map(key => [key, evidence[key]]));
+      } catch (error) { sourceReviewError = error.message; }
+    }
+    previews.push({ mic, companies: catalog?.shares?.length ?? null, expectedCompanies: contract.expectedCount,
+      operational: blockers.length === 0, admissionBlockers: counts, sourceReview, sourceReviewError });
+  }
   for (const row of ledger ?? []) if (row.recordHash) verifyOpportunity(row);
   return { schemaVersion: 1, generatedAt: now.toISOString(), commit, buildCheck, markets, previews,
     predictions: ledger && opportunityScoreboard(ledger, Object.keys(companyContracts)) };

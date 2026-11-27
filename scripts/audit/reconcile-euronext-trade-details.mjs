@@ -18,11 +18,17 @@ export function reconcileTradeDetails(audit, official) {
       const expected = { open: trades.first?.price, high: trades.high, low: trades.low, close: trades.last?.price, volume: trades.totalVolume };
       for (const field of Object.keys(expected)) if (bar[field] !== expected[field]) differences.push(field);
     }
+    const hasLast = Number.isFinite(bar?.lastTradePrice) && bar.lastTradePrice > 0;
+    const lastMatches = trades && hasLast ? trades.lastCandidatePrices.includes(bar.lastTradePrice) : null;
+    const executionMatches = lastMatches === true && !differences.some(field => field !== 'close') && !trades.modifications && !integrity.conflicts.length;
     return { isin: share.isin, mic: share.primaryMic, symbol: share.symbol, currency: share.currency,
       status: !trades ? (bar?.volume === 0 ? 'ZERO_VOLUME_WITHOUT_TAPE' : 'UNCONFIRMED') :
         !bar ? 'OFFICIAL_BAR_ABSENT' : trades.modifications ? 'TRADE_MODIFICATIONS_REQUIRE_REVIEW' :
         integrity.conflicts.length ? 'OFFICIAL_OHLC_INVALID' : differences.length ? 'DEFINITION_REVIEW' :
         trades.lastCandidatePrices.length > 1 ? 'MATCH_WITH_AMBIGUOUS_LAST_TRADE_ORDER' : 'EXACT_MATCH',
+      lastTradeMatches: lastMatches, executionMatches,
+      definitionStatus: !trades ? 'NO_EXECUTION_TO_COMPARE' : !hasLast ? 'OFFICIAL_LAST_NOT_OBSERVED' :
+        !executionMatches ? 'SOURCE_CONFLICT' : bar.close !== bar.lastTradePrice ? 'OFFICIAL_REFERENCE_DISTINCT_FROM_LAST' : 'OFFICIAL_REFERENCE_EQUALS_LAST',
       differences, official: bar, trades: trades || null,
       volumeMatches: trades && bar ? bar.volume === trades.totalVolume : null,
       officialIntegrityIssues: integrity?.conflicts || [],
@@ -31,7 +37,9 @@ export function reconcileTradeDetails(audit, official) {
   const statuses = {};
   for (const row of listings) statuses[row.status] = (statuses[row.status] || 0) + 1;
   return { session: audit.session, approved: audit.approved, observed: audit.observed,
-    statuses, volumeMatches: listings.filter(row => row.volumeMatches).length,
+    statuses, lastTradeMatches: listings.filter(row => row.lastTradeMatches).length,
+    referenceCloseDifferences: listings.filter(row => row.definitionStatus === 'OFFICIAL_REFERENCE_DISTINCT_FROM_LAST').length,
+    definitionUnresolved: listings.filter(row => row.trades && !row.executionMatches).length, volumeMatches: listings.filter(row => row.volumeMatches).length,
     volumeDifferences: listings.filter(row => row.volumeMatches === false).length,
     publicationApproved: false, listings };
 }
