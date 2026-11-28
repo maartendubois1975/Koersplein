@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "ES0105590006",
+    "mic": "XMLI",
+    "symbol": "MLIFS",
+    "name": "IMPULSE FITNESS",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "retained-approved-archive",
+    "role": "reviewed-retained-history",
+    "metadata": {
+      "originalProvider": "euronext-live",
+      "originalRetrievedAt": "2026-10-17 08:35:16",
+      "retainedObservedAt": "2026-11-28T06:23:28.366Z",
+      "sourceUrl": "https://koersplein.maarten-dubois1975.workers.dev/api/history/XMLI:ES0105590006",
+      "sourceSha256": "6cad28c600742ffd8539f13b74ee2438fa998ebb13c912745752fedea36823e5",
+      "evidenceSha256": "8a53cb2a30150d852b97c37acb5a78bf3451b73bdaa6a7b4992067d265677dc7",
+      "priceBasis": "UNVERIFIED",
+      "completenessEvidenceVerified": false,
+      "backfillComplete": false
+    },
+    "licenseNote": "Provider- en herdistributierechten moeten voor productie afzonderlijk worden vastgesteld."
+  },
+  "coverage": {
+    "firstDate": "2024-12-02",
+    "lastDate": "2026-02-18",
+    "recordCount": 4,
+    "records": 4
+  },
+  "bars": [
+    {
+      "date": "2024-12-02",
+      "open": 7,
+      "high": 7,
+      "low": 7,
+      "close": 7,
+      "volume": 22,
+      "adjustedClose": 7
+    },
+    {
+      "date": "2026-01-22",
+      "open": 7.5,
+      "high": 7.5,
+      "low": 7.5,
+      "close": 7.5,
+      "volume": 1,
+      "adjustedClose": 7.5
+    },
+    {
+      "date": "2026-02-03",
+      "open": 7,
+      "high": 7,
+      "low": 7,
+      "close": 7,
+      "volume": 1,
+      "adjustedClose": 7
+    },
+    {
+      "date": "2026-02-18",
+      "open": 7,
+      "high": 7,
+      "low": 7,
+      "close": 7,
+      "volume": 50,
+      "adjustedClose": 7
+    }
+  ]
+}

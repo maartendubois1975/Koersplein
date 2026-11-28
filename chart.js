@@ -1,4 +1,11 @@
+import { inspectDailyBarIntegrity } from './scripts/cloudflare/europe-run-policy.mjs';
 const DAY = 86_400_000;
+export function tradedHistoryRows(rows) {
+  const dates = rows.map(row => row.date).sort();
+  if (!dates.length) return { bars: [], excluded: 0, conflicts: [] };
+  const checked = inspectDailyBarIntegrity({ bars: rows }, { startDate: dates[0], endDate: dates.at(-1) });
+  return { ...checked, excluded: rows.length - checked.bars.length };
+}
 const PERIODS = { '1M': 1, '3M': 3, '6M': 6, '1J': 12, '3J': 36, '5J': 60, '10J': 120, MAX: null };
 
 const validDate = date => typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(Date.parse(date)) && new Date(date+'T00:00:00Z').toISOString().slice(0,10) === date;

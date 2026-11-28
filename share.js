@@ -1,5 +1,5 @@
 import {approvedMarkets,browserCatalog,browserMarkets,dailyRow,dailyHistoryPath,dailyState,dailyStateLabel,listingForRequest,previousConfirmedBar,historyAvailability,historyAvailabilityText} from './daily-session-view.mjs';
-import { renderHistoryChart, validateHistoryDocument, periodStartDate, mergeChartHistoryBars } from './chart.js';
+import { renderHistoryChart, validateHistoryDocument, periodStartDate, mergeChartHistoryBars, tradedHistoryRows } from './chart.js';
 import { manifestResolver } from './market-week-core.mjs';
 import { assessPeriod, latestCloseChange } from './scripts/research/amsterdam-period-quality.mjs';
 const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
@@ -76,7 +76,11 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
    h={...h,bars:merged,coverage:{...h.coverage,records:merged.length,firstDate:merged[0].date,lastDate:merged.at(-1).date}};
   }
   if(h.coverage?.recordCount!=null&&h.coverage.records==null)h.coverage.records=h.coverage.recordCount;
-  const bars=validateHistoryDocument(h,{...share,isin:storageId,mic,symbol:share.symbol||share.ticker}),first=bars[0],last=bars.at(-1),currency=h.instrument?.currency||market.currency||'EUR';
+  const validated=validateHistoryDocument(h,{...share,isin:storageId,mic,symbol:share.symbol||share.ticker});
+  const executed=tradedHistoryRows(h.bars),dates=new Set(executed.bars.map(bar=>bar.date));
+  const bars=validated.filter(bar=>dates.has(bar.date));
+  if(!bars.length)throw Error('De opgeslagen reeks bevat geen complete handelsdagen met positief volume');
+  const first=bars[0],last=bars.at(-1),currency=h.instrument?.currency||market.currency||'EUR';
   document.querySelector('#history-range').textContent=`${first.date} — ${last.date}`;renderHistoryChart(historyState,bars,{currency});
   let amsterdamQuality=null;
   {
@@ -99,6 +103,7 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
    historyState.querySelector('.periods')?.addEventListener('click',()=>queueMicrotask(explain));
   }
   const p=document.createElement('p');p.className='history-source';p.textContent=`${bars.length.toLocaleString('nl-NL')} opgeslagen dagrecords (structurele broncontrole) · ${first.date} t/m ${last.date}`;historyState.append(p);
+  if(executed.excluded){const note=document.createElement('p');note.className='history-source';note.textContent=`${executed.excluded.toLocaleString('nl-NL')} referentie- of onvolledige bronregels niet als handelsdagen getekend. De oorspronkelijke brongegevens blijven bewaard.`;historyState.append(note);}
   const previous=bars.length>1?bars.at(-2):null;
   // Suppress a latest close-to-close percentage if a discontinuity is not verified.
   const change=latestCloseChange(bars,amsterdamQuality);
@@ -112,6 +117,11 @@ Promise.all([load('data/markets.json'),load('data/runtime-config.json').catch(()
    ? await load('data/history-availability.json').catch(()=>null) : null;
   const note=historyAvailabilityText(historyAvailability(availability,{isin:share.isin,mic,symbol:share.symbol||share.ticker}));
   if(note)fail(note,'Geen volledige koersgegevens gevonden');
-  else fail(e.message+'.');
+  else {
+   const retained=await load('data/retained-history-review.json').catch(()=>null);
+   const review=retained?.companies?.find(row=>row.isin===share.isin&&row.mic===mic&&row.symbol===(share.symbol||share.ticker));
+   if(review?.status==='NO_COMPLETE_RETAINED_TRADES')fail(`De bestaande opslag bevat ${review.rawRecords} bronregels, waarvan ${review.zeroVolumeRows} zonder verhandeld volume, en geen complete handelsdag. Een referentieprijs wordt niet als handelskoers getoond.`,'Geen bevestigde handelskoersen');
+   else fail(e.message+'.');
+  }
  }
 }).catch(e=>{detail.innerHTML=`<div><p class="eyebrow">Niet beschikbaar</p><h1>${esc(e.message)}</h1></div>`;fail('Aandeelgegevens konden niet worden geladen')});

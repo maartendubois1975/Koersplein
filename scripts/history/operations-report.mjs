@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { historyAvailability, listingIdentity, validSessionDate } from '../../daily-session-view.mjs';
+import { historyAvailability, listingIdentity, validSessionDate, sessionSnapshotAt } from '../../daily-session-view.mjs';
 import { validateHistoryDocument } from '../../chart.js';
 import { validateSnapshot } from '../cloudflare/archive-approved-session.mjs';
 import { inspectDailyBarIntegrity, mapConcurrent } from '../cloudflare/europe-run-policy.mjs';
@@ -70,7 +70,7 @@ async function reportMarket(catalog, dataDir, now, availability, reviews) {
     const date = name.slice(0, -5);
     if (!name.endsWith('.json') || !validSessionDate(date) || date > closed) continue;
     try {
-      const snapshot = validateSnapshot(await json(join(archiveDir, name)), catalog, mic);
+      const snapshot = sessionSnapshotAt(validateSnapshot(await json(join(archiveDir, name)), catalog, mic), now);
       if (snapshot.session !== date || !sessionCalendar(mic, date).open) throw Error('INVALID_ARCHIVE_SESSION');
       archived.set(date, new Map(snapshot.results.map(row => [row.isin, row])));
     } catch (error) { readErrors.push({ date, reason: error.message }); }
@@ -80,7 +80,7 @@ async function reportMarket(catalog, dataDir, now, availability, reviews) {
     const snapshot = await json(join(dataDir, 'daily-session-' + mic + '.json'));
     if (snapshot) {
       if (!archived.has(snapshot.session)) throw Error('PUBLISHED_ARCHIVE_SESSION_MISSING');
-      latest = validateSnapshot(snapshot, catalog, mic);
+      latest = sessionSnapshotAt(validateSnapshot(snapshot, catalog, mic), now);
     }
   } catch (error) { readErrors.push({ reason: error.message }); }
 
@@ -168,6 +168,14 @@ export async function operationsReport({ dataDir = 'data', now = new Date(), com
   const storedRecovery = await json(join(dataDir, 'history-recovery-status.json'));
   const historyRecovery = storedRecovery?.schemaVersion === 1 && new Date(storedRecovery.performedAt) <= now
     ? storedRecovery : null;
+  const retainedReview = await json(join(dataDir, 'retained-history-review.json'));
+  const retainedHistoryReview = retainedReview?.schemaVersion === 1 && new Date(retainedReview.performedAt) <= now ? retainedReview : null;
+  const sessionReview = await json(join(dataDir, 'session-evidence-review-status.json'));
+  const sessionEvidenceReview = sessionReview?.schemaVersion === 1 && new Date(sessionReview.performedAt) <= now ? sessionReview : null;
+  for (const market of markets) for (const company of market.companies) {
+    const source = retainedHistoryReview?.companies.find(row => row.storageKey === company.storageKey);
+    if (source) company.retainedReview = Object.fromEntries(['status', 'rawRecords', 'completeOhlcv', 'excludedRows', 'sourceSha256'].map(key => [key, source[key] ?? null]));
+  }
   const archiveWriter = await json(join(dataDir, '.archive-writer-lock', 'owner.json'));
   const forecastSourceRefresh = storedRefresh?.schemaVersion === 1 && validSessionDate(storedRefresh.cutoff) &&
     Array.isArray(storedRefresh.results) && new Date(storedRefresh.finishedAt) <= now &&
@@ -197,7 +205,7 @@ export async function operationsReport({ dataDir = 'data', now = new Date(), com
   }
   for (const row of ledger ?? []) if (row.recordHash) verifyOpportunity(row);
   return { schemaVersion: 1, generatedAt: now.toISOString(), commit, buildCheck, markets, previews, forecastSourceRefresh,
-    historyRecovery, archiveWriter,
+    historyRecovery, archiveWriter, retainedHistoryReview, sessionEvidenceReview,
     predictions: ledger && opportunityScoreboard(ledger, Object.keys(companyContracts)),
     predictionRecords: (ledger ?? []).filter(row => row.recordHash && !row.legacyUnverified).map(row => ({
       ...Object.fromEntries(['market', 'name', 'isin', 'ticker', 'recordHash', 'createdAt', 'referenceDate',

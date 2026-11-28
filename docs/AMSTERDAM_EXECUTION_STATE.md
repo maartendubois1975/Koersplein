@@ -345,3 +345,48 @@ geplande publicatie worden apart in de oplevering vermeld. Main, productie en
 Cloudflare zijn ongemoeid gelaten; geen handmatige import/deploy of extra dienst.
 Ontwerp, bewijs, beperkingen en rollback:
 [Historische dekking en herstel](HISTORY_RECOVERY_BLOCK_2026-11-28.md).
+
+## 2026-11-28 — Parijse bronnen, begrensde sessiereviews en volledige Oslo-identiteiten
+
+Basis ae1c736. De bestaande opslag is read-only onderzocht voor 85 ontbrekende
+Parijse lokale reeksen. 57 exacte manifestkoppelingen, 54 met 36.479 complete
+positieve OHLCV-regels, drie uitsluitend nulvolume, 28 eerder onderzochte
+brongevallen. De 54 zijn werkelijk in de centrale historie hersteld; alle 896
+vooraf aanwezige JSON-archiefbestanden zijn bytegelijk gebleven. De volledige
+oorspronkelijke bronwaarnemingen zijn in gehasht bewijs bewaard. Nieuwe reeksen
+blijven ongeschikt voor modeltoelating totdat prijsbasis en corporate actions
+afzonderlijk zijn bewezen. Grafieken tekenen geen nulvolume-/onvolledige
+referenties als handelsdagen. Beursweergave heeft 55 extra echte oudere
+lastConfirmedBar-velden gekregen, zonder nieuwe handel te verzinnen.
+
+126 oudere onbevestigde sessies zijn door de bestaande archiver verbeterd met
+later opgeslagen officieel bewijs binnen zeven dagen: XAMS 1, XBRU 11, XPAR 114.
+Alle oorspronkelijke onbevestigde records en alle 9.449 bevestigde besluiten
+blijven bewaard. knownAt/beoordelingsdatum voorkomt vooraf bekende schijnkennis;
+de gedeelde as-of-projectie gebruikt vóór die datum het oorspronkelijke record.
+Koersen en de gehele voorspellingsledger zijn onveranderd. Herhaling en negatieve
+bewijsproeven slagen. 111 opgeslagen sessies en zes gevallen op de laatste
+sessie blijven onbevestigd. De zes verse bronproeven zijn expliciet geen bewijs
+voor afsluiting. Geen handmatige workflow of collector gestart.
+
+Parijs heeft nu 633/664 lokale reeksen; actieve vijf samen 420.819 complete
+unieke bedrijf/dagen. Geen volledige-historie- of totaalrendementclaim.
+De 31 resterende gevallen zijn 28 bestaande brongevallen plus AROCA DEL PINAR,
+IGIS NEPTUNE en STUDENT PROPERTY met alleen referenties zonder volume.
+
+Oslo: de actuele officiële 292-regellijst matcht alle 244 geselecteerde
+identiteiten. Het RomReal-prospectus verbindt het met spaties gedrukte ISIN
+deterministisch aan registratie 37382 en daarmee de actuele GLEIF-LEI.
+244 unieke uitgevers, nul dubbele LEI's. Nieuwe cataloguspreview gebruikt de
+bestaande centrale toelatingscontrole. Geen actieve registertoelating: dagelijkse
+bronroute en gratis openbare rechten blijven onvolledig. Milaan blijft op de
+bestaande rechtenblokkade. Alpha Vantage/Twelve Data/Stooq/Borsa-alternatieven
+leveren geen bewezen onvoorwaardelijke gratis route op; geen betaalde verplichting.
+
+Hoofdtests, codeaudit, historietests, Paris-selectie en 22 researchtests geslaagd;
+aanvullende echte bron-/opslag-/grafiek-/statusketen en temporele tests ook.
+Render stond bij controle nog op b3e2cb2. GitHub-commit, onafhankelijke CI en
+nog niet uitgevoerde geplande publicatie worden in de oplevering apart benoemd.
+Actieve registers 899, prijsbronnen, modelregels, main, productie en Cloudflare
+ongewijzigd. Geen handmatige deployment of nieuwe dienst. Ontwerp, grenzen,
+bronbesluit en rollback: [Parijs en Oslo](PARIS_OSLO_EVIDENCE_BLOCK_2026-11-28.md).

@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0014003FN0",
+    "mic": "XMLI",
+    "symbol": "MLVIE",
+    "name": "INTEGRITAS VIAGER",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "retained-approved-archive",
+    "role": "reviewed-retained-history",
+    "metadata": {
+      "originalProvider": "yahoo-chart",
+      "originalRetrievedAt": "2026-10-17 08:35:21",
+      "retainedObservedAt": "2026-11-28T06:23:28.366Z",
+      "sourceUrl": "https://koersplein.maarten-dubois1975.workers.dev/api/history/XMLI:FR0014003FN0",
+      "sourceSha256": "64a001c4b845304e07d81a8d89e2c9bd38704b81cfd4415c31cefd5809785c18",
+      "evidenceSha256": "8a53cb2a30150d852b97c37acb5a78bf3451b73bdaa6a7b4992067d265677dc7",
+      "priceBasis": "UNVERIFIED",
+      "completenessEvidenceVerified": false,
+      "backfillComplete": false
+    },
+    "licenseNote": "Provider- en herdistributierechten moeten voor productie afzonderlijk worden vastgesteld."
+  },
+  "coverage": {
+    "firstDate": "2021-12-28",
+    "lastDate": "2026-08-17",
+    "recordCount": 7,
+    "records": 7
+  },
+  "bars": [
+    {
+      "date": "2021-12-28",
+      "open": 116,
+      "high": 116,
+      "low": 116,
+      "close": 116,
+      "volume": 1,
+      "adjustedClose": 116
+    },
+    {
+      "date": "2022-01-05",
+      "open": 116,
+      "high": 116,
+      "low": 116,
+      "close": 116,
+      "volume": 5,
+      "adjustedClose": 116
+    },
+    {
+      "date": "2022-01-28",
+      "open": 118,
+      "high": 118,
+      "low": 118,
+      "close": 118,
+      "volume": 10,
+      "adjustedClose": 118
+    },
+    {
+      "date": "2022-05-18",
+      "open": 120,
+      "high": 120,
+      "low": 120,
+      "close": 120,
+      "volume": 2,
+      "adjustedClose": 120
+    },
+    {
+      "date": "2023-03-27",
+      "open": 126,
+      "high": 126,
+      "low": 126,
+      "close": 126,
+      "volume": 4,
+      "adjustedClose": 126
+    },
+    {
+      "date": "2023-08-14",
+      "open": 115,
+      "high": 115,
+      "low": 115,
+      "close": 115,
+      "volume": 2,
+      "adjustedClose": 115
+    },
+    {
+      "date": "2026-08-17",
+      "open": 120,
+      "high": 120,
+      "low": 120,
+      "close": 120,
+      "volume": 2,
+      "adjustedClose": 120
+    }
+  ]
+}

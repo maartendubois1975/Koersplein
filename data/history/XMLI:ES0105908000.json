@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "ES0105908000",
+    "mic": "XMLI",
+    "symbol": "MLINA",
+    "name": "INMOLECULE",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "retained-approved-archive",
+    "role": "reviewed-retained-history",
+    "metadata": {
+      "originalProvider": "yahoo-chart",
+      "originalRetrievedAt": "2026-10-17 08:35:18",
+      "retainedObservedAt": "2026-11-28T06:23:28.366Z",
+      "sourceUrl": "https://koersplein.maarten-dubois1975.workers.dev/api/history/XMLI:ES0105908000",
+      "sourceSha256": "dcd77332566d96bd311eadae3d27294114585905e728ae57569f96db6a83533d",
+      "evidenceSha256": "8a53cb2a30150d852b97c37acb5a78bf3451b73bdaa6a7b4992067d265677dc7",
+      "priceBasis": "UNVERIFIED",
+      "completenessEvidenceVerified": false,
+      "backfillComplete": false
+    },
+    "licenseNote": "Provider- en herdistributierechten moeten voor productie afzonderlijk worden vastgesteld."
+  },
+  "coverage": {
+    "firstDate": "2025-10-16",
+    "lastDate": "2026-10-02",
+    "recordCount": 12,
+    "records": 12
+  },
+  "bars": [
+    {
+      "date": "2025-10-16",
+      "open": 3.9800000190734863,
+      "high": 3.9800000190734863,
+      "low": 3.9800000190734863,
+      "close": 3.9800000190734863,
+      "volume": 132,
+      "adjustedClose": 3.9800000190734863
+    },
+    {
+      "date": "2025-10-21",
+      "open": 3.9800000190734863,
+      "high": 3.9800000190734863,
+      "low": 3.9800000190734863,
+      "close": 3.9800000190734863,
+      "volume": 40,
+      "adjustedClose": 3.9800000190734863
+    },
+    {
+      "date": "2025-10-24",
+      "open": 3.9800000190734863,
+      "high": 3.9800000190734863,
+      "low": 3.9800000190734863,
+      "close": 3.9800000190734863,
+      "volume": 10,
+      "adjustedClose": 3.9800000190734863
+    },
+    {
+      "date": "2025-10-29",
+      "open": 3.9800000190734863,
+      "high": 3.9800000190734863,
+      "low": 3.9800000190734863,
+      "close": 3.9800000190734863,
+      "volume": 603,
+      "adjustedClose": 3.9800000190734863
+    },
+    {
+      "date": "2026-05-13",
+      "open": 3.9800000190734863,
+      "high": 3.9800000190734863,
+      "low": 3.9800000190734863,
+      "close": 3.9800000190734863,
+      "volume": 10,
+      "adjustedClose": 3.9800000190734863
+    },
+    {
+      "date": "2026-05-28",
+      "open": 4.079999923706055,
+      "high": 4.079999923706055,
+      "low": 4.079999923706055,
+      "close": 4.079999923706055,
+      "volume": 491,
+      "adjustedClose": 4.079999923706055
+    },
+    {
+      "date": "2026-06-10",
+      "open": 4.079999923706055,
+      "high": 4.079999923706055,
+      "low": 4.079999923706055,
+      "close": 4.079999923706055,
+      "volume": 110,
+      "adjustedClose": 4.079999923706055
+    },
+    {
+      "date": "2026-06-22",
+      "open": 4.079999923706055,
+      "high": 4.079999923706055,
+      "low": 4.079999923706055,
+      "close": 4.079999923706055,
+      "volume": 100,
+      "adjustedClose": 4.079999923706055
+    },
+    {
+      "date": "2026-08-17",
+      "open": 4.079999923706055,
+      "high": 4.079999923706055,
+      "low": 4.079999923706055,
+      "close": 4.079999923706055,
+      "volume": 100,
+      "adjustedClose": 4.079999923706055
+    },
+    {
+      "date": "2026-09-14",
+      "open": 4.079999923706055,
+      "high": 4.079999923706055,
+      "low": 4.079999923706055,
+      "close": 4.079999923706055,
+      "volume": 100,
+      "adjustedClose": 4.079999923706055
+    },
+    {
+      "date": "2026-09-30",
+      "open": 3.9800000190734863,
+      "high": 3.9800000190734863,
+      "low": 3.9800000190734863,
+      "close": 3.9800000190734863,
+      "volume": 1,
+      "adjustedClose": 3.9800000190734863
+    },
+    {
+      "date": "2026-10-02",
+      "open": 3.9800000190734863,
+      "high": 3.9800000190734863,
+      "low": 3.9800000190734863,
+      "close": 3.9800000190734863,
+      "volume": 9,
+      "adjustedClose": 3.9800000190734863
+    }
+  ]
+}

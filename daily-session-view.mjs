@@ -76,6 +76,25 @@ export function dailyStateLabel(row){
  return 'Koers niet bevestigd';
 }
 
+// A retrospective status decision is not knowledge available on its trade date.
+// Keep the original observation usable for an explicitly earlier as-of query.
+export function sessionSnapshotAt(snapshot, asOf) {
+ const cutoff=new Date(asOf).getTime();if(!Number.isFinite(cutoff))throw Error('INVALID_SESSION_EVIDENCE_AS_OF');
+ let changed=false;
+ const results=snapshot.results.map(row=>{
+  if(row.evidence?.scope!=='RETROSPECTIVE_SESSION_STATUS_ONLY')return row;
+  const known=Date.parse(row.evidence.knownAt);
+  if(!Number.isFinite(known)||known>cutoff){
+   if(!row.priorUnverifiedEvidence)throw Error('RETROSPECTIVE_SESSION_ORIGINAL_MISSING');
+   changed=true;return row.priorUnverifiedEvidence;
+  }
+  return row;
+ });
+ if(!changed)return snapshot;
+ const counts={};for(const row of results)counts[row.status]=(counts[row.status]??0)+1;
+ return {...snapshot,results,counts};
+}
+
 export function historyAvailability(document, identity) {
  const key=identity.mic+':'+identity.isin;
  const row=document?.schemaVersion===1?document.instruments?.[key]:null;

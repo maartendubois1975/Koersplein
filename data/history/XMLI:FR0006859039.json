@@ -1,0 +1,799 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0006859039",
+    "mic": "XMLI",
+    "symbol": "MLIPP",
+    "name": "IMM.PARIS.PERLE",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "retained-approved-archive",
+    "role": "reviewed-retained-history",
+    "metadata": {
+      "originalProvider": "yahoo-chart",
+      "originalRetrievedAt": "2026-10-17 08:35:13",
+      "retainedObservedAt": "2026-11-28T06:23:28.366Z",
+      "sourceUrl": "https://koersplein.maarten-dubois1975.workers.dev/api/history/XMLI:FR0006859039",
+      "sourceSha256": "b96d5a634de59722078063f7a1ab60dfe01f1126f76bcee886e473cf5971eef8",
+      "evidenceSha256": "8a53cb2a30150d852b97c37acb5a78bf3451b73bdaa6a7b4992067d265677dc7",
+      "priceBasis": "UNVERIFIED",
+      "completenessEvidenceVerified": false,
+      "backfillComplete": false
+    },
+    "licenseNote": "Provider- en herdistributierechten moeten voor productie afzonderlijk worden vastgesteld."
+  },
+  "coverage": {
+    "firstDate": "2000-11-24",
+    "lastDate": "2026-09-28",
+    "recordCount": 85,
+    "records": 85
+  },
+  "bars": [
+    {
+      "date": "2000-11-24",
+      "open": 90,
+      "high": 90,
+      "low": 90,
+      "close": 90,
+      "volume": 10,
+      "adjustedClose": 58.37837600708008
+    },
+    {
+      "date": "2000-12-29",
+      "open": 90.05000305175781,
+      "high": 90.05000305175781,
+      "low": 90.05000305175781,
+      "close": 90.05000305175781,
+      "volume": 32,
+      "adjustedClose": 58.41080856323242
+    },
+    {
+      "date": "2001-12-14",
+      "open": 90,
+      "high": 90,
+      "low": 90,
+      "close": 90,
+      "volume": 1,
+      "adjustedClose": 58.37837600708008
+    },
+    {
+      "date": "2002-01-16",
+      "open": 81,
+      "high": 81,
+      "low": 81,
+      "close": 81,
+      "volume": 12,
+      "adjustedClose": 52.5405387878418
+    },
+    {
+      "date": "2002-03-28",
+      "open": 75,
+      "high": 75,
+      "low": 75,
+      "close": 75,
+      "volume": 1,
+      "adjustedClose": 48.64864730834961
+    },
+    {
+      "date": "2003-07-29",
+      "open": 99,
+      "high": 99,
+      "low": 99,
+      "close": 99,
+      "volume": 50,
+      "adjustedClose": 64.21621704101562
+    },
+    {
+      "date": "2003-08-08",
+      "open": 119.0999984741211,
+      "high": 119.0999984741211,
+      "low": 119.0999984741211,
+      "close": 119.0999984741211,
+      "volume": 10,
+      "adjustedClose": 77.2540512084961
+    },
+    {
+      "date": "2003-08-18",
+      "open": 120,
+      "high": 120,
+      "low": 120,
+      "close": 120,
+      "volume": 10,
+      "adjustedClose": 77.83783721923828
+    },
+    {
+      "date": "2003-08-22",
+      "open": 130.10000610351562,
+      "high": 130.10000610351562,
+      "low": 130.10000610351562,
+      "close": 130.10000610351562,
+      "volume": 5,
+      "adjustedClose": 84.38919067382812
+    },
+    {
+      "date": "2003-09-11",
+      "open": 130,
+      "high": 130,
+      "low": 130,
+      "close": 130,
+      "volume": 1,
+      "adjustedClose": 84.3243179321289
+    },
+    {
+      "date": "2003-11-25",
+      "open": 205,
+      "high": 205,
+      "low": 205,
+      "close": 205,
+      "volume": 40,
+      "adjustedClose": 132.97296142578125
+    },
+    {
+      "date": "2003-12-02",
+      "open": 206,
+      "high": 206,
+      "low": 206,
+      "close": 206,
+      "volume": 1,
+      "adjustedClose": 133.62161254882812
+    },
+    {
+      "date": "2003-12-03",
+      "open": 206.10000610351562,
+      "high": 206.10000610351562,
+      "low": 206.10000610351562,
+      "close": 206.10000610351562,
+      "volume": 4,
+      "adjustedClose": 133.6864776611328
+    },
+    {
+      "date": "2004-01-27",
+      "open": 300,
+      "high": 300,
+      "low": 300,
+      "close": 300,
+      "volume": 19,
+      "adjustedClose": 194.59458923339844
+    },
+    {
+      "date": "2004-02-16",
+      "open": 300,
+      "high": 300,
+      "low": 300,
+      "close": 300,
+      "volume": 50,
+      "adjustedClose": 194.59458923339844
+    },
+    {
+      "date": "2004-10-08",
+      "open": 270,
+      "high": 270,
+      "low": 270,
+      "close": 270,
+      "volume": 24,
+      "adjustedClose": 175.1351318359375
+    },
+    {
+      "date": "2004-10-11",
+      "open": 297,
+      "high": 297,
+      "low": 297,
+      "close": 297,
+      "volume": 5,
+      "adjustedClose": 192.6486358642578
+    },
+    {
+      "date": "2005-02-25",
+      "open": 250,
+      "high": 250,
+      "low": 250,
+      "close": 250,
+      "volume": 5,
+      "adjustedClose": 162.1621551513672
+    },
+    {
+      "date": "2005-03-17",
+      "open": 250,
+      "high": 250,
+      "low": 250,
+      "close": 250,
+      "volume": 49,
+      "adjustedClose": 162.1621551513672
+    },
+    {
+      "date": "2005-06-02",
+      "open": 275,
+      "high": 275,
+      "low": 275,
+      "close": 275,
+      "volume": 25,
+      "adjustedClose": 178.3783721923828
+    },
+    {
+      "date": "2005-06-09",
+      "open": 270,
+      "high": 270,
+      "low": 270,
+      "close": 270,
+      "volume": 25,
+      "adjustedClose": 175.1351318359375
+    },
+    {
+      "date": "2005-06-15",
+      "open": 270,
+      "high": 270,
+      "low": 270,
+      "close": 270,
+      "volume": 15,
+      "adjustedClose": 175.1351318359375
+    },
+    {
+      "date": "2005-06-16",
+      "open": 270.29998779296875,
+      "high": 270.29998779296875,
+      "low": 270.29998779296875,
+      "close": 270.29998779296875,
+      "volume": 10,
+      "adjustedClose": 175.3297119140625
+    },
+    {
+      "date": "2005-06-20",
+      "open": 325,
+      "high": 325,
+      "low": 325,
+      "close": 325,
+      "volume": 29,
+      "adjustedClose": 210.81080627441406
+    },
+    {
+      "date": "2005-06-21",
+      "open": 330,
+      "high": 330,
+      "low": 330,
+      "close": 330,
+      "volume": 50,
+      "adjustedClose": 214.05404663085938
+    },
+    {
+      "date": "2005-06-22",
+      "open": 350,
+      "high": 350,
+      "low": 350,
+      "close": 350,
+      "volume": 100,
+      "adjustedClose": 227.0270233154297
+    },
+    {
+      "date": "2005-08-05",
+      "open": 300,
+      "high": 300,
+      "low": 300,
+      "close": 300,
+      "volume": 25,
+      "adjustedClose": 194.59458923339844
+    },
+    {
+      "date": "2006-04-25",
+      "open": 305.1000061035156,
+      "high": 305.1000061035156,
+      "low": 305.1000061035156,
+      "close": 305.1000061035156,
+      "volume": 2,
+      "adjustedClose": 197.90269470214844
+    },
+    {
+      "date": "2006-05-29",
+      "open": 335,
+      "high": 335,
+      "low": 335,
+      "close": 335,
+      "volume": 27,
+      "adjustedClose": 217.2972869873047
+    },
+    {
+      "date": "2006-05-30",
+      "open": 350,
+      "high": 350,
+      "low": 350,
+      "close": 350,
+      "volume": 1,
+      "adjustedClose": 227.0270233154297
+    },
+    {
+      "date": "2006-06-07",
+      "open": 350,
+      "high": 350,
+      "low": 350,
+      "close": 350,
+      "volume": 2,
+      "adjustedClose": 227.0270233154297
+    },
+    {
+      "date": "2006-06-12",
+      "open": 350,
+      "high": 350,
+      "low": 350,
+      "close": 350,
+      "volume": 3,
+      "adjustedClose": 227.0270233154297
+    },
+    {
+      "date": "2006-09-07",
+      "open": 340,
+      "high": 340,
+      "low": 340,
+      "close": 340,
+      "volume": 30,
+      "adjustedClose": 220.54052734375
+    },
+    {
+      "date": "2006-10-05",
+      "open": 307,
+      "high": 307,
+      "low": 307,
+      "close": 307,
+      "volume": 15,
+      "adjustedClose": 199.1351318359375
+    },
+    {
+      "date": "2006-10-11",
+      "open": 370.1000061035156,
+      "high": 370.1000061035156,
+      "low": 370,
+      "close": 370,
+      "volume": 3,
+      "adjustedClose": 239.99998474121094
+    },
+    {
+      "date": "2006-10-12",
+      "open": 371,
+      "high": 371,
+      "low": 371,
+      "close": 371,
+      "volume": 25,
+      "adjustedClose": 240.6486358642578
+    },
+    {
+      "date": "2006-10-16",
+      "open": 340,
+      "high": 340,
+      "low": 340,
+      "close": 340,
+      "volume": 5,
+      "adjustedClose": 220.54052734375
+    },
+    {
+      "date": "2007-06-27",
+      "open": 370,
+      "high": 370,
+      "low": 370,
+      "close": 370,
+      "volume": 15,
+      "adjustedClose": 239.99998474121094
+    },
+    {
+      "date": "2007-07-05",
+      "open": 369.8999938964844,
+      "high": 369.8999938964844,
+      "low": 369.8999938964844,
+      "close": 369.8999938964844,
+      "volume": 4,
+      "adjustedClose": 369.8999938964844
+    },
+    {
+      "date": "2007-07-06",
+      "open": 369.8999938964844,
+      "high": 369.8999938964844,
+      "low": 369.8999938964844,
+      "close": 369.8999938964844,
+      "volume": 10,
+      "adjustedClose": 369.8999938964844
+    },
+    {
+      "date": "2007-07-18",
+      "open": 339.989990234375,
+      "high": 339.989990234375,
+      "low": 339.989990234375,
+      "close": 339.989990234375,
+      "volume": 10,
+      "adjustedClose": 339.989990234375
+    },
+    {
+      "date": "2007-08-02",
+      "open": 306,
+      "high": 306,
+      "low": 306,
+      "close": 306,
+      "volume": 13,
+      "adjustedClose": 306
+    },
+    {
+      "date": "2007-10-17",
+      "open": 306,
+      "high": 306,
+      "low": 306,
+      "close": 306,
+      "volume": 13,
+      "adjustedClose": 306
+    },
+    {
+      "date": "2007-10-22",
+      "open": 306,
+      "high": 306,
+      "low": 306,
+      "close": 306,
+      "volume": 4000000,
+      "adjustedClose": 306
+    },
+    {
+      "date": "2008-01-04",
+      "open": 306,
+      "high": 306,
+      "low": 306,
+      "close": 306,
+      "volume": 10,
+      "adjustedClose": 306
+    },
+    {
+      "date": "2008-06-12",
+      "open": 310,
+      "high": 310,
+      "low": 310,
+      "close": 310,
+      "volume": 13,
+      "adjustedClose": 310
+    },
+    {
+      "date": "2008-06-23",
+      "open": 310,
+      "high": 310,
+      "low": 310,
+      "close": 310,
+      "volume": 2,
+      "adjustedClose": 310
+    },
+    {
+      "date": "2008-09-26",
+      "open": 310,
+      "high": 310,
+      "low": 310,
+      "close": 310,
+      "volume": 10,
+      "adjustedClose": 310
+    },
+    {
+      "date": "2009-12-15",
+      "open": 130.44000244140625,
+      "high": 130.44000244140625,
+      "low": 130.44000244140625,
+      "close": 130.44000244140625,
+      "volume": 73,
+      "adjustedClose": 130.44000244140625
+    },
+    {
+      "date": "2009-12-18",
+      "open": 173,
+      "high": 173,
+      "low": 173,
+      "close": 173,
+      "volume": 3,
+      "adjustedClose": 173
+    },
+    {
+      "date": "2009-12-28",
+      "open": 173,
+      "high": 173,
+      "low": 173,
+      "close": 173,
+      "volume": 2,
+      "adjustedClose": 173
+    },
+    {
+      "date": "2010-04-08",
+      "open": 306.4599914550781,
+      "high": 306.4599914550781,
+      "low": 306.4599914550781,
+      "close": 306.4599914550781,
+      "volume": 2,
+      "adjustedClose": 306.4599914550781
+    },
+    {
+      "date": "2010-07-15",
+      "open": 200,
+      "high": 200,
+      "low": 200,
+      "close": 200,
+      "volume": 2,
+      "adjustedClose": 200
+    },
+    {
+      "date": "2010-07-16",
+      "open": 200,
+      "high": 200,
+      "low": 200,
+      "close": 200,
+      "volume": 2,
+      "adjustedClose": 200
+    },
+    {
+      "date": "2010-07-26",
+      "open": 200,
+      "high": 200,
+      "low": 200,
+      "close": 200,
+      "volume": 7,
+      "adjustedClose": 200
+    },
+    {
+      "date": "2010-09-24",
+      "open": 180,
+      "high": 180,
+      "low": 180,
+      "close": 180,
+      "volume": 1,
+      "adjustedClose": 180
+    },
+    {
+      "date": "2011-07-14",
+      "open": 163,
+      "high": 163,
+      "low": 163,
+      "close": 163,
+      "volume": 5,
+      "adjustedClose": 163
+    },
+    {
+      "date": "2011-08-05",
+      "open": 163,
+      "high": 163,
+      "low": 163,
+      "close": 163,
+      "volume": 15,
+      "adjustedClose": 163
+    },
+    {
+      "date": "2011-12-08",
+      "open": 150,
+      "high": 150,
+      "low": 150,
+      "close": 150,
+      "volume": 20,
+      "adjustedClose": 150
+    },
+    {
+      "date": "2011-12-29",
+      "open": 138,
+      "high": 138,
+      "low": 138,
+      "close": 138,
+      "volume": 15,
+      "adjustedClose": 138
+    },
+    {
+      "date": "2014-02-17",
+      "open": 100,
+      "high": 100,
+      "low": 100,
+      "close": 100,
+      "volume": 5,
+      "adjustedClose": 100
+    },
+    {
+      "date": "2014-02-25",
+      "open": 100,
+      "high": 100,
+      "low": 100,
+      "close": 100,
+      "volume": 75,
+      "adjustedClose": 100
+    },
+    {
+      "date": "2014-03-19",
+      "open": 101,
+      "high": 101,
+      "low": 101,
+      "close": 101,
+      "volume": 5,
+      "adjustedClose": 101
+    },
+    {
+      "date": "2018-01-11",
+      "open": 35.599998474121094,
+      "high": 35.599998474121094,
+      "low": 35.599998474121094,
+      "close": 35.599998474121094,
+      "volume": 7,
+      "adjustedClose": 35.599998474121094
+    },
+    {
+      "date": "2019-03-25",
+      "open": 51.5,
+      "high": 51.5,
+      "low": 51.5,
+      "close": 51.5,
+      "volume": 7,
+      "adjustedClose": 51.5
+    },
+    {
+      "date": "2019-04-08",
+      "open": 51.5,
+      "high": 51.5,
+      "low": 51.5,
+      "close": 51.5,
+      "volume": 1,
+      "adjustedClose": 51.5
+    },
+    {
+      "date": "2020-07-28",
+      "open": 51.5,
+      "high": 51.5,
+      "low": 51.5,
+      "close": 51.5,
+      "volume": 1,
+      "adjustedClose": 51.5
+    },
+    {
+      "date": "2020-09-04",
+      "open": 51.5,
+      "high": 51.5,
+      "low": 51.5,
+      "close": 51.5,
+      "volume": 1,
+      "adjustedClose": 51.5
+    },
+    {
+      "date": "2021-03-08",
+      "open": 46.599998474121094,
+      "high": 46.599998474121094,
+      "low": 46.599998474121094,
+      "close": 46.599998474121094,
+      "volume": 7,
+      "adjustedClose": 46.599998474121094
+    },
+    {
+      "date": "2021-03-25",
+      "open": 46.599998474121094,
+      "high": 46.599998474121094,
+      "low": 46.599998474121094,
+      "close": 46.599998474121094,
+      "volume": 7,
+      "adjustedClose": 46.599998474121094
+    },
+    {
+      "date": "2021-06-08",
+      "open": 45,
+      "high": 45,
+      "low": 45,
+      "close": 45,
+      "volume": 12,
+      "adjustedClose": 45
+    },
+    {
+      "date": "2025-05-08",
+      "open": 55.5,
+      "high": 55.5,
+      "low": 55.5,
+      "close": 55.5,
+      "volume": 1,
+      "adjustedClose": 55.5
+    },
+    {
+      "date": "2026-02-24",
+      "open": 85,
+      "high": 85,
+      "low": 85,
+      "close": 85,
+      "volume": 1,
+      "adjustedClose": 85
+    },
+    {
+      "date": "2026-03-04",
+      "open": 102,
+      "high": 102,
+      "low": 102,
+      "close": 102,
+      "volume": 3,
+      "adjustedClose": 102
+    },
+    {
+      "date": "2026-03-05",
+      "open": 112,
+      "high": 112,
+      "low": 112,
+      "close": 112,
+      "volume": 3,
+      "adjustedClose": 112
+    },
+    {
+      "date": "2026-03-12",
+      "open": 135,
+      "high": 135,
+      "low": 135,
+      "close": 135,
+      "volume": 3,
+      "adjustedClose": 135
+    },
+    {
+      "date": "2026-03-13",
+      "open": 145,
+      "high": 145,
+      "low": 145,
+      "close": 145,
+      "volume": 1,
+      "adjustedClose": 145
+    },
+    {
+      "date": "2026-03-17",
+      "open": 178,
+      "high": 178,
+      "low": 178,
+      "close": 178,
+      "volume": 3,
+      "adjustedClose": 178
+    },
+    {
+      "date": "2026-03-26",
+      "open": 161,
+      "high": 161,
+      "low": 161,
+      "close": 161,
+      "volume": 1,
+      "adjustedClose": 161
+    },
+    {
+      "date": "2026-08-04",
+      "open": 131,
+      "high": 131,
+      "low": 131,
+      "close": 131,
+      "volume": 1,
+      "adjustedClose": 131
+    },
+    {
+      "date": "2026-08-13",
+      "open": 159,
+      "high": 159,
+      "low": 159,
+      "close": 159,
+      "volume": 1,
+      "adjustedClose": 159
+    },
+    {
+      "date": "2026-08-17",
+      "open": 174,
+      "high": 174,
+      "low": 174,
+      "close": 174,
+      "volume": 5,
+      "adjustedClose": 174
+    },
+    {
+      "date": "2026-08-19",
+      "open": 191,
+      "high": 191,
+      "low": 191,
+      "close": 191,
+      "volume": 5,
+      "adjustedClose": 191
+    },
+    {
+      "date": "2026-09-18",
+      "open": 191,
+      "high": 191,
+      "low": 191,
+      "close": 191,
+      "volume": 1,
+      "adjustedClose": 191
+    },
+    {
+      "date": "2026-09-28",
+      "open": 174,
+      "high": 174,
+      "low": 174,
+      "close": 174,
+      "volume": 13,
+      "adjustedClose": 174
+    }
+  ]
+}

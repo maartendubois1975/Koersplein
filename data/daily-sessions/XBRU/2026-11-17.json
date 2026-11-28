@@ -12,11 +12,11 @@
   },
   "counts": {
     "TRADED": 98,
-    "SESSION_UNVERIFIED": 6,
-    "NO_TRADES": 1
+    "SESSION_UNVERIFIED": 4,
+    "NO_TRADES": 3
   },
   "readOnly": true,
-  "generatedAt": "2026-11-18T05:32:30.509Z",
+  "generatedAt": "2026-11-28T06:31:35.727Z",
   "results": [
     {
       "isin": "BE0003008019",
@@ -64,7 +64,16 @@
       "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
       "evidence": null,
       "officialError": null,
-      "error": "Alle providers faalden voor BE0003519270: yahoo-chart: Provider returned no usable bars in requested range"
+      "error": "Alle providers faalden voor BE0003519270: yahoo-chart: Provider returned no usable bars in requested range",
+      "lastConfirmedBar": {
+        "date": "2026-11-16",
+        "open": 2200,
+        "high": 2200,
+        "low": 2200,
+        "close": 2200,
+        "adjustedClose": 2200,
+        "volume": 1
+      }
     },
     {
       "isin": "BE0003545531",
@@ -220,7 +229,16 @@
       "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
       "evidence": null,
       "officialError": null,
-      "error": "Alle providers faalden voor BE0003680916: yahoo-chart: Provider returned no daily bars"
+      "error": "Alle providers faalden voor BE0003680916: yahoo-chart: Provider returned no daily bars",
+      "lastConfirmedBar": {
+        "date": "2026-09-16",
+        "open": 11.300000190734863,
+        "high": 11.300000190734863,
+        "low": 11.300000190734863,
+        "close": 11.300000190734863,
+        "adjustedClose": 11.300000190734863,
+        "volume": 4
+      }
     },
     {
       "isin": "BE0003696102",
@@ -590,6 +608,15 @@
         "stateObservedAt": "2026-11-18T05:07:21.350Z",
         "currentTradingState": "CLO",
         "currentHaltReason": null
+      },
+      "lastConfirmedBar": {
+        "date": "2026-11-16",
+        "open": 346,
+        "high": 346,
+        "low": 346,
+        "close": 346,
+        "adjustedClose": null,
+        "volume": 2
       }
     },
     {
@@ -778,12 +805,75 @@
       "mic": "MLXB",
       "symbol": "REAL",
       "name": "Realco SA",
-      "status": "SESSION_UNVERIFIED",
+      "status": "NO_TRADES",
       "bar": null,
-      "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
-      "evidence": null,
-      "officialError": null,
-      "error": "Alle providers faalden voor BE0003841583: yahoo-chart: Provider returned no daily bars"
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003841583-MLXB",
+      "evidence": {
+        "date": "2026-11-17",
+        "isin": "BE0003841583",
+        "mic": "MLXB",
+        "provider": "euronext-live",
+        "status": "NO_TRADES",
+        "lastTradeDate": "2026-11-02",
+        "volume": 0,
+        "verification": "RETAINED_OFFICIAL_NO_TRADE_INTERVAL",
+        "observedAt": "2026-11-21T05:07:46.698Z",
+        "reviewedAt": "2026-11-28T06:31:35.727Z",
+        "knownAt": "2026-11-28T06:31:35.727Z",
+        "scope": "RETROSPECTIVE_SESSION_STATUS_ONLY",
+        "sourceSession": "2026-11-20",
+        "sourceRowHash": "a84ea268e384897d50876b3348000a14c6c036cbb37224f92482c388c5f70c3f",
+        "sourceRow": {
+          "isin": "BE0003841583",
+          "mic": "MLXB",
+          "symbol": "REAL",
+          "name": "Realco SA",
+          "status": "NO_TRADES",
+          "bar": null,
+          "provider": "euronext-live",
+          "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003841583-MLXB",
+          "evidence": {
+            "date": "2026-11-20",
+            "mic": "MLXB",
+            "isin": "BE0003841583",
+            "provider": "euronext-live",
+            "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0003841583-MLXB",
+            "retrievedAt": "2026-11-21T05:07:46.300Z",
+            "lastTradeDate": "2026-11-02",
+            "status": "NO_TRADES",
+            "volume": 0,
+            "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+            "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0003841583-MLXB",
+            "quoteSha256": "15ce27eaa11f783a7803fa64646f35baef7b86eff755782db0a067ce7d21f579",
+            "stateObservedAt": "2026-11-21T05:07:46.698Z",
+            "currentTradingState": "CLO",
+            "currentHaltReason": null
+          }
+        },
+        "reviewId": "d043b5aea9e755828d5735cc8e28f5fd19f0948549d0ab1933f4a3457c89dc5e"
+      },
+      "priorUnverifiedEvidence": {
+        "isin": "BE0003841583",
+        "mic": "MLXB",
+        "symbol": "REAL",
+        "name": "Realco SA",
+        "status": "SESSION_UNVERIFIED",
+        "bar": null,
+        "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
+        "evidence": null,
+        "officialError": null,
+        "error": "Alle providers faalden voor BE0003841583: yahoo-chart: Provider returned no daily bars"
+      },
+      "lastConfirmedBar": {
+        "date": "2026-11-02",
+        "open": 14,
+        "high": 14,
+        "low": 14,
+        "close": 14,
+        "adjustedClose": 14,
+        "volume": 18
+      }
     },
     {
       "isin": "BE0003847648",
@@ -795,7 +885,16 @@
       "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
       "evidence": null,
       "officialError": null,
-      "error": "Alle providers faalden voor BE0003847648: yahoo-chart: Provider returned no daily bars"
+      "error": "Alle providers faalden voor BE0003847648: yahoo-chart: Provider returned no daily bars",
+      "lastConfirmedBar": {
+        "date": "2026-10-15",
+        "open": 21.600000381469727,
+        "high": 21.600000381469727,
+        "low": 21.600000381469727,
+        "close": 21.600000381469727,
+        "adjustedClose": 21.600000381469727,
+        "volume": 6
+      }
     },
     {
       "isin": "BE0003851681",
@@ -1324,12 +1423,75 @@
       "mic": "ALXB",
       "symbol": "CAND",
       "name": "Candela Invest SA",
-      "status": "SESSION_UNVERIFIED",
+      "status": "NO_TRADES",
       "bar": null,
-      "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
-      "evidence": null,
-      "officialError": null,
-      "error": "Alle providers faalden voor BE0974298300: yahoo-chart: Provider returned no daily bars"
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974298300-ALXB",
+      "evidence": {
+        "date": "2026-11-17",
+        "isin": "BE0974298300",
+        "mic": "ALXB",
+        "provider": "euronext-live",
+        "status": "NO_TRADES",
+        "lastTradeDate": "2026-10-19",
+        "volume": 0,
+        "verification": "RETAINED_OFFICIAL_NO_TRADE_INTERVAL",
+        "observedAt": "2026-11-21T05:07:39.845Z",
+        "reviewedAt": "2026-11-28T06:31:35.727Z",
+        "knownAt": "2026-11-28T06:31:35.727Z",
+        "scope": "RETROSPECTIVE_SESSION_STATUS_ONLY",
+        "sourceSession": "2026-11-20",
+        "sourceRowHash": "6afe2b2b4411acefcb2ce0741c88ad3d69e0fec3d66cf8c24934ee8c4bd8e542",
+        "sourceRow": {
+          "isin": "BE0974298300",
+          "mic": "ALXB",
+          "symbol": "CAND",
+          "name": "Candela Invest SA",
+          "status": "NO_TRADES",
+          "bar": null,
+          "provider": "euronext-live",
+          "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974298300-ALXB",
+          "evidence": {
+            "date": "2026-11-20",
+            "mic": "ALXB",
+            "isin": "BE0974298300",
+            "provider": "euronext-live",
+            "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/BE0974298300-ALXB",
+            "retrievedAt": "2026-11-21T05:07:39.156Z",
+            "lastTradeDate": "2026-10-19",
+            "status": "NO_TRADES",
+            "volume": 0,
+            "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+            "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/BE0974298300-ALXB",
+            "quoteSha256": "4dced5e77fd6f13f4a6754686dbe4b2e460c382a343082d72cec0e692c9bbe23",
+            "stateObservedAt": "2026-11-21T05:07:39.845Z",
+            "currentTradingState": "CLO",
+            "currentHaltReason": null
+          }
+        },
+        "reviewId": "acaae529a37c3756b2bcedddb67a117b5c1f4f9352d41c94a7a6e7338a6be1b7"
+      },
+      "priorUnverifiedEvidence": {
+        "isin": "BE0974298300",
+        "mic": "ALXB",
+        "symbol": "CAND",
+        "name": "Candela Invest SA",
+        "status": "SESSION_UNVERIFIED",
+        "bar": null,
+        "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
+        "evidence": null,
+        "officialError": null,
+        "error": "Alle providers faalden voor BE0974298300: yahoo-chart: Provider returned no daily bars"
+      },
+      "lastConfirmedBar": {
+        "date": "2026-10-19",
+        "open": 1.9199999570846558,
+        "high": 1.9199999570846558,
+        "low": 1.9199999570846558,
+        "close": 1.9199999570846558,
+        "adjustedClose": 1.9199999570846558,
+        "volume": 11
+      }
     },
     {
       "isin": "BE0974303357",
@@ -1721,7 +1883,16 @@
       "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
       "evidence": null,
       "officialError": null,
-      "error": "Alle providers faalden voor BE0974497290: yahoo-chart: Provider returned no usable bars in requested range"
+      "error": "Alle providers faalden voor BE0974497290: yahoo-chart: Provider returned no usable bars in requested range",
+      "lastConfirmedBar": {
+        "date": "2026-11-16",
+        "open": 3.5999999046325684,
+        "high": 3.5999999046325684,
+        "low": 3.5999999046325684,
+        "close": 3.5999999046325684,
+        "adjustedClose": 3.5999999046325684,
+        "volume": 96
+      }
     },
     {
       "isin": "BE0974499312",
@@ -1887,5 +2058,7 @@
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0015000HT4-XBRU"
     }
   ],
-  "archiveConflicts": []
+  "archiveConflicts": [],
+  "previousSnapshotGeneratedAt": "2026-11-18T05:32:30.509Z",
+  "sessionEvidenceReviewedAt": "2026-11-28T06:31:35.727Z"
 }

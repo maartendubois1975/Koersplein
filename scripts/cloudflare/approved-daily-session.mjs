@@ -8,7 +8,7 @@ import {providerRoute} from '../history/source-policy.mjs';
 import {officialDailyStatus} from '../history/official-daily-status.mjs';
 import {inspectDailyBarIntegrity,mapConcurrent} from './europe-run-policy.mjs';
 import {latestClosedSession,sessionCalendar} from '../history/trading-calendar.mjs';
-import {listingIdentity,validSessionDate} from '../../daily-session-view.mjs';
+import {listingIdentity,validSessionDate,sessionSnapshotAt} from '../../daily-session-view.mjs';
 
 export async function collectApprovedSession({market,session,now=new Date(),catalog,registry=createDefaultProviderRegistry(),official=officialDailyStatus,concurrency=4,priorSnapshot,sourceRegistry=marketSources,retryIsins}={}){
  session??=latestClosedSession(market,now);
@@ -21,7 +21,8 @@ export async function collectApprovedSession({market,session,now=new Date(),cata
  if(selected&&(!priorSnapshot||selected.size!==retryIsins.length))throw Error('INVALID_TARGETED_SESSION_RETRY');
  if(priorSnapshot){
   if(priorSnapshot.session!==session)throw Error('PRIOR_SESSION_MISMATCH');
-  for(const row of validateSnapshot(priorSnapshot,catalog,market).results){
+  priorSnapshot=sessionSnapshotAt(validateSnapshot(priorSnapshot,catalog,market),now);
+  for(const row of priorSnapshot.results){
    if(row.status!=='SESSION_UNVERIFIED'||selected&&!selected.has(row.isin))confirmed.set(row.isin,row);
   }
   if(selected&&[...selected].some(isin=>!priorSnapshot.results.some(row=>row.isin===isin&&row.status==='SESSION_UNVERIFIED')))throw Error('INVALID_TARGETED_SESSION_RETRY');
@@ -83,7 +84,7 @@ export async function collectApprovedSessionWithRecovery(options, {
  const after=new Map(snapshot.results.map(row=>[row.isin,row]));
  return {...snapshot,recovery:{schemaVersion:1,policy:'ONE_TARGETED_TRANSIENT_RETRY',
   performedAt:(options.now??new Date()).toISOString(),
-  reusedConfirmed:options.priorSnapshot?.results.filter(row=>row.status!=='SESSION_UNVERIFIED').length??0,
+  reusedConfirmed:options.priorSnapshot?sessionSnapshotAt(options.priorSnapshot,options.now??new Date()).results.filter(row=>row.status!=='SESSION_UNVERIFIED').length:0,
   initialUnverified:first.results.filter(row=>row.status==='SESSION_UNVERIFIED').length,
   retried:retryIsins.length,
   recovered:retryIsins.filter(isin=>after.get(isin).status!=='SESSION_UNVERIFIED').length,

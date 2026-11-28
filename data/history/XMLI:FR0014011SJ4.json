@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "FR0014011SJ4",
+    "mic": "XMLI",
+    "symbol": "MLPRE",
+    "name": "PRELUDE S.A",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "retained-approved-archive",
+    "role": "reviewed-retained-history",
+    "metadata": {
+      "originalProvider": "yahoo-chart",
+      "originalRetrievedAt": "2026-10-17 08:36:50",
+      "retainedObservedAt": "2026-11-28T06:23:28.366Z",
+      "sourceUrl": "https://koersplein.maarten-dubois1975.workers.dev/api/history/XMLI:FR0014011SJ4",
+      "sourceSha256": "26fe1f19d9059584fe161dbf948308683625a10fed0b5776bd2a1929239a67ff",
+      "evidenceSha256": "8a53cb2a30150d852b97c37acb5a78bf3451b73bdaa6a7b4992067d265677dc7",
+      "priceBasis": "UNVERIFIED",
+      "completenessEvidenceVerified": false,
+      "backfillComplete": false
+    },
+    "licenseNote": "Provider- en herdistributierechten moeten voor productie afzonderlijk worden vastgesteld."
+  },
+  "coverage": {
+    "firstDate": "2025-10-02",
+    "lastDate": "2026-08-07",
+    "recordCount": 5,
+    "records": 5
+  },
+  "bars": [
+    {
+      "date": "2025-10-02",
+      "open": 10,
+      "high": 10,
+      "low": 10,
+      "close": 10,
+      "volume": 10,
+      "adjustedClose": 10
+    },
+    {
+      "date": "2025-10-03",
+      "open": 10,
+      "high": 10,
+      "low": 10,
+      "close": 10,
+      "volume": 40,
+      "adjustedClose": 10
+    },
+    {
+      "date": "2025-10-20",
+      "open": 11,
+      "high": 11,
+      "low": 11,
+      "close": 11,
+      "volume": 88,
+      "adjustedClose": 11
+    },
+    {
+      "date": "2025-10-30",
+      "open": 11,
+      "high": 11,
+      "low": 11,
+      "close": 11,
+      "volume": 50,
+      "adjustedClose": 11
+    },
+    {
+      "date": "2026-08-07",
+      "open": 11,
+      "high": 11,
+      "low": 11,
+      "close": 11,
+      "volume": 10,
+      "adjustedClose": 11
+    }
+  ]
+}

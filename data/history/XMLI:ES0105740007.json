@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "ES0105740007",
+    "mic": "XMLI",
+    "symbol": "MLWRS",
+    "name": "WELLNESS",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "retained-approved-archive",
+    "role": "reviewed-retained-history",
+    "metadata": {
+      "originalProvider": "yahoo-chart",
+      "originalRetrievedAt": "2026-10-17 08:38:17",
+      "retainedObservedAt": "2026-11-28T06:23:28.366Z",
+      "sourceUrl": "https://koersplein.maarten-dubois1975.workers.dev/api/history/XMLI:ES0105740007",
+      "sourceSha256": "de05ddb3a7d4052e97f700721af2cac56de8f84f78f89900f940d4e1f58807c1",
+      "evidenceSha256": "8a53cb2a30150d852b97c37acb5a78bf3451b73bdaa6a7b4992067d265677dc7",
+      "priceBasis": "UNVERIFIED",
+      "completenessEvidenceVerified": false,
+      "backfillComplete": false
+    },
+    "licenseNote": "Provider- en herdistributierechten moeten voor productie afzonderlijk worden vastgesteld."
+  },
+  "coverage": {
+    "firstDate": "2025-09-19",
+    "lastDate": "2025-09-19",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2025-09-19",
+      "open": 2.200000047683716,
+      "high": 2.200000047683716,
+      "low": 2.200000047683716,
+      "close": 2.200000047683716,
+      "volume": 1,
+      "adjustedClose": 2.200000047683716
+    }
+  ]
+}

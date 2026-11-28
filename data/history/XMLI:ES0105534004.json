@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "ES0105534004",
+    "mic": "XMLI",
+    "symbol": "MLORQ",
+    "name": "ORINOQUIA",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "retained-approved-archive",
+    "role": "reviewed-retained-history",
+    "metadata": {
+      "originalProvider": "yahoo-chart",
+      "originalRetrievedAt": "2026-10-17 08:36:33",
+      "retainedObservedAt": "2026-11-28T06:23:28.366Z",
+      "sourceUrl": "https://koersplein.maarten-dubois1975.workers.dev/api/history/XMLI:ES0105534004",
+      "sourceSha256": "c6af9f6f286302b45d6cd598e15613303790ce18967550758a0b3ad272c38b2b",
+      "evidenceSha256": "8a53cb2a30150d852b97c37acb5a78bf3451b73bdaa6a7b4992067d265677dc7",
+      "priceBasis": "UNVERIFIED",
+      "completenessEvidenceVerified": false,
+      "backfillComplete": false
+    },
+    "licenseNote": "Provider- en herdistributierechten moeten voor productie afzonderlijk worden vastgesteld."
+  },
+  "coverage": {
+    "firstDate": "2021-10-01",
+    "lastDate": "2026-10-14",
+    "recordCount": 22,
+    "records": 22
+  },
+  "bars": [
+    {
+      "date": "2021-10-01",
+      "open": 1.1399999856948853,
+      "high": 1.1399999856948853,
+      "low": 1.1399999856948853,
+      "close": 1.1399999856948853,
+      "volume": 5000,
+      "adjustedClose": 0.8250025510787964
+    },
+    {
+      "date": "2022-02-03",
+      "open": 1.149999976158142,
+      "high": 1.149999976158142,
+      "low": 1.149999976158142,
+      "close": 1.149999976158142,
+      "volume": 5350,
+      "adjustedClose": 0.8322394490242004
+    },
+    {
+      "date": "2022-08-12",
+      "open": 1.2000000476837158,
+      "high": 1.2000000476837158,
+      "low": 1.2000000476837158,
+      "close": 1.2000000476837158,
+      "volume": 4400,
+      "adjustedClose": 0.8832606673240662
+    },
+    {
+      "date": "2023-02-20",
+      "open": 1.25,
+      "high": 1.25,
+      "low": 1.25,
+      "close": 1.25,
+      "volume": 8400,
+      "adjustedClose": 0.9375842809677124
+    },
+    {
+      "date": "2023-11-03",
+      "open": 1.3200000524520874,
+      "high": 1.3200000524520874,
+      "low": 1.3200000524520874,
+      "close": 1.3200000524520874,
+      "volume": 5000,
+      "adjustedClose": 0.9919959306716919
+    },
+    {
+      "date": "2024-05-03",
+      "open": 1.4199999570846558,
+      "high": 1.4199999570846558,
+      "low": 1.4199999570846558,
+      "close": 1.4199999570846558,
+      "volume": 3500,
+      "adjustedClose": 1.0932652950286865
+    },
+    {
+      "date": "2024-11-18",
+      "open": 1.600000023841858,
+      "high": 1.600000023841858,
+      "low": 1.600000023841858,
+      "close": 1.600000023841858,
+      "volume": 35000,
+      "adjustedClose": 1.246627926826477
+    },
+    {
+      "date": "2025-02-24",
+      "open": 1.5,
+      "high": 1.5,
+      "low": 1.5,
+      "close": 1.5,
+      "volume": 1333,
+      "adjustedClose": 1.2945890426635742
+    },
+    {
+      "date": "2025-02-25",
+      "open": 1.5,
+      "high": 1.5,
+      "low": 1.5,
+      "close": 1.5,
+      "volume": 77800,
+      "adjustedClose": 1.2945890426635742
+    },
+    {
+      "date": "2025-02-26",
+      "open": 1.5,
+      "high": 1.5,
+      "low": 1.5,
+      "close": 1.5,
+      "volume": 148867,
+      "adjustedClose": 1.2945890426635742
+    },
+    {
+      "date": "2025-02-27",
+      "open": 1.5,
+      "high": 1.5,
+      "low": 1.5,
+      "close": 1.5,
+      "volume": 35799,
+      "adjustedClose": 1.2945890426635742
+    },
+    {
+      "date": "2025-03-05",
+      "open": 1.5,
+      "high": 1.5,
+      "low": 1.5,
+      "close": 1.5,
+      "volume": 52346,
+      "adjustedClose": 1.2945890426635742
+    },
+    {
+      "date": "2025-03-06",
+      "open": 1.5,
+      "high": 1.5,
+      "low": 1.5,
+      "close": 1.5,
+      "volume": 3333,
+      "adjustedClose": 1.2945890426635742
+    },
+    {
+      "date": "2025-05-20",
+      "open": 1.590000033378601,
+      "high": 1.590000033378601,
+      "low": 1.590000033378601,
+      "close": 1.590000033378601,
+      "volume": 1427000,
+      "adjustedClose": 1.3722645044326782
+    },
+    {
+      "date": "2025-05-22",
+      "open": 1.590000033378601,
+      "high": 1.590000033378601,
+      "low": 1.590000033378601,
+      "close": 1.590000033378601,
+      "volume": 12036,
+      "adjustedClose": 1.3722645044326782
+    },
+    {
+      "date": "2025-05-23",
+      "open": 1.590000033378601,
+      "high": 1.590000033378601,
+      "low": 1.590000033378601,
+      "close": 1.590000033378601,
+      "volume": 14724,
+      "adjustedClose": 1.3722645044326782
+    },
+    {
+      "date": "2025-09-22",
+      "open": 1.440000057220459,
+      "high": 1.440000057220459,
+      "low": 1.440000057220459,
+      "close": 1.440000057220459,
+      "volume": 27780,
+      "adjustedClose": 1.3777514696121216
+    },
+    {
+      "date": "2025-09-23",
+      "open": 1.440000057220459,
+      "high": 1.440000057220459,
+      "low": 1.440000057220459,
+      "close": 1.440000057220459,
+      "volume": 5933,
+      "adjustedClose": 1.3777514696121216
+    },
+    {
+      "date": "2026-01-20",
+      "open": 1.5499999523162842,
+      "high": 1.5499999523162842,
+      "low": 1.5499999523162842,
+      "close": 1.5499999523162842,
+      "volume": 2268,
+      "adjustedClose": 1.4829963445663452
+    },
+    {
+      "date": "2026-04-29",
+      "open": 1.649999976158142,
+      "high": 1.649999976158142,
+      "low": 1.649999976158142,
+      "close": 1.649999976158142,
+      "volume": 3250,
+      "adjustedClose": 1.6136490106582642
+    },
+    {
+      "date": "2026-10-12",
+      "open": 1.649999976158142,
+      "high": 1.649999976158142,
+      "low": 1.649999976158142,
+      "close": 1.649999976158142,
+      "volume": 10,
+      "adjustedClose": 1.649999976158142
+    },
+    {
+      "date": "2026-10-14",
+      "open": 1.659999966621399,
+      "high": 1.659999966621399,
+      "low": 1.659999966621399,
+      "close": 1.659999966621399,
+      "volume": 10000,
+      "adjustedClose": 1.659999966621399
+    }
+  ]
+}

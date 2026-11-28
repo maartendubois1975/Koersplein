@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "ES0105479002",
+    "mic": "XMLI",
+    "symbol": "MLINT",
+    "name": "IANTE INVESTMENTS",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "retained-approved-archive",
+    "role": "reviewed-retained-history",
+    "metadata": {
+      "originalProvider": "yahoo-chart",
+      "originalRetrievedAt": "2026-10-17 08:35:07",
+      "retainedObservedAt": "2026-11-28T06:23:28.366Z",
+      "sourceUrl": "https://koersplein.maarten-dubois1975.workers.dev/api/history/XMLI:ES0105479002",
+      "sourceSha256": "6c338bc419b72b2ec9dafc7b7cd80b25402f5a87a25b2e1da9df9b68d345b826",
+      "evidenceSha256": "8a53cb2a30150d852b97c37acb5a78bf3451b73bdaa6a7b4992067d265677dc7",
+      "priceBasis": "UNVERIFIED",
+      "completenessEvidenceVerified": false,
+      "backfillComplete": false
+    },
+    "licenseNote": "Provider- en herdistributierechten moeten voor productie afzonderlijk worden vastgesteld."
+  },
+  "coverage": {
+    "firstDate": "2022-05-20",
+    "lastDate": "2022-05-20",
+    "recordCount": 1,
+    "records": 1
+  },
+  "bars": [
+    {
+      "date": "2022-05-20",
+      "open": 4.619999885559082,
+      "high": 4.619999885559082,
+      "low": 4.619999885559082,
+      "close": 4.619999885559082,
+      "volume": 700,
+      "adjustedClose": 4.580798625946045
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-11-28",
+  "decision": "NO_NEW_UNCONDITIONAL_FREE_PUBLICATION_ROUTE_PROVEN",
+  "existingFiveRoutesChanged": false,
+  "agreementsSigned": 0,
+  "paidSubscriptionsStarted": 0,
+  "applicationsSubmitted": 0,
+  "sources": [
+    {
+      "provider": "euronext-live",
+      "technicalEvidenceReused": "research/admission/2026-11-27/milan-session-readiness.json",
+      "termsDecisionReused": "research/admission/2026-11-27/free-publication-decision.json",
+      "decision": "PUBLICATION_AND_ARCHIVE_RIGHTS_UNCONFIRMED",
+      "finding": "The reviewed October 2026 EMDA, fees and conditional waiver do not establish an unconditional zero-cost grant for public OHLCV storage, display and prediction use. Existing completed research is reused."
+    },
+    {
+      "provider": "borsa-italiana-listino",
+      "urls": ["https://www.borsaitaliana.it/listino-ufficiale.htm", "https://www.borsaitaliana.it/borsaitaliana/information-services/pricing/rtdagreement23.en.pdf"],
+      "decision": "LEGACY_AFTER_MIDNIGHT_CLAUSE_NOT_CURRENT_ENDPOINT_PERMISSION",
+      "finding": "The official site offers end-of-day instrument data. A legacy agreement discusses after-midnight redistribution, but it does not prove the scope of current endpoint archival and platform rights under the later reviewed Euronext documents."
+    },
+    {
+      "provider": "alpha-vantage",
+      "url": "https://www.alphavantage.co/terms_of_service/",
+      "decision": "FREE_PERSONAL_USE_NOT_PUBLIC_PLATFORM_ENTITLEMENT",
+      "finding": "The published grant is personal and non-commercial unless separately agreed in writing. The definition includes organizational use and provision to other users. No account, API key or agreement was created."
+    },
+    {
+      "provider": "twelve-data",
+      "url": "https://twelvedata.com/terms",
+      "termsUpdated": "2026-01-01",
+      "decision": "FREE_TIER_COMMERCIAL_USE_RESTRICTED_REDISTRIBUTION_REQUIRES_PERMISSION",
+      "finding": "Sections 2.2 through 2.4 condition external display and redistribution on express entitlement, and restrict commercial Free Tier use. No account or paid add-on was created."
+    },
+    {
+      "provider": "stooq",
+      "urls": ["https://stooq.com/t/", "https://stooq.com/db/h/"],
+      "decision": "ACCESS_AND_PUBLICATION_TERMS_UNVERIFIED",
+      "finding": "Both official pages returned a JavaScript browser-verification wall to the read-only lookup. Secondary claims about restrictions are not treated as primary permission evidence. No challenge bypass or bulk retrieval was attempted."
+    },
+    {
+      "provider": "retained-koersplein-history",
+      "decision": "EXISTING_OWNER_ARCHIVE_REUSE_ONLY",
+      "evidenceFile": "retained-history-evidence.json.gz",
+      "finding": "57 existing identity-bound owner archive documents were read; only complete positive OHLCV observations are restored. Original source observations, including all excluded references, are retained in proof. This is not a new provider license or proof of independent total-return suitability."
+    }
+  ]
+}

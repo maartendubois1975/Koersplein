@@ -37,6 +37,11 @@ assert.equal(rows('forecast-readiness').length, report.markets.filter(market => 
 assert.equal(rows('prediction-records').length, report.predictionRecords.length);
 for (const row of report.predictionRecords) assert(nodes.get('prediction-records').textContent.includes(row.recordHash));
 if (report.historyRecovery) assert(nodes.get('history-recovery').textContent.includes(String(report.historyRecovery.confirmedRestoredBars)));
+if (report.retainedHistoryReview) assert(nodes.get('retained-review').textContent.includes(report.retainedHistoryReview.restoredCompanies + ' ondernemingen'));
+if (report.sessionEvidenceReview) assert(nodes.get('session-review').textContent.includes(report.sessionEvidenceReview.reviewedSessions + ' bevestigd zonder handel'));
 nodes.get('exchange').value = 'XLIS'; nodes.get('exchange').events.change();
 assert.equal(rows('companies').length, 34);
+nodes.get('exchange').value = 'XPAR'; nodes.get('exchange').events.change();
+assert.equal(rows('companies').length, 664);
+if (report.retainedHistoryReview) assert(nodes.get('companies').textContent.includes('NO_COMPLETE_RETAINED_TRADES'));
 console.log('Actual status renderer: five markets, 80/34 company switch, source evidence, admission blockers and prediction tables PASS');

@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "IT0005460081",
+    "mic": "ALXP",
+    "symbol": "ALREB",
+    "name": "REBIRTH",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "retained-approved-archive",
+    "role": "reviewed-retained-history",
+    "metadata": {
+      "originalProvider": "yahoo-chart",
+      "originalRetrievedAt": "2026-10-17 08:36:58",
+      "retainedObservedAt": "2026-11-28T06:23:28.366Z",
+      "sourceUrl": "https://koersplein.maarten-dubois1975.workers.dev/api/history/ALXP:IT0005460081",
+      "sourceSha256": "6b92e6379d070cbd987a0c5f6726ef319ae90b82d2f109c83aa7ad1cdc5bc190",
+      "evidenceSha256": "8a53cb2a30150d852b97c37acb5a78bf3451b73bdaa6a7b4992067d265677dc7",
+      "priceBasis": "UNVERIFIED",
+      "completenessEvidenceVerified": false,
+      "backfillComplete": false
+    },
+    "licenseNote": "Provider- en herdistributierechten moeten voor productie afzonderlijk worden vastgesteld."
+  },
+  "coverage": {
+    "firstDate": "2025-02-17",
+    "lastDate": "2026-08-07",
+    "recordCount": 6,
+    "records": 6
+  },
+  "bars": [
+    {
+      "date": "2025-02-17",
+      "open": 2.299999952316284,
+      "high": 2.299999952316284,
+      "low": 2.299999952316284,
+      "close": 2.299999952316284,
+      "volume": 500,
+      "adjustedClose": 2.299999952316284
+    },
+    {
+      "date": "2025-02-19",
+      "open": 2.299999952316284,
+      "high": 2.299999952316284,
+      "low": 2.299999952316284,
+      "close": 2.299999952316284,
+      "volume": 30,
+      "adjustedClose": 2.299999952316284
+    },
+    {
+      "date": "2025-05-28",
+      "open": 2.319999933242798,
+      "high": 2.319999933242798,
+      "low": 2.319999933242798,
+      "close": 2.319999933242798,
+      "volume": 20,
+      "adjustedClose": 2.319999933242798
+    },
+    {
+      "date": "2026-06-05",
+      "open": 2.299999952316284,
+      "high": 2.299999952316284,
+      "low": 2.299999952316284,
+      "close": 2.299999952316284,
+      "volume": 100,
+      "adjustedClose": 2.299999952316284
+    },
+    {
+      "date": "2026-06-08",
+      "open": 2.299999952316284,
+      "high": 2.299999952316284,
+      "low": 2.299999952316284,
+      "close": 2.299999952316284,
+      "volume": 50,
+      "adjustedClose": 2.299999952316284
+    },
+    {
+      "date": "2026-08-07",
+      "open": 2.299999952316284,
+      "high": 2.299999952316284,
+      "low": 2.299999952316284,
+      "close": 2.299999952316284,
+      "volume": 50,
+      "adjustedClose": 2.299999952316284
+    }
+  ]
+}

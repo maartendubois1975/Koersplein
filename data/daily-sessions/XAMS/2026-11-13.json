@@ -3,7 +3,8 @@
   "session": "2026-11-13",
   "counts": {
     "TRADED": 76,
-    "SESSION_UNVERIFIED": 4
+    "SESSION_UNVERIFIED": 3,
+    "NO_TRADES": 1
   },
   "readOnly": true,
   "results": [
@@ -348,10 +349,64 @@
       "mic": "XAMS",
       "symbol": "BEVER",
       "name": "BEVER HOLDING",
-      "status": "SESSION_UNVERIFIED",
+      "status": "NO_TRADES",
       "bar": null,
-      "officialError": null,
-      "error": "Alle providers faalden voor NL0000285278: euronext-live: Geen verhandelde Euronext koershistorie voor NL0000285278-XAMS; mislukte vensters: 0; yahoo-chart: Provider returned no daily bars"
+      "provider": "euronext-live",
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000285278-XAMS",
+      "evidence": {
+        "date": "2026-11-13",
+        "isin": "NL0000285278",
+        "mic": "XAMS",
+        "provider": "euronext-live",
+        "status": "NO_TRADES",
+        "lastTradeDate": "2026-11-04",
+        "volume": 0,
+        "verification": "RETAINED_OFFICIAL_NO_TRADE_INTERVAL",
+        "observedAt": "2026-11-18T05:07:23.771Z",
+        "reviewedAt": "2026-11-28T06:31:35.727Z",
+        "knownAt": "2026-11-28T06:31:35.727Z",
+        "scope": "RETROSPECTIVE_SESSION_STATUS_ONLY",
+        "sourceSession": "2026-11-17",
+        "sourceRowHash": "bd6a49e56810c366026385f33789139eb2036f1522bbb22044642eb89041d41e",
+        "sourceRow": {
+          "isin": "NL0000285278",
+          "mic": "XAMS",
+          "symbol": "BEVER",
+          "name": "BEVER HOLDING",
+          "status": "NO_TRADES",
+          "bar": null,
+          "provider": "euronext-live",
+          "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000285278-XAMS",
+          "evidence": {
+            "date": "2026-11-17",
+            "mic": "XAMS",
+            "isin": "NL0000285278",
+            "provider": "euronext-live",
+            "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0000285278-XAMS",
+            "retrievedAt": "2026-11-18T05:07:23.304Z",
+            "lastTradeDate": "2026-11-04",
+            "status": "NO_TRADES",
+            "volume": 0,
+            "verification": "OFFICIAL_LAST_EXECUTED_DATE_AND_ZERO_VOLUME_SESSION",
+            "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/NL0000285278-XAMS",
+            "quoteSha256": "7ab521b4e4a6ad77caadca49a7bbccb375fce88726b0d6640e8df788b6499af6",
+            "stateObservedAt": "2026-11-18T05:07:23.771Z",
+            "currentTradingState": "CLO",
+            "currentHaltReason": null
+          }
+        },
+        "reviewId": "28fcf33015311b9b388247611c9abff2cd4f22f4b843ca2cd775dbadfb3528f8"
+      },
+      "priorUnverifiedEvidence": {
+        "isin": "NL0000285278",
+        "mic": "XAMS",
+        "symbol": "BEVER",
+        "name": "BEVER HOLDING",
+        "status": "SESSION_UNVERIFIED",
+        "bar": null,
+        "officialError": null,
+        "error": "Alle providers faalden voor NL0000285278: euronext-live: Geen verhandelde Euronext koershistorie voor NL0000285278-XAMS; mislukte vensters: 0; yahoo-chart: Provider returned no daily bars"
+      }
     },
     {
       "isin": "NL0000302636",
@@ -1424,5 +1479,8 @@
       "provider": "euronext-live",
       "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/NL0015073TS8-XAMS"
     }
-  ]
+  ],
+  "generatedAt": "2026-11-28T06:31:35.727Z",
+  "sessionEvidenceReviewedAt": "2026-11-28T06:31:35.727Z",
+  "archiveConflicts": []
 }

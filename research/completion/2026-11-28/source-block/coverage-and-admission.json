@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-28T06:34:12.314Z",
+  "scope": "LOCAL_BUILD_DATA_NOT_REMOTE_COVERAGE",
+  "markets": [
+    {
+      "mic": "XLIS",
+      "approvedCompanies": 34,
+      "latestClosed": "2026-11-27",
+      "latestStored": "2026-11-27",
+      "counts": {
+        "TRADED": 26,
+        "NO_TRADES": 8
+      },
+      "archive": 34,
+      "legacy": 0,
+      "any": 34,
+      "archiveBars": 6983,
+      "legacyBars": 0,
+      "completeUniqueDays": 6983,
+      "confirmedArchiveDays": 185,
+      "reviewedSourceDays": 0,
+      "assessedSessions": 7816,
+      "coveredSessions": 6292,
+      "beforeCalendarDays": 744,
+      "sourceConflictDays": 0,
+      "statusConflictDays": 0,
+      "incompleteDays": 0,
+      "unknownStartCompanies": 34,
+      "missingSessions": 1524,
+      "unverifiedSessions": 0,
+      "noTradeSessions": 53
+    },
+    {
+      "mic": "XDUB",
+      "approvedCompanies": 16,
+      "latestClosed": "2026-11-27",
+      "latestStored": "2026-11-27",
+      "counts": {
+        "TRADED": 14,
+        "NO_TRADES": 1,
+        "SESSION_UNVERIFIED": 1
+      },
+      "archive": 16,
+      "legacy": 0,
+      "any": 16,
+      "archiveBars": 3863,
+      "legacyBars": 0,
+      "completeUniqueDays": 3863,
+      "confirmedArchiveDays": 99,
+      "reviewedSourceDays": 0,
+      "assessedSessions": 3711,
+      "coveredSessions": 3454,
+      "beforeCalendarDays": 418,
+      "sourceConflictDays": 0,
+      "statusConflictDays": 0,
+      "incompleteDays": 0,
+      "unknownStartCompanies": 16,
+      "missingSessions": 253,
+      "unverifiedSessions": 4,
+      "noTradeSessions": 9
+    },
+    {
+      "mic": "XAMS",
+      "approvedCompanies": 80,
+      "latestClosed": "2026-11-27",
+      "latestStored": "2026-11-27",
+      "counts": {
+        "TRADED": 75,
+        "NO_TRADES": 5
+      },
+      "archive": 80,
+      "legacy": 80,
+      "any": 80,
+      "archiveBars": 847,
+      "legacyBars": 363586,
+      "completeUniqueDays": 364357,
+      "confirmedArchiveDays": 847,
+      "reviewedSourceDays": 0,
+      "assessedSessions": 38385,
+      "coveredSessions": 37232,
+      "beforeCalendarDays": 327155,
+      "sourceConflictDays": 0,
+      "statusConflictDays": 0,
+      "incompleteDays": 4,
+      "unknownStartCompanies": 80,
+      "missingSessions": 1150,
+      "unverifiedSessions": 3,
+      "noTradeSessions": 30
+    },
+    {
+      "mic": "XBRU",
+      "approvedCompanies": 105,
+      "latestClosed": "2026-11-27",
+      "latestStored": "2026-11-27",
+      "counts": {
+        "TRADED": 99,
+        "NO_TRADES": 6
+      },
+      "archive": 105,
+      "legacy": 0,
+      "any": 105,
+      "archiveBars": 2180,
+      "legacyBars": 0,
+      "completeUniqueDays": 2180,
+      "confirmedArchiveDays": 1065,
+      "reviewedSourceDays": 0,
+      "assessedSessions": 3885,
+      "coveredSessions": 2249,
+      "beforeCalendarDays": 0,
+      "sourceConflictDays": 0,
+      "statusConflictDays": 0,
+      "incompleteDays": 0,
+      "unknownStartCompanies": 105,
+      "missingSessions": 1615,
+      "unverifiedSessions": 21,
+      "noTradeSessions": 69
+    },
+    {
+      "mic": "XPAR",
+      "approvedCompanies": 664,
+      "latestClosed": "2026-11-27",
+      "latestStored": "2026-11-27",
+      "counts": {
+        "TRADED": 510,
+        "NO_TRADES": 149,
+        "SESSION_UNVERIFIED": 5
+      },
+      "archive": 633,
+      "legacy": 0,
+      "any": 633,
+      "archiveBars": 43436,
+      "legacyBars": 0,
+      "completeUniqueDays": 43436,
+      "confirmedArchiveDays": 5635,
+      "reviewedSourceDays": 0,
+      "assessedSessions": 33796,
+      "coveredSessions": 12076,
+      "beforeCalendarDays": 32941,
+      "sourceConflictDays": 0,
+      "statusConflictDays": 0,
+      "incompleteDays": 0,
+      "unknownStartCompanies": 663,
+      "missingSessions": 21637,
+      "unverifiedSessions": 83,
+      "noTradeSessions": 1581
+    }
+  ],
+  "predictions": {
+    "predictions": 2,
+    "closed": 0,
+    "hits30": 0,
+    "misses30": 0,
+    "hitRate": null,
+    "averageReturn": null,
+    "averageLoss": null,
+    "benchmarkComparisons": 0,
+    "averageBenchmarkReturn": null,
+    "averageExcessReturn": null,
+    "savedRecords": 4,
+    "unsealedRecords": 2,
+    "open": 2,
+    "byMarket": {
+      "XAMS": {
+        "predictions": 2,
+        "closed": 0,
+        "hits30": 0,
+        "misses30": 0,
+        "hitRate": null,
+        "averageReturn": null,
+        "averageLoss": null,
+        "benchmarkComparisons": 0,
+        "averageBenchmarkReturn": null,
+        "averageExcessReturn": null
+      },
+      "XBRU": {
+        "predictions": 0,
+        "closed": 0,
+        "hits30": 0,
+        "misses30": 0,
+        "hitRate": null,
+        "averageReturn": null,
+        "averageLoss": null,
+        "benchmarkComparisons": 0,
+        "averageBenchmarkReturn": null,
+        "averageExcessReturn": null
+      },
+      "XDUB": {
+        "predictions": 0,
+        "closed": 0,
+        "hits30": 0,
+        "misses30": 0,
+        "hitRate": null,
+        "averageReturn": null,
+        "averageLoss": null,
+        "benchmarkComparisons": 0,
+        "averageBenchmarkReturn": null,
+        "averageExcessReturn": null
+      },
+      "XLIS": {
+        "predictions": 0,
+        "closed": 0,
+        "hits30": 0,
+        "misses30": 0,
+        "hitRate": null,
+        "averageReturn": null,
+        "averageLoss": null,
+        "benchmarkComparisons": 0,
+        "averageBenchmarkReturn": null,
+        "averageExcessReturn": null
+      },
+      "XPAR": {
+        "predictions": 0,
+        "closed": 0,
+        "hits30": 0,
+        "misses30": 0,
+        "hitRate": null,
+        "averageReturn": null,
+        "averageLoss": null,
+        "benchmarkComparisons": 0,
+        "averageBenchmarkReturn": null,
+        "averageExcessReturn": null
+      }
+    },
+    "bySignal": {
+      "consensus": {
+        "predictions": 2,
+        "closed": 0,
+        "hits30": 0,
+        "misses30": 0,
+        "hitRate": null,
+        "averageReturn": null,
+        "averageLoss": null,
+        "benchmarkComparisons": 0,
+        "averageBenchmarkReturn": null,
+        "averageExcessReturn": null
+      }
+    },
+    "byHorizon": {
+      "3": {
+        "predictions": 2,
+        "closed": 0,
+        "hits30": 0,
+        "misses30": 0,
+        "hitRate": null,
+        "averageReturn": null,
+        "averageLoss": null,
+        "benchmarkComparisons": 0,
+        "averageBenchmarkReturn": null,
+        "averageExcessReturn": null
+      }
+    }
+  },
+  "previews": [
+    {
+      "mic": "XMIL",
+      "companies": 360,
+      "expectedCompanies": 360,
+      "operational": false,
+      "admissionBlockers": {
+        "UNVERIFIED_PUBLICATION_RIGHTS": 1
+      },
+      "sourceReview": {
+        "session": "2026-11-26",
+        "approved": 360,
+        "observed": 309,
+        "volumeMatches": 309,
+        "lastTradeMatches": 309,
+        "referenceCloseDifferences": 7,
+        "definitionUnresolved": 0,
+        "noTradeConfirmed": 51,
+        "unconfirmed": 0,
+        "issuerIdentities": 360
+      },
+      "sourceReviewError": null
+    },
+    {
+      "mic": "XOSL",
+      "companies": 244,
+      "expectedCompanies": 244,
+      "operational": false,
+      "admissionBlockers": {
+        "INCOMPLETE_OPERATIONAL_SOURCE_ROUTES": 1,
+        "UNVERIFIED_PUBLICATION_RIGHTS": 2
+      },
+      "sourceReview": null,
+      "sourceReviewError": null
+    }
+  ]
+}

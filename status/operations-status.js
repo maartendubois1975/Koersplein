@@ -85,6 +85,9 @@ function showMarket(market) {
       'Bronbeoordeling niet volledig naspeelbaar in deze build · ' + row.coverage.sourceReviewUnavailable.length,
       ...row.coverage.sourceConflicts.map(item => item.date + ' · ' + item.reason),
       ...row.coverage.statusConflicts.map(item => item.date + ' · ' + item.reason));
+    if (row.retainedReview) values.push('Bestaande centrale bron beoordeeld · ' + row.retainedReview.status,
+      'Complete handelsregels in bewaarde bron · ' + show(row.retainedReview.completeOhlcv),
+      'Referentie- of onvolledige regels uitgesloten · ' + show(row.retainedReview.excludedRows));
     return values.length ? expandable('Herkomst', values) : '—';
   }
   table(element('companies'), [
@@ -159,6 +162,17 @@ async function start() {
       'Nieuwe bronverzoeken · ' + show(recovery.networkRequests),
       'Bestaande koersregels en sessiebestanden behouden · ' + (recovery.existingEvidencePreserved ? 'ja' : 'onbevestigd')]));
   if (report.archiveWriter) element('archive-writer').textContent = 'Archiefschrijflock waargenomen bij build · gestart op ' + report.archiveWriter.startedAt;
+  const retained = report.retainedHistoryReview;
+  if (retained) element('retained-review').replaceChildren(expandable('Bewaarde historie hersteld · ' +
+    show(retained.restoredCompanies) + ' ondernemingen · ' + show(retained.restoredBars) + ' handelsregels',
+    ['Uitgevoerd op · ' + retained.performedAt, 'Alleen bestaande centrale opslag; geen nieuwe bronrechten aangenomen',
+      ...retained.companies.filter(row => row.status !== 'RESTORED_RETAINED_TRADES').map(row => row.name + ' · ' + row.status)]));
+  const sessions = report.sessionEvidenceReview;
+  if (sessions) element('session-review').replaceChildren(expandable('Oudere sessies opnieuw beoordeeld · ' +
+    show(sessions.reviewedSessions) + ' bevestigd zonder handel',
+    ['Beoordeeld op · ' + sessions.performedAt, 'Eerder onbevestigd bewijs behouden; geen koersen toegevoegd',
+      'Achteraf bevestigd met later bronbewijs; geen vooraf bekende informatie voor historische voorspellingen',
+      ...Object.entries(sessions.byMarket ?? {}).map(([mic, count]) => mic + ' · ' + count)]));
   if (report.previews.length) {
     const previews = element('previews');
     previews.hidden = false;

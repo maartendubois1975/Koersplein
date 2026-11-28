@@ -1,0 +1,326 @@
+[
+  {
+    "instrument": {
+      "isin": "ES0106042007",
+      "mic": "XMLI",
+      "symbol": "MLHA2",
+      "name": "HAY 2 SOCIMI",
+      "status": "SESSION_UNVERIFIED",
+      "bar": null,
+      "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
+      "evidence": {
+        "date": "2026-11-27",
+        "mic": "XMLI",
+        "isin": "ES0106042007",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0106042007-XMLI",
+        "retrievedAt": "2026-11-27T18:45:51.159Z",
+        "lastTradeDate": null,
+        "status": "SESSION_UNVERIFIED",
+        "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0106042007-XMLI",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-27T18:45:51.674Z"
+      },
+      "officialError": null,
+      "error": "Alle providers faalden voor ES0106042007: yahoo-chart: Yahoo HTTP 404 voor MLHA2.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0106042007-XMLI; mislukte vensters: 0",
+      "market": "XPAR",
+      "session": "2026-11-27",
+      "currency": "EUR"
+    },
+    "daily": {
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0106042007-XMLI",
+      "rows": [
+        {
+          "date": "2026-11-27",
+          "open": null,
+          "high": null,
+          "low": null,
+          "close": 38,
+          "adjustedClose": null,
+          "volume": 0
+        }
+      ]
+    },
+    "quote": {
+      "identityMatch": true,
+      "currency": "",
+      "lastTradeDate": null,
+      "valuationDate": "2026-11-27",
+      "status": "CLO",
+      "bookState": "1",
+      "haltReason": null,
+      "tradingState": "CLO",
+      "identityUnknown": false,
+      "sourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0106042007-XMLI",
+      "retrievedAt": "2026-11-28T06:17:55.902Z",
+      "sourceSha256": "1d6dcd965a27d94decb64a67b1ac9a286e96cc041c3aa03169a7542a4e2a39f4"
+    }
+  },
+  {
+    "instrument": {
+      "isin": "ES0105910006",
+      "mic": "XMLI",
+      "symbol": "MLSJA",
+      "name": "SAJA REAL ESTATE",
+      "status": "SESSION_UNVERIFIED",
+      "bar": null,
+      "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
+      "evidence": {
+        "date": "2026-11-27",
+        "mic": "XMLI",
+        "isin": "ES0105910006",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105910006-XMLI",
+        "retrievedAt": "2026-11-27T18:46:21.558Z",
+        "lastTradeDate": null,
+        "status": "SESSION_UNVERIFIED",
+        "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105910006-XMLI",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-27T18:46:21.969Z"
+      },
+      "officialError": null,
+      "error": "Alle providers faalden voor ES0105910006: yahoo-chart: Yahoo HTTP 404 voor MLSJA.PA; euronext-live: Geen verhandelde Euronext koershistorie voor ES0105910006-XMLI; mislukte vensters: 0",
+      "market": "XPAR",
+      "session": "2026-11-27",
+      "currency": "EUR"
+    },
+    "daily": {
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/ES0105910006-XMLI",
+      "rows": [
+        {
+          "date": "2026-11-27",
+          "open": null,
+          "high": null,
+          "low": null,
+          "close": 10,
+          "adjustedClose": null,
+          "volume": 0
+        }
+      ]
+    },
+    "quote": {
+      "identityMatch": true,
+      "currency": "",
+      "lastTradeDate": null,
+      "valuationDate": "2026-11-27",
+      "status": "CLO",
+      "bookState": "1",
+      "haltReason": null,
+      "tradingState": "CLO",
+      "identityUnknown": false,
+      "sourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/ES0105910006-XMLI",
+      "retrievedAt": "2026-11-28T06:17:56.130Z",
+      "sourceSha256": "318bc85da389c38b1786298bd853fac49995dab4b36441dbdf86149f684e80f8"
+    }
+  },
+  {
+    "instrument": {
+      "isin": "FR001400QW73",
+      "mic": "XMLI",
+      "symbol": "MLIME",
+      "name": "IMEON ENERGY",
+      "status": "SESSION_UNVERIFIED",
+      "bar": null,
+      "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
+      "evidence": {
+        "date": "2026-11-27",
+        "mic": "XMLI",
+        "isin": "FR001400QW73",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR001400QW73-XMLI",
+        "retrievedAt": "2026-11-27T18:45:56.562Z",
+        "lastTradeDate": null,
+        "status": "SESSION_UNVERIFIED",
+        "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/FR001400QW73-XMLI",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-27T18:45:56.872Z"
+      },
+      "officialError": null,
+      "error": "Alle providers faalden voor FR001400QW73: yahoo-chart: Yahoo HTTP 404 voor MLIME.PA; euronext-live: Geen verhandelde Euronext koershistorie voor FR001400QW73-XMLI; mislukte vensters: 0",
+      "market": "XPAR",
+      "session": "2026-11-27",
+      "currency": "EUR"
+    },
+    "daily": {
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR001400QW73-XMLI",
+      "rows": [
+        {
+          "date": "2026-11-27",
+          "open": null,
+          "high": null,
+          "low": null,
+          "close": 5.45,
+          "adjustedClose": null,
+          "volume": 0
+        }
+      ]
+    },
+    "quote": {
+      "identityMatch": true,
+      "currency": "",
+      "lastTradeDate": null,
+      "valuationDate": "2026-11-27",
+      "status": "CLO",
+      "bookState": "1",
+      "haltReason": null,
+      "tradingState": "CLO",
+      "identityUnknown": false,
+      "sourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/FR001400QW73-XMLI",
+      "retrievedAt": "2026-11-28T06:17:57.062Z",
+      "sourceSha256": "2409ad3529c1ce45ac5840607f4c6f43f8af55b87b7efc4e6c29d18cecb22715"
+    }
+  },
+  {
+    "instrument": {
+      "isin": "FR0014011QJ8",
+      "mic": "ALXP",
+      "symbol": "ALEUP",
+      "name": "EUROPLASMA",
+      "status": "SESSION_UNVERIFIED",
+      "bar": null,
+      "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
+      "evidence": null,
+      "officialError": null,
+      "error": "Alle providers faalden voor FR0014011QJ8: yahoo-chart: Provider returned no usable bars in requested range; euronext-live: Geen verhandelde Euronext koershistorie voor FR0014011QJ8-ALXP; mislukte vensters: 0",
+      "lastConfirmedBar": {
+        "date": "2026-11-26",
+        "open": 2.009999990463257,
+        "high": 2.190000057220459,
+        "low": 1.899999976158142,
+        "close": 2,
+        "adjustedClose": 2,
+        "volume": 6993
+      },
+      "market": "XPAR",
+      "session": "2026-11-27",
+      "currency": "EUR"
+    },
+    "daily": {
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/FR0014011QJ8-ALXP",
+      "rows": []
+    },
+    "quote": {
+      "identityMatch": true,
+      "currency": "",
+      "lastTradeDate": null,
+      "valuationDate": "2026-11-26",
+      "status": "CLO",
+      "bookState": "1",
+      "haltReason": null,
+      "tradingState": "CLO",
+      "identityUnknown": false,
+      "sourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/FR0014011QJ8-ALXP",
+      "retrievedAt": "2026-11-28T06:17:57.334Z",
+      "sourceSha256": "8fc342ff018893b398b623995f460180b240c6c815d6345d74fc3dfdef51cfc2"
+    }
+  },
+  {
+    "instrument": {
+      "isin": "IT0005613739",
+      "mic": "XMLI",
+      "symbol": "MLGL",
+      "name": "GLASS TO POWER",
+      "status": "SESSION_UNVERIFIED",
+      "bar": null,
+      "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
+      "evidence": {
+        "date": "2026-11-27",
+        "mic": "XMLI",
+        "isin": "IT0005613739",
+        "provider": "euronext-live",
+        "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IT0005613739-XMLI",
+        "retrievedAt": "2026-11-27T18:45:48.520Z",
+        "lastTradeDate": null,
+        "status": "SESSION_UNVERIFIED",
+        "reasonCode": "NO_EXECUTED_TRADE_EVIDENCE",
+        "quoteSourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/IT0005613739-XMLI",
+        "currentTradingState": "CLO",
+        "currentHaltReason": null,
+        "stateObservedAt": "2026-11-27T18:45:48.900Z"
+      },
+      "officialError": null,
+      "error": "Alle providers faalden voor IT0005613739: yahoo-chart: Yahoo HTTP 404 voor MLGL.PA; euronext-live: Geen verhandelde Euronext koershistorie voor IT0005613739-XMLI; mislukte vensters: 0",
+      "market": "XPAR",
+      "session": "2026-11-27",
+      "currency": "EUR"
+    },
+    "daily": {
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IT0005613739-XMLI",
+      "rows": [
+        {
+          "date": "2026-11-27",
+          "open": null,
+          "high": null,
+          "low": null,
+          "close": 4.5,
+          "adjustedClose": null,
+          "volume": 0
+        }
+      ]
+    },
+    "quote": {
+      "identityMatch": true,
+      "currency": "",
+      "lastTradeDate": null,
+      "valuationDate": "2026-11-27",
+      "status": "CLO",
+      "bookState": "1",
+      "haltReason": null,
+      "tradingState": "CLO",
+      "identityUnknown": false,
+      "sourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/IT0005613739-XMLI",
+      "retrievedAt": "2026-11-28T06:17:58.545Z",
+      "sourceSha256": "34f43a0acae5e6e8032de6345632228a5a89cb841ca12a3ac677f373622ddf56"
+    }
+  },
+  {
+    "instrument": {
+      "isin": "IE00BLP58571",
+      "mic": "XMSM",
+      "symbol": "IR5B",
+      "name": "Irish Continental Group",
+      "status": "SESSION_UNVERIFIED",
+      "bar": null,
+      "reasonCode": "PROVIDER_DATA_UNAVAILABLE",
+      "evidence": null,
+      "officialError": null,
+      "error": "Alle providers faalden voor IE00BLP58571: euronext-live: Geen verhandelde Euronext koershistorie voor IE00BLP58571-XMSM; mislukte vensters: 0",
+      "lastConfirmedBar": {
+        "date": "2026-11-20",
+        "open": 7.96,
+        "high": 8,
+        "low": 7.96,
+        "close": 7.96,
+        "adjustedClose": null,
+        "volume": 21719
+      },
+      "market": "XDUB",
+      "session": "2026-11-27",
+      "currency": "EUR"
+    },
+    "daily": {
+      "sourceUrl": "https://live.euronext.com/en/ajax/getHistoricalPricePopup/IE00BLP58571-XMSM",
+      "rows": []
+    },
+    "quote": {
+      "identityMatch": true,
+      "currency": "EUR",
+      "lastTradeDate": "2026-11-20",
+      "valuationDate": "2026-11-23",
+      "status": "CLO",
+      "bookState": "1",
+      "haltReason": null,
+      "tradingState": "CLO",
+      "identityUnknown": false,
+      "sourceUrl": "https://live.euronext.com/en/ajax/getDetailedQuote/IE00BLP58571-XMSM",
+      "retrievedAt": "2026-11-28T06:17:58.702Z",
+      "sourceSha256": "ca95239dc1212c1adfcff55555ceb6c3b6de037316b21ae2cb2dd92b32287385"
+    }
+  }
+]

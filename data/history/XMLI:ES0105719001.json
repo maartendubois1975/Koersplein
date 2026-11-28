@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "ES0105719001",
+    "mic": "XMLI",
+    "symbol": "MLBIO",
+    "name": "NORTEM BIOGROUP",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "retained-approved-archive",
+    "role": "reviewed-retained-history",
+    "metadata": {
+      "originalProvider": "yahoo-chart",
+      "originalRetrievedAt": "2026-10-17 08:36:21",
+      "retainedObservedAt": "2026-11-28T06:23:28.366Z",
+      "sourceUrl": "https://koersplein.maarten-dubois1975.workers.dev/api/history/XMLI:ES0105719001",
+      "sourceSha256": "4cd6e7bc6321edc455e362f2207047d5cc93995682e5e4b3eea9eb0538bf10f8",
+      "evidenceSha256": "8a53cb2a30150d852b97c37acb5a78bf3451b73bdaa6a7b4992067d265677dc7",
+      "priceBasis": "UNVERIFIED",
+      "completenessEvidenceVerified": false,
+      "backfillComplete": false
+    },
+    "licenseNote": "Provider- en herdistributierechten moeten voor productie afzonderlijk worden vastgesteld."
+  },
+  "coverage": {
+    "firstDate": "2023-09-27",
+    "lastDate": "2024-02-22",
+    "recordCount": 3,
+    "records": 3
+  },
+  "bars": [
+    {
+      "date": "2023-09-27",
+      "open": 5.400000095367432,
+      "high": 5.400000095367432,
+      "low": 5.400000095367432,
+      "close": 5.400000095367432,
+      "volume": 4,
+      "adjustedClose": 5.400000095367432
+    },
+    {
+      "date": "2024-02-21",
+      "open": 5.400000095367432,
+      "high": 5.400000095367432,
+      "low": 5.400000095367432,
+      "close": 5.400000095367432,
+      "volume": 10,
+      "adjustedClose": 5.400000095367432
+    },
+    {
+      "date": "2024-02-22",
+      "open": 5.400000095367432,
+      "high": 5.400000095367432,
+      "low": 5.400000095367432,
+      "close": 5.400000095367432,
+      "volume": 3490,
+      "adjustedClose": 5.400000095367432
+    }
+  ]
+}

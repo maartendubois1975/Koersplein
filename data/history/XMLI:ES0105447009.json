@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "instrument": {
+    "isin": "ES0105447009",
+    "mic": "XMLI",
+    "symbol": "MLMAQ",
+    "name": "MAQ ADMON. URBANAS",
+    "currency": "EUR"
+  },
+  "provider": {
+    "name": "retained-approved-archive",
+    "role": "reviewed-retained-history",
+    "metadata": {
+      "originalProvider": "yahoo-chart",
+      "originalRetrievedAt": "2026-10-17 08:35:55",
+      "retainedObservedAt": "2026-11-28T06:23:28.366Z",
+      "sourceUrl": "https://koersplein.maarten-dubois1975.workers.dev/api/history/XMLI:ES0105447009",
+      "sourceSha256": "3a1beb0ac8ea301b84b00be342e8955d484e158fde3aeddbe2c62c73ed84b046",
+      "evidenceSha256": "8a53cb2a30150d852b97c37acb5a78bf3451b73bdaa6a7b4992067d265677dc7",
+      "priceBasis": "UNVERIFIED",
+      "completenessEvidenceVerified": false,
+      "backfillComplete": false
+    },
+    "licenseNote": "Provider- en herdistributierechten moeten voor productie afzonderlijk worden vastgesteld."
+  },
+  "coverage": {
+    "firstDate": "2019-12-30",
+    "lastDate": "2020-01-27",
+    "recordCount": 3,
+    "records": 3
+  },
+  "bars": [
+    {
+      "date": "2019-12-30",
+      "open": 8.260000228881836,
+      "high": 8.260000228881836,
+      "low": 8.260000228881836,
+      "close": 8.260000228881836,
+      "volume": 1,
+      "adjustedClose": 6.991336345672607
+    },
+    {
+      "date": "2020-01-16",
+      "open": 8.300000190734863,
+      "high": 8.300000190734863,
+      "low": 8.300000190734863,
+      "close": 8.300000190734863,
+      "volume": 1,
+      "adjustedClose": 7.0251922607421875
+    },
+    {
+      "date": "2020-01-27",
+      "open": 8.300000190734863,
+      "high": 8.300000190734863,
+      "low": 8.300000190734863,
+      "close": 8.300000190734863,
+      "volume": 1,
+      "adjustedClose": 7.0251922607421875
+    }
+  ]
+}
