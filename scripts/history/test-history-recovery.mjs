@@ -16,7 +16,9 @@ const read = file => fs.readFile(file, 'utf8').then(JSON.parse);
 const write = (file, doc) => fs.writeFile(file, JSON.stringify(doc, null, 2) + '\n');
 const hash = raw => createHash('sha256').update(raw).digest('hex');
 const catalog = await loadCompanyCatalog('XAMS');
-const names = (await fs.readdir('data/daily-sessions/XAMS')).filter(name => name.endsWith('.json')).sort().slice(-2);
+// Freeze the retained real observations for this replay. Future suspensions or
+// unverified daily collections must not change this regression's input case.
+const names = ['2026-11-26.json', '2026-11-27.json'];
 assert.equal(names.length, 2);
 const snapshots = await Promise.all(names.map(name => read('data/daily-sessions/XAMS/' + name)));
 const last = snapshots.at(-1), now = new Date(last.session + 'T22:00:00Z');
