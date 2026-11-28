@@ -71,9 +71,24 @@ export async function loadForecastHistory(share, mic, options) {
     try { reviews = JSON.parse(await fs.readFile(join(options?.dataDir || 'data', 'forecast-input-reviews.json'), 'utf8')); }
     catch (reviewError) { if (reviewError.code === 'ENOENT') throw error; throw reviewError; }
     const identity = { ...listingIdentity(share, mic, options.cutoff), currency: options.currency || share.currency || 'EUR' };
-    const review = reviews.schemaVersion === 1 && reviews.instruments?.[identity.storageKey];
-    if (!review || review.asOf !== options.cutoff) throw error;
+    if (reviews.schemaVersion !== 1) throw error;
+    const { resolveForecastReview, deriveForecastRollforward, forecastReviewHash } = await import('./forecast-rollforward.mjs');
+    const selected = resolveForecastReview(reviews, identity.storageKey, options.cutoff);
+    if (!selected) throw error;
+    const { review, entry } = selected;
     const bars = await loadApprovedHistory(share, mic, options);
+    if (entry) {
+      if (!/^forecast-input-evidence\/[a-f0-9]{64}\.json\.gz$/.test(entry.evidence?.file || '') ||
+          !entry.evidence.file.includes(entry.evidence.sha256)) throw Error('FORECAST_ROLLING_EVIDENCE_REFERENCE_INVALID');
+      const bytes = await fs.readFile(join(options?.dataDir || 'data', entry.evidence.file));
+      if (createHash('sha256').update(bytes).digest('hex') !== entry.evidence.sha256) throw Error('FORECAST_ROLLING_EVIDENCE_CHANGED');
+      const { gunzipSync } = await import('node:zlib');
+      const record = JSON.parse(gunzipSync(bytes)).find(row => row.key === identity.storageKey && row.reviewSha256 === entry.reviewSha256);
+      if (!record) throw Error('FORECAST_ROLLING_EVIDENCE_ABSENT');
+      const parent = resolveForecastReview(reviews, identity.storageKey, entry.parent.asOf)?.review;
+      const replay = deriveForecastRollforward(bars, parent, record.evidence, new Date(entry.createdAt));
+      if (forecastReviewHash({ ...replay, evidence: entry.evidence }) !== forecastReviewHash(entry)) throw Error('FORECAST_ROLLING_REPLAY_CHANGED');
+    }
     return reviewedForecastWindow(bars, review, identity, options.cutoff);
   }
 }

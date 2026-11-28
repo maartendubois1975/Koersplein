@@ -10,7 +10,7 @@ import {inspectDailyBarIntegrity,mapConcurrent} from './europe-run-policy.mjs';
 import {latestClosedSession,sessionCalendar} from '../history/trading-calendar.mjs';
 import {listingIdentity,validSessionDate} from '../../daily-session-view.mjs';
 
-export async function collectApprovedSession({market,session,now=new Date(),catalog,registry=createDefaultProviderRegistry(),official=officialDailyStatus,concurrency=4,priorSnapshot}={}){
+export async function collectApprovedSession({market,session,now=new Date(),catalog,registry=createDefaultProviderRegistry(),official=officialDailyStatus,concurrency=4,priorSnapshot,sourceRegistry=marketSources}={}){
  session??=latestClosedSession(market,now);
  if(!validSessionDate(session)||session>now.toISOString().slice(0,10)||[0,6].includes(new Date(session+'T12:00:00Z').getUTCDay()))throw Error('Invalid or unclosed target session '+session);
  const calendar=sessionCalendar(market,session);
@@ -35,7 +35,7 @@ export async function collectApprovedSession({market,session,now=new Date(),cata
   if(!calendar.open){results.push({...identity,status:'MARKET_CLOSED',bar:null,evidence:{sourceUrl:calendar.sourceUrl,date:session,verification:'OFFICIAL_TRADING_CALENDAR'}});return;}
   let officialError=null,officialEvidence=null;
   try{
-   const officialProvider=marketSources.markets[market]?.officialDailyProvider;
+   const officialProvider=sourceRegistry.markets[market]?.officialDailyProvider;
    const status=establishedMarkets.has(market)||officialProvider?await official(instrument,session):null;
    if(officialProvider&&status&&status.provider!==officialProvider)throw Error('OFFICIAL_DAILY_PROVIDER_MISMATCH');
    officialEvidence=status;
@@ -46,7 +46,7 @@ export async function collectApprovedSession({market,session,now=new Date(),cata
    if(bar){results.push({...identity,status:'TRADED',bar,provider:status.provider,sourceUrl:status.sourceUrl});return;}
   }catch(error){officialError=error.message;}
   try{
-   const route=providerRoute(instrument,{mode:'update'});
+   const route=providerRoute(instrument,{mode:'update',sourceRegistry});
    const {provider,result}=await registry.fetchDaily(instrument,range,route.primary,{allowedProviderIds:route.allowedProviderIds,timeoutMs:20000,acceptResult:r=>r.providerMeta?.partialHistory!==true&&Boolean(exact(r))});
    results.push({...identity,status:'TRADED',bar:exact(result),provider:provider.id,sourceUrl:result.requestUrl,officialError});
   }catch(error){results.push({...identity,status:'SESSION_UNVERIFIED',bar:null,reasonCode:officialEvidence?.reasonCode||(officialError?'OFFICIAL_SOURCE_ERROR':'PROVIDER_DATA_UNAVAILABLE'),evidence:officialEvidence,officialError,error:error.message});}

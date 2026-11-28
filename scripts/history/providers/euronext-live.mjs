@@ -67,12 +67,17 @@ export function decodeEuronextBody(text){
  if(!html.length)throw Error('EURONEXT_TRANSPORT_NO_HTML');
  return html.join('\n');
 }
-export async function euronextDailySnapshot(i,date,signal,adjusted='N'){
- if(!['Y','N'].includes(adjusted))throw Error('Invalid adjustment mode');
+export async function euronextHistoricalSnapshot(i,{startDate,endDate,adjusted='N'},signal){
+ if(!['Y','N'].includes(adjusted)||!/^\d{4}-\d{2}-\d{2}$/.test(startDate)||!/^\d{4}-\d{2}-\d{2}$/.test(endDate)||startDate>endDate)throw Error('Invalid historical snapshot range');
  const key=`${i.isin}-${euronextProviderMic(i.mic)}`,sourceUrl=ROOT+encodeURIComponent(key);
- const r=await fetch(sourceUrl,{method:'POST',signal,headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},body:new URLSearchParams({adjusted,startdate:date,enddate:date,nbSession:'100000'})});
+ const r=await fetch(sourceUrl,{method:'POST',signal,headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8','X-Requested-With':'XMLHttpRequest'},body:new URLSearchParams({adjusted,startdate:startDate,enddate:endDate,nbSession:'100000'})});
  if(!r.ok)throw Error('Euronext HTTP '+r.status);
- return {sourceUrl,rows:parseEuronextHistoryRows(decodeEuronextBody(await r.text()))};
+ const raw=await r.text();
+ return {sourceUrl,rows:parseEuronextHistoryRows(decodeEuronextBody(raw)),sourceSha256:createHash('sha256').update(raw).digest('hex'),retrievedAt:new Date().toISOString()};
+}
+export async function euronextDailySnapshot(i,date,signal,adjusted='N'){
+ const {sourceUrl,rows}=await euronextHistoricalSnapshot(i,{startDate:date,endDate:date,adjusted},signal);
+ return {sourceUrl,rows};
 }
 export class EuronextLiveProvider{
  id=PROVIDER_ID;name='Euronext Live historical prices';requiresApiKey=false;

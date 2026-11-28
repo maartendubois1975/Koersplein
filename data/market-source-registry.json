@@ -73,33 +73,44 @@
     },
     "XMIL": {
       "status": "APPROVED",
-      "catalogFingerprint": "0b230cc2edf398a7e682187076133b541ab94a767c0359c063317394dfd06051",
+      "catalogFingerprint": "02d2d762d1852e72d5742cf83be024baf46a569c720a268ea2c94460a95fe7ec",
       "catalogSource": "https://live.euronext.com/en/product_directory/data/stocks-milan/download?mics=XMIL%2CMTAA%2CEXGM",
       "historySources": [
         {
-          "provider": "yahoo-isin-resolver",
-          "role": "DISCOVERY_FALLBACK",
-          "note": "ISIN-first resolver used when direct symbol and official history route fail."
+          "provider": "euronext-live",
+          "role": "PRIMARY",
+          "note": "Existing 360-company source replay: 153650 complete bars. Public archive permission separately unconfirmed."
         },
         {
           "provider": "yahoo-chart",
-          "role": "PRIMARY",
-          "note": "Full-catalog preflight: 400/401 instruments."
-        },
-        {
-          "provider": "euronext-live",
-          "role": "INDEPENDENT_FALLBACK_VALIDATION",
-          "note": "Independently tested on full catalog: 0/401; 0 additional instruments beyond primary."
+          "role": "CANDIDATE_PUBLIC",
+          "note": "360 technical histories; unresolved corporate identity and price/volume differences prohibit automatic fallback."
         }
       ],
       "discovery": {
-        "testedDifficultSymbols": 20,
-        "testedFullCatalog": 401,
+        "testedFullCatalog": 360,
         "coverageRatio": 1,
-        "crossCheckedSymbols": 0,
-        "crossCheckRatio": 0,
-        "sourceCountTested": 4,
-        "note": "Official catalog is tested before backfill. Every instrument must be source-covered or explicitly proven DATA_UNAVAILABLE; unresolved instruments block approval."
+        "reviewedOn": "2026-11-27",
+        "note": "Technical acquisition approval only; no operational activation without explicit free public display/archive permission.",
+        "sourceCountTested": 2
+      },
+      "officialDailyProvider": "euronext-live",
+      "dailySources": [
+        {
+          "provider": "euronext-live",
+          "role": "PRIMARY",
+          "note": "Technical source reviewed: 360 dated identities, 309 traded/51 corroborated no-trade on 2026-11-26. Public permission is separately unconfirmed."
+        }
+      ],
+      "publication": {
+        "euronext-live": {
+          "free": null,
+          "publicArchive": null,
+          "publicDisplay": null,
+          "evidenceUrl": "https://connect2.euronext.com/sites/default/files/documentation/data/EMDA%20General%20Terms%20and%20Conditions%20and%20Policies%20%28effective%201%20October%202026%29_3.pdf",
+          "decision": "UNCONFIRMED",
+          "decisionFile": "research/admission/2026-11-27/free-publication-decision.json"
+        }
       }
     },
     "XOSL": {

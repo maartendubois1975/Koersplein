@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "goldenCopy": {
+      "publishDate": "2026-11-27T00:00:00Z"
+    }
+  },
+  "data": {
+    "type": "lei-records",
+    "id": "8156008B101B97A43B02",
+    "attributes": {
+      "lei": "8156008B101B97A43B02",
+      "entity": {
+        "legalName": {
+          "name": "Cementir Holding N.V.",
+          "language": "nl"
+        },
+        "otherNames": [],
+        "transliteratedOtherNames": [],
+        "legalAddress": {
+          "language": "nl",
+          "addressLines": [
+            "Corso di Francia no. 200"
+          ],
+          "addressNumber": null,
+          "addressNumberWithinBuilding": null,
+          "mailRouting": null,
+          "city": "Rome",
+          "region": null,
+          "country": "IT",
+          "postalCode": "00191"
+        },
+        "headquartersAddress": {
+          "language": "nl",
+          "addressLines": [
+            "Corso di Francia no. 200"
+          ],
+          "addressNumber": null,
+          "addressNumberWithinBuilding": null,
+          "mailRouting": null,
+          "city": "Rome",
+          "region": null,
+          "country": "IT",
+          "postalCode": "00191"
+        },
+        "registeredAt": {
+          "id": "RA000463",
+          "other": null
+        },
+        "registeredAs": "76026728",
+        "jurisdiction": "NL",
+        "category": "GENERAL",
+        "legalForm": {
+          "id": "B5PM",
+          "other": null
+        },
+        "associatedEntity": {
+          "lei": null,
+          "name": null
+        },
+        "status": "ACTIVE",
+        "expiration": {
+          "date": null,
+          "reason": null
+        },
+        "successorEntity": {
+          "lei": null,
+          "name": null
+        },
+        "successorEntities": [],
+        "creationDate": "2019-10-04T22:00:00Z",
+        "subCategory": null,
+        "otherAddresses": [],
+        "eventGroups": []
+      },
+      "registration": {
+        "initialRegistrationDate": "2014-02-12T18:21:35Z",
+        "lastUpdateDate": "2026-05-26T05:10:39Z",
+        "status": "ISSUED",
+        "nextRenewalDate": "2027-05-26T20:30:21Z",
+        "managingLou": "724500A93Z8V1MJK5349",
+        "corroborationLevel": "FULLY_CORROBORATED",
+        "validatedAt": {
+          "id": "RA000463",
+          "other": null
+        },
+        "validatedAs": "76026728",
+        "otherValidationAuthorities": []
+      },
+      "bic": [
+        "CEMHITR1XXX"
+      ],
+      "mic": null,
+      "ocid": "nl/76026728",
+      "qcc": null,
+      "gem": "E100002005093",
+      "spglobal": [
+        "11211196"
+      ],
+      "conformityFlag": "CONFORMING"
+    },
+    "relationships": {
+      "managing-lou": {
+        "links": {
+          "related": "https://api.gleif.org/api/v1/lei-records/8156008B101B97A43B02/managing-lou"
+        }
+      },
+      "lei-issuer": {
+        "links": {
+          "related": "https://api.gleif.org/api/v1/lei-records/8156008B101B97A43B02/lei-issuer"
+        }
+      },
+      "field-modifications": {
+        "links": {
+          "related": "https://api.gleif.org/api/v1/lei-records/8156008B101B97A43B02/field-modifications"
+        }
+      },
+      "direct-parent": {
+        "links": {
+          "relationship-record": "https://api.gleif.org/api/v1/lei-records/8156008B101B97A43B02/direct-parent-relationship",
+          "lei-record": "https://api.gleif.org/api/v1/lei-records/8156008B101B97A43B02/direct-parent"
+        }
+      },
+      "ultimate-parent": {
+        "links": {
+          "relationship-record": "https://api.gleif.org/api/v1/lei-records/8156008B101B97A43B02/ultimate-parent-relationship",
+          "lei-record": "https://api.gleif.org/api/v1/lei-records/8156008B101B97A43B02/ultimate-parent"
+        }
+      },
+      "direct-children": {
+        "links": {
+          "relationship-records": "https://api.gleif.org/api/v1/lei-records/8156008B101B97A43B02/direct-child-relationships",
+          "related": "https://api.gleif.org/api/v1/lei-records/8156008B101B97A43B02/direct-children"
+        }
+      }
+    },
+    "links": {
+      "self": "https://api.gleif.org/api/v1/lei-records/8156008B101B97A43B02"
+    }
+  }
+}

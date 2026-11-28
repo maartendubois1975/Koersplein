@@ -115,5 +115,146 @@
     "hit30Date": null,
     "result30": null,
     "benchmarkReturn": null
+  },
+  {
+    "selectionDate": "2026-11-27",
+    "market": "XAMS",
+    "venue": "Euronext Amsterdam",
+    "currency": "EUR",
+    "targetPct": 30,
+    "horizonMonths": 3,
+    "status": "OPEN",
+    "frozen": true,
+    "createdAt": "2026-11-28T05:21:36.258Z",
+    "modelVersion": "consensus-price-v2-auditable",
+    "signalType": "consensus",
+    "benchmarkAtSelection": [
+      {
+        "isin": "BMG3602E1084",
+        "referenceClose": 23.4
+      },
+      {
+        "isin": "GB00BNTJ3546",
+        "referenceClose": 10.04
+      },
+      {
+        "isin": "NL0000313286",
+        "referenceClose": 23.6
+      },
+      {
+        "isin": "NL0000334118",
+        "referenceClose": 618.6
+      },
+      {
+        "isin": "NL0000379121",
+        "referenceClose": 42.41
+      },
+      {
+        "isin": "NL0000852523",
+        "referenceClose": 45
+      },
+      {
+        "isin": "NL0009269109",
+        "referenceClose": 82.6
+      },
+      {
+        "isin": "NL0009432491",
+        "referenceClose": 53
+      },
+      {
+        "isin": "NL0010407946",
+        "referenceClose": 35.6
+      },
+      {
+        "isin": "NL0010801007",
+        "referenceClose": 106.65
+      },
+      {
+        "isin": "NL0011660485",
+        "referenceClose": 2.035
+      },
+      {
+        "isin": "NL0011832811",
+        "referenceClose": 5.7
+      },
+      {
+        "isin": "NL0011872650",
+        "referenceClose": 31.26
+      },
+      {
+        "isin": "NL0012866412",
+        "referenceClose": 140.4
+      },
+      {
+        "isin": "NL0012969182",
+        "referenceClose": 882.6
+      },
+      {
+        "isin": "NL0013332471",
+        "referenceClose": 3.36
+      },
+      {
+        "isin": "NL00150006Z9",
+        "referenceClose": 0.58
+      },
+      {
+        "isin": "NL0015002K83",
+        "referenceClose": 18.05
+      }
+    ],
+    "name": "IMCD",
+    "ticker": "IMCD",
+    "isin": "NL0010801007",
+    "referenceDate": "2026-11-27",
+    "referenceClose": 106.65,
+    "consensusRank": 10,
+    "componentRanks": {
+      "momentum": 2,
+      "balanced": 2,
+      "acceleration": 4,
+      "breakout": 2
+    },
+    "componentScores": {
+      "momentum": 0.24964227,
+      "balanced": 0.72564828,
+      "acceleration": 0.05578714,
+      "breakout": 0.31045471
+    },
+    "features": {
+      "m1": 0.04918839,
+      "m3": 0.08693434,
+      "m6": 0.2061751,
+      "m12": 0.40587924,
+      "volatility126": 0.01675557,
+      "recovery52w": 0.52139804,
+      "drawdown52w": 0,
+      "previous3m": 0.10970374,
+      "acceleration3m": -0.02276941
+    },
+    "audit": {
+      "universeCount": 80,
+      "eligibleCount": 18,
+      "failedCount": 62,
+      "coveragePct": 22.5,
+      "historyWindowSha256": "9dfd9415870273b1fdf359f38d558c8b7e4f0de2b403801a35b594e6827ca649"
+    },
+    "recordHash": "bb65531035bac0db9a314509541d274656ef2a4f1fe93ed0a375335f2894aa6e",
+    "immutable": true,
+    "evaluationVersion": "bounded-calendar-v1",
+    "endDate": "2027-02-27",
+    "latestDate": "2026-11-27",
+    "latestClose": 106.65,
+    "currentReturn": 0,
+    "maxReturn": 0,
+    "maxDrawdown": 0,
+    "observedThrough": "2026-11-27",
+    "hit10": false,
+    "hit10Date": null,
+    "hit20": false,
+    "hit20Date": null,
+    "hit30": false,
+    "hit30Date": null,
+    "result30": null,
+    "benchmarkReturn": null
   }
 ]

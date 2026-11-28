@@ -1,0 +1,7 @@
+# Werkelijke uitvoering 28 november
+
+De bestaande 27-novemberkoersarchieven zijn behouden. De eerste broncontrole zette 17 van 18 handmatig toegelaten ondernemingen voort; Acomo kreeg een timeout. Een gecontroleerde herhaling zette Acomo voort en hergebruikte de 17 eerder geslaagde dossiers zonder nieuwe bronverzoeken daarvoor. De handmatige bronbesluiten zijn ongewijzigd; dagelijkse bronbestanden zijn inhoudsgebonden en append-only opgeslagen.
+
+De normale selectieschrijver koos daarna IMCD op basis van 27 november, vastgelegd op 28 november 2026 om 05:21:36 UTC, vóór de eerstvolgende beursopening. Het cohort en de vooraf vastgelegde gelijkgewogen prijsbenchmark tellen achttien ondernemingen. De bestaande Basic-Fit-selectie met benchmark van twee bedrijven is niet aangepast. Er zijn twee open verzegelde voorspellingen en nog geen afgeronde gevalideerde uitkomsten. De vrijdagreferentie is geen gegarandeerde maandagse uitvoeringsprijs; dividend en transactiekosten zijn niet verwerkt.
+
+De broncontrole en selectie zijn uitgevoerd als onderzoeksverwerking van reeds opgeslagen afgesloten sessies. Er is geen handmatige importworkflow, nieuwe service of deployment gestart. Milaan blijft buiten het operationele register wegens onbevestigde kosteloze herpublicatierechten. De technische Milanese keten is met de echte 360-bedrijvenreplay getest. De openbare testsite blijft onder de bestaande geplande publicatiebeveiliging.

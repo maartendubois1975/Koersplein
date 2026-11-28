@@ -32,4 +32,4 @@ try{
  assert.equal(report.freshnessCutoff,'2026-10-16');
  assert.equal(report.historyCompleteness,'NOT_PROVEN_BY_DAILY_AUDIT');
 }finally{await fs.rm(dir,{recursive:true,force:true});}
-console.log('Europe summary: exact 31-market eight-shard coverage, old exclusions and newest retry PASS');
+console.log('Europe summary: exact ' + complete.length + '-market eight-shard coverage, old exclusions and newest retry PASS');

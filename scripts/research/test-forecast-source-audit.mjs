@@ -11,7 +11,8 @@ const catalog = await loadCompanyCatalog('XAMS');
 const proposals = new Map();
 for (const input of evidence) {
   const share = catalog.shares.find(row => row.isin === input.instrument.isin);
-  const bars = await loadApprovedHistory(share, 'XAMS', { cutoff: input.cutoff });
+  const latest = JSON.parse(await fs.readFile('data/history/XAMS:' + share.isin + '.json', 'utf8')).coverage.lastDate;
+  const bars = (await loadApprovedHistory(share, 'XAMS', { cutoff: latest })).filter(row => row.date <= input.cutoff);
   const before = JSON.stringify(bars);
   const result = proposeForecastReview(bars, input);
   assert.equal(JSON.stringify(bars), before);

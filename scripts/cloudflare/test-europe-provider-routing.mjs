@@ -41,7 +41,8 @@ const baltic=new NasdaqBalticProvider();
 for(const mic of ['XTAL','XLIT','XRIS'])assert.equal(baltic.supports({mic,isin:'EE3100008996'}),true, 'Official Nasdaq Baltic provider must support '+mic);
 assert.equal(baltic.supports({mic:'XLON',isin:'EE3100008996'}),false);
 
-assert.match(updateScript,/providerRoute\(instrument,\{mode:'update'\}\)/,'Daily import must use central approved-only routing');
+assert.match(updateScript,/providerRoute\(instrument,\{mode:'update',sourceRegistry\}\)/,'Daily import must use central approved-only routing');
+assert.match(updateScript,/sourceRegistry=marketSources/,'Operational default remains the central source register');
 console.log('Registered approved fallback routes for Paris, Switzerland, London and Sofia PASS');
 
 const yahooChart=await fs.readFile('scripts/history/providers/yahoo-chart.mjs','utf8');

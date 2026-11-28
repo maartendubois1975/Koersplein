@@ -1,0 +1,49 @@
+{
+  "checkedOn": "2026-11-28",
+  "baseCommit": "3bf81b7e01d2d0078ce2a885148f2ffd2081e741",
+  "commands": [
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "logSha256": "3849d544a406cab75cf4aae6074e9af9bbb93b25440bbe8cc9f952c80c44f39b"
+    },
+    {
+      "command": "npm run audit:codebase",
+      "exitCode": 0,
+      "logSha256": "99ec535dfb4a8803af5f2ea14a7f038f4fb5552865e0517534a07adba315d5cb"
+    },
+    {
+      "command": "npm run history:test",
+      "exitCode": 0,
+      "logSha256": "935551239d1bd14568f83141266f9cee1e64e4289db57ffd7936e71c64f6a45d"
+    },
+    {
+      "command": "all research tests",
+      "exitCode": 0,
+      "logSha256": "4016a6434fdc82d2daca30e159343f4f5bd7a6438de1c9d2357d3b221c8f5457"
+    },
+    {
+      "command": "Paris immutable selection check",
+      "exitCode": 0,
+      "logSha256": "fd53cc96e6508104d2efcda6bd9cdd9b6f5c2666157cbea5505eb73bc5db7866"
+    }
+  ],
+  "researchTestFiles": 22,
+  "approvedCompanies": 899,
+  "milanReplay": {
+    "companies": 360,
+    "traded": 309,
+    "noTrades": 51,
+    "unverified": 0,
+    "distinctIssuers": 360,
+    "operationalAdmission": false
+  },
+  "actualModelSession": "2026-11-27",
+  "verifiedRollforwards": 18,
+  "sealedPredictions": 2,
+  "closedPredictions": 0,
+  "priceArchiveFilesChanged": 0,
+  "paidAgreementsEntered": 0,
+  "manualImportsOrDeploysStarted": 0,
+  "visualAcceptanceOfNewDeployment": false
+}

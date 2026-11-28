@@ -1,0 +1,28 @@
+{
+  "session": "2026-11-26",
+  "approved": 360,
+  "observed": 309,
+  "volumeMatches": 309,
+  "lastTradeMatches": 309,
+  "referenceCloseDifferences": 7,
+  "definitionUnresolved": 0,
+  "noTradeConfirmed": 51,
+  "unconfirmed": 0,
+  "issuerIdentities": 360,
+  "operationallyActivated": false,
+  "sourceEvidence": [
+    {
+      "file": "research/completion/2026-11-27/milan-price-definitions.json",
+      "sha256": "572a3d130db9de4bc18f7e09ab088d719b4e398d2f6997f463492a9ef6f6178b"
+    },
+    {
+      "file": "research/admission/2026-11-27/milan-no-trade-evidence.json",
+      "sha256": "5cfe865c0366d36abc242190263ecdcdbe5cd5228464834a7f904a82a04f058d"
+    },
+    {
+      "file": "research/admission/2026-11-27/milan-issuer-decisions.json",
+      "sha256": "d813819ae612489f83ca92ebdb2a9877ab94e2c9e4afc77e54828f256fa15db4"
+    }
+  ],
+  "publicationStatus": "UNVERIFIED_PUBLICATION_RIGHTS"
+}

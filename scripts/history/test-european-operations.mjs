@@ -54,7 +54,7 @@ for (const row of archived.results.filter(row => row.status !== 'SESSION_UNVERIF
 }
 
 const milan = await read('research/milan/2026-11-26/approved-companies.json');
-assert.throws(() => assertOperationalMarket(milan, { navigation: { name: 'Milaan', code: 'milan', country: 'IT', currency: 'EUR' } }), /SOURCE_ROUTES/);
+assert.throws(() => assertOperationalMarket(milan, { navigation: { name: 'Milaan', code: 'milan', country: 'IT', currency: 'EUR' } }), /UNVERIFIED_PUBLICATION_RIGHTS/);
 const picked = milan.shares.find(row => row.symbol === 'MFEB');
 const rawList = {
   mic: milan.mic, asOf: '2026-11-26', sourceUrl: 'https://live.euronext.com/en/markets/milan/equities/list',

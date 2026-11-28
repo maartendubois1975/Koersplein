@@ -6,9 +6,10 @@ const catalog = JSON.parse(await fs.readFile('research/milan/2026-11-26/approved
 const contract = contracts.catalogPreviews.XMIL;
 const before = JSON.stringify(catalog);
 const issues = operationalMarketIssues(catalog, contract);
-assert(issues.some(row => row.startsWith('INCOMPLETE_OPERATIONAL_SOURCE_ROUTES')));
+assert(!issues.some(row => row.startsWith('INCOMPLETE_OPERATIONAL_SOURCE_ROUTES')));
 assert(issues.some(row => row.startsWith('UNVERIFIED_PUBLICATION_RIGHTS')));
-assert.equal(issues.filter(row => row.startsWith('INVALID_ADMITTED_LISTING')).length, 360);
+assert.equal(issues.filter(row => row.startsWith('INVALID_ADMITTED_LISTING')).length, 0);
+assert(!issues.some(row => row.startsWith('INCOMPLETE_MARKET_DEFINITION')));
 assert.throws(() => assertOperationalMarket(catalog, contract), error => error.message === issues[0]);
 assert.equal(JSON.stringify(catalog), before);
 assert.deepEqual(operationalMarketIssues(catalog, contract, { sources: { markets: {} } }).filter(row => row.startsWith('UNVERIFIED')), []);

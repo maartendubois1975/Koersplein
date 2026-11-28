@@ -166,6 +166,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Verify new source windows for previously reviewed forecast instruments
+        run: node scripts/research/refresh-forecast-input-reviews.mjs
+        env:
+          TARGET_SESSION: ${{ inputs.session || needs.register.outputs.reference_session }}
       - name: Evaluate frozen predictions and select only provenance-verified histories
         run: node scripts/research/daily-opportunity-ledger.mjs
         env:
@@ -175,7 +179,10 @@ jobs:
         run: |
           git config user.name "Koersplein development"
           git config user.email "actions@users.noreply.github.com"
-          git add data/opportunity-ledger.json data/opportunity-latest.json data/opportunity-learning.json
+          git add data/opportunity-ledger.json data/opportunity-latest.json data/opportunity-learning.json data/forecast-input-reviews.json data/forecast-input-refresh-status.json
+          if [ -d data/forecast-input-evidence ]; then
+            git add data/forecast-input-evidence
+          fi
           if ! git diff --cached --quiet; then
             git commit -m "Evaluate frozen approved-company research predictions"
             git push origin HEAD:consolidation-20261116
@@ -184,7 +191,9 @@ jobs:
         if: always()
         with:
           name: daily-opportunity-diagnostics
-          path: research/output/daily-opportunity-diagnostics.json
+          path: |
+            research/output/daily-opportunity-diagnostics.json
+            research/output/forecast-input-refresh.json
   deploy-test:
     needs: [archive-development, verify-daily, research-development]
     if: always() && needs.verify-daily.result == 'success'

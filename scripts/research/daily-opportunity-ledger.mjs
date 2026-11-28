@@ -2,6 +2,8 @@ import {latestClosedSession,sessionCalendar} from '../history/trading-calendar.m
 import fs from 'node:fs/promises';
 import {loadApprovedHistory} from './market-history-source.mjs';
 import {mapConcurrent} from '../cloudflare/europe-run-policy.mjs';
+import {assertForecastEvaluationEvidence} from './forecast-rollforward.mjs';
+import {listingIdentity} from '../../daily-session-view.mjs';
 import {validSessionDate} from '../../daily-session-view.mjs';
 import {assessForecastWindow,loadForecastHistory} from './forecast-input-review.mjs';
 import {evaluateOpportunity} from './exam-outcomes-core.mjs';
@@ -14,6 +16,8 @@ const API=(process.env.KOERSPLEIN_API_URL||'').replace(/\/$/,'');
 const active=await Promise.all(Object.keys(companyContracts).map(async mic=>{const catalog=await loadCompanyCatalog(mic);return {mic,name:catalog.exchange||mic,catalog};}));
 const runReferenceDate=process.env.TARGET_SESSION||latestClosedSession(active[0].mic);
 if(!validSessionDate(runReferenceDate)||runReferenceDate>latestClosedSession(active[0].mic)||[0,6].includes(new Date(runReferenceDate+'T12:00:00Z').getUTCDay()))throw Error('INVALID_RESEARCH_REFERENCE_SESSION');
+let sourceRefresh=null;
+try{sourceRefresh=JSON.parse(await fs.readFile('data/forecast-input-refresh-status.json','utf8'))}catch(error){if(error.code!=='ENOENT')throw error;}
 const diagnostics=[];
 const histCache=new Map();
 async function hist(share,market,{prediction=false}={}){
@@ -124,6 +128,7 @@ for(const p of ledger){
     if(!p.recordHash){p.legacyUnverified=true;diagnostics.push({market:p.market,isin:p.isin,status:'LEGACY_PREDICTION_NOT_PRESEALED'});}
     const market=active.find(x=>x.mic===p.market),share=market?.catalog.shares.find(x=>x.isin===p.isin);
     if(!share)throw Error('PREDICTION_OUTSIDE_APPROVED_REGISTER');
+    if(p.recordHash)assertForecastEvaluationEvidence(sourceRefresh,listingIdentity(share,p.market,runReferenceDate).storageKey,runReferenceDate);
     const bars=await hist(share,p.market);
     if(p.evaluationVersion!=='bounded-calendar-v1'&&p.latestDate)p.previousEvaluation={latestDate:p.latestDate,latestClose:p.latestClose,result30:p.result30,hit30:p.hit30,hit30Date:p.hit30Date,maxReturn:p.maxReturn};
     const outcome=evaluateOpportunity(p,bars,{asOf:runReferenceDate});
@@ -132,6 +137,7 @@ for(const p of ledger){
     try{
       p.benchmarkReturn=await evaluateBenchmark(p,outcome,async member=>{
         const benchmarkShare=market.catalog.shares.find(x=>x.isin===member.isin);
+        if(benchmarkShare)assertForecastEvaluationEvidence(sourceRefresh,listingIdentity(benchmarkShare,p.market,runReferenceDate).storageKey,runReferenceDate);
         return benchmarkShare ? hist(benchmarkShare,p.market) : [];
       });
     }catch(error){diagnostics.push({market:p.market,isin:p.isin,status:'BENCHMARK_UNVERIFIED',error:error.message});}

@@ -1,0 +1,40 @@
+{
+  "reviewedOn": "2026-11-27",
+  "provider": "euronext-live",
+  "decision": "TECHNICAL_SOURCE_APPROVED_PUBLICATION_UNCONFIRMED",
+  "freeAccess": true,
+  "unconditionalFreeRedistributionProven": false,
+  "historicalArchivePermissionProven": false,
+  "paidAgreementEntered": false,
+  "applicationSubmitted": false,
+  "currentDocuments": [
+    {
+      "url": "https://connect2.euronext.com/sites/default/files/documentation/data/EMDA%20General%20Terms%20and%20Conditions%20and%20Policies%20%28effective%201%20October%202026%29_3.pdf",
+      "sha256": "22fd59990e342106620070f59a4938e39fc1c96665e70fef415302714bc58e60"
+    },
+    {
+      "url": "https://connect2.euronext.com/sites/default/files/documentation/data/Information%20Product%20Fee%20Schedule%20%28effective%201%20October%202026%29%20V21.1.pdf",
+      "sha256": "7f0832e4de19c03f81d99657ddf01c451d2c56b6521fabf563e650bc6e8ed828"
+    },
+    {
+      "url": "https://connect2.euronext.com/sites/default/files/documentation/data/Delayed%20Fee%20Waiver%20Application%20Form%20%28effective%201%20October%202026%29%20-%20protected.docx",
+      "sha256": "f51f439e87a96e4e175aac45125a6763ee019f98de82dddbd77a8c2136b43883"
+    }
+  ],
+  "findings": [
+    "Current EMDA and fee schedule effective 1 October 2026 supersede treating the old After Midnight announcement as a complete permission.",
+    "Delayed fee waiver Version 3 requires an existing signed EMDA and Euronext discretionary acceptance; it does not suspend fees while assessed.",
+    "Value-added services and direct economic benefit are listed as fee-liable circumstances. Forecasting/public archival scope needs explicit confirmation.",
+    "EMDA defines Historical Data before previous business day and states that Euronext supplies it under a different agreement.",
+    "No guaranteed zero-cost grant for the Live AJAX daily/history endpoints and public GitHub archive has been established."
+  ],
+  "blockingEvidence": [
+    "Written explicit permission for zero-cost OHLCV public display and archival from the identified endpoints",
+    "Written explicit zero-cost permission for the platform prediction use and public GitHub/Render storage"
+  ],
+  "technicalSourceEvidence": [
+    "research/completion/2026-11-27/milan-price-definitions.json",
+    "research/admission/2026-11-27/milan-no-trade-evidence.json",
+    "research/milan/2026-11-26/summary.json"
+  ]
+}

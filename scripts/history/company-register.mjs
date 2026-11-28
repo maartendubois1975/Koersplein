@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import {validLei} from './issuer-identity.mjs';
 import {catalogWithListingEvents} from '../../daily-session-view.mjs';
 import {assertOperationalMarket,establishedMarkets} from './market-definitions.mjs';
 const data = new URL('../../data/', import.meta.url);
@@ -20,6 +21,8 @@ export function validateCompanyCatalog(catalog, contract = companyContracts[cata
     const current=share.currentListing,event=instrumentEvents.find(e=>e.oldIsin===share.isin);
     if(!event||event.successorStatus!=='VERIFIED_SUCCESSOR'||current.status!==event.successorStatus||current.isin!==event.newIsin||current.mic!==event.mic||current.symbol!==event.symbol||current.effectiveDate!==event.effectiveDate||!/^\d{4}-\d{2}-\d{2}$/.test(current.activeFromSession)||current.activeFromSession<event.effectiveDate||current.activeFromSession>event.successorVerifiedThrough)throw Error('Unverified successor listing '+share.isin);
   }
+  const issuers = catalog.shares.map(share => share.issuerId).filter(Boolean);
+  if (new Set(issuers).size !== issuers.length || issuers.some(id => typeof id !== 'string' || id.startsWith('LEI:') && !validLei(id.slice(4)))) throw Error('Invalid or duplicate approved issuer identity');
   const digest = createHash('sha256').update(identities.join('\n')).digest('hex');
   if (digest !== contract.identitySha256) throw Error(`Approved company identities changed: ${catalog.mic}`);
   return catalog;

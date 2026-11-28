@@ -1,0 +1,155 @@
+{
+  "meta": {
+    "goldenCopy": {
+      "publishDate": "2026-11-27T00:00:00Z"
+    }
+  },
+  "data": {
+    "type": "lei-records",
+    "id": "213800ED5AN2J56N6Z02",
+    "attributes": {
+      "lei": "213800ED5AN2J56N6Z02",
+      "entity": {
+        "legalName": {
+          "name": "DAVIDE CAMPARI-MILANO N.V.",
+          "language": "en"
+        },
+        "otherNames": [
+          {
+            "name": "DAVIDE CAMPARI-MILANO S.P.A.",
+            "language": "en",
+            "type": "PREVIOUS_LEGAL_NAME"
+          }
+        ],
+        "transliteratedOtherNames": [],
+        "legalAddress": {
+          "language": "en",
+          "addressLines": [
+            "VIA FRANCO SACCHETTI 20"
+          ],
+          "addressNumber": null,
+          "addressNumberWithinBuilding": null,
+          "mailRouting": null,
+          "city": "SESTO SAN GIOVANNI",
+          "region": "IT-MI",
+          "country": "IT",
+          "postalCode": "20099"
+        },
+        "headquartersAddress": {
+          "language": "en",
+          "addressLines": [
+            "VIA FRANCO SACCHETTI 20"
+          ],
+          "addressNumber": null,
+          "addressNumberWithinBuilding": null,
+          "mailRouting": null,
+          "city": "SESTO SAN GIOVANNI",
+          "region": "IT-MI",
+          "country": "IT",
+          "postalCode": "20099"
+        },
+        "registeredAt": {
+          "id": "RA000463",
+          "other": null
+        },
+        "registeredAs": "78502934",
+        "jurisdiction": "NL",
+        "category": "GENERAL",
+        "legalForm": {
+          "id": "B5PM",
+          "other": null
+        },
+        "associatedEntity": {
+          "lei": null,
+          "name": null
+        },
+        "status": "ACTIVE",
+        "expiration": {
+          "date": null,
+          "reason": null
+        },
+        "successorEntity": {
+          "lei": null,
+          "name": null
+        },
+        "successorEntities": [],
+        "creationDate": "1860-01-01T00:00:00Z",
+        "subCategory": null,
+        "otherAddresses": [],
+        "eventGroups": []
+      },
+      "registration": {
+        "initialRegistrationDate": "2014-02-13T00:00:00Z",
+        "lastUpdateDate": "2026-11-16T11:01:02Z",
+        "status": "ISSUED",
+        "nextRenewalDate": "2027-02-13T00:00:00Z",
+        "managingLou": "213800WAVVOPS85N2205",
+        "corroborationLevel": "FULLY_CORROBORATED",
+        "validatedAt": {
+          "id": "RA000463",
+          "other": null
+        },
+        "validatedAs": "78502934",
+        "otherValidationAuthorities": []
+      },
+      "bic": [
+        "DAAAIT21XXX"
+      ],
+      "mic": null,
+      "ocid": "nl/78502934",
+      "qcc": null,
+      "gem": null,
+      "spglobal": [
+        "135528"
+      ],
+      "conformityFlag": "CONFORMING"
+    },
+    "relationships": {
+      "managing-lou": {
+        "links": {
+          "related": "https://api.gleif.org/api/v1/lei-records/213800ED5AN2J56N6Z02/managing-lou"
+        }
+      },
+      "lei-issuer": {
+        "links": {
+          "related": "https://api.gleif.org/api/v1/lei-records/213800ED5AN2J56N6Z02/lei-issuer"
+        }
+      },
+      "field-modifications": {
+        "links": {
+          "related": "https://api.gleif.org/api/v1/lei-records/213800ED5AN2J56N6Z02/field-modifications"
+        }
+      },
+      "direct-parent": {
+        "links": {
+          "reporting-exception": "https://api.gleif.org/api/v1/lei-records/213800ED5AN2J56N6Z02/direct-parent-reporting-exception"
+        }
+      },
+      "ultimate-parent": {
+        "links": {
+          "reporting-exception": "https://api.gleif.org/api/v1/lei-records/213800ED5AN2J56N6Z02/ultimate-parent-reporting-exception"
+        }
+      },
+      "direct-children": {
+        "links": {
+          "relationship-records": "https://api.gleif.org/api/v1/lei-records/213800ED5AN2J56N6Z02/direct-child-relationships",
+          "related": "https://api.gleif.org/api/v1/lei-records/213800ED5AN2J56N6Z02/direct-children"
+        }
+      },
+      "ultimate-children": {
+        "links": {
+          "relationship-records": "https://api.gleif.org/api/v1/lei-records/213800ED5AN2J56N6Z02/ultimate-child-relationships",
+          "related": "https://api.gleif.org/api/v1/lei-records/213800ED5AN2J56N6Z02/ultimate-children"
+        }
+      },
+      "isins": {
+        "links": {
+          "related": "https://api.gleif.org/api/v1/lei-records/213800ED5AN2J56N6Z02/isins"
+        }
+      }
+    },
+    "links": {
+      "self": "https://api.gleif.org/api/v1/lei-records/213800ED5AN2J56N6Z02"
+    }
+  }
+}

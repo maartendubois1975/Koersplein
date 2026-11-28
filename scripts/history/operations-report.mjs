@@ -154,6 +154,10 @@ export async function operationsReport({ dataDir = 'data', now = new Date(), com
   const availability = storedAvailability?.reviewedOn <= now.toISOString().slice(0, 10) ? storedAvailability : null;
   for (const catalog of catalogs) markets.push(await reportMarket(catalog, dataDir, now, availability));
   const ledger = await json(join(dataDir, 'opportunity-ledger.json'));
+  const storedRefresh = await json(join(dataDir, 'forecast-input-refresh-status.json'));
+  const forecastSourceRefresh = storedRefresh?.schemaVersion === 1 && validSessionDate(storedRefresh.cutoff) &&
+    Array.isArray(storedRefresh.results) && new Date(storedRefresh.finishedAt) <= now &&
+    storedRefresh.cutoff <= latestClosedSession('XAMS', now) ? storedRefresh : null;
   const contracts = await json(new URL('../../data/company-register-contracts.json', import.meta.url));
   const previews = [];
   for (const [mic, contract] of Object.entries(contracts.catalogPreviews || {})) {
@@ -171,14 +175,14 @@ export async function operationsReport({ dataDir = 'data', now = new Date(), com
         const evidence = JSON.parse(raw);
         if (evidence.approved !== catalog?.shares.length || !validSessionDate(evidence.session)) throw Error('SOURCE_REVIEW_IDENTITY_MISMATCH');
         sourceReview = Object.fromEntries(['session', 'approved', 'observed', 'volumeMatches', 'lastTradeMatches',
-          'referenceCloseDifferences', 'definitionUnresolved'].map(key => [key, evidence[key]]));
+          'referenceCloseDifferences', 'definitionUnresolved', 'noTradeConfirmed', 'unconfirmed', 'issuerIdentities'].map(key => [key, evidence[key]]));
       } catch (error) { sourceReviewError = error.message; }
     }
     previews.push({ mic, companies: catalog?.shares?.length ?? null, expectedCompanies: contract.expectedCount,
       operational: blockers.length === 0, admissionBlockers: counts, sourceReview, sourceReviewError });
   }
   for (const row of ledger ?? []) if (row.recordHash) verifyOpportunity(row);
-  return { schemaVersion: 1, generatedAt: now.toISOString(), commit, buildCheck, markets, previews,
+  return { schemaVersion: 1, generatedAt: now.toISOString(), commit, buildCheck, markets, previews, forecastSourceRefresh,
     predictions: ledger && opportunityScoreboard(ledger, Object.keys(companyContracts)) };
 }
 

@@ -1,0 +1,138 @@
+{
+  "meta": {
+    "goldenCopy": {
+      "publishDate": "2026-11-27T00:00:00Z"
+    }
+  },
+  "data": {
+    "type": "lei-records",
+    "id": "2221005IWV4R4EP4D553",
+    "attributes": {
+      "lei": "2221005IWV4R4EP4D553",
+      "entity": {
+        "legalName": {
+          "name": "D'AMICO INTERNATIONAL SHIPPING S.A.",
+          "language": "en"
+        },
+        "otherNames": [],
+        "transliteratedOtherNames": [],
+        "legalAddress": {
+          "language": "en",
+          "addressLines": [
+            "25C, BOULEVARD ROYAL"
+          ],
+          "addressNumber": null,
+          "addressNumberWithinBuilding": null,
+          "mailRouting": null,
+          "city": "LUXEMBOURG",
+          "region": "LU-LU",
+          "country": "LU",
+          "postalCode": "L-2449"
+        },
+        "headquartersAddress": {
+          "language": "en",
+          "addressLines": [
+            "25C, BOULEVARD ROYAL"
+          ],
+          "addressNumber": null,
+          "addressNumberWithinBuilding": null,
+          "mailRouting": null,
+          "city": "LUXEMBOURG",
+          "region": "LU-LU",
+          "country": "LU",
+          "postalCode": "L-2449"
+        },
+        "registeredAt": {
+          "id": "RA000432",
+          "other": null
+        },
+        "registeredAs": "B124790",
+        "jurisdiction": "LU",
+        "category": "GENERAL",
+        "legalForm": {
+          "id": "5GGB",
+          "other": null
+        },
+        "associatedEntity": {
+          "lei": null,
+          "name": null
+        },
+        "status": "ACTIVE",
+        "expiration": {
+          "date": null,
+          "reason": null
+        },
+        "successorEntity": {
+          "lei": null,
+          "name": null
+        },
+        "successorEntities": [],
+        "creationDate": "2007-03-07T00:00:00Z",
+        "subCategory": null,
+        "otherAddresses": [],
+        "eventGroups": []
+      },
+      "registration": {
+        "initialRegistrationDate": "2016-11-09T02:01:24Z",
+        "lastUpdateDate": "2026-04-13T15:20:41Z",
+        "status": "ISSUED",
+        "nextRenewalDate": "2027-05-26T00:00:00Z",
+        "managingLou": "213800WAVVOPS85N2205",
+        "corroborationLevel": "FULLY_CORROBORATED",
+        "validatedAt": {
+          "id": "RA000432",
+          "other": null
+        },
+        "validatedAs": "B124790",
+        "otherValidationAuthorities": []
+      },
+      "bic": null,
+      "mic": null,
+      "ocid": "lu/B124790",
+      "qcc": "QLUR295W69",
+      "gem": null,
+      "spglobal": [
+        "33873785"
+      ],
+      "conformityFlag": "CONFORMING"
+    },
+    "relationships": {
+      "managing-lou": {
+        "links": {
+          "related": "https://api.gleif.org/api/v1/lei-records/2221005IWV4R4EP4D553/managing-lou"
+        }
+      },
+      "lei-issuer": {
+        "links": {
+          "related": "https://api.gleif.org/api/v1/lei-records/2221005IWV4R4EP4D553/lei-issuer"
+        }
+      },
+      "field-modifications": {
+        "links": {
+          "related": "https://api.gleif.org/api/v1/lei-records/2221005IWV4R4EP4D553/field-modifications"
+        }
+      },
+      "direct-parent": {
+        "links": {
+          "relationship-record": "https://api.gleif.org/api/v1/lei-records/2221005IWV4R4EP4D553/direct-parent-relationship",
+          "lei-record": "https://api.gleif.org/api/v1/lei-records/2221005IWV4R4EP4D553/direct-parent"
+        }
+      },
+      "ultimate-parent": {
+        "links": {
+          "relationship-record": "https://api.gleif.org/api/v1/lei-records/2221005IWV4R4EP4D553/ultimate-parent-relationship",
+          "lei-record": "https://api.gleif.org/api/v1/lei-records/2221005IWV4R4EP4D553/ultimate-parent"
+        }
+      },
+      "direct-children": {
+        "links": {
+          "relationship-records": "https://api.gleif.org/api/v1/lei-records/2221005IWV4R4EP4D553/direct-child-relationships",
+          "related": "https://api.gleif.org/api/v1/lei-records/2221005IWV4R4EP4D553/direct-children"
+        }
+      }
+    },
+    "links": {
+      "self": "https://api.gleif.org/api/v1/lei-records/2221005IWV4R4EP4D553"
+    }
+  }
+}

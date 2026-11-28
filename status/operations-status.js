@@ -140,7 +140,10 @@ async function start() {
         ...(row.sourceReview ? ['Bronproef ' + row.sourceReview.session + ' · ' + show(row.sourceReview.observed) +
           ' verhandelde ondernemingen · ' + show(row.sourceReview.lastTradeMatches) + ' laatste prijzen bevestigd · ' +
           show(row.sourceReview.volumeMatches) + ' volumes bevestigd · ' + show(row.sourceReview.referenceCloseDifferences) +
-          ' expliciete slotreferenties verschillend van laatste transactie'] : []),
+          ' expliciete slotreferenties verschillend van laatste transactie',
+          ...(Number.isFinite(row.sourceReview.noTradeConfirmed) ? [show(row.sourceReview.noTradeConfirmed) +
+            ' bevestigde dagen zonder handel · ' + show(row.sourceReview.unconfirmed) + ' onbevestigd · ' +
+            show(row.sourceReview.issuerIdentities) + ' bevestigde uitgeveridentiteiten'] : [])] : []),
         ...(row.sourceReviewError ? ['Bronproef niet bruikbaar · ' + row.sourceReviewError] : []),
       ],
     )));
@@ -161,6 +164,16 @@ async function start() {
     exchange.addEventListener('change', update);
     element('history').hidden = false;
     update();
+  }
+  const refresh = report.forecastSourceRefresh;
+  if (refresh) {
+    const node = element('forecast-source-refresh');
+    const count = status => refresh.results.filter(row => row.status === status).length;
+    node.hidden = false;
+    node.replaceChildren(expandable('Bronvensters ' + refresh.cutoff + ' · ' + count('ALREADY_REVIEWED') +
+      ' eerder bevestigd · ' + count('VERIFIED_ROLLFORWARD') + ' voortgezet · ' + count('REVIEW_UNCONFIRMED') + ' onbevestigd',
+      ['Werkelijk uitgevoerd op ' + refresh.finishedAt,
+        ...refresh.results.filter(row => row.status === 'REVIEW_UNCONFIRMED').map(row => row.key + ' · ' + row.reason)]));
   }
   showPredictions(report.predictions, report.markets);
 }

@@ -25,7 +25,7 @@ export function parseForecastNoticePages(pages) {
 }
 
 // Read-only proposal. The approved review manifest is never written here.
-export function proposeForecastReview(bars, { instrument, cutoff, rawRows, adjustedRows, quote, notices, source }) {
+export function proposeForecastReview(bars, { instrument, cutoff, rawRows, adjustedRows, quote, notices, source }, { priorReview } = {}) {
   const firstDate = bars.at(-forecastLookback)?.date;
   const selected = bars.slice(-forecastLookback);
   const official = rawRows.filter(row => row.date >= firstDate && row.date <= cutoff);
@@ -41,7 +41,9 @@ export function proposeForecastReview(bars, { instrument, cutoff, rawRows, adjus
   // Capital decreases can cancel shares or alter nominal value. They need an individual decision.
   if (events.some(event => !iso(event.effective))) issues.push('CORPORATE_ACTION_EFFECTIVE_DATE_UNCONFIRMED');
   const allowedTypes = new Set(['CE - Shares - Dividend', 'CE - Shares - Ordinary dividend', 'CE - Shares - Shares buy-back', 'CE - Shares - Liquidity contract', 'CE - Shares - Dividend - Announcement', 'CE - Change of Index components', 'CE - Change of trading group', 'CE - Shares - Change of compartment', 'CE - Shares - Euronext Tech Leaders segment update']);
-  if (events.some(event => !allowedTypes.has(event.type))) issues.push('CORPORATE_ACTION_REQUIRES_INDIVIDUAL_REVIEW');
+  const previouslyReviewed = event => priorReview?.corporateActions.events.some(old =>
+    iso(event.effective) <= priorReview.asOf && JSON.stringify(old) === JSON.stringify(event));
+  if (events.some(event => !allowedTypes.has(event.type) && !previouslyReviewed(event))) issues.push('CORPORATE_ACTION_REQUIRES_INDIVIDUAL_REVIEW');
   const resolutions = [], byDate = new Map(official.map(row => [row.date, row]));
   for (const base of selected) {
     const observed = byDate.get(base.date);
