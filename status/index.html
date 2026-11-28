@@ -26,6 +26,8 @@
   <section class="status-section">
     <h1>Technische status</h1>
     <p id="build" role="status">Status van deze build laden…</p>
+    <div id="history-recovery"></div>
+    <p id="archive-writer" role="status"></p>
     <div id="previews" hidden></div>
     <div id="markets" class="status-table" tabindex="0" role="region" aria-label="Beurzen"></div>
   </section>
@@ -33,7 +35,7 @@
     <h2>Historie per onderneming</h2>
     <label for="exchange">Beurs</label><select id="exchange"></select>
     <div id="market-info"></div>
-    <p>De aangegeven periode begint bij de bevestigde noteringsdatum of de oudste opgeslagen waarneming. De telling van ontbrekende sessies loopt alleen over jaren met een beschikbare officiële kalender. Koersdagen hebben complete OHLCV. Historische reeksen kunnen verschillen in bron en prijsbasis.</p>
+    <p>De aangegeven periode begint bij de bevestigde noteringsdatum of de oudste opgeslagen waarneming. Ontbrekende sessies worden alleen over beschikbare officiële kalenderjaren geteld. Overlappende bronnen tellen één keer; onopgeloste conflicten tellen niet als complete koersdagen. Complete OHLCV bewijst geen gecontroleerd totaalrendement of volledige historie sinds de beursgang. Alleen lokaal opgeslagen gegevens van deze build worden geteld.</p>
     <div id="companies" class="status-table" tabindex="0" role="region" aria-label="Ondernemingen"></div>
   </section>
   <section id="predictions" class="status-section" hidden>
@@ -42,6 +44,8 @@
     <div id="forecast-source-refresh" hidden></div>
     <div id="forecast-readiness" class="status-table" tabindex="0" role="region" aria-label="Toetsing voorspelling per beurs"></div>
     <div id="scores" class="status-table" tabindex="0" role="region" aria-label="Voorspellingsresultaten"></div>
+    <div id="prediction-records" class="status-table" tabindex="0" role="region" aria-label="Afzonderlijke verzegelde voorspellingen"></div>
+    <p>Open voorspellingen zijn onderzoek op een vastgelegde referentieprijs, zonder bewezen uitvoeringsprijs, kosten of dividend. Een onbevestigde evaluatie telt niet mee als afgerond resultaat.</p>
     <p>De benchmark neemt de gelijkgewogen prijsrendementen van de ondernemingen die bij selectie in aanmerking kwamen. Het benchmarkrendement verschijnt als de referentiekoers en eindkoers van alle vooraf vastgelegde ondernemingen zijn bevestigd.</p>
   </section>
 </main>

@@ -4,6 +4,7 @@ import path from 'node:path';
 import {identityEventAt} from '../history/company-register.mjs';
 import {verifiedBackfillComplete} from '../history/bars.mjs';
 import {YahooChartProvider} from '../history/providers/yahoo-chart.mjs';
+import {sameSourcePrice} from '../../chart.js';
 
 const yahoo=new YahooChartProvider();
 const barsOf=raw=>Array.isArray(raw)?raw:(raw?.bars||raw?.history||raw?.records||raw?.data||[]);
@@ -62,8 +63,12 @@ export async function loadApprovedHistory(item,parentMic,{api='',cutoff,currency
   const checked=inspectDailyBarIntegrity({bars:source},{startDate:'0001-01-01',endDate:cutoff});
   if(checked.conflicts.length||checked.bars.length!==source.length)throw Error('HISTORY_INVALID_OR_DUPLICATE_BARS');
   for(const bar of checked.bars){
-   const existing=byDate.get(bar.date),signature=b=>JSON.stringify(['open','high','low','close','volume'].map(k=>Number(b[k])));
-   if(existing&&signature(existing)!==signature(bar))throw Error('HISTORY_SOURCE_CONFLICT '+bar.date);
+   const existing=byDate.get(bar.date);
+   // Use the existing chart precision rule, retaining the reader's original
+   // source precedence. This preserves previously reviewed model-window hashes
+   // when an exact float32 representation is also restored to the raw archive.
+   if(existing&&(!['open','high','low','close'].every(key=>sameSourcePrice(Number(existing[key]),Number(bar[key])))||
+    Number(existing.volume)!==Number(bar.volume)))throw Error('HISTORY_SOURCE_CONFLICT '+bar.date);
    byDate.set(bar.date,bar);
   }
  }

@@ -13,6 +13,8 @@ import { providerRoute } from './source-policy.mjs';
 import { latestClosedSession, sessionCalendar, tradingCalendars } from './trading-calendar.mjs';
 import { auditStoredForecastInput } from '../research/forecast-input-review.mjs';
 import { verifyOpportunity, opportunityScoreboard } from '../research/prediction-ledger-core.mjs';
+import { historyCoverage } from './history-coverage.mjs';
+import { marketSources } from './market-definitions.mjs';
 
 async function json(file) {
   try { return JSON.parse(await fs.readFile(file, 'utf8')); }
@@ -41,8 +43,9 @@ async function inspectHistory(file, identity, currency, cutoff) {
   if (doc.instrument?.currency !== currency) throw Error('HISTORY_CURRENCY_MISMATCH');
   const rows = validateHistoryDocument(doc, identity);
   if (doc.coverage.lastDate > cutoff) throw Error('HISTORY_AFTER_LATEST_CLOSED_SESSION');
-  const { bars } = inspectDailyBarIntegrity({ bars: rows }, { startDate: rows[0].date, endDate: cutoff });
-  return { bars, audit: {
+  const { bars } = inspectDailyBarIntegrity({ bars: doc.bars }, { startDate: rows[0].date, endDate: cutoff });
+  const good = new Set(bars.map(bar => bar.date));
+  return { bars, rows, invalidDates: rows.filter(bar => !good.has(bar.date)).map(bar => bar.date), audit: {
     source: doc.provider?.id || doc.provider?.name || null,
     firstDate: rows[0].date, lastDate: rows.at(-1).date,
     completeBars: bars.length, incompleteBars: rows.length - bars.length,
@@ -52,7 +55,7 @@ async function inspectHistory(file, identity, currency, cutoff) {
   } };
 }
 
-async function reportMarket(catalog, dataDir, now, availability) {
+async function reportMarket(catalog, dataDir, now, availability, reviews) {
   const { mic, shares } = catalog;
   const closed = latestClosedSession(mic, now);
   const sessions = openDates(mic, closed);
@@ -69,7 +72,7 @@ async function reportMarket(catalog, dataDir, now, availability) {
     try {
       const snapshot = validateSnapshot(await json(join(archiveDir, name)), catalog, mic);
       if (snapshot.session !== date || !sessionCalendar(mic, date).open) throw Error('INVALID_ARCHIVE_SESSION');
-      archived.set(date, new Map(snapshot.results.map(row => [row.isin, row.status])));
+      archived.set(date, new Map(snapshot.results.map(row => [row.isin, row])));
     } catch (error) { readErrors.push({ date, reason: error.message }); }
   }
   let latest = null;
@@ -94,23 +97,14 @@ async function reportMarket(catalog, dataDir, now, availability) {
     const archive = await readHistory(join(dataDir, 'history', identity.storageKey + '.json'), 'archive');
     const legacy = await readHistory(join(dataDir, mic === 'XAMS' ? 'history' : 'test-history',
       (mic === 'XAMS' ? identity.isin : identity.storageKey) + '.json'), 'legacy');
-    const bars = new Set([...(archive?.bars || []), ...(legacy?.bars || [])].map(bar => bar.date));
+    const bars = new Set([...(archive?.rows || []), ...(legacy?.rows || [])].map(bar => bar.date));
     const statuses = new Map([...archived].flatMap(([date, rows]) => rows.has(identity.isin) ? [[date, rows.get(identity.isin)]] : []));
     const listingDate = share.currentListing?.isin === identity.isin
       ? share.currentListing.effectiveDate : share.listingDate;
     const observed = [...bars, ...statuses.keys()].sort();
     const start = validSessionDate(listingDate) ? listingDate : observed[0];
-    const noTrades = [], unverified = [], unverifiedWithBar = [], missing = [];
-    if (start) for (const date of sessions) {
-      if (date < start) continue;
-      const status = statuses.get(date);
-      if (status === 'NO_TRADES') noTrades.push(date);
-      else if (status === 'SESSION_UNVERIFIED') {
-        unverified.push(date);
-        if (bars.has(date)) unverifiedWithBar.push(date);
-      }
-      else if (!bars.has(date)) missing.push(date);
-    }
+    const coverage = historyCoverage({ archive, legacy, identity, statuses, sessions, start, cutoff: closed,
+      review: reviews?.instruments?.[identity.storageKey] });
     if (latest) {
       const review = await auditStoredForecastInput(share, mic, { dataDir, cutoff: latest.session, currency });
       forecastCounts[review.status] = (forecastCounts[review.status] ?? 0) + 1;
@@ -123,7 +117,7 @@ async function reportMarket(catalog, dataDir, now, availability) {
       archive: archive?.audit ?? null, legacy: legacy?.audit ?? null,
       availability: historyAvailability(availability, identity),
       gapWindowStart: start && sessions.find(date => date >= start) || null,
-      listingDateVerified: validSessionDate(listingDate), noTrades, unverified, unverifiedWithBar, missing, issues };
+      listingDateVerified: validSessionDate(listingDate), ...coverage, issues };
   });
   const observedSources = latest ? [...new Set(latest.results.map(row => row.provider || row.evidence?.provider).filter(Boolean))].sort() : null;
   const counts = latest?.results.reduce((result, row) => {
@@ -138,12 +132,27 @@ async function reportMarket(catalog, dataDir, now, availability) {
     history: { archive: companies.filter(row => row.archive).length, legacy: companies.filter(row => row.legacy).length,
       any: companies.filter(row => row.archive || row.legacy).length,
       archiveBars: companies.reduce((total, row) => total + (row.archive?.completeBars ?? 0), 0),
-      legacyBars: companies.reduce((total, row) => total + (row.legacy?.completeBars ?? 0), 0) },
+      legacyBars: companies.reduce((total, row) => total + (row.legacy?.completeBars ?? 0), 0),
+      ...Object.fromEntries(['completeUniqueDays', 'confirmedArchiveDays', 'reviewedSourceDays', 'assessedSessions',
+        'coveredSessions', 'beforeCalendarDays'].map(key => [key, companies.reduce((n, row) => n + row.coverage[key], 0)])),
+      sourceConflictDays: companies.reduce((n, row) => n + row.coverage.sourceConflicts.length, 0),
+      statusConflictDays: companies.reduce((n, row) => n + row.coverage.statusConflicts.length, 0),
+      incompleteDays: companies.reduce((n, row) => n + row.coverage.incompleteDates.length, 0),
+      unknownStartCompanies: companies.filter(row => !row.listingDateVerified).length,
+      missingSessions: companies.reduce((n, row) => n + row.missing.length, 0),
+      unverifiedSessions: companies.reduce((n, row) => n + row.unverified.length, 0),
+      noTradeSessions: companies.reduce((n, row) => n + row.noTrades.length, 0) },
     forecastReadiness: latest ? { session: latest.session, counts: forecastCounts, unverifiedWindows: forecastWindows } : null,
     sources: sources.allowedProviderIds, observedSources,
+    historyRecovery: { mode: 'STORED_APPROVED_SESSION_REPLAY_ONLY',
+      networkSources: providerRoute({ mic }).allowedProviderIds.map(provider => {
+        const permission = marketSources.markets[mic]?.publication?.[provider];
+        return { provider, newPublicArchiveAllowed: permission?.free === true && permission.publicArchive === true &&
+          permission.publicDisplay === true && /^https:\/\//.test(permission.evidenceUrl ?? '') };
+      }) },
     sourceErrors: latest?.results.filter(row => row.officialError || ['OFFICIAL_SOURCE_ERROR', 'PROVIDER_DATA_UNAVAILABLE'].includes(row.reasonCode))
       .map(row => ({ isin: row.isin, reason: row.officialError || row.error || row.reasonCode })) ?? null,
-    archiveConflicts: latest?.archiveConflicts ?? null, readErrors, companies,
+    archiveConflicts: latest?.archiveConflicts ?? null, recovery: latest?.recovery ?? null, readErrors, companies,
   };
 }
 
@@ -152,9 +161,14 @@ export async function operationsReport({ dataDir = 'data', now = new Date(), com
   const markets = [];
   const storedAvailability = await json(join(dataDir, 'history-availability.json'));
   const availability = storedAvailability?.reviewedOn <= now.toISOString().slice(0, 10) ? storedAvailability : null;
-  for (const catalog of catalogs) markets.push(await reportMarket(catalog, dataDir, now, availability));
+  const reviews = await json(join(dataDir, 'history-chart-resolutions.json'));
+  for (const catalog of catalogs) markets.push(await reportMarket(catalog, dataDir, now, availability, reviews));
   const ledger = await json(join(dataDir, 'opportunity-ledger.json'));
   const storedRefresh = await json(join(dataDir, 'forecast-input-refresh-status.json'));
+  const storedRecovery = await json(join(dataDir, 'history-recovery-status.json'));
+  const historyRecovery = storedRecovery?.schemaVersion === 1 && new Date(storedRecovery.performedAt) <= now
+    ? storedRecovery : null;
+  const archiveWriter = await json(join(dataDir, '.archive-writer-lock', 'owner.json'));
   const forecastSourceRefresh = storedRefresh?.schemaVersion === 1 && validSessionDate(storedRefresh.cutoff) &&
     Array.isArray(storedRefresh.results) && new Date(storedRefresh.finishedAt) <= now &&
     storedRefresh.cutoff <= latestClosedSession('XAMS', now) ? storedRefresh : null;
@@ -183,7 +197,14 @@ export async function operationsReport({ dataDir = 'data', now = new Date(), com
   }
   for (const row of ledger ?? []) if (row.recordHash) verifyOpportunity(row);
   return { schemaVersion: 1, generatedAt: now.toISOString(), commit, buildCheck, markets, previews, forecastSourceRefresh,
-    predictions: ledger && opportunityScoreboard(ledger, Object.keys(companyContracts)) };
+    historyRecovery, archiveWriter,
+    predictions: ledger && opportunityScoreboard(ledger, Object.keys(companyContracts)),
+    predictionRecords: (ledger ?? []).filter(row => row.recordHash && !row.legacyUnverified).map(row => ({
+      ...Object.fromEntries(['market', 'name', 'isin', 'ticker', 'recordHash', 'createdAt', 'referenceDate',
+        'referenceClose', 'currency', 'signalType', 'horizonMonths', 'targetPct', 'status', 'latestDate',
+        'latestClose', 'currentReturn', 'benchmarkReturn', 'evaluationError', 'endDate', 'result30'].map(key => [key, row[key] ?? null])),
+      benchmarkMembers: row.benchmarkAtSelection?.length ?? 0,
+    })) };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

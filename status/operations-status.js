@@ -52,6 +52,17 @@ function showMarket(market) {
     'Geregistreerde bronfouten · ' + fallback(market.sourceErrors?.length),
     'Vastgelegde archiefconflicten · ' + fallback(market.archiveConflicts?.length),
     'Archief- en leesfouten in deze build · ' + show(market.readErrors.length),
+    'Unieke complete OHLCV-dagen · ' + show(market.history.completeUniqueDays),
+    'Door opgeslagen dagsessies bevestigd · ' + show(market.history.confirmedArchiveDays),
+    'Afzonderlijk beoordeelde bronkeuzes · ' + show(market.history.reviewedSourceDays),
+    'Nog ontbrekende sessies binnen beoordeelde periode · ' + show(market.history.missingSessions),
+    'Noteringsstart niet bewezen · ' + show(market.history.unknownStartCompanies) + ' ondernemingen',
+    ...(market.historyRecovery?.networkSources ?? []).map(row => 'Nieuwe historische aanvulling via ' + row.provider + ' · ' +
+      (row.newPublicArchiveAllowed ? 'expliciete gratis archiefrechten vastgelegd' : 'gratis herpublicatierechten nog niet vastgelegd')),
+    ...(market.recovery ? ['Gericht herstel voor opgeslagen sessie · ' + market.recovery.retried + ' opnieuw geprobeerd · ' +
+      market.recovery.recovered + ' hersteld · ' + market.recovery.remainingUnverified + ' onbevestigd',
+      ...market.recovery.results.map(row => row.isin + ' · ' + row.status + (row.finalError ? ' · ' + row.finalError : ''))]
+      : ['Gericht dagelijks herstel · nog geen opgeslagen uitvoering']),
     ...(market.sourceErrors ?? []).map(row => row.isin + ' · ' + row.reason),
     ...(market.archiveConflicts ?? []).map(row => row.isin + ' · ' + row.date + ' · ' + row.code),
     ...market.readErrors.map(row => [row.date, row.reason].filter(Boolean).join(' · ')),
@@ -66,21 +77,30 @@ function showMarket(market) {
     const checked = historyAvailabilityText(row.availability);
     if (checked) values.push(checked);
     values.push(...row.issues.map(issue => issue.kind + ' · ' + issue.reason));
+    if (row.coverage) values.push('Bronkwaliteit · ' + row.coverage.quality,
+      'Bevestigd in dagarchief · ' + row.coverage.confirmedArchiveDays,
+      'Getoetste kalenderperiode · ' + (row.coverage.calendarWindowStart ?? 'onbekend') + ' t/m ' +
+        (row.coverage.calendarWindowEnd ?? 'onbekend'),
+      'Complete dagen buiten getoetste kalenderperiode · ' + row.coverage.beforeCalendarDays,
+      'Bronbeoordeling niet volledig naspeelbaar in deze build · ' + row.coverage.sourceReviewUnavailable.length,
+      ...row.coverage.sourceConflicts.map(item => item.date + ' · ' + item.reason),
+      ...row.coverage.statusConflicts.map(item => item.date + ' · ' + item.reason));
     return values.length ? expandable('Herkomst', values) : '—';
   }
   table(element('companies'), [
-    'Onderneming', 'ISIN', 'Eerste koers', 'Laatste koers', 'Archief OHLCV', 'Grafiekbasis OHLCV',
+    'Onderneming', 'ISIN', 'Eerste koers', 'Laatste koers', 'Unieke complete dagen', 'Bevestigde dagarchiefdagen', 'Conflictdagen',
     'Periode vanaf', 'Geen handel', 'Onbevestigd', 'Ontbrekend', 'Bronkwaliteit',
   ], market.companies.map(row => [
-    row.name + ' · ' + row.symbol, row.isin, row.firstDate, row.lastDate,
-    row.archive?.completeBars, row.legacy?.completeBars, row.gapWindowStart,
+    row.name + ' · ' + row.symbol, row.isin, row.coverage?.firstCompleteDate, row.coverage?.lastCompleteDate,
+    row.coverage?.completeUniqueDays, row.coverage?.confirmedArchiveDays,
+    row.coverage ? row.coverage.sourceConflicts.length + row.coverage.statusConflicts.length : null, row.gapWindowStart,
     row.gapWindowStart ? dates('Geen handel', row.noTrades) : null,
     row.gapWindowStart ? dates('Onbevestigd', row.unverified) : null,
     row.gapWindowStart ? dates('Ontbrekend', row.missing) : null, evidence(row),
   ]));
 }
 
-function showPredictions(scores, markets) {
+function showPredictions(scores, markets, records = []) {
   if (!scores) return;
   element('predictions').hidden = false;
   element('prediction-counts').textContent = show(scores.predictions) + ' vooraf vastgelegde voorspellingen · ' +
@@ -110,6 +130,15 @@ function showPredictions(scores, markets) {
     returnPct(score.averageReturn), returnPct(score.averageLoss), score.benchmarkComparisons,
     returnPct(score.averageBenchmarkReturn), returnPct(score.averageExcessReturn),
   ]));
+  table(element('prediction-records'), [
+    'Onderneming', 'Beurs', 'Vastgelegd op', 'Referentiedag', 'Referentiekoers',
+    'Periode', 'Doel', 'Status', 'Laatste evaluatiedag', 'Prijsrendement', 'Benchmarkleden', 'Controle',
+  ], records.map(row => [row.name || row.isin, names.get(row.market) || row.market,
+    row.createdAt, row.referenceDate, row.referenceClose == null ? null : row.referenceClose + ' ' + row.currency,
+    row.horizonMonths + ' maanden', row.targetPct == null ? null : row.targetPct + '%', row.status,
+    row.latestDate, row.evaluationError ? null : returnPct(row.currentReturn), row.benchmarkMembers,
+    expandable('Verzegeling', ['SHA-256 · ' + row.recordHash, ...(row.evaluationError ? [row.evaluationError] : [])]),
+  ]));
 }
 
 async function start() {
@@ -122,6 +151,14 @@ async function start() {
   element('build').textContent = 'Gebouwd op ' + generatedAt +
     ' · Commit ' + (report.commit?.slice(0, 12) ?? 'onbekend') +
     ' · Historietests ' + (report.buildCheck === 'HISTORY_TEST_PASSED' ? 'geslaagd' : 'onbekend');
+  const recovery = report.historyRecovery;
+  if (recovery) element('history-recovery').replaceChildren(expandable('Uitgevoerd historieherstel · ' +
+    show(recovery.confirmedRestoredBars) + ' echte koersdagen · ' + recovery.status,
+    ['Uitgevoerd op · ' + recovery.performedAt, 'Controleplan SHA-256 · ' + recovery.planHash,
+      ...Object.entries(recovery.byMarket ?? {}).map(([mic, count]) => mic + ' · ' + show(count) + ' aangevulde dagen'),
+      'Nieuwe bronverzoeken · ' + show(recovery.networkRequests),
+      'Bestaande koersregels en sessiebestanden behouden · ' + (recovery.existingEvidencePreserved ? 'ja' : 'onbevestigd')]));
+  if (report.archiveWriter) element('archive-writer').textContent = 'Archiefschrijflock waargenomen bij build · gestart op ' + report.archiveWriter.startedAt;
   if (report.previews.length) {
     const previews = element('previews');
     previews.hidden = false;
@@ -149,12 +186,17 @@ async function start() {
     )));
   }
   table(element('markets'), [
-    'Beurs', 'Bedrijven', 'Afgesloten sessie bij build', 'Gearchiveerd', 'Getoond in build',
-    'Verhandeld', 'Geen handel', 'Onbevestigd', 'Bedrijven met historie', 'Bronfouten', 'Archiefconflicten',
+    'Beurs', 'Bedrijven', 'Afgesloten sessie bij build', 'Gearchiveerd', 'Getoond in build', 'Gegevensstatus',
+    'Verhandeld', 'Geen handel', 'Onbevestigd', 'Bedrijven met historie', 'Unieke OHLCV-dagen',
+    'Bevestigd in dagarchief', 'Ontbrekende sessies', 'Bronconflictdagen', 'Bronfouten', 'Archiefconflicten',
   ], report.markets.map(market => [
     market.name, market.approvedCompanies, market.latestClosed, market.latestArchived, market.latestPublished,
+    market.readErrors.length ? 'Archiefcontrole nodig' : market.latestPublished === market.latestClosed ? 'Actueel in deze build' : 'Verwerking loopt achter',
     sessionCount(market, 'TRADED'), sessionCount(market, 'NO_TRADES'), sessionCount(market, 'SESSION_UNVERIFIED'),
-    market.history.any + ' / ' + market.approvedCompanies, market.sourceErrors?.length, market.archiveConflicts?.length,
+    market.history.any + ' / ' + market.approvedCompanies, market.history.completeUniqueDays,
+    market.history.confirmedArchiveDays, market.history.missingSessions,
+    market.history.sourceConflictDays + market.history.statusConflictDays,
+    market.sourceErrors?.length, market.archiveConflicts?.length,
   ]));
   const exchange = element('exchange');
   for (const market of report.markets) exchange.add(new Option(market.name, market.mic));
@@ -175,7 +217,7 @@ async function start() {
       ['Werkelijk uitgevoerd op ' + refresh.finishedAt,
         ...refresh.results.filter(row => row.status === 'REVIEW_UNCONFIRMED').map(row => row.key + ' · ' + row.reason)]));
   }
-  showPredictions(report.predictions, report.markets);
+  showPredictions(report.predictions, report.markets, report.predictionRecords);
 }
 
 start().catch(() => {

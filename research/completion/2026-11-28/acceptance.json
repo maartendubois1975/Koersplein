@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-11-28T05:50:55.794Z",
+  "baseCommit": "4749e4271a28f198c10eec727d9e49b236696b6b",
+  "requiredCommands": [
+    {
+      "name": "npm-test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "logSha256": "537593e922d460481da69256737e4db25e3f7f7f9bb712cfd24c9ae6abe1e811"
+    },
+    {
+      "name": "code-audit",
+      "command": [
+        "npm",
+        "run",
+        "audit:codebase"
+      ],
+      "exitCode": 0,
+      "logSha256": "03635e9d5d1996e732ccc1a6c7a2246d99a1c5a96fa5719b7293b4213e9231e8"
+    },
+    {
+      "name": "history-test",
+      "command": [
+        "npm",
+        "run",
+        "history:test"
+      ],
+      "exitCode": 0,
+      "logSha256": "513e1c501e3149ab1b3761b13d47103e18cc7d8ffbbd3766660ae7faa69cd4a5"
+    },
+    {
+      "name": "paris-selection",
+      "command": [
+        "node",
+        "scripts/research/export-paris-company-review.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "logSha256": "fd53cc96e6508104d2efcda6bd9cdd9b6f5c2666157cbea5505eb73bc5db7866"
+    },
+    {
+      "name": "test-amsterdam-period-quality",
+      "command": [
+        "node",
+        "scripts/research/test-amsterdam-period-quality.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "a396f6a3b6f40a309ca382c3b59cd57bb5c48c4f9dbf6c3fbb357143388e6674"
+    },
+    {
+      "name": "test-amsterdam-portfolio-simulator",
+      "command": [
+        "node",
+        "scripts/research/test-amsterdam-portfolio-simulator.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "2ee13b781029138a5612fbe5b86bf39e93dbfb109859020b452637efc0366cc4"
+    },
+    {
+      "name": "test-analytics",
+      "command": [
+        "node",
+        "scripts/research/test-analytics.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "9e166c73f7e4d7c43d2e56eb22221a3640ab7e3205803e1d9e8ceaf9d8ed647f"
+    },
+    {
+      "name": "test-block1-complete",
+      "command": [
+        "node",
+        "scripts/research/test-block1-complete.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "117537a6c7d72232ac52e78161147816cf84c687a6b78ad3f168c032051929cd"
+    },
+    {
+      "name": "test-block2-machines",
+      "command": [
+        "node",
+        "scripts/research/test-block2-machines.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "66e6211bfa9c9755fe69501f26b084aa41f8d0c8caab11eb71d4267e69531964"
+    },
+    {
+      "name": "test-block3-integrity",
+      "command": [
+        "node",
+        "scripts/research/test-block3-integrity.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "29d7768c55fd477d4d79156131edeaf0e7d0e21fba2c32081a764f12638f5cb1"
+    },
+    {
+      "name": "test-block4-exam",
+      "command": [
+        "node",
+        "scripts/research/test-block4-exam.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "e2598b0a708249e6e8ad1c8e762bd1c4928ae6386faaa8c3d255816c8b6a7f3b"
+    },
+    {
+      "name": "test-block5-learning",
+      "command": [
+        "node",
+        "scripts/research/test-block5-learning.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "4d4bd053a7b688c3024fac50f24eb78f664162ae3593faa04861d3f1ebbf2853"
+    },
+    {
+      "name": "test-block6-live",
+      "command": [
+        "node",
+        "scripts/research/test-block6-live.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "8f262ab90377f8289b4ad4d204f2eb13830fcb54eaf0db9bcb540c7c281d2561"
+    },
+    {
+      "name": "test-fetch-gpw-evidence",
+      "command": [
+        "node",
+        "scripts/research/test-fetch-gpw-evidence.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "627780ec9f38791b89986d3ee7c2b5cbcebd67eaee8253c2b8fbed93af23cdfa"
+    },
+    {
+      "name": "test-forecast-input-reviews",
+      "command": [
+        "node",
+        "scripts/research/test-forecast-input-reviews.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "87ec8c7a5e8371bf037914908bf45e368ce41a1a544fb00d8808064b323c7c87"
+    },
+    {
+      "name": "test-forecast-rollforward",
+      "command": [
+        "node",
+        "scripts/research/test-forecast-rollforward.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "e5ea59baea39a3399fd349aa7afa7832897840c893180b0a0b03d78a4feb7f52"
+    },
+    {
+      "name": "test-forecast-source-audit",
+      "command": [
+        "node",
+        "scripts/research/test-forecast-source-audit.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "bc3838c61446672774023ef171f574719b3e8808066f6456d3fdfcddb75ad4fc"
+    },
+    {
+      "name": "test-import-isin-evidence",
+      "command": [
+        "node",
+        "scripts/research/test-import-isin-evidence.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "a6c33aba3e6f4aa72d5bfba7f62b420378489d81f38bec32aa8eb62bab922647"
+    },
+    {
+      "name": "test-learning",
+      "command": [
+        "node",
+        "scripts/research/test-learning.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "4c743784cef511453e9e50758f56045eedd2a34f5053886dc9b1e12f643c669a"
+    },
+    {
+      "name": "test-machine-specialists",
+      "command": [
+        "node",
+        "scripts/research/test-machine-specialists.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "446d67390801465bd249dde75af77649a5024d7b8a40a9a665375f2e60f7616a"
+    },
+    {
+      "name": "test-opportunity-boundaries",
+      "command": [
+        "node",
+        "scripts/research/test-opportunity-boundaries.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "35abeb67c80f77e2f18c0d0bb67c9ac2b507f4e8e0bdc6ae125b5c366500d985"
+    },
+    {
+      "name": "test-plus30-chain-scanner",
+      "command": [
+        "node",
+        "scripts/research/test-plus30-chain-scanner.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "ff1634554ecb7e3deae9076a3dea3335389ed149624aa18e8f3556e699bb1a77"
+    },
+    {
+      "name": "test-reconcile-isin",
+      "command": [
+        "node",
+        "scripts/research/test-reconcile-isin.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "486cba66c892b1e1c72ffbf848b7e0166afea244d06711cf7829f2b40e8de673"
+    },
+    {
+      "name": "test-sector-classification",
+      "command": [
+        "node",
+        "scripts/research/test-sector-classification.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "0c46d1feb584f28d4bb7f656ebeb6c2b33a3e1deadde24fa5e7582232380dea5"
+    },
+    {
+      "name": "test-six-ipo-current-identity",
+      "command": [
+        "node",
+        "scripts/research/test-six-ipo-current-identity.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "e8d7bf8fbb8d0d68b421d656e4807381c1c78a642dd3f2e58765718752d826f2"
+    },
+    {
+      "name": "test-six-official-symbol-evidence",
+      "command": [
+        "node",
+        "scripts/research/test-six-official-symbol-evidence.mjs"
+      ],
+      "exitCode": 0,
+      "logSha256": "137bc786a298ff68eae2f85c6eeb5c31ade0e0706c09521500c0a6a63985782c"
+    }
+  ],
+  "additionalChecks": [
+    {
+      "command": "node scripts/history/test-oslo-issuer-identities.mjs",
+      "exitCode": 0,
+      "logSha256": "aa73ba7b2366c2ace7d68a2aae972ad53f48099be63b6830c4d28d015b0f9bf9"
+    },
+    {
+      "command": "node scripts/history/test-operations-status-view.mjs",
+      "exitCode": 0,
+      "logSha256": "47581077c5b757247fdaf3dfdd981503f494e0e62db5c3037c7c6851a6cbbfa8"
+    }
+  ],
+  "protectedRegisters": [
+    {
+      "mic": "XLIS",
+      "count": 34,
+      "file": "data/euronext-lisbon-approved.json",
+      "sha256": "a95a778520a8f81574ecaec5c627e7493c56ddd6e12c9537ac1a967ba5c1b8ca"
+    },
+    {
+      "mic": "XDUB",
+      "count": 16,
+      "file": "data/euronext-dublin-approved.json",
+      "sha256": "1dec06a2ff679f33664b5483a64e779d95fa1fbcb6775c00aef58786a8357669"
+    },
+    {
+      "mic": "XAMS",
+      "count": 80,
+      "file": "data/euronext-amsterdam.json",
+      "sha256": "57f0ab26aad82ad7a40f7891208f892e46b5e227de1685c69736ffdafab457b7"
+    },
+    {
+      "mic": "XBRU",
+      "count": 105,
+      "file": "data/euronext-brussels.json",
+      "sha256": "5671bbb427a8372895176f5d0bb3a6425b9e92a11b2c17d2b715230ed68e30e2"
+    },
+    {
+      "mic": "XPAR",
+      "count": 664,
+      "file": "research/paris/2026-11-16/approved-research-catalog.json",
+      "sha256": "6d7af3dc616f5ca32ec8df39810740a615a935d55a1a042006eebfdf95a39267"
+    }
+  ],
+  "approvedCompanies": 899,
+  "recoveredBars": 681,
+  "networkHistoryRequests": 0,
+  "protectedExistingBars": 383741,
+  "protectedSessionFiles": 47,
+  "opportunityLedgerSha256": "ce13998ef6a9e403cf168e66a143c0d99b6f585ff5feb5480d2a9e81129fbffb",
+  "sealedPredictions": 2,
+  "closedPredictions": 0,
+  "oslo": {
+    "candidates": 244,
+    "issuerProposals": 243,
+    "remainingUnresolved": 1,
+    "admitted": false
+  },
+  "lastObservedTestDeploy": {
+    "commit": "b3e2cb27571a5bfbcba102db91a4f2f72c979f50",
+    "id": "dep-dc47u0d9el5s73ag70d0",
+    "status": "live"
+  },
+  "manualWorkflowOrDeploymentStarts": 0,
+  "productionMainOrCloudflareChanges": false,
+  "newVersionDeployed": false
+}

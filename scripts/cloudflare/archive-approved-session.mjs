@@ -4,10 +4,15 @@ import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {loadCompanyCatalog,companyContracts} from '../history/company-register.mjs';
 import {dailyRow,listingIdentity,previousConfirmedBar,validSessionDate} from '../../daily-session-view.mjs';
+import {withArchiveWriter} from '../history/archive-writer-lock.mjs';
+import {latestClosedSession,sessionCalendar} from '../history/trading-calendar.mjs';
+import {sameSourcePrice} from '../../chart.js';
 
 const readOptional=async file=>{try{return JSON.parse(await fs.readFile(file,'utf8'))}catch(e){if(e.code!=='ENOENT')throw e;return null}};
 const write=async(file,value)=>{await fs.mkdir(path.dirname(file),{recursive:true});const tmp=file+'.tmp';await fs.writeFile(tmp,JSON.stringify(value,null,2)+'\n');await fs.rename(tmp,file);};
-const signature=bar=>JSON.stringify(['open','high','low','close','volume'].map(k=>bar[k]));
+// Share the chart's proven float32 representation check; never round a real
+// price difference and never tolerate a volume difference. Old bytes stay put.
+const sameObservation=(a,b)=>['open','high','low','close'].every(key=>sameSourcePrice(a[key],b[key]))&&a.volume===b.volume;
 export function validateSnapshot(snapshot,catalog,market){
  if(snapshot?.market!==market||!validSessionDate(snapshot.session)||snapshot.results?.length!==catalog.shares.length||new Set(snapshot.results.map(r=>r.isin)).size!==catalog.shares.length)throw Error('Session register mismatch '+market);
  const rows=new Map(snapshot.results.map(r=>[r.isin,r]));
@@ -18,12 +23,21 @@ export function validateSnapshot(snapshot,catalog,market){
  }
  return snapshot;
 }
-export async function archiveApprovedSessions({inputDir='research/output',dataDir='data',markets=Object.keys(companyContracts),loadCatalog=loadCompanyCatalog}={}){
+export async function archiveApprovedSessions(options={}){
+ return withArchiveWriter(options.dataDir??'data',async()=>{
+  await options.beforeArchive?.();
+  return archiveSessions(options);
+ });
+}
+async function archiveSessions({inputDir='research/output',dataDir='data',markets=Object.keys(companyContracts),loadCatalog=loadCompanyCatalog,replaySessions,now=new Date()}={}){
  const report={markets:[],errors:[],conflicts:[]};
- for(const market of markets){
+ if(replaySessions&&replaySessions.some(row=>!markets.includes(row.market)||!validSessionDate(row.session)))throw Error('INVALID_ARCHIVE_REPLAY');
+ for(const {market,session} of replaySessions??markets.map(market=>({market}))){
   try{
-   const incoming=await readOptional(path.join(inputDir,'daily-session-'+market+'.json'));
+   const incoming=await readOptional(session?path.join(inputDir,market,session+'.json'):path.join(inputDir,'daily-session-'+market+'.json'));
    if(!incoming){report.errors.push({market,error:'SESSION_ARTIFACT_MISSING'});continue;}
+   if(session&&incoming.session!==session)throw Error('ARCHIVE_REPLAY_SESSION_MISMATCH');
+   if(session&&(!sessionCalendar(market,session).open||session>latestClosedSession(market,now)))throw Error('ARCHIVE_REPLAY_SESSION_NOT_CLOSED');
    const catalog=await loadCatalog(market);const snap=validateSnapshot(incoming,catalog,market);
    const archivePath=path.join(dataDir,'daily-sessions',market,snap.session+'.json');
    const prior=await readOptional(archivePath);
@@ -43,7 +57,7 @@ export async function archiveApprovedSessions({inputDir='research/output',dataDi
     for(const old of prior.results)if(['TRADED','NO_TRADES','MARKET_CLOSED'].includes(old.status)){
      const next=current.get(old.isin);
      if(old.status!=='TRADED'&&next.status==='TRADED')report.conflicts.push({market,isin:old.isin,date:snap.session,code:'SESSION_STATUS_CONFLICT_PRESERVED',priorStatus:old.status,incomingStatus:next.status,incomingBar:next.bar});
-     if(old.status==='TRADED'&&next.status==='TRADED'&&signature(next.bar)!==signature(old.bar))report.conflicts.push({market,isin:old.isin,date:snap.session,code:'SESSION_CONFLICT_PRESERVED'});
+     if(old.status==='TRADED'&&next.status==='TRADED'&&!sameObservation(next.bar,old.bar))report.conflicts.push({market,isin:old.isin,date:snap.session,code:'SESSION_CONFLICT_PRESERVED'});
      current.set(old.isin,old);
     }
     snap.results=[...current.values()].sort((a,b)=>a.isin.localeCompare(b.isin));
@@ -56,10 +70,10 @@ export async function archiveApprovedSessions({inputDir='research/output',dataDi
     const bar=dailyRow(snap,share,market);if(!bar)continue;
     const identity=listingIdentity(share,market,snap.session),file=path.join(dataDir,'history',identity.storageKey+'.json');
     const doc=await readOptional(file);
-    if(doc&&(doc.instrument?.isin!==identity.isin||doc.instrument?.mic!==identity.mic||doc.instrument?.symbol!==identity.symbol||!Array.isArray(doc.bars)))throw Error('Stored history identity mismatch '+identity.storageKey);
+    if(doc&&(doc.instrument?.isin!==identity.isin||doc.instrument?.mic!==identity.mic||doc.instrument?.symbol!==identity.symbol||doc.instrument?.currency!==(share.currency||catalog.currency||'EUR')||!Array.isArray(doc.bars)))throw Error('Stored history identity mismatch '+identity.storageKey);
     const bars=doc?[...doc.bars]:[],existing=bars.find(b=>b.date===bar.date);
     if(existing){
-     if(signature(existing)!==signature(bar)){
+     if(!sameObservation(existing,bar)){
       report.conflicts.push({market,isin:share.isin,date:bar.date,code:'HISTORY_CONFLICT_PRESERVED'});
       if(!prior?.results.some(r=>r.isin===identity.isin&&r.status==='TRADED')){const row=snap.results.find(r=>r.isin===identity.isin);row.status='SESSION_UNVERIFIED';row.bar=null;row.error='Stored history conflicts with session; raw history retained';}
      }
@@ -86,9 +100,13 @@ export async function archiveApprovedSessions({inputDir='research/output',dataDi
    const conflicts=[...(savedPrior?.archiveConflicts||[]),...report.conflicts.filter(x=>x.market===market)];
    snap.archiveConflicts=[...new Map(conflicts.map(conflict=>[JSON.stringify(conflict),conflict])).values()];
    if(savedPrior&&isDeepStrictEqual(savedPrior,{...snap,generatedAt:savedPrior.generatedAt}))snap.generatedAt=savedPrior.generatedAt;
-   if(!isDeepStrictEqual(savedPrior,snap))await write(archivePath,snap);
-   const latestPath=path.join(dataDir,'daily-session-'+market+'.json');const latest=await readOptional(latestPath);
-   if((!latest||latest.session<=snap.session)&&!isDeepStrictEqual(latest,snap))await write(latestPath,snap);
+   // A repair reads retained session evidence; it may append missing candles,
+   // but never rewrites that evidence or changes the published session pointer.
+   if(!replaySessions){
+    if(!isDeepStrictEqual(savedPrior,snap))await write(archivePath,snap);
+    const latestPath=path.join(dataDir,'daily-session-'+market+'.json');const latest=await readOptional(latestPath);
+    if((!latest||latest.session<=snap.session)&&!isDeepStrictEqual(latest,snap))await write(latestPath,snap);
+   }
    report.markets.push({market,session:snap.session,counts:snap.counts,historyDocuments:historyWrites.length});
   }catch(error){report.errors.push({market,error:error.message});}
  }

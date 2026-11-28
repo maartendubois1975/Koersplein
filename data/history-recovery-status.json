@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "performedAt": "2026-11-28T05:40:38.656Z",
+  "mode": "STORED_APPROVED_SESSION_REPLAY_ONLY",
+  "planHash": "90dd08c377b02eccfbdbf08da9b0414adc8b50d8800ab823a9d8d198d7b22f9b",
+  "status": "REPLAY_COMPLETED",
+  "confirmedRestoredBars": 681,
+  "byMarket": {
+    "XAMS": 76,
+    "XBRU": 94,
+    "XPAR": 511
+  },
+  "restoredSession": "2026-11-13",
+  "existingEvidencePreserved": true,
+  "protectedExistingHistoryFiles": 894,
+  "protectedExistingBars": 383741,
+  "protectedSessionFiles": 47,
+  "networkRequests": 0,
+  "remainingReplayActions": 0,
+  "errors": [],
+  "conflicts": [],
+  "repeat": "ALREADY_REPAIRED",
+  "ledgerSha256": "ce13998ef6a9e403cf168e66a143c0d99b6f585ff5feb5480d2a9e81129fbffb"
+}

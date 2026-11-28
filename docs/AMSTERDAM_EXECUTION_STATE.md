@@ -304,3 +304,44 @@ De geplande verwerking heeft intussen de vijf 27-novembersessies opgeslagen in 2
 De normale onderzoeksingang is daarna op 28 november om 06:21:36 Nederlandse tijd uitgevoerd op basis van de afgesloten vrijdag 27 november. Zij heeft IMCD vooraf verzegeld als nieuwe onderzoeksselectie, met een cohort en benchmark van achttien ondernemingen. De oorspronkelijke Basic-Fit-selectie en haar benchmark van twee ondernemingen blijven exact behouden. Er zijn twee verzegelde open voorspellingen, twee oudere onbevestigde records en nul afgeronde gevalideerde resultaten. Er is geen koers of handelsdag voor zaterdag 28 november gemaakt. De nieuwe selectie is een prijsproef op vrijdagreferentie, geen uitvoeringsprijs of bewezen handelsrendement.
 
 De bestaande publicatieautomatisering is gelezen en ongewijzigd behouden. Haar laatste resultaat meldde terecht dat een gewijzigde branch-head na de dagelijkse validatie publicatie blokkeert. Een geslaagde algemene regressie vervangt die exacte dagelijkse SHA-controle niet. Render stond bij controle nog op b3e2cb2. De nieuwe ontwikkelcommit, haar onafhankelijke CI en publicatiestatus worden in de eindrapportage afzonderlijk benoemd.
+
+## 2026-11-28 — historische dekking en gericht herstel
+
+Uitgangscommit 4749e42. De bestaande centrale archiver heeft 681 ontbrekende
+raw-archiefregels van 13 november aangevuld uit al bevestigde sessiebestanden:
+Amsterdam 76, Brussel 94, Parijs 511. Alle 383.741 bestaande raw regels, 47
+sessiebestanden, de vijf registers met 899 ondernemingen en de volledige
+voorspellingsledger zijn behouden. Nul nieuwe koersbronverzoeken. Het gehashte
+plan is onder dezelfde schrijflock als de dagarchiver opnieuw gecontroleerd.
+Een onderbroken verwerking en herhaling zijn met echte gegevens getest;
+de tweede echte toepassing is byte-idempotent. Er is één centrale opslagroute.
+
+Het statusrapport telt unieke complete dagen en bevestigde dagarchiefdagen apart,
+met bron-/statusconflicten, kalenderbereik en onbekende noteringsstart. De lokale
+build bevat 384.340 unieke complete bedrijf/dag-observaties; dit bewijst geen
+volledige externe historie of totaalrendement. De onderzoekslezer hergebruikt nu
+de bestaande bewezen float32-regel, zodat de herstelde overlap de eerdere
+beoordeelde forecastvensters niet ten onrechte blokkeert. Werkelijke verschillen
+blijven blokkeren. Twee verzegelde open voorspellingen, nul afgerond; geen
+modelrekenregel, historische prijs of bevroren voorspelling gewijzigd.
+
+De bestaande dagelijkse CLI probeert alleen tijdelijke transportfouten één keer
+gericht opnieuw; bevestigde/no-trade- en identiteits-/valutaproblemen worden niet
+blind herhaald. Op echte bars met geïnjecteerde storingen getest, nog geen echte
+nieuwe geplande hersteluitvoering geclaimd. De statuspagina toont ook de concrete
+voorspellingen, de echte herstelmeting en bronrechten voor nieuwe aanvulling.
+
+Oslo: 22 actuele GLEIF-entiteiten onderzocht, 21 aanvullende primaire bruggen,
+243/244 uitgevervoorstellen, nul dubbele uitgevers. RomReal blijft open wegens
+ontbrekende primaire ISIN-LEI-brug. Geen goedgekeurd register automatisch gewijzigd.
+Milaan blijft uitsluitend wegens onbevestigde gratis herpublicatierechten niet
+operationeel. Nieuwe historische netwerkrequests blijven eveneens afhankelijk
+van expliciete gratis archiefrechten; bestaande vijf bronregisters ongewijzigd.
+
+Alle bestaande hoofdtests, codeaudit, historietests, Paris-selectie en 22
+researchtests zijn lokaal geslaagd; aanvullende status- en Oslo-tests ook.
+Render stond bij read-only eindcontrole nog op b3e2cb2. Commit/CI en uitgestelde
+geplande publicatie worden apart in de oplevering vermeld. Main, productie en
+Cloudflare zijn ongemoeid gelaten; geen handmatige import/deploy of extra dienst.
+Ontwerp, bewijs, beperkingen en rollback:
+[Historische dekking en herstel](HISTORY_RECOVERY_BLOCK_2026-11-28.md).

@@ -29,7 +29,7 @@
     "isin:gpw": "node scripts/research/fetch-gpw-evidence.mjs",
     "amsterdam:discover": "node scripts/history/discover-amsterdam.mjs",
     "audit:architecture": "node scripts/audit/architecture-inventory.mjs",
-    "history:core:test": "node scripts/history/test-history-core.mjs && node scripts/history/test-session-readiness.mjs && node scripts/history/test-consolidation.mjs",
+    "history:core:test": "node scripts/history/test-history-core.mjs && node scripts/history/test-session-readiness.mjs && node scripts/history/test-consolidation.mjs && node scripts/history/test-history-recovery.mjs && node scripts/history/test-oslo-issuer-identities.mjs",
     "daily:collect": "node scripts/cloudflare/approved-daily-session.mjs",
     "daily:archive": "node scripts/cloudflare/archive-approved-session.mjs",
     "research:daily": "node scripts/research/daily-opportunity-ledger.mjs",

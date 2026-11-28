@@ -1,0 +1,1548 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-11-28",
+  "mode": "READ_ONLY_REVIEWED_ISSUER_PROPOSALS",
+  "candidateFile": "research/oslo/2026-11-27/candidate-companies.json",
+  "candidateSha256": "0e4972603eec391e97227d3d26831246fd0294742f73cfe68f2a78b21ef0a7e6",
+  "baseFile": "research/admission/2026-11-27/oslo-issuer-proposals.json",
+  "baseSha256": "cbb684b9f53a5cea27ab8bd88024fd03346c2041b57da5d0e0c2c80d324e7466",
+  "reviewedRemainingCandidates": 22,
+  "newVerifiedBridges": 21,
+  "decisions": [
+    {
+      "isin": "DK0060945467",
+      "symbol": "5PG",
+      "name": "5th Planet Games A/S",
+      "issuerId": "LEI:213800MC2SGVSIBN7J53",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/DK0060945467.json",
+        "sha256": "b602983be9a0f1d2d277926c20940e8fa26350a5ec5cac935603727e60c6e122",
+        "url": "https://api.gleif.org/api/v1/lei-records/213800MC2SGVSIBN7J53",
+        "entityName": "5TH PLANET GAMES A/S",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/sites/default/files/company_press_releases/attachments_oslo/2022/04/04/558519_2021%20Annual%20report%205th%20Planet%20Games.pdf",
+        "sha256": "aa61d627e71d19690bd4b52c1da9636a1f649f02ec09ab682efb46054f29db2d",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:44:57.877551+00:00"
+    },
+    {
+      "isin": "CY0108052115",
+      "symbol": "ADS",
+      "name": "ADS MARITIME HOLDING PLC",
+      "issuerId": "LEI:254900W1NJ6UIVLUCN25",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/CY0108052115.json",
+        "sha256": "08f3536fb0a84c4ae985fe403c9dd3dd0916381615edc42c2b10e1a5c946e864",
+        "url": "https://api.gleif.org/api/v1/lei-records/254900W1NJ6UIVLUCN25",
+        "entityName": "ADS MARITIME HOLDING PLC",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://www.adsmh.com/wp-content/uploads/2022/10/ADS-Maritime-Holding-Plc-Disclosure-by-B-T-Larsen-Co-Ltd.pdf",
+        "sha256": "ccf4f47e19d3c760a794fdfc98c0db7f8e5021adccdd366ff8d5f06b90b405d6",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:44:57.878212+00:00"
+    },
+    {
+      "isin": "SGXZ33675836",
+      "symbol": "BARRA",
+      "name": "BARRAMUNDI GROUP LTD.",
+      "issuerId": "LEI:254900Z1VT9KY0P9EP44",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/SGXZ33675836.json",
+        "sha256": "55886712a7c97d31e74ffdf1e680c3100cb708577b984c2622a4577999ad1c8d",
+        "url": "https://api.gleif.org/api/v1/lei-records/254900Z1VT9KY0P9EP44",
+        "entityName": "Barramundi Group Ltd.",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/en/ipo-showcase/barramundi-group",
+        "sha256": "492493644deb746be74bc4c2410ea1c4de97846e0593f178238214c3548566ae",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:44:57.878711+00:00"
+    },
+    {
+      "isin": "SGXZ69436764",
+      "symbol": "BWLPG",
+      "name": "BW LPG Limited",
+      "issuerId": "LEI:5493006WBEME88YFDW23",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/SGXZ69436764.json",
+        "sha256": "0dd066b4ee331e2d56c01e73c46fac3ad36b96bb03de24fc4177cabc41fca877",
+        "url": "https://api.gleif.org/api/v1/lei-records/5493006WBEME88YFDW23",
+        "entityName": "BW LPG LIMITED",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/sites/default/files/company_press_releases/attachments_oslo/2024/10/11/629421_Sale%20of%20Shares%2010%20Oct%202024.pdf",
+        "sha256": "1928ed930b1713f5f0289bd633296cd4ab0238e1bbb5f915dad08023131f5e51",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:44:57.879121+00:00"
+    },
+    {
+      "isin": "MHY1096C1093",
+      "symbol": "CAPT",
+      "name": "CAPITAL TANKERS CORP.",
+      "issuerId": "LEI:254900YKEOPGDBKEUX72",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/MHY1096C1093.json",
+        "sha256": "4a37012aa1283838326b94efec6bef661f8e0d24075600c2e08fe3503cea1806",
+        "url": "https://api.gleif.org/api/v1/lei-records/254900YKEOPGDBKEUX72",
+        "entityName": "CAPITAL TANKERS CORP.",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/en/ipo-showcase/capital-tankers-corp",
+        "sha256": "36852ae018cea014b734f90eabf57b423a4cff600ef24cb6b86c2092e1cc4f31",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:07.218274+00:00"
+    },
+    {
+      "isin": "KYG203121077",
+      "symbol": "CTUS",
+      "name": "Cetus Maritime Holdings Limited",
+      "issuerId": "LEI:98450015EBD8CD646A16",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/KYG203121077.json",
+        "sha256": "01b8cc455f393b862e0b89728184bfa6e6e81fd7c4320ab3d2be46c8c459917b",
+        "url": "https://api.gleif.org/api/v1/lei-records/98450015EBD8CD646A16",
+        "entityName": "CETUS MARITIME HOLDINGS LIMITED",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/en/ipo-showcase/cetus-maritime-holdings-limited",
+        "sha256": "120b7b97a95288289b21e1b9eea2edcc3a3e96f58d526dedb8912f2a0e190074",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:07.280777+00:00"
+    },
+    {
+      "isin": "MT0003060101",
+      "symbol": "GOLDR",
+      "name": "Gold Road International  P.L.C",
+      "issuerId": "LEI:984500C9T5B59D69F447",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/MT0003060101.json",
+        "sha256": "0b8438c6518274d90180d80866eadd838ec052dbdea2c3ed87448f37935aedfb",
+        "url": "https://api.gleif.org/api/v1/lei-records/984500C9T5B59D69F447",
+        "entityName": "Gold Road International p.l.c.",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/en/ipo-showcase/gold-road-international-plc",
+        "sha256": "1d1fb6c8c7b80be6bba6ec77760a500d9c41266c2112d8df62fb302bd11d42fc",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:07.722477+00:00"
+    },
+    {
+      "isin": "SGXZ53070850",
+      "symbol": "HAFNI",
+      "name": "Hafnia Limited",
+      "issuerId": "LEI:5493001KCFT0SCGJ2647",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/SGXZ53070850.json",
+        "sha256": "aaa8d3ed05859d679c5e0fccd90e11d63be971bb7f249ebb82b5daa5db86a995",
+        "url": "https://api.gleif.org/api/v1/lei-records/5493001KCFT0SCGJ2647",
+        "entityName": "HAFNIA LIMITED",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://www.sec.gov/Archives/edgar/data/1815779/000114036126037440/ef20082652_fwp.htm",
+        "sha256": "ee5a633363f08a6937973385ed33a19ff59f74f3ae5da01bf5047e0b7a2f3bfa",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:08.067623+00:00"
+    },
+    {
+      "isin": "BMG4660A1036",
+      "symbol": "HSHP",
+      "name": "Himalaya Shipping Ltd",
+      "issuerId": "LEI:984500D86FFE5EYE7988",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/BMG4660A1036.json",
+        "sha256": "5380ed0d205f25b73fd3e2276ed8f9f2e04fbc4c58c536a4a8152f9739ebb1cf",
+        "url": "https://api.gleif.org/api/v1/lei-records/984500D86FFE5EYE7988",
+        "entityName": "Himalaya Shipping Ltd.",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/en/ipo-showcase/himalaya-shipping",
+        "sha256": "a737be27c2edb5a1f4cca81aedaed867ce96c91c330e7c47a77b01bda65f1f42",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:16.041527+00:00"
+    },
+    {
+      "isin": "NL0015268814",
+      "symbol": "MPCES",
+      "name": "MPC ENERGY SOLUTIONS N.V.",
+      "issuerId": "LEI:724500EBN1V9P4WME110",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/NL0015268814.json",
+        "sha256": "a6d19e5ab04b38075e17691c62e0641f26073f2ab9742b634779819012edaa64",
+        "url": "https://api.gleif.org/api/v1/lei-records/724500EBN1V9P4WME110",
+        "entityName": "MPC Energy Solutions N.V.",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/en/ipo-showcase/mpc-energy-solutio",
+        "sha256": "2c056bd17d69192c2dd300ff400be0d8b1c1e6f07614c24f010521f3f52f0e7d",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:16.060371+00:00"
+    },
+    {
+      "isin": "DK0060520450",
+      "symbol": "NAPA",
+      "name": "Napatech A/S",
+      "issuerId": "LEI:213800XQZL5ULZCCNP76",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/DK0060520450.json",
+        "sha256": "0d6f57fe75c0267daf6cd9f3eeed82744a174ee4a5607e914b80859b504e7f24",
+        "url": "https://api.gleif.org/api/v1/lei-records/213800XQZL5ULZCCNP76",
+        "entityName": "NAPATECH A/S",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/sites/default/files/company_press_releases/attachments_oslo/2026/03/05/667669_PDMR%20-%20Zane%20Ball.pdf",
+        "sha256": "21e8e0f0895dfcd2154a84e48432ab6a1aefd3492e5dcc846da7195c6c8b63b1",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:16.191014+00:00"
+    },
+    {
+      "isin": "BMG6716L1081",
+      "symbol": "OTL",
+      "name": "Odfjell Technology Ltd",
+      "issuerId": "LEI:529900ZYHGCPTAD1R169",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/BMG6716L1081.json",
+        "sha256": "8fcb97ca699f5d3bb0fbd133df5435c2af2db54d429caaf4d08eabbe4fa1be03",
+        "url": "https://api.gleif.org/api/v1/lei-records/529900ZYHGCPTAD1R169",
+        "entityName": "Odfjell Technology Ltd",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/en/ipo-showcase/odfjell-technology",
+        "sha256": "b021c6f63561db20213965ade3a7187c373329cb01ed7c42b4326f56118bd3d2",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:17.184612+00:00"
+    },
+    {
+      "isin": "BMG6904D1083",
+      "symbol": "PLSV",
+      "name": "Paratus Energy Services Ltd.",
+      "issuerId": "LEI:549300XB7T5BX418QX67",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/BMG6904D1083.json",
+        "sha256": "ca3323d70ea19a6ec94d86169ffe3db07aeedf477efa995c2f97e23bd624958a",
+        "url": "https://api.gleif.org/api/v1/lei-records/549300XB7T5BX418QX67",
+        "entityName": "Paratus Energy Services Ltd.",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/en/ipo-showcase/paratus-energy-ser",
+        "sha256": "0a9f6a22eca8df388de66454cc3c8ffa1ad431aca886f8164a95d359f36033ae",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:26.602365+00:00"
+    },
+    {
+      "isin": "CY0201461213",
+      "symbol": "PLCAN",
+      "name": "PELICAN AQUA HOLDING PLC",
+      "issuerId": "LEI:213800MS7YC1XTISON88",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/CY0201461213.json",
+        "sha256": "72e6b37ea8cb7c352af6e2c531228c3253356e474eb5aa79e91ce796e89bdae8",
+        "url": "https://api.gleif.org/api/v1/lei-records/213800MS7YC1XTISON88",
+        "entityName": "PELICAN AQUA HOLDING PLC",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/en/ipo-showcase/pelican-aqua-holding",
+        "sha256": "3f54289e255d4fcf715621da6f9118e65c8dab3711d56d3ac4655e24e717e933",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:26.617068+00:00"
+    },
+    {
+      "isin": "CY0102630916",
+      "symbol": "PSE",
+      "name": "Petrolia SE",
+      "issuerId": "LEI:213800314VQ2TXFPB471",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/CY0102630916.json",
+        "sha256": "c7e3865897ec7b49e068a04d3d81900d378d8dba2c2eee784f76bcbbbcc23fc8",
+        "url": "https://api.gleif.org/api/v1/lei-records/213800314VQ2TXFPB471",
+        "entityName": "PETROLIA SE",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://www.mfn.se/ob/a/petrolia/pse-mandatory-notification-of-trade-4eeaa619",
+        "sha256": "797052c4d8fe965b22efe0e86557b4f6e53f98fd6f1399c44fa690bf8e25211b",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:46:55.650109+00:00"
+    },
+    {
+      "isin": "BMG763301022",
+      "symbol": "ROM",
+      "name": "RomReal Ltd.",
+      "issuerId": "LEI:549300DHIW4W3OJW6A93",
+      "status": "UNRESOLVED_PRIMARY_ISIN_TO_LEI_BRIDGE",
+      "gleif": {
+        "file": "oslo-entities/BMG763301022.json",
+        "sha256": "e4d2f71a2e28312b8077fe338bf475901127e7230c7b769ef1202125e2e49227",
+        "url": "https://api.gleif.org/api/v1/lei-records/549300DHIW4W3OJW6A93",
+        "entityName": "RomReal Ltd.",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": null,
+      "reason": "GLEIF confirms RomReal entity, but its ISIN mapping is empty. The retrieved issuer annual report contains neither the ISIN, LEI nor registration 37382. Secondary matches are leads only.",
+      "observedAt": "2026-11-28T05:46:55.651005+00:00"
+    },
+    {
+      "isin": "CY0101550917",
+      "symbol": "SDSD",
+      "name": "S.D. Standard ETC Plc",
+      "issuerId": "LEI:213800T1IOLQVHNHB646",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/CY0101550917.json",
+        "sha256": "36c94a65dd4bd04860fc77433952da41a6ee8f01f247e7c9d4061386331bfaf8",
+        "url": "https://api.gleif.org/api/v1/lei-records/213800T1IOLQVHNHB646",
+        "entityName": "S.D. STANDARD ETC PLC",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://www.standard-etc.com/wp-content/uploads/2021/11/20171208-SDSD-Listing-Prospectus-FINAL-CLEAN.pdf",
+        "sha256": "85a271cc1464e3613f1d053adc124b4411f4795f216d6859b2e36baddeb98054",
+        "mode": "PRIMARY_ISIN_REGISTRATION_GLEIF_BRIDGE",
+        "isinObserved": true,
+        "leiObserved": false,
+        "registrationBridge": {
+          "sourceRegisteredAs": "HE 277936",
+          "gleifRegisteredAs": "ΗΕ 277936",
+          "authority": "RA000161",
+          "previousLegalName": "S.D. STANDARD DRILLING PLC",
+          "normalization": "Greek HE glyphs to Latin HE; whitespace removed; exact Cyprus registration 277936"
+        }
+      },
+      "observedAt": "2026-11-28T05:47:49.547007+00:00"
+    },
+    {
+      "isin": "CY0101162119",
+      "symbol": "ENH",
+      "name": "SED Energy Holdings Plc",
+      "issuerId": "LEI:213800ED88L967PGFK25",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/CY0101162119.json",
+        "sha256": "776d0a1235b62d41636e738aba9ce449e0ad68f4c87ba7e491bf2cedb0dbbdc9",
+        "url": "https://api.gleif.org/api/v1/lei-records/213800ED88L967PGFK25",
+        "entityName": "SED ENERGY HOLDINGS PLC",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/sites/default/files/company_press_releases/attachments_oslo/2026/02/26/666900_Project%20Camino%20-%20PDMR%20form%20-%20HV%20VI%20Invest%20Uraz%20Limited%20-%2025%20February%202026%2835853336.1%29.pdf",
+        "sha256": "006674b696e610dab78abec972ac4eea5402ac3159e66a6aa85fdc6dd0716166",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:46:55.650506+00:00"
+    },
+    {
+      "isin": "BMG8080M1001",
+      "symbol": "SNM",
+      "name": "SHAMARAN PETROLEUM LTD.",
+      "issuerId": "LEI:529900227RVB89NZH924",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/BMG8080M1001.json",
+        "sha256": "8eca425979d5455508ee7c811bf8dcca29c9f9f7ebbddc54800d4702bdd8b868",
+        "url": "https://api.gleif.org/api/v1/lei-records/529900227RVB89NZH924",
+        "entityName": "ShaMaran Petroleum Ltd.",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/en/ipo-showcase/shamaran-petroleum",
+        "sha256": "7930fa78e6b4a94809c72877eb485488b462cadcc4750fc44ef05914e3da3cb2",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:50.320406+00:00"
+    },
+    {
+      "isin": "LU0075646355",
+      "symbol": "SUBC",
+      "name": "Subsea 7 SA",
+      "issuerId": "LEI:222100AIF0CBCY80AH62",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/LU0075646355.json",
+        "sha256": "7ddc4800c05831bc2a6ae43aa0e0c6283ea1f46dfe43ac69ade5283c386e4e39",
+        "url": "https://api.gleif.org/api/v1/lei-records/222100AIF0CBCY80AH62",
+        "entityName": "SUBSEA 7 S.A.",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://www.subsea7.com/en/investors/shareholder-centre/faqs.html",
+        "sha256": "23b56c9eb319cd93568ba7b2ae7cb65fcb55781e0ea90335bd54eb75a952011a",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:51.988439+00:00"
+    },
+    {
+      "isin": "BMG730931091",
+      "symbol": "VTURA",
+      "name": "VENTURA OFFSHORE HOLDING LTD.",
+      "issuerId": "LEI:5299001V0XROH623VE19",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/BMG730931091.json",
+        "sha256": "c655a4f9bc9fde211d18c0148cc3efa16d8d821bcf3aa218a4984422f42841b3",
+        "url": "https://api.gleif.org/api/v1/lei-records/5299001V0XROH623VE19",
+        "entityName": "Ventura Offshore Holding Ltd.",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/en/ipo-showcase/ventura-offshore",
+        "sha256": "e4f74b5dc9ea5d7f95e3bf7e25e0f02ac58f16dde99b7db4bfc3e4cd5d804070",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "observedAt": "2026-11-28T05:45:56.081965+00:00"
+    },
+    {
+      "isin": "SGXZ33616145",
+      "symbol": "VLCC",
+      "name": "Volare Shipping Ltd.",
+      "issuerId": "LEI:213800Y6QEMFTNTWKB48",
+      "status": "VERIFIED_ISSUER_PROPOSAL",
+      "gleif": {
+        "file": "oslo-entities/SGXZ33616145.json",
+        "sha256": "cdce5faf9bcdaa17e582095587c7bacc854c87be5395137a021666d1d244eaec",
+        "url": "https://api.gleif.org/api/v1/lei-records/213800Y6QEMFTNTWKB48",
+        "entityName": "VOLARE SHIPPING PTE. LTD.",
+        "entityStatus": "ACTIVE",
+        "registrationStatus": "ISSUED",
+        "isinMappingReturned": false
+      },
+      "primary": {
+        "url": "https://live.euronext.com/en/ipo-showcase/volare-shipping-ltd",
+        "sha256": "817ec9d095a3d92870e87f9def9b4f5eefd3b1ef0d7b7cef2174fe636ec895d6",
+        "mode": "PRIMARY_ISIN_LEI_COOBSERVED",
+        "isinObserved": true,
+        "leiObserved": true,
+        "registrationBridge": null
+      },
+      "note": "Current GLEIF legal name is VOLARE SHIPPING PTE. LTD.; exchange IPO card explicitly binds this LEI and ISIN. This proposal does not change listing/name decisions.",
+      "observedAt": "2026-11-28T05:45:58.414713+00:00"
+    }
+  ],
+  "proposals": [
+    {
+      "isin": "BMG9156K1018",
+      "issuerId": "LEI:549300402C8KQEW78U64"
+    },
+    {
+      "isin": "NO0010955917",
+      "issuerId": "LEI:549300QEVW47ULJE4O08"
+    },
+    {
+      "isin": "DK0060945467",
+      "issuerId": "LEI:213800MC2SGVSIBN7J53"
+    },
+    {
+      "isin": "NO0003021909",
+      "issuerId": "LEI:5967007LIEEXZXIEMG82"
+    },
+    {
+      "isin": "NO0013531616",
+      "issuerId": "LEI:98450042CE074BB6T235"
+    },
+    {
+      "isin": "CY0108052115",
+      "issuerId": "LEI:254900W1NJ6UIVLUCN25"
+    },
+    {
+      "isin": "NO0003078107",
+      "issuerId": "LEI:5967007LIEEXZXFU1405"
+    },
+    {
+      "isin": "NO0010872468",
+      "issuerId": "LEI:5493000E25PBC2PXV881"
+    },
+    {
+      "isin": "NO0010215684",
+      "issuerId": "LEI:5967007LIEEXZXIX5468"
+    },
+    {
+      "isin": "NO0010234552",
+      "issuerId": "LEI:5967007LIEEXZXJ10071"
+    },
+    {
+      "isin": "NO0010345853",
+      "issuerId": "LEI:549300NFTY73920OYK69"
+    },
+    {
+      "isin": "NO0010716582",
+      "issuerId": "LEI:5967007LIEEXZXG42836"
+    },
+    {
+      "isin": "SE0015193412",
+      "issuerId": "LEI:549300Q7RJC8BD1UB509"
+    },
+    {
+      "isin": "NO0003097503",
+      "issuerId": "LEI:5967007LIEEXZXH8YG14"
+    },
+    {
+      "isin": "NO0010829765",
+      "issuerId": "LEI:549300W7L5S281Y3DD68"
+    },
+    {
+      "isin": "NO0013683821",
+      "issuerId": "LEI:636700OJYMZPJZ0ZO361"
+    },
+    {
+      "isin": "NO0013735894",
+      "issuerId": "LEI:529900RG33DF0N88RJ88"
+    },
+    {
+      "isin": "NO0010715394",
+      "issuerId": "LEI:5967007LIEEXZXH86O96"
+    },
+    {
+      "isin": "BMG0451H2087",
+      "issuerId": "LEI:549300D1D5TS4O1V4923"
+    },
+    {
+      "isin": "NO0010859580",
+      "issuerId": "LEI:549300Z2HW6I989Q2C78"
+    },
+    {
+      "isin": "NO0010917719",
+      "issuerId": "LEI:549300WIEAOXRI8H0046"
+    },
+    {
+      "isin": "NO0010014632",
+      "issuerId": "LEI:5967007LIEEXZXGR7K47"
+    },
+    {
+      "isin": "NO0003572802",
+      "issuerId": "LEI:5967007LIEEXZXDZO898"
+    },
+    {
+      "isin": "NO0013682948",
+      "issuerId": "LEI:5967007LIEEXZXFK0040"
+    },
+    {
+      "isin": "NO0004822503",
+      "issuerId": "LEI:5967007LIEEXZXINVS13"
+    },
+    {
+      "isin": "NO0010073489",
+      "issuerId": "LEI:5967007LIEEXZXFFDC03"
+    },
+    {
+      "isin": "BMG0670A1099",
+      "issuerId": "LEI:549300KYN3M0LSM5A413"
+    },
+    {
+      "isin": "NO0010607971",
+      "issuerId": "LEI:5967007LIEEXZXJO5C34"
+    },
+    {
+      "isin": "NO0010840515",
+      "issuerId": "LEI:549300P5VT8OMA17TJ33"
+    },
+    {
+      "isin": "NO0012861683",
+      "issuerId": "LEI:635400GUFTQDXIVUEM96"
+    },
+    {
+      "isin": "NO0010633951",
+      "issuerId": "LEI:5967007LIEEXZXFHOO08"
+    },
+    {
+      "isin": "FO0000000179",
+      "issuerId": "LEI:2138007LH7OP4V112978"
+    },
+    {
+      "isin": "NO0010810476",
+      "issuerId": "LEI:213800T94A9GIDXI2C20"
+    },
+    {
+      "isin": "SGXZ33675836",
+      "issuerId": "LEI:254900Z1VT9KY0P9EP44"
+    },
+    {
+      "isin": "NO0010950249",
+      "issuerId": "LEI:5493002USXDN1F0IE776"
+    },
+    {
+      "isin": "NO0013711721",
+      "issuerId": "LEI:5967007LIEEXZX8NJK85"
+    },
+    {
+      "isin": "NO0010890965",
+      "issuerId": "LEI:254900N95EUYYZZA5F19"
+    },
+    {
+      "isin": "NO0012706763",
+      "issuerId": "LEI:5967007LIEEXZXEW2W49"
+    },
+    {
+      "isin": "NO0013685750",
+      "issuerId": "LEI:213800HELCJXXWXSP608"
+    },
+    {
+      "isin": "NO0010379266",
+      "issuerId": "LEI:5967007LIEEXZXGE3C16"
+    },
+    {
+      "isin": "NO0013753343",
+      "issuerId": "LEI:6367005A4HJPL36AGT05"
+    },
+    {
+      "isin": "NO0003110603",
+      "issuerId": "LEI:213800HOQE1B34SUA323"
+    },
+    {
+      "isin": "NO0013256180",
+      "issuerId": "LEI:5967007LIEEXZXG3AG53"
+    },
+    {
+      "isin": "NO0010657505",
+      "issuerId": "LEI:5967007LIEEXZXGYXC05"
+    },
+    {
+      "isin": "NO0010360266",
+      "issuerId": "LEI:5967007LIEEXZXFMBC26"
+    },
+    {
+      "isin": "BMG0702P1086",
+      "issuerId": "LEI:5493004D19CJBN3DLD40"
+    },
+    {
+      "isin": "SGXZ69436764",
+      "issuerId": "LEI:5493006WBEME88YFDW23"
+    },
+    {
+      "isin": "BMG1738J1247",
+      "issuerId": "LEI:2138008LFKH8V2EOA915"
+    },
+    {
+      "isin": "NO0003087603",
+      "issuerId": "LEI:5967007LIEEXZXGPO018"
+    },
+    {
+      "isin": "GB00BN49H029",
+      "issuerId": "LEI:213800IG54URWEOWN718"
+    },
+    {
+      "isin": "NO0010078850",
+      "issuerId": "LEI:254900WXI8DIFKSABS36"
+    },
+    {
+      "isin": "MHY1096C1093",
+      "issuerId": "LEI:254900YKEOPGDBKEUX72"
+    },
+    {
+      "isin": "NO0010923121",
+      "issuerId": "LEI:549300WYBNH1T16J8V12"
+    },
+    {
+      "isin": "NO0013219535",
+      "issuerId": "LEI:254900D1PHII0FANVY07"
+    },
+    {
+      "isin": "KYG203121077",
+      "issuerId": "LEI:98450015EBD8CD646A16"
+    },
+    {
+      "isin": "NO0013033795",
+      "issuerId": "LEI:5967007LIEEXZXFYNS31"
+    },
+    {
+      "isin": "NO0010876642",
+      "issuerId": "LEI:549300VUALPJQLAH7B56"
+    },
+    {
+      "isin": "NO0013483503",
+      "issuerId": "LEI:9845003I6D5D47658F22"
+    },
+    {
+      "isin": "SE0014731154",
+      "issuerId": "LEI:549300DGJB24U1VKHC98"
+    },
+    {
+      "isin": "NO0010015175",
+      "issuerId": "LEI:549300XTJ33LIKU4KN78"
+    },
+    {
+      "isin": "NO0013755728",
+      "issuerId": "LEI:636700F2ZNFEE1S05195"
+    },
+    {
+      "isin": "NO0010963275",
+      "issuerId": "LEI:549300PVIC7OFM8MWU40"
+    },
+    {
+      "isin": "NO0010161896",
+      "issuerId": "LEI:549300GKFG0RYRRQ1414"
+    },
+    {
+      "isin": "NO0003921009",
+      "issuerId": "LEI:5967007LIEEXZXH3K072"
+    },
+    {
+      "isin": "NO0012851874",
+      "issuerId": "LEI:213800GIV9N2A714T434"
+    },
+    {
+      "isin": "NO0013711739",
+      "issuerId": "LEI:636700KVRNQYY153LO45"
+    },
+    {
+      "isin": "NO0013601245",
+      "issuerId": "LEI:5967007LIEEXZXIPFC54"
+    },
+    {
+      "isin": "NO0010263023",
+      "issuerId": "LEI:5967007LIEEXZXFOMO31"
+    },
+    {
+      "isin": "NO0010816093",
+      "issuerId": "LEI:549300CVBE06T0SH6T76"
+    },
+    {
+      "isin": "NO0010722283",
+      "issuerId": "LEI:21380012EQMN8XOXBQ51"
+    },
+    {
+      "isin": "NO0011002586",
+      "issuerId": "LEI:529900BIDQN2AOKV6N08"
+    },
+    {
+      "isin": "NO0012555459",
+      "issuerId": "LEI:5967007LIEEXZXIIHC31"
+    },
+    {
+      "isin": "NO0013698431",
+      "issuerId": "LEI:894500PK593QVIFIQ784"
+    },
+    {
+      "isin": "NO0013186460",
+      "issuerId": "LEI:5493007QXMCG0WPKFC96"
+    },
+    {
+      "isin": "NO0010716418",
+      "issuerId": "LEI:549300APU14LQKTYCH34"
+    },
+    {
+      "isin": "NO0010096985",
+      "issuerId": "LEI:OW6OFBNCKXC4US5C7523"
+    },
+    {
+      "isin": "NO0010708605",
+      "issuerId": "LEI:5967007LIEEXZXH9Q807"
+    },
+    {
+      "isin": "NO0010735343",
+      "issuerId": "LEI:5967007LIEEXZXGA8G28"
+    },
+    {
+      "isin": "NO0013647693",
+      "issuerId": "LEI:5967007LIEEXZXKC2G83"
+    },
+    {
+      "isin": "NO0013713115",
+      "issuerId": "LEI:984500F024BDA76D7H08"
+    },
+    {
+      "isin": "NO0010748866",
+      "issuerId": "LEI:5967007LIEEXZXHNM861"
+    },
+    {
+      "isin": "NO0011013765",
+      "issuerId": "LEI:984500IBAME770G02E98"
+    },
+    {
+      "isin": "NO0010582521",
+      "issuerId": "LEI:5967007LIEEXZX6FAO47"
+    },
+    {
+      "isin": "MT0003060101",
+      "issuerId": "LEI:984500C9T5B59D69F447"
+    },
+    {
+      "isin": "NO0013228585",
+      "issuerId": "LEI:5967007LIEEXZXGIQ006"
+    },
+    {
+      "isin": "NO0004913609",
+      "issuerId": "LEI:5967007LIEEXZXFGWW36"
+    },
+    {
+      "isin": "NO0010907744",
+      "issuerId": "LEI:9845006D911A1DFC9983"
+    },
+    {
+      "isin": "NO0010365521",
+      "issuerId": "LEI:5967007LIEEXZXH5VC37"
+    },
+    {
+      "isin": "NO0004288200",
+      "issuerId": "LEI:5967007LIEEXZXHQPC18"
+    },
+    {
+      "isin": "SGXZ53070850",
+      "issuerId": "LEI:5493001KCFT0SCGJ2647"
+    },
+    {
+      "isin": "NO0010931918",
+      "issuerId": "LEI:8945008J6G4EILS2VI26"
+    },
+    {
+      "isin": "NO0013696799",
+      "issuerId": "LEI:549300HQNL6UPBRT4P26"
+    },
+    {
+      "isin": "NO0010257728",
+      "issuerId": "LEI:5967007LIEEXZXFJ8876"
+    },
+    {
+      "isin": "NO0013774166",
+      "issuerId": "LEI:9845000671CA38DA6280"
+    },
+    {
+      "isin": "NO0013401380",
+      "issuerId": "LEI:2549005RGU6BUYK07L22"
+    },
+    {
+      "isin": "NO0003067902",
+      "issuerId": "LEI:5967007LIEEXZXJWMW49"
+    },
+    {
+      "isin": "NO0013751966",
+      "issuerId": "LEI:549300CM3T0GK8X3FW75"
+    },
+    {
+      "isin": "BMG4660A1036",
+      "issuerId": "LEI:984500D86FFE5EYE7988"
+    },
+    {
+      "isin": "NO0010598683",
+      "issuerId": "LEI:5967007LIEEXZXGGEO44"
+    },
+    {
+      "isin": "NO0010859648",
+      "issuerId": "LEI:894500JLT5FIBY5QWI84"
+    },
+    {
+      "isin": "NO0013470534",
+      "issuerId": "LEI:213800D37JXCR1BKBZ39"
+    },
+    {
+      "isin": "NO0012953720",
+      "issuerId": "LEI:5967007LIEEXZXHLAW34"
+    },
+    {
+      "isin": "NO0010892359",
+      "issuerId": "LEI:549300EW945NUS7PK214"
+    },
+    {
+      "isin": "NO0011082075",
+      "issuerId": "LEI:549300D7GNMPKTA4HD46"
+    },
+    {
+      "isin": "NO0010724701",
+      "issuerId": "LEI:213800VMVZVHCK6MW184"
+    },
+    {
+      "isin": "NO0013536078",
+      "issuerId": "LEI:5967007LIEEXZXHECW11"
+    },
+    {
+      "isin": "NO0010536048",
+      "issuerId": "LEI:5967007LIEEXZXIZGG54"
+    },
+    {
+      "isin": "SE0017486103",
+      "issuerId": "LEI:549300306YYJ3BX3VB98"
+    },
+    {
+      "isin": "NO0010864036",
+      "issuerId": "LEI:254900N6OCHSL8S5YP54"
+    },
+    {
+      "isin": "NO0010762792",
+      "issuerId": "LEI:549300GGE58VFJE5KJ70"
+    },
+    {
+      "isin": "NO0013461350",
+      "issuerId": "LEI:549300JCAQFRMWSL7M59"
+    },
+    {
+      "isin": "NO0013119255",
+      "issuerId": "LEI:5967007LIEEXZXIMC884"
+    },
+    {
+      "isin": "NO0010001118",
+      "issuerId": "LEI:5967007LIEEXZXFZFK03"
+    },
+    {
+      "isin": "NO0012477704",
+      "issuerId": "LEI:549300TH27ADF0CT8150"
+    },
+    {
+      "isin": "BMG5137R1088",
+      "issuerId": "LEI:54930066UQE0B7NO1M17"
+    },
+    {
+      "isin": "NO0010884794",
+      "issuerId": "LEI:98450040PEERA56F3E42"
+    },
+    {
+      "isin": "NO0010743545",
+      "issuerId": "LEI:5967007LIEEXZXH53K17"
+    },
+    {
+      "isin": "NO0003079709",
+      "issuerId": "LEI:5967007LIEEXZXIG6009"
+    },
+    {
+      "isin": "NO0010833262",
+      "issuerId": "LEI:213800ZFB2MQM3JA6K52"
+    },
+    {
+      "isin": "NO0011016040",
+      "issuerId": "LEI:254900PS6TE65C9V4D71"
+    },
+    {
+      "isin": "NO0003033102",
+      "issuerId": "LEI:5967007LIEEXZXJDCG21"
+    },
+    {
+      "isin": "NO0013536151",
+      "issuerId": "LEI:5967007LIEEXZXJ9HK73"
+    },
+    {
+      "isin": "NO0013697029",
+      "issuerId": "LEI:6367007UE6J5YSBTWN87"
+    },
+    {
+      "isin": "NO0010815103",
+      "issuerId": "LEI:549300GTNWP8MOCFB082"
+    },
+    {
+      "isin": "NO0003096208",
+      "issuerId": "LEI:5967007LIEEXZXJ2JK50"
+    },
+    {
+      "isin": "NO0013355859",
+      "issuerId": "LEI:254900D88MYGZ7JD5P39"
+    },
+    {
+      "isin": "NO0010894231",
+      "issuerId": "LEI:2549006RH08XJGKC2Y14"
+    },
+    {
+      "isin": "NO0010921299",
+      "issuerId": "LEI:254900T8HI961K0EV282"
+    },
+    {
+      "isin": "NO0010927288",
+      "issuerId": "LEI:984500558A4B099PCC34"
+    },
+    {
+      "isin": "NO0010405780",
+      "issuerId": "LEI:549300NXMIMRSBCDZO71"
+    },
+    {
+      "isin": "NO0010976343",
+      "issuerId": "LEI:549300T0BYA0TXE4QL60"
+    },
+    {
+      "isin": "NO0010187032",
+      "issuerId": "LEI:5967007LIEEXZXGY5K17"
+    },
+    {
+      "isin": "NO0013750893",
+      "issuerId": "LEI:254900PQFRUFHCWY2C89"
+    },
+    {
+      "isin": "NO0010159684",
+      "issuerId": "LEI:5967007LIEEXZXJOX483"
+    },
+    {
+      "isin": "NO0013325506",
+      "issuerId": "LEI:6488UNV33KXZ9498L870"
+    },
+    {
+      "isin": "NO0003054108",
+      "issuerId": "LEI:549300W1OGQF5LZIH349"
+    },
+    {
+      "isin": "NO0010791353",
+      "issuerId": "LEI:213800MXS7CXYJ2Q1805"
+    },
+    {
+      "isin": "NL0015268814",
+      "issuerId": "LEI:724500EBN1V9P4WME110"
+    },
+    {
+      "isin": "NO0010734338",
+      "issuerId": "LEI:5967007LIEEXZXG9GO07"
+    },
+    {
+      "isin": "NO0010974983",
+      "issuerId": "LEI:894500ODN68AR6F14J34"
+    },
+    {
+      "isin": "DK0060520450",
+      "issuerId": "LEI:213800XQZL5ULZCCNP76"
+    },
+    {
+      "isin": "NO0010205966",
+      "issuerId": "LEI:529900LKVQOR2SRUJU71"
+    },
+    {
+      "isin": "NO0003049405",
+      "issuerId": "LEI:5967007LIEEXZXIFE872"
+    },
+    {
+      "isin": "NO0010081235",
+      "issuerId": "LEI:549300G6XN5IXMRKEG37"
+    },
+    {
+      "isin": "NO0010360019",
+      "issuerId": "LEI:549300YA98I8QIPGWZ72"
+    },
+    {
+      "isin": "NO0010856511",
+      "issuerId": "LEI:254900C08RCMXVZYFY97"
+    },
+    {
+      "isin": "NO0010892912",
+      "issuerId": "LEI:549300N8UWBEWUET7X59"
+    },
+    {
+      "isin": "NO0013052209",
+      "issuerId": "LEI:635400VFBLRSFRXLGQ03"
+    },
+    {
+      "isin": "NO0011002651",
+      "issuerId": "LEI:549300DMI437CP0K2C23"
+    },
+    {
+      "isin": "NO0012928805",
+      "issuerId": "LEI:254900IQ54IIYYIHF752"
+    },
+    {
+      "isin": "NO0013683409",
+      "issuerId": "LEI:5967007LIEEXZXGCJS95"
+    },
+    {
+      "isin": "NO0003058109",
+      "issuerId": "LEI:894500K853DDTPY1SE30"
+    },
+    {
+      "isin": "NO0013162693",
+      "issuerId": "LEI:5967007LIEEXZXFVKO54"
+    },
+    {
+      "isin": "NO0003055501",
+      "issuerId": "LEI:5967007LIEEXZXJGFK95"
+    },
+    {
+      "isin": "NO0011018434",
+      "issuerId": "LEI:5493007FPINFEX1FGR53"
+    },
+    {
+      "isin": "NO0012885252",
+      "issuerId": "LEI:2549008P77XR4V5Z8N86"
+    },
+    {
+      "isin": "NO0005052605",
+      "issuerId": "LEI:549300N1SDN71ZZ8BO45"
+    },
+    {
+      "isin": "NO0010969108",
+      "issuerId": "LEI:549300Y0QTPZ5SDVSM33"
+    },
+    {
+      "isin": "NO0010861115",
+      "issuerId": "LEI:529900MYY60WXHHY3039"
+    },
+    {
+      "isin": "NO0010550056",
+      "issuerId": "LEI:5967007LIEEXZXFWCG26"
+    },
+    {
+      "isin": "BMG6682J1036",
+      "issuerId": "LEI:254900S4HDF3MYTDLB73"
+    },
+    {
+      "isin": "NO0010196140",
+      "issuerId": "LEI:549300IEUH2FEM2Y6B51"
+    },
+    {
+      "isin": "NO0010984966",
+      "issuerId": "LEI:5493004WNVZP9EMYI834"
+    },
+    {
+      "isin": "NO0010917339",
+      "issuerId": "LEI:549300Y78E2ZIKWG3N54"
+    },
+    {
+      "isin": "NO0003679102",
+      "issuerId": "LEI:5967007LIEEXZXI5D463"
+    },
+    {
+      "isin": "NO0010714785",
+      "issuerId": "LEI:254900UKQHWYZJD22017"
+    },
+    {
+      "isin": "NO0013457952",
+      "issuerId": "LEI:9845005F38B74FFJ1B65"
+    },
+    {
+      "isin": "NO0010914641",
+      "issuerId": "LEI:549300RJNR13BNHMHC23"
+    },
+    {
+      "isin": "NO0010887565",
+      "issuerId": "LEI:894500DQEGMYYBH8Y653"
+    },
+    {
+      "isin": "BMG671801022",
+      "issuerId": "LEI:529900M08ZU24JXMPB85"
+    },
+    {
+      "isin": "NO0003399909",
+      "issuerId": "LEI:529900J8VSH14TP5VD23"
+    },
+    {
+      "isin": "BMG6716L1081",
+      "issuerId": "LEI:529900ZYHGCPTAD1R169"
+    },
+    {
+      "isin": "NO0010816895",
+      "issuerId": "LEI:549300H385IGBB58CN91"
+    },
+    {
+      "isin": "NO0010894512",
+      "issuerId": "LEI:635400L5M4MW6HBEFX25"
+    },
+    {
+      "isin": "NO0013711713",
+      "issuerId": "LEI:213800TYYFXKYF3V2A23"
+    },
+    {
+      "isin": "NO0003733800",
+      "issuerId": "LEI:549300PZS8G8RG6RVZ52"
+    },
+    {
+      "isin": "NO0010040611",
+      "issuerId": "LEI:391200EWTTF186UWWH07"
+    },
+    {
+      "isin": "NO0013721613",
+      "issuerId": "LEI:213800GFRKV96MLT9G04"
+    },
+    {
+      "isin": "NO0013757500",
+      "issuerId": "LEI:636700ZGN52GCBI4L216"
+    },
+    {
+      "isin": "NO0010564701",
+      "issuerId": "LEI:5967007LIEEXZXGWM030"
+    },
+    {
+      "isin": "BMG6904D1083",
+      "issuerId": "LEI:549300XB7T5BX418QX67"
+    },
+    {
+      "isin": "NO0010397581",
+      "issuerId": "LEI:5967007LIEEXZX75J484"
+    },
+    {
+      "isin": "CY0201461213",
+      "issuerId": "LEI:213800MS7YC1XTISON88"
+    },
+    {
+      "isin": "CY0102630916",
+      "issuerId": "LEI:213800314VQ2TXFPB471"
+    },
+    {
+      "isin": "NO0012942525",
+      "issuerId": "LEI:984500AEEH2D2AK42C11"
+    },
+    {
+      "isin": "NO0010840507",
+      "issuerId": "LEI:549300S79JFZK79XBI07"
+    },
+    {
+      "isin": "NO0010000045",
+      "issuerId": "LEI:5967007LIEEXZXG8OW35"
+    },
+    {
+      "isin": "NO0013756361",
+      "issuerId": "LEI:636700IIAN59SZR4KD06"
+    },
+    {
+      "isin": "NO0010466022",
+      "issuerId": "LEI:5967007LIEEXZXILKG08"
+    },
+    {
+      "isin": "NO0012535832",
+      "issuerId": "LEI:2138007ZPDNUIHX6Z659"
+    },
+    {
+      "isin": "NO0010861990",
+      "issuerId": "LEI:2138001LK2Z2HSER4U15"
+    },
+    {
+      "isin": "NO0010209331",
+      "issuerId": "LEI:5967007LIEEXZXAIO813"
+    },
+    {
+      "isin": "NO0010893902",
+      "issuerId": "LEI:5493006J8UNWCDMAQW02"
+    },
+    {
+      "isin": "DE000A2G8ZX8",
+      "issuerId": "LEI:39120067WWD5WF229E72"
+    },
+    {
+      "isin": "NO0003117202",
+      "issuerId": "LEI:5967007LIEEXZXK7FS45"
+    },
+    {
+      "isin": "NL0015001BF4",
+      "issuerId": "LEI:636700DW8P234UXFM919"
+    },
+    {
+      "isin": "CY0101550917",
+      "issuerId": "LEI:213800T1IOLQVHNHB646"
+    },
+    {
+      "isin": "NO0010572589",
+      "issuerId": "LEI:5967007LIEEXZXG0Z404"
+    },
+    {
+      "isin": "NO0010310956",
+      "issuerId": "LEI:5967007LIEEXZXGDBK67"
+    },
+    {
+      "isin": "NO0010892094",
+      "issuerId": "LEI:549300P2OB7L255PF765"
+    },
+    {
+      "isin": "NO0010863285",
+      "issuerId": "LEI:549300UWBMWYM7YQRF97"
+    },
+    {
+      "isin": "NO0003053308",
+      "issuerId": "LEI:5967007LIEEXZXI6WO83"
+    },
+    {
+      "isin": "NO0010715139",
+      "issuerId": "LEI:5967007LIEEXZXIARK36"
+    },
+    {
+      "isin": "KYG812291253",
+      "issuerId": "LEI:549300NYGU1CE7UICM69"
+    },
+    {
+      "isin": "CY0101162119",
+      "issuerId": "LEI:213800ED88L967PGFK25"
+    },
+    {
+      "isin": "NO0010612450",
+      "issuerId": "LEI:5967007LIEEXZXIHPK59"
+    },
+    {
+      "isin": "NO0013573014",
+      "issuerId": "LEI:636700TZLHWHJV5B7Z64"
+    },
+    {
+      "isin": "BMG8080M1001",
+      "issuerId": "LEI:529900227RVB89NZH924"
+    },
+    {
+      "isin": "NO0010931207",
+      "issuerId": "LEI:549300CD6GFWDQWKRK76"
+    },
+    {
+      "isin": "NO0011012502",
+      "issuerId": "LEI:6488IGA378IE710UU959"
+    },
+    {
+      "isin": "NO0010811961",
+      "issuerId": "LEI:549300AETMWJS91G4A50"
+    },
+    {
+      "isin": "NO0010713571",
+      "issuerId": "LEI:529900E9W21TGMWZ7430"
+    },
+    {
+      "isin": "NO0013135368",
+      "issuerId": "LEI:636700X6XN8UWIBHQ877"
+    },
+    {
+      "isin": "NO0003080608",
+      "issuerId": "LEI:5967007LIEEXZXHGO849"
+    },
+    {
+      "isin": "NO0010631567",
+      "issuerId": "LEI:549300Q3OIWRHQUQM052"
+    },
+    {
+      "isin": "NO0012780958",
+      "issuerId": "LEI:894500YHMWB7V6HNXW71"
+    },
+    {
+      "isin": "BMG850801025",
+      "issuerId": "LEI:213800VZX4LWJSGRLR94"
+    },
+    {
+      "isin": "NO0003053605",
+      "issuerId": "LEI:5967007LIEEXZX7NA051"
+    },
+    {
+      "isin": "NO0010098247",
+      "issuerId": "LEI:5967007LIEEXZXISIG31"
+    },
+    {
+      "isin": "LU0075646355",
+      "issuerId": "LEI:222100AIF0CBCY80AH62"
+    },
+    {
+      "isin": "NO0012916131",
+      "issuerId": "LEI:5967007LIEEXZXIJ9474"
+    },
+    {
+      "isin": "NO0010951577",
+      "issuerId": "LEI:549300B8BGP6YLHH0K80"
+    },
+    {
+      "isin": "NO0010063308",
+      "issuerId": "LEI:549300IM1QSBY4SLPM26"
+    },
+    {
+      "isin": "NO0003078800",
+      "issuerId": "LEI:549300NUPLAXPB0WYH90"
+    },
+    {
+      "isin": "NL00150001S5",
+      "issuerId": "LEI:9845004WD3997B9F1061"
+    },
+    {
+      "isin": "NO0010597883",
+      "issuerId": "LEI:5967007LIEEXZXG6DK30"
+    },
+    {
+      "isin": "NO0012470089",
+      "issuerId": "LEI:549300J726JCFJU3VT89"
+    },
+    {
+      "isin": "NO0005806802",
+      "issuerId": "LEI:5967007LIEEXZXHF4O96"
+    },
+    {
+      "isin": "NO0010736879",
+      "issuerId": "LEI:5967007LIEEXZXHT0O36"
+    },
+    {
+      "isin": "BMG730931091",
+      "issuerId": "LEI:5299001V0XROH623VE19"
+    },
+    {
+      "isin": "NO0010734122",
+      "issuerId": "LEI:5967007LIEEXZXFQY092"
+    },
+    {
+      "isin": "SGXZ33616145",
+      "issuerId": "LEI:213800Y6QEMFTNTWKB48"
+    },
+    {
+      "isin": "NO0003025009",
+      "issuerId": "LEI:5967007LIEEXZX4N9429"
+    },
+    {
+      "isin": "NO0010708068",
+      "issuerId": "LEI:5967007LIEEXZXGUAO90"
+    },
+    {
+      "isin": "NO0011202772",
+      "issuerId": "LEI:549300LIVN3FFOJN2K47"
+    },
+    {
+      "isin": "NO0010571680",
+      "issuerId": "LEI:549300NBN0URT3RA3Y54"
+    },
+    {
+      "isin": "NO0010609662",
+      "issuerId": "LEI:213800IQHG9H6OHKI983"
+    },
+    {
+      "isin": "NO0010768096",
+      "issuerId": "LEI:2138005JUC8BMOEGIG97"
+    },
+    {
+      "isin": "NO0010571698",
+      "issuerId": "LEI:54930050TPKOLSE1ZZ71"
+    },
+    {
+      "isin": "NO0010895782",
+      "issuerId": "LEI:549300FGEL9DD7M1M692"
+    },
+    {
+      "isin": "NO0010208051",
+      "issuerId": "LEI:213800WKOUWXWFJ5Z514"
+    },
+    {
+      "isin": "NO0010713936",
+      "issuerId": "LEI:549300Y5EDWTJNTS8P96"
+    },
+    {
+      "isin": "NO0013524942",
+      "issuerId": "LEI:254900B4VALJZR9TL744"
+    }
+  ],
+  "unresolved": [
+    {
+      "isin": "BMG763301022",
+      "reason": "LEI_NOT_OBSERVED"
+    }
+  ],
+  "multipleClasses": [],
+  "activeRegisterChanged": false,
+  "pricePublicationApproved": false,
+  "terms": "GLEIF entity records CC0; primary sources used for individual factual identifiers only. No price-display/archive permissions inferred."
+}
